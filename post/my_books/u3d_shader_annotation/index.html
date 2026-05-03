@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>《Unity3D内建着色器源码剖析》 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Unity3D内建着色器源码剖析">
+		<meta property="og:title" content="《Unity3D内建着色器源码剖析》" />
+<meta property="og:description" content="Unity3D内建着色器源码剖析" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/my_books/u3d_shader_annotation/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-12-30T15:25:10+08:00" />
+<meta property="article:modified_time" content="2019-12-30T15:25:10+08:00" />
+
+
+		<meta itemprop="name" content="《Unity3D内建着色器源码剖析》">
+<meta itemprop="description" content="Unity3D内建着色器源码剖析"><meta itemprop="datePublished" content="2019-12-30T15:25:10+08:00" />
+<meta itemprop="dateModified" content="2019-12-30T15:25:10+08:00" />
+<meta itemprop="wordCount" content="228">
+<meta itemprop="keywords" content="Unity3D,Shader,ShaderLab," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">《Unity3D内建着色器源码剖析》</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2019-12-30T15:25:10&#43;08:00">December 30, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">Shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">《Unity3D内建着色器源码剖析》</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#书籍信息">书籍信息</a></li>
+    <li><a href="#官方qq群">官方QQ群</a></li>
+    <li><a href="#书籍配套代码">书籍配套代码</a></li>
+    <li><a href="#书中参考引用到的一些技术文章">书中参考引用到的一些技术文章</a></li>
+    <li><a href="#unity3d内建着色器源码剖析勘误表">《Unity3D内建着色器源码剖析》勘误表</a>
+      <ul>
+        <li><a href="#第1版第1刷">第1版第1刷</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><img src="/image/book_erratas/u3d_shader_annotation.jpg" alt=""></p>
+<h2 id="书籍信息">书籍信息</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">信息</th>
+<th style="text-align:center">详情</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">定价</td>
+<td style="text-align:center">89.00</td>
+</tr>
+<tr>
+<td style="text-align:center">出版社</td>
+<td style="text-align:center">人民邮电出版社</td>
+</tr>
+<tr>
+<td style="text-align:center">版次</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">出版时间</td>
+<td style="text-align:center">2019年08月</td>
+</tr>
+<tr>
+<td style="text-align:center">开本</td>
+<td style="text-align:center">16</td>
+</tr>
+<tr>
+<td style="text-align:center">装帧</td>
+<td style="text-align:center">平装</td>
+</tr>
+<tr>
+<td style="text-align:center">页数</td>
+<td style="text-align:center">334</td>
+</tr>
+<tr>
+<td style="text-align:center">ISBN编码</td>
+<td style="text-align:center">9787115507044</td>
+</tr>
+</tbody>
+</table>
+<h2 id="官方qq群">官方QQ群</h2>
+<p>群1号码：<strong>672523982</strong></p>
+<h2 id="书籍配套代码">书籍配套代码</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">代码文件</th>
+<th style="text-align:center">MD5值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="/files/builtin_shaders-2017.2.0f3.zip">Unity3D内建着色器源代码 版本2017.2.0f3</a></td>
+<td style="text-align:center">MD5: 1737874a497c6fa04031af3c90ff2f99</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="/files/StarNight.zip">第12章的代码工程</a></td>
+<td style="text-align:center">MD5：640938e9f1a259b7e693b1abe866f368</td>
+</tr>
+</tbody>
+</table>
+<h2 id="书中参考引用到的一些技术文章">书中参考引用到的一些技术文章</h2>
+<ol>
+<li>微软网站上关于DXT及BC系列格式的<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb694531(v=vs.85).aspx#BC1">详细介绍</a></li>
+<li>微软MSDN上有介绍<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/hh308955(v=vs.85).aspx">块状压缩</a>的文章</li>
+<li>nVidia开发者网站有一篇介绍<a href="https://developer.nvidia.com/vrworks/graphics/singlepassstereo">单程立体渲染原理</a>的文章。</li>
+<li>Unity3D官网也有<a href="https://docs.unity3d.com/2017.2/Documentation/Manual/SinglePassStereoRendering.html">单程立体渲染</a>的介绍</li>
+</ol>
+<h2 id="unity3d内建着色器源码剖析勘误表">《Unity3D内建着色器源码剖析》勘误表</h2>
+<h3 id="第1版第1刷">第1版第1刷</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">章节</th>
+<th style="text-align:center">页数</th>
+<th style="text-align:center">位置</th>
+<th style="text-align:center">错误内容</th>
+<th style="text-align:center">正确内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1.2.2</td>
+<td style="text-align:center">正文第4页</td>
+<td style="text-align:center">第5段第5行</td>
+<td style="text-align:center">$$\left&lt; p_1,p_2,p_3 \right&gt;$$ 的排列顺序称为顺时针方向（clockwise，CW）。</td>
+<td style="text-align:center">$$ \left&lt; p_1,p_3,p_2 \right&gt; $$ 的排列顺序称为顺时针方向（clockwise，CW）。……</td>
+</tr>
+<tr>
+<td style="text-align:center">1.2.2</td>
+<td style="text-align:center">正文第4页</td>
+<td style="text-align:center">第6段第2行</td>
+<td style="text-align:center">在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_2,p_3 \right&gt; $$</td>
+<td style="text-align:center">在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_3,p_2 \right&gt; $$</td>
+</tr>
+<tr>
+<td style="text-align:center">1.2.3</td>
+<td style="text-align:center">正文第6页</td>
+<td style="text-align:center">式1-7</td>
+<td style="text-align:center"><img src="/image/book_erratas/shi1-7-error.jpg" alt=""></td>
+<td style="text-align:center"><img src="/image/book_erratas/shi1-7-correct.jpg" alt=""></td>
+</tr>
+<tr>
+<td style="text-align:center">1.2.3</td>
+<td style="text-align:center">正文第8页</td>
+<td style="text-align:center">第8段第4行</td>
+<td style="text-align:center">&hellip;当 <strong>M</strong> 为旋转变换矩阵、平移变换矩阵和非均匀缩放矩阵中的一种或者它们的组合时，&hellip;</td>
+<td style="text-align:center">&hellip;当 <strong>M</strong> 为非均匀缩放矩阵，或者是非均匀缩放矩阵与“旋转变换矩阵、平移变换矩阵这两种矩阵中的一个（或两个）”的组合时，&hellip;</td>
+</tr>
+<tr>
+<td style="text-align:center">1.3.3</td>
+<td style="text-align:center">正文第20页</td>
+<td style="text-align:center">第2段第1行</td>
+<td style="text-align:center">$$ T_2 $$ 表示 <strong>背面</strong> 三角形， $$ T_1 $$ 表示 <strong>正面</strong> 三角形</td>
+<td style="text-align:center">$$ T_2 $$ 表示 <strong>正面</strong> 三角形，$ T_1 $$ 表示 <strong>背面</strong> 三角形</td>
+</tr>
+<tr>
+<td style="text-align:center">1.3.3</td>
+<td style="text-align:center">正文第20页</td>
+<td style="text-align:center">图1-19</td>
+<td style="text-align:center">$$ n_1.c_1 &gt; 0 $$ ， <strong>正面</strong> ， $$ n_2.c_2 &lt; 0 $$ ， <strong>背面</strong></td>
+<td style="text-align:center">$$ n_1.c_1 &gt; 0 $$ ， <strong>背面</strong> ， $$ n_2.c_2 &lt; 0 $$ ， <strong>正面</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">2.2</td>
+<td style="text-align:center">正文第35页</td>
+<td style="text-align:center">第6段第3行</td>
+<td style="text-align:center">&hellip; $$ \Phi _{\text{v}}\left( \lambda \right) $$ 为 <strong>辐射</strong> 通量对波长的函数； $$ \Phi _{\text{e}}\left( \lambda \right) $$ 为 <strong>光</strong> 通量对波长的函数；&hellip;</td>
+<td style="text-align:center">&hellip; $$ \Phi _{\text{v}}\left( \lambda \right) $$ 为 <strong>光</strong> 通量对波长的函数； $$ \Phi _{\text{e}}\left( \lambda \right) $$ 为 <strong>辐射</strong> 通量对波长的函数；&hellip;</td>
+</tr>
+<tr>
+<td style="text-align:center">3.1</td>
+<td style="text-align:center">正文第57页</td>
+<td style="text-align:center">表3-4第4行第2列</td>
+<td style="text-align:center">指定一个函数，使用 <strong>DX 11的GPU镶嵌（tesselation）</strong> 功能计算 <strong>镶嵌因子</strong></td>
+<td style="text-align:center">指定一个函数，使用 <strong>DirectX 11的GPU曲面细分（tesselation）</strong> 功能计算 <strong>曲面细分因子（tesselation factor）</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">3.4.3</td>
+<td style="text-align:center">正文第48页</td>
+<td style="text-align:center">第9小段</td>
+<td style="text-align:center"><strong>multi_compile_fwdadd</strong> 编译指示符将会根据当前选定的雾化因子&hellip;</td>
+<td style="text-align:center"><strong>multi_compile_fog</strong> 编译指示符将会根据当前选定的雾化因子&hellip;</td>
+</tr>
+<tr>
+<td style="text-align:center">10.1</td>
+<td style="text-align:center">正文第214页</td>
+<td style="text-align:center">公式10-1</td>
+<td style="text-align:center">$$ I_{do} = I_{do}K_d\max \left( \cos \theta , 0 \right) $$</td>
+<td style="text-align:center">$$  I_{do} = I_{di}K_d\max \left( \cos \theta , 0 \right)  $$</td>
+</tr>
+</tbody>
+</table>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
+			<a class="entry__tag btn" href="/tags/shader/">Shader</a>
+			<a class="entry__tag btn" href="/tags/shaderlab/">ShaderLab</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/mac_ios/high_ver_sdk_for_low_ver_xcode/">在低版本中的XCode中使用高版本的iOS SDK</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_component_construction_func/">继承自Monobehaviour的组件组件的构造函数</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/from_cs_to_quad/">从计算着色器到四边形【翻译】</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/cg_programming_unity_debugging_of_shaders/">在Unity3D中使用Visual Studio调试shader【翻译】</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_player_prefs/">Unity3D PlayerPrefs的存储位置</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

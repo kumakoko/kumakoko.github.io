@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta name="generator" content="Hugo 0.121.2">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Responsive card-based &amp; code-light Hugo theme">
+		<meta property="og:title" content="XGF" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/" />
+
+
+		<meta itemprop="name" content="XGF">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-home">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+			<div class="cards">
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cpp/cpp_rvalue_test/">C&#43;&#43;的右值和移动构造函数的测试程序说明</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+本文用以测试C++的右值，移动构造函数，以及标准库容器的emplace和push操作的区别。 测试环境是Visual C++ 14.0.25431.01 Update 3版本，未启用任何编译优化操作
+代码可以在github中获取。
+#include &lt;cstring&gt; #include &lt;cstdlib&gt; #include &lt;map&gt; #include &lt;vector&gt; #include &lt;cstdio&gt; class DemoClassA { public: DemoClassA() :num_(0), name_(nullptr) { std::printf(&#34;DemoClassA::DemoClassA()\n&#34;); } ~DemoClassA() { if (name_) { std::printf(&#34;DemoClassA::~DemoClassA(%d,%s)\n&#34;, num_, name_); delete[] name_; name_ = nullptr; } else { std::printf(&#34;DemoClassA::~DemoClassA()\n&#34;); } } DemoClassA(int num, const char* name) { num_ = num; auto len = std::strlen(name) + 1; name_ = new char[len]; memset(name_, 0, len); std::strcpy(name_, name); std::printf(&#34;DemoClassA::DemoClassA(%d,%s)\n&#34;, num_, name_); } DemoClassA(const DemoClassA&amp; rhs) { num_ = rhs.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-22T22:02:43&#43;08:00">January 22, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/c&#43;&#43;/" rel="category">C&#43;&#43;</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/c&#43;&#43;/" rel="tag">C&#43;&#43;</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/universal_additional_camera_data_component/">The Universal Additional Camera Data component</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+URP版本：8.2.0
+源参考网页
+通用附加相机数据组件（Universal Addtional Camera Data Component） 是通用渲染管线（URP）用于内部数据存储的组件。通用附加相机数据组件使URP可以扩展和覆盖Unity标准相机组件的功能和外观。
+在URP中，具有Camera组件的GameObject还必须具有通用附加摄影机数据组件。如果您的项目使用URP，则在创建Camera GameObject时，Unity会自动添加通用附加相机数据组件。您不能从带有Camera组件的game object中删除通用附加相机数据组件。
+如果您使用脚本来控制和自定义URP，则可以通过以下脚本访问摄像机的通用附加摄像机数据组件：
+var cameraData = camera.GetUniversalAdditionalCameraData(); 有关更多信息，请参见UniversalAdditionalCameraData API文档。如果需要通过脚本频繁访问通用附加摄像机数据组件，则应缓存对其的引用，以避免不必要的CPU工作。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-15T19:21:39&#43;08:00">January 15, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/urp/">Universal Render Pipeline</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 URP的常见问题回答 URP和HDRP(High Definition Render Pipeline)不能混用。 可以从内建render pipeline转到URP。可以用升级器(upgrade)升级内建shader到URP shader。如果自定义的shader的话，需要手动去upgrade。 不能在运行期换pipeline asset。 URP和HDRP之间不能换用。 通过Package Manager获取URP的package 在URP Asset的【Player Setting】界面上可以找到Dynamic Batching的checkbox 选中材质球时，在Inspector面板中，找到Render Face选项，选择Both选项，即可开启Double Sided Global Illumination。 URP适用于各种平台，包括PC和mobile 在Built-in RP和URP功能对照表中，标识为Not Supported的功能，表示没有且不会在后续版本中实现。 如果在build URP工程时很慢，检查以下shader stripping是否设置对，要strip掉可以strip掉的shader。 缺省地，URP是在linear space中工作，可以在Player Setting中将其设置为在gamma space中工作。 通过创建ScriptableRendererFeature脚本，使用scriptable render pass可以扩展URP的功能。 2 URP Asset URP版本：8.2.0 源网页
+要使用URP asset，需要创建一个URP asset，并在【Graphic settings】界面将其赋值使用。URP asset控制图形渲染的功能，设置图形渲染的质量等级。URP asset本身是一个scriptable object。它继承自RenderPipelineAsset类。在一个工程中可以使用多个URP asset，并且可以在它们之间切换使用，比如有个URP asset是启用了阴影，另一个URP asset关闭了阴影。
+URP有以下几大类的控制选项，如下：
+General Quality Lighting Shadows Post-processing Advanced 下面的图显示了这几个控制选项的UI：
+2.1 General 这是一些用于控制管道渲染框架的核心部分常规设置
+属性名 描述 对应的编辑器变量名称 Depth Texture 当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个深度纹理_CameraDepthTexture。缺省地URP将把这个深度纹理交给你场景中的所有的摄像机去使用之。 m_RequireDepthTextureProp Opaque Texture 当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个不透明的深度纹理_CameraOpaqueTexture。缺省地，URP将这个深度纹理交给你场景中的所有的摄像机使用。这个深度纹理起的作用，就很类似于built-in render pipeline中的GrabPass。在URP渲染任意的透明状网格(transparent mesh)时，该纹理将会提供一个当前场景的一个快照(snapshot) m_RequireOpaqueTextureProp Opaque Downsampling 设置Opaque Texture属性的降采样方式，有None(不采样)、2倍线性过滤(2x Bilinear)，、4倍线性过滤(4x Bilinear)，、4倍盒状过滤(4x Bilinear)，其中4倍盒状过滤产生一种轻柔羽化的效果 m_OpaqueDownsamplingProp Terrain Holes 禁用此项的话，在build包的时候，URP将会移出所有的Terrain hole shader变体，将会减少build包的时间 &ndash; 2.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-15T19:21:39&#43;08:00">January 15, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/multicompile_shaderfeature_shadervariant_assetbundle/">Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+multi_compile编译指示符 multi_compile编译指示符的文档在这里。假如有以下的shader示例语句：
+#pragma multi_compile _USE_SEMITRANSPARENT _USE_OPAQUE #pragma multi_compile _MULTI_RED _MULTI_GREEN _MULTI_BLU ... fixed4 frag (v2f i) : SV_Target { fixed4 col = tex2D(_MainTex, i.uv); #if _MULTI_RED col = col * fixed4(1,0,0,1); #elif _MULTI_GREEN col = col * fixed4(0,1,0,1); #elif _MULTI_BLUE col = col * fixed4(0,0,1,1); #endif #if _USE_SEMITRANSPARENT col.a = 0.5; #elif _USE_OPAQUE col.a = 1.0; #endif return col; } 那么根据排列组合，就会有 $ 2 \times 3 = 6 $ 种代码段的组合，即分别是 _USE_SEMITRANSPARENT与_MULTI_RED ， _USE_SEMITRANSPARENT与_MULTI_GREEN ， _USE_SEMITRANSPARENT与_MULTI_BLUE ， _USE_OPAQUE与_MULTI_RED ， _USE_OPAQUE与_MULTI_GREEN ， _USE_OPAQUE与_MULTI_BLUE。总得来说，就是各种排列组合对应编译生成的变体， $\color{#FF0000}{无论有没有被使用上，都会被编译打包到游戏包或者资源包中}$ 。所以 在运行时 ，可以使用 Material.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-04T13:20:28&#43;08:00">January 04, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/editor/model_import_setting_wnd_model_tab/">Unity3D的Model Import Settings window - Model tab</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 Model tab 当选中模型文件时，Inspector窗口就会显现出Import Settings窗口，且定位到Model页。可以通过在此页中调整参数控制模型导入的细节。
+Model页上的各种属性可以分为三个区，分别是：
+分区 细节 (A) Scene 和关卡场景相关的，比如光源和摄像机的导入，还有scale factor的设置 (B) Meshes. 和网格导入相关的属性 (C) Geometry 和网格拓扑相关的户型，比如的顶点的纹理UV，法线等等 2 Scene分区的属性描述表格 属性 功能 Scale Factor 在导入的原始模型文件的比例值，不适合项目中的预期比例时，设置此值，可作为一个全局的对原始模型的缩放比例值。 Unity的物理系统，期望游戏世界中的1米，就对应于原始模型文件的1个单位。 Convert Units 启用此选项，可将导入的原始模型文件的比例值。转换为Unity的比例。导入BlendShapes时，启用此属性可允许Unity导入网格物体的混合形状。 Import BlendShapes Enable this property to allow Unity to import blend shapes with your Mesh. See Importing blend shapes below for details.Note: Importing blend shape normals requires smoothing groups in the FBX file Import Visibility 导入FBX设置，这些设置将会确定是否启用MeshRenderer组件，当启用时改mesh可见 Import Cameras 从.FBX文件中导入在这些文件中定义的camera Import Lights 从.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-02T15:40:26&#43;08:00">January 02, 2020</time>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/unityeditor/" rel="tag">UnityEditor</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/update_fixedupdate_lateupdate/">Update、FixedUpdate、LateUpdate函数，定时器和帧速率</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 Update、LateUpdate、FixedUpdate函数 Unity将每帧调用一次 Update() 函数。这意味着，如果你以60fps的速度运行，那意味着每秒调用60次 Update() 函数。如果以50fps的速度运行，则每秒调用50次Update函数。这也就是说。每两次执行update函数之间的时间间隔，其实是变化不定的。正是由于这一点，使用 Update() 函数的最大问题是它可能与物理引擎不同步。调用行为可以改变，因为它可以结束更快或更慢，这取决于您的图形在渲染的硬件上放置了多少负载，使用物理更新可能会导致完全错误的反应。
+Unity确实会尝试以项目所指定的速率调用FixedUpdate()函数。但是，这些调用也需要根据当前实际的帧速率去确定。这意味着虽然任何给定帧上可能有零次，一次甚至超过100次对FixedUpdate()函数的调用，但Unity会动态调整到实际帧速率。通过深入挖掘，我们逐渐意识到，这也意味着对FixedUpdate()的所有调用都不一定在指定的时间间隔内。下面举例说明下这种情况：
+默认情况下 FixedUpdate() 函数的更新频率是50FPS（0.02s），如果当游戏的更新频率为60FPS时，那么FixedUpdate有固定的更新速率是很好理解的，因为这种绝对可以保证到，每执行一次 FixedUpdate() 函数，就至少执行了一帧，但是如果游戏本身的更新频率就很低，例如为30FPS时，每一帧的时间间隔明显大于0.02秒的，那么这时候在每两次 Update() 函数的调用之间。 FixedUpdate() 函数就被调用了多次。
+通常 FixedUpdate() 函数比 Update() 函数更频繁地被调用。 FixedUpdate() 函数可以在一帧内被调用多次，如果帧速率很低，则根本不能在帧之间调用。 如果帧速率很高，也可能不会调用 FixedUpdate() 。 在 FixedUpdate() 函数被调用之后立即进行所有物理计算和更新。 作用力，扭矩或其他与物理相关的函数时，应使用FixedUpdate函数。 FixedUpdate() 函数由一个准确可信的计时器调用，而与实际的帧速率无关，因此在 FixedUpdate() 中应用移动计算时，您不需要将您的值乘以Time.deltaTime。 Update() 函数是每一帧中执行更新操作的主要（入口）函数。 Update() 函数中用来移动非物理系统驱动的物体。 Update() 函数用来接受用户输入。 Update() 函数可用来实现简单的计时器。 由于 Update() 的执行方式，与物理引擎的执行步调不同，即可能在一帧中， FixedUpdate() 函数执行了多次，而Update函数则只执行了一次。这取决于渲染器在渲染图形时的负载量，以及所耗费的CPU时间。如果在 Update() 函数中执行物理运算时，会导致未知的结果。同时也可以看到： 函数的执行间隔，未必就是TimeManager界面中Fixed TimeStep项中所指定的值。
+LateUpdate() 函数每帧会被调用一次，在 Update() 函数结束后调用 所有在 Update() 函数中执行的计算，将会在 LateUpdate() 函数调用之前完成执行。 如果实现一个跟随式的第三视角摄像机，则摄像机的状态更新放在 LateUpdate() 函数中执行是一个通用的做法。 因为你的角色是在 Update() 函数里面执行移动和转向的操作。所以在 LateUpdate() 函数执行摄像机的位置和旋转度计算，可以确保在计算时，角色已经全部完成了位置计算，摄像机可以正确地跟踪到角色的正确位置。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-31T12:32:55&#43;08:00">December 31, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/mac_ios/u3d_ios_build_pack/">Unity3D出iOS的包操作指南</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 切换平台到iOS下 打开 【Unity|File|Build Setting】 菜单,选择iOS平台，然后点击左下角的 Switch Platform 切换到iOS平台，右边选择 Release。确保项目能在iOS平台上正确运行了再下一步打包。
+2 配置Unity项目PlayerSetting 界面上各个选项如下表所示：
+选项 细节 Company Name 公司名，与下面的Bundle Identifier对应 Product Name 项目名，也是与下面的Bundle Identifier对应 Bundle Identifier com.CompanyName.ProductName,这个在打包成xCode工程之后，需要和在苹果开发者网站上的app IDs一致，不然会报错：项目Identifier与开发者账号申请的证书的Identifier不同。 Scripting Backend 选择IL2CPP，支持64位。 Api Compatibility Level 如果项目中使用到了文件的操作，要选择“.NET 2.0” Target Device 项目要运行的平台，有哪个就选哪个，不过到时候审核的时候也是要iPhone和iPad分开审核。 Target SDK 这个选择DeviceSDK，选用设备的SDK就行了。 Target minimum iOS Version 限制最低可运行iOS版本，这个在xCode中也可以更细致调整。 PlayerSetting界面如下图所示：
+到这里，就可以打包了，点击 【File|Build And Run】 菜单，会弹出要保存的项目文件地址，Unity3D会把工程导出成一个可以给xcode使用的工程。
+3 构建开发版的包 首先在xcode的 Account 里面添加苹果开发者账号。从 xcode 7 开始,在开发阶段，如果只需要进行真机调试而不要求发布到AppStore上的话，可以使用一个普通的苹果用户ID作为真机调试账号。方法如下：
+第1步：首先点击菜单 【Xcode|Preferences&hellip;】 ,
+第2步：然后点击 【Accounts】 切换到如图所示界面，然后点击左下角的 “+” 号，会弹出一个填写对话框，在此对话框中添加你的苹果用户ID，密码等等，信息，最后点击 【Sign in】 按钮</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-31T11:52:43&#43;08:00">December 31, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/ios/" rel="category">iOS</a>, 
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/ios/" rel="tag">iOS</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_shader_optimization/">Unity3D shader优化技巧集合</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+一些优化的tips，基于2019.3版本 只做需要的计算，比如一直在shader设置某个固定颜色，就等于白做计算 能给vs做的，就不要给fs做，能在脚本设置的，就不要在shader里做，比如在shader代码里面用 if-else ,就不如在脚本中用 keyword 优化surface shader：启用 approxview 编译指示符，在光照计算时，在vs中而不是在fs中做视线向量的规格化 优化surface shader：启用 halfasview 编译指示符，在光照计算时，使用半角向量做光照计算，且半角向量的计算在vs中执行 优化surface shader：启用 noforwardadd 编译指示符，确保在 Forward rendering 模式中， 只使用一个有向平行光光源 在fs中执行光照计算，其他的实时光源都只在vs中进行计算，此指示符确保只在一个pass中执行渲染操作 优化surface shader：编译指令 noambient 禁用着色器上的环境照明和球谐光。这样可以使性能稍快一些。 数据精度的优化：世界坐标系下的坐标值，纹理映射坐标值，用 float 数据精度的优化：除了HDR颜色之外的数据，使用 half 数据精度的优化：纹理数据的相关的一些简单操作用 fixed 各种GPU的区别： 桌面GPU ，内部都会统一用 float 计算 各种GPU的区别： 移动GPU 内部能真正支持half精度，大胆地使用它 各种GPU的区别： 老旧的GPU 才内部实现了 fixed ， OpenGL ES3 及后续的都内部把 fixed 处理为 half 了 Alpha Testing ：在iOS等等使用了PowerVR芯片的平台，表现不佳。 ColorMask ：在某些平台上（大多数是在iOS和Android设备的移动GPU），使用 ColorMask 忽略某些通道（例如 ColorMask RGB ）可能会占用大量资源，因此仅在确实需要时才使用它。 参考网页： https://docs.unity3d.com/Manual/SL-ShaderPerformance.html
+https://www.cnblogs.com/sifenkesi/p/4716791.html</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-31T11:37:25&#43;08:00">December 31, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/my_books/u3d_shader_annotation/">《Unity3D内建着色器源码剖析》</a></h1>
+	<div class="entry__content">书籍信息 信息 详情 定价 89.00 出版社 人民邮电出版社 版次 1 出版时间 2019年08月 开本 16 装帧 平装 页数 334 ISBN编码 9787115507044 官方QQ群 群1号码：672523982
+书籍配套代码 代码文件 MD5值 Unity3D内建着色器源代码 版本2017.2.0f3 MD5: 1737874a497c6fa04031af3c90ff2f99 第12章的代码工程 MD5：640938e9f1a259b7e693b1abe866f368 书中参考引用到的一些技术文章 微软网站上关于DXT及BC系列格式的详细介绍 微软MSDN上有介绍块状压缩的文章 nVidia开发者网站有一篇介绍单程立体渲染原理的文章。 Unity3D官网也有单程立体渲染的介绍 《Unity3D内建着色器源码剖析》勘误表 第1版第1刷 章节 页数 位置 错误内容 正确内容 1.2.2 正文第4页 第5段第5行 $$\left&lt; p_1,p_2,p_3 \right&gt;$$ 的排列顺序称为顺时针方向（clockwise，CW）。 $$ \left&lt; p_1,p_3,p_2 \right&gt; $$ 的排列顺序称为顺时针方向（clockwise，CW）。…… 1.2.2 正文第4页 第6段第2行 在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_2,p_3 \right&gt; $$ 在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_3,p_2 \right&gt; $$ 1.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-30T15:25:10&#43;08:00">December 30, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">Shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/mac_ios/use_vscode_in_mac/">在Mac中如何安装VScode并作为Unity3D开发IDE</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 安装brew Homebrew 是Mac OSX上的软件包管理工具，能在Mac中方便的安装软件或者卸载软件，相当于linux下的apt-get、yum神器；Homebrew可以在Mac上安装一些MacOS上没有的，从Unix/Linux等系统移植过来的工具，Homebrew将这些工具统统安装到了 【/usr/local/Cellar】 目录中，并在 【/usr/local/bin】 中创建符号链接。
+1.1 Homebrew的安装 Homebrew的安装很简单，只需在终端下输入如下指令：
+/usr/bin/ruby -e &#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&#34; Homebrew安装成功后，会自动创建目录 /usr/local/Cellar 来存放Homebrew安装的程序。 这时你在命令行状态下面就可以使用 brew 命令了.
+1.2 Homebrew的使用 指令功能 指令格式 指令示例 安装软件 brew install 软件名 brew install wget 搜索软件 brew search 软件名 brew search wget 卸载软件 brew uninstall 软件名 brew uninstall wget 更新所有软件 brew update 通过 update 可以把包信息更新到最新，不过包更新是通过git命令，所以要先通过 brew install git 命令安装git。 更新具体软件 brew upgrade 软件名 brew upgrade git 显示已安装软件 brew list brew list 查看软件信息 brew info 软件名 brew info git 用浏览器打开官方网页查看软件信息 brew home 软件名 brew home git 查看那些已安装的程序需要更新 brew outdated brew outdated 显示包依赖 brew deps brew deps 创建你自己的Homebrew包 brew create 文件名 $ brew create https://foo.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-30T11:52:43&#43;08:00">December 30, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/ios/" rel="category">iOS</a>, 
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/ios/" rel="tag">iOS</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+			</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/">1</a>
+				<a class="pagination__item pagination__item--desktop" href="/page/2/">2</a>
+				<a class="pagination__item pagination__item--desktop" href="/page/3/">3</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/7/">7</a>
+				<span class="pagination__item pagination__item--active" data-total="15">8</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/9/">9</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/15/">15</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

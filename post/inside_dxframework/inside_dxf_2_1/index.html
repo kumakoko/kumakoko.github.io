@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>深度探索DxFramework 2-1 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="深度探索DxFramework">
+		<meta property="og:title" content="深度探索DxFramework 2-1" />
+<meta property="og:description" content="深度探索DxFramework" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_2_1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2007-10-11T18:08:30+08:00" />
+<meta property="article:modified_time" content="2007-10-11T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content="深度探索DxFramework 2-1">
+<meta itemprop="description" content="深度探索DxFramework"><meta itemprop="datePublished" content="2007-10-11T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2007-10-11T18:08:30+08:00" />
+<meta itemprop="wordCount" content="567">
+<meta itemprop="keywords" content="DxFramework," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">深度探索DxFramework 2-1</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2007-10-11T18:08:30&#43;08:00">October 11, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">深度探索DxFramework 2-1</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#21-dxframework的全局头文件">2.1 DxFramework的全局头文件</a></li>
+    <li><a href="#22-dxframework的异常处理机制">2.2 DxFramework的异常处理机制</a>
+      <ul>
+        <li><a href="#221-异常的概念和c的异常处理机制">2.2.1 异常的概念和C++的异常处理机制</a></li>
+        <li><a href="#222-dxframework对异常描述的封装">2.2.2 DxFramework对异常描述的封装</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h1 id="第2章-dxframework的架构剖析-1">第2章 DxFramework的架构剖析 1</h1>
+<h2 id="21-dxframework的全局头文件">2.1 DxFramework的全局头文件</h2>
+<p>在开始着手分析DxFramework之前，我们有必要先弄懂DxFramework所定义的一些在其引擎代码内部中频繁使用的一些数据类型，宏，和全局函数。</p>
+<p>众所周知，由于C++语言的灵活性和自由性；在不同的操作系统平台下，不同的编译器对同一关键字所指定的数据类型所占字节大小是不一致的——C++标准委员会对此也并没有做统一的要求。以int类型为例，C++标准委员会只是要求此类型的大小至少不小于16位。例如在Microsoft Win32平台下，Visual C++6编译器所实现的int是32位整形数据。而在DOS系统下，Borland C++ 3.1实现的int则只有16位。因此，为了代码的平台移植，或者是便于版本的数据类型升级和扩充，一般的大型软件系统都有其自定义的数据类型。以Microsoft定义的win32数据类型为例，就有诸如无符号双字类型，32位的DWORD；无符号单字类型，十六位的WORD；无符号的整形数据，UINT等等。DxFramework也不例外，它也有着它自身的预定义数据类型，它们定义在globals.h文件中，现在我们来逐个分析。代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//globals.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#define WIN32_LEAN_AND_MEAN
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define DIRECTINPUT_VERSION 0x0800	</span><span style="color:#75715e">//指定使用的DInput版本
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">忽略编号为4786的编译器警告 当变量标识符名字过长（超过255个字符）的时候，调试器无法调试变量标
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">识符号超过255个字符长度的代码。无法在调试器中查看、计算、更新或监视被截断的符号。调试器在调试过程中
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">将会把变量标识符“截短”至255个字符。有时在嵌套声明的变量名中，会出现一串长的警告，在使用STL 的时候，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">这种警告会经常出现，使用此指令可以关掉此警告
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pragma warning(disable: 4786)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//用来进行内存侦测的起到开关作用的宏
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef _DEBUG
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define _CRTDBG_MAP_ALLOC	</span><span style="color:#75715e">//定义此宏，使得CRT内存泄漏侦测函数可用，此宏在crtdbg.h中定义
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define _INC_MALLOC
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define enw DEBUG_NEW
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//定义使用UNICODE的宏
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define UNICODE
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">//如果宏UNCODE定义了，则把宏_UNICODE也定义
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef UNICODE
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define _UNICODE
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define USE_DOUBLE_FLOAT_PRECISION
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">如果定义了USE_DOUBLE_FLOAT_PRECISION宏 XVECTOR2定义为用双精度浮点数类型实例化模板类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">类型的DVECTOR2替代为，XFLOAT定义为如果没有定义的话，就把XVECTOR2定义为单精度浮点数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">实例化的模板类类型FVECTOR2，XFLOAT定义为floatFVECTOR2，DVECTOR2类型在vector2.h中定义，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">稍后详述
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifdef USE_DOUBLE_FLOAT_PRECISION
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define XVECTOR2 DVECTOR2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define XFLOAT double
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#else
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define XVECTOR2 FVECTOR2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define XFLOAT float
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//预包含engine所要使用的系统头文件
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;tchar.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;crtdbg.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;windows.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;exception&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;d3d8.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;d3dx8.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;Dinput.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;dshow.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;dsound.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ctime&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;dplay8.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;dxerr8.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;fstream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;map&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;list&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stack&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;queue&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//使用STL的basic_string模板类来定义
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//DxFramework的字符串类tstring
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//TCHAR是单字节还是双字节，取决于代码编译时，宏UNICODE启动与否
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>basic_string<span style="color:#f92672">&lt;</span>TCHAR<span style="color:#f92672">&gt;</span> tstring;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//定义了版本号的字符串常量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> tstring ENGINE_ENGINE_VERSION_TSTRING <span style="color:#f92672">=</span> _T(<span style="color:#e6db74">&#34;0.9.3&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define ENGINE_ENGINE_VERSION 0x0093
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//引擎所需的各种图片，音频，视频资源所存放的目录
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> tstring    IMAGE_DIR <span style="color:#f92672">=</span> _T(<span style="color:#e6db74">&#34;./images/&#34;</span>); 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> tstring    SOUND_DIR <span style="color:#f92672">=</span> _T(<span style="color:#e6db74">&#34;./sounds/&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> tstring    VIDEO_DIR <span style="color:#f92672">=</span> _T(<span style="color:#e6db74">&#34;./video/&#34;</span>);
+</span></span></code></pre></div><p>从物理学知识可以知道，任何一样颜色的可见光都是由不同强度的红光，绿光，蓝光混合而成。在计算机图形学中，人们通常使用一个四元组来描述一个光的颜色的组成。这四元组是透明度Alpha，红色分量Red，绿色分量Green，蓝色分量Blue组成。一般地，各个分量都可以分成256级。在Direct3D中，通常使用区间[0.0，1.0]内的值表示分量的强度。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//一些经常使用的颜色，使用了Direct3D提供的D3DCOLOR数据类型和宏D3DCOLOR_ARGB宏来定义实现
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> D3DCOLOR BLACK <span style="color:#f92672">=</span> D3DCOLOR_ARGB(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>);<span style="color:#75715e">//黑色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> D3DCOLOR RED <span style="color:#f92672">=</span> D3DCOLOR_ARGB(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>);<span style="color:#75715e">//红色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> D3DCOLOR GREEN <span style="color:#f92672">=</span> D3DCOLOR_ARGB(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>);<span style="color:#75715e">//绿色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> D3DCOLOR BLUE <span style="color:#f92672">=</span> D3DCOLOR_ARGB(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>);<span style="color:#75715e">//蓝色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> D3DCOLOR MAGENTA <span style="color:#f92672">=</span> D3DCOLOR_ARGB(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>);<span style="color:#75715e">//洋红色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> D3DCOLOR CYAN <span style="color:#f92672">=</span> D3DCOLOR_ARGB(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>);	<span style="color:#75715e">//青色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> D3DCOLOR YELLOW <span style="color:#f92672">=</span> D3DCOLOR_ARGB(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">0</span>);<span style="color:#75715e">//黄色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> D3DCOLOR WHITE <span style="color:#f92672">=</span> D3DCOLOR_ARGB(<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>);<span style="color:#75715e">//白色
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//安全地释放对象指针，对象数组，COM对象
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#define SAFE_DELETE(p){ if(p) { delete (p); (p)=NULL; } }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define SAFE_ARRAY_DELETE(p){if(p){delete [](p);(p)=NULL;}}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define SAFE_RELEASE(p) {if(p){(p)-&gt;Release();(p)=NULL; }}
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//把一个vector类型的STL容器清空
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#define FLUSH_VECTOR(v){while(!v.empty())\
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                        v.pop_back();v.clear();}
+</span></span></span></code></pre></div><h2 id="22-dxframework的异常处理机制">2.2 DxFramework的异常处理机制</h2>
+<h3 id="221-异常的概念和c的异常处理机制">2.2.1 异常的概念和C++的异常处理机制</h3>
+<p>异常(exception) 是指可能能被检测到的，程序运行时刻不正常的情况。比如用除法运算时除数为0； 数组越界访问；内存耗尽；被要求打开一个并不存在的磁盘文件，等等。异常往往存在于程序的正常代码之外，而且要求程序要立即转入处理。</p>
+<p>C++提供了一些语言特性来产生（raise） 和处理异常。这些语言特性将激活了一种运行时（runtime）机制。通过这种机制，C++程序的两个无关的代码模块可以进行异常通信。</p>
+<p>当C++程序中出现异常时，侦测到异常的程序段可以通过产生（raise） 或者是抛出（throw） 异常，告知系统有异常发生。 关于在Windows平台上对C++语言的异常机制的实现原理，可参阅Jeffey Ritcher的《Advanced Windows Program》中关于结构化异常的描述的章节。</p>
+<h3 id="222-dxframework对异常描述的封装">2.2.2 DxFramework对异常描述的封装</h3>
+<p>DxFramework使用类Error来描述异常信息，通过抛出一个Error实例对象来被异常处理器截获，从而转到异常处理流程。类Error在engine\error.h文件中声明，在engine\error.cpp文件中定义。</p>
+<p>类Error除了使用文本字符串描述异常之外，还能提供给用户发生该异常的代码所在文件名和代码的行号。除此之外，还能返回给用户调用DirectX函数时所得到的HRESULT类型的返回值。类Error的定义如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Error</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> exception  <span style="color:#75715e">// 异常信息描述类
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    Error(tstring message);
+</span></span><span style="display:flex;"><span>    Error(tstring message, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> file, DWORD line);
+</span></span><span style="display:flex;"><span>    Error(tstring message, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> file,  DWORD line, HRESULT hr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Notify</span>() <span style="color:#66d9ef">const</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Prompt</span>() <span style="color:#66d9ef">const</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    tstring AssembleOutput() <span style="color:#66d9ef">const</span>;    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">EXCEPTION_TYPE</span> <span style="color:#75715e">// 异常信息描述类的类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    {
+</span></span><span style="display:flex;"><span>        EXCEPTION_MESSAGE,    <span style="color:#75715e">// 仅仅使用文本字符串描述该异常
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        EXCEPTION_REGULAR,    <span style="color:#75715e">// 使用文本字符串，异常所在文件名， 异常代码所在行号描述该异常        
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        EXCEPTION_DX        <span style="color:#75715e">// 使用文本字符串，异常所在文件名，异常代码所在行号，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                            <span style="color:#75715e">// 以及调用DirectX库函数的HRESULT类型返回值，描述该异常
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }; 
+</span></span><span style="display:flex;"><span>    EXCEPTION_TYPE type;    <span style="color:#75715e">// 异常描述类的类型，在每个不同的构造函数内指定不同的类型
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    tstring title;            <span style="color:#75715e">// 在表示此异常错误信息时，用到的 message box所使用的标题
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    tstring message;  <span style="color:#75715e">// 描述此异常错误信息的字符串
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    tstring file;            <span style="color:#75715e">// 产生此异常的代码所在的文件的名字
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    DWORD line;    <span style="color:#75715e">// 产生此异常的代码所在的代码行行号
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    HRESULT hr;   <span style="color:#75715e">// Windows/DirectX的HRESULT类型的函数返回值码
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span></code></pre></div><p>类Error继承自标准C++库的exception类。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Error<span style="color:#f92672">::</span>Error(tstring message) <span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>title(_T(<span style="color:#e6db74">&#34;Engine Exception&#34;</span>)),
+</span></span><span style="display:flex;"><span>type(EXCEPTION_MESSAGE), 
+</span></span><span style="display:flex;"><span>message(message) {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Error<span style="color:#f92672">::</span>Error(tstring message, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> file, DWORD line) <span style="color:#f92672">:</span> 
+</span></span><span style="display:flex;"><span>title(_T(<span style="color:#e6db74">&#34;Engine Exception&#34;</span>)), type(EXCEPTION_REGULAR), 
+</span></span><span style="display:flex;"><span>message(message), file(toTString(file)), line(line) {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Error<span style="color:#f92672">::</span>Error(tstring message, <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> file, DWORD line, HRESULT hr) <span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>title(_T(<span style="color:#e6db74">&#34;Engine Exception&#34;</span>)), type(EXCEPTION_DX), 
+</span></span><span style="display:flex;"><span>message(message), file(toTString(file)), 
+</span></span><span style="display:flex;"><span>line(line), hr(hr) {}
+</span></span></code></pre></div><p>类Error有三个显式的构造函数，可以根据对异常描述详细程度的不同需要而实例化相对应Error对象出来。一般地，在构造Error对象的时候，通过使用宏__FILE__，<strong>LINE</strong>，便可以得到描述此对象所在的文件的名字，以及此代码所在的行号。在DxFramework中大量地使用了这样的技术。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>tstring Error<span style="color:#f92672">::</span>AssembleOutput() <span style="color:#66d9ef">const</span> 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    tstring <span style="color:#a6e22e">output</span>(message);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">switch</span> (type) 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> EXCEPTION_DX:
+</span></span><span style="display:flex;"><span>        output <span style="color:#f92672">+=</span> _T(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">DirectX Error String: &#34;</span>)<span style="color:#f92672">+</span>(tstring)DXGetErrorString8(hr);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> EXCEPTION_REGULAR:
+</span></span><span style="display:flex;"><span>        output <span style="color:#f92672">+=</span> _T(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">+</span> file <span style="color:#f92672">+</span> _T(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Line &#34;</span>)<span style="color:#f92672">+</span>toTString(line);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> EXCEPTION_MESSAGE:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">default</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> output;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上述的私有成员函数AssembleOutput()的功能是：根据该异常信息描述类的类型，格式化不同的信息描述字符串，并返回。如果该异常信息描述类的类型是EXCEPTION_DX的话，通过调用D3D库函数:const char WINAPI* DXGetErrorString8 (HRESULT hr)可以根据错误返回码，返回相关的描述错误信息的字符串。接着再添加上产生异常的代码所在的文件的文件名，以及所在行号数。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Error<span style="color:#f92672">::</span>Prompt() <span style="color:#66d9ef">const</span> 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 获取到产生异常的原因描述字符串，并且向用户询问是否退出本程序
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    tstring output <span style="color:#f92672">=</span> AssembleOutput() <span style="color:#f92672">+</span> _T(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Quit Program?&#34;</span>);
+</span></span><span style="display:flex;"><span>    ShowCursor(true);<span style="color:#75715e">//显示鼠标光标
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> ret <span style="color:#f92672">=</span> MessageBox(g_WindowHnd, output.c_str(),title.c_str(),MB_YESNO <span style="color:#f92672">|</span> MB_ICONERROR );
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (ret <span style="color:#f92672">==</span> IDYES) <span style="color:#75715e">//如果用户选择彻底退出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 再次提问用户是否真的要退出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        ret <span style="color:#f92672">=</span> MessageBox(g_WindowHnd, _T(<span style="color:#e6db74">&#34;Terminate now (exit(1)) ?&#34;</span>), _T(<span style="color:#e6db74">&#34;Eject! Eject!&#34;</span>),
+</span></span><span style="display:flex;"><span>                        MB_YESNO <span style="color:#f92672">|</span> MB_ICONQUESTION );
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (ret <span style="color:#f92672">==</span> IDYES)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            exit(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 向OS发送退出本执行线程的请求
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            PostQuitMessage(<span style="color:#ae81ff">0</span>); 
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }    
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上述的函数通知用户有异常产生，并且提示用户对此异常进行相关处理。调用此函数后，将会有一个Windows消息框弹出，用户可以选择忽略此异常，也可以选择让程序尝试彻底地停止运行并退出。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Error<span style="color:#f92672">::</span>Notify() <span style="color:#66d9ef">const</span> 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    tstring output <span style="color:#f92672">=</span> AssembleOutput();
+</span></span><span style="display:flex;"><span>    ShowCursor(true);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Windows消息只提供了“确定”按钮，用户点击后程序将尝试退出。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    MessageBox(g_WindowHnd, output.c_str(), title.c_str(), MB_OK <span style="color:#f92672">|</span> MB_ICONERROR );
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>执行上述函数将会弹出一个Windows消息框，通知用户有异常产生。程序在用户点击了Windows消息框的确定按钮之后，将尝试着彻底退出运行。所有在WinMain函数中被捕获到的描述异常的类Error实例对象，都将调用此成员函数。见WinMain函数代码，如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// 在main.cpp文件中
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> WINAPI <span style="color:#a6e22e">WinMain</span>( HINSTANCE instanceHnd, HINSTANCE prevInstanceHnd,<span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> p_CmdLine, <span style="color:#66d9ef">int</span> numCmds)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span>(Error e)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 截获在try{}代码块中被抛出（thrown）的异常，调用Error::Notify函数处理
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        e.Notify();    
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 截获由C++标准库抛出的异常，告诉用户发生了何种异常，然后退出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">catch</span>(exception e)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        MessageBox(g_WindowHnd, toTString(e.what()).c_str(), 
+</span></span><span style="display:flex;"><span>                    _T(<span style="color:#e6db74">&#34;Unhandled Exception, aborting&#34;</span>), MB_OK <span style="color:#f92672">|</span> MB_ICONERROR );
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    SAFE_DELETE(p_Game);<span style="color:#75715e">// Destroy the game and all objects
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// DO NOT ADD CODE AFTER THIS LINE!
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// (except the possible change of the return value)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    _CrtMemDumpAllObjectsSince(<span style="color:#f92672">&amp;</span>memstate);    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Dump memory leaks, see comment at top of this function.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>; <span style="color:#75715e">//could return a more useful value here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div></div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/dxframework/">DxFramework</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_1/">深度探索DxFramework 1</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_0/">深度探索DxFramework 0</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

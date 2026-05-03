@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>深度探索DxFramework 10-3 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="深度探索DxFramework">
+		<meta property="og:title" content="深度探索DxFramework 10-3" />
+<meta property="og:description" content="深度探索DxFramework" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_10_3/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2007-10-25T18:08:30+08:00" />
+<meta property="article:modified_time" content="2007-10-25T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content="深度探索DxFramework 10-3">
+<meta itemprop="description" content="深度探索DxFramework"><meta itemprop="datePublished" content="2007-10-25T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2007-10-25T18:08:30+08:00" />
+<meta itemprop="wordCount" content="1079">
+<meta itemprop="keywords" content="DxFramework," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">深度探索DxFramework 10-3</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2007-10-25T18:08:30&#43;08:00">October 25, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">深度探索DxFramework 10-3</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#105-无规矩不成方圆c_boundingbox类">10.5 无规矩不成方圆，C_BoundingBox类</a>
+      <ul>
+        <li><a href="#1051包围盒的种类">10.5.1.包围盒的种类</a></li>
+        <li><a href="#1053包围盒的相交种类和相交判定">10.5.3.包围盒的相交种类和相交判定</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h1 id="第10章-进入三维的世界-3">第10章 进入三维的世界 3</h1>
+<h2 id="105-无规矩不成方圆c_boundingbox类">10.5 无规矩不成方圆，C_BoundingBox类</h2>
+<h3 id="1051包围盒的种类">10.5.1.包围盒的种类</h3>
+<p>DXFrameWork的包围盒是一个凸六面体，由6个面，8个顶点，12条边组成的闭合体。因此，DXFrameWork也使用了相关的数据结构来描述包围盒。代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C_BoundingBox</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    D3DXVECTOR3 point[<span style="color:#ae81ff">8</span>]; <span style="color:#75715e">//8个顶点
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPLANE     plane[<span style="color:#ae81ff">6</span>]; <span style="color:#75715e">//6个表面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>8个顶点和6个面和编号的示意图如下：</p>
+<p><img src="/image/inside_dxf/bounding_box.png" alt=""></p>
+<p>###10.5.2.包围盒的数据结构和初始化设置</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//根据给定的图元计算出它的包围盒
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> C_BoundingBox<span style="color:#f92672">::</span>FindBoundingBox(C_Primitive<span style="color:#f92672">*</span> p_Primitive) 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">unsigned</span> i;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//获取
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    DWORD numVertices <span style="color:#f92672">=</span> p_Primitive<span style="color:#f92672">-&gt;</span>numVertices;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Lock the vertex buffer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    C_VertexManipulator vertexMemory;
+</span></span><span style="display:flex;"><span>    p_Primitive<span style="color:#f92672">-&gt;</span>LockVertexBuffer(<span style="color:#f92672">&amp;</span>vertexMemory);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Find the mins and maxs for each X Y and Z axis
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXVECTOR3 position;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> minX;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> minY;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> minZ;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> maxX;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> maxY;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> maxZ;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    position <span style="color:#f92672">=</span> vertexMemory[<span style="color:#ae81ff">0</span>].position;
+</span></span><span style="display:flex;"><span>    minX <span style="color:#f92672">=</span> maxX <span style="color:#f92672">=</span> position.x;
+</span></span><span style="display:flex;"><span>    minY <span style="color:#f92672">=</span> maxY <span style="color:#f92672">=</span> position.y;
+</span></span><span style="display:flex;"><span>    minZ <span style="color:#f92672">=</span> maxZ <span style="color:#f92672">=</span> position.z;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//遍历每一个顶点，找出X,Y,Z值最大和最小值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;</span> numVertices; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        position <span style="color:#f92672">=</span> vertexMemory[i].position;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (position.x <span style="color:#f92672">&lt;</span> minX) {
+</span></span><span style="display:flex;"><span>            minX <span style="color:#f92672">=</span> position.x;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (position.y <span style="color:#f92672">&lt;</span> minY) {
+</span></span><span style="display:flex;"><span>            minY <span style="color:#f92672">=</span> position.y;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (position.z <span style="color:#f92672">&lt;</span> minZ) {
+</span></span><span style="display:flex;"><span>            minZ <span style="color:#f92672">=</span> position.z;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (position.x <span style="color:#f92672">&gt;</span> maxX) {
+</span></span><span style="display:flex;"><span>            maxX <span style="color:#f92672">=</span> position.x;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (position.y <span style="color:#f92672">&gt;</span> maxY) {
+</span></span><span style="display:flex;"><span>            maxY <span style="color:#f92672">=</span> position.y;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (position.z <span style="color:#f92672">&gt;</span> maxZ) {
+</span></span><span style="display:flex;"><span>            maxZ <span style="color:#f92672">=</span> position.z;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Unlock the vertex buffer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    p_Primitive<span style="color:#f92672">-&gt;</span>UnlockVertexBuffer();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//如果一些图元的包围盒是不是三维的话，比如，一个二维面片的包围盒。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//那么，就要适当地调整一下，使得包围盒能变成三维的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (fabs(minX <span style="color:#f92672">-</span> maxX) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.01f</span>) { 
+</span></span><span style="display:flex;"><span>        minX <span style="color:#f92672">-=</span> <span style="color:#ae81ff">0.1f</span>;
+</span></span><span style="display:flex;"><span>        maxX <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0.1f</span>; 
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (fabs(minY <span style="color:#f92672">-</span> maxY) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.01f</span>) { 
+</span></span><span style="display:flex;"><span>        minY <span style="color:#f92672">-=</span> <span style="color:#ae81ff">0.1f</span>;
+</span></span><span style="display:flex;"><span>        maxY <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0.1f</span>; 
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (fabs(minZ <span style="color:#f92672">-</span> maxZ) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.01f</span>) { 
+</span></span><span style="display:flex;"><span>        minZ <span style="color:#f92672">-=</span> <span style="color:#ae81ff">0.1f</span>;
+</span></span><span style="display:flex;"><span>        maxZ <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0.1f</span>; 
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//创建组成三角形的八个顶点，从0到7的顺序，X,Y,Z值分别是：
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//0 右，下，近
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//1 右，上，近
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//2 左，上，近
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//3 右，上，近
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//4 右，下，远
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//5 右，上，远
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//6 左，上，远
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//7 左，下，远
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 意思是，前4个
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(maxX, minY, minZ); <span style="color:#75715e">// Right Bottom Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(maxX, maxY, minZ); <span style="color:#75715e">// Right Top Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(minX, maxY, minZ); <span style="color:#75715e">// Left Top Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(minX, minY, minZ); <span style="color:#75715e">// Right Top Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(maxX, minY, maxZ); <span style="color:#75715e">// Right Bottom Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(maxX, maxY, maxZ); <span style="color:#75715e">// Right Top Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(minX, maxY, maxZ); <span style="color:#75715e">// Left Top Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(minX, minY, maxZ); <span style="color:#75715e">// Left Bottom Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Obtain the 6 plane specifying the bounding box
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">0</span>]); <span style="color:#75715e">//Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">6</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">4</span>]); <span style="color:#75715e">//Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">7</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">6</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">2</span>]); <span style="color:#75715e">//Left
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">3</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">0</span>]); <span style="color:#75715e">//Right
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">4</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">4</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">3</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">0</span>]); <span style="color:#75715e">//Bottom
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">1</span>]); <span style="color:#75715e">//Top
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Validate the bounding box
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    valid <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//根据指定的包围盒的大小范围查找到对应的包围盒
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> C_BoundingBox<span style="color:#f92672">::</span>FindBoundingBox(<span style="color:#66d9ef">float</span> minX, <span style="color:#66d9ef">float</span> minY, <span style="color:#66d9ef">float</span> minZ, <span style="color:#66d9ef">float</span> maxX, <span style="color:#66d9ef">float</span> maxY, <span style="color:#66d9ef">float</span> maxZ) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/* 当有些包围盒不是3D的话，比如其中有一维的值为0，则调整它变成真正三维的盒子*/</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (fabs(minX <span style="color:#f92672">-</span> maxX) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.01f</span>) { 
+</span></span><span style="display:flex;"><span>        minX <span style="color:#f92672">-=</span> <span style="color:#ae81ff">0.1f</span>;
+</span></span><span style="display:flex;"><span>        maxX <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0.1f</span>; 
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (fabs(minY <span style="color:#f92672">-</span> maxY) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.01f</span>) { 
+</span></span><span style="display:flex;"><span>        minY <span style="color:#f92672">-=</span> <span style="color:#ae81ff">0.1f</span>;
+</span></span><span style="display:flex;"><span>        maxY <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0.1f</span>; 
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (fabs(minZ <span style="color:#f92672">-</span> maxZ) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.01f</span>) { 
+</span></span><span style="display:flex;"><span>        minZ <span style="color:#f92672">-=</span> <span style="color:#ae81ff">0.1f</span>;
+</span></span><span style="display:flex;"><span>        maxZ <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0.1f</span>; 
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    point[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(maxX, minY, minZ); <span style="color:#75715e">// Right Bottom Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(maxX, maxY, minZ); <span style="color:#75715e">// Right Top Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(minX, maxY, minZ); <span style="color:#75715e">// Left Top Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(minX, minY, minZ); <span style="color:#75715e">// Right Top Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(maxX, minY, maxZ); <span style="color:#75715e">// Right Bottom Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(maxX, maxY, maxZ); <span style="color:#75715e">// Right Top Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(minX, maxY, maxZ); <span style="color:#75715e">// Left Top Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    point[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> D3DXVECTOR3(minX, minY, maxZ); <span style="color:#75715e">// Left Bottom Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Obtain the 6 plane specifying the bounding box
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">0</span>]); <span style="color:#75715e">//Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">6</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">4</span>]); <span style="color:#75715e">//Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">7</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">6</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">2</span>]); <span style="color:#75715e">//Left
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">3</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">0</span>]); <span style="color:#75715e">//Right
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">4</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">4</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">3</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">0</span>]); <span style="color:#75715e">//Bottom
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">1</span>]); <span style="color:#75715e">//Top
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Validate the bounding box
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    valid <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_BoundingBox<span style="color:#f92672">::</span>SetBoundingBox(D3DXVECTOR3 point[<span style="color:#ae81ff">8</span>]) {     <span style="color:#66d9ef">int</span> i;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">8</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>point[i]<span style="color:#f92672">=</span>point[i];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Obtain the 6 plane specifying the bounding box
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">0</span>]); <span style="color:#75715e">//Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">6</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">4</span>]); <span style="color:#75715e">//Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">7</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">6</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">2</span>]); <span style="color:#75715e">//Left
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">3</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">0</span>]); <span style="color:#75715e">//Right
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">4</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">4</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">3</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">0</span>]); <span style="color:#75715e">//Bottom
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    D3DXPlaneFromPoints(<span style="color:#f92672">&amp;</span>plane[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">1</span>]); <span style="color:#75715e">//Top
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 确认包围盒有效
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    valid <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_BoundingBox<span style="color:#f92672">::</span>SetBoundingBox(D3DXVECTOR3 point[<span style="color:#ae81ff">8</span>], D3DXPLANE plane[<span style="color:#ae81ff">6</span>])
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">8</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>point[i] <span style="color:#f92672">=</span> point[i];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">6</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>plane[i] <span style="color:#f92672">=</span> plane[i];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    valid <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="1053包围盒的相交种类和相交判定">10.5.3.包围盒的相交种类和相交判定</h3>
+<p>在dxframework中，包围盒的相交种类分为四种，分别是：相离，相交，覆盖，被包含四种。</p>
+<p>相离的情况如下，所谓相离是指，A包围盒和B包围盒之间，A包围盒中任意一个顶点，都不在B包围盒内部。或者B包围盒中任意一个顶点，都不在A包围盒的内部。示意图如下：</p>
+<p><img src="/image/inside_dxf/bbox_pos_relation_1.png" alt=""></p>
+<p>相交是指：B包围盒的一部分的顶点在A包围盒的内部，这时候称为A包围盒与B包围盒相交。示意图如下：</p>
+<p><img src="/image/inside_dxf/bbox_pos_relation_2.png" alt=""></p>
+<p>覆盖和被包含是指：B包围盒的全部顶点完全在A包围盒内部。这时候称为A包围盒“覆盖”了B包围盒。或者称为：B包围盒“被包含”于A包围盒。示意图如下：</p>
+<p><img src="/image/inside_dxf/bbox_pos_relation_3.png" alt=""></p>
+<p>C_BoundingBox类提供了包围盒相交检测的函数，如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//核心函数，判断本包围盒是否和p_BoundingBox包围盒相交
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>INTERSECTION_TYPE C_BoundingBox<span style="color:#f92672">::</span>IsIntersecting( C_BoundingBox <span style="color:#f92672">*</span>p_BoundingBox) 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((p_BoundingBox <span style="color:#f92672">==</span> NULL) <span style="color:#f92672">||</span> (<span style="color:#f92672">!</span>p_BoundingBox<span style="color:#f92672">-&gt;</span>valid) <span style="color:#f92672">||</span> (<span style="color:#f92672">!</span><span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>valid)) 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//两包围盒必须要有效，即各顶点信息和表明信息要计算好才能进行相交判断
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">throw</span> <span style="color:#a6e22e">Error</span>(_T(<span style="color:#e6db74">&#34;C_BoundingBox::IsIntersecting : Bounding box(es)</span> <span style="color:#66d9ef">do</span> not exist or are not valid<span style="color:#e6db74">&#34;))</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//注释约定：first box指本包围盒（this指针所指向的包围盒对象），
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//second box指传递进来的参数指针所指向的包围盒。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> i,j;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>     <span style="color:#75715e">//out[i]数据中的第k位表示是否第i个包围盒顶点是否在第k个平面的外测
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    DWORD out[<span style="color:#ae81ff">8</span>]; 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//检查second box的顶点是否在first box里面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">8</span>; i<span style="color:#f92672">++</span>)    {
+</span></span><span style="display:flex;"><span>        out[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> aPointInside <span style="color:#f92672">=</span> false;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> sumOut <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">8</span>; i<span style="color:#f92672">++</span>) 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">6</span>; j<span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//调用工具函数，检查第i个second box是否在
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">//first box的第j个表面正则。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> (positiveSide(<span style="color:#f92672">&amp;</span>p_BoundingBox<span style="color:#f92672">-&gt;</span>point[i], 
+</span></span><span style="display:flex;"><span>                             <span style="color:#f92672">&amp;</span>plane[j]))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                out[i] <span style="color:#f92672">|=</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> j);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//如果第i个second box的顶点都在所有的first box的的负侧
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">//表明表示这个第i个second box的顶点在first box的内部。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>out[i]) 
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            aPointInside <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        sumOut <span style="color:#f92672">+=</span> out[i];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//如果second box至少有一个点在first box的内侧
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (aPointInside) 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// sumOut等于0。表示所有的second box的顶点都在first box
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 内部。所以first box覆盖second box
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (sumOut <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) 
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> COMPLETELY_COVER;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> PARTIALY_INTERSECTING;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    D3DXVECTOR3 intersectionPoint;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((((((((out[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&amp;</span> out[<span style="color:#ae81ff">1</span>]) <span style="color:#f92672">&amp;</span> out[<span style="color:#ae81ff">2</span>]) <span style="color:#f92672">&amp;</span> out[<span style="color:#ae81ff">3</span>]) 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&amp;</span> out[<span style="color:#ae81ff">4</span>]) <span style="color:#f92672">&amp;</span> out[<span style="color:#ae81ff">5</span>]) <span style="color:#f92672">&amp;</span> out[<span style="color:#ae81ff">6</span>]) <span style="color:#f92672">&amp;</span> out[<span style="color:#ae81ff">7</span>]) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 所有的顶点都在某一个面的正测，表示这两个包围盒是相离的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">return</span> NOT_INTERSECTING;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//检查first box的某一边是否穿过second box
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    {
+</span></span><span style="display:flex;"><span>        D3DXVECTOR3 edges[<span style="color:#ae81ff">12</span>][<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">0</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">1</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">1</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">2</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">2</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">3</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">3</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">0</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">0</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">4</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">1</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">5</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">2</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">6</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">3</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">7</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">4</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">5</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">5</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">6</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">6</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">7</span>],
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">7</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">4</span>]};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        D3DXVECTOR3 faces[<span style="color:#ae81ff">6</span>][<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        point[<span style="color:#ae81ff">3</span>], point[<span style="color:#ae81ff">2</span>], point[<span style="color:#ae81ff">1</span>], point[<span style="color:#ae81ff">0</span>],<span style="color:#75715e">//近Z，XY面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        point[<span style="color:#ae81ff">5</span>], point[<span style="color:#ae81ff">6</span>], point[<span style="color:#ae81ff">7</span>], point[<span style="color:#ae81ff">4</span>],<span style="color:#75715e">//远Z，XY面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        point[<span style="color:#ae81ff">3</span>], point[<span style="color:#ae81ff">7</span>], point[<span style="color:#ae81ff">6</span>], point[<span style="color:#ae81ff">2</span>],<span style="color:#75715e">//左X，YZ面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        point[<span style="color:#ae81ff">1</span>], point[<span style="color:#ae81ff">5</span>], point[<span style="color:#ae81ff">4</span>], point[<span style="color:#ae81ff">0</span>],<span style="color:#75715e">//右X，YZ面    
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        point[<span style="color:#ae81ff">4</span>], point[<span style="color:#ae81ff">7</span>], point[<span style="color:#ae81ff">3</span>], point[<span style="color:#ae81ff">0</span>],<span style="color:#75715e">//底Y，XZ面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        point[<span style="color:#ae81ff">2</span>], point[<span style="color:#ae81ff">6</span>], point[<span style="color:#ae81ff">5</span>], point[<span style="color:#ae81ff">1</span>]};<span style="color:#75715e">//顶Y，XZ面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">12</span>; i<span style="color:#f92672">++</span>) 
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">6</span>; j<span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">//调用工具函数checkEdgeIntersects检查第i条first 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#75715e">//box的边是否穿过第j个second box的面
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span>(checkEdgeIntersectsFace(edges[i],faces[j], 
+</span></span><span style="display:flex;"><span>                    <span style="color:#ae81ff">4</span>, <span style="color:#f92672">&amp;</span>plane[j], <span style="color:#f92672">&amp;</span>intersectionPoint)) 
+</span></span><span style="display:flex;"><span>                    { 
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">return</span> PARTIALY_INTERSECTING;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//检查second box的某一边是否穿过first box
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    {
+</span></span><span style="display:flex;"><span>        D3DXVECTOR3 edges[<span style="color:#ae81ff">12</span>][<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">0</span>], point[<span style="color:#ae81ff">1</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">1</span>], point[<span style="color:#ae81ff">2</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">2</span>], point[<span style="color:#ae81ff">3</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">3</span>], point[<span style="color:#ae81ff">0</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">0</span>], point[<span style="color:#ae81ff">4</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">1</span>], point[<span style="color:#ae81ff">5</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">2</span>], point[<span style="color:#ae81ff">6</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">3</span>], point[<span style="color:#ae81ff">7</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">4</span>], point[<span style="color:#ae81ff">5</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">5</span>], point[<span style="color:#ae81ff">6</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">6</span>], point[<span style="color:#ae81ff">7</span>],
+</span></span><span style="display:flex;"><span>                    point[<span style="color:#ae81ff">7</span>], point[<span style="color:#ae81ff">4</span>]};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        D3DXVECTOR3 faces[<span style="color:#ae81ff">6</span>][<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">3</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">2</span>], 
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">1</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">0</span>],    
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">5</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">6</span>], 
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">7</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">4</span>],     
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">3</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">7</span>], 
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">6</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">2</span>],    
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">1</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">5</span>], 
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">4</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">0</span>],      
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">4</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">7</span>], 
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">3</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">0</span>],    
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">2</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">6</span>], 
+</span></span><span style="display:flex;"><span>        p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">5</span>], p_BoundingBox<span style="color:#f92672">-&gt;</span>point[<span style="color:#ae81ff">1</span>]};   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">12</span>; i<span style="color:#f92672">++</span>) 
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">6</span>; j<span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span>(checkEdgeIntersectsFace(edges[i],faces[j],
+</span></span><span style="display:flex;"><span>                                <span style="color:#ae81ff">4</span>, <span style="color:#f92672">&amp;</span>p_BoundingBox<span style="color:#f92672">-&gt;</span>plane[j], 
+</span></span><span style="display:flex;"><span>                                <span style="color:#f92672">&amp;</span>intersectionPoint)) 
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                      <span style="color:#66d9ef">return</span> PARTIALY_INTERSECTING;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//检查一下是否first box的一点是否至少在second box的一个面的正侧，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//如果是的话，表示两盒子相离。如果否的话，在上述的各种情况都检查过的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//前提下，就表示，first box在second box的内部，即first box被
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//包含于second box
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">6</span>; i<span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>( positiveSide(<span style="color:#f92672">&amp;</span>point[<span style="color:#ae81ff">0</span>], 
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&amp;</span>p_BoundingBox<span style="color:#f92672">-&gt;</span>plane[i])) 
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> NOT_INTERSECTING; 
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> COMPLETELY_INSIDE;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面的函数检查两包围盒相交与否是非常精确的。但是也可以看到，检测的计算非常耗时。尤其是后面判断first box是否被包含于second box的部分。如果我们能够预先知道first box的体积肯定大于second box的话。那么后面的“被包含”判断就可以省略的。因此，DXFrameWork提供了一个比较快速的相交判断函数：INTERSECTION_TYPE C_BoundingBox:: LazyIsIntersecting (C_BoundingBox *p_BoundingBox)。和IsIntersectiong函数相比，LazyIsIntersecting函数省略了检查“被包含”的判断。因此使用此函数的时候，要保证first box的体积大于second box才能得到正确的判断。</p>
+<p>除了判断包围盒之间的相交检测之外，C_BoundingBox类还提供了包围盒和线段之间的相交判断函数，如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> C_BoundingBox<span style="color:#f92672">::</span>IsPenetrated(D3DXVECTOR3 p_Edge[<span style="color:#ae81ff">2</span>]) 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> j;
+</span></span><span style="display:flex;"><span>    D3DXVECTOR3 intersectionPoint;
+</span></span><span style="display:flex;"><span>    D3DXVECTOR3 faces[<span style="color:#ae81ff">6</span>][<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        point[<span style="color:#ae81ff">3</span>], point[<span style="color:#ae81ff">2</span>], point[<span style="color:#ae81ff">1</span>], point[<span style="color:#ae81ff">0</span>],       <span style="color:#75715e">//Near
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        point[<span style="color:#ae81ff">5</span>], point[<span style="color:#ae81ff">6</span>], point[<span style="color:#ae81ff">7</span>], point[<span style="color:#ae81ff">4</span>],       <span style="color:#75715e">//Far
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        point[<span style="color:#ae81ff">3</span>], point[<span style="color:#ae81ff">7</span>], point[<span style="color:#ae81ff">6</span>], point[<span style="color:#ae81ff">2</span>],       <span style="color:#75715e">//Left
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        point[<span style="color:#ae81ff">1</span>], point[<span style="color:#ae81ff">5</span>], point[<span style="color:#ae81ff">4</span>], point[<span style="color:#ae81ff">0</span>],       <span style="color:#75715e">//Right    
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        point[<span style="color:#ae81ff">4</span>], point[<span style="color:#ae81ff">7</span>], point[<span style="color:#ae81ff">3</span>], point[<span style="color:#ae81ff">0</span>],       <span style="color:#75715e">//Bottom
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        point[<span style="color:#ae81ff">2</span>], point[<span style="color:#ae81ff">6</span>], point[<span style="color:#ae81ff">5</span>], point[<span style="color:#ae81ff">1</span>]};      <span style="color:#75715e">//Top
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; j <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">6</span>; j<span style="color:#f92672">++</span>) 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (checkEdgeIntersectsFace(p_Edge, faces[j], <span style="color:#ae81ff">4</span>,<span style="color:#f92672">&amp;</span>plane[j], <span style="color:#f92672">&amp;</span>intersectionPoint)) 
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>              <span style="color:#66d9ef">return</span> true;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> false;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>从上述代码看出，要检查某线段是否和某包围盒相交，就只是需要检查某线段是否和包围盒的任意一个表面相交即可。如果是则表示这线段和包围盒相交，否就表示不相交。</p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/dxframework/">DxFramework</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_10_2/">深度探索DxFramework 10-2</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_10_1/">深度探索DxFramework 10-1</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_9_1/">深度探索DxFramework 9-1</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_8_2/">深度探索DxFramework 8-2</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_8_1/">深度探索DxFramework 8-1</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

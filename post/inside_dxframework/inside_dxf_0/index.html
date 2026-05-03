@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>深度探索DxFramework 0 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="深度探索DxFramework">
+		<meta property="og:title" content="深度探索DxFramework 0" />
+<meta property="og:description" content="深度探索DxFramework" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_0/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2007-10-10T18:08:30+08:00" />
+<meta property="article:modified_time" content="2007-10-10T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content="深度探索DxFramework 0">
+<meta itemprop="description" content="深度探索DxFramework"><meta itemprop="datePublished" content="2007-10-10T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2007-10-10T18:08:30+08:00" />
+<meta itemprop="wordCount" content="14">
+<meta itemprop="keywords" content="DxFramework," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">深度探索DxFramework 0</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2007-10-10T18:08:30&#43;08:00">October 10, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">深度探索DxFramework 0</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents"></nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<p>#前言</p>
+<p>这系列文章的面世，既可说是偶然，也可谓是必然。</p>
+<p>在本世纪初的几年，中国的网络游戏业如同蛰伏着等待破茧而出的蝶蛹一样。看似平静，其实内部正蕴藏着巨大的商机和市场。那时我还在南京的校园里，在计算机前编织着游戏梦。作为一名理工科的学生，当时的我对日后如雨后春笋般的网络游戏所含的巨大利润没有太多的敏锐嗅觉。当时只是为了心目中的一种理想，一种爱好去编程，去学习设计自己的游戏。</p>
+<p>无法忘记那段激情燃烧的岁月。在上大学之前没有接触过计算机的我，为了弥补先天的不足。在那一段时间里如同海绵吸水般从图书馆，从网络中吸取游戏设计相关的知识。也正是在那一段时间里，知道了享誉全球的John Carmack；知道了FreeMind、云风、softboy等一批国内的先行者；知道了他们在求知过程中所经历的酸甜苦辣。那时候网络才刚刚普及，费用奇高。我在学习过程中也时常感叹资料的匮乏和不系统性。四年的学习生涯很快过去，离开校园的我，顺理成章地进入了这个行业。</p>
+<p>有谁能理解在一个身处起步阶段的游戏产业的业界人，从学校进入社会时所经过的各种各样的挫折，困惑和磨练呢？为了提升自我，程序员们往往需要不断地学习，学习，再学习。互联网的普及给程序员提升自我的水平带来了更大的便利和更广泛的知识来源。在一次偶然的机会，其实也是一种必然，互联网上的DxFramework项目引起了我的注意。通过阅读这个项目的源代码，我学到了很多游戏开发的知识，也写了很多阅读笔记和心得文档。然而因为工作的繁忙和需要，我也要花很多业余时间去从其他的开源项目中去学习，种种的原因使得我对DxFramework的学习也是时断时续，但也总算是一直都坚持了下来。</p>
+<p>人生中总是有这样那样的挫折。工作的变动，使得我有机会去专心整理梳顺DxFramework的知识内容。也是一个可称为必然的偶然的机会，我萌生了对DxFramework项目写一本书的想法。相对充足的时间允许我去实现我的想法。作为一个对自己知识和经验的总结；也作为一种知识的传承吸纳；便诞生了这一系列文章。</p>
+<p>这本书不是一本DirectX开发入门教程，也不是一本C++程序设计语言教程；更不是一本数学入门教程。本书的定位是：通过剖析一个完整的，开放源代码的游戏应用程序框架（game application framework），以及使用这框架开发的一些实例。从而掌握游戏程序设计基础知识和设计思维。</p>
+<p>在阅读本书之前，或在阅读本书的同时，读者应首先对C++程序设计语言；Microsoft DirectX开发包；以及和3D图形程序设计相关的数学知识有一个大致的了解。“大致的”的了解意味着读者能基本理解Direct3D的工作方式，以及相关的基础知识。比如读者应该能对诸如“顶点”，“纹理”等基础概念有一个大概的认识。当然，DirectX/Direct3D是一个很大的体系，读者不可能也不必要事无巨细地穷经皓首面面俱到。要强调的是，尽管本书不是一本C++语言教程和DirectX教程，但是在剖析代码时所涉及到的C++语言，Direct3D，乃至3D数学的知识点，本书都将力求讲细讲透。</p>
+<p>对于有一定C++程序设计语言和Direct3D基础知识，对游戏开发有浓厚兴趣，跃跃欲试想登堂入室的读者。本书将会是你很好的选择。</p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/dxframework/">DxFramework</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta name="generator" content="Hugo 0.121.2">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Responsive card-based &amp; code-light Hugo theme">
+		<meta property="og:title" content="XGF" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/" />
+
+
+		<meta itemprop="name" content="XGF">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-home">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+			<div class="cards">
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/understand_csharp_async_wait_3/">Understanding C# async / await 第3章</a></h1>
+	<div class="entry__content">Understanding C# async / await 第1章原文地址
+Understanding C# async / await 第2章原文地址
+Understanding C# async / await 第3章原文地址
+以下是基于你提供的内容的总结和解读，保留示例代码和关键细节：
+理解 C# 的 async / await (3)：运行时上下文 1. 概述 在前两篇文章中，我们探讨了 async 和 await 的编译过程和 Awaitable-Awaiter 模式。本文将深入探讨 await 在运行时的上下文处理机制，特别是如何通过 ExecutionContext 和 SynchronizationContext 解决跨线程问题。
+2. 跨线程问题 在 WPF 应用程序中，以下代码可以正常工作：
+this.Button.Click += async (sender, e) =&gt; { string html = await new WebClient().DownloadStringTaskAsync(&#34;https://weblogs.asp.net/dixin&#34;); this.TextBox.Text = html; }; 但如果将其改写为 Task.ContinueWith() 的回调形式：
+this.Button.Click += (sender, e) =&gt; { new WebClient().</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-11-21T19:08:30&#43;08:00">November 21, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/understand_csharp_async_wait_2/">Understanding C# async / await 第2章</a></h1>
+	<div class="entry__content">Understanding C# async / await 第1章原文地址
+Understanding C# async / await 第2章原文地址
+Understanding C# async / await 第3章原文地址
+理解 C# 的 async / await (2)：Awaitable-Awaiter 模式 1. 什么是 Awaitable？ 在 C# 中，任何具有 GetAwaiter() 方法的对象都是 awaitable 的。Task 是最常见的 awaitable 类型，但其他类型也可以实现这一模式。例如：
+Task&lt;int&gt; task = new Task&lt;int&gt;(() =&gt; 0); int result = await task.ConfigureAwait(false); // 返回 ConfiguredTaskAwaitable&lt;TResult&gt; ConfiguredTaskAwaitable&lt;TResult&gt; 是一个 awaitable 类型，但它并不是 Task。
+2. Awaitable-Awaiter 模式 通过观察不同的 awaitable / awaiter 类型，可以总结出以下规则：
+Awaitable 对象必须有一个 GetAwaiter() 方法（实例方法或扩展方法）。 Awaiter 对象必须满足以下条件： 实现 INotifyCompletion 或 ICriticalNotifyCompletion 接口。 有一个 IsCompleted 属性，返回布尔值。 有一个 GetResult() 方法，返回 void 或一个结果。 这种模式与 可迭代-迭代器模式（IEnumerable / IEnumerator）非常相似。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-11-21T18:08:30&#43;08:00">November 21, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/understand_csharp_async_wait_1/">Understanding C# async / await 第1章</a></h1>
+	<div class="entry__content">Understanding C# async / await 第1章原文地址
+Understanding C# async / await 第2章原文地址
+Understanding C# async / await 第3章原文地址
+以下是基于你提供的内容的总结和解读，保留示例代码和关键细节：
+理解 C# 的 async / await (1)：编译过程 1. 概述 C# 的 async 和 await 关键字为异步编程提供了极大的便利。本文将深入探讨这些语法糖背后的实际代码实现。
+2. 准备工作 首先，定义一些辅助方法：
+internal class HelperMethods { private static void IO() { using (WebClient client = new WebClient()) { Enumerable.Repeat(&#34;http://weblogs.asp.net/dixin&#34;, 10).Select(client.DownloadString).ToArray(); } } internal static int Method(int arg0, int arg1) { int result = arg0 + arg1; IO(); // 模拟长时间运行的 IO 操作 return result; } internal static Task&lt;int&gt; MethodTask(int arg0, int arg1) { Task&lt;int&gt; task = new Task&lt;int&gt;(() =&gt; Method(arg0, arg1)); task.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-11-21T17:08:30&#43;08:00">November 21, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/lua/lua_opt/">lua优化经验总结</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+这是我在做一些手游项目时的lua优化经验总结。
+注意清空table操作的效率问题 在Lua中，通常要清空一个table，很常见的方法就是直接赋值一个新的空table给指向table的变量：例如：
+local t = {“I am a table”} t = {} –- 现在t指向的table就是一个空的新建的table了。 这样子虽然逻辑上没什么问题，但t原来指向的那个table实质上就是一个“野table”了，它的何时被清理掉依赖于lua的gc操作。如果t本身就是存储着一些原生数字类型的数组的话，这种={}的清空操作是比较低效的。如果在每帧每秒都被调用的函数中，清空一个既有的table，可以采用以下的代码： -- [[这样子才是全部清空一个table中的所有项，如果将pairs函数改用ipairs函数则只会清空数组项，而不清空hash项]] for i, _ in pairs(t) do -- 不需要kv对中的value值，所以用哑元_代替 t[i] = nil end 利用逻辑判断的短路判定特性优化代码 对于逻辑或（or）操作，只要有一个判断条件为true，则结果为true。逻辑与操作，只要有一个判断条件为false，结果即为false，根据这个特性，在多条件判断时，将获取条件耗费性能最大的函数，挪到最后，尽可能地减少计算。例如： 逻辑与（and）操作，只要有一个判断条件为false，结果即为false。所以对于全逻辑与的操作，在计算判断条件时，应该每计算一次就判断一次，只要有一个为false，就立即得到判定逻辑与计算最终结果为false：
+字符串常见问题 和Java，C#，Python等语言类似，一个字符串（对象）对应着一个常量字符串，一旦该字符串声明完毕，其指向的字符串内容即不可更改，所以如果有以下的代码：
+local s1 = “I” local s2 = “ am” local s3 = “ Lua” local s = s1..s2..s3 在第一个连字符操作完成后，会生成一个匿名的常量字符串，尔后该匿名字符串再和s3进行拼接，再生成一个新的字符串赋值给变量s。也就是说，Lua中的所有字符串，都不会发生“in place”操作，一切会对本字符串的内容发生了修改的操作，必然会导致一个新的字符串的产生。如果是存在着较多的字符串连接操作的话，可以使用table来模拟C#的StringBuilder,如下：
+-- table.concat函数所处理的表中，表项值只接受字符串和数字 function concat_string(s1,s2,s3,s4,s5,s6) -- 如果预先知道了要拼接多少个字符串，在定义table时可以预先 -- 开好多少个空位而不是直接创建空表，这样子有利于性能提升 local t = {nil,nil,nil,nil,nil} t.name = “I am table t” -- table.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-10-20T18:08:30&#43;08:00">October 20, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/lua/" rel="category">Lua</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/lua/" rel="tag">Lua</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/generic_animation_root_motion/">Unity3D动画中Root Motion的概念和使用</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+Unity3D的Mecanim动画系统可以直接复用3DS MAX中制作的动画文件中的位移，这个就是通过applyRootMotion选项来达成的，我们只需要在使用Animator控制动画播放的同时，设置Animator组件的applyRootMotion字段为true就可以了。
+applyRootMotion，从字面上理解来看，是“应用于根节点的运动”，官方文档的解释如下：
+The Root Transform is a projection on the Y plane of the Body Transform and is computed at runtime. At every frame, a change in the Root Transform is computed. This change in transform is then applied to the Game Object to make it move.
+直接翻译的意思是：
+root transform是指body transform在在Y平面上的投影（即Y=0的平面，可以理解为模型所站立的“地面”。且这个投影是在运行时执行计算。在每一帧，root transform的每一个变化都会被计算。然后这些变化将会作用到game object上，使得它发生运动
+也就是说，root motion就是指：在动画中物体产生的位移，可以在运行时，让绑定了Animator组件的game object，也发生实际的位移。且这个位移，是根据播放动画中每一帧物体的位移，在 X 和 Z 轴上投影计算而得。
+对于某些技能动画，整个动画是有一定位移的，但是动画的位移是动作设计师在设计时根据动作需要调出来的，位移是跟动作的幅度直接相关和匹配的。那么在释放技能的时候就只需要直接播放动画，只要应用这个 Root Motion 的特性，就可以很好的完成角色在播放动作的同时进行移动，动作播放完毕之后就在动画结束帧角色所在的位置。而不要额外地做计算工作。接下来看下animation clip inspector面板上若干和root motion有关的属性选项
+animation clip inspector 界面上的一些属性介绍 以下是Unity 2019.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-05-09T18:38:27&#43;08:00">May 09, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cpp/porting_to_64bit_platforms/">移植代码到64位平台</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+C和C++大量依赖于指针的使用，即包含内存地址的变量。尽管指针类型在概念上与整数类型不同，但其物理地址值 始终是一个整数 。开发人员在C/C ++中大量使用整数类型而不是指针类型，即使在编译器随附的系统头文件中也是如此。在过去的几十年中，大多数计算机处理器都使用32位内存地址，因此开发环境是 围绕地址长度为32位的假设 建立的。C/C++代码中存在着大量 指针和整数之间的隐式和显式转换 。使用指针，或union的重叠内存结构方式（overlapping memory structures），去访问变量，也是司空见惯。
+当然，32位架构有其局限性。具体来说，它们将计算机内存限制为4GB。应用程序需求不断增长，迫切需要迁移到更长的地址。经常使用的旧式类型带来了新的含义和价值。最具戏剧性，最明显的的变化，是从32位转向64位指针。
+不再适用相同的规则 基本类型的某些大小已更改。其中一些保持不变。但是，突然之间，在C和C++代码库中使用的许多隐式假设不再有效。在32位系统中编写和测试的代码在迁移到64位计算机时不再有效。
+幸运的是，已经识别并分类了代码可能易于从32位计算机迁移到64位计算机的大多数区域。一些编译器使用主动检查技术来捕获在迁移期间可能出现的漏洞。静态分析工具的供应商（包括Coverity和Klocwork）可以提供进一步帮助将代码从32位机器平稳迁移到64位机器的机制。尽管这些工具不能直接解决代码迁移问题，但它们提供了便利的可扩展性和API，可以创建与32位到64位迁移相关的自定义检查程序。增强这些工具可以进一步帮助发现并有效解决这些兼容性问题。
+本文的目的是帮助您使代码库与体系结构无关，因此可以在32位计算机或64位计算机上构建相同的代码库，并为每台计算机生成可行的代码。此外，如果32位程序通过二进制数据交换（通过文件或套接字）与64位程序进行通信，则有多种方法可以确保二进制结构不受两种体系结构类型之间的迁移的影响。
+本文包含详细的分析和建议，以解决与32位到64位迁移有关的众多问题。
+为了使您的程序与体系结构无关，有两个目标需要实现。 其中之一是内部一致性，即确保程序中使用的所有类型都是一致的，而不管代码是在32位还是64位计算机上编译的。 让我们看一下两种架构上基本类型的大小（请参见表1）。
+此处的显着区别是指针类型和long类型的大小变化。由于大小更改，某些基于隐式依赖关系构建的代码可能无法正确迁移。可能的问题主要与整数与整数之间，或者是整数和指针之间的数据交换有关。
+整数大小的差异 在32位系统上，int和long类型都是32位，这意味着程序员可以互换使用这两种类型。此外，C没有严格的输入规则，因此函数中的int参数可以传递long参数而不会出错。尽管这不是一个好的编码实践，但是此代码可能会在数年内完美运行。但是，在64位系统中，在某些编译器中，int和long具有不同的大小，并且代码在迁移后将无法正常工作。将long值分配给int变量可能会导致截断。以下代码在32位系统中可以正常工作，但在64位系统中则极有可能正常工作。
+int sum; long val1, val2; sum = val1 + val2; // possible truncation in 64-bit system 以下代码可能会在某些编译器中引起编译器警告，但是此代码（在32位模式下工作）可能将无法在64位模式下工作，因为堆栈上的值大小会发生变化。
+int add(int parm1, int parm2); // ..... long val1, val2; long sum = add(val1,val2); // mismatch of parm size on 64-bit machine 可能还会发生其他一些细微的事情，从而影响代码的完整性。例如，编译时函数sizeof()返回类型为size_t的结果，size_t类型的占据的字节大小，则取决于该程序中指针类型变量占据的字节数的大小。将此值分配给整数可能导致被截断。如下代码所示：
+int mySize = sizeof(MyStructure); // possible size truncation 另一个更细微的错误是位字段的符号扩展。 例如：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-04-16T10:53:26&#43;08:00">April 16, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/c&#43;&#43;/" rel="category">C&#43;&#43;</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/c&#43;&#43;/" rel="tag">C&#43;&#43;</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/misc/solve_github_problem/">解决访问GitHub的Failed to connect to github.com port 443: Operation timed out问题</a></h1>
+	<div class="entry__content">当碰到以下问题时：
+突然电脑无法访问github了。 用科学上网却可以访问到GitHub 科学上网中，使用git时，却出现了以下的问题：Failed to connect to github.com port 443: Operation timed out 不要着急，解决方案如下：
+第1步， 打开https://github.com.ipaddress.com/。记录下 Domain Summary下的IP Address，例如是140.82.113.4
+第2步， 打开https://fastly.net.ipaddress.com/github.global.ssl.fastly.net#ipinfo。记录下 Hostname Summary下的IP Address，例如是199.232.69.194
+第3步，打开https://github.com.ipaddress.com/assets-cdn.github.com。记录下FAQ下的IP，通常是四个，例如
+186.185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153 第4步。打开电脑的hosts文件，把下列的地址写在最后，然后保存即可。
+140.82.113.4 github.com 199.232.69.194 github.global.ssl.fastly.net 185.199.108.153 assets-cdn.github.com 185.199.109.153 assets-cdn.github.com 185.199.110.153 assets-cdn.github.com 185.199.111.153 assets-cdn.github.com 参考网页 GitHub无法访问、443 Operation timed out的解决办法</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-04-12T15:14:34&#43;08:00">April 12, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/misc/" rel="category">MISC</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/ray_tracing/ray_tracing_from_the_ground_up/code_4_1_explanation/">《光线跟踪算法技术》代码4.1解释</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+首先上代码：
+void World::render_scene(void) const { RGBColor pixel_color; Ray ray; float zw = 100.0; int n = (int)sqrt((float)vp.num_samples); Point2D pp; // sample point on a pixel open_window(vp.hres,vp.vres); ray.d = Vector3D(0,0,-1); for (int r = 0; r &lt; vp.vres; r++) // up for (int c = 0; c &lt; vp.hres; c++) { // across pixel_color = black; for (int p = 0; p &lt; n; p++) // up pixel for (int q = 0; q &lt; n; q++) { // across pixel pp.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-04-11T00:30:11&#43;08:00">April 11, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/opengl/an_introduction_to_shader_derivative_functions/">An Introduction to shader derivative functions（翻译）</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+文档内容总结 1. Shader Derivative Functions 简介 Shader Derivative Functions 是片段着色器中的指令，用于计算任何值相对于屏幕空间坐标的变化率。 在 HLSL 中，这些函数称为 ddx 和 ddy，在 GLSL 中称为 dFdx 和 dFdy。 这些函数在三角形光栅化过程中，通过计算 2x2 像素块中像素值之间的差异来求导数。 2. 导数计算 GPU 在光栅化时，会同时运行多个片段着色器实例，并将它们组织成 2x2 像素块。 dFdx 计算块中左右像素值的差异，dFdy 计算上下像素值的差异。 导数可以用于片段着色器中的任何变量，对于向量和矩阵类型，导数按元素计算。 3. 导数与 Mipmaps Mipmaps 是通过将纹理过滤成更小尺寸的预计算图像序列，用于避免纹理缩小时的锯齿问题。 导数在纹理采样时用于选择最佳的 mipmap 级别，纹理坐标相对于屏幕坐标的变化率越大，选择的 mipmap 级别越高。 4. 面法线计算（Flat Shader） 导数可以用于在片段着色器中计算当前三角形的面法线。 当前片段的世界坐标的水平和垂直导数是位于三角形表面的两个向量，它们的叉积是垂直于表面的向量，其范数为三角形的法线向量。 GLSL 代码示例： normalize(cross(dFdx(pos), dFdy(pos))); 5. 导数与分支 导数计算基于 GPU 硬件上多个着色器实例的并行执行。 在条件分支的情况下，如果核心中的线程没有全部执行相同的分支，则会出现代码执行的分歧，导致导数操作未定义。 为了避免这个问题，着色器编译器可能会展平分支或将纹理读取移到分支控制流之外。 6. 导数块对齐的揭示 通过一个简单的实验揭示了着色器导数的内部块对齐。 实验通过计算步进函数的导数，展示了当步进过渡发生在 2x2 像素块的中间或两个相邻块之间时，导数的不同结果。 7. 参考文献 How a GPU works - Kayvon Fatahalian Computer Graphics: Principles and Practice - Chapter 38.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-03-04T20:36:51&#43;08:00">March 04, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">Shader</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_shader_multi_compile_variants/">Unity3D Shader的内建multi_compile开关所涵盖的多样体</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+multi_compile_fwdbase 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdbase编译指令，包含了以下 9 个内建的keyword：
+DIRECTIONAL DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON LIGHTMAP_ON LIGHTMAP_SHADOW_MIXING LIGHTPROBE_SH SHADOWS_SCREEN SHADOWS_SHADOWMASK VERTEXLIGHT_ON 如果不做特别的指定的话，默认地启用了其中的 4 个内建keyword，分别是：DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON组成了 8 个多样体，如下：
+多样体（变体） DIRECTIONAL DIRECTIONAL LIGHTPROBE_SH DIRECTIONAL SHADOWS_SCREEN DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN DIRECTIONAL VERTEXLIGHT_ON DIRECTIONAL LIGHTPROBE_SH VERTEXLIGHT_ON DIRECTIONAL SHADOWS_SCREEN VERTEXLIGHT_ON DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON multi_compile_fwdadd 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdadd编译指令，包含了以下 5 个内建的keyword：
+DIRECTIONAL DIRECTIONAL_COOKIE POINT POINT_COOKIE SPOT 如果不做特别的指定的话，默认地启用了全部的 5 个内建keyword，组成了 8 个多样体，如下：
+keyword组成的多样体（变体） DIRECTIONAL DIRECTIONAL_COOKIE POINT POINT_COOKIE SPOT multi_compile_fwdadd_fullshadows 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdadd_fullshadows编译指令，包含了以下 5 个内建的keyword：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-31T11:37:25&#43;08:00">January 31, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+			</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/">1</a>
+				<a class="pagination__item pagination__item--desktop" href="/page/2/">2</a>
+				<a class="pagination__item pagination__item--desktop" href="/page/3/">3</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/6/">6</a>
+				<span class="pagination__item pagination__item--active" data-total="15">7</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/8/">8</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/15/">15</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

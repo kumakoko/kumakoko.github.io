@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Understanding C# async / await 第3章 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="C#中的async和await">
+		<meta property="og:title" content="Understanding C# async / await 第3章" />
+<meta property="og:description" content="C#中的async和await" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/dotnet/understand_csharp_async_wait_3/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-11-21T19:08:30+08:00" />
+<meta property="article:modified_time" content="2020-11-21T19:08:30+08:00" />
+
+
+		<meta itemprop="name" content="Understanding C# async / await 第3章">
+<meta itemprop="description" content="C#中的async和await"><meta itemprop="datePublished" content="2020-11-21T19:08:30+08:00" />
+<meta itemprop="dateModified" content="2020-11-21T19:08:30+08:00" />
+<meta itemprop="wordCount" content="395">
+<meta itemprop="keywords" content=".NET," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Understanding C# async / await 第3章</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2020-11-21T19:08:30&#43;08:00">November 21, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">Understanding C# async / await 第3章</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-概述"><strong>1. 概述</strong></a></li>
+    <li><a href="#2-跨线程问题"><strong>2. 跨线程问题</strong></a></li>
+    <li><a href="#3-运行时上下文处理"><strong>3. 运行时上下文处理</strong></a>
+      <ul>
+        <li><a href="#31-executioncontext"><strong>3.1 ExecutionContext</strong></a></li>
+        <li><a href="#32-synchronizationcontext"><strong>3.2 SynchronizationContext</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#4-改进的-continuewithcontext"><strong>4. 改进的 ContinueWithContext</strong></a></li>
+    <li><a href="#5-使用-taskconfigureawait"><strong>5. 使用 Task.ConfigureAwait()</strong></a></li>
+    <li><a href="#6-总结"><strong>6. 总结</strong></a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><a href="https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-1-compilation">Understanding C# async / await 第1章原文地址</a></p>
+<p><a href="https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-2-awaitable-awaiter-pattern">Understanding C# async / await 第2章原文地址</a></p>
+<p><a href="https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-3-runtime-context">Understanding C# async / await 第3章原文地址</a></p>
+<hr>
+<p>以下是基于你提供的内容的总结和解读，保留示例代码和关键细节：</p>
+<hr>
+<h1 id="理解-c-的-async--await-3运行时上下文"><strong>理解 C# 的 async / await (3)：运行时上下文</strong></h1>
+<h2 id="1-概述"><strong>1. 概述</strong></h2>
+<p>在前两篇文章中，我们探讨了 <code>async</code> 和 <code>await</code> 的编译过程和 Awaitable-Awaiter 模式。本文将深入探讨 <code>await</code> 在运行时的上下文处理机制，特别是如何通过 <code>ExecutionContext</code> 和 <code>SynchronizationContext</code> 解决跨线程问题。</p>
+<h2 id="2-跨线程问题"><strong>2. 跨线程问题</strong></h2>
+<p>在 WPF 应用程序中，以下代码可以正常工作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">this</span>.Button.Click += <span style="color:#66d9ef">async</span> (sender, e) =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">string</span> html = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">new</span> WebClient().DownloadStringTaskAsync(<span style="color:#e6db74">&#34;https://weblogs.asp.net/dixin&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.TextBox.Text = html;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>但如果将其改写为 <code>Task.ContinueWith()</code> 的回调形式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">this</span>.Button.Click += (sender, e) =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> WebClient().DownloadStringTaskAsync(<span style="color:#e6db74">&#34;https://weblogs.asp.net/dixin&#34;</span>).ContinueWith(<span style="color:#66d9ef">await</span> =&gt; 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> html = <span style="color:#66d9ef">await</span>.Result;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.TextBox.Text = html; <span style="color:#75715e">// 可能会抛出 InvalidOperationException</span>
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>这段代码可能会抛出 <code>InvalidOperationException</code>，因为回调代码可能在一个非 UI 线程中执行，无法直接访问 UI 控件。</p>
+<h2 id="3-运行时上下文处理"><strong>3. 运行时上下文处理</strong></h2>
+<p><code>await</code> 的基础设施通过捕获和恢复 <code>ExecutionContext</code> 和 <code>SynchronizationContext</code> 来解决跨线程问题。</p>
+<h3 id="31-executioncontext"><strong>3.1 ExecutionContext</strong></h3>
+<p><code>ExecutionContext</code> 包含了当前线程的执行上下文信息，如安全上下文、调用上下文和同步上下文。<code>await</code> 会捕获初始线程的 <code>ExecutionContext</code>，并在每次调用 <code>MoveNext()</code> 时将其传递给下一个线程。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// 捕获当前线程的 ExecutionContext</span>
+</span></span><span style="display:flex;"><span>ExecutionContext executionContext = ExecutionContext.Capture();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 在指定的 ExecutionContext 中执行函数</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> TResult InvokeWith&lt;TResult&gt;(<span style="color:#66d9ef">this</span> Func&lt;TResult&gt; function, ExecutionContext executionContext)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (executionContext == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> function();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    TResult result = <span style="color:#66d9ef">default</span>(TResult);
+</span></span><span style="display:flex;"><span>    ExecutionContext.Run(executionContext, _ =&gt; result = function(), <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="32-synchronizationcontext"><strong>3.2 SynchronizationContext</strong></h3>
+<p><code>SynchronizationContext</code> 提供了线程间的同步机制。在不同的环境中，<code>SynchronizationContext</code> 有不同的实现，如 WPF 的 <code>DispatcherSynchronizationContext</code> 和 WinForms 的 <code>WindowsFormsSynchronizationContext</code>。<code>await</code> 会捕获初始线程的 <code>SynchronizationContext</code>，并将 <code>MoveNext()</code> 的调用发布到该上下文中。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// 捕获当前线程的 SynchronizationContext</span>
+</span></span><span style="display:flex;"><span>SynchronizationContext synchronizationContext = SynchronizationContext.Current;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 在指定的 SynchronizationContext 和 ExecutionContext 中执行函数</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Task&lt;TResult&gt; InvokeWith&lt;TResult&gt;(<span style="color:#66d9ef">this</span> Func&lt;TResult&gt; function, SynchronizationContext synchronizationContext, ExecutionContext executionContext)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    TaskCompletionSource&lt;TResult&gt; taskCompletionSource = <span style="color:#66d9ef">new</span> TaskCompletionSource&lt;TResult&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (synchronizationContext == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            TResult result = function.InvokeWith(executionContext);
+</span></span><span style="display:flex;"><span>            taskCompletionSource.SetResult(result);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            synchronizationContext.OperationStarted();
+</span></span><span style="display:flex;"><span>            synchronizationContext.Post(_ =&gt;
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    TResult result = function.InvokeWith(executionContext);
+</span></span><span style="display:flex;"><span>                    synchronizationContext.OperationCompleted();
+</span></span><span style="display:flex;"><span>                    taskCompletionSource.SetResult(result);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">catch</span> (Exception exception)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    taskCompletionSource.SetException(exception);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }, <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span> (Exception exception)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        taskCompletionSource.SetException(exception);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> taskCompletionSource.Task;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="4-改进的-continuewithcontext"><strong>4. 改进的 ContinueWithContext</strong></h2>
+<p>为了在回调中正确处理 <code>ExecutionContext</code> 和 <code>SynchronizationContext</code>，可以定义 <code>ContinueWithContext</code> 方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TaskExtensions</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Task&lt;TNewResult&gt; ContinueWithContext&lt;TResult, TNewResult&gt;(<span style="color:#66d9ef">this</span> Task&lt;TResult&gt; task, Func&lt;Task&lt;TResult&gt;, TNewResult&gt; continuation)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        ExecutionContext executionContext = ExecutionContext.Capture();
+</span></span><span style="display:flex;"><span>        SynchronizationContext synchronizationContext = SynchronizationContext.Current;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> task.ContinueWith(t =&gt;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">new</span> Func&lt;TNewResult&gt;(() =&gt; continuation(t)).InvokeWith(synchronizationContext, executionContext))
+</span></span><span style="display:flex;"><span>            .Unwrap();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Task ContinueWithContext&lt;TResult&gt;(<span style="color:#66d9ef">this</span> Task&lt;TResult&gt; task, Action&lt;Task&lt;TResult&gt;&gt; continuation)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> task.ContinueWithContext(<span style="color:#66d9ef">new</span> Func&lt;Task&lt;TResult&gt;, <span style="color:#66d9ef">object</span>&gt;(t =&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            continuation(t);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>        }));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>使用 <code>ContinueWithContext</code> 可以修复 WPF 应用程序中的跨线程问题：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">this</span>.Button.Click += (sender, e) =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">new</span> WebClient().DownloadStringTaskAsync(<span style="color:#e6db74">&#34;https://weblogs.asp.net/dixin&#34;</span>).ContinueWithContext(<span style="color:#66d9ef">await</span> =&gt; 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> html = <span style="color:#66d9ef">await</span>.Result;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.TextBox.Text = html; <span style="color:#75715e">// 现在可以正常工作</span>
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><h2 id="5-使用-taskconfigureawait"><strong>5. 使用 Task.ConfigureAwait()</strong></h2>
+<p><code>Task.ConfigureAwait()</code> 提供了控制 <code>SynchronizationContext</code> 捕获的选项：</p>
+<ul>
+<li><code>ConfigureAwait(true)</code>：默认行为，捕获 <code>SynchronizationContext</code>。</li>
+<li><code>ConfigureAwait(false)</code>：不捕获 <code>SynchronizationContext</code>。</li>
+</ul>
+<p>例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">this</span>.Button.Click += <span style="color:#66d9ef">async</span> (sender, e) =&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> Task.Run(() =&gt; { }).ConfigureAwait(<span style="color:#66d9ef">false</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">this</span>.TextBox.Text = <span style="color:#66d9ef">string</span>.Empty; <span style="color:#75715e">// 会抛出 InvalidOperationException</span>
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>这段代码会抛出 <code>InvalidOperationException</code>，因为 <code>ConfigureAwait(false)</code> 阻止了 <code>SynchronizationContext</code> 的捕获。</p>
+<h2 id="6-总结"><strong>6. 总结</strong></h2>
+<ul>
+<li><strong>编译时</strong>：<code>async</code> 和 <code>await</code> 被编译为状态机，代码按 <code>await</code> 拆分为多个部分，并通过回调链式执行。</li>
+<li><strong>运行时</strong>：
+<ul>
+<li><code>ExecutionContext</code> 总是被捕获，确保代码在正确的上下文中执行。</li>
+<li><code>SynchronizationContext</code> 默认被捕获，确保 UI 操作在 UI 线程中执行，除非显式禁用（如 <code>ConfigureAwait(false)</code>）。</li>
+</ul>
+</li>
+<li><strong>改进回调</strong>：通过 <code>ContinueWithContext</code> 可以正确处理 <code>ExecutionContext</code> 和 <code>SynchronizationContext</code>，解决跨线程问题。</li>
+</ul>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/.net/">.NET</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/understand_csharp_async_wait_2/">Understanding C# async / await 第2章</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/understand_csharp_async_wait_1/">Understanding C# async / await 第1章</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_attribute_note/">C#中的Attribute学习笔记</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_object_copy_and_assign/">C#中的对象和拷贝</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/delete_dictionary_elements/">正确地删除Dictionary中的元素</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

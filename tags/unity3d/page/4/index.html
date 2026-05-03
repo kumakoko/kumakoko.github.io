@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Unity3D | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Unity3D" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/tags/unity3d/" />
+
+
+		<meta itemprop="name" content="Unity3D">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/tags/unity3d/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-term">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/tags/">Tags</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity3D</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">Unity3D</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/unity_lightmap_keng/">Unity动态加载光照贴图的坑</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+Unity的光照贴图，如果在运行时动态加载的话，需要对创建出来的game object的lightmap index做一次重新指派， 然后在设置一下LightmapSetting。基本按照Mr.钱康来的这一系列文章那样子设置。如下链接：
+Unity中光照贴图一二坑及解决办法
+Unity中光照贴图一二坑(续)
+如果按照老钱的方法去做了，还是有问题的话，那么就要看下 【Project Settings -&gt; Graphics -&gt; Shader Stripping】 菜单下的这个：
+就是打包时没把LIGHTMAP_ON相关的shader变体给打进去，因为被strip掉。为了保险，选中Custom，然后所有全部选上，再进行打AB。就能正确加载光照贴图。当然，这样子会导致变体变多变大，所以最好还是仔细分析下，那些勾选上为好。
+国内有一个兄弟也是碰到这个问题，在Unity论坛上也有人用这个方案解决了问题
+另外，经过实测，只要正确设置好shader stripping之后，无论从AB中装载进来的game object，是不是从static变为非static标签，或者有没有用StaticBatchingUtility.Combine去运行时静态合批，都不影响正确加载lightmap
+参考网页 光照贴图接缝探讨
+where did &ldquo;lightmap static&rdquo; go
+打包Assetbundle以及Shader Stripping导致LightMap全部丢失的解决方法
+UWA上的《Lightmap丢失》
+Shader Variants 打包遇到的问题
+Stripping scriptable shader variants
+Stripping commonly unused shader variants in Unity&rsquo;s built-in render pipeline
+Unity帮助文档中和Shader Stripping相关的页面</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-12-08T18:38:27&#43;08:00">December 08, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/unity_toon_render/">Unity卡通渲染知识点笔记（持续更新中）</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+描边 描边有两种方法，一种是用两个pass，第一个pass绘制模型本身，第二个pass则是绘制边缘。这种技术的要点是在第一个pass使用cull back把背面拣选掉，第二个pass使用cull front 把正面拣选掉，这时候就只剩下侧边的边缘线颜色。
+在第二个pass中，在绘制时，让模型顶点沿着法线方向向外移动一定的距离。这时候绘制出的一个纯色模型把原来的模型给包住。但如果是在世界空间中移动的话，当镜头拉远时，描边线会变得很细小。所以为了解决这个问题，一般将法线在裁剪空间中或者在NDC空间中做位移：
+在裁剪空间中做位移的操作如下：
+// 这段代码是一段URP代码 Varyings vert(Attributes input) { // scaledScreenParams 是用当前窗口的屏幕宽高像素值乘以渲染缩放系数renderScale的值。renderScale默认为1， float4 scaledScreenParams = GetScaledScreenParams(); float aspect = abs(scaledScreenParams.x / scaledScreenParams.y);//求得X因屏幕比例缩放的倍数 // 下面的计算是在裁剪空间中操作。当然也可以直接将法线转到NDC Varyings output; VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz); VertexNormalInputs normalInput = GetVertexNormalInputs(input.normalOS); float3 normalCS = TransformWorldToHClipDir(normalInput.normalWS);//法线转换到裁剪空间 float2 extendDis = normalize(normalCS.xy) *(_OutlineWidth*0.01);//根据法线和线宽计算偏移量 extendDis.x /= aspect ;//由于屏幕比例可能不是1:1，所以偏移量会被拉伸显示，根据屏幕比例把x进行修正 output.positionCS = vertexInput.positionCS; // 因为后续会转换成NDC坐标，会除w进行缩放，所以先乘一个w，那么该偏移的距离就不会在NDC下有变换 output.positionCS.xy += extendDis * output.positionCS.w ; // 要预先乘一个做透视除法的值 return output; } 在NDC空间做变换代码如下：
+//　这是一段基于Unity内建管线的顶点着色器代码 v2f o; UNITY_INITIALIZE_OUTPUT(v2f, o); float4 pos = UnityObjectToClipPos(v.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-10-08T18:38:27&#43;08:00">October 08, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/diff_between_urp_and_builtin/">URP和内建管线的一些编程上的差异</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+SubShader代码中的Tags 新增加了RenderPipeline关键字 SubShader的Tags段中需添加 &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot;语句段
+光照模式（LightMode）关键字的对应替换 Built-in URP 作用 ForwardBase UniversalForward ForwardAdd 开启关键字_ADDITIONAL_LIGHTS解决 ShadowCaster ShadowCaster MotionVectors 尚未支持 Always 不再支持 PrepassBase 不再支持 PrepassFinal 不再支持 Vertex 不再支持 VertexLMRGBM 不再支持 VertexLM 不再支持 URP新增 DepthOnly URP新增 Meta 用于烘焙光照贴图 URP新增 Universal2D 用于2D的前向渲染 URP新增 UniversalGBuffer Deferred Rendering（延迟渲染）中使用，目前URP不支持延迟渲染，暂时用以兼容HDRP URP新增 UniversalForwardOnly 用于在Deferred Rendering（延迟渲染）中，表示这个Pass使用Forward Rendering（前向渲染） 变体相关的指令 内建管线中，提供了multi_compile_fwdbase来编译所有ForwardBasePass所需要的变体，multi_compile_fwdadd来编译ForwardAddPass所需要的所有变体，类似如下代码：
+#pragma multi_compile_fwdbase 而在URP中，需要自己判断需要编辑哪些变体，用户又更大的灵活性，类似如下（参考Lit.Shader）：
+#pragma multi_compile _ _MAIN_LIGHT_SHADOWS #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS #pragma multi_compile _ _SHADOWS_SOFT #pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE 参考网页 从 Builtin 管线升级到 URP</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-08-02T23:29:44&#43;08:00">August 02, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/srp_batcher/">Scriptable Render Pipeline (SRP) Batcher</a></h1>
+	<div class="entry__content">非SRP Batcher的Unity渲染管线怎么做 不多说，先看图：
+图中有个Unity Engine propeties，其实就是指一些不需要我们显式地写在shaderlab代码的Propeties块中的uniform shader变量。比如物体的变换矩阵等等。
+上图中的Unity Engine properties，以及各个材质球数据，存放在System Memory中。每当准备渲染物体时。CPU要将这些数据从System Memory中搜集起来，设置到shader的常量缓冲区中去（即CBUFFER，即从CPU传给GPU的数据，这些数据包含了shaderlab代码的Propeties块中的定义的变量）。在内部的渲染循环中，当渲染某个物体，发现需要用到一个新的材质数据时，CPU就将shader properties搜集起来。放到不同的常量缓冲区中去。这些常量缓冲区的个数，就取决着色器代码中声明了多少个。
+SRP Batcher 的工作原理： 在 Unity 中，您可以在一帧中的任何时间修改任何材质的属性。然而这种做法有一些缺点。例如，当在一次DrawCall调用种使用新材质时，有很多工作要做。因此，场景中的材质越多，Unity设置 GPU用到的数据所需要的 CPU时间就越多。传统的处理方式是减少DrawCalls的数量来优化CPU端的渲染成本，因为Unity在发出DrawCall之前要设置很多东西。真正的 CPU耗时是耗在这些设置操作，而不是来自 GPU的绘制本身。这些设置操作也只是Unity 需要推送到 GPU 命令缓冲区的一些字节数据而已。
+当场景中有大量的材质球，但是shader的变体比较少时，SRP Batcher就能进行优化。它的方法简而言之是：对Unity Engine properties，尽可能将其留存在GPU memory中。如果材质的内容没有发生变化的话，那么就不需要把这些数据上传到GPU memory上，从而省去了传统方式中的这部分CPU的工作。SRP Batcher专门定制了一些代码（dedicated code），可以快速地将Unity Engine properties更新到一个大的GPU 缓冲区（large GPU buffer） 中。如下图所示：
+在上图中，CPU仅仅需要处理built-in engine properties，也就是诸如物体的变换矩阵等等。这是因为物体可能会移动，所以它的世界变换矩阵等等会经常发生变化。而其他的材质数据就被持久化地存储在CBUFFER中，这是因为大部分可渲染物体，它进行渲染时，传给shader的一些uniform变量一般都是保持，不随着时间的变化而变化的。这也就是说，SRP Batcher通过两种手段加速渲染：
+每个可渲染物体的材质数据持久化存在显存中。 专门定制的代码管理一个大的逐物体GPU Buffer，即图中的Per Object large buffer块。 SRP Batcher compatibility 在任何给定的场景中，有些可渲染物体与 SRP Batcher 兼容，有些则不兼容。即使使用不兼容的对象，Unity 也能正确渲染场景。这是因为兼容对象使用SRP Batcher代码路径，而其他对象使用标准的SRP 代码路径。能使用SRP Batcher 代码路径渲染的可渲染对象必须是以下的类型：
+渲染对象必须是一个mesh或skinned mesh。它不能是粒子。 着色器必须与 SRP Batcher 兼容。HDRP 和 URP 中的所有光照和非光照着色器都符合此要求（这些着色器的粒子版本除外）。 可渲染对象不得使用 MaterialPropertyBlocks。 要使着色器与 SRP Batcher兼容，必须遵循以下几点：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-06-01T16:05:07&#43;08:00">June 01, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/urp_shader_pass_tag/">URP Shader Pass Tag</a></h1>
+	<div class="entry__content">原文地址
+以下是将上述回答表格化的结果：
+URP 中 ShaderLab Pass 标签参考 1. LightMode 标签 标签值 描述 适用场景 UniversalForward 渲染对象几何体并计算所有光照贡献。 Forward 渲染路径 UniversalGBuffer 渲染对象几何体但不计算光照贡献。 Deferred 渲染路径 UniversalForwardOnly 渲染对象几何体并计算所有光照贡献，可在 Forward 和 Deferred 渲染路径中使用。 Deferred 渲染路径中需要 Forward 渲染的对象（如 Clear Coat 法线） DepthNormalsOnly 用于深度和法线预渲染，生成环境光遮蔽（AO）。 Deferred 渲染路径，结合 UniversalForwardOnly 使用 Universal2D 渲染对象并计算 2D 光照贡献。 2D 渲染器 ShadowCaster 渲染对象从光源视角的深度到阴影贴图或深度纹理。 阴影生成 DepthOnly 渲染从相机视角的深度信息到深度纹理。 深度渲染 Meta 仅在 Unity 编辑器烘焙光照贴图时执行，构建时会被剥离。 光照贴图烘焙 SRPDefaultUnlit 用于绘制额外 Pass（如对象轮廓），适用于 Forward 和 Deferred 渲染路径。 绘制额外 Pass（如轮廓） MotionVectors 用于支持运动矢量（Motion Vectors）的 Pass。 运动矢量渲染 2.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-06-01T16:02:07&#43;08:00">June 01, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>, 
+		<a class="meta-tags__link" href="/tags/urp/" rel="tag">URP</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/pixel_perfect_outline_shaders_unity/">Pixel-Perfect Outline Shaders for Unity</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+以下是基于你提供的内容的总结和解读，保留示例代码和图片链接：
+轮廓着色器的工作原理与优化 1. 经典轮廓技术 起源：在 2003 年游戏《XIII》中首次看到 3D 对象的轮廓效果，使用固定功能管线实现。 实现方式：通过网格的外壳（Outer Hull）和反转法线绘制轮廓，覆盖黑色纹理。 现代改进：使用顶点着色器在单独 Pass 中渲染略微膨胀的网格，剔除正面。 2. 经典轮廓技术的局限性 局限性 描述 轮廓宽度不均匀 轮廓宽度随物体形状和视角变化。 透视缩短 轮廓宽度随物体远离相机而变窄（透视投影）。 对象空间单位 轮廓宽度以对象空间单位指定，而非像素。 3. 经典轮廓着色器代码 Shader &#34;Tutorial/Outline&#34; { Properties { _Color (&#34;Color&#34;, Color) = (1, 1, 1, 1) _Glossiness (&#34;Smoothness&#34;, Range(0, 1)) = 0.5 _Metallic (&#34;Metallic&#34;, Range(0, 1)) = 0 _OutlineColor (&#34;Outline Color&#34;, Color) = (0, 0, 0, 1) _OutlineWidth (&#34;Outline Width&#34;, Range(0, 0.1)) = 0.03 } Subshader { Tags { &#34;RenderType&#34; = &#34;Opaque&#34; } CGPROGRAM #pragma surface surf Standard fullforwardshadows Input { float4 color : COLOR; } half4 _Color; half _Glossiness; half _Metallic; void surf(Input IN, inout SufaceStandardOutput o) { o.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-04-29T11:37:25&#43;08:00">April 29, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/build_xlua_for_android/">使用Android NDK编译xlua</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+基本上就是按照参考网页所示的那样子，先后安装好Android Studio，打开【File|Setting】菜单项打开界面，把google的CMake选好。注意这里一定要用google家的CMake，用原生CMake不行
+如果google CMake的版本过高的话，会报CMake Error: Could not create named generator Android Gradle - Ninja的错误，较新版本的google CMake会产生这个问题，反而低版本的不会，所以选用3.6.4111459版本的才行。Stack Overflow网站上有人就这个问题做了回答：
+Compatibility of CMake version might be an issue, Old NDK (below 13b) is not compatible with the new CMake, so, either update NDK or remove the new CMake (to force older CMake usage). Check your System Setting and version listed under SDK Tools Go to Appearance &amp; Behaviour -&gt; System Settings -&gt; Android SDK Incompatible 3.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-03-23T15:52:57&#43;08:00">March 23, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_srp_static_dynamic_batch_gpuinstance/">Unity3D的SRP,Static Batching、Dynamic Batching和GPU instancing</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+所谓的draw call batching（绘制批处理），就是指对将要绘制的N个网格，在保持渲染结果正确的前提下，将draw call进行合并，以一整批，而不是单个的方式，向GPU提交这些draw call操作。 绘制批处理有若干种实现方式，有些方式只是减少了提交draw call的次数，但执行draw call的次数没变少。有些方式则是直接减少了draw call的数量。
+在《Unity DrawCall、Batch、SetPassCall的区别》一文中对Batching的解释很到位，摘录如下：
+Batch 把数据加载到显存，设置渲染状态，CPU调用GPU渲染的过程称之为一个Batch。这其实就是渲染流程的运用阶段，最终输出一个渲染图元（点、线、面等），再传递给GPU进行几何阶段和光栅化阶段的渲染显示。一个Batch必然会触发一次或多次DrawCall，且包含了该对象的所有的网格和顶点数据以及材质信息。把数据加载到显存是指把渲染所需的数据从硬盘加载到内存（RAM），再将网格和纹理等加载到显卡（VRAM），这一步比较耗时。设置渲染状态就是设置场景中的网格的顶点（Vertex）/片元（Fragment）着色器，光源属性，材质等。Unity提供的动态合批（Dynamic Batching ）合并的就是这一过程，将渲染状态相同的对象合并成一个Batch，减少DrawCall。
+还有对SetPassCall的解释也很好，摘录如下：
+SetPassCall Shader脚本中一个Pass语义块就是一个完整的渲染流程，一个着色器可以包含多个Pass语义块，每当GPU运行一个Pass之前，就会产生一个SetPassCall，所以可以理解为一次完整的渲染流程次数。
+由此可见，一个Batch包含一个或多个DrawCall，都是产生是在CPU阶段，而目前普遍渲染的瓶颈恰恰就是CPU，GPU的处理速度比CPU快多了，Draw Call太高，CPU会把大量时间花费在处理Draw Call调用上。如果Batch太大，CPU需要频繁的从硬盘加载数据，切换渲染状态，这个消耗要比DrawCall大，所以后面Unity才逐渐弱化了DrawCall的显示。
+再提一下，优化的时候还要关注下Statistics窗口上的三角形数（Tris）和顶点数（Verts），这两个数据也是会影响到性能，比如单个物体的顶点数最好不要超过900，不然会影响到Unity的动态合批。Unity的Statistics窗口上的三角形数（Tris）和顶点数（Verts）并不仅仅是视锥中的梯形内的三角形数和顶点数，而是Camera中 field of view所有取值下的三角形数和顶点数。也就是说，即使当前Game视图中看不到这个 cube，只有 field of view在1-179 范围内都看不到这个cube，stats面板才不会统计，GPU才不会渲染，否则都会渲染，而且Unity不会把模型拆分，这个模型哪怕只有1个顶点需要渲染，Unity也会把整个模型都渲出来。
+四种优化方式的适用场合 优化方式的优先级 一些细节笔记 参考网页 Unity DrawCall、Batch、SetPassCall的区别
+浅谈Draw Call和Batch的区别
+Unity渲染优化的4种批处理：静态批处理，动态批处理，SRP Batcher 与 GPU Instancing
+Draw call batching
+为什么baches（draw calls）数那么高？ 它们有什么意义？
+请教Unity中的Draw Call Batch规则</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-03-18T20:20:49&#43;08:00">March 18, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_fbx_import_tangent_option/">批量设置FBX文件导入模型切线方式</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原理 利用AssetDatabase.FindAssets(&quot;t:Model&quot;)找出所有的FBX模型的GUID。再利用AssetDatabase.GUIDToAssetPath将GUID转为文件路径。然后使用 AssetImporter.GetAtPath函数拿到 模型导入器（ModelImporter） 对象。模型导入期对象里面就有一个importTangents属性项，当此项为None时表示没切线，其他选项都表示带有切线信息。下面是查找所有带有切线信息的模型的函数。
+/// &lt;summary&gt; /// 查找出带有切线信息的模型 /// &lt;/summary&gt; /// List&lt;string&gt; mikkTSpace 使用Morten Mikkelsen切线空间(MikkTSpace)算法计算生成切线的模型文件名 /// List&lt;string&gt; calculateLegacy 使用传统的算法计算生成切线的模型文件名 /// List&lt;string&gt; calculateLegacyWithSplitTangents,使用传统的算法，并对UV图表进行拆分的方式，计算生成切线的模型文件名 /// List&lt;string&gt; imported 从原始文件中导入切线的模型文件名 private void FindAllModelsContainTangent(List&lt;string&gt; mikkTSpace,List&lt;string&gt; calculateLegacy, List&lt;string&gt; calculateLegacyWithSplitTangents,List&lt;string&gt; imported) { // 使用了库函数，用&#34;t:Model&#34;参数检索所有的模型文件。即FBX文件 // 返回的是所有fbx的GUID string[] allModels = AssetDatabase.FindAssets(&#34;t:Model&#34;); for (int i = 0; i &lt; allModels.Length; i++) { // 把GUID换成资源文件路径名，然后使用AssetImporter模块获取到模型导入器 string modelPath = AssetDatabase.GUIDToAssetPath(allModels[i]); var modelImporter = AssetImporter.GetAtPath(modelPath) as ModelImporter; if (modelImporter == null) continue; switch (modelImporter.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-03-06T17:52:57&#43;08:00">March 06, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_ugui_optimization/">UGUI优化</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+影响性能的要素 像素填充率（FillRate） 概念：指每秒每秒显卡能填充的像素数
+填充率和over draw息息相关，over draw由GPU影响
+影响像素填充率的原因
+半透明物体过多
+绘制半透明物体需要： 1 开启ALPHA_BLEND 2 关闭Z TEST和Z WRITE 同一像素的over draw过高， 即重复绘制次数过多
+优化方法
+对于Alpha值为0，但是又要响应输入的不可见物体，采用 无绘制但能响应RayCast的组件来处理 减少填充区域的覆盖，比如一个矩形区域，它的周围空白不 可见区域比较多，那可以考虑把矩形转化为若干个三角形 Draw call draw call受CPU影响
+UGUI引入了canvas的概念，提供给相同材质的 界面组件进行合批，减少draw call
+优化方法
+使用同一组材质球的UI组件，放置在同一个canvas下 动静分离：canvas可以分组，如果某个界面，存在着会动 的元素和不会动的元素，则考虑分成两组。但canvas如果 先SetActive(false)，再SetActive(true)。则需要ForceUpdate 它强制重绘 绘制顺序不要穿插，比如A组件用了A材质球，B组件用了B材 质球，C组件用了A材质球，如果不存在相互遮盖关系的话， 那么应该在scene hierachy窗口中，将三个组件按上下顺序 排序为A,C,B 其他优化策略汇总 少用Mask组件 原理：Mask组件会额外消耗多一个Drawcall来创建遮罩做像素剔除。 Mask组件不利于层级合并。原本同一图集里的ui可以合并层级， 仅需一个Drawcall渲染，如果加入Mask，就会将一个ui整体分割 成了Mask下的子ui与其他ui，两者只能各自进行层级合并，至少 要两个Drawcall。 字体 尽量减少字体特效，outline，渐变等，可以使用本身带有描边的字体文件 ，尽量统一字体风格，减少不必要的额外字体文件，不用richtext 界面切换 原理：增加一个新层，并且将Camera的Culling Mask中取消勾选， 即不渲染该层，UI界面在切换时，将其Canvas所在Layer设置为该 层，看起来就像被隐藏了 优点：于切换时基本没有开销，也不会产生多余的 Draw Call 缺点：隐藏时依然还会有一定的持续开销，而其对应的Mesh 也会始终存在于内存中。 各种界面隐藏方案的优劣分析 SetActive产生GC,会导致画布丢弃它的VBO数据，从而重建和重新批处理，操作频繁时GC导致CPU占用可能会卡顿。 enable Canvas禁用画布,能降低dc，避免SetActive的GC开销，但测试依旧会有SendWillRenderCanvases函数的调用开销。 移出RootCanvas，似乎没有多大优化，理论上会降低dc且不会引起重建。 将单独界面使用Canvas，绑定一个Camera在隐藏时设置Layer进行CullingMask蔽，同时禁用GraphicsRaycaster，能避免重建，但随着canvas增多dc会增多，同时界面较时管理比较费力，注意动态UI的事件。 设置Canvas Group 的alpha为0：依旧会被渲染，但能避免setactive带来的巨大开销，且容易操作。 更改Scale的值为0：点信息被清除，这样不会减少dc开销，同时还会引起重建，不采用。 设置一个Canvas作为根节点，将其layer设置为相机屏蔽的层级，同时禁用GraphicsRaycaster，当需要隐藏某个界面时将其以该Canvas作为根节点移到其下，这样能避免重建同时减少dc，但会有一些SetParent带来的消耗。目前采用该方案。 如果只是隐藏某个Graphic类的，可以考虑获取canvasRenderer.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-03-06T15:52:57&#43;08:00">March 06, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/">1</a>
+				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/2/">2</a>
+				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/3/">3</a>
+				<span class="pagination__item pagination__item--active" data-total="7">4</span>
+				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/5/">5</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/7/">7</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>使用GLSL实现水面反射效果 1（翻译） | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="使用GLSL实现水面反射效果">
+		<meta property="og:title" content="使用GLSL实现水面反射效果 1（翻译）" />
+<meta property="og:description" content="使用GLSL实现水面反射效果" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/opengl/water_reflective_glsl_1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2018-10-21T18:08:30+08:00" />
+<meta property="article:modified_time" content="2018-10-21T18:08:30+08:00" />
+
+		<meta itemprop="name" content="使用GLSL实现水面反射效果 1（翻译）">
+<meta itemprop="description" content="使用GLSL实现水面反射效果"><meta itemprop="datePublished" content="2018-10-21T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2018-10-21T18:08:30+08:00" />
+<meta itemprop="wordCount" content="299">
+<meta itemprop="keywords" content="OpenGL," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">使用GLSL实现水面反射效果 1（翻译）</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2018-10-21T18:08:30&#43;08:00">October 21, 2018</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">使用GLSL实现水面反射效果 1（翻译）</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1rendering-reflection-texture">1.Rendering reflection texture</a>
+      <ul>
+        <li><a href="#11-parallax">1.1. Parallax</a></li>
+        <li><a href="#12-mirrored-geometry">1.2. Mirrored geometry</a></li>
+        <li><a href="#13-underwater-clipping">1.3. Underwater clipping</a></li>
+        <li><a href="#14-putting-it-all-together">1.4. Putting it all together</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-rendering-reflective-object">2 Rendering reflective object</a>
+      <ul>
+        <li><a href="#21vertex-shader">2.1.Vertex shader</a></li>
+        <li><a href="#22-fragment-shader">2.2. Fragment shader</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="www.xionggf.com">www.xionggf.com</a></strong></p>
+<p>原文地址：
+<a href="http://khayyam.kaplinski.com/2011/09/reflective-water-with-glsl-part-i.html">http://khayyam.kaplinski.com/2011/09/reflective-water-with-glsl-part-i.html</a></p>
+<p>出于物理准确性或为游戏提高可玩性，考虑上对水面及其反射效果的实现，会增加渲染引擎的功能。虽然只有通过光线跟踪才能完成真正的反射，但是通过使用非常简单的场景设置和一些GPU编程，就可以实现令人惊讶的逼真的近似效果。</p>
+<p>良好的水模拟至少应具有以下特征：</p>
+<ol>
+<li>真实反射（具有正确的视差）</li>
+<li>能正确地裁剪绘制在反射图像上的水底下的物体</li>
+<li>视角取决于水的透明度/反射率</li>
+<li>实现涟漪和（或者）波浪的效果</li>
+<li>水散射（即随着深度增加，水逐渐变得不透明）</li>
+</ol>
+<p>其他不是很明显但是会让渲染效果更好的细节：</p>
+<ol>
+<li>折射</li>
+<li>焦散 - 即浅水底部的光点</li>
+<li>反射光 - 即反射到水附近物体的光点</li>
+</ol>
+<p>目前我只把第一个列表中的功能实现到到Khayyam/Sehle/Shinya的代码中。您可以查看我之前发布的一些引擎内图片。在这里，我将描述背后的数学机制，并提供编写自己的水面效果的系统/对象/渲染通道的指南。</p>
+<h2 id="1rendering-reflection-texture">1.Rendering reflection texture</h2>
+<p>没有反射的水看起来完全无趣 - 就像任何其他半透明表面一样。因此，我们从实现反射开始，然后继续其他效果。</p>
+<h3 id="11-parallax">1.1. Parallax</h3>
+<p>尽管到目前为止你仍然设法在一个render pass中渲染你的场景，但从这现在开始你需要至少使用两个render pass去进行场景绘制（实际上至少有N + 1个render pass，其中N是可见反射表面的数量）。</p>
+<p>原因是我们无法重复使用第一次渲染出来的主场景图像用作反射效果的实现。首先是因为它可以使视锥体变得非常大（例如 - 如果从y一个高角度俯视观察水面，在当前的主视图中只看到地面和水，但要反射的内容却是天空）。其次是因为视差。“反射”不是真实的发生反射的场景的完美副本，而是从不同视点复制同一场景而已。下图说明了这一点。</p>
+<p>$$ M{camera}^{‘}=M{reflection}\times M_{camera} $$</p>
+<p><img src="/image/opengl/water_reflective_glsl/reflections.png" alt=""></p>
+<p>这意味着你需要进行“渲染内容到纹理”这一功能进行设置工作。我们将“水面反射的内容”渲染到一个目标纹理，然后在主场景中渲染水面时使用此目标纹理。</p>
+<p>因此，为了获得存储了“水面反射的内容”的纹理，我们首先必须将场景从“反射用虚拟相机”视点P’渲染到纹理。首先，我们必须找到“反射用虚拟相机”的位置——或者更确切地说，是实际摄像机的观察矩阵的“反射用观察矩阵”。（因为除了位置我们还需要摄像机方向）。“反射用观察矩阵”可以通过以下公式来获得：</p>
+<p>$$ M_{camera}^{&rsquo;}=M_{reflection}\times M_{camera} $$</p>
+<p>其中\(M_{camera}^{&rsquo;}\)反射是镜面的反射矩阵。它可以通过反射平面的位置来计算：</p>
+<p><img src="/image/opengl/water_reflective_glsl/equ2.png" alt=""></p>
+<p>其中\((N_x,N_y,N_z,D)\)是平面方程\(xN_x+yN_y+zN_z+D=0\)的系数。注意\((N_x,N_y,N_z)\)也是给定平面的法向量。\(M_{camera}\)就是实际相机所对应的观察矩阵。</p>
+<h3 id="12-mirrored-geometry">1.2. Mirrored geometry</h3>
+<p>实际上我们针对上一张图片中作了点弊。我们对“镜像图像”旋转了180度，使之更加类似于原始图像，从而可以明显地看出视差效果。实际的镜像图像如下图所示：</p>
+<p><img src="/image/opengl/water_reflective_glsl/reflections-2.png" alt="">
+镜像图像上的不同绕组顺序</p>
+<p>请注意，图像中多边形的顶点环绕顺序，在镜像图像上是发生了翻转的，即三角形在原始时为CCW，但在反射时为CW。</p>
+<p>如果你的场景都是双面材质，那么拣选方向是可以随意的。如果开启了拣选的话，比如总是定义拣选方式为CCW的话，必须对反射的图像进行某些操作，否则几何图形将无法正确渲染。</p>
+<p>我们将利用相机始终（至少在大多数应用中）矩形并以视图方向为中心的功能。因此我们可以在沿着Y方向，翻转相机方向，使得缠绕顺序再次被正确设置。（它翻转反射的图像，因此它看起来像第一张图片上的（3））。这可以用一个以上的反射矩阵来完成：</p>
+<p><img src="/image/opengl/water_reflective_glsl/equ3.png" alt=""></p>
+<p>其中(M_{flip})是简单的另一个反射矩阵，它在(XZ)平面上进行反射。现在，如果我们使用M’’ 相机作为相机矩阵渲染镜像，管道可以保持不变。当然，我们必须保存此矩阵以供以后参考，因为需要在主渲染阶段将纹理正确映射到水对象。</p>
+<h3 id="13-underwater-clipping">1.3. Underwater clipping</h3>
+<p>看看下面的图片：</p>
+<p><img src="/image/opengl/water_reflective_glsl/reflections-3.png" alt=""></p>
+<p>我们在场景中添加了一个水下物体(Q). 现在它不应该出现在反射上，因为它不会阻挡实际的反射光线(PB’B)和(PA’A)。但我们没有进行光线追踪。相反地，我们将相机移动到镜像视点(P’)并像正常图像一样渲染反射。但正如你所看到的，物体(Q)阻挡了射线(PA’A)，因此会出现在我们的反射中。这显然是不对的。</p>
+<p>因此，我们必须确保在反射平面（水面）下的任何东西都不会出现在镜像渲染中。这可以通过三种不同的方式实现</p>
+<ol>
+<li>在GPU上使用额外的剪裁平面。它可以非常快或非常慢 - 取决于使用的显卡和驱动程序。</li>
+<li>在反射渲染过程中使用倾斜投影矩阵。你可以在这里阅读更多相关信息。这是很酷的技术，但我个人从来没有让它运作得很好，因为它弄乱了相机远的飞机。</li>
+<li>在像素着色器中手动剪辑。它浪费了一些GPU周期，但其他方便且万无一失。</li>
+</ol>
+<p>我选择了（3）因为倾斜投影矩阵似乎不能很好地适应广角相机（远处的平面移动通过无限远创造各种奇怪的效果）。剪辑本身就像在所有像素着色器的开头添加以下代码一样简单（或者更准确地说是用于可反射对象的代码）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">vec4</span> clip_plane;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">varying</span> <span style="color:#66d9ef">vec3</span> interpolatedVertexEye;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> main()
+</span></span><span style="display:flex;"><span>{ 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> clipPos <span style="color:#f92672">=</span> dot (interpolatedVertexEye, clip_plane.xyz) <span style="color:#f92672">+</span> clip_plane.w;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (clipPos <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">discard</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当然，您必须为着色器提供\(clip_plane\)并在顶点着色器中计算interpolatedVertexEye（它只是视图/眼睛空间中的顶点坐标：\(VertexEye=M_{modelview}\times Vertex\)。如果您不需要剪切，只需将\(clip_{plane}\)的xyz分量设置为零，即可渲染所有像素。</p>
+<h3 id="14-putting-it-all-together">1.4. Putting it all together</h3>
+<p>在开始主渲染过程之前（正向或延迟）执行以下操作：</p>
+<p>创建需要反射的所有对象的列表（以及所有反射平面的参数）。然后为每个反射平面：</p>
+<ol>
+<li>计算反射的相机矩阵</li>
+<li>\( M_{camera}^{&rsquo;&rsquo;}=M_{reflection}\times M_{camera}\times M_{flip} \)</li>
+<li>设置相机矩阵（您可以使用剪切投影矩阵优化渲染，但这里不再讨论）。</li>
+<li>设置剪裁平面到反射平面</li>
+<li>渲染完整的场景</li>
+<li>将渲染图像保存为与反射对象一起使用的纹理</li>
+</ol>
+<p>如果您使用HDR，则不应使用色调映射反射纹理 - 除非您想要实现某些非常特定的效果。</p>
+<h2 id="2-rendering-reflective-object">2 Rendering reflective object</h2>
+<p>这实际上非常简单 - 前提是你手头有所有必要的参数。您还需要决定在哪个渲染阶段执行此操作。我使用透明舞台，因为水基本上只是场景中的一个半透明表面，但您也可以在透明度之前或之后添加另一个通道。</p>
+<p>你需要手头：</p>
+<ol>
+<li>反射相机矩阵\( M^{&rsquo;&rsquo;}\)</li>
+<li>您用于渲染投影到水面上产生反射效果的矩阵\( M_{ProjectionReflection}\)（通常这与您用于主相机的投影相同）</li>
+<li>反射纹理</li>
+</ol>
+<h3 id="21vertex-shader">2.1.Vertex shader</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">attribute</span> <span style="color:#66d9ef">vec3</span> vertex;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> mat4 o2v_projection;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">varying</span> <span style="color:#66d9ef">vec3</span> interpolatedVertexObject;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> main()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    gl_Position <span style="color:#f92672">=</span> o2v_projection <span style="color:#f92672">*</span> <span style="color:#66d9ef">vec4</span>(vertex.xy, <span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">1.0</span>);
+</span></span><span style="display:flex;"><span>    interpolatedVertexObject <span style="color:#f92672">=</span> vertex;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们在这里添加另一个约束 - 水面将位于对象局部坐标系的XY平面。如果你有适当的反射平面，这是完全没有必要的，但我发现它更容易。只需使用XY平面作为反射平面，并适当放置物体（水体）。</p>
+<p>实际上，这允许我们做另一个很酷的技巧。我们可以使用水体底部（即河流，湖泊……）作为水体。它将在着色器中展平，但我们可以使用Z数据来确定给定点的水深。但下一部分还有更多相关内容。o2v_projection只是复合矩阵\( M_{Projection}\times M_{ModelView}\)的名称</p>
+<p>我更喜欢用助记符名称来命名矩阵，描述它们所做的坐标系转换 - 在给定的情况下，它是Object To View，乘以Projection。interpolatedVertexObject只是对象局部坐标系中的顶点坐标 - 我们需要它来查找反射纹理。</p>
+<h3 id="22-fragment-shader">2.2. Fragment shader</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> mat4 o2v_projection_reflection;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">sampler2D</span> reflection_sampler;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">varying</span> <span style="color:#66d9ef">vec3</span> interpolatedVertexObject;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> main()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">vec4</span> vClipReflection <span style="color:#f92672">=</span> o2v_projection_reflection <span style="color:#f92672">*</span> <span style="color:#66d9ef">vec4</span>(interpolatedVertexObject.xy, <span style="color:#ae81ff">0.0</span> , <span style="color:#ae81ff">1.0</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">vec2</span> vDeviceReflection <span style="color:#f92672">=</span> vClipReflection.st <span style="color:#f92672">/</span> vClipReflection.q;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">vec2</span> vTextureReflection <span style="color:#f92672">=</span> <span style="color:#66d9ef">vec2</span>(<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> vDeviceReflection;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">vec4</span> reflectionTextureColor <span style="color:#f92672">=</span> texture2D (reflection_sampler, vTextureReflection);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Framebuffer reflection can have alpha &gt; 1</span>
+</span></span><span style="display:flex;"><span>    reflectionTextureColor.a <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    gl_FragColor <span style="color:#f92672">=</span> reflectionTextureColor;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>o2v_projection_reflection是在反射渲染过程中使用的复合矩阵\( M_{Projection}\times M_{ModelView}\)。即：</p>
+<p>$$ M_{camera}^{&rsquo;&rsquo;}=M_{reflection}\times M_{camera}\times M_{flip} $$</p>
+<p>顾名思义，它从物体坐标系转换到反射相机的剪辑坐标系。</p>
+<p>在片元着色器中，我们只需在反射渲染过程中重复完整的变换管道，并使用最终的2D坐标进行纹理查找。为此，我们需要初始的，未转换的对象顶点 - 因此它们是从顶点着色器（ interpolatedVertexObject）插值的。</p>
+<p>我将反射 alpha设置为 1.0因为我使用HDR缓冲区，并且由于加法混合，最终的alpha可以在那里有一些非常奇怪的值。并渲染图像</p>
+<p>最后的渲染结果如图：</p>
+<p>Not very realistic?
+Up to now we have implemented water as perfect mirror. This is very far from reality (look at the feature list in the first section).</p>
+<p>In the next parts I will show how to add viewing angle based transparency, water color and depth-dependent ripples to your water.</p>
+<p>Have fun!</p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/opengl/">OpenGL</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/opengl/modern_opengl_debugging/">现代的OpenGL调试方式（翻译）</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/sv_position_and_position/">着色器语言的语义SV_POSITION和POSITION之辨析</a></li>
+		
+	</ul>
+</div>
+
+	
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2024 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

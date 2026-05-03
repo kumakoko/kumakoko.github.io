@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>C#中的对象和拷贝 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="C#中的对象和拷贝">
+		<meta property="og:title" content="C#中的对象和拷贝" />
+<meta property="og:description" content="C#中的对象和拷贝" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/dotnet/cs_object_copy_and_assign/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-11-23T18:08:30+08:00" />
+<meta property="article:modified_time" content="2019-11-23T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content="C#中的对象和拷贝">
+<meta itemprop="description" content="C#中的对象和拷贝"><meta itemprop="datePublished" content="2019-11-23T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2019-11-23T18:08:30+08:00" />
+<meta itemprop="wordCount" content="770">
+<meta itemprop="keywords" content=".NET," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">C#中的对象和拷贝</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2019-11-23T18:08:30&#43;08:00">November 23, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">C#中的对象和拷贝</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#核心解答">核心解答</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+    <li><a href="#如何在c-中如何正确实现深拷贝">如何在C# 中如何正确实现深拷贝</a>
+      <ul>
+        <li><a href="#什么是深拷贝先理清概念">什么是深拷贝（先理清概念）</a></li>
+      </ul>
+    </li>
+    <li><a href="#方式1手动实现深拷贝最可控性能最好">方式1：手动实现深拷贝（最可控、性能最好）</a></li>
+    <li><a href="#方式2通过序列化实现通用深拷贝最便捷适配复杂类">方式2：通过序列化实现通用深拷贝（最便捷、适配复杂类）</a></li>
+    <li><a href="#方式3使用systemtextjson无序列化标记适配现代net">方式3：使用System.Text.Json（无序列化标记，适配现代.NET）</a>
+      <ul>
+        <li><a href="#总结-1">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<p>问题：在C#中，先创建类A的实例a并赋值其成员变量，再创建实例b，然后执行 <code>b = a</code>，是否能让b自动拥有和a相同的成员变量值。</p>
+<h3 id="核心解答">核心解答</h3>
+<p>首先直接给出结论：<strong>执行 <code>b = a</code> 并不会让b拥有a的成员变量副本，而是让b和a指向内存中的同一个对象</strong>。这不是“赋值成员变量”，而是“引用赋值”。</p>
+<h4 id="1-代码演示与解释">1. 代码演示与解释</h4>
+<p>下面用一段完整的代码来展示这个过程：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 定义类A</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 成员变量</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Number { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Text { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 1. 创建实例a并赋值成员变量</span>
+</span></span><span style="display:flex;"><span>        A a = <span style="color:#66d9ef">new</span> A();
+</span></span><span style="display:flex;"><span>        a.Number = <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span>        a.Text = <span style="color:#e6db74">&#34;Hello&#34;</span>;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 2. 创建实例b（此时b指向一个新的空对象）</span>
+</span></span><span style="display:flex;"><span>        A b = <span style="color:#66d9ef">new</span> A();
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 3. 执行 b = a</span>
+</span></span><span style="display:flex;"><span>        b = a;
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 4. 验证结果</span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;b.Number = {b.Number}&#34;</span>); <span style="color:#75715e">// 输出：10</span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;b.Text = {b.Text}&#34;</span>);     <span style="color:#75715e">// 输出：Hello</span>
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 5. 修改b的成员变量，看a是否变化</span>
+</span></span><span style="display:flex;"><span>        b.Number = <span style="color:#ae81ff">20</span>;
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;a.Number = {a.Number}&#34;</span>); <span style="color:#75715e">// 输出：20（a的值也变了）</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>关键解释</strong>：</p>
+<ul>
+<li>C#中的<code>class</code>是<strong>引用类型</strong>，变量<code>a</code>和<code>b</code>本质上是“指向对象的引用（地址）”，而非对象本身。</li>
+<li><code>new A()</code> 会在内存中创建一个新的A对象，并返回该对象的地址。</li>
+<li>执行 <code>b = a</code> 时，只是把<code>a</code>中存储的“对象地址”复制给了<code>b</code>，此时<code>a</code>和<code>b</code>都指向<strong>同一个内存对象</strong>：
+<ul>
+<li>你通过<code>b</code>访问成员变量，其实是访问的<code>a</code>指向的那个对象，所以能看到<code>a</code>的赋值；</li>
+<li>修改<code>b</code>的成员变量，本质是修改同一个对象，因此<code>a</code>的成员变量也会同步变化；</li>
+<li>最初<code>new A()</code>创建的b的原始对象，因为没有引用指向它，会被GC（垃圾回收器）回收。</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-如何真正复制成员变量深拷贝浅拷贝">2. 如何真正复制成员变量（深拷贝/浅拷贝）</h4>
+<p>如果你想让b成为一个独立的对象，但拥有和a相同的成员变量值，需要手动实现“拷贝”逻辑：</p>
+<h5 id="方式1手动赋值每个成员变量简单场景">方式1：手动赋值每个成员变量（简单场景）</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>A a = <span style="color:#66d9ef">new</span> A { Number = <span style="color:#ae81ff">10</span>, Text = <span style="color:#e6db74">&#34;Hello&#34;</span> };
+</span></span><span style="display:flex;"><span>A b = <span style="color:#66d9ef">new</span> A();
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 手动复制每个成员变量</span>
+</span></span><span style="display:flex;"><span>b.Number = a.Number;
+</span></span><span style="display:flex;"><span>b.Text = a.Text;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 修改b不会影响a</span>
+</span></span><span style="display:flex;"><span>b.Number = <span style="color:#ae81ff">20</span>;
+</span></span><span style="display:flex;"><span>Console.WriteLine(a.Number); <span style="color:#75715e">// 输出：10</span>
+</span></span></code></pre></div><h5 id="方式2实现icloneable接口通用场景">方式2：实现ICloneable接口（通用场景）</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span> : ICloneable
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Number { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Text { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 实现克隆方法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">object</span> Clone()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 浅拷贝（值类型成员复制，引用类型成员复制引用）</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> A
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Number = <span style="color:#66d9ef">this</span>.Number,
+</span></span><span style="display:flex;"><span>            Text = <span style="color:#66d9ef">this</span>.Text
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 如果有引用类型成员（如List），需要实现深拷贝：</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// return new A {</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//     Number = this.Number,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//     Text = this.Text,</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//     List = new List&lt;int&gt;(this.List) // 重新创建List并复制元素</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// };</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 使用</span>
+</span></span><span style="display:flex;"><span>A a = <span style="color:#66d9ef">new</span> A { Number = <span style="color:#ae81ff">10</span>, Text = <span style="color:#e6db74">&#34;Hello&#34;</span> };
+</span></span><span style="display:flex;"><span>A b = (A)a.Clone(); <span style="color:#75715e">// 克隆出独立的对象</span>
+</span></span><span style="display:flex;"><span>b.Number = <span style="color:#ae81ff">20</span>;
+</span></span><span style="display:flex;"><span>Console.WriteLine(a.Number); <span style="color:#75715e">// 输出：10</span>
+</span></span></code></pre></div><h3 id="总结">总结</h3>
+<ol>
+<li><code>b = a</code>（引用类型）不会复制成员变量，只是让b和a指向同一个对象，修改其一都会影响另一个；</li>
+<li>若要让b拥有a的成员变量值且相互独立，需<strong>手动复制每个成员变量</strong>或<strong>实现克隆方法</strong>；</li>
+<li>C#中<code>class</code>是引用类型，<code>struct</code>是值类型（<code>struct</code>的赋值会复制成员变量），这是核心区别。</li>
+</ol>
+<h2 id="如何在c-中如何正确实现深拷贝">如何在C# 中如何正确实现深拷贝</h2>
+<p>所谓<strong>深拷贝</strong>，也就是让新对象拥有和原对象完全相同的成员变量值，且两个对象相互独立（即使包含引用类型成员，修改新对象也不会影响原对象）。</p>
+<h3 id="什么是深拷贝先理清概念">什么是深拷贝（先理清概念）</h3>
+<ul>
+<li><strong>浅拷贝</strong>：只复制值类型成员，引用类型成员仅复制引用（两个对象共享同一个引用类型对象）。</li>
+<li><strong>深拷贝</strong>：不仅复制值类型成员，还会为引用类型成员创建全新的实例，并复制其内部值，最终两个对象完全独立。</li>
+</ul>
+<p>下面我会给出几种常用且实用的深拷贝实现方式，按“易用性+场景适配”排序：</p>
+<h2 id="方式1手动实现深拷贝最可控性能最好">方式1：手动实现深拷贝（最可控、性能最好）</h2>
+<p>适合成员变量较少、结构固定的类，手动为每个成员（包括引用类型成员）创建新实例并赋值，是最直观且性能最优的方式。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Collections.Generic;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 定义包含引用类型成员的类</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Address</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> City { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Street { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 值类型成员</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Age { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 引用类型成员</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Address HomeAddress { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 集合类型（引用类型）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> List&lt;<span style="color:#66d9ef">string</span>&gt; Hobbies { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 手动实现深拷贝方法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Person DeepClone()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 1. 创建新的Person实例</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> clone = <span style="color:#66d9ef">new</span> Person
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 复制值类型成员</span>
+</span></span><span style="display:flex;"><span>            Age = <span style="color:#66d9ef">this</span>.Age,
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// string是特殊的引用类型（不可变），直接赋值等价于深拷贝</span>
+</span></span><span style="display:flex;"><span>            Name = <span style="color:#66d9ef">this</span>.Name
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 2. 为引用类型成员创建新实例并赋值（核心：深拷贝关键）</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.HomeAddress != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            clone.HomeAddress = <span style="color:#66d9ef">new</span> Address
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                City = <span style="color:#66d9ef">this</span>.HomeAddress.City,
+</span></span><span style="display:flex;"><span>                Street = <span style="color:#66d9ef">this</span>.HomeAddress.Street
+</span></span><span style="display:flex;"><span>            };
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 3. 为集合类型创建新实例并复制元素</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.Hobbies != <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            clone.Hobbies = <span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt;(<span style="color:#66d9ef">this</span>.Hobbies);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> clone;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 测试代码</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 创建原对象并赋值</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> person1 = <span style="color:#66d9ef">new</span> Person
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Age = <span style="color:#ae81ff">25</span>,
+</span></span><span style="display:flex;"><span>            Name = <span style="color:#e6db74">&#34;张三&#34;</span>,
+</span></span><span style="display:flex;"><span>            HomeAddress = <span style="color:#66d9ef">new</span> Address { City = <span style="color:#e6db74">&#34;北京&#34;</span>, Street = <span style="color:#e6db74">&#34;长安街&#34;</span> },
+</span></span><span style="display:flex;"><span>            Hobbies = <span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt; { <span style="color:#e6db74">&#34;读书&#34;</span>, <span style="color:#e6db74">&#34;跑步&#34;</span> }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 深拷贝</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> person2 = person1.DeepClone();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 修改拷贝对象的成员</span>
+</span></span><span style="display:flex;"><span>        person2.Age = <span style="color:#ae81ff">30</span>;
+</span></span><span style="display:flex;"><span>        person2.HomeAddress.City = <span style="color:#e6db74">&#34;上海&#34;</span>; <span style="color:#75715e">// 修改引用类型成员</span>
+</span></span><span style="display:flex;"><span>        person2.Hobbies.Add(<span style="color:#e6db74">&#34;游泳&#34;</span>);      <span style="color:#75715e">// 修改集合</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 验证原对象不受影响</span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(person1.Age); <span style="color:#75715e">// 输出 25（值类型独立）</span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(person1.HomeAddress.City); <span style="color:#75715e">// 输出 北京（引用类型独立）</span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#66d9ef">string</span>.Join(<span style="color:#e6db74">&#34;,&#34;</span>, person1.Hobbies)); <span style="color:#75715e">// 输出 读书,跑步（集合独立）</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>关键说明</strong>：</p>
+<ul>
+<li>对于<code>string</code>类型，虽然是引用类型，但它是<strong>不可变的</strong>，直接赋值即可视为深拷贝；</li>
+<li>对于自定义引用类型（如<code>Address</code>），必须创建新实例并复制其成员；</li>
+<li>对于集合（如<code>List</code>），必须创建新的集合实例，并复制原集合的元素。</li>
+</ul>
+<h2 id="方式2通过序列化实现通用深拷贝最便捷适配复杂类">方式2：通过序列化实现通用深拷贝（最便捷、适配复杂类）</h2>
+<p>适合成员变量多、结构复杂的类，利用序列化将对象转为字节流，再反序列化为新对象，自动实现深拷贝。需要注意：所有涉及的类都要标记<code>[Serializable]</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.IO;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Runtime.Serialization.Formatters.Binary;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Collections.Generic;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 必须标记[Serializable]才能序列化</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[Serializable]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Address</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> City { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Street { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">[Serializable]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Age { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Address HomeAddress { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> List&lt;<span style="color:#66d9ef">string</span>&gt; Hobbies { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 通用深拷贝工具类</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CloneHelper</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 泛型方法，适配任意可序列化的类</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T DeepClone&lt;T&gt;(T obj)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 处理空值</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (obj == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">default</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 创建二进制序列化器</span>
+</span></span><span style="display:flex;"><span>        BinaryFormatter formatter = <span style="color:#66d9ef">new</span> BinaryFormatter();
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 使用内存流存储序列化后的字节</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (MemoryStream stream = <span style="color:#66d9ef">new</span> MemoryStream())
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 序列化原对象到内存流</span>
+</span></span><span style="display:flex;"><span>            formatter.Serialize(stream, obj);
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 将流指针重置到起始位置</span>
+</span></span><span style="display:flex;"><span>            stream.Seek(<span style="color:#ae81ff">0</span>, SeekOrigin.Begin);
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 反序列化为新对象（深拷贝）</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> (T)formatter.Deserialize(stream);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 测试代码</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> person1 = <span style="color:#66d9ef">new</span> Person
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Age = <span style="color:#ae81ff">25</span>,
+</span></span><span style="display:flex;"><span>            Name = <span style="color:#e6db74">&#34;张三&#34;</span>,
+</span></span><span style="display:flex;"><span>            HomeAddress = <span style="color:#66d9ef">new</span> Address { City = <span style="color:#e6db74">&#34;北京&#34;</span>, Street = <span style="color:#e6db74">&#34;长安街&#34;</span> },
+</span></span><span style="display:flex;"><span>            Hobbies = <span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt; { <span style="color:#e6db74">&#34;读书&#34;</span>, <span style="color:#e6db74">&#34;跑步&#34;</span> }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 通用深拷贝</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> person2 = CloneHelper.DeepClone(person1);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 修改拷贝对象</span>
+</span></span><span style="display:flex;"><span>        person2.HomeAddress.City = <span style="color:#e6db74">&#34;上海&#34;</span>;
+</span></span><span style="display:flex;"><span>        person2.Hobbies.Add(<span style="color:#e6db74">&#34;游泳&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 验证原对象不受影响</span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(person1.HomeAddress.City); <span style="color:#75715e">// 输出 北京</span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#66d9ef">string</span>.Join(<span style="color:#e6db74">&#34;,&#34;</span>, person1.Hobbies)); <span style="color:#75715e">// 输出 读书,跑步</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>注意事项</strong>：</p>
+<ul>
+<li><code>BinaryFormatter</code>在.NET Core/.NET 5+中需要引入 NuGet 包：<code>System.Runtime.Serialization.Formatters</code>；</li>
+<li>所有嵌套的类（如<code>Address</code>）都必须标记<code>[Serializable]</code>，否则会抛出序列化异常；</li>
+<li>性能略低于手动拷贝，但胜在通用、无需手动维护拷贝逻辑。</li>
+</ul>
+<h2 id="方式3使用systemtextjson无序列化标记适配现代net">方式3：使用System.Text.Json（无序列化标记，适配现代.NET）</h2>
+<p>如果不想标记<code>[Serializable]</code>，可以用.NET Core/.NET 5+内置的<code>System.Text.Json</code>实现深拷贝，无需额外依赖：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Text.Json;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Collections.Generic;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 无需标记Serializable</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Address</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> City { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Street { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Age { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Name { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Address HomeAddress { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> List&lt;<span style="color:#66d9ef">string</span>&gt; Hobbies { <span style="color:#66d9ef">get</span>; <span style="color:#66d9ef">set</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CloneHelper</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> T DeepClone&lt;T&gt;(T obj)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (obj == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">default</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 序列化为JSON字符串，再反序列化为新对象</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> json = JsonSerializer.Serialize(obj);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> JsonSerializer.Deserialize&lt;T&gt;(json);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 测试代码和方式2一致，效果相同</span>
+</span></span></code></pre></div><p><strong>优缺点</strong>：</p>
+<ul>
+<li>优点：无需标记特性、使用现代API、跨平台友好；</li>
+<li>缺点：性能比二进制序列化略低，且对一些特殊类型（如<code>DateTimeOffset</code>、自定义结构体）需要额外配置序列化选项。</li>
+</ul>
+<h3 id="总结-1">总结</h3>
+<ol>
+<li><strong>手动深拷贝</strong>：性能最优、可控性强，适合成员少、结构稳定的类；</li>
+<li><strong>二进制序列化</strong>：通用、适配复杂类，但需要标记<code>[Serializable]</code>，性能中等；</li>
+<li><strong>Json序列化</strong>：无需标记特性、现代.NET友好，性能略低，适合快速开发场景；</li>
+<li>核心原则：深拷贝的关键是<strong>为所有引用类型成员创建新实例</strong>，而非仅复制引用，确保原对象和拷贝对象完全独立。</li>
+</ol>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/.net/">.NET</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/delete_dictionary_elements/">正确地删除Dictionary中的元素</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/iterator_and_yield/">C#中的迭代器和yield</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_asynresult_interface_detail/">.NET Framework的IAsyncResult接口的细节</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/begin_receive_and_end_receive/">NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

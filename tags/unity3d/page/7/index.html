@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Unity3D | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Unity3D" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/tags/unity3d/" />
+
+
+		<meta itemprop="name" content="Unity3D">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/tags/unity3d/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-term">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/tags/">Tags</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity3D</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">Unity3D</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_collision_trigger/">Unity3D的碰撞检测响应处理细节</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 对碰撞做出响应所必须的条件 要想两个物体A，B发生碰撞检测，即触发OnCollision相关事件，或者触发OnTrigger相关事件。必须：
+物体A,B都挂接上了一个碰撞器组件，即Collider类（2D环境下是Collider2D类）的子类 运动着的物体，要携带一个刚体组件，即RigidBody类（2D环境下是RigidBody2D类），另一方的物体如果是静止的话，可以不用携带刚体组件。 2 碰撞时触发OnCollision相关事件的条件 在满足第1节中所提出的条件下，当两者的刚体组件（如果有的话）的Is Kinematic属性都未勾选，且两者的碰撞器组件的Is Trigger属性，都没勾选时，便会触发OnCollision相关事件。
+3 碰撞时触发OnCollision相关事件的条件 在满足第1节中所提出的条件下，当两者的碰撞器组件的Is Trigger属性，其中有一个勾选时，就会触发OnTrigger相关事件。
+4 响应事件的分类 响应事件分为Enter、Stay、Exit。以OnTrigger为例，就是OnTriggerEnter、OnTriggerStay、OnTriggerExit（2D环境下就是OnTriggerEnter2D，OnTriggerStay2D，OnTriggerExit2D，OnCollision事件以此类推）。
+Enter事件便是两个物体碰撞的那一瞬间，此事件在碰撞过程会执行一次 Stay事件表示两个物体在持续接触时，此事件在碰撞过程会多次执行。 Exit事件便是两个物体在分开的那一瞬间，此事件在碰撞过程会执行一次</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-03-22T20:20:49&#43;08:00">March 22, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_png_iccp_warning/">解决Unity3D在编译时出现libpng iccp警告的问题</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+项目组使用Unity3D4.6进行渠道商SDK接入，在编译Android版本时，发现部分渠道商提供的SDK包在编译时会出现如下图的问题：
+经查证，新版本的Unity3D采用了较高版本的libpng库作为png格式图片的处理模块，产生此问题的原因是新版本的libpng对png的ICCP采用了更严格的约束条件，因此，我们必须使用软件对渠道商提供的这些资源png图片进行处理，以解决这个问题。开源软件 ImageMagick 提供了处理这个问题的方案。
+从ImageMagick网站下载了ImageMagick Display软件包，安装后如下图：
+我们使用软件包中的convert.exe程序对这些图片进行处理。convert程序是一个命令行程序，该程序有很多开关参数。我们使用-strip参数处理。命令行格式为：
+convert 待处理的图片的文件名 -strip 处理后输出的图片文件名 如果需要一口气处理同一文件夹下的许多png，我们可以将处理命令写成一个批处理文件，代码如下：
+set fn=E:\software\ImageMagick-6.9.0-Q16\convert.exe for /f &#34;tokens=*&#34; %%i in (&#39;dir/s/b *.png&#39;) do &#34;%fn%&#34; &#34;%%i&#34; -strip &#34;%%i&#34; </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-03-19T20:20:49&#43;08:00">March 19, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_mesh_edge_flicker/">在Unity3D中模型渲染时边缘抖动有杂点的问题解决方案</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+项目主美反映了一个问题，即在U3D中，给模型使用了镜面高光的材质，结果模型的边缘有很多白色的杂点，如果换用了普通漫反射材质的话，杂点的明显稍微没那么强烈，如下图，左边是使用了镜面高光材质，右边是使用了漫反射材质。
+一开始，我以为是因为模型的Z-fighting问题，即两个带纹理的模型因为太靠近了，导致因渲染时的精度问题而造成模型的穿插。但后来检查了模型，并不存在“靴子里面还套着小腿”的这种情况。所以不是Z-fighting的问题。
+后来google了一下，发现老外们也曾经发现过类似的问题。最终有人提出这是一个因为抗锯齿做得不好的问题，解决方案就是给摄像机加一个基于image post process机制的脚本AntialiasingAsPostEffect，然后选用FXAA反走样的着色器。加入之后，效果不错，杂点问题得到了较为明显的改善。
+KlayGE引擎开发者，大神龚敏敏认为基于post process处理的技术目前已经是逐渐成为主流。nVidia等公司有很多大牛也提出了不少的算法。比如FXAA算法就是由nVidia的研究员Timothy Lottes提出的算法。所以可以预见不远的将来这项技术会逐渐普及。但目前因为硬件能力的问题，在手机移动平台上，依然要注意使用这种算法的性能问题。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-03-18T20:20:49&#43;08:00">March 18, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_lightmap_color_distortion/">Unity3D烘焙光照图在移动平台上颜色失真的分析和应对方案</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+Unity烘焙的LightMap是32bit的HDR图，而移动设备通常不支持 HDR图(32bit per channel) ，会按照 LDR图(8bit per channel) 的形式进行处理，因此会出现色偏问题。即颜色变淡，在例子中地面为绿色，因此相比于PC平台，切到移动平台如Android或者iOS上之后，黄色变淡，使得地面的绿色更加显眼。对此Unity3D技术支持人员的的建议是：
+可尝试自行修改LightMap的DecodeLightmap函数，该函数可在 Unity\Editor\Data\CGIncludes\UnityCG.cginc 文件中找到。需要说明的是，这种方法也不能达到与PC端完全一致的效果。 为了避免类似问题，请不要使用过于强烈的Light进行烘焙，因为Light的强度(Intensity)越高，色偏问题会越严重。 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-03-17T20:20:49&#43;08:00">March 17, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_render_path_detail/">Unity3D的渲染路径的细节一览表</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 功能列表 功能 Vertex Lit Rendering Path Forward Rendering Path Deferred Rendering Path 逐像素光照效果（Normal map等） N Y Y 多render pass支持 仅在一个render pass中完成光照计算 允许多render pass 允许多render pass 逐像素实时阴影 N 仅支持一盏Directional Light Y 双光照贴图(Dual Lightmaps) N N Y 深度缓冲区和法线缓冲区 N Additional Render Pass Y 软粒子（soft particle） N N Y 半透明的物体（Semitransparent objects） N Y Y 反走样（抗锯齿 anti aliasing） N Y Y 灯光剔除蒙版(Lighting Culling masks) 受限制 Y Y 光照保真度（Lighting Fidelity） 所有光照计算在顶点着色器中执行 部分光照计算在片元着色器中执行 所有光照计算在片元着色器中执行 每像素光照的性能耗费 像素数 像素数*被实时光照亮的像素数 PC上的所需的最低shader model版本 任意版本 最低2.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-03-12T20:20:49&#43;08:00">March 12, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_special_directory/">Unity3D工程中的特殊文件夹及其在不同平台下的目录</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+目录名 作用 仅能放置于工程根目录吗 会打包进最终发布包吗 仅在编辑阶段使用吗 读取方式 打包时会原样保留原始文件格式吗 Editor 放置一些第三方或者自定义的编辑辅助工具的代码 N N Y - Editor Default Resources 编辑器用到的一些资源，比如图片、文本文件、等等。放在这里 Y N Y 调用EditorGUIUtility.Load读取 - Gizmos 用来在编辑阶段绘制一些辅助图标辅助线条 Y N Y 在MonoBehavior类的OnDrawGizmos方法中使用 - Plugins Andoird 或者 iOS平台下，要给工程接一些SDK时可以把SDK依赖的库文件如 .so .jar .a文件放置从此处 N Y N - N Resources Resources文件夹下的资源不管你用还是不用都会被打包进.apk或者.ipa N Y N Resource.Load函数： 编辑时和运行时都可以通过Resource.Load来直接读取。Resources.LoadAssetAtPath它可以读取Assets目录下的任意文件夹下的资源，它可以在编辑时或者编辑器运行时用，它但是它不能在真机上用，它的路径是 ”Assets/xx/xx.xxx” 必须是这种路径，并且要带文件的后缀名。 N StreamingAssets 并且它是一个只读的文件夹，就是程序运行时只能读 不能写。它在各个平台下的路径是不同的 N Y N Application.streamingAssetsPath 是访问这些目录下的资源路径的方法。它会根据当前的平台选择对应的路径。 Y Application类中定义的若干路径在不同平台下的具体值如下表：
+变量Application.dataPath
+Windows: &ndash; Android: /data/app/xxx.xxx.xxx.apk iOS: Application/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/xxx.app/Data 变量Application.streamingAssetsPath</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-02-17T20:20:49&#43;08:00">February 17, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_gi_introduction/">Unity3D的全局光照及Lighting Window面板参数简介</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 什么是全局光照（Global Illumination） 在阐述什么是全局光照之前，我们先简与之对应的局部光照。粗略地说，所谓局部光照，就是我们在渲染一个场景时，仅仅考虑光源和物体之间的交互，而不考虑物体与物体之间的光线交互——即每一个物体表面的颜色，仅仅由光源发出的光线贡献，而不考虑由其他物体所反射过来的光线的贡献。
+全局光照则是在局部光照的基础上，增加考虑物体与物体之间光线交互。所以说如果局部光照系统就是由光源+待渲染物体+视点组成的话，那么全局光照系统就是由光源+各待渲染物体之间的反射光+待渲染物体+视点组成。
+从是否是即时性来分，GI可分为实时（又可称为在线）光照和 非实时（又可称为离线） 光照。如果是离线光照的话，待渲染物体之间的反射光就是通过辐射度算法或者是光线追踪算法逐点计算出来的。这些算法是相当耗时的，无法应用在实时GI上（当然随着硬件的发展，不排除原本只适用于离线光照的算法在未来能应用在实时上）。
+2 光照的各种方式 如上所述，GI是在局部光照的基础上，增加了对待渲染物体之间的光线交互的计算。从而使得渲染效果更逼真。对Unity3D而言。照明模式（lighting mode）分为实时照明和烘焙照明两大类，其中烘焙照明又可以分为预计算光照和烘焙光照贴图这两种。首先看实时照明的方式。
+2.1 实时照明 在不做任何修改设置的情况下，Unity的光源(包括directional light,、spot light、point light)都是实时的，代表这些光源会把光线照射到场景并以每一帧的频率更新，由于光源是可以在场景内移动的对象，场景灯光的更新是实时的，你可以在游戏窗口和场景窗口看到改变。如下图
+注意上图：因为没有反射光源的关系阴影是全黑的，只有投射光锥体范围内的对象表面才有光源影响。实时照明是场景里照亮物体最基本的方法，用来照亮角色和会动的对象，但默认设置里Unity实时照明里的光线不会反射，（也就是说，从A物体反射出来的光线，就算是在物理学上应该会入射到B物体。但在渲染中，计算B物体的最终颜色时，并不考虑这个从A物体反射过来的光线的贡献）。因此，我们才导入了全局光照系统，启用了预先计算的技术，都是为了表现一个更逼真的场景。
+2.2 烘焙照明 2.2.1 烘焙全局光照贴图（Baked GI Lighting） 当烘焙一张光照贴图(Lightmap)时，场景内的静态对象会根据当前场景内的光照，算出一张渲染结果贴图，并覆盖在场景对象之上建立照明效果，如下图：
+这些”光照贴图”可以包含场景内投射到物体表面的直接光源，以及在不同物体间反射的”间接光源”，这样的光照贴图可以通过使用着色器(Shader)描述物体的表面信息(Albedo)和凹凸(Normals)信息。
+使用这种烘焙方式所产生出来的光照贴图，是无法在运行期发生变化的，因此被定义为静态(Static)，虽然仍可在这层贴图上继续迭加光源计算，但两者已无法交互运算，通常我们采用这光照法来让低阶的手机能顺利执行，解决光在游戏中运行的性能问题。
+2.2.2预计算全局光照(Precomputed Realtime GI Lighting) 虽然这种静态光照贴图无法在游戏执行时改变场景光照效果，但预先计算的实时全局光照系统，则能实时地去计算算复杂的场景光源的变化，通过这种方法，就能建立一个丰富的全局光照反射场景，并实时反映光源的改变。好比做个日晷，阴影的位置和颜色会随着光源移动改变，这在原本的烘焙光照系统是无法达成的。
+为了能够实时地实现这些效果，需要在实时运算之前先将场景中的相关光照数据做一次”预计算”，所谓的预计算负责计算游戏过程中光的复杂行为，它可以在时间空档时进行计算，因此称作一个”脱机”运算，或者可称为“离线”运算。
+3 Unity3D 5中的全局烘焙照明 在上节我们提到Unity3D 5的GI系统有两种烘焙模式，因此，Unity3D 5在Lighting Windows窗口中提供了这两种的模式的操作。 Unity3D 5的Lighting Window可以在通过菜单【Windows|Lighting】打开。
+在Unity3D 5的灯光组件中，有一个Baking属性，这个Baking属性有三种选项，分别是Realtime、Baked、Mixed这三种属性。而这三种属性，则又分别对应于Lighting Window中的Scene Tab界面中的【Precomputed Realtime GI】和【Baked GI】这两个选项的组合，如下图
+3.1只勾选【Precomputed Realtime GI】选项 关闭当在scene tab面板中，关闭了【Baked GI】选项。或者将场景中的全部光源类型设置为【Realtime】的时候这意味着没有任何的光会被预先烘焙出光照贴图。引擎在“烘焙”时，仅仅是存储场景内静态物体间的关系，当烘焙完成后你可以自由的调整光源或物体材质，并实时地看到效果。 此时在Scene中观察Baked结果可以看到没有任何静态颜色被烘焙出来。
+如果在scene tab中，仅启用了【Precomputed Realtime GI】选项时，则场景中的光源应该选择Realtime类型。烘焙选项【Realtime Resolutio】对应前文所说的间接光照图，值越高间接光的效果就越明显（其实应该是越准确，当分辨率太低时间接光会因像素过滤而变弱） 。如下图，注意红色盒子投递在白色盒子上的影子。如下图当Realtime Resolution的值为10时
+如下图当Realtime Resolution的值为1时
+3.2 只勾选【Baked GI】选项 当在scene tab中，取消【Precomputed Realtime GI】选项，而启用【Baked GI】的话。这时候光源则依赖于他的Baking属性去分别参与静态光照贴图的烘焙：属性为Realtime的灯光，不参与静态光照烘焙，但同时作用于动态与静态物体上；属性为Mixed的光源，参与静态光照贴图的烘焙，而在运行时，则仅作用于非静态物体；属性为Baked光源，仅作用于静态光照贴图的烘焙，在运行时不参与实时光照计算。如下图可再次观察SceneView可以看到烘焙出来的颜色。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-02-17T20:10:49&#43;08:00">February 17, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/">1</a>
+				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/2/">2</a>
+				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/3/">3</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/6/">6</a>
+				<span class="pagination__item pagination__item--active" data-total="7">7</span>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

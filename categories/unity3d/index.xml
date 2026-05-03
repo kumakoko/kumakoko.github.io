@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Unity3D on XGF</title>
+    <link>http://www.xionggf.com/categories/unity3d/</link>
+    <description>Recent content in Unity3D on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 12 Nov 2025 18:21:49 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/categories/unity3d/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Yoasset学习笔记和踩坑记录</title>
+      <link>http://www.xionggf.com/post/unity3d/yooasset_note/</link>
+      <pubDate>Wed, 12 Nov 2025 18:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/yooasset_note/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;安装YooAssets的编辑器和运行时源代码可以直接从Github下面下载，但如果要用到tuyoo公司提供的若干个示例，则还需要配置一下package manager，从Unity的package manager中下载&#xA;打开管理界面 【Edit/Project Settings/Package Manager】 // 输入以下内容（中国版） Name: package.openupm.cn URL: https://package.openupm.cn Scope(s): com.tuyoogame.yooasset // 输入以下内容（国际版） Name: package.openupm.com URL: https://package.openupm.com Scope(s): com.tuyoogame.yooasset 什么是unity的scoped registry参见本站网页。&#xA;如果碰到有如下的控制台输出：&#xA;[Package Manager Window] Error searching for packages. Unable to perform online search: Cannot connect to &amp;#39;package.openupm.cn&amp;#39; (error code: ENOTFOUND). Verify your environment firewall policies allow connection to this host name. If your system is behind a proxy, verify your proxy environment variables (HTTP_PROXY and HTTPS_PROXY) are properly set.</description>
+    </item>
+    <item>
+      <title>在unity中生成一个guid值</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_guid/</link>
+      <pubDate>Wed, 12 Nov 2025 18:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_guid/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;Unity中生成GUID的方法 Unity本身提供了便捷的API来生成GUID，同时也兼容C#标准库的GUID生成方式，以下是两种最常用且可靠的方法：&#xA;方法1：使用Unity内置的GUID类（推荐） Unity引擎有专门的 UnityEditor.GUID 类（编辑器环境）和 System.Guid 类（运行时/编辑器通用），其中运行时通用的方式兼容性最好：&#xA;using UnityEngine; public class GuidGenerator : MonoBehaviour { void Start() { // 生成新的GUID System.Guid newGuid = System.Guid.NewGuid(); // 转换为字符串（常用格式，包含连字符） string guidString = newGuid.ToString(); Debug.Log(&amp;#34;生成的GUID（带连字符）：&amp;#34; + guidString); // 转换为无连字符的字符串（适合存储/传输） string guidNoHyphen = newGuid.ToString(&amp;#34;N&amp;#34;); Debug.Log(&amp;#34;生成的GUID（无连字符）：&amp;#34; + guidNoHyphen); // 转换为Unity编辑器专用的GUID类型（仅编辑器环境可用） #if UNITY_EDITOR UnityEditor.GUID unityGuid = UnityEditor.GUID.Generate(); Debug.Log(&amp;#34;Unity编辑器GUID：&amp;#34; + unityGuid.ToString()); #endif } } 方法2：编辑器扩展（批量生成/快捷生成） 如果需要在编辑器面板快速生成GUID，可以写一个简单的编辑器工具：&#xA;using UnityEditor; using UnityEngine; public class GuidCreatorWindow : EditorWindow { [MenuItem(&amp;#34;Tools/生成GUID&amp;#34;)] static void OpenWindow() { GuidCreatorWindow window = GetWindow&amp;lt;GuidCreatorWindow&amp;gt;(&amp;#34;GUID生成器&amp;#34;); window.</description>
+    </item>
+    <item>
+      <title>详解Unity3D packmanager的scoped registry</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_scoped_registry_detail/</link>
+      <pubDate>Tue, 11 Nov 2025 18:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_scoped_registry_detail/</guid>
+      <description>核心概念：一句话概括 Scoped Registry（作用域注册表） 是一个自定义的包服务器地址，你可以告诉 Unity Package Manager：“当我要找某个特定前缀的包时，不要再去 Unity 的官方源找了，请去我指定的这个私人地址找。”&#xA;为什么需要 Scoped Registry？（解决的问题） 在 Scoped Registry 出现之前，如果你想使用非 Unity 官方提供的包（比如公司内部的工具包、第三方供应商的插件、或自己团队开发的共享模块），通常有几种麻烦的方式：&#xA;直接导入 .unitypackage 文件：难以更新、版本控制混乱、无法清晰地管理依赖。 使用 Git URL：在 Package Manager 里直接链接到 Git 仓库。这虽然可以，但不够规范，并且对私有仓库的权限管理比较麻烦。 手动复制文件：最原始的方法，维护起来是噩梦。 这些方法都不够优雅，也不利于团队协作和持续集成。&#xA;Scoped Registry 的诞生就是为了像管理官方包一样，来管理这些“第三方”或“私人”的包。 它让 Package Manager 从一个只能连接 Unity 官方商店的工具，变成了一个可以连接多个包源的、更通用的依赖管理工具。&#xA;它是如何工作的？ Scoped Registry 基于 npm 的包注册表协议。你配置两个核心信息：&#xA;注册表地址：包的服务器地址。例如： 公司内部搭建的 npm registry（如 Verdaccio、Azure Artifacts 等）。 第三方服务提供的地址（如 OpenUPM 的注册表）。 作用域：一个或多个包名的前缀。它用来“过滤”或“限定”这个注册表负责哪些包。 工作流程示例：&#xA;假设你的公司叫 “AwesomeStudio”，你们将所有内部工具包的名字都命名为 com.awesomestudio.xxx。&#xA;配置 Scoped Registry：&#xA;名称： AwesomeStudio Internal URL： https://packages.awesomestudio.com 作用域： com.</description>
+    </item>
+    <item>
+      <title>一篇文章说透计算着色器的SV_DispatchThreadID</title>
+      <link>http://www.xionggf.com/post/unity3d/hlsl_sv_dispatch_thread_id_detail/</link>
+      <pubDate>Mon, 30 Dec 2024 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/hlsl_sv_dispatch_thread_id_detail/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;SV_DispatchThreadID 是HLSL（High-Level Shading Language）中的一个语义（Semantic），用于在Compute Shader中获取当前线程的全局线程ID。它是Compute Shader中非常重要的一个概念，用于确定每个线程处理的数据或任务。&#xA;SV_DispatchThreadID 的含义 全局线程ID：&#xA;SV_DispatchThreadID 是一个 uint3 类型的变量，表示当前线程在全局线程空间中的ID。 它的三个分量（x、y、z）分别表示线程在X、Y、Z三个维度上的全局索引。 线程的全局位置：&#xA;SV_DispatchThreadID 的值范围由程序语言层（例如C#） 的Dispatch 调用，和HLSL语言中的 numthreads 语句定义。 例如，如果调度了 Dispatch(10, 20, 30)，并且 numthreads 是 [8, 8, 1]，那么： SV_DispatchThreadID.x 的范围是 [0, 10*8-1]（即 [0, 79]）。 SV_DispatchThreadID.y 的范围是 [0, 20*8-1]（即 [0, 159]）。 SV_DispatchThreadID.z 的范围是 [0, 30*1-1]（即 [0, 29]）。 用途：&#xA;SV_DispatchThreadID 通常用于确定当前线程处理的数据索引。 例如，在处理2D纹理时，SV_DispatchThreadID.xy 可以直接用作纹理坐标。 在处理1D数组时，SV_DispatchThreadID.x 可以直接用作数组索引。 SV_DispatchThreadID 的计算方式 SV_DispatchThreadID 的值是由以下两个因素决定的：&#xA;线程组的大小（由 numthreads 定义）：&#xA;例如，[numthreads(8, 8, 1)] 表示每个线程组有 8x8x1 = 64 个线程。即是说，numthread语句，是声明“线程”的。 线程组的数量（由 Dispatch 调用定义）：</description>
+    </item>
+    <item>
+      <title>使用mipmap streaming来优化GPU的纹理内存</title>
+      <link>http://www.xionggf.com/post/unity3d/texture_streaming/</link>
+      <pubDate>Thu, 19 Dec 2024 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/texture_streaming/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;本文所涉及到的API和Unity3D编辑器都是基于6000.0.25f1c1版本&#xA;1 mipmap streaming 简介 使用 mipmap 流来限制 GPU 内存中纹理的大小。&#xA;1.1 mipmap streaming的工作原理 对于每个被摄像机观察到的纹理，Unity会自动计算并加载其特定级别的mipmap，而不是加载所有级别。这意味着 Unity 只会将每个纹理的指定mipmap level的内容从磁盘传输到 CPU 和 GPU。 Unity 会以尽可能高的分辨率加载 mipmap level，但如果较高分辨率的 mipmap level不符合您设置的内存限制，则使用较低的 mipmap level。mipmap可预配置 Unity 在 GPU 上缓存指定mipmap level的纹理内容，以避免重复加载。 1.2 mipmap streaming的限制 Unity不支持对地形纹理使用mipmap streaming，因为 Unity 始终需要最高分辨率的 mipmap level。 Unity不支持对纹理数组、cubemap，3D纹理使用mipmap streaming。 如果使用Graphics.DrawMeshNow等 API来渲染纹理，Unity 将无法获得计算 mipmap level所需的信息。使用Texture2D.requestedMipmapLevel API 手动设置纹理的 mipmap level，或者禁用mipmap streaming。 如果纹理有tiling和offset属性，但又没指定使用_ST属性，Unity可能无法正确计算这种纹理的mipmap level。 2 启用 mipmap streaming 要启用 mipmap streaming，按照以下步骤操作：&#xA;点击【Edit|Project Settings】菜单项，弹出【Project Settings】面板，选中【Quality】项 在【Texture】部分中，启用【Mipmap Streaming】 在默认情况下，这时候为场景中的所有摄像机都打开了mipmap streaming。在编辑器中，mipmap streaming在edit mode或者play mode下都处于开启状态。</description>
+    </item>
+    <item>
+      <title>一段根据片元深度值重建对应的深度坐标值的代码及其解释</title>
+      <link>http://www.xionggf.com/post/unity3d/reconstruct_world_position/</link>
+      <pubDate>Fri, 29 Nov 2024 23:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/reconstruct_world_position/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;// 从深度信息重建世界空间坐标 // 参数： // screenPos - 屏幕空间坐标（通常来自顶点着色器的SV_Position） // viewDir - 视图空间方向向量 // sceneDepth - 包含原始深度和线性深度值的结构体 float3 ReconstructWorldPosition(float4 screenPos, float3 viewDir, SceneDepth sceneDepth) { // 平台深度缓冲处理 ---------------------------------------- #if UNITY_REVERSED_Z // 处理Reversed-Z平台（如DirectX） real rawDepth = sceneDepth.raw; // 直接使用原始深度值 #else // OpenGL等常规深度缓冲平台 // 将深度值从[0,1]映射到[Near,1]，适配OpenGL的NDC范围 real rawDepth = lerp(UNITY_NEAR_CLIP_VALUE, 1, sceneDepth.raw); #endif // 正交投影处理 -------------------------------------------- #if defined(ORTHOGRAPHIC_SUPPORT) // 将屏幕坐标转换为NDC空间（-1到1范围） float4 viewPos = float4( (screenPos.xy / screenPos.w) * 2.0 - 1.0, // 透视除法后映射到NDC rawDepth, // 深度值 1.</description>
+    </item>
+    <item>
+      <title>一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</title>
+      <link>http://www.xionggf.com/post/unity3d/surface_depth/</link>
+      <pubDate>Thu, 28 Nov 2024 23:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/surface_depth/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;// 计算场景深度与当前透明几何像素的线性深度差 // 参数： // depth - 包含场景深度信息的结构体（包含原始深度和线性眼空间深度） // positionCS - 当前像素在裁剪空间中的位置坐标（SV_Position） float SurfaceDepth(SceneDepth depth, float4 positionCS) { // ===================== 场景深度计算 ===================== // 根据投影模式选择计算方式： // unity_OrthoParams.w: 0=透视投影 | 1=正交投影 const float sceneDepth = (unity_OrthoParams.w == 0) ? depth.eye // 透视模式：直接使用预计算的线性眼空间深度 : LinearDepthToEyeDepth(depth.raw); // 正交模式：将原始深度转换到眼空间 // ================= 当前像素深度计算 ==================== const float clipSpaceDepth = (unity_OrthoParams.w == 0) ? LinearEyeDepth(positionCS.z, _ZBufferParams) // 透视模式：裁剪空间z转线性眼深度 : LinearDepthToEyeDepth(positionCS.z / positionCS.w); // 正交模式：NDC z转眼空间深度 // ================ 深度差异计算结果 ===================== return sceneDepth - clipSpaceDepth; // 返回场景深度与当前像素深度的差值 } 首先，函数内部有两个const float变量，sceneDepth和clipSpaceDepth，然后返回它们的差值。我需要理解这两个变量是如何计算的，特别是条件判断部分unity_OrthoParams.</description>
+    </item>
+    <item>
+      <title>Unity3D的内置宏 DYNAMICLIGHTMAP_ON</title>
+      <link>http://www.xionggf.com/post/unity3d/dynamiclightmap_on/</link>
+      <pubDate>Tue, 19 Nov 2024 23:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/dynamiclightmap_on/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;在Unity中，DYNAMICLIGHTMAP_ON 是一个与 动态光照贴图（Dynamic Lightmaps） 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 控制着色器是否处理动态光照贴图数据，主要用于实现动态物体的间接光照混合效果。&#xA;核心含义 动态光照贴图标识&#xA;当该宏被激活时（#if defined(DYNAMICLIGHTMAP_ON)），表示当前渲染的物体 启用了动态光照贴图，需要在着色器中采样动态光照贴图数据。 若未激活，则物体仅使用静态光照贴图或实时光照。 技术目的&#xA;允许动态物体（如可移动的物件）与烘焙的静态场景光照进行间接光交互。 结合 Enlighten 或 Progressive Lightmapper 系统，实现动态物体的间接光实时更新。 触发条件 该宏在以下情况下自动激活：&#xA;物体设置&#xA;物体的 Mesh Renderer 组件中勾选 Lightmap Static 为 Contribute GI，同时设置 Lightmap Parameters 为支持动态更新。 光照系统配置&#xA;项目中启用了 Realtime Global Illumination（实时全局光照）。 使用 Baked Indirect 或 Shadowmask 混合光照模式。 Shader编译指令&#xA;在Shader中通过 #pragma multi_compile 或 #pragma shader_feature 声明动态光照贴图支持： #pragma multi_compile __ DYNAMICLIGHTMAP_ON 技术实现机制 1. 数据传递 动态光照贴图信息通过以下方式传递到着色器：&#xA;顶点数据：动态光照贴图坐标通过 TEXCOORD2 传递。 Uniform变量：动态光照贴图纹理（unity_DynamicLightmap）和采样器（samplerunity_DynamicLightmap）。 2. 着色器代码示例 struct v2f { float2 uv : TEXCOORD0; #if defined(LIGHTMAP_ON) float2 lightmapUV : TEXCOORD1; // 静态光照贴图UV #endif #if defined(DYNAMICLIGHTMAP_ON) float2 dynamicLightmapUV : TEXCOORD2; // 动态光照贴图UV #endif }; half3 GetLightmapColor(v2f i) { half3 staticGI = 0; half3 dynamicGI = 0; #if defined(LIGHTMAP_ON) staticGI = SampleLightmap(unity_Lightmap, samplerunity_Lightmap, i.</description>
+    </item>
+    <item>
+      <title>Unity3D的内置宏 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</title>
+      <link>http://www.xionggf.com/post/unity3d/requires_vertex_shadow_coord_interpolator/</link>
+      <pubDate>Tue, 19 Nov 2024 23:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/requires_vertex_shadow_coord_interpolator/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;在Unity URP中，REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR 是一个与阴影计算相关的内置宏（Shader Variant Keyword），它的作用是：&#xA;核心含义 控制顶点着色器是否需要生成并传递阴影坐标插值器&#xA;当该宏被激活时，Unity会在顶点着色器阶段计算主光源的阴影坐标，并通过顶点着色器输出结构体（Varyings）传递到片元着色器。这使得片元着色器可以直接使用插值后的阴影坐标进行阴影采样，避免在片元阶段重复计算。&#xA;触发条件 该宏会自动激活，当以下条件满足时：&#xA;项目中启用了 主光源阴影（Main Light Shadows） 使用了 逐顶点阴影坐标插值 的优化模式（而非逐片元计算） 在Shader中通过 #pragma multi_compile 启用了阴影相关功能（例如 _MAIN_LIGHT_SHADOWS） 典型应用场景 在URP的Shader中，你会在顶点着色器输出结构体 Varyings 中看到类似代码：&#xA;struct Varyings { float4 positionCS : SV_POSITION; float3 positionWS : TEXCOORD0; // 当 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR 激活时，自动添加阴影坐标字段 #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) float4 shadowCoord : TEXCOORD1; #endif }; 技术原理 阴影坐标生成&#xA;顶点着色器通过 GetShadowCoord(vertexInput) 计算阴影坐标，并存储在 shadowCoord 中。&#xA;插值优化&#xA;阴影坐标在顶点阶段计算后，通过插值器传递到片元着色器，减少片元阶段的计算量。&#xA;自动编译控制&#xA;Unity会根据项目设置和Shader特性，在编译时自动决定是否启用该宏，生成不同的Shader变体。&#xA;对比其他阴影模式 宏名称 计算阶段 性能消耗 精度 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR 顶点着色器 较低 中等 REQUIRES_FRAGMENT_SHADOW_COORD_INTERPOLATOR 片元着色器 较高 较高 调试与手动控制 强制启用/禁用（不推荐）</description>
+    </item>
+    <item>
+      <title>Unity3D的内置宏 _LIGHT_LAYERS</title>
+      <link>http://www.xionggf.com/post/unity3d/_light_layers/</link>
+      <pubDate>Tue, 19 Nov 2024 22:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/_light_layers/</guid>
+      <description>Unity3D的内置宏 ADDITIONAL_LIGHTS_VERTEX&#xA;请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;在Unity URP/HDRP中，_LIGHT_LAYERS 是一个与 光源层级过滤（Light Layer Masking） 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 实现基于层级的光源与物体交互控制，允许开发者通过层掩码（Layer Masks）精确控制哪些光源可以影响特定物体。&#xA;核心含义 1. 功能定位 光源筛选机制：激活该宏后，物体会根据自身的 Light Layer Mask 和光源的 Light Layer Mask 进行匹配，只有匹配层的光源才会对该物体产生光照影响。 渲染优化：通过层级过滤减少无效光源计算，提升复杂场景性能。 2. 技术目标 精细化光源控制：例如让装饰性灯光只影响场景道具，不影响角色 多世界渲染支持：用于分屏游戏或VR中不同视角的独立光照逻辑 触发条件 该宏的激活需要同时满足以下条件：&#xA;项目设置启用&#xA;URP/HDRP Asset 中开启光源层支持： URP: Lighting &amp;gt; Light Layers &amp;gt; Enable Light Layers HDRP: Lighting &amp;gt; Light Layers Shader声明&#xA;在着色器中通过#pragma指令声明支持：&#xA;#pragma multi_compile _ _LIGHT_LAYERS 光源与物体配置&#xA;光源的 Light Layer Mask 设置为非&amp;quot;Everything&amp;quot;值 物体的 Renderer组件 &amp;gt; Rendering Layer Mask 设置为与光源匹配的层级 技术实现机制 1.</description>
+    </item>
+    <item>
+      <title>Unity3D的内置宏 _ADDITIONAL_LIGHTS_VERTEX</title>
+      <link>http://www.xionggf.com/post/unity3d/_additional_lights_vertex/</link>
+      <pubDate>Tue, 19 Nov 2024 21:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/_additional_lights_vertex/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;在Unity URP中，_ADDITIONAL_LIGHTS_VERTEX 是一个与 附加光源处理方式 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 控制附加光源的光照计算阶段，决定是在 顶点着色器 还是 片元着色器 中处理附加光源的贡献。&#xA;核心含义 1. 光源计算阶段选择 启用时（_ADDITIONAL_LIGHTS_VERTEX 被定义）：&#xA;附加光源的光照计算在 顶点着色器 阶段完成，计算结果通过顶点插值传递到片元着色器。 未启用时（默认或使用 _ADDITIONAL_LIGHTS）：&#xA;附加光源的光照计算在 片元着色器 阶段逐像素完成。 2. 性能与质量的权衡 模式 性能消耗 光照精度 适用场景 _ADDITIONAL_LIGHTS_VERTEX 较低 中等（顶点插值） 移动端、低性能设备 _ADDITIONAL_LIGHTS 较高 高（逐像素） PC/主机、高质量渲染需求 触发条件 该宏的激活由以下因素决定：&#xA;URP Asset设置&#xA;在URP资源中启用 Additional Lights（附加光源） 设置 Per Object Light 类型为 Vertex 或 Fragment（对应不同模式） Shader编译指令&#xA;在Shader中使用以下指令声明变体：&#xA;#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS 实际光源数量&#xA;当场景中存在 附加光源（点光源、聚光灯等） 且影响当前渲染对象时，Unity自动选择对应变体。&#xA;技术实现原理 顶点着色器阶段处理（_ADDITIONAL_LIGHTS_VERTEX） // 顶点着色器中计算附加光源 Varyings vert(Attributes input) { Varyings output; // .</description>
+    </item>
+    <item>
+      <title>StylizedWater2插件帮助文档精读</title>
+      <link>http://www.xionggf.com/post/unity3d/stylized_water_2_doc/</link>
+      <pubDate>Tue, 19 Nov 2024 20:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/stylized_water_2_doc/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;插件官方文档地址&#xA;Stylized Water 2 入门指南 1. 准备工作 确保项目无控制台错误：未解决的代码错误会导致资源代码无法编译，材质可能显示为粉色。 项目设置： 使用 Universal Render Pipeline (URP)：在 Edit -&amp;gt; Project Settings -&amp;gt; Graphics 中检查是否已分配 URP 资源。 如果没有正确设置 URP，材质将显示为粉色。请参考 Unity 的 URP 文档进行设置。 注意：建议在项目早期决定使用 URP，因为在生产过程中切换到 URP 可能导致其他自定义着色器失效。 颜色空间：推荐使用 Linear 颜色空间（新项目默认使用 Gamma 空间），详细信息请参考 Unity 文档。 2. URP 设置 启用必要选项： Depth Texture：用于多种效果（如深度和交互动画）。如果禁用，这些效果将失效，且在 Android 上构建时水可能会不可见。 Opaque Texture：用于折射效果，启用折射时需要。 如果这些选项未启用，但着色器使用了相关功能，材质 UI 中会显示警告并提供快速修复按钮。 相机设置：每个相机可以覆盖这些设置。如果某些效果在特定场景或相机中不可见，请检查这些选项是否被设置为“Off”。 质量级别设置：如果使用了不同质量级别的管道设置，请确保这些选项也已启用，否则在较低质量级别下运行时，水效果可能失效。 3. 向场景中添加水 建议：创建或复制材质（而不是直接使用包中的材质），以避免更新资源时设置被意外覆盖。 方法： 方法 1：将 Assets/StylizedWater2/Prefabs 中的预制件拖入场景，并调整材质属性。 方法 2：通过 GameObject -&amp;gt; 3D Object -&amp;gt; Water -&amp;gt; Object 菜单选项创建新的 Mesh Renderer。 方法 3： 在场景中创建一个平面网格。 创建新材质并分配 StylizedWater2/Default 着色器。 通过 Add Component -&amp;gt; Stylized Water 2 -&amp;gt; Water Object 添加 Water Object 组件（仅在需要使用平面反射时必要，但无负面影响）。 材质参数：每个参数都有工具提示，鼠标悬停可查看描述。 Stylized Water 2 着色器使用指南 1.</description>
+    </item>
+    <item>
+      <title>Amplify Imposter 插件使用指南</title>
+      <link>http://www.xionggf.com/post/unity3d/amplify_imposter_manual/</link>
+      <pubDate>Tue, 12 Nov 2024 19:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/amplify_imposter_manual/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原文地址&#xA;描述 Amplify Impostors 是一款小巧但功能强大的工具，可用于创建不同类型的 Impostors，这些 Impostors 是平面和简单多边形构成的复杂高多边形对象的替代品（substitutes ），可渲染原始对象的虚假版本（fake version）（因此得名）。与传统精灵非常相似，它们通常由单个平面四边形或简单多边形组成，并且像经典广告牌（classic billboard）一样始终面向相机。将它们视为要渲染的面向相机的纸板版本。使用此类技术的常见目的是能够用非常低的多边形表示远处的物体，例如树木、灌木丛、岩石、废墟、建筑物、道具等。&#xA;有多种方法可以创建这些 impostor，每种方法都有各自的优点和缺点。此工具旨在提供最有用和最流行的技术，同时使创建过程尽可能简单。&#xA;安装 打开 AmplifyImpostors.unitypackage Unity 加载后会显示“导入包”窗口，选择全部并点击导入 警告 - 如果您在同一个项目中使用 Amplify Shader Editor请确保两个软件包都是最新的；检查您的控制台是否存在与之相关的任何错误 快速入门说明 选择场景中的游戏对象或项目中的预制件 在检查器窗口中搜索并添加“Amplify Impostor”组件 按“Bake Impostor”并选择要保存impostor文件的位置 当前功能 Impostor类型 目前支持三种预先烘焙的 Impostor 类型 （左边是真实网格，右边是冒名顶替网格）&#xA;效果图 示意图 描述 球面(spherical)：以典型的经纬度格式拍摄多张照片。着色器更简单、更快速，近距离拍摄时， impostor看起来基本没问题，但帧间跳动相当明显。可以通过增加轴帧数（以牺牲分辨率为代价）来缓解这一问题。 八面 (Octahedron) ：以十球面格式(icosphere format)拍摄多张照片。这样做是为了保证相邻帧数固定为 3，这样在相对于相机的任何给定位置，我们都可以混合最近的三帧。这样做的好处是消除帧之间的弹出。另一方面，着色器复杂度更高，当近距离观察时，混合变得太明显，出现明显的重影伪影。 半八面体(HemiOctahedron)：半八面体变体与正八面体类似，不同之处在于只从物体的上半球拍摄相同数量的镜头，从而有效地使混合精度翻倍。但缺点是，由于不烘焙下半球，从下方看时会产生不正确的结果。这种方法通常仅在您知道物体将始终从上方观看时使用（即：自上而下的相机(top-down cameras)）。 实时渲染 这些预烘焙解决方案中的每一个方案，都会渲染表面的构成部分贴图，以支持实时照明。这些方案支持：&#xA;可编写脚本的渲染管道（HD 和 LW）（v4.9.0+） 标准/旧版前向渲染和延迟渲染 动态灯光和阴影 对象交叉点(object intersection)的深度写入 全局照明 烘焙光照贴图（通过自定义烘焙） GPU 实例 抖动交叉淡入淡出 其他的 自定义打包贴图（package map）：使用标准材质烘焙渲染最多 4 张贴图和自定义材质，使用自定义烘焙渲染最多 8 张不同的地图（支持 PNG 和未压缩的 TGA） 反照率 (RGB) | Alpha 蒙版 (A) 镜面反射 (RGB) | 平滑度 (A) 物体法线 (RGB) | 深度 (A) 发射 (RGB) | 环境光遮蔽 (A) 自定义形状编辑器（Custom Shape Editor）：自动生成自定义形状，以移除替代器的大部分透明区域，从而减少过度绘制。还支持手动编辑。 烘焙预设(baking presets)：定义烘焙替代者的预设，其中还包含各种导入和导出选项。 脚本化的渲染管道（scriptable render pipeline） 为了将 Amplify Impostors 与 SRP 一起使用，请务必导入所需的包 ( AmplifyImpostors\Plugins\EditorResources\RenderPipelinePackages )。</description>
+    </item>
+    <item>
+      <title>Amplify Imposter Custom Baking</title>
+      <link>http://www.xionggf.com/post/unity3d/amplify_imposter_custom_baking/</link>
+      <pubDate>Tue, 12 Nov 2024 18:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/amplify_imposter_custom_baking/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原文地址&#xA;介绍 标准烘焙器收集延迟的 GBuffer 信息，其中包含典型 PBR 渲染的所有材质数据。然而，这可能并不总是必要的，甚至可能不够。在某些情况下，想要为其创建替代者的对象具有一些特殊的实时着色器效果，而简单的 PBR 渲染无法涵盖这些效果。在其他情况下，可能只想减少生成的数据量，因为有更高的平台限制（即移动设备）。自定义烘焙背后的想法是允许告诉工具想要烘焙什么以及希望如何根据具体情况进行渲染。&#xA;##要求 为本指南创建着色器可能非常困难，因此我们在包中包含了可与 Amplify Shader Editor 插件一起使用的必要模板和节点，从而使该过程变得更加轻松快捷。如果不熟悉它，Amplify Shader Editor 是我们自己的屡获殊荣的着色器编辑器，可以在基于节点的图形编辑器中创建着色器，而无需了解着色器代码。本指南假设使用 Amplify Shader Editor，因此如果对直观的基于节点的着色器创作工具感兴趣，请随时在此处查看其商店页面。还可以在此处的 wiki 页面中了解更多信息。&#xA;可以在软件包的目录AmplifyImpostors/Examples/Scenes/CustomBaking中找到本指南的文件和示例。如果是高级用户，并且想要手动创建着色器，仍然可以通过将结果与给定的示例进行比较来遵循指南。&#xA;Shader Graph 限制了使用自定义代码的能力，从而阻止了对 Amplify Impostors 的支持。请考虑使用替代方案Amplify Shader Editor，它从头开始设计，可扩展并可适应任何管道要求。&#xA;描述 本指南演示了创建与示例中相同的自定义替代器的过程。目的是为包含特殊动态着色器的对象创建替代器。此着色器在对象顶部添加了一个程序化油漆层。此油漆层是程序化的，因为它使用对象位置来计算油漆的伪随机颜色。如果我们为这个对象烘焙一个常规替代器，我们将失去这种程序行为，最终得到一个静态版本。&#xA;为了实现这一点，需要两个特殊的着色器。一个着色器将使用被代替的物体的原始着色器来烘焙不同的纹理贴图。此着色器包含不同的输出，这些输出将用于生成不同的纹理及其通道所包含的内容。称为“烘焙着色器”。另一个着色器将使用生成的纹理，并使用可能正在寻找的预期自定义效果，正确渲染地impostor。这是将在产品中使用的创建imposter效果的着色器。我们将其称为“运行时着色器”。最后，需要设置输出并将着色器链接到它们，使用可以在Impostor组件中创建和引用的预设资产文件来执行此操作。&#xA;创建烘焙着色器 在的项目中单击鼠标右键，然后创建一个新的 Impostor Bake 着色器。 注意：如果看不到此条目，请确保在着色器编辑器之后导入 Impostors 包，并打开着色器编辑器画布以检测更改。 在编辑器中打开着色器后，首先放置纹理采样器并将它们打包到所选输出，并确保属性名称与原始着色器匹配。 然后创建与我们可以烘焙到地图中的静态部分相对应的图形节点和连接，在我们的例子中，这是除程序颜色部分之外的所有内容。此外，因为我们稍后需要特殊遮罩来重新创建最终的程序效果，并且因为我们想要节省一些纹理内存，所以我们会将其与剩余数据一起打包并将其连接到同一个输出。 添加“Pack Normal Depth”着色器功能节点，它将法线转换为必要的空间并在 Alpha 通道中创建深度信息。 （可选）如果的对象着色器使用“剪切”效果，请确保通过减去剪辑蒙版值并将其连接到“剪辑”输出来模仿它。 创建运行时着色器 在的项目中单击鼠标右键并创建一个新的 Impostor Runtime 着色器。 在编辑器中添加一个新的“Amplify Impostor 节点”，将 Albedo、World Normal 和 Alpha 输出连接到主节点中的可用输入。点击 ASE 画布中的保存按钮。 注意：这样做应该会编译一个使用烘焙中最重要的数据的 Impostor 兼容着色器，但我们仍然需要进一步定制它以支持预期的程序效果。 在我们的例子中，我们想要获取原始输出中没有的自定义地图，我们通过选择 Impostor 节点并将“Extra Samplers”字段更改为适当的数字（在我们的例子中为 1）并连接一个带有名称的纹理对象节点来实现此目的，稍后将使用该名称来引用此地图。在本例中，我们将其称为“_Mask”。 我们现在需要从原始着色器创建程序逻辑，该着色器使用波函数中的对象 XZ 位置来生成颜色。 最后，从额外输出将程序颜色过滤到蒙版，并将适当的通道连接到其输出。保存。 创建烘焙预设 通过转到“Assets &amp;gt; Create &amp;gt; Amplify Impostor Bake Preset”或点击 impostor 组件中的“New”按钮来创建新预设。在所选项目位置中选择它。 将着色器分配给预设并添加或删除输出，直到拥有与在 [步骤 2] 中创建的着色器相同数量的可用输出。 配置输出以表示它们所保存的数据。在本例中，第一个输出保存 RGB 中的反照率颜色数据，因此我们将其标记为 sRGB 颜色空间。务必标记包含 alpha 通道的输出，在本例中它是第一个，因此我们保留单选按钮不变。 现在，只需在 impostor 组件中选择新的预设，必要时覆盖字段并点击“Bake Impostor” 最终结果 这是最终结果，请注意右侧的替代器现在可以模仿原始对象的效果并按预期显示程序颜色。此外，这些替代器仅使用三个贴图来实现它，而不是像标准替代器那样使用四个贴图。</description>
+    </item>
+    <item>
+      <title>Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_fov_and_screentoworldpoint/</link>
+      <pubDate>Sun, 22 Sep 2024 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_fov_and_screentoworldpoint/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;在Unity3D编程中经常会碰到以下的问题：&#xA;比如一开始的FOV为60度，后来设置为22度，可以通过怎样的公式，使得使用22度FOV对应生成的3D位置点，通过这个公式，可以转换到其位置点和使用60度生成的一样呢&#xA;当从一个FOV为60度的视角切换到22度的视角时，使用Camera.ScreenToWorldPoint函数生成的3D位置点会发生变化，因为FOV直接影响视锥体的宽度和高度。要解决这个问题，需要通过调整视锥体的缩放因子，来抵消FOV变化带来的位置偏移。&#xA;问题分析 当FOV变化时，屏幕坐标对应的世界坐标会随之缩放。假设有一个屏幕坐标screenPos，在FOV为60度时通过Camera.ScreenToWorldPoint生成一个3D位置点P60。当FOV变为22度时，假设生成的3D位置点为P22。我们需要找到一个转换公式，使得P22转换回P60。&#xA;FOV与世界坐标的关系 视锥体的高度（在深度为z处）与FOV通过以下公式相关：&#xA;$$ Heightz=2×z×tan⁡(FOV2)\text{Height}_z = 2 \times z \times \tan\left(\frac{FOV}{2}\right)Heightz=2×z×tan(2FOV) $$&#xA;其中：&#xA;Height_z ：在深度为z处的视锥体高度。 FOV：垂直视野角度。 z：深度（从摄像机到目标点的距离）。 视锥体的宽度和高度成比例地变化，具体公式为：&#xA;$$ Widthz=Heightz×Aspect Ratio\text{Width}_z = \text{Height}_z \times \text{Aspect Ratio}Widthz=Heightz×Aspect Ratio $$&#xA;对于两个不同的FOV（如60度和22度），可以计算出它们对应的视锥体高度比值。为了让FOV为22度时生成的世界坐标与FOV为60度时生成的一致，需要应用这个比值进行缩放。&#xA;缩放因子的推导 在FOV为60度时的视锥体高度：&#xA;$$ \mathrm{Heigth}_{60}=2\times \mathrm{z}\times \tan \left( \frac{60^o}{2} \right) $$&#xA;在FOV为22度时的视锥体高度：&#xA;$$ \mathrm{Heigth}_{22}=2\times \mathrm{z}\times \tan \left( \frac{22^o}{2} \right) $$&#xA;缩放因子： 需要将FOV为22度时的世界坐标缩放到FOV为60度的视锥体高度，因此缩放因子是这两个视锥体高度的比值：&#xA;$$ ScaleFactor=\frac{Height_{60}}{Height_{22}}=\frac{\tan \left( 30^{o} \right)}{\tan \left( 11^{o} \right)} $$&#xA;可以计算出这个缩放因子：&#xA;$$ \mathrm{ScaleFactor}=\frac{0.5774}{0.1944}\approx 2.97 $$&#xA;公式应用 在FOV为22度时生成的3D世界坐标P22可以通过如下公式转换为FOV为60度时的3D世界坐标P60：</description>
+    </item>
+    <item>
+      <title>Unity3D中根据深度值重建像素点对应的世界坐标</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_from_depthmap_to_world_coord/</link>
+      <pubDate>Thu, 11 Jul 2024 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_from_depthmap_to_world_coord/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;1 深度图介绍 就是将深度信息(Z坐标值)保存在了一张贴图上的R通道上，因为R通道的值范围是[0, 1]，所以我们可以用ndc空间下的Z坐标值做下处理就能变成[0, 1]范围了（ (Zndc+1)*0.5&#xA;2 C#接口取得深度图纹理的方法 Shader.GetGlobalTexture(&amp;#34;_CameraDepthTexture&amp;#34;) 3 在NDC空间下深度值的计算公式 4 从片元着色器中根据深度图反推出片元世界坐标且输出的shader Shader &amp;#34;zznewclear13/DepthToPositionShader&amp;#34; { Properties { [Toggle(REQUIRE_POSITION_VS)] _Require_Position_VS(&amp;#34;Require Position VS&amp;#34;, float) = 0 } HLSLINCLUDE #include &amp;#34;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&amp;#34; #include &amp;#34;Packages/com.unity.render-pipelines.universal/ShaderLibrary/core.hlsl&amp;#34; #pragma multi_compile _ REQUIRE_POSITION_VS sampler2D _CameraDepthTexture; struct Attributes { float4 positionOS : POSITION; float2 texcoord : TEXCOORD0; }; struct Varyings { float4 positionCS : SV_POSITION; float2 texcoord : TEXCOORD0; }; Varyings Vert(Attributes input) { Varyings output = (Varyings)0; // 根据顶点在其模型坐标系下的值，计算得到在裁剪空间中的齐次坐标 VertexPositionInputs vertexPositionInputs = GetVertexPositionInputs(input.</description>
+    </item>
+    <item>
+      <title>不使用MeshRenderer去绘制Mesh【翻译】</title>
+      <link>http://www.xionggf.com/post/unity3d/rendering_meshes_in_unity_without_meshrenderers/</link>
+      <pubDate>Sat, 17 Feb 2024 19:08:53 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/rendering_meshes_in_unity_without_meshrenderers/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原文地址&#xA;在 Unity 中不使用 MeshRenderer 渲染网格 1. 概述 目的：使用 DrawMesh 系列方法在 Unity 中渲染大量网格，而无需创建和管理 GameObject。 特点： 网格会受到光照影响，可以投射和接收阴影。 可以针对所有相机或特定相机渲染。 支持 GPU 实例化和 Compute Shader。 2. 常用方法 DrawMesh：最简单的渲染方法，使用指定材质渲染网格。 DrawMeshInstanced：通过 GPU 实例化渲染大量相同网格，支持小规模变化（如颜色）。 DrawMeshInstancedIndirect：通过 ComputeBuffer 传递实例数量和位置等数据，适用于大规模实例化。 DrawMeshInstancedProcedural：与 DrawMeshInstancedIndirect 类似，但实例数量可以直接从 C# 传递。 DrawProcedural：在 GPU 上执行绘制调用，无需顶点或索引缓冲区，适用于 Compute Shader。 DrawProceduralIndirect：与 DrawProcedural 类似，但实例数量等数据从 ComputeBuffer 传递。 3. 代码示例 DrawMesh： public class ExampleDrawMesh : MonoBehaviour { public Mesh mesh; public Material material; void Update() { Graphics.DrawMesh(mesh, Vector3.zero, Quaternion.identity, material, 0); } } DrawMeshNow： public class ExampleDrawMeshNow : MonoBehaviour { public Mesh mesh; public Material material; public void OnPostRender() { material.</description>
+    </item>
+    <item>
+      <title>Unity3D中枚举类型UnityEngine.Experimental.Rendering.GraphicsFormat详解</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_unity_engine_graphics_format_detail/</link>
+      <pubDate>Sat, 09 Dec 2023 18:38:27 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_unity_engine_graphics_format_detail/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com 在Unity中，UnityEngine.Experimental.Rendering.GraphicsFormat 枚举类型定义了多种图形格式，用于描述纹理、渲染目标等的像素格式。每种格式都有不同的通道数、每个像素的字节数以及适用场景。以下是 GraphicsFormat 中每个值的具体含义、通道数、每个像素的字节数等详细信息：&#xA;1. 常用图形格式 枚举值 含义 通道数 每个像素字节数 描述 None 无格式 - - 未定义格式。 R8_UNorm 单通道 8 位无符号归一化 1 1 适用于单通道数据，如灰度图。 R8_SNorm 单通道 8 位有符号归一化 1 1 适用于单通道有符号数据。 R8_UInt 单通道 8 位无符号整数 1 1 适用于单通道无符号整数数据。 R8_SInt 单通道 8 位有符号整数 1 1 适用于单通道有符号整数数据。 R16_UNorm 单通道 16 位无符号归一化 1 2 适用于单通道高精度数据。 R16_SNorm 单通道 16 位有符号归一化 1 2 适用于单通道高精度有符号数据。 R16_UInt 单通道 16 位无符号整数 1 2 适用于单通道高精度无符号整数数据。 R16_SInt 单通道 16 位有符号整数 1 2 适用于单通道高精度有符号整数数据。 R16_SFloat 单通道 16 位有符号浮点数 1 2 适用于单通道高精度浮点数数据。 R32_UInt 单通道 32 位无符号整数 1 4 适用于单通道超高精度无符号整数数据。 R32_SInt 单通道 32 位有符号整数 1 4 适用于单通道超高精度有符号整数数据。 R32_SFloat 单通道 32 位有符号浮点数 1 4 适用于单通道超高精度浮点数数据。 R8G8_UNorm 双通道 8 位无符号归一化 2 2 适用于双通道数据，如法线贴图的 XY 通道。 R8G8_SNorm 双通道 8 位有符号归一化 2 2 适用于双通道有符号数据。 R8G8_UInt 双通道 8 位无符号整数 2 2 适用于双通道无符号整数数据。 R8G8_SInt 双通道 8 位有符号整数 2 2 适用于双通道有符号整数数据。 R16G16_UNorm 双通道 16 位无符号归一化 2 4 适用于双通道高精度数据。 R16G16_SNorm 双通道 16 位有符号归一化 2 4 适用于双通道高精度有符号数据。 R16G16_UInt 双通道 16 位无符号整数 2 4 适用于双通道高精度无符号整数数据。 R16G16_SInt 双通道 16 位有符号整数 2 4 适用于双通道高精度有符号整数数据。 R16G16_SFloat 双通道 16 位有符号浮点数 2 4 适用于双通道高精度浮点数数据。 R32G32_UInt 双通道 32 位无符号整数 2 8 适用于双通道超高精度无符号整数数据。 R32G32_SInt 双通道 32 位有符号整数 2 8 适用于双通道超高精度有符号整数数据。 R32G32_SFloat 双通道 32 位有符号浮点数 2 8 适用于双通道超高精度浮点数数据。 R8G8B8A8_UNorm 四通道 8 位无符号归一化 4 4 适用于 RGBA 颜色数据。 R8G8B8A8_SNorm 四通道 8 位有符号归一化 4 4 适用于 RGBA 有符号数据。 R8G8B8A8_UInt 四通道 8 位无符号整数 4 4 适用于 RGBA 无符号整数数据。 R8G8B8A8_SInt 四通道 8 位有符号整数 4 4 适用于 RGBA 有符号整数数据。 R16G16B16A16_UNorm 四通道 16 位无符号归一化 4 8 适用于 RGBA 高精度数据。 R16G16B16A16_SNorm 四通道 16 位有符号归一化 4 8 适用于 RGBA 高精度有符号数据。 R16G16B16A16_UInt 四通道 16 位无符号整数 4 8 适用于 RGBA 高精度无符号整数数据。 R16G16B16A16_SInt 四通道 16 位有符号整数 4 8 适用于 RGBA 高精度有符号整数数据。 R16G16B16A16_SFloat 四通道 16 位有符号浮点数 4 8 适用于 RGBA 高精度浮点数数据。 R32G32B32A32_UInt 四通道 32 位无符号整数 4 16 适用于 RGBA 超高精度无符号整数数据。 R32G32B32A32_SInt 四通道 32 位有符号整数 4 16 适用于 RGBA 超高精度有符号整数数据。 R32G32B32A32_SFloat 四通道 32 位有符号浮点数 4 16 适用于 RGBA 超高精度浮点数数据。 B8G8R8A8_UNorm 四通道 BGRA 8 位无符号归一化 4 4 适用于 BGRA 颜色数据。 B8G8R8A8_SNorm 四通道 BGRA 8 位有符号归一化 4 4 适用于 BGRA 有符号数据。 B8G8R8A8_UInt 四通道 BGRA 8 位无符号整数 4 4 适用于 BGRA 无符号整数数据。 B8G8R8A8_SInt 四通道 BGRA 8 位有符号整数 4 4 适用于 BGRA 有符号整数数据。 B8G8R8X8_UNorm 四通道 BGRA 8 位无符号归一化（无 Alpha） 4 4 适用于 BGRA 颜色数据（无 Alpha 通道）。 B8G8R8X8_SNorm 四通道 BGRA 8 位有符号归一化（无 Alpha） 4 4 适用于 BGRA 有符号数据（无 Alpha 通道）。 B8G8R8X8_UInt 四通道 BGRA 8 位无符号整数（无 Alpha） 4 4 适用于 BGRA 无符号整数数据（无 Alpha 通道）。 B8G8R8X8_SInt 四通道 BGRA 8 位有符号整数（无 Alpha） 4 4 适用于 BGRA 有符号整数数据（无 Alpha 通道）。 R10G10B10A2_UNorm 四通道 RGBA，RGB 各 10 位，A 2 位 4 4 适用于高精度 RGB 和低精度 Alpha 数据。 R10G10B10A2_UInt 四通道 RGBA，RGB 各 10 位，A 2 位 4 4 适用于高精度 RGB 和低精度 Alpha 无符号整数数据。 R11G11B10_UFloat 三通道 RGB，R 和 G 各 11 位，B 10 位 3 4 适用于 HDR 数据，节省内存。 D16_UNorm 16 位深度 1 2 适用于深度缓冲区。 D24_UNorm_S8_UInt 24 位深度 + 8 位模板 2 4 适用于深度和模板缓冲区。 D32_SFloat 32 位深度 1 4 适用于高精度深度缓冲区。 D32_SFloat_S8_UInt 32 位深度 + 8 位模板 2 5 适用于高精度深度和模板缓冲区。 2.</description>
+    </item>
+    <item>
+      <title>Unity3D中枚举类型UnityEngine.TextureFormat详解</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_unity_engine_texture_format_detail/</link>
+      <pubDate>Fri, 08 Dec 2023 18:38:27 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_unity_engine_texture_format_detail/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;在Unity中，UnityEngine.TextureFormat 枚举类型定义了多种纹理格式，每种格式都有不同的通道数、每个像素的字节数以及适用场景。以下是 UnityEngine.TextureFormat 中每个值的具体含义、通道数、每个像素的字节数等详细信息：&#xA;1. 常用纹理格式 枚举值 含义 通道数 每个像素字节数 描述 Alpha8 单通道 Alpha 1 1 仅存储 Alpha 通道，适用于遮罩或透明度贴图。 ARGB4444 4 通道 ARGB，每通道 4 位 4 2 每个通道 4 位，适用于低精度颜色贴图。 RGB24 3 通道 RGB，每通道 8 位 3 3 存储 RGB 颜色，无 Alpha 通道，适用于普通颜色贴图。 RGBA32 4 通道 RGBA，每通道 8 位 4 4 存储 RGBA 颜色，适用于带透明度的颜色贴图。 RGB565 3 通道 RGB，R 和 B 各 5 位，G 6 位 3 2 压缩格式，适用于低精度颜色贴图。 R16 单通道 16 位 1 2 存储单通道 16 位数据，适用于高度图或深度图。 DXT1 DXT1 压缩格式 3 0.</description>
+    </item>
+    <item>
+      <title>高效地访问纹理数据</title>
+      <link>http://www.xionggf.com/post/unity3d/accessing_texture_data_efficiently/</link>
+      <pubDate>Wed, 22 Nov 2023 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/accessing_texture_data_efficiently/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原文地址&#xA;Working with pixel data in Unity Pixel data describes the color of individual pixels in a texture. Unity provides methods that enable you to read from or write to pixel data with C# scripts.&#xA;像素数据描述纹理中各个像素的颜色。Unity 提供了使用 C# 脚本读取或写入像素数据的方法。&#xA;You might use these methods to duplicate or update a texture (for example, adding a detail to a player’s profile picture), or use the texture’s data in a particular way, like reading a texture that represents a world map to determine where to place an object.</description>
+    </item>
+    <item>
+      <title>Unity的2D Pixel Perfect包的工作原理</title>
+      <link>http://www.xionggf.com/post/unity3d/2d_pixel_perfect_package/</link>
+      <pubDate>Sun, 12 Nov 2023 18:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/2d_pixel_perfect_package/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;Unity的 2D Pixel Perfect 包（现为 Pixel Perfect Camera 组件）是专为像素风格游戏设计的工具，其核心目标是确保2D精灵（Sprites）在屏幕上以整数像素呈现，避免模糊或锯齿，保持复古像素艺术的清晰锐利。以下是它的工作原理和关键实现方式：&#xA;1. 核心原理：像素对齐（Pixel Snapping） 问题根源：&#xA;当游戏相机或精灵的坐标包含小数部分（如位置为 (10.3, 5.7)），Unity的渲染器会进行子像素插值，导致精灵边缘模糊（抗锯齿效果）。 解决方案：&#xA;Pixel Perfect Camera 会动态调整相机位置和渲染分辨率，确保所有2D精灵的顶点坐标对齐到屏幕像素网格（即整数坐标），消除小数偏移。 2. 关键工作流程 (1) 设置目标分辨率 Assets Pixels Per Unit (PPU)：&#xA;在精灵导入设置中定义 Pixels Per Unit（如 16 表示1 Unity单位 = 16像素）。&#xA;示例：若角色精灵为 32x32 像素，PPU=16，则精灵在Unity中的大小为 2x2 单位。&#xA;Reference Resolution：&#xA;在 Pixel Perfect Camera 组件中设置目标分辨率（如 256x144），表示游戏设计的基准像素分辨率。&#xA;(2) 动态调整相机 整数倍缩放（Scale to Fit）：&#xA;相机会根据当前屏幕分辨率，选择整数倍缩放（1x, 2x, 3x&amp;hellip;）以适配窗口，避免非整数拉伸。&#xA;例如：&#xA;目标分辨率 256x144，屏幕为 768x432 → 缩放3倍（256*3=768）。 若屏幕为 900x500，可能缩放3倍并留黑边（Letterboxing）。 像素对齐（Pixel Snapping）：</description>
+    </item>
+    <item>
+      <title>Http详解及如何在Unity上使用</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_http_details/</link>
+      <pubDate>Sun, 08 Jan 2023 18:38:27 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_http_details/</guid>
+      <description>** 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com。**&#xA;1 HTTP协议简介 超文本传输协议（英文：HyperText Transfer Protocol，缩写：HTTP）是一种用于分布式、协作式和超媒体信息系统的应用层协议。&#xA;HTTP是一个基于TCP/IP通信协议。来传递数据（HTML 文件, 图片文件, 查询结果等）。它指定了客户端可能发送给服务器什么样的消息，以及得到什么样的响应。请求和响应消息的头以ASCII形式给出；而消息内容则具有一个类似MIME的格式。&#xA;HTTP协议永远都是客户端发起请求，服务器回送响应。见下图：&#xA;2 HTTP工作流程 一次HTTP操作称为一个事务，其工作过程可分为四步：&#xA;客户机与服务器建立TCP连接。只要单击某个超级链接/输入网址/提交表单等。 建立连接后，客户机发送http请求给服务器. 服务器接到请求后，响应信息。 客户端接收服务器所返回的信息，然后客户机与服务器断开TCP连接。 3 HTTP发展及各版本 版本 产生时间 内容 发展现状 HTTP/1.1 1997年 持久连接(长连接)、节约带宽、HOST域、管道机制、分块传输编码 2015年前使用最广泛 HTTP/2 2015年 多路复用、服务器推送、头信息压缩、二进制协议等 逐渐覆盖市场 3.1 HTTP1.1 版本 HTTP 1.1 新增了delete options 等几种请求数据的方式，客户端和服务端三次握手后，建立tcp链接，一个tcp链接可以传送多个请求和响应，这样就减少了握手和建立tcp和关闭tcp链接的消耗，传输更快 HTTP 1.1 支持持久链接 请求头有一个connection 参数，参数值是close/keep-alive 意思是本次请求处理完后，服务器是关闭该tcp链接还是继续使用该链接&#xA;3.2 HTTP 2.0 版本 HTTP2.0使用了多路复用的技术，做到同一个链接并发处理多个请求，而且并发请求的数量比HTTP1.1大了好几个数量级。&#xA;4 HTTP主要特点 简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。 灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。 无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。 无状态：无状态是指协议对于事务处理没有记忆能力。也就是说，打开一个服务器上的网页和上一次打开这个服务器上的网页之间没有任何联系。HTTP是一个无状态的面向连接的协议，无状态不代表HTTP不能保持TCP连接，更不能代表HTTP使用的是UDP协议（无连接）。 支持B/S及C/S模式 5 HTTP协议安全机制 HTTPS (Secure Hypertext Transfer Protocol)：安全超文本传输协议。HTTPS是在HTTP上建立SSL加密层，并对传输数据进行加密，是HTTP协议的安全版。HTTPS提供的安全通信，应用了对称加密，非对称加密，数据签名等技术。&#xA;HTTP缺点：不够安全——明文传输，不做加密，易被中间人攻击（中间人截获甚至篡改信息） HTTPS主要作用： （1）对数据进行加密，并建立一个信息安全通道，来保证传输过程中的数据安全; （2）对网站服务器进行真实身份认证。 6 HTTP请求方法 根据HTTP标准，HTTP请求可以使用多种请求方法。到目前为止，有以下的方法</description>
+    </item>
+    <item>
+      <title>伪内部空间映射的相关文档</title>
+      <link>http://www.xionggf.com/post/unity3d/interior_mapping_document/</link>
+      <pubDate>Thu, 08 Dec 2022 18:38:27 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/interior_mapping_document/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;CSDN上的参考网页 Unity Shader Interior mapping 内部映射&#xA;CSDN上的案例学习——Interior Mapping 室内映射（假室内效果）&#xA;CSDN上的UE5黑客帝国3d print假室内的一些使用记录&#xA;unity 跟随目标_使用Cubemap在Unity中制作虚拟室内效果&#xA;知乎上的参考网页 案例学习——Interior Mapping 室内映射（假室内效果）&#xA;一种假室内(Fake Interior)效果的实现，这种是带上了室内深度效果的，即每个室内的深度纵深是不一样的。&#xA;其他 Joost van Dongen的论文《Interior Mapping A new techique for rendering realistic buildings》&#xA;下面的这份代码是《一种假室内(Fake Interior)效果的实现》中提到的代码实现&#xA;Shader &amp;#34;Custom/FakeRoom&amp;#34; { Properties { [NoScaleOffset]_WindowTex (&amp;#34;Window Texture&amp;#34;, 2D) = &amp;#34;black&amp;#34; {} _RoomTex (&amp;#34;Room Texture&amp;#34;, CUBE) = &amp;#34;&amp;#34;{} _RoomDepth (&amp;#34;Room Depth&amp;#34;, Range(0.01, 1)) = 1.0 } SubShader { Tags { &amp;#34;RenderType&amp;#34;=&amp;#34;Opaque&amp;#34; } Cull Back Pass { CGPROGRAM #pragma vertex vert #pragma fragment frag #include &amp;#34;UnityCG.</description>
+    </item>
+    <item>
+      <title>Volumetric Clouds Write-up(翻译)</title>
+      <link>http://www.xionggf.com/post/unity3d/volumetric_clouds_write_up/</link>
+      <pubDate>Fri, 11 Nov 2022 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/volumetric_clouds_write_up/</guid>
+      <description>原文地址&#xA;The basis of this effect is drawing a vertical stack of quads, each one showing a slice of the cloud. The cloud texture itself is just a world-mapped, top-down animated noise that is piped into opacity.&#xA;这种效果的基础是绘制一组垂直堆叠的四边形（简称为：四边形堆栈，vertical stack of quads），每个四边形都显示一片云。 云纹理本身只是一个世界映射的(world-mapped)、自上而下的(top-down)的动画噪声，它通过渲染，管道传输到不透明度中。&#xA;To animate the noise, I use the same trick that I use in countless other shaders to create a natural looking motion that appears free of obvious repetition, which is to blend the noise with either a copy of itself with a different UV scale, or a different noise texture, and pan these two noise textures against each other in opposite directions, and then blend them together through multiplication or some other desired blend mode.</description>
+    </item>
+    <item>
+      <title>Unity纹理压缩格式详解</title>
+      <link>http://www.xionggf.com/post/unity3d/unity_texture_compression_detail/</link>
+      <pubDate>Wed, 08 Jun 2022 18:38:27 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/unity_texture_compression_detail/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;Crunch compression(紧凑压缩) Crunch compression是一种建筑在DXT或ETC压缩之上的压缩格式，提供额外的可变比特率压缩。当Unity加载紧凑压缩的纹理时，它会在CPU上将纹理解压缩为DXT或 ETC，然后将DXT或ETC压缩的纹理数据上传到GPU。&#xA;紧凑压缩有助于纹理使用尽可能少的磁盘空间，但对运行时内存使用没有影响。紧凑压缩 纹理可能需要很长时间来压缩，但运行时的解压缩速度相当快。您可以调整紧凑压缩的有损程度，以在文件大小和质量之间取得平衡。&#xA;Unity的各种纹理压缩格式信息 参考网页 聊聊 Unity 的 Alpha Is Transparency 有什么用 What does the &amp;ldquo;alpha is transparency&amp;rdquo; setting actually do? 光照贴图的中的编码格式 </description>
+    </item>
+    <item>
+      <title>从半透明模型的描边到URP Multipass Rendering</title>
+      <link>http://www.xionggf.com/post/unity3d/from_outline_to_urp_multipass/</link>
+      <pubDate>Fri, 29 Apr 2022 11:37:25 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/from_outline_to_urp_multipass/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;卡通渲染技术中，描边的实现的有多种做法，有基于后处理实现，也有基于非后处理，通过多次绘制模型的方法实现。&#xA;通过多次绘制模型的实现，方法无非就是：&#xA;绘制模型本体，同时写入深度值。 让模型顶点沿着法线外扩一定的偏移量，即让模型膨胀一些 全用描边的颜色绘制膨胀过的模型，且，在绘制时，使用cull front，即只绘制模型的背向摄像机面。在第1步中因为绘制模型本体时已经写入深度值。在本步骤中只要不改变深度测试函数的方式，那么除了膨胀部分之外，是无法写入像素的，能写入的部分，便形成了边缘。 上述的方式，一般应用于不透明的材质上。如果是半透明的材质的话就有问题，因为在第1步绘制半透明材质时，一般是不写入深度值的。那么第3步在绘制膨胀模型时，模型背部的地方就会被绘制上去。&#xA;解决这个问题有很多，可以利用stencil test的方式。也可以在第一步绘制，不绘制任何颜色，只写入深度，然后再绘制模型，最后再绘制描边。后一种方法，如果用Unity内置管线，大约就是这个样子：&#xA;Shader &amp;#34;Unlit/半透明&amp;#34; { Properties { _Diffuse(&amp;#34;Diffuse&amp;#34;,Color) = (1,1,1,1) // 漫反射 _MainTex(&amp;#34;MainTex&amp;#34;,2D) = &amp;#34;white&amp;#34;{} // 2D纹理贴图 _AlphaScale(&amp;#34;Alpha Scale&amp;#34;,Range(0,1)) = 1 // 控制Alpha参数 } SubShader { Tags { &amp;#34;Queue&amp;#34; = &amp;#34;Transparent&amp;#34; &amp;#34;IgnoreProjector&amp;#34; = &amp;#34;True&amp;#34; &amp;#34;RenderType&amp;#34; = &amp;#34;Transparent&amp;#34; } //渲染顺序设置Transparent LOD 100 // 用两个pass通道来处理，防止出现渲染错误，第一个pass通道 // 每个pass通道都会渲染一次 Pass { ZWrite On // 注意这里：写入深度 为了确认渲染顺序 ColorMask 0 // 掩码遮罩代表这个pass通道不写入任何颜色值 } Pass // 第二个pass通道 { Tags{&amp;#34;LightMode&amp;#34; = &amp;#34;ForwardBase&amp;#34;} ZWrite Off // 注意这里：关闭ZWrite（深度写入） Blend SrcAlpha OneMinusSrcAlpha // 源颜色因子 正常透明混合 CGPROGRAM #pragma vertex vert #pragma fragment frag #include &amp;#34;UnityCG.</description>
+    </item>
+    <item>
+      <title>Unity3D的图形渲染优化方法汇总</title>
+      <link>http://www.xionggf.com/post/unity3d/uniyt3d_graphic_optimize_note/</link>
+      <pubDate>Thu, 24 Mar 2022 21:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/uniyt3d_graphic_optimize_note/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;下图是我整理的一些Unity3D的图形渲染优化方法笔记</description>
+    </item>
+    <item>
+      <title>Unity3D的assetbundle技术要点汇总</title>
+      <link>http://www.xionggf.com/post/unity3d/uniyt3d_asset_bundle_note/</link>
+      <pubDate>Sun, 20 Mar 2022 21:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/uniyt3d_asset_bundle_note/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;下图是我整理的一些unity assetbundle细节笔记</description>
+    </item>
+    <item>
+      <title>一个Unity工程目录架构组织图</title>
+      <link>http://www.xionggf.com/post/unity3d/project_dir_and_architecture/</link>
+      <pubDate>Sat, 19 Mar 2022 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/project_dir_and_architecture/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;此图是我曾经在某些项目中用过的工程目录架构，仅供参考：</description>
+    </item>
+    <item>
+      <title>彻底弄懂Unity3D的光照模式，光照贴图和光探针（持续更新）</title>
+      <link>http://www.xionggf.com/post/unity3d/inside_u3d_lighting_and_bake/</link>
+      <pubDate>Fri, 18 Mar 2022 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/inside_u3d_lighting_and_bake/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;1 光源的Light Mode 光源的Light Mode分为Realtime，Baked，Mixed四种。&#xA;Realtime类型 本类型的光源，会根据Shadow Distance项指定的值，以及当前摄像机的位置值，去敲定本光源是否给物体投下阴影。在URP中，Shadow Distance值在Universl Render Pipeline Asset中指定。 在旧管线中，如果启用了【Realtime Global Illumination】选项，realtime光源仅贡献实时的直接光照部分。正因为如此，所以由这种光源产生的影子是纯黑的，不会受别的间接光照的影响 在自定义的管线中，实时光源可以对实时的间接光照部分产生贡献。 Baked类型 Unity把Baked类型的光源产生的照明和阴影信息，烘焙到lightmap或者light probe中。 baked类型的光源，只贡献了漫反射部分的光照，不贡献镜面高光部分的光照。 只有标识为static的GameObject才接受baked类型的光源产生的照明和阴影。 Mixed类型 mixed类型，顾名思义，即是整合了realtime和baked两种模式的特点。采用mixed类型的光源，可以在其贡献的直接光照部分，使用realtime的模式实现，间接光照部分，使用baked模式实现。 在场景中，mixed类型的光源的行为，依赖于【Lighting】窗口中的【Lighting Mode】属性设置。不同的设置，会产生不同的视觉保真度，以及产生不同的性能消耗。 在运行时，可以更改mixed类型的光源的属性。但仅对realtime部分的属性生效。 2【Lighting】窗口中的【Lighting Mode】属性 直接光照的实现模式 间接光照的实现模式 阴影的实现模式 适用机型 Baked Indirect real-time baked real-time 中端机型 Shadowmask real-time baked 部分baked，部分real-time 中高端机型 Subtractive baked baked 只对一个平行光渲染real-time阴影 低端机型 Baked Indirect光照模式的一些细节 内置管线，URP,HDRP，都支持本模式&#xA;在本模式下，Mixed类型的光源照射到GameObject时，GameObject会收到以下的光影信息如下表：&#xA;Shadowmask光照模式的一些细节 与baked indirect模式类似，Shadowmask模式也结合了实时直接光照和烘焙间接光照。但两者不同之处在于在于渲染阴影的方式。Shadowmask模式允许Unity在运行时结合baked阴影和real-time阴影，并在远处渲染阴影。它通过使用额外的光照贴图 纹理称为阴影蒙版，并通过将附加信息存储在光探头。&#xA;Shadowmask模式提供所有模式下保真度最高的阴影，但性能成本和内存要求最高。&#xA;不同渲染管线对Shadowmask模式的支持程度 管线类型 是否支持 内置管线 支持 URP 从10.1版本开始支持 HDRP 支持 Shadowmask模式有两种，一种是Distance Shadowmask，另一种是Shadowmask。在Project Setting界面的Quality选项可以指定，如下图所示：</description>
+    </item>
+    <item>
+      <title>Unity动态加载光照贴图的坑</title>
+      <link>http://www.xionggf.com/post/unity3d/unity_lightmap_keng/</link>
+      <pubDate>Wed, 08 Dec 2021 18:38:27 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/unity_lightmap_keng/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;Unity的光照贴图，如果在运行时动态加载的话，需要对创建出来的game object的lightmap index做一次重新指派， 然后在设置一下LightmapSetting。基本按照Mr.钱康来的这一系列文章那样子设置。如下链接：&#xA;Unity中光照贴图一二坑及解决办法&#xA;Unity中光照贴图一二坑(续)&#xA;如果按照老钱的方法去做了，还是有问题的话，那么就要看下 【Project Settings -&amp;gt; Graphics -&amp;gt; Shader Stripping】 菜单下的这个：&#xA;就是打包时没把LIGHTMAP_ON相关的shader变体给打进去，因为被strip掉。为了保险，选中Custom，然后所有全部选上，再进行打AB。就能正确加载光照贴图。当然，这样子会导致变体变多变大，所以最好还是仔细分析下，那些勾选上为好。&#xA;国内有一个兄弟也是碰到这个问题，在Unity论坛上也有人用这个方案解决了问题&#xA;另外，经过实测，只要正确设置好shader stripping之后，无论从AB中装载进来的game object，是不是从static变为非static标签，或者有没有用StaticBatchingUtility.Combine去运行时静态合批，都不影响正确加载lightmap&#xA;参考网页 光照贴图接缝探讨&#xA;where did &amp;ldquo;lightmap static&amp;rdquo; go&#xA;打包Assetbundle以及Shader Stripping导致LightMap全部丢失的解决方法&#xA;UWA上的《Lightmap丢失》&#xA;Shader Variants 打包遇到的问题&#xA;Stripping scriptable shader variants&#xA;Stripping commonly unused shader variants in Unity&amp;rsquo;s built-in render pipeline&#xA;Unity帮助文档中和Shader Stripping相关的页面</description>
+    </item>
+    <item>
+      <title>Unity卡通渲染知识点笔记（持续更新中）</title>
+      <link>http://www.xionggf.com/post/unity3d/unity_toon_render/</link>
+      <pubDate>Fri, 08 Oct 2021 18:38:27 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/unity_toon_render/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;描边 描边有两种方法，一种是用两个pass，第一个pass绘制模型本身，第二个pass则是绘制边缘。这种技术的要点是在第一个pass使用cull back把背面拣选掉，第二个pass使用cull front 把正面拣选掉，这时候就只剩下侧边的边缘线颜色。&#xA;在第二个pass中，在绘制时，让模型顶点沿着法线方向向外移动一定的距离。这时候绘制出的一个纯色模型把原来的模型给包住。但如果是在世界空间中移动的话，当镜头拉远时，描边线会变得很细小。所以为了解决这个问题，一般将法线在裁剪空间中或者在NDC空间中做位移：&#xA;在裁剪空间中做位移的操作如下：&#xA;// 这段代码是一段URP代码 Varyings vert(Attributes input) { // scaledScreenParams 是用当前窗口的屏幕宽高像素值乘以渲染缩放系数renderScale的值。renderScale默认为1， float4 scaledScreenParams = GetScaledScreenParams(); float aspect = abs(scaledScreenParams.x / scaledScreenParams.y);//求得X因屏幕比例缩放的倍数 // 下面的计算是在裁剪空间中操作。当然也可以直接将法线转到NDC Varyings output; VertexPositionInputs vertexInput = GetVertexPositionInputs(input.positionOS.xyz); VertexNormalInputs normalInput = GetVertexNormalInputs(input.normalOS); float3 normalCS = TransformWorldToHClipDir(normalInput.normalWS);//法线转换到裁剪空间 float2 extendDis = normalize(normalCS.xy) *(_OutlineWidth*0.01);//根据法线和线宽计算偏移量 extendDis.x /= aspect ;//由于屏幕比例可能不是1:1，所以偏移量会被拉伸显示，根据屏幕比例把x进行修正 output.positionCS = vertexInput.positionCS; // 因为后续会转换成NDC坐标，会除w进行缩放，所以先乘一个w，那么该偏移的距离就不会在NDC下有变换 output.positionCS.xy += extendDis * output.positionCS.w ; // 要预先乘一个做透视除法的值 return output; } 在NDC空间做变换代码如下：&#xA;//　这是一段基于Unity内建管线的顶点着色器代码 v2f o; UNITY_INITIALIZE_OUTPUT(v2f, o); float4 pos = UnityObjectToClipPos(v.</description>
+    </item>
+    <item>
+      <title>URP和内建管线的一些编程上的差异</title>
+      <link>http://www.xionggf.com/post/unity3d/urp_doc/diff_between_urp_and_builtin/</link>
+      <pubDate>Mon, 02 Aug 2021 23:29:44 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/urp_doc/diff_between_urp_and_builtin/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;SubShader代码中的Tags 新增加了RenderPipeline关键字 SubShader的Tags段中需添加 &amp;quot;RenderPipeline&amp;quot; = &amp;quot;UniversalPipeline&amp;quot;语句段&#xA;光照模式（LightMode）关键字的对应替换 Built-in URP 作用 ForwardBase UniversalForward ForwardAdd 开启关键字_ADDITIONAL_LIGHTS解决 ShadowCaster ShadowCaster MotionVectors 尚未支持 Always 不再支持 PrepassBase 不再支持 PrepassFinal 不再支持 Vertex 不再支持 VertexLMRGBM 不再支持 VertexLM 不再支持 URP新增 DepthOnly URP新增 Meta 用于烘焙光照贴图 URP新增 Universal2D 用于2D的前向渲染 URP新增 UniversalGBuffer Deferred Rendering（延迟渲染）中使用，目前URP不支持延迟渲染，暂时用以兼容HDRP URP新增 UniversalForwardOnly 用于在Deferred Rendering（延迟渲染）中，表示这个Pass使用Forward Rendering（前向渲染） 变体相关的指令 内建管线中，提供了multi_compile_fwdbase来编译所有ForwardBasePass所需要的变体，multi_compile_fwdadd来编译ForwardAddPass所需要的所有变体，类似如下代码：&#xA;#pragma multi_compile_fwdbase 而在URP中，需要自己判断需要编辑哪些变体，用户又更大的灵活性，类似如下（参考Lit.Shader）：&#xA;#pragma multi_compile _ _MAIN_LIGHT_SHADOWS #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS #pragma multi_compile _ _SHADOWS_SOFT #pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE 参考网页 从 Builtin 管线升级到 URP</description>
+    </item>
+    <item>
+      <title>Scriptable Render Pipeline (SRP) Batcher</title>
+      <link>http://www.xionggf.com/post/unity3d/urp_doc/srp_batcher/</link>
+      <pubDate>Tue, 01 Jun 2021 16:05:07 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/urp_doc/srp_batcher/</guid>
+      <description>非SRP Batcher的Unity渲染管线怎么做 不多说，先看图：&#xA;图中有个Unity Engine propeties，其实就是指一些不需要我们显式地写在shaderlab代码的Propeties块中的uniform shader变量。比如物体的变换矩阵等等。&#xA;上图中的Unity Engine properties，以及各个材质球数据，存放在System Memory中。每当准备渲染物体时。CPU要将这些数据从System Memory中搜集起来，设置到shader的常量缓冲区中去（即CBUFFER，即从CPU传给GPU的数据，这些数据包含了shaderlab代码的Propeties块中的定义的变量）。在内部的渲染循环中，当渲染某个物体，发现需要用到一个新的材质数据时，CPU就将shader properties搜集起来。放到不同的常量缓冲区中去。这些常量缓冲区的个数，就取决着色器代码中声明了多少个。&#xA;SRP Batcher 的工作原理： 在 Unity 中，您可以在一帧中的任何时间修改任何材质的属性。然而这种做法有一些缺点。例如，当在一次DrawCall调用种使用新材质时，有很多工作要做。因此，场景中的材质越多，Unity设置 GPU用到的数据所需要的 CPU时间就越多。传统的处理方式是减少DrawCalls的数量来优化CPU端的渲染成本，因为Unity在发出DrawCall之前要设置很多东西。真正的 CPU耗时是耗在这些设置操作，而不是来自 GPU的绘制本身。这些设置操作也只是Unity 需要推送到 GPU 命令缓冲区的一些字节数据而已。&#xA;当场景中有大量的材质球，但是shader的变体比较少时，SRP Batcher就能进行优化。它的方法简而言之是：对Unity Engine properties，尽可能将其留存在GPU memory中。如果材质的内容没有发生变化的话，那么就不需要把这些数据上传到GPU memory上，从而省去了传统方式中的这部分CPU的工作。SRP Batcher专门定制了一些代码（dedicated code），可以快速地将Unity Engine properties更新到一个大的GPU 缓冲区（large GPU buffer） 中。如下图所示：&#xA;在上图中，CPU仅仅需要处理built-in engine properties，也就是诸如物体的变换矩阵等等。这是因为物体可能会移动，所以它的世界变换矩阵等等会经常发生变化。而其他的材质数据就被持久化地存储在CBUFFER中，这是因为大部分可渲染物体，它进行渲染时，传给shader的一些uniform变量一般都是保持，不随着时间的变化而变化的。这也就是说，SRP Batcher通过两种手段加速渲染：&#xA;每个可渲染物体的材质数据持久化存在显存中。 专门定制的代码管理一个大的逐物体GPU Buffer，即图中的Per Object large buffer块。 SRP Batcher compatibility 在任何给定的场景中，有些可渲染物体与 SRP Batcher 兼容，有些则不兼容。即使使用不兼容的对象，Unity 也能正确渲染场景。这是因为兼容对象使用SRP Batcher代码路径，而其他对象使用标准的SRP 代码路径。能使用SRP Batcher 代码路径渲染的可渲染对象必须是以下的类型：&#xA;渲染对象必须是一个mesh或skinned mesh。它不能是粒子。 着色器必须与 SRP Batcher 兼容。HDRP 和 URP 中的所有光照和非光照着色器都符合此要求（这些着色器的粒子版本除外）。 可渲染对象不得使用 MaterialPropertyBlocks。 要使着色器与 SRP Batcher兼容，必须遵循以下几点：</description>
+    </item>
+    <item>
+      <title>URP Shader Pass Tag</title>
+      <link>http://www.xionggf.com/post/unity3d/urp_doc/urp_shader_pass_tag/</link>
+      <pubDate>Tue, 01 Jun 2021 16:02:07 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/urp_doc/urp_shader_pass_tag/</guid>
+      <description>原文地址&#xA;以下是将上述回答表格化的结果：&#xA;URP 中 ShaderLab Pass 标签参考 1. LightMode 标签 标签值 描述 适用场景 UniversalForward 渲染对象几何体并计算所有光照贡献。 Forward 渲染路径 UniversalGBuffer 渲染对象几何体但不计算光照贡献。 Deferred 渲染路径 UniversalForwardOnly 渲染对象几何体并计算所有光照贡献，可在 Forward 和 Deferred 渲染路径中使用。 Deferred 渲染路径中需要 Forward 渲染的对象（如 Clear Coat 法线） DepthNormalsOnly 用于深度和法线预渲染，生成环境光遮蔽（AO）。 Deferred 渲染路径，结合 UniversalForwardOnly 使用 Universal2D 渲染对象并计算 2D 光照贡献。 2D 渲染器 ShadowCaster 渲染对象从光源视角的深度到阴影贴图或深度纹理。 阴影生成 DepthOnly 渲染从相机视角的深度信息到深度纹理。 深度渲染 Meta 仅在 Unity 编辑器烘焙光照贴图时执行，构建时会被剥离。 光照贴图烘焙 SRPDefaultUnlit 用于绘制额外 Pass（如对象轮廓），适用于 Forward 和 Deferred 渲染路径。 绘制额外 Pass（如轮廓） MotionVectors 用于支持运动矢量（Motion Vectors）的 Pass。 运动矢量渲染 2.</description>
+    </item>
+    <item>
+      <title>Pixel-Perfect Outline Shaders for Unity</title>
+      <link>http://www.xionggf.com/post/unity3d/pixel_perfect_outline_shaders_unity/</link>
+      <pubDate>Thu, 29 Apr 2021 11:37:25 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/pixel_perfect_outline_shaders_unity/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原文地址&#xA;以下是基于你提供的内容的总结和解读，保留示例代码和图片链接：&#xA;轮廓着色器的工作原理与优化 1. 经典轮廓技术 起源：在 2003 年游戏《XIII》中首次看到 3D 对象的轮廓效果，使用固定功能管线实现。 实现方式：通过网格的外壳（Outer Hull）和反转法线绘制轮廓，覆盖黑色纹理。 现代改进：使用顶点着色器在单独 Pass 中渲染略微膨胀的网格，剔除正面。 2. 经典轮廓技术的局限性 局限性 描述 轮廓宽度不均匀 轮廓宽度随物体形状和视角变化。 透视缩短 轮廓宽度随物体远离相机而变窄（透视投影）。 对象空间单位 轮廓宽度以对象空间单位指定，而非像素。 3. 经典轮廓着色器代码 Shader &amp;#34;Tutorial/Outline&amp;#34; { Properties { _Color (&amp;#34;Color&amp;#34;, Color) = (1, 1, 1, 1) _Glossiness (&amp;#34;Smoothness&amp;#34;, Range(0, 1)) = 0.5 _Metallic (&amp;#34;Metallic&amp;#34;, Range(0, 1)) = 0 _OutlineColor (&amp;#34;Outline Color&amp;#34;, Color) = (0, 0, 0, 1) _OutlineWidth (&amp;#34;Outline Width&amp;#34;, Range(0, 0.1)) = 0.03 } Subshader { Tags { &amp;#34;RenderType&amp;#34; = &amp;#34;Opaque&amp;#34; } CGPROGRAM #pragma surface surf Standard fullforwardshadows Input { float4 color : COLOR; } half4 _Color; half _Glossiness; half _Metallic; void surf(Input IN, inout SufaceStandardOutput o) { o.</description>
+    </item>
+    <item>
+      <title>使用Android NDK编译xlua</title>
+      <link>http://www.xionggf.com/post/unity3d/build_xlua_for_android/</link>
+      <pubDate>Tue, 23 Mar 2021 15:52:57 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/build_xlua_for_android/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;基本上就是按照参考网页所示的那样子，先后安装好Android Studio，打开【File|Setting】菜单项打开界面，把google的CMake选好。注意这里一定要用google家的CMake，用原生CMake不行&#xA;如果google CMake的版本过高的话，会报CMake Error: Could not create named generator Android Gradle - Ninja的错误，较新版本的google CMake会产生这个问题，反而低版本的不会，所以选用3.6.4111459版本的才行。Stack Overflow网站上有人就这个问题做了回答：&#xA;Compatibility of CMake version might be an issue, Old NDK (below 13b) is not compatible with the new CMake, so, either update NDK or remove the new CMake (to force older CMake usage). Check your System Setting and version listed under SDK Tools Go to Appearance &amp;amp; Behaviour -&amp;gt; System Settings -&amp;gt; Android SDK Incompatible 3.</description>
+    </item>
+    <item>
+      <title>Unity3D的SRP,Static Batching、Dynamic Batching和GPU instancing</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_srp_static_dynamic_batch_gpuinstance/</link>
+      <pubDate>Thu, 18 Mar 2021 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_srp_static_dynamic_batch_gpuinstance/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;所谓的draw call batching（绘制批处理），就是指对将要绘制的N个网格，在保持渲染结果正确的前提下，将draw call进行合并，以一整批，而不是单个的方式，向GPU提交这些draw call操作。 绘制批处理有若干种实现方式，有些方式只是减少了提交draw call的次数，但执行draw call的次数没变少。有些方式则是直接减少了draw call的数量。&#xA;在《Unity DrawCall、Batch、SetPassCall的区别》一文中对Batching的解释很到位，摘录如下：&#xA;Batch 把数据加载到显存，设置渲染状态，CPU调用GPU渲染的过程称之为一个Batch。这其实就是渲染流程的运用阶段，最终输出一个渲染图元（点、线、面等），再传递给GPU进行几何阶段和光栅化阶段的渲染显示。一个Batch必然会触发一次或多次DrawCall，且包含了该对象的所有的网格和顶点数据以及材质信息。把数据加载到显存是指把渲染所需的数据从硬盘加载到内存（RAM），再将网格和纹理等加载到显卡（VRAM），这一步比较耗时。设置渲染状态就是设置场景中的网格的顶点（Vertex）/片元（Fragment）着色器，光源属性，材质等。Unity提供的动态合批（Dynamic Batching ）合并的就是这一过程，将渲染状态相同的对象合并成一个Batch，减少DrawCall。&#xA;还有对SetPassCall的解释也很好，摘录如下：&#xA;SetPassCall Shader脚本中一个Pass语义块就是一个完整的渲染流程，一个着色器可以包含多个Pass语义块，每当GPU运行一个Pass之前，就会产生一个SetPassCall，所以可以理解为一次完整的渲染流程次数。&#xA;由此可见，一个Batch包含一个或多个DrawCall，都是产生是在CPU阶段，而目前普遍渲染的瓶颈恰恰就是CPU，GPU的处理速度比CPU快多了，Draw Call太高，CPU会把大量时间花费在处理Draw Call调用上。如果Batch太大，CPU需要频繁的从硬盘加载数据，切换渲染状态，这个消耗要比DrawCall大，所以后面Unity才逐渐弱化了DrawCall的显示。&#xA;再提一下，优化的时候还要关注下Statistics窗口上的三角形数（Tris）和顶点数（Verts），这两个数据也是会影响到性能，比如单个物体的顶点数最好不要超过900，不然会影响到Unity的动态合批。Unity的Statistics窗口上的三角形数（Tris）和顶点数（Verts）并不仅仅是视锥中的梯形内的三角形数和顶点数，而是Camera中 field of view所有取值下的三角形数和顶点数。也就是说，即使当前Game视图中看不到这个 cube，只有 field of view在1-179 范围内都看不到这个cube，stats面板才不会统计，GPU才不会渲染，否则都会渲染，而且Unity不会把模型拆分，这个模型哪怕只有1个顶点需要渲染，Unity也会把整个模型都渲出来。&#xA;四种优化方式的适用场合 优化方式的优先级 一些细节笔记 参考网页 Unity DrawCall、Batch、SetPassCall的区别&#xA;浅谈Draw Call和Batch的区别&#xA;Unity渲染优化的4种批处理：静态批处理，动态批处理，SRP Batcher 与 GPU Instancing&#xA;Draw call batching&#xA;为什么baches（draw calls）数那么高？ 它们有什么意义？&#xA;请教Unity中的Draw Call Batch规则</description>
+    </item>
+    <item>
+      <title>批量设置FBX文件导入模型切线方式</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_fbx_import_tangent_option/</link>
+      <pubDate>Sat, 06 Mar 2021 17:52:57 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_fbx_import_tangent_option/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原理 利用AssetDatabase.FindAssets(&amp;quot;t:Model&amp;quot;)找出所有的FBX模型的GUID。再利用AssetDatabase.GUIDToAssetPath将GUID转为文件路径。然后使用 AssetImporter.GetAtPath函数拿到 模型导入器（ModelImporter） 对象。模型导入期对象里面就有一个importTangents属性项，当此项为None时表示没切线，其他选项都表示带有切线信息。下面是查找所有带有切线信息的模型的函数。&#xA;/// &amp;lt;summary&amp;gt; /// 查找出带有切线信息的模型 /// &amp;lt;/summary&amp;gt; /// List&amp;lt;string&amp;gt; mikkTSpace 使用Morten Mikkelsen切线空间(MikkTSpace)算法计算生成切线的模型文件名 /// List&amp;lt;string&amp;gt; calculateLegacy 使用传统的算法计算生成切线的模型文件名 /// List&amp;lt;string&amp;gt; calculateLegacyWithSplitTangents,使用传统的算法，并对UV图表进行拆分的方式，计算生成切线的模型文件名 /// List&amp;lt;string&amp;gt; imported 从原始文件中导入切线的模型文件名 private void FindAllModelsContainTangent(List&amp;lt;string&amp;gt; mikkTSpace,List&amp;lt;string&amp;gt; calculateLegacy, List&amp;lt;string&amp;gt; calculateLegacyWithSplitTangents,List&amp;lt;string&amp;gt; imported) { // 使用了库函数，用&amp;#34;t:Model&amp;#34;参数检索所有的模型文件。即FBX文件 // 返回的是所有fbx的GUID string[] allModels = AssetDatabase.FindAssets(&amp;#34;t:Model&amp;#34;); for (int i = 0; i &amp;lt; allModels.Length; i++) { // 把GUID换成资源文件路径名，然后使用AssetImporter模块获取到模型导入器 string modelPath = AssetDatabase.GUIDToAssetPath(allModels[i]); var modelImporter = AssetImporter.GetAtPath(modelPath) as ModelImporter; if (modelImporter == null) continue; switch (modelImporter.</description>
+    </item>
+    <item>
+      <title>UGUI优化</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_ugui_optimization/</link>
+      <pubDate>Sat, 06 Mar 2021 15:52:57 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_ugui_optimization/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;影响性能的要素 像素填充率（FillRate） 概念：指每秒每秒显卡能填充的像素数&#xA;填充率和over draw息息相关，over draw由GPU影响&#xA;影响像素填充率的原因&#xA;半透明物体过多&#xA;绘制半透明物体需要： 1 开启ALPHA_BLEND 2 关闭Z TEST和Z WRITE 同一像素的over draw过高， 即重复绘制次数过多&#xA;优化方法&#xA;对于Alpha值为0，但是又要响应输入的不可见物体，采用 无绘制但能响应RayCast的组件来处理 减少填充区域的覆盖，比如一个矩形区域，它的周围空白不 可见区域比较多，那可以考虑把矩形转化为若干个三角形 Draw call draw call受CPU影响&#xA;UGUI引入了canvas的概念，提供给相同材质的 界面组件进行合批，减少draw call&#xA;优化方法&#xA;使用同一组材质球的UI组件，放置在同一个canvas下 动静分离：canvas可以分组，如果某个界面，存在着会动 的元素和不会动的元素，则考虑分成两组。但canvas如果 先SetActive(false)，再SetActive(true)。则需要ForceUpdate 它强制重绘 绘制顺序不要穿插，比如A组件用了A材质球，B组件用了B材 质球，C组件用了A材质球，如果不存在相互遮盖关系的话， 那么应该在scene hierachy窗口中，将三个组件按上下顺序 排序为A,C,B 其他优化策略汇总 少用Mask组件 原理：Mask组件会额外消耗多一个Drawcall来创建遮罩做像素剔除。 Mask组件不利于层级合并。原本同一图集里的ui可以合并层级， 仅需一个Drawcall渲染，如果加入Mask，就会将一个ui整体分割 成了Mask下的子ui与其他ui，两者只能各自进行层级合并，至少 要两个Drawcall。 字体 尽量减少字体特效，outline，渐变等，可以使用本身带有描边的字体文件 ，尽量统一字体风格，减少不必要的额外字体文件，不用richtext 界面切换 原理：增加一个新层，并且将Camera的Culling Mask中取消勾选， 即不渲染该层，UI界面在切换时，将其Canvas所在Layer设置为该 层，看起来就像被隐藏了 优点：于切换时基本没有开销，也不会产生多余的 Draw Call 缺点：隐藏时依然还会有一定的持续开销，而其对应的Mesh 也会始终存在于内存中。 各种界面隐藏方案的优劣分析 SetActive产生GC,会导致画布丢弃它的VBO数据，从而重建和重新批处理，操作频繁时GC导致CPU占用可能会卡顿。 enable Canvas禁用画布,能降低dc，避免SetActive的GC开销，但测试依旧会有SendWillRenderCanvases函数的调用开销。 移出RootCanvas，似乎没有多大优化，理论上会降低dc且不会引起重建。 将单独界面使用Canvas，绑定一个Camera在隐藏时设置Layer进行CullingMask蔽，同时禁用GraphicsRaycaster，能避免重建，但随着canvas增多dc会增多，同时界面较时管理比较费力，注意动态UI的事件。 设置Canvas Group 的alpha为0：依旧会被渲染，但能避免setactive带来的巨大开销，且容易操作。 更改Scale的值为0：点信息被清除，这样不会减少dc开销，同时还会引起重建，不采用。 设置一个Canvas作为根节点，将其layer设置为相机屏蔽的层级，同时禁用GraphicsRaycaster，当需要隐藏某个界面时将其以该Canvas作为根节点移到其下，这样能避免重建同时减少dc，但会有一些SetParent带来的消耗。目前采用该方案。 如果只是隐藏某个Graphic类的，可以考虑获取canvasRenderer.</description>
+    </item>
+    <item>
+      <title>杂谈Unity3D的single channel texture</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_single_channel_texture/</link>
+      <pubDate>Tue, 23 Feb 2021 15:04:03 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_single_channel_texture/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;经实测，在Unity3D 2020.2.6f1版本中，在导入纹理的钩子代码中，如果设置TextureImporter.textureType = TextureImporterType.SingleChannel，以及TextureImporterPlatformSettings.format = TextureImporterFormat.R8是一张2048的贴图，导入后其格式&#xA;根据Unity的纹理格式文档描述：&#xA;当TextureImporter.textureType为TextureImporterType.SingleChannel时，除了R8之外，可选的格式有：&#xA;据UWA的人说，R Compressed 4 bit应该是但在本版本的Unity中，其对应的TextureImporterFormat.COM枚举值应该是EAC_R。&#xA;根据Unity的纹理格式文档描述：&#xA;R Compressed EAC 4 bit是一个High-quality compressed R (single-channel) 纹理。一个256x256的纹理，在内存中其大小为32KB。在Android平台下，OpenGLES2.0版本是不支持该格式的，如果指定了该格式，则会自动解压为 【ETC2 fallback】 标签项所指定的纹理格式。&#xA;考虑到现在Android手机早就已经是支持OpenGLES3了，所以大胆使用此格式，作为单通道贴图的导入格式。&#xA;参考网页 best-texture-format-for-a-single-channel Crunched single channel texture an-introduction-to-texture-compression-in-unity Unity Editor下判断图片是否带alpha通道 Unity 中纹理压缩的方式 – 搁浅の砖厂 Recommended, default, and supported texture formats, by platform C# (CSharp) UnityEditor TextureImporterSettings示例 https://huailiang.github.io/blog/2022/astc/</description>
+    </item>
+    <item>
+      <title>Animancer的Transition参数手册（翻译）</title>
+      <link>http://www.xionggf.com/post/unity3d/animation/animancer_transition/</link>
+      <pubDate>Fri, 12 Feb 2021 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/animation/animancer_transition/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原文地址&#xA;Transitions 与其硬编码淡入淡出的持续时间(hard-coding the fade durations)，开始和结束时间，动画剪辑的播放速度和动画事件，不如使用transition机制。此机制可以在编辑模式下的可视化地编辑它们。由非程序员在Inspector面板中定义这些细节，无需编辑和重新编译任何脚本。&#xA;Animancer中包含的每个State类都有其自己的Transition Type，其中包含与之相关的各种详细信息，以便在将其传递给AnimancerComponent.Play(ITransition)时，这些详细信息可用来创建该State类型。例如，当播放一个AnimationClip对象（即一个动画片段剪辑）时，一个ClipState.Transition将创建一个ClipState实例对象。如下代码所示：&#xA;using Animancer; using UnityEngine; public class TransitionExample : MonoBehaviour { [SerializeField] private AnimancerComponent _Animancer; [SerializeField] private ClipState.Transition _Animation; private void OnEnable() { _Animancer.Play(_Animation); } } 对应的inspector显示如下图：&#xA;这个示例详细演示如何使用transitions。&#xA;Fields 字段名字 代码值 inspector截图 Animation Clip Fade Duration FadeDuration Speed Speed Start Time NormalizedStartTime End Time Events.NormalizedEndTime Events Events 各个属性的说明如下表&#xA;字段名字 说明 Animation 要播放的那个animation clip Fade Duration 从上一个动画淡入淡出到新动画所需的时间。此值不能为负，并且将其设置为0 sill会使动画立即播放。不管使用哪个字段输入值， 此时间字段始终被序列化为秒 Speed 动画以其正常速度的倍数播放的速度。负值会使它向后播放（因此可能希望将Start Time设置为1x，以便从末尾开始向后播放 Start Time 如果启用，播放时动画时刻将立即跳到该值。否则，它将显示默认值：0x（正速度）或1x（负速度）。如果动画的AnimancerNode.</description>
+    </item>
+    <item>
+      <title>Animancer的States（翻译）</title>
+      <link>http://www.xionggf.com/post/unity3d/animation/animancer_state/</link>
+      <pubDate>Thu, 11 Feb 2021 20:30:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/animation/animancer_state/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原文地址&#xA;State 当播放一段动画剪辑（animation clip）时，Animancer会创建一个ClipState来管理它并跟踪其进度。ClipState是最常见的一种AnimancerState，除此之外，有其他类型的AnimancerState，例如Controller States和 Mixer States。这些用来在一个state中管理多个动画剪辑。&#xA;执行AnimancerComponent.Play函数播放一个animation clip，就返回一个AnimancerState对象，如下代码所示：&#xA;void PlayAnimation(AnimancerComponent animancer, AnimationClip clip) { // Play the animation and control its state: var state = animancer.Play(clip); state.Time = ... state.NormalizedTime = ... state.Speed = ... state.OnEnd = ... } 也可以自己访问和创建状态，而无需立即播放它们：&#xA;code description var state = animancer.States.GetOrCreate(clip); 访问状态而不播放状态（该Play方法在内部使用此状态）。 var state = animancer.States[clip]; 获取状态（如果存在）（否则为null）。 var state = animancer.States.Create(key, clip); 即使该动画已经存在，也要创建一个新状态。注意必须为每个状态提供不同的key。 var state = new ClipState(animancer, clip); 创建一个新状态而不给它一个Key。可以使用其AnimancerState.Key属性分配一个。 Keys 当用AnimancerComponent.Play方法创建一个state时，这个state存储在一个内部的Dictionary容器中，通过指定某个key，用以在以后用这个key来检索使用该state。&#xA;默认地，该state所播放的那段动画剪辑所对应的AnimationClip实例对象，将作为该state的key值 NameAnimancerComponent将重载其GetKey方法，NameAnimancerComponent类不再使用它播放的AnimationClip对象，而是使用这个动画剪辑的名字字符串去作为key。但在启动时，可以在inspector面板中，在Animation中预先注册好这个 void PlayAnimation(AnimancerComponent animancer, AnimationClip clip) { // Trying to play an animation before registering it does nothing.</description>
+    </item>
+    <item>
+      <title>Unity3D的Animator中的animation transition参数细节</title>
+      <link>http://www.xionggf.com/post/unity3d/animation/u3d_animation_state_detail/</link>
+      <pubDate>Sat, 02 Jan 2021 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/animation/u3d_animation_state_detail/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;选项 描述 Has Exit Time 如果设置为true，则仅在指定的动画剪辑已经播放了给定百分比之后，才启用动画剪辑过渡（transition）。 如果禁用，则将在满足其过渡条件后，立即进行切换。 如果要创建由若干个动画剪辑组成的序列，请将其设置为true。 Exit Time 这是满足“Has Exit Time”选项勾选后，指定的播放动画长度的百分比（0-1范围）。 例如，如果将其设置为0.5，则在播放了50％的动画剪辑后，当满足转换条件后，动画的状态将转换。 Fixed Duration 这个属性将和下一个属性“ Transition Duration (s)”结合使用。如果本选项启用，的财产与下一个过渡期间结合在一起。 如果启用，则Transition Duration (s) 项以秒为单位;如果关闭，则以动画播放时间的百分比表示。 Transition Duration (s) 动画状态过渡所需的时间。 这是从一个动画剪辑过渡到另一个所用的时间。 在过渡期间动画剪辑会被混合在一起。 过渡时间越长，会让动画剪辑转换得更平滑些，否则就转换得更锐利。一个好的默认值是大约0.25。 Transition Offset 选项会把待处理的目标动画开始时刻做偏移。该值以动画剪辑的播放百分比表示。 比如将其设置为0.3。意思是说，当从动画剪辑A过渡到动画剪辑B时，那么A过渡到B之后，会从B的30%处开始播放，而不会从B的开始刻度处开始播放。 Interruption Source 此设置告诉Unity某个动画剪辑过渡。是否可以被其他过渡打断。 例如动画系统下有一个默认的Idle动画，Idle动画有Jump动画分支和Walk动画分支，而Walk动画分支下又有一个Jump1动画分支，当我们同时满足两个Jump动画的切换条件时，Interruption Source就可以判断优先从哪个动画源切换到Jump或Jump1。Interruption Source中四个选项如下表中的几个选项的一个 Interruption Source的各个选项表 选项 描述 None 关闭Interruption Source选项 Current State: 从当前源打断 Next State 从下一个源打断 Current State then Next State 优先从当前源打断，如果当前源不能切换到下一个状态则从下一个源打断。 Next State then Current State 和上一个选项相反 Ordered Interruption If set to false, this lets the transition be interrupted by other transitions independently of their order.</description>
+    </item>
+    <item>
+      <title>Unity3D的Color Space细节解析</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_color_space/</link>
+      <pubDate>Fri, 01 Jan 2021 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_color_space/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;参考网页 https://zhuanlan.zhihu.com/p/36507196&#xA;https://zhuanlan.zhihu.com/p/93216787&#xA;https://blog.csdn.net/candycat1992/article/details/46228771&#xA;https://developer.nvidia.com/gpugems/GPUGems3&#xA;http://www.klayge.org/2011/02/26/gamma%E7%9A%84%E4%BC%A0%E8%AF%B4/&#xA;https://zhuanlan.zhihu.com/p/36507196&#xA;https://www.kinematicsoup.com/news/2016/6/15/gamma-and-linear-space-what-they-are-how-they-differ&#xA;https://zhuanlan.zhihu.com/p/66558476&#xA;https://www.cambridgeincolour.com/tutorials/gamma-correction.htm&#xA;https://zhuanlan.zhihu.com/p/37679604&#xA;https://zhuanlan.zhihu.com/p/271011254</description>
+    </item>
+    <item>
+      <title>Unity3D动画中Root Motion的概念和使用</title>
+      <link>http://www.xionggf.com/post/unity3d/generic_animation_root_motion/</link>
+      <pubDate>Sat, 09 May 2020 18:38:27 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/generic_animation_root_motion/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;Unity3D的Mecanim动画系统可以直接复用3DS MAX中制作的动画文件中的位移，这个就是通过applyRootMotion选项来达成的，我们只需要在使用Animator控制动画播放的同时，设置Animator组件的applyRootMotion字段为true就可以了。&#xA;applyRootMotion，从字面上理解来看，是“应用于根节点的运动”，官方文档的解释如下：&#xA;The Root Transform is a projection on the Y plane of the Body Transform and is computed at runtime. At every frame, a change in the Root Transform is computed. This change in transform is then applied to the Game Object to make it move.&#xA;直接翻译的意思是：&#xA;root transform是指body transform在在Y平面上的投影（即Y=0的平面，可以理解为模型所站立的“地面”。且这个投影是在运行时执行计算。在每一帧，root transform的每一个变化都会被计算。然后这些变化将会作用到game object上，使得它发生运动&#xA;也就是说，root motion就是指：在动画中物体产生的位移，可以在运行时，让绑定了Animator组件的game object，也发生实际的位移。且这个位移，是根据播放动画中每一帧物体的位移，在 X 和 Z 轴上投影计算而得。&#xA;对于某些技能动画，整个动画是有一定位移的，但是动画的位移是动作设计师在设计时根据动作需要调出来的，位移是跟动作的幅度直接相关和匹配的。那么在释放技能的时候就只需要直接播放动画，只要应用这个 Root Motion 的特性，就可以很好的完成角色在播放动作的同时进行移动，动作播放完毕之后就在动画结束帧角色所在的位置。而不要额外地做计算工作。接下来看下animation clip inspector面板上若干和root motion有关的属性选项&#xA;animation clip inspector 界面上的一些属性介绍 以下是Unity 2019.</description>
+    </item>
+    <item>
+      <title>Unity3D Shader的内建multi_compile开关所涵盖的多样体</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_shader_multi_compile_variants/</link>
+      <pubDate>Fri, 31 Jan 2020 11:37:25 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_shader_multi_compile_variants/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;multi_compile_fwdbase 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdbase编译指令，包含了以下 9 个内建的keyword：&#xA;DIRECTIONAL DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON LIGHTMAP_ON LIGHTMAP_SHADOW_MIXING LIGHTPROBE_SH SHADOWS_SCREEN SHADOWS_SHADOWMASK VERTEXLIGHT_ON 如果不做特别的指定的话，默认地启用了其中的 4 个内建keyword，分别是：DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON组成了 8 个多样体，如下：&#xA;多样体（变体） DIRECTIONAL DIRECTIONAL LIGHTPROBE_SH DIRECTIONAL SHADOWS_SCREEN DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN DIRECTIONAL VERTEXLIGHT_ON DIRECTIONAL LIGHTPROBE_SH VERTEXLIGHT_ON DIRECTIONAL SHADOWS_SCREEN VERTEXLIGHT_ON DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON multi_compile_fwdadd 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdadd编译指令，包含了以下 5 个内建的keyword：&#xA;DIRECTIONAL DIRECTIONAL_COOKIE POINT POINT_COOKIE SPOT 如果不做特别的指定的话，默认地启用了全部的 5 个内建keyword，组成了 8 个多样体，如下：&#xA;keyword组成的多样体（变体） DIRECTIONAL DIRECTIONAL_COOKIE POINT POINT_COOKIE SPOT multi_compile_fwdadd_fullshadows 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdadd_fullshadows编译指令，包含了以下 5 个内建的keyword：</description>
+    </item>
+    <item>
+      <title>The Universal Additional Camera Data component</title>
+      <link>http://www.xionggf.com/post/unity3d/urp_doc/universal_additional_camera_data_component/</link>
+      <pubDate>Wed, 15 Jan 2020 19:21:39 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/urp_doc/universal_additional_camera_data_component/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;URP版本：8.2.0&#xA;源参考网页&#xA;通用附加相机数据组件（Universal Addtional Camera Data Component） 是通用渲染管线（URP）用于内部数据存储的组件。通用附加相机数据组件使URP可以扩展和覆盖Unity标准相机组件的功能和外观。&#xA;在URP中，具有Camera组件的GameObject还必须具有通用附加摄影机数据组件。如果您的项目使用URP，则在创建Camera GameObject时，Unity会自动添加通用附加相机数据组件。您不能从带有Camera组件的game object中删除通用附加相机数据组件。&#xA;如果您使用脚本来控制和自定义URP，则可以通过以下脚本访问摄像机的通用附加摄像机数据组件：&#xA;var cameraData = camera.GetUniversalAdditionalCameraData(); 有关更多信息，请参见UniversalAdditionalCameraData API文档。如果需要通过脚本频繁访问通用附加摄像机数据组件，则应缓存对其的引用，以避免不必要的CPU工作。</description>
+    </item>
+    <item>
+      <title>Universal Render Pipeline</title>
+      <link>http://www.xionggf.com/post/unity3d/urp_doc/urp/</link>
+      <pubDate>Wed, 15 Jan 2020 19:21:39 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/urp_doc/urp/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;1 URP的常见问题回答 URP和HDRP(High Definition Render Pipeline)不能混用。 可以从内建render pipeline转到URP。可以用升级器(upgrade)升级内建shader到URP shader。如果自定义的shader的话，需要手动去upgrade。 不能在运行期换pipeline asset。 URP和HDRP之间不能换用。 通过Package Manager获取URP的package 在URP Asset的【Player Setting】界面上可以找到Dynamic Batching的checkbox 选中材质球时，在Inspector面板中，找到Render Face选项，选择Both选项，即可开启Double Sided Global Illumination。 URP适用于各种平台，包括PC和mobile 在Built-in RP和URP功能对照表中，标识为Not Supported的功能，表示没有且不会在后续版本中实现。 如果在build URP工程时很慢，检查以下shader stripping是否设置对，要strip掉可以strip掉的shader。 缺省地，URP是在linear space中工作，可以在Player Setting中将其设置为在gamma space中工作。 通过创建ScriptableRendererFeature脚本，使用scriptable render pass可以扩展URP的功能。 2 URP Asset URP版本：8.2.0 源网页&#xA;要使用URP asset，需要创建一个URP asset，并在【Graphic settings】界面将其赋值使用。URP asset控制图形渲染的功能，设置图形渲染的质量等级。URP asset本身是一个scriptable object。它继承自RenderPipelineAsset类。在一个工程中可以使用多个URP asset，并且可以在它们之间切换使用，比如有个URP asset是启用了阴影，另一个URP asset关闭了阴影。&#xA;URP有以下几大类的控制选项，如下：&#xA;General Quality Lighting Shadows Post-processing Advanced 下面的图显示了这几个控制选项的UI：&#xA;2.1 General 这是一些用于控制管道渲染框架的核心部分常规设置&#xA;属性名 描述 对应的编辑器变量名称 Depth Texture 当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个深度纹理_CameraDepthTexture。缺省地URP将把这个深度纹理交给你场景中的所有的摄像机去使用之。 m_RequireDepthTextureProp Opaque Texture 当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个不透明的深度纹理_CameraOpaqueTexture。缺省地，URP将这个深度纹理交给你场景中的所有的摄像机使用。这个深度纹理起的作用，就很类似于built-in render pipeline中的GrabPass。在URP渲染任意的透明状网格(transparent mesh)时，该纹理将会提供一个当前场景的一个快照(snapshot) m_RequireOpaqueTextureProp Opaque Downsampling 设置Opaque Texture属性的降采样方式，有None(不采样)、2倍线性过滤(2x Bilinear)，、4倍线性过滤(4x Bilinear)，、4倍盒状过滤(4x Bilinear)，其中4倍盒状过滤产生一种轻柔羽化的效果 m_OpaqueDownsamplingProp Terrain Holes 禁用此项的话，在build包的时候，URP将会移出所有的Terrain hole shader变体，将会减少build包的时间 &amp;ndash; 2.</description>
+    </item>
+    <item>
+      <title>Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle</title>
+      <link>http://www.xionggf.com/post/unity3d/multicompile_shaderfeature_shadervariant_assetbundle/</link>
+      <pubDate>Sat, 04 Jan 2020 13:20:28 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/multicompile_shaderfeature_shadervariant_assetbundle/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;multi_compile编译指示符 multi_compile编译指示符的文档在这里。假如有以下的shader示例语句：&#xA;#pragma multi_compile _USE_SEMITRANSPARENT _USE_OPAQUE #pragma multi_compile _MULTI_RED _MULTI_GREEN _MULTI_BLU ... fixed4 frag (v2f i) : SV_Target { fixed4 col = tex2D(_MainTex, i.uv); #if _MULTI_RED col = col * fixed4(1,0,0,1); #elif _MULTI_GREEN col = col * fixed4(0,1,0,1); #elif _MULTI_BLUE col = col * fixed4(0,0,1,1); #endif #if _USE_SEMITRANSPARENT col.a = 0.5; #elif _USE_OPAQUE col.a = 1.0; #endif return col; } 那么根据排列组合，就会有 $ 2 \times 3 = 6 $ 种代码段的组合，即分别是 _USE_SEMITRANSPARENT与_MULTI_RED ， _USE_SEMITRANSPARENT与_MULTI_GREEN ， _USE_SEMITRANSPARENT与_MULTI_BLUE ， _USE_OPAQUE与_MULTI_RED ， _USE_OPAQUE与_MULTI_GREEN ， _USE_OPAQUE与_MULTI_BLUE。总得来说，就是各种排列组合对应编译生成的变体， $\color{#FF0000}{无论有没有被使用上，都会被编译打包到游戏包或者资源包中}$ 。所以 在运行时 ，可以使用 Material.</description>
+    </item>
+    <item>
+      <title>Update、FixedUpdate、LateUpdate函数，定时器和帧速率</title>
+      <link>http://www.xionggf.com/post/unity3d/update_fixedupdate_lateupdate/</link>
+      <pubDate>Tue, 31 Dec 2019 12:32:55 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/update_fixedupdate_lateupdate/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;1 Update、LateUpdate、FixedUpdate函数 Unity将每帧调用一次 Update() 函数。这意味着，如果你以60fps的速度运行，那意味着每秒调用60次 Update() 函数。如果以50fps的速度运行，则每秒调用50次Update函数。这也就是说。每两次执行update函数之间的时间间隔，其实是变化不定的。正是由于这一点，使用 Update() 函数的最大问题是它可能与物理引擎不同步。调用行为可以改变，因为它可以结束更快或更慢，这取决于您的图形在渲染的硬件上放置了多少负载，使用物理更新可能会导致完全错误的反应。&#xA;Unity确实会尝试以项目所指定的速率调用FixedUpdate()函数。但是，这些调用也需要根据当前实际的帧速率去确定。这意味着虽然任何给定帧上可能有零次，一次甚至超过100次对FixedUpdate()函数的调用，但Unity会动态调整到实际帧速率。通过深入挖掘，我们逐渐意识到，这也意味着对FixedUpdate()的所有调用都不一定在指定的时间间隔内。下面举例说明下这种情况：&#xA;默认情况下 FixedUpdate() 函数的更新频率是50FPS（0.02s），如果当游戏的更新频率为60FPS时，那么FixedUpdate有固定的更新速率是很好理解的，因为这种绝对可以保证到，每执行一次 FixedUpdate() 函数，就至少执行了一帧，但是如果游戏本身的更新频率就很低，例如为30FPS时，每一帧的时间间隔明显大于0.02秒的，那么这时候在每两次 Update() 函数的调用之间。 FixedUpdate() 函数就被调用了多次。&#xA;通常 FixedUpdate() 函数比 Update() 函数更频繁地被调用。 FixedUpdate() 函数可以在一帧内被调用多次，如果帧速率很低，则根本不能在帧之间调用。 如果帧速率很高，也可能不会调用 FixedUpdate() 。 在 FixedUpdate() 函数被调用之后立即进行所有物理计算和更新。 作用力，扭矩或其他与物理相关的函数时，应使用FixedUpdate函数。 FixedUpdate() 函数由一个准确可信的计时器调用，而与实际的帧速率无关，因此在 FixedUpdate() 中应用移动计算时，您不需要将您的值乘以Time.deltaTime。 Update() 函数是每一帧中执行更新操作的主要（入口）函数。 Update() 函数中用来移动非物理系统驱动的物体。 Update() 函数用来接受用户输入。 Update() 函数可用来实现简单的计时器。 由于 Update() 的执行方式，与物理引擎的执行步调不同，即可能在一帧中， FixedUpdate() 函数执行了多次，而Update函数则只执行了一次。这取决于渲染器在渲染图形时的负载量，以及所耗费的CPU时间。如果在 Update() 函数中执行物理运算时，会导致未知的结果。同时也可以看到： 函数的执行间隔，未必就是TimeManager界面中Fixed TimeStep项中所指定的值。&#xA;LateUpdate() 函数每帧会被调用一次，在 Update() 函数结束后调用 所有在 Update() 函数中执行的计算，将会在 LateUpdate() 函数调用之前完成执行。 如果实现一个跟随式的第三视角摄像机，则摄像机的状态更新放在 LateUpdate() 函数中执行是一个通用的做法。 因为你的角色是在 Update() 函数里面执行移动和转向的操作。所以在 LateUpdate() 函数执行摄像机的位置和旋转度计算，可以确保在计算时，角色已经全部完成了位置计算，摄像机可以正确地跟踪到角色的正确位置。</description>
+    </item>
+    <item>
+      <title>Unity3D出iOS的包操作指南</title>
+      <link>http://www.xionggf.com/post/mac_ios/u3d_ios_build_pack/</link>
+      <pubDate>Tue, 31 Dec 2019 11:52:43 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/mac_ios/u3d_ios_build_pack/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;1 切换平台到iOS下 打开 【Unity|File|Build Setting】 菜单,选择iOS平台，然后点击左下角的 Switch Platform 切换到iOS平台，右边选择 Release。确保项目能在iOS平台上正确运行了再下一步打包。&#xA;2 配置Unity项目PlayerSetting 界面上各个选项如下表所示：&#xA;选项 细节 Company Name 公司名，与下面的Bundle Identifier对应 Product Name 项目名，也是与下面的Bundle Identifier对应 Bundle Identifier com.CompanyName.ProductName,这个在打包成xCode工程之后，需要和在苹果开发者网站上的app IDs一致，不然会报错：项目Identifier与开发者账号申请的证书的Identifier不同。 Scripting Backend 选择IL2CPP，支持64位。 Api Compatibility Level 如果项目中使用到了文件的操作，要选择“.NET 2.0” Target Device 项目要运行的平台，有哪个就选哪个，不过到时候审核的时候也是要iPhone和iPad分开审核。 Target SDK 这个选择DeviceSDK，选用设备的SDK就行了。 Target minimum iOS Version 限制最低可运行iOS版本，这个在xCode中也可以更细致调整。 PlayerSetting界面如下图所示：&#xA;到这里，就可以打包了，点击 【File|Build And Run】 菜单，会弹出要保存的项目文件地址，Unity3D会把工程导出成一个可以给xcode使用的工程。&#xA;3 构建开发版的包 首先在xcode的 Account 里面添加苹果开发者账号。从 xcode 7 开始,在开发阶段，如果只需要进行真机调试而不要求发布到AppStore上的话，可以使用一个普通的苹果用户ID作为真机调试账号。方法如下：&#xA;第1步：首先点击菜单 【Xcode|Preferences&amp;hellip;】 ,&#xA;第2步：然后点击 【Accounts】 切换到如图所示界面，然后点击左下角的 “+” 号，会弹出一个填写对话框，在此对话框中添加你的苹果用户ID，密码等等，信息，最后点击 【Sign in】 按钮</description>
+    </item>
+    <item>
+      <title>Unity3D shader优化技巧集合</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_shader_optimization/</link>
+      <pubDate>Tue, 31 Dec 2019 11:37:25 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_shader_optimization/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;一些优化的tips，基于2019.3版本 只做需要的计算，比如一直在shader设置某个固定颜色，就等于白做计算 能给vs做的，就不要给fs做，能在脚本设置的，就不要在shader里做，比如在shader代码里面用 if-else ,就不如在脚本中用 keyword 优化surface shader：启用 approxview 编译指示符，在光照计算时，在vs中而不是在fs中做视线向量的规格化 优化surface shader：启用 halfasview 编译指示符，在光照计算时，使用半角向量做光照计算，且半角向量的计算在vs中执行 优化surface shader：启用 noforwardadd 编译指示符，确保在 Forward rendering 模式中， 只使用一个有向平行光光源 在fs中执行光照计算，其他的实时光源都只在vs中进行计算，此指示符确保只在一个pass中执行渲染操作 优化surface shader：编译指令 noambient 禁用着色器上的环境照明和球谐光。这样可以使性能稍快一些。 数据精度的优化：世界坐标系下的坐标值，纹理映射坐标值，用 float 数据精度的优化：除了HDR颜色之外的数据，使用 half 数据精度的优化：纹理数据的相关的一些简单操作用 fixed 各种GPU的区别： 桌面GPU ，内部都会统一用 float 计算 各种GPU的区别： 移动GPU 内部能真正支持half精度，大胆地使用它 各种GPU的区别： 老旧的GPU 才内部实现了 fixed ， OpenGL ES3 及后续的都内部把 fixed 处理为 half 了 Alpha Testing ：在iOS等等使用了PowerVR芯片的平台，表现不佳。 ColorMask ：在某些平台上（大多数是在iOS和Android设备的移动GPU），使用 ColorMask 忽略某些通道（例如 ColorMask RGB ）可能会占用大量资源，因此仅在确实需要时才使用它。 参考网页： https://docs.unity3d.com/Manual/SL-ShaderPerformance.html&#xA;https://www.cnblogs.com/sifenkesi/p/4716791.html</description>
+    </item>
+    <item>
+      <title>《Unity3D内建着色器源码剖析》</title>
+      <link>http://www.xionggf.com/post/my_books/u3d_shader_annotation/</link>
+      <pubDate>Mon, 30 Dec 2019 15:25:10 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/my_books/u3d_shader_annotation/</guid>
+      <description>书籍信息 信息 详情 定价 89.00 出版社 人民邮电出版社 版次 1 出版时间 2019年08月 开本 16 装帧 平装 页数 334 ISBN编码 9787115507044 官方QQ群 群1号码：672523982&#xA;书籍配套代码 代码文件 MD5值 Unity3D内建着色器源代码 版本2017.2.0f3 MD5: 1737874a497c6fa04031af3c90ff2f99 第12章的代码工程 MD5：640938e9f1a259b7e693b1abe866f368 书中参考引用到的一些技术文章 微软网站上关于DXT及BC系列格式的详细介绍 微软MSDN上有介绍块状压缩的文章 nVidia开发者网站有一篇介绍单程立体渲染原理的文章。 Unity3D官网也有单程立体渲染的介绍 《Unity3D内建着色器源码剖析》勘误表 第1版第1刷 章节 页数 位置 错误内容 正确内容 1.2.2 正文第4页 第5段第5行 $$\left&amp;lt; p_1,p_2,p_3 \right&amp;gt;$$ 的排列顺序称为顺时针方向（clockwise，CW）。 $$ \left&amp;lt; p_1,p_3,p_2 \right&amp;gt; $$ 的排列顺序称为顺时针方向（clockwise，CW）。…… 1.2.2 正文第4页 第6段第2行 在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&amp;lt; p_1,p_2,p_3 \right&amp;gt; $$ 在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&amp;lt; p_1,p_3,p_2 \right&amp;gt; $$ 1.</description>
+    </item>
+    <item>
+      <title>在Mac中如何安装VScode并作为Unity3D开发IDE</title>
+      <link>http://www.xionggf.com/post/mac_ios/use_vscode_in_mac/</link>
+      <pubDate>Mon, 30 Dec 2019 11:52:43 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/mac_ios/use_vscode_in_mac/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;1 安装brew Homebrew 是Mac OSX上的软件包管理工具，能在Mac中方便的安装软件或者卸载软件，相当于linux下的apt-get、yum神器；Homebrew可以在Mac上安装一些MacOS上没有的，从Unix/Linux等系统移植过来的工具，Homebrew将这些工具统统安装到了 【/usr/local/Cellar】 目录中，并在 【/usr/local/bin】 中创建符号链接。&#xA;1.1 Homebrew的安装 Homebrew的安装很简单，只需在终端下输入如下指令：&#xA;/usr/bin/ruby -e &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;#34; Homebrew安装成功后，会自动创建目录 /usr/local/Cellar 来存放Homebrew安装的程序。 这时你在命令行状态下面就可以使用 brew 命令了.&#xA;1.2 Homebrew的使用 指令功能 指令格式 指令示例 安装软件 brew install 软件名 brew install wget 搜索软件 brew search 软件名 brew search wget 卸载软件 brew uninstall 软件名 brew uninstall wget 更新所有软件 brew update 通过 update 可以把包信息更新到最新，不过包更新是通过git命令，所以要先通过 brew install git 命令安装git。 更新具体软件 brew upgrade 软件名 brew upgrade git 显示已安装软件 brew list brew list 查看软件信息 brew info 软件名 brew info git 用浏览器打开官方网页查看软件信息 brew home 软件名 brew home git 查看那些已安装的程序需要更新 brew outdated brew outdated 显示包依赖 brew deps brew deps 创建你自己的Homebrew包 brew create 文件名 $ brew create https://foo.</description>
+    </item>
+    <item>
+      <title>继承自Monobehaviour的组件组件的构造函数</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_component_construction_func/</link>
+      <pubDate>Mon, 23 Apr 2018 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_component_construction_func/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;问题1： 在unity中，继承自MonoBehaviour的组件类可以写构造函数吗？构造函数应该是public，protected，还是private的，构造函数的执行顺序比Awake和Start事件方法更早吗？&#xA;你想了解在Unity中，继承自MonoBehaviour的组件类里构造函数的使用规则、访问修饰符选择，以及它和Awake/Start的执行顺序关系，这个问题触及了Unity组件生命周期的核心知识点。&#xA;一、核心结论与详细解释 1. 可以写构造函数，但强烈不推荐 从语法上讲，你完全可以为MonoBehaviour子类编写构造函数，但Unity的组件系统设计逻辑决定了这是一种错误的实践。&#xA;原因：&#xA;Unity组件的实例化不是由new关键字创建的，而是由Unity引擎在场景加载、对象实例化（如Instantiate()）时自动创建的。 如果你手动写构造函数，Unity引擎并不会调用它（除非你自己用new创建，但这会导致组件脱离Unity的GameObject体系，失去所有MonoBehaviour的特性）。 构造函数中如果访问Unity的核心API（如transform、gameObject），会直接报错，因为此时组件还未被引擎初始化，这些引用都是null。 2. 构造函数的访问修饰符 即使你非要写构造函数，访问修饰符的选择也没有实际意义：&#xA;public：语法合法，但无意义，因为你不会手动new一个MonoBehaviour组件。 protected/private：同样合法，但Unity引擎也不会调用，仅能被类内部/子类的代码调用（而这种调用本身就不符合Unity的使用规范）。 总结： 无论选择哪种修饰符，对Unity组件的正常使用都没有帮助，反而可能造成误解。&#xA;3. 执行顺序对比 构造函数的执行顺序确实比Awake和Start更早，但这个“更早”没有实际价值：&#xA;执行时机： 构造函数：当Unity引擎在内存中创建组件对象的“裸实例”时执行（场景加载/Instantiate的最早期）。 Awake：组件对象被引擎初始化（绑定到GameObject、初始化transform等引用）后立即执行（游戏开始/对象创建时）。 Start：在Awake之后，该组件第一次更新（Update）前执行。 关键问题：构造函数执行时，组件的gameObject、transform等核心属性都是null，无法进行任何有效的Unity相关操作，此时执行的代码几乎没有实际意义。 二、正确的替代方案 如果你想在组件初始化时执行代码，应该使用Unity提供的生命周期方法，而不是构造函数：&#xA;using UnityEngine; public class MyComponent : MonoBehaviour { // 错误示范：不要写构造函数 // public MyComponent() // { // // 这里访问transform会报错！ // // transform.position = Vector3.zero; // } // 正确：初始化逻辑写在Awake（最早的有效时机） private void Awake() { // 此时所有Unity引用都已初始化，可以安全操作 transform.position = Vector3.zero; Debug.Log(&amp;#34;Awake执行：组件初始化&amp;#34;); } // 可选：延迟初始化写在Start（在Awake之后） private void Start() { Debug.</description>
+    </item>
+    <item>
+      <title>从计算着色器到四边形【翻译】</title>
+      <link>http://www.xionggf.com/post/unity3d/from_cs_to_quad/</link>
+      <pubDate>Wed, 17 Feb 2016 19:08:53 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/from_cs_to_quad/</guid>
+      <description>原文地址&#xA;// input texture Texture2D&amp;lt;float3&amp;gt; _sourceTexture; // a compute buffer that we can append to for output AppendStructuredBuffer&amp;lt;int2&amp;gt; _brightPoints; 在上面的代码段中，_sourceTexture是从外部传给GPU的纹理。和在fragment shader中访问纹理不一样的是，在片元着色器中通过采样器(sampler)获取纹理，纹理坐标是浮点数，而在compute shader中，“纹理”可以视为一个二维数组，可以通过整数索引值，直接访问这“二维数组”中的元素——纹素。&#xA;AppendStructedBuffer AppendStructuredBuffer 可视为是原始缓冲区的“升级版”，即结构化缓冲区。原始缓冲区（raw buffer）只是一个字节数组，而结构化缓冲区意味着可以为缓冲区中的每个元素定义一个结构。可以用来AppendStructuredBuffer.Append()方法将元素从缓冲区的末尾加入。重AppendStructuredBuffer.Append()是一个线程安全的操作。即使有数千个线程同时尝试向缓冲区添加某些内容，也不会产生冲突。&#xA;// tell Unity that the function &amp;#34;FindBrights&amp;#34; is a compute kernel #pragma kernel FindBrights // define thread groups for the FindBrights kernel [numthreads(32, 32, 1)] pragma kernel 指令 #pragma kernel FindBrights是Unity专用的代码。用来通知Unity函数FindBrights是计算内核(compute kernel)，这意味着它可以用作计算着色器，而不仅仅是一个普通函数。&#xA;numthreads指令 numthreads指令的三个输入参数分别表示该着色器在工作组（Work Group）内的线程布局。具体来说，numthreads(x, y, z)指令中xyz三个参数分别定义了在X、Y和Z三个维度上每个工作组中线程的数量。这三个参数决定了工作组内线程的总数量，例如numthreads(8, 8, 1) 就定义了一个工作组包含 8 x 8 x 1 = 64 个线程。工作组的总线程数直接影响计算的并行性，在实际调用时，通过Dispatch()函数定义工作组的分布。如下代码：</description>
+    </item>
+    <item>
+      <title>在Unity3D中使用Visual Studio调试shader【翻译】</title>
+      <link>http://www.xionggf.com/post/unity3d/cg_programming_unity_debugging_of_shaders/</link>
+      <pubDate>Wed, 17 Feb 2016 19:08:53 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/cg_programming_unity_debugging_of_shaders/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原文地址&#xA;本文主要介绍在U3D中调试shader代码的主要技术：false-color images:通过设置片元颜色中的某个分量，使得该值可视。然后根据resulting image中的颜色分量的亮度（intensity of that color component），你可以得到shader代码中的值的结论，这种技术的确是一种很原始的调试技术，但不幸的是，这在U3D中并不是不常见的。&#xA;1 顶点数据来自何方 在RGB cube一节中，你可以看到片元着色器如何通过顶点着色器输出的结构体中，获取到对应的数据。那么问现在的问题是：顶点着色器从何方拿到这些数据？在U3D环境下，答案是从绑定到game object中的Mesh Renderer组件中获取。Mesh Renderer组件将在每一帧中所有的发送网格顶点数据给OpenGL。这一步发送操作通常被称为“draw call”。必须注意的是，每一个的draw call都有一些性能耗费（performance overhead）。因而，一次性地给OpenGL发送一个大的网格数据，比分多次发送，每次发送一些较小的网格数据，要来得更高效些。这些网格数据通常由一系列的三角形组成，而每一个三角形则是以”三个顶点数据和一些其他属性数据“的方式被定义。这些属性数据将会通过”顶点输入参数（vertex input parameter）“的方式在顶点着色器中被启用。每一个顶点输入参数将会指定一系列的语义，如POSITION, NORMAL, TEXCOORD0, TEXCOORD1, TANGENT, COLOR等等。在U3D环境下的Cg语言的特定编程实现中。这些内建的顶点输入参数将会由一个特定的名字。&#xA;2 内建的顶点输入参数，以及如何使得它们可视 在U3D中的，内建的顶点输入参数不仅仅有特定的语义表示符号，还有特定的变量名字和类型，此外，他们还被包含在一个单独的结构体中，如下：&#xA;struct vertexInput { float4 vertex:POSITION; // position (in object coordinates, i.e. local or model coordinates) float4 tangent:TANGENT; // vector orthogonal to the surface normal float3 normal:NORMAL; //surface normal vector (in object coordinates; usually normalized to unit //length float4 texcoord:TEXCOORD0; //0th set of texture coordinates (a.</description>
+    </item>
+    <item>
+      <title>Unity3D PlayerPrefs的存储位置</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_player_prefs/</link>
+      <pubDate>Wed, 11 Nov 2015 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_player_prefs/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;平台 存储位置 macOS 存储在 【~/Library/Preferences】 目录下名字为 【unity.[company name].[product name].plist】 文件中,其中的 【company name】 和 【product names】 在 【Project Settings】 面板中设置。而且这个plist文件是为编辑器版本和单独可执行版本的程序共同使用。 Windows 存在注册表中的注册项中，该注册项的路径是 【HKEY_CURRENT_USER\Software[company name][product name]】。其中的 【company name】 和 【product names】 在 【Project Settings】 面板中设置。注意编辑器版本和单独可执行版本的注册表路径是不同的，例如 【company name】 是 “TomCompany” ,例如 【product name】 是 “TomGame” 的话，在编辑器中执行程序，其注册项路径为 【计算机\HKEY_CURRENT_USER\Software\Unity\UnityEditor\TomCompany\TomGame】 Linux PlayerPrefs存储在 【~/.config/unity3d/[CompanyName]/[ProductName]】 。其中的 【company name】 和 【product names】 在 【Project Settings】 面板中设置.。 Windows Store Apps PlayerPrefs存储在 【%userprofile%\AppData\Local\Packages[ProductPackageId]\LocalState\playerprefs.dat】 文件中 Windows Phone 8 PlayerPrefs存储在应用的 “local folder” 中，可查阅Directory.</description>
+    </item>
+    <item>
+      <title>Unity2D的碰撞检测响应处理细节</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_2d_collision_trigger/</link>
+      <pubDate>Mon, 23 Mar 2015 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_2d_collision_trigger/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;Unity中的2D碰撞/触发回调的触发规则遵循一下的规则&#xA;详细的触发规则 首先明确两个核心概念的区别：&#xA;碰撞（Collision）：需要两个Collider2D都勾选Is Trigger = false，且满足物理交互条件 触发（Trigger）：至少一个Collider2D勾选Is Trigger = true 1. 碰撞回调（OnCollisionEnter2D/Stay2D/Exit2D）的触发条件 要接收到碰撞回调，必须满足：&#xA;两个Collider2D都未勾选Is Trigger 至少其中一个 GameObject拥有 非静态 的Rigidbody2D组件（注意：Rigidbody2D不能设为Kinematic+Is Kinematic且另一个也无Rigidbody2D，这种情况不会触发） 两个Collider2D的Layer层碰撞矩阵允许交互 2. 触发回调（OnTriggerEnter2D/Stay2D/Exit2D）的触发条件 要接收到触发回调，规则更宽松：&#xA;至少一个Collider2D勾选Is Trigger 满足以下任一条件即可： 其中一个GameObject有 非静态 的Rigidbody2D（可以是动态/运动学） 其中一个GameObject是 运动的静态物体（Static GameObject，且通过代码主动改变位置/旋转） 注意：两个纯静态（Static）且无Rigidbody2D的物体碰撞，不会触发任何回调 常见场景示例 为了让你更直观理解，这里列出几个典型场景：&#xA;场景 A物体（Collider2D） B物体（Collider2D） 是否触发回调 1 有Rigidbody2D（动态） 无Rigidbody2D ✅（碰撞/触发都可） 2 无Rigidbody2D 有Rigidbody2D（动态） ✅（碰撞/触发都可） 3 无Rigidbody2D（静态） 无Rigidbody2D（静态） ❌（无任何回调） 4 有Rigidbody2D（运动学） 无Rigidbody2D ✅（触发可，碰撞需B也有非运动学Rigidbody2D） 关键补充 回调函数（如OnCollisionEnter2D）必须写在有Collider2D的GameObject所挂载的脚本中，且脚本所在的GameObject需满足上述Rigidbody2D条件，否则接收不到回调。 Rigidbody2D的Body Type影响： Dynamic（动态）：受物理力影响，是最常用的能触发回调的类型 Kinematic（运动学）：不受物理力影响，但主动移动时能触发触发回调 Static（静态）：等同于无Rigidbody2D的静态物体 总结 核心规则：要接收2D碰撞/触发回调，不能两个物体都没有Rigidbody2D且都是静态的，至少一个物体要有非静态的Rigidbody2D（触发回调允许运动学Rigidbody2D）。 简化记忆：日常开发中，给需要检测碰撞/触发的物体（或其中一个）挂载Rigidbody2D（动态类型），就能稳定接收到回调。 触发vs碰撞：触发回调规则更宽松（运动学Rigidbody2D也可），碰撞回调要求更严格（至少一个动态Rigidbody2D）。 3D的Collider和Rigidbody也是遵循一样的规则吗 你问的这个问题很关键，3D的Collider和Rigidbody的碰撞/触发回调规则核心逻辑和2D一致，但在细节上有一些专属的差异，并不是完全一模一样。</description>
+    </item>
+    <item>
+      <title>Unity3D的碰撞检测响应处理细节</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_collision_trigger/</link>
+      <pubDate>Sun, 22 Mar 2015 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_collision_trigger/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;1 对碰撞做出响应所必须的条件 要想两个物体A，B发生碰撞检测，即触发OnCollision相关事件，或者触发OnTrigger相关事件。必须：&#xA;物体A,B都挂接上了一个碰撞器组件，即Collider类（2D环境下是Collider2D类）的子类 运动着的物体，要携带一个刚体组件，即RigidBody类（2D环境下是RigidBody2D类），另一方的物体如果是静止的话，可以不用携带刚体组件。 2 碰撞时触发OnCollision相关事件的条件 在满足第1节中所提出的条件下，当两者的刚体组件（如果有的话）的Is Kinematic属性都未勾选，且两者的碰撞器组件的Is Trigger属性，都没勾选时，便会触发OnCollision相关事件。&#xA;3 碰撞时触发OnCollision相关事件的条件 在满足第1节中所提出的条件下，当两者的碰撞器组件的Is Trigger属性，其中有一个勾选时，就会触发OnTrigger相关事件。&#xA;4 响应事件的分类 响应事件分为Enter、Stay、Exit。以OnTrigger为例，就是OnTriggerEnter、OnTriggerStay、OnTriggerExit（2D环境下就是OnTriggerEnter2D，OnTriggerStay2D，OnTriggerExit2D，OnCollision事件以此类推）。&#xA;Enter事件便是两个物体碰撞的那一瞬间，此事件在碰撞过程会执行一次 Stay事件表示两个物体在持续接触时，此事件在碰撞过程会多次执行。 Exit事件便是两个物体在分开的那一瞬间，此事件在碰撞过程会执行一次</description>
+    </item>
+    <item>
+      <title>解决Unity3D在编译时出现libpng iccp警告的问题</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_png_iccp_warning/</link>
+      <pubDate>Thu, 19 Mar 2015 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_png_iccp_warning/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;项目组使用Unity3D4.6进行渠道商SDK接入，在编译Android版本时，发现部分渠道商提供的SDK包在编译时会出现如下图的问题：&#xA;经查证，新版本的Unity3D采用了较高版本的libpng库作为png格式图片的处理模块，产生此问题的原因是新版本的libpng对png的ICCP采用了更严格的约束条件，因此，我们必须使用软件对渠道商提供的这些资源png图片进行处理，以解决这个问题。开源软件 ImageMagick 提供了处理这个问题的方案。&#xA;从ImageMagick网站下载了ImageMagick Display软件包，安装后如下图：&#xA;我们使用软件包中的convert.exe程序对这些图片进行处理。convert程序是一个命令行程序，该程序有很多开关参数。我们使用-strip参数处理。命令行格式为：&#xA;convert 待处理的图片的文件名 -strip 处理后输出的图片文件名 如果需要一口气处理同一文件夹下的许多png，我们可以将处理命令写成一个批处理文件，代码如下：&#xA;set fn=E:\software\ImageMagick-6.9.0-Q16\convert.exe for /f &amp;#34;tokens=*&amp;#34; %%i in (&amp;#39;dir/s/b *.png&amp;#39;) do &amp;#34;%fn%&amp;#34; &amp;#34;%%i&amp;#34; -strip &amp;#34;%%i&amp;#34; </description>
+    </item>
+    <item>
+      <title>在Unity3D中模型渲染时边缘抖动有杂点的问题解决方案</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_mesh_edge_flicker/</link>
+      <pubDate>Wed, 18 Mar 2015 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_mesh_edge_flicker/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;项目主美反映了一个问题，即在U3D中，给模型使用了镜面高光的材质，结果模型的边缘有很多白色的杂点，如果换用了普通漫反射材质的话，杂点的明显稍微没那么强烈，如下图，左边是使用了镜面高光材质，右边是使用了漫反射材质。&#xA;一开始，我以为是因为模型的Z-fighting问题，即两个带纹理的模型因为太靠近了，导致因渲染时的精度问题而造成模型的穿插。但后来检查了模型，并不存在“靴子里面还套着小腿”的这种情况。所以不是Z-fighting的问题。&#xA;后来google了一下，发现老外们也曾经发现过类似的问题。最终有人提出这是一个因为抗锯齿做得不好的问题，解决方案就是给摄像机加一个基于image post process机制的脚本AntialiasingAsPostEffect，然后选用FXAA反走样的着色器。加入之后，效果不错，杂点问题得到了较为明显的改善。&#xA;KlayGE引擎开发者，大神龚敏敏认为基于post process处理的技术目前已经是逐渐成为主流。nVidia等公司有很多大牛也提出了不少的算法。比如FXAA算法就是由nVidia的研究员Timothy Lottes提出的算法。所以可以预见不远的将来这项技术会逐渐普及。但目前因为硬件能力的问题，在手机移动平台上，依然要注意使用这种算法的性能问题。</description>
+    </item>
+    <item>
+      <title>Unity3D烘焙光照图在移动平台上颜色失真的分析和应对方案</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_lightmap_color_distortion/</link>
+      <pubDate>Tue, 17 Mar 2015 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_lightmap_color_distortion/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;Unity烘焙的LightMap是32bit的HDR图，而移动设备通常不支持 HDR图(32bit per channel) ，会按照 LDR图(8bit per channel) 的形式进行处理，因此会出现色偏问题。即颜色变淡，在例子中地面为绿色，因此相比于PC平台，切到移动平台如Android或者iOS上之后，黄色变淡，使得地面的绿色更加显眼。对此Unity3D技术支持人员的的建议是：&#xA;可尝试自行修改LightMap的DecodeLightmap函数，该函数可在 Unity\Editor\Data\CGIncludes\UnityCG.cginc 文件中找到。需要说明的是，这种方法也不能达到与PC端完全一致的效果。 为了避免类似问题，请不要使用过于强烈的Light进行烘焙，因为Light的强度(Intensity)越高，色偏问题会越严重。 </description>
+    </item>
+    <item>
+      <title>Unity3D的渲染路径的细节一览表</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_render_path_detail/</link>
+      <pubDate>Thu, 12 Mar 2015 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_render_path_detail/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;1 功能列表 功能 Vertex Lit Rendering Path Forward Rendering Path Deferred Rendering Path 逐像素光照效果（Normal map等） N Y Y 多render pass支持 仅在一个render pass中完成光照计算 允许多render pass 允许多render pass 逐像素实时阴影 N 仅支持一盏Directional Light Y 双光照贴图(Dual Lightmaps) N N Y 深度缓冲区和法线缓冲区 N Additional Render Pass Y 软粒子（soft particle） N N Y 半透明的物体（Semitransparent objects） N Y Y 反走样（抗锯齿 anti aliasing） N Y Y 灯光剔除蒙版(Lighting Culling masks) 受限制 Y Y 光照保真度（Lighting Fidelity） 所有光照计算在顶点着色器中执行 部分光照计算在片元着色器中执行 所有光照计算在片元着色器中执行 每像素光照的性能耗费 像素数 像素数*被实时光照亮的像素数 PC上的所需的最低shader model版本 任意版本 最低2.</description>
+    </item>
+    <item>
+      <title>Unity3D工程中的特殊文件夹及其在不同平台下的目录</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_special_directory/</link>
+      <pubDate>Tue, 17 Feb 2015 20:20:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_special_directory/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;目录名 作用 仅能放置于工程根目录吗 会打包进最终发布包吗 仅在编辑阶段使用吗 读取方式 打包时会原样保留原始文件格式吗 Editor 放置一些第三方或者自定义的编辑辅助工具的代码 N N Y - Editor Default Resources 编辑器用到的一些资源，比如图片、文本文件、等等。放在这里 Y N Y 调用EditorGUIUtility.Load读取 - Gizmos 用来在编辑阶段绘制一些辅助图标辅助线条 Y N Y 在MonoBehavior类的OnDrawGizmos方法中使用 - Plugins Andoird 或者 iOS平台下，要给工程接一些SDK时可以把SDK依赖的库文件如 .so .jar .a文件放置从此处 N Y N - N Resources Resources文件夹下的资源不管你用还是不用都会被打包进.apk或者.ipa N Y N Resource.Load函数： 编辑时和运行时都可以通过Resource.Load来直接读取。Resources.LoadAssetAtPath它可以读取Assets目录下的任意文件夹下的资源，它可以在编辑时或者编辑器运行时用，它但是它不能在真机上用，它的路径是 ”Assets/xx/xx.xxx” 必须是这种路径，并且要带文件的后缀名。 N StreamingAssets 并且它是一个只读的文件夹，就是程序运行时只能读 不能写。它在各个平台下的路径是不同的 N Y N Application.streamingAssetsPath 是访问这些目录下的资源路径的方法。它会根据当前的平台选择对应的路径。 Y Application类中定义的若干路径在不同平台下的具体值如下表：&#xA;变量Application.dataPath&#xA;Windows: &amp;ndash; Android: /data/app/xxx.xxx.xxx.apk iOS: Application/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/xxx.app/Data 变量Application.streamingAssetsPath</description>
+    </item>
+    <item>
+      <title>Unity3D的全局光照及Lighting Window面板参数简介</title>
+      <link>http://www.xionggf.com/post/unity3d/u3d_gi_introduction/</link>
+      <pubDate>Tue, 17 Feb 2015 20:10:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/u3d_gi_introduction/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;1 什么是全局光照（Global Illumination） 在阐述什么是全局光照之前，我们先简与之对应的局部光照。粗略地说，所谓局部光照，就是我们在渲染一个场景时，仅仅考虑光源和物体之间的交互，而不考虑物体与物体之间的光线交互——即每一个物体表面的颜色，仅仅由光源发出的光线贡献，而不考虑由其他物体所反射过来的光线的贡献。&#xA;全局光照则是在局部光照的基础上，增加考虑物体与物体之间光线交互。所以说如果局部光照系统就是由光源+待渲染物体+视点组成的话，那么全局光照系统就是由光源+各待渲染物体之间的反射光+待渲染物体+视点组成。&#xA;从是否是即时性来分，GI可分为实时（又可称为在线）光照和 非实时（又可称为离线） 光照。如果是离线光照的话，待渲染物体之间的反射光就是通过辐射度算法或者是光线追踪算法逐点计算出来的。这些算法是相当耗时的，无法应用在实时GI上（当然随着硬件的发展，不排除原本只适用于离线光照的算法在未来能应用在实时上）。&#xA;2 光照的各种方式 如上所述，GI是在局部光照的基础上，增加了对待渲染物体之间的光线交互的计算。从而使得渲染效果更逼真。对Unity3D而言。照明模式（lighting mode）分为实时照明和烘焙照明两大类，其中烘焙照明又可以分为预计算光照和烘焙光照贴图这两种。首先看实时照明的方式。&#xA;2.1 实时照明 在不做任何修改设置的情况下，Unity的光源(包括directional light,、spot light、point light)都是实时的，代表这些光源会把光线照射到场景并以每一帧的频率更新，由于光源是可以在场景内移动的对象，场景灯光的更新是实时的，你可以在游戏窗口和场景窗口看到改变。如下图&#xA;注意上图：因为没有反射光源的关系阴影是全黑的，只有投射光锥体范围内的对象表面才有光源影响。实时照明是场景里照亮物体最基本的方法，用来照亮角色和会动的对象，但默认设置里Unity实时照明里的光线不会反射，（也就是说，从A物体反射出来的光线，就算是在物理学上应该会入射到B物体。但在渲染中，计算B物体的最终颜色时，并不考虑这个从A物体反射过来的光线的贡献）。因此，我们才导入了全局光照系统，启用了预先计算的技术，都是为了表现一个更逼真的场景。&#xA;2.2 烘焙照明 2.2.1 烘焙全局光照贴图（Baked GI Lighting） 当烘焙一张光照贴图(Lightmap)时，场景内的静态对象会根据当前场景内的光照，算出一张渲染结果贴图，并覆盖在场景对象之上建立照明效果，如下图：&#xA;这些”光照贴图”可以包含场景内投射到物体表面的直接光源，以及在不同物体间反射的”间接光源”，这样的光照贴图可以通过使用着色器(Shader)描述物体的表面信息(Albedo)和凹凸(Normals)信息。&#xA;使用这种烘焙方式所产生出来的光照贴图，是无法在运行期发生变化的，因此被定义为静态(Static)，虽然仍可在这层贴图上继续迭加光源计算，但两者已无法交互运算，通常我们采用这光照法来让低阶的手机能顺利执行，解决光在游戏中运行的性能问题。&#xA;2.2.2预计算全局光照(Precomputed Realtime GI Lighting) 虽然这种静态光照贴图无法在游戏执行时改变场景光照效果，但预先计算的实时全局光照系统，则能实时地去计算算复杂的场景光源的变化，通过这种方法，就能建立一个丰富的全局光照反射场景，并实时反映光源的改变。好比做个日晷，阴影的位置和颜色会随着光源移动改变，这在原本的烘焙光照系统是无法达成的。&#xA;为了能够实时地实现这些效果，需要在实时运算之前先将场景中的相关光照数据做一次”预计算”，所谓的预计算负责计算游戏过程中光的复杂行为，它可以在时间空档时进行计算，因此称作一个”脱机”运算，或者可称为“离线”运算。&#xA;3 Unity3D 5中的全局烘焙照明 在上节我们提到Unity3D 5的GI系统有两种烘焙模式，因此，Unity3D 5在Lighting Windows窗口中提供了这两种的模式的操作。 Unity3D 5的Lighting Window可以在通过菜单【Windows|Lighting】打开。&#xA;在Unity3D 5的灯光组件中，有一个Baking属性，这个Baking属性有三种选项，分别是Realtime、Baked、Mixed这三种属性。而这三种属性，则又分别对应于Lighting Window中的Scene Tab界面中的【Precomputed Realtime GI】和【Baked GI】这两个选项的组合，如下图&#xA;3.1只勾选【Precomputed Realtime GI】选项 关闭当在scene tab面板中，关闭了【Baked GI】选项。或者将场景中的全部光源类型设置为【Realtime】的时候这意味着没有任何的光会被预先烘焙出光照贴图。引擎在“烘焙”时，仅仅是存储场景内静态物体间的关系，当烘焙完成后你可以自由的调整光源或物体材质，并实时地看到效果。 此时在Scene中观察Baked结果可以看到没有任何静态颜色被烘焙出来。&#xA;如果在scene tab中，仅启用了【Precomputed Realtime GI】选项时，则场景中的光源应该选择Realtime类型。烘焙选项【Realtime Resolutio】对应前文所说的间接光照图，值越高间接光的效果就越明显（其实应该是越准确，当分辨率太低时间接光会因像素过滤而变弱） 。如下图，注意红色盒子投递在白色盒子上的影子。如下图当Realtime Resolution的值为10时&#xA;如下图当Realtime Resolution的值为1时&#xA;3.2 只勾选【Baked GI】选项 当在scene tab中，取消【Precomputed Realtime GI】选项，而启用【Baked GI】的话。这时候光源则依赖于他的Baking属性去分别参与静态光照贴图的烘焙：属性为Realtime的灯光，不参与静态光照烘焙，但同时作用于动态与静态物体上；属性为Mixed的光源，参与静态光照贴图的烘焙，而在运行时，则仅作用于非静态物体；属性为Baked光源，仅作用于静态光照贴图的烘焙，在运行时不参与实时光照计算。如下图可再次观察SceneView可以看到烘焙出来的颜色。</description>
+    </item>
+  </channel>
+</rss>

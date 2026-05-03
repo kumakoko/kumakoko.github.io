@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on XGF</title>
+    <link>http://www.xionggf.com/tags/</link>
+    <description>Recent content in Tags on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 12 Nov 2025 18:21:49 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Unity3D</title>
+      <link>http://www.xionggf.com/tags/unity3d/</link>
+      <pubDate>Wed, 12 Nov 2025 18:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/unity3d/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CG</title>
+      <link>http://www.xionggf.com/tags/cg/</link>
+      <pubDate>Wed, 25 Dec 2024 20:36:51 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/cg/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Culling</title>
+      <link>http://www.xionggf.com/tags/culling/</link>
+      <pubDate>Wed, 25 Dec 2024 20:36:51 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/culling/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Hiz</title>
+      <link>http://www.xionggf.com/tags/hiz/</link>
+      <pubDate>Wed, 25 Dec 2024 20:36:51 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/hiz/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OpenGL</title>
+      <link>http://www.xionggf.com/tags/opengl/</link>
+      <pubDate>Sun, 15 Dec 2024 20:36:51 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/opengl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Godot</title>
+      <link>http://www.xionggf.com/tags/godot/</link>
+      <pubDate>Thu, 14 Nov 2024 18:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/godot/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>AI</title>
+      <link>http://www.xionggf.com/tags/ai/</link>
+      <pubDate>Tue, 12 Nov 2024 18:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>MISC</title>
+      <link>http://www.xionggf.com/tags/misc/</link>
+      <pubDate>Tue, 22 Oct 2024 23:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/misc/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GPU Driven Terrain</title>
+      <link>http://www.xionggf.com/tags/gpu-driven-terrain/</link>
+      <pubDate>Tue, 08 Oct 2024 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/gpu-driven-terrain/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Unity</title>
+      <link>http://www.xionggf.com/tags/unity/</link>
+      <pubDate>Tue, 08 Oct 2024 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/unity/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HLSL</title>
+      <link>http://www.xionggf.com/tags/hlsl/</link>
+      <pubDate>Fri, 08 Mar 2024 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/hlsl/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Shader</title>
+      <link>http://www.xionggf.com/tags/shader/</link>
+      <pubDate>Fri, 29 Apr 2022 11:37:25 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/shader/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SRP</title>
+      <link>http://www.xionggf.com/tags/srp/</link>
+      <pubDate>Mon, 02 Aug 2021 23:29:44 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/srp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>URP</title>
+      <link>http://www.xionggf.com/tags/urp/</link>
+      <pubDate>Tue, 01 Jun 2021 16:02:07 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/urp/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ShaderLab</title>
+      <link>http://www.xionggf.com/tags/shaderlab/</link>
+      <pubDate>Thu, 29 Apr 2021 11:37:25 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/shaderlab/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>.NET</title>
+      <link>http://www.xionggf.com/tags/.net/</link>
+      <pubDate>Sat, 21 Nov 2020 19:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/.net/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Lua</title>
+      <link>http://www.xionggf.com/tags/lua/</link>
+      <pubDate>Tue, 20 Oct 2020 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/lua/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>http://www.xionggf.com/tags/c&#43;&#43;/</link>
+      <pubDate>Thu, 16 Apr 2020 10:53:26 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>UnityEditor</title>
+      <link>http://www.xionggf.com/tags/unityeditor/</link>
+      <pubDate>Thu, 02 Jan 2020 15:40:26 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/unityeditor/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>iOS</title>
+      <link>http://www.xionggf.com/tags/ios/</link>
+      <pubDate>Tue, 31 Dec 2019 11:52:43 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/ios/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>HDR</title>
+      <link>http://www.xionggf.com/tags/hdr/</link>
+      <pubDate>Wed, 08 Mar 2017 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/hdr/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Windows Programming</title>
+      <link>http://www.xionggf.com/tags/windows-programming/</link>
+      <pubDate>Sat, 09 Apr 2016 13:39:08 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/windows-programming/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>VR</title>
+      <link>http://www.xionggf.com/tags/vr/</link>
+      <pubDate>Fri, 01 Jan 2016 14:46:50 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/vr/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DNH</title>
+      <link>http://www.xionggf.com/tags/dnh/</link>
+      <pubDate>Thu, 25 Oct 2012 18:09:58 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/dnh/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DxFramework</title>
+      <link>http://www.xionggf.com/tags/dxframework/</link>
+      <pubDate>Fri, 26 Oct 2007 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/dxframework/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>DirectX</title>
+      <link>http://www.xionggf.com/tags/directx/</link>
+      <pubDate>Mon, 21 Nov 2005 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/tags/directx/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

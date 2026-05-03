@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>从计算着色器到四边形【翻译】 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="使用计算着色器在 Unity 的通用渲染管道中添加镜头光晕高光">
+		<meta property="og:title" content="从计算着色器到四边形【翻译】" />
+<meta property="og:description" content="使用计算着色器在 Unity 的通用渲染管道中添加镜头光晕高光" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/unity3d/from_cs_to_quad/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2016-02-17T19:08:53+08:00" />
+<meta property="article:modified_time" content="2016-02-17T19:08:53+08:00" />
+
+
+		<meta itemprop="name" content="从计算着色器到四边形【翻译】">
+<meta itemprop="description" content="使用计算着色器在 Unity 的通用渲染管道中添加镜头光晕高光"><meta itemprop="datePublished" content="2016-02-17T19:08:53+08:00" />
+<meta itemprop="dateModified" content="2016-02-17T19:08:53+08:00" />
+<meta itemprop="wordCount" content="410">
+<meta itemprop="keywords" content="Unity3D," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">从计算着色器到四边形【翻译】</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2016-02-17T19:08:53&#43;08:00">February 17, 2016</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">从计算着色器到四边形【翻译】</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#appendstructedbuffer">AppendStructedBuffer</a></li>
+    <li><a href="#pragma-kernel-指令">pragma kernel 指令</a></li>
+    <li><a href="#numthreads指令">numthreads指令</a>
+      <ul>
+        <li><a href="#例子1-二维图像处理">例子1 二维图像处理</a></li>
+        <li><a href="#例子2-三维数据处理">例子2 三维数据处理</a></li>
+      </ul>
+    </li>
+    <li><a href="#三个重要的计算着色器系统语义值">三个重要的计算着色器系统语义值</a>
+      <ul>
+        <li><a href="#举例说明的代码段">举例说明的代码段</a></li>
+        <li><a href="#简单总结">简单总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><a href="https://samdriver.xyz/article/compute-shader-intro">原文地址</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// input texture</span>
+</span></span><span style="display:flex;"><span>Texture2D&lt;float3&gt; _sourceTexture;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// a compute buffer that we can append to for output</span>
+</span></span><span style="display:flex;"><span>AppendStructuredBuffer&lt;int2&gt; _brightPoints;
+</span></span></code></pre></div><p>在上面的代码段中，<code>_sourceTexture</code>是从外部传给GPU的纹理。和在fragment shader中访问纹理不一样的是，在片元着色器中通过采样器(sampler)获取纹理，纹理坐标是浮点数，而在compute shader中，“纹理”可以视为一个二维数组，可以通过整数索引值，直接访问这“二维数组”中的元素——纹素。</p>
+<h2 id="appendstructedbuffer">AppendStructedBuffer</h2>
+<p><code>AppendStructuredBuffer</code> 可视为是原始缓冲区的“升级版”，即结构化缓冲区。原始缓冲区（raw buffer）只是一个字节数组，而结构化缓冲区意味着可以为缓冲区中的每个元素定义一个结构。可以用来<code>AppendStructuredBuffer.Append()</code>方法将元素从缓冲区的末尾加入。重<code>AppendStructuredBuffer.Append()</code>是一个<strong>线程安全</strong>的操作。即使有数千个线程同时尝试向缓冲区添加某些内容，也不会产生冲突。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// tell Unity that the function &#34;FindBrights&#34; is a compute kernel</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pragma</span> kernel FindBrights
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// define thread groups for the FindBrights kernel</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[numthreads(32, 32, 1)]</span>
+</span></span></code></pre></div><h2 id="pragma-kernel-指令">pragma kernel 指令</h2>
+<p><code>#pragma kernel FindBrights</code>是Unity专用的代码。用来通知Unity函数<code>FindBrights</code>是<strong>计算内核</strong>(compute kernel)，这意味着它可以用作计算着色器，而不仅仅是一个普通函数。</p>
+<h2 id="numthreads指令">numthreads指令</h2>
+<p><code>numthreads</code>指令的三个输入参数分别表示该着色器在<strong>工作组</strong>（Work Group）内的<strong>线程布局</strong>。具体来说，<code>numthreads(x, y, z)</code>指令中xyz三个参数分别定义了在X、Y和Z三个维度上每个工作组中线程的数量。这三个参数决定了工作组内线程的总数量，例如<code>numthreads(8, 8, 1)</code> 就定义了<strong>一个工作组包含 8 x 8 x 1 = 64 个线程</strong>。工作组的总线程数直接影响计算的并行性，在实际调用时，通过<code>Dispatch()</code>函数定义工作组的分布。如下代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>ComputeShader.Dispatch(kernelIndex, numGroupsX, numGroupsY, numGroupsZ);
+</span></span></code></pre></div><p>在上面的代码中，<code>numGroupsX</code>、<code>numGroupsY</code> 和 <code>numGroupsZ</code> 定义了<strong>工作组的数量</strong>，配合 <code>numthreads</code> 定义每个工作组内的线程数量，共同决定了整个计算着色器执行的并行规模。</p>
+<p>在Direct3D11中，1024是D3D11每一个工作组的最大线程总数（无论是 32x32、512x2 还是 32x16x2）</p>
+<p>之所以工作组要在三个轴上分配线程，是为了适应不同类型的数据结构和计算任务。在Unity3D的Compute Shader中，数据通常是多维的，类似于图像、体积数据或3D模型等。不同的数据形状和维度要求计算任务能灵活地处理这些不同维度的数据。以下是具体原因：</p>
+<ol>
+<li>
+<p>适应多维数据结构：</p>
+<ul>
+<li>一维数据（x 轴）：对于一维数组或线性数据（比如粒子系统），只需要在x轴上分配线程。因此可用 <code>numthreads(x, 1, 1)</code> 来分配线程，表示在一维线性维度上执行操作。</li>
+<li>二维数据（x 和 y 轴）：二维数据常见于图像或纹理。对于每个像素的处理，通常需要在X和Y两个维度上分配线程。例如，一个图像的宽度和高度对应于 x 和 y 轴， <code>numthreads(x, y, 1)</code> 可以让每个线程处理一个像素点。</li>
+<li>三维数据（x, y, z 轴）：体积数据（如3D纹理、体积渲染等）需要在三个维度上操作。例如，体积数据的宽度、高度和深度分别对应 x、y 和 z 轴，<code>numthreads(x, y, z)</code> 就适合处理每个三维体素（<strong>volumetric pixel</strong>）。</li>
+</ul>
+</li>
+<li>
+<p>提高并行处理效率
+Compute Shader 是为并行处理设计的。通过分成X、Y和Z三个轴，可以让不同线程同时处理多个维度的数据，提高并行效率。例如，二维图像的每个像素可以被不同线程并行处理，三维数据的每个体素也可以被并行处理。</p>
+</li>
+<li>
+<p>灵活应对不同的计算问题。分三个轴让你有更多的控制权。例如：</p>
+</li>
+</ol>
+<ul>
+<li>X轴：可以处理数据的一维维度，如数组、行处理。</li>
+<li>Y轴：可以处理数据的二维维度，如矩阵、图像的每一列。</li>
+<li>Z轴：当你有3D数据或多个层次时，Z轴可以用来遍历每一个深度或层次。</li>
+</ul>
+<h3 id="例子1-二维图像处理">例子1 二维图像处理</h3>
+<p>如果处理一个1024x1024的图像，可以这样定义一个工作组：</p>
+<pre tabindex="0"><code>[numthreads(8, 8, 1)]
+</code></pre><p>这意味着每个工作组将有8x8=64个线程，每个线程处理图像中的一个像素。然后，用以下的<code>Dispatch</code>函数调度它：</p>
+<pre tabindex="0"><code>// 128*8=1024
+computeShader.Dispatch(kernelIndex, 128, 128, 1);
+</code></pre><p>这会在X和Y维度上创建128x128=16384个工作组，总线程数为<strong>16384x64共1048576</strong>。整个图像中每个像素都会由一个线程去计算。</p>
+<h3 id="例子2-三维数据处理">例子2 三维数据处理</h3>
+<p>如果处理一个128x128x128的3D体积数据，可能会这样定义一个工作组：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#a6e22e">[numthreads(4, 4, 4)]</span>
+</span></span></code></pre></div><p>这定义了一个4x4x4=64个线程的工作组。然后可以这样调度：</p>
+<pre tabindex="0"><code>computeShader.Dispatch(kernelIndex, 32, 32, 32);
+</code></pre><p>这会在X、Y和Z维度上创建32x32x32个工作组，最终覆盖整个128x128x128的数据体积。</p>
+<h4 id="总结">总结</h4>
+<p>三个轴允许你处理不同维度的数据——一维、二维或三维——并通过工作组和线程来分配工作负载，从而在GPU上实现高效的并行计算。这样做能够充分利用GPU的强大计算能力，适应不同的任务需求。</p>
+<h2 id="三个重要的计算着色器系统语义值">三个重要的计算着色器系统语义值</h2>
+<p>在计算着色器中，<code>SV_DispatchThreadID</code>、<code>SV_GroupThreadID</code> 和 <code>SV_GroupID</code> 这三个<strong>系统语义值</strong>（system-value semantics）是<strong>用来为每个线程标记其在整个计算任务中的位置</strong>的。每个值都提供了线程在不同范围中的唯一标识，以帮助处理数据计算。以下表格是这些语义值的具体作用：</p>
+<table>
+<thead>
+<tr>
+<th>语义值</th>
+<th>含义</th>
+<th>作用范围</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SV_DispatchThreadID</code></td>
+<td>表示当前线程在整个<code>Dispatch</code>函数调用中的全局ID</td>
+<td>该ID在整个调度网格中唯一标识每个线程，使用三维坐标 (X, Y, Z) 来表示位置</td>
+<td>通常用于访问全局数据结构，比如纹理或缓冲区等。在处理一个图像时，可以用 <code>SV_DispatchThreadID</code> 直接定位某个像素的位置</td>
+</tr>
+<tr>
+<td><code>SV_GroupThreadID</code></td>
+<td>表示当前线程在所属的工作组内的<strong>局部ID</strong></td>
+<td>该ID唯一标识每个工作组中的线程，范围通常从 (0, 0, 0) 到在<code>numthreads</code>中定义的最大值。例如 <strong>(x-1, y-1, z-1)</strong>。</td>
+<td>在局部工作组范围内的计算和同步操作，例如在同一个工作组内进行数据共享、同步或者对某些局部资源进行操作。</td>
+</tr>
+<tr>
+<td><code>SV_GroupID</code></td>
+<td>表示当前工作组在整个调度网格中的ID</td>
+<td>该ID唯一标识调度网格中的每个工作组。每个工作组由多个线程组成，并且 <code>SV_GroupID</code>标识的是这个工作组在调度网格中的位置（X, Y, Z）坐标</td>
+<td>用于在全局范围上确定工作组的唯一位置，例如在调度多个工作组时， <code>SV_GroupID</code>可以帮助定位某个工作组的全局位置。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="举例说明的代码段">举例说明的代码段</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果在C#层，Dispatch(kernelIndex, 10, 10, 1) 被调用，并且在计算着色器中定义了numthreads(8, 8, 1)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 那么 SV_DispatchThreadID 将会表示**从0到79的X和Y维度上**所有线程的全局ID。</span>
+</span></span><span style="display:flex;"><span>uint3 globalThreadID = SV_DispatchThreadID;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果numthreads(8, 8, 1)，那么 SV_GroupThreadID 的值范围将在 (0, 0, 0) 到 (7, 7, 0)，表示工作组内线程的位置。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// SV_GroupThreadID就是当前正在执行本compute shader的那个线程的在其所属工作组内的局部ID</span>
+</span></span><span style="display:flex;"><span>uint3 localThreadID = SV_GroupThreadID;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 如果 Dispatch(kernelIndex, 10, 10, 1) 被调用，这意味着你有10x10个工作组。</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// SV_GroupID 会从 (0, 0, 0) 到 (9, 9, 0)，标识每个工作组的全局位置。</span>
+</span></span><span style="display:flex;"><span>uint3 groupID = SV_GroupID;
+</span></span></code></pre></div><h3 id="简单总结">简单总结</h3>
+<p>当调用 <code>Dispatch(kernelIndex, numGroupsX, numGroupsY, numGroupsZ)</code> 时：</p>
+<ul>
+<li><code>SV_GroupID</code> 用来确定哪个工作组在调度网格中的位置。表示工作组在整个调度网格中的位置。</li>
+<li><code>SV_GroupThreadID</code> 用来确定工作组内部每个线程的局部位置。表示线程在当前工作组中的局部ID。</li>
+<li><code>SV_DispatchThreadID</code> 是结合了 <code>SV_GroupID</code> 和 <code>SV_GroupThreadID</code> 之后的全局线程ID，用来唯一标识调度网格中所有线程的位置。表示线程在整个<code>Dispatch</code>调用中的全局ID。</li>
+</ul>
+<p>这些ID让你可以从全局到局部、再到线程级别控制数据的分配和计算流程。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// these three system-value semantics let us know which thread we&#39;re in.</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> FindBrights (uint3 globalId : SV_DispatchThreadID, uint3 localId : SV_GroupThreadID, uint3 groupId : SV_GroupID)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 如上文所述，SV_DispatchThreadID是全局级别的线程ID，因为这里定义了纹素数量和线程的数量相等，</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 所以线程的xy方向顶点索引ID可以直接用作纹素二维数组的索引值</span>
+</span></span><span style="display:flex;"><span>  float3 colour = _sourceTexture[globalId.xy];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (CalculateLuminance(colour) &gt; <span style="color:#ae81ff">1.43</span>)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// add our position to _brightPoints if colour is bright enough</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 亮度值大于1.43的纹素点记录到struct buffer中</span>
+</span></span><span style="display:flex;"><span>    _brightPoints.Append(int2(globalId.xy));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面的<code>CalculateLuminance()</code>是一个简单的函数，用于从线性 sRGB 颜色中获取亮度值。这里唯一值得注意的是，在 HLSL（以及许多其他通常较旧的语言）中，函数必须在源代码中定义在调用它们的位置之前。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">BrightPoint</span> <span style="color:#75715e">// 8 * 4 = 32 bytes</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  int2 middle;      <span style="color:#75715e">// midpoint in texels</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">float</span> magnitude;  <span style="color:#75715e">// (luminance - luminanceThreshold) / luminanceThreshold</span>
+</span></span><span style="display:flex;"><span>  float3 colour;    <span style="color:#75715e">// colour of pixel that spawned it</span>
+</span></span><span style="display:flex;"><span>  float2 padding;   <span style="color:#75715e">// pad out to a multiple of float4</span>
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">float</span> CalculateLuminance(float3 colourLinear)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// magic numbers copied from wikipedia, the source of all the best magic numbers</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// https://en.wikipedia.org/wiki/Relative_luminance</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> colourLinear.x * <span style="color:#ae81ff">0.2126</span> + colourLinear.y * <span style="color:#ae81ff">0.7152</span> + colourLinear.z * <span style="color:#ae81ff">0.0722</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/cg_programming_unity_debugging_of_shaders/">在Unity3D中使用Visual Studio调试shader【翻译】</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_player_prefs/">Unity3D PlayerPrefs的存储位置</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_2d_collision_trigger/">Unity2D的碰撞检测响应处理细节</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_collision_trigger/">Unity3D的碰撞检测响应处理细节</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_png_iccp_warning/">解决Unity3D在编译时出现libpng iccp警告的问题</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

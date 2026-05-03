@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>在Unity3D中使用Visual Studio调试shader【翻译】 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="在Unity3D中使用Visual Studio调试shader">
+		<meta property="og:title" content="在Unity3D中使用Visual Studio调试shader【翻译】" />
+<meta property="og:description" content="在Unity3D中使用Visual Studio调试shader" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/unity3d/cg_programming_unity_debugging_of_shaders/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2016-02-17T19:08:53+08:00" />
+<meta property="article:modified_time" content="2016-02-17T19:08:53+08:00" />
+
+
+		<meta itemprop="name" content="在Unity3D中使用Visual Studio调试shader【翻译】">
+<meta itemprop="description" content="在Unity3D中使用Visual Studio调试shader"><meta itemprop="datePublished" content="2016-02-17T19:08:53+08:00" />
+<meta itemprop="dateModified" content="2016-02-17T19:08:53+08:00" />
+<meta itemprop="wordCount" content="576">
+<meta itemprop="keywords" content="Unity3D," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">在Unity3D中使用Visual Studio调试shader【翻译】</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2016-02-17T19:08:53&#43;08:00">February 17, 2016</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">在Unity3D中使用Visual Studio调试shader【翻译】</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-顶点数据来自何方">1 顶点数据来自何方</a></li>
+    <li><a href="#2-内建的顶点输入参数以及如何使得它们可视">2 内建的顶点输入参数，以及如何使得它们可视</a></li>
+    <li><a href="#3-如何解析false-color-image">3 如何解析False color image</a></li>
+    <li><a href="#4-使用visual-studio调试shader代码">4 使用Visual Studio调试shader代码</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<p><a href="http://en.wikibooks.org/wiki/Cg_Programming/Unity/Debugging_of_Shaders">原文地址</a></p>
+<p>本文主要介绍在U3D中调试shader代码的主要技术：false-color images:通过设置片元颜色中的某个分量，使得该值可视。然后根据resulting image中的颜色分量的亮度（intensity of that color component），你可以得到shader代码中的值的结论，这种技术的确是一种很原始的调试技术，但不幸的是，这在U3D中并不是不常见的。</p>
+<h2 id="1-顶点数据来自何方">1 顶点数据来自何方</h2>
+<p>在RGB cube一节中，你可以看到片元着色器如何通过顶点着色器输出的结构体中，获取到对应的数据。那么问现在的问题是：顶点着色器从何方拿到这些数据？在U3D环境下，答案是从绑定到game object中的Mesh Renderer组件中获取。Mesh Renderer组件将在每一帧中所有的发送网格顶点数据给OpenGL。这一步发送操作通常被称为“draw call”。必须注意的是，每一个的draw call都有一些性能耗费（performance overhead）。因而，一次性地给OpenGL发送一个大的网格数据，比分多次发送，每次发送一些较小的网格数据，要来得更高效些。这些网格数据通常由一系列的三角形组成，而每一个三角形则是以”三个顶点数据和一些其他属性数据“的方式被定义。这些属性数据将会通过”顶点输入参数（vertex input parameter）“的方式在顶点着色器中被启用。每一个顶点输入参数将会指定一系列的语义，如POSITION, NORMAL, TEXCOORD0, TEXCOORD1, TANGENT, COLOR等等。在U3D环境下的Cg语言的特定编程实现中。这些内建的顶点输入参数将会由一个特定的名字。</p>
+<h2 id="2-内建的顶点输入参数以及如何使得它们可视">2 内建的顶点输入参数，以及如何使得它们可视</h2>
+<p>在U3D中的，内建的顶点输入参数不仅仅有特定的语义表示符号，还有特定的变量名字和类型，此外，他们还被包含在一个单独的结构体中，如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">vertexInput</span> 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  float4 vertex:POSITION; <span style="color:#75715e">// position (in object coordinates,  i.e. local or model coordinates)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  float4 tangent:TANGENT; <span style="color:#75715e">// vector orthogonal to the surface normal
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  float3 normal:NORMAL; <span style="color:#75715e">//surface normal vector (in object coordinates; usually normalized to unit                            //length
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  float4 texcoord:TEXCOORD0; <span style="color:#75715e">//0th set of texture coordinates (a.k.a. “UV”; between 0 and 1) 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  float4 texcoord1:TEXCOORD1; <span style="color:#75715e">//1st set of texture coordinates  (a.k.a. “UV”; between 0 and 1)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  fixed4 color:COLOR; <span style="color:#75715e">//color (usually constant)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span></code></pre></div><p>这个数据结构可以以下的方式被使用:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Shader <span style="color:#e6db74">&#34;Cg shader with all built-in vertex input parameters&#34;</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>   SubShader { 
+</span></span><span style="display:flex;"><span>      Pass { 
+</span></span><span style="display:flex;"><span>         CGPROGRAM 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         <span style="color:#960050;background-color:#1e0010">#</span>pragma vertex vert  
+</span></span><span style="display:flex;"><span>         <span style="color:#960050;background-color:#1e0010">#</span>pragma fragment frag 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">vertexInput</span> {
+</span></span><span style="display:flex;"><span>            float4 vertex : POSITION;
+</span></span><span style="display:flex;"><span>            float4 tangent : TANGENT;  
+</span></span><span style="display:flex;"><span>            float3 normal : NORMAL;
+</span></span><span style="display:flex;"><span>            float4 texcoord : TEXCOORD0;  
+</span></span><span style="display:flex;"><span>            float4 texcoord1 : TEXCOORD1; 
+</span></span><span style="display:flex;"><span>            fixed4 color : COLOR; 
+</span></span><span style="display:flex;"><span>         };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">vertexOutput</span> {
+</span></span><span style="display:flex;"><span>            float4 pos : SV_POSITION;
+</span></span><span style="display:flex;"><span>            float4 col : TEXCOORD0;
+</span></span><span style="display:flex;"><span>         };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         vertexOutput <span style="color:#a6e22e">vert</span>(vertexInput input) 
+</span></span><span style="display:flex;"><span>         {
+</span></span><span style="display:flex;"><span>            vertexOutput output;
+</span></span><span style="display:flex;"><span>            output.pos <span style="color:#f92672">=</span>  mul(UNITY_MATRIX_MVP, input.vertex);
+</span></span><span style="display:flex;"><span>            output.col <span style="color:#f92672">=</span> input.texcoord; <span style="color:#75715e">// set the output color
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// other possibilities to play with:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// output.col = input.vertex;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// output.col = input.tangent;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// output.col = float4(input.normal, 1.0);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// output.col = input.texcoord;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// output.col = input.texcoord1;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// output.col = input.color;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">return</span> output;
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         float4 <span style="color:#a6e22e">frag</span>(vertexOutput input) <span style="color:#f92672">:</span> COLOR 
+</span></span><span style="display:flex;"><span>         {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> input.col; 
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         ENDCG  
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在RGB Cube一文中我们已经知道如何通过”以顶点坐标的值设置对应的片元颜色“，使得这些顶点坐标的值可视。在本文中，片元颜色将会用纹理坐标去设置，使得U3D提供的纹理坐标值是什么。</p>
+<p>注意在vertexInput结构体的tangent成员变量中，只有前三个分量才表示该顶点的切线方向。通常在第四个分量存储的数值会用作一些特殊用途，例如用于parallex mapping。</p>
+<p>通常，你能通过明确指定你所需的顶点输入参数的具体属性值，而不是所有的顶点属性都罗列出来，以达到较高的性能要求。U3D在UnityCG.cginc文件中提供了若干个预定义的顶点数据结构体，如appdata_base，appdata_tan，appdata_full。appdata_full结构体包含了最多的顶点属性语义。如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">appdata_base</span> {
+</span></span><span style="display:flex;"><span>      float4 vertex : POSITION;
+</span></span><span style="display:flex;"><span>      float3 normal : NORMAL;
+</span></span><span style="display:flex;"><span>      float4 texcoord : TEXCOORD0;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">appdata_tan</span> {
+</span></span><span style="display:flex;"><span>      float4 vertex : POSITION;
+</span></span><span style="display:flex;"><span>      float4 tangent : TANGENT;
+</span></span><span style="display:flex;"><span>      float3 normal : NORMAL;
+</span></span><span style="display:flex;"><span>      float4 texcoord : TEXCOORD0;
+</span></span><span style="display:flex;"><span>}; 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">appdata_full</span> {
+</span></span><span style="display:flex;"><span>      float4 vertex : POSITION;
+</span></span><span style="display:flex;"><span>      float4 tangent : TANGENT;
+</span></span><span style="display:flex;"><span>      float3 normal : NORMAL;
+</span></span><span style="display:flex;"><span>      float4 texcoord : TEXCOORD0;
+</span></span><span style="display:flex;"><span>      float4 texcoord1 : TEXCOORD1;
+</span></span><span style="display:flex;"><span>      fixed4 color : COLOR;
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// and additional texture coordinates only on XBOX360)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span></code></pre></div><p>所以上一段shader代码可以使用U3D定义的顶点输入类型改写为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Shader <span style="color:#e6db74">&#34;Cg shader with all built-in vertex input parameters&#34;</span> { 
+</span></span><span style="display:flex;"><span>   SubShader { 
+</span></span><span style="display:flex;"><span>      Pass { 
+</span></span><span style="display:flex;"><span>         CGPROGRAM 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         <span style="color:#960050;background-color:#1e0010">#</span>pragma vertex vert  
+</span></span><span style="display:flex;"><span>         <span style="color:#960050;background-color:#1e0010">#</span>pragma fragment frag 
+</span></span><span style="display:flex;"><span>         <span style="color:#960050;background-color:#1e0010">#</span>include <span style="color:#e6db74">&#34;UnityCG.cginc&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">vertexOutput</span> {
+</span></span><span style="display:flex;"><span>            float4 pos : SV_POSITION;
+</span></span><span style="display:flex;"><span>            float4 col : TEXCOORD0;
+</span></span><span style="display:flex;"><span>         };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         vertexOutput <span style="color:#a6e22e">vert</span>(appdata_full input) 
+</span></span><span style="display:flex;"><span>         {
+</span></span><span style="display:flex;"><span>            vertexOutput output; 
+</span></span><span style="display:flex;"><span>            output.pos <span style="color:#f92672">=</span>  mul(UNITY_MATRIX_MVP, input.vertex);
+</span></span><span style="display:flex;"><span>            output.col <span style="color:#f92672">=</span> input.texcoord; 
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> output;
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         float4 <span style="color:#a6e22e">frag</span>(vertexOutput input) <span style="color:#f92672">:</span> COLOR 
+</span></span><span style="display:flex;"><span>         {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> input.col; 
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         ENDCG  
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="3-如何解析false-color-image">3 如何解析False color image</h2>
+<p>当试图据理解一个false color image的信息的时候，只需要将重点放在一个颜色分量中即可。例如：如果我们要渲染一个标准球体。在顶点输入结构中，有一个成员变量texcoord，绑定了TEXCOORD0语义，并且这个texcoord的值写入到片元颜色中，则这个texcoord变量所包含的纹理坐标x分量值就对应于片元颜色的red分量。如果你从来没有学习过如何把注意力集中在一个颜色分量上的话，这个方式就变得挺有挑战性的。因而，你可以考虑一次只看一个颜色分量，如下代码所示:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>output.col <span style="color:#f92672">=</span> float4(input.texcoord.x, <span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">1.0</span>);
+</span></span></code></pre></div><p>上面的代码在顶点着色器中执行，将会把纹理坐标的x分量输出到片元颜色中red分量中，这时候如果你看效果图，则在球体上从0度开始，到360度为止，逐渐地从淡红变为深红，类似于这种方式，我们也可以把纹理坐标的y坐标输出到片元颜色的green分量中。</p>
+<p>纹理坐标是特别容易可视化的，因为它们的值和颜色分量值类似，范围都是限定在[0,1]。类似地法线值也可以用类似的方法去可视化，但因为法线的分量值是在[-1,1]范围内，所以我们要做一个映射，将这个值域映射到[0,1]。方法如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>output.col <span style="color:#f92672">=</span> float4((input.normal <span style="color:#f92672">+</span> float3(<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.0</span>)) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2.0</span>, <span style="color:#ae81ff">1.0</span>);
+</span></span></code></pre></div><p>如果你想可视化的数据值的值域范围不在[0,1]或者[-1,1]的话，也必须要将其值域映射到[0,1]，如果你不知道待可视化的值的范围的话，你只能逐一地去尝试。在这里，如果这些待可视化的值超出了[0,1]范围的话，当输出到颜色变量时，他们自动地夹持到[0,1]范围中。即小于0值被设置为0，大于1值被设置为1.因此，当输出的颜色变量的分量是0或者1时，你至少知道这个待可视化值的分量有超过[0,1]范围了，你必须想办法将其准确地映射到[0,1]中</p>
+<p>为了实践调试shader代码。本节包含了一些代码，这些代码用来生成黑色的颜色。你的任务是弄明白每一行代码，弄明白为何最后的输出结果是黑色在最后，你可以尝试可视化任何的你不确定的值。尝试将一些大于1或者小于0的值映射的[0,1]范围内。注意下面的代码中有很多函数和操作数在Vector and Matrix Operations这一节中有文档注解。</p>
+<pre tabindex="0"><code class="language-cg" data-lang="cg">output.col = input.texcoord - float4(1.5, 2.3, 1.1, 0.0);
+output.col = input.texcoord.zzzz;
+output.col = input.texcoord / tan(0.0);
+output.col = dot(input.normal, input.tangent.xyz) * input.texcoord;
+output.col = dot(cross(input.normal, input.tangent.xyz), input.normal) * input.texcoord;
+output.col = float4(cross(input.normal, input.normal), 1.0);
+output.col = float4(cross(input.normal, input.vertex.xyz), 1.0); 
+output.col = radians(input.texcoord);
+</code></pre><h2 id="4-使用visual-studio调试shader代码">4 使用Visual Studio调试shader代码</h2>
+<p>首先要更新安装必须的软件，如下：</p>
+<p>-下载和安装DirectX SDK June 2010版本
+-安装最新的Windows更新补丁
+-安装最新的Visual Studio更新补丁，至少是version 4</p>
+<p>接着创建一个新的Unity3D工程，在工程中创建一个预定义的立方体game object。然后创建一个Shader文件，该shader命名为NewShader。编写NewShader代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Shader <span style="color:#e6db74">&#34;Custom/NewShader&#34;</span> {
+</span></span><span style="display:flex;"><span>    Properties {
+</span></span><span style="display:flex;"><span>        _MainTex (<span style="color:#e6db74">&#34;Base (RGB)&#34;</span>, <span style="color:#ae81ff">2</span>D) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;white&#34;</span> {}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    SubShader {
+</span></span><span style="display:flex;"><span>        Tags { <span style="color:#e6db74">&#34;RenderType&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Opaque&#34;</span> }
+</span></span><span style="display:flex;"><span>        LOD <span style="color:#ae81ff">200</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        CGPROGRAM
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#pragma surface surf Lambert
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">#pragma enable_d3d11_debug_symbols
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        sampler2D _MainTex;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Input</span> {
+</span></span><span style="display:flex;"><span>            float2 uv_MainTex;
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">surf</span> (Input IN, inout SurfaceOutput o) {
+</span></span><span style="display:flex;"><span>            half4 c <span style="color:#f92672">=</span> tex2D (_MainTex, IN.uv_MainTex);
+</span></span><span style="display:flex;"><span>            o.Albedo <span style="color:#f92672">=</span> c.rgb;
+</span></span><span style="display:flex;"><span>            o.Alpha <span style="color:#f92672">=</span> c.a;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        ENDCG
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    FallBack <span style="color:#e6db74">&#34;Diffuse&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>注意在上面的代码中，enable_d3d11_debug_symbols标志一定要被启用！</p>
+<p>在U3D的工程窗口中，右击弹出菜单，选【Create-&gt;Material】选项，创建一个新的材质</p>
+<p>选中这个新创建的材质，并且给该材质指定shader为刚才创建的New Shader。把这个新创建的材质拖拽到场景内的cube上。点击【File-&gt;Build Settings】菜单项，在工程配置界面上选择【PC Standalone】，然后点击【Switch Platform】按钮点击【Edit-&gt;Project Settings-&gt;Quality】菜单项，然后在Inspector面板中关闭所有画面质量等级中的反走样效果。如下图：</p>
+<p><img src="/image/u3d/u3d_debug_vs/quality_settings.png" alt=""></p>
+<p>保存工程配置，然后进入【File-&gt;Build Settings】，选中【Development Build】和【Scipt Debugging】选项。 将【Player Settings-&gt;Inspector-&gt;Other Settings-&gt;Use Direct3D 11】选为yes</p>
+<p><img src="/image/u3d/u3d_debug_vs/other_settings.png" alt=""></p>
+<p>在VS2013中创建一个新的C++ Win32工程，创建完毕之后，进入工程属性配置对话框，在Command一栏中，将<code>&quot;$(TargetPath)&quot;</code>变量代替为刚才我们创建的test.exe文件所在的目录，然后在Command Arguments一栏中加入<code>-force-d3d11</code></p>
+<p><img src="/image/u3d/u3d_debug_vs/property_pages.png" alt=""></p>
+<p>然后点击菜单【Build-&gt;Build Solution】，编译完成之后，选择菜单【Go to Debug-&gt;Graphics-&gt;Start Diagnostics】。这时左上角会提示“Frames captured: 0. Use Print Screen key to capture a frame”的消息，如下图：</p>
+<p><img src="/image/u3d/u3d_debug_vs/frame_capture.png" alt=""></p>
+<p>按下“Print Screen”键，然后切换回Visual studio。你就可以看到当前捕获的帧的画面，双击这画面，便可以打开一个新的Visual Studio窗口，如下图：</p>
+<p><img src="/image/u3d/u3d_debug_vs/visual_studio_report.png" alt=""></p>
+<p>在这个新打开的Visual Studio窗口上，你可以通过鼠标滚轮放大或者缩小这个捕获的帧的大小。把十字叉丝放置到你感兴趣的那个像素点上，然后点击鼠标左键。如下图：</p>
+<p><img src="/image/u3d/u3d_debug_vs/render_target.png" alt=""></p>
+<p>移动鼠标到图形事件列表窗口（Graphics Event List Window）。选择第一个出现的（在事件列表树状控件中最靠顶的那个）**&ldquo;obj:x DrawIndexed&rdquo;<strong>事件。如果VS弹出</strong>“No source available”**警告。则选择一个在Camera.Render树状控件的项，如下图：</p>
+<p>![](/image/u3d/u3d_debug_vs/graphics_event_list.png</p>
+<p>移动到Graphics Pixel History window，在树状控件中，选中【Go to Graphics Pixel History window-&gt;obj:x DrawIndexed-&gt;Triangle-&gt;Vertex Shader】项，然后点击绿色的箭头，如下图：</p>
+<p><img src="/image/u3d/u3d_debug_vs/graphics_pixel_history.png" alt=""></p>
+<p>现在你便可以单步调试你的shader代码了，如下图：</p>
+<p><img src="/image/u3d/u3d_debug_vs/vs_source.png" alt=""></p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/from_cs_to_quad/">从计算着色器到四边形【翻译】</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_player_prefs/">Unity3D PlayerPrefs的存储位置</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_2d_collision_trigger/">Unity2D的碰撞检测响应处理细节</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_collision_trigger/">Unity3D的碰撞检测响应处理细节</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_png_iccp_warning/">解决Unity3D在编译时出现libpng iccp警告的问题</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

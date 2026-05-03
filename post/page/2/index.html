@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Posts | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Posts" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/post/" />
+
+
+		<meta itemprop="name" content="Posts">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/post/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-section">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Posts</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">Posts</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/reconstruct_world_position/">一段根据片元深度值重建对应的深度坐标值的代码及其解释</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+// 从深度信息重建世界空间坐标 // 参数： // screenPos - 屏幕空间坐标（通常来自顶点着色器的SV_Position） // viewDir - 视图空间方向向量 // sceneDepth - 包含原始深度和线性深度值的结构体 float3 ReconstructWorldPosition(float4 screenPos, float3 viewDir, SceneDepth sceneDepth) { // 平台深度缓冲处理 ---------------------------------------- #if UNITY_REVERSED_Z // 处理Reversed-Z平台（如DirectX） real rawDepth = sceneDepth.raw; // 直接使用原始深度值 #else // OpenGL等常规深度缓冲平台 // 将深度值从[0,1]映射到[Near,1]，适配OpenGL的NDC范围 real rawDepth = lerp(UNITY_NEAR_CLIP_VALUE, 1, sceneDepth.raw); #endif // 正交投影处理 -------------------------------------------- #if defined(ORTHOGRAPHIC_SUPPORT) // 将屏幕坐标转换为NDC空间（-1到1范围） float4 viewPos = float4( (screenPos.xy / screenPos.w) * 2.0 - 1.0, // 透视除法后映射到NDC rawDepth, // 深度值 1.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-29T23:21:49&#43;08:00">November 29, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/surface_depth/">一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+// 计算场景深度与当前透明几何像素的线性深度差 // 参数： // depth - 包含场景深度信息的结构体（包含原始深度和线性眼空间深度） // positionCS - 当前像素在裁剪空间中的位置坐标（SV_Position） float SurfaceDepth(SceneDepth depth, float4 positionCS) { // ===================== 场景深度计算 ===================== // 根据投影模式选择计算方式： // unity_OrthoParams.w: 0=透视投影 | 1=正交投影 const float sceneDepth = (unity_OrthoParams.w == 0) ? depth.eye // 透视模式：直接使用预计算的线性眼空间深度 : LinearDepthToEyeDepth(depth.raw); // 正交模式：将原始深度转换到眼空间 // ================= 当前像素深度计算 ==================== const float clipSpaceDepth = (unity_OrthoParams.w == 0) ? LinearEyeDepth(positionCS.z, _ZBufferParams) // 透视模式：裁剪空间z转线性眼深度 : LinearDepthToEyeDepth(positionCS.z / positionCS.w); // 正交模式：NDC z转眼空间深度 // ================ 深度差异计算结果 ===================== return sceneDepth - clipSpaceDepth; // 返回场景深度与当前像素深度的差值 } 首先，函数内部有两个const float变量，sceneDepth和clipSpaceDepth，然后返回它们的差值。我需要理解这两个变量是如何计算的，特别是条件判断部分unity_OrthoParams.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-28T23:21:49&#43;08:00">November 28, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/dynamiclightmap_on/">Unity3D的内置宏 DYNAMICLIGHTMAP_ON</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+在Unity中，DYNAMICLIGHTMAP_ON 是一个与 动态光照贴图（Dynamic Lightmaps） 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 控制着色器是否处理动态光照贴图数据，主要用于实现动态物体的间接光照混合效果。
+核心含义 动态光照贴图标识
+当该宏被激活时（#if defined(DYNAMICLIGHTMAP_ON)），表示当前渲染的物体 启用了动态光照贴图，需要在着色器中采样动态光照贴图数据。 若未激活，则物体仅使用静态光照贴图或实时光照。 技术目的
+允许动态物体（如可移动的物件）与烘焙的静态场景光照进行间接光交互。 结合 Enlighten 或 Progressive Lightmapper 系统，实现动态物体的间接光实时更新。 触发条件 该宏在以下情况下自动激活：
+物体设置
+物体的 Mesh Renderer 组件中勾选 Lightmap Static 为 Contribute GI，同时设置 Lightmap Parameters 为支持动态更新。 光照系统配置
+项目中启用了 Realtime Global Illumination（实时全局光照）。 使用 Baked Indirect 或 Shadowmask 混合光照模式。 Shader编译指令
+在Shader中通过 #pragma multi_compile 或 #pragma shader_feature 声明动态光照贴图支持： #pragma multi_compile __ DYNAMICLIGHTMAP_ON 技术实现机制 1. 数据传递 动态光照贴图信息通过以下方式传递到着色器：
+顶点数据：动态光照贴图坐标通过 TEXCOORD2 传递。 Uniform变量：动态光照贴图纹理（unity_DynamicLightmap）和采样器（samplerunity_DynamicLightmap）。 2. 着色器代码示例 struct v2f { float2 uv : TEXCOORD0; #if defined(LIGHTMAP_ON) float2 lightmapUV : TEXCOORD1; // 静态光照贴图UV #endif #if defined(DYNAMICLIGHTMAP_ON) float2 dynamicLightmapUV : TEXCOORD2; // 动态光照贴图UV #endif }; half3 GetLightmapColor(v2f i) { half3 staticGI = 0; half3 dynamicGI = 0; #if defined(LIGHTMAP_ON) staticGI = SampleLightmap(unity_Lightmap, samplerunity_Lightmap, i.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-19T23:21:49&#43;08:00">November 19, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/requires_vertex_shadow_coord_interpolator/">Unity3D的内置宏 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+在Unity URP中，REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR 是一个与阴影计算相关的内置宏（Shader Variant Keyword），它的作用是：
+核心含义 控制顶点着色器是否需要生成并传递阴影坐标插值器
+当该宏被激活时，Unity会在顶点着色器阶段计算主光源的阴影坐标，并通过顶点着色器输出结构体（Varyings）传递到片元着色器。这使得片元着色器可以直接使用插值后的阴影坐标进行阴影采样，避免在片元阶段重复计算。
+触发条件 该宏会自动激活，当以下条件满足时：
+项目中启用了 主光源阴影（Main Light Shadows） 使用了 逐顶点阴影坐标插值 的优化模式（而非逐片元计算） 在Shader中通过 #pragma multi_compile 启用了阴影相关功能（例如 _MAIN_LIGHT_SHADOWS） 典型应用场景 在URP的Shader中，你会在顶点着色器输出结构体 Varyings 中看到类似代码：
+struct Varyings { float4 positionCS : SV_POSITION; float3 positionWS : TEXCOORD0; // 当 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR 激活时，自动添加阴影坐标字段 #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) float4 shadowCoord : TEXCOORD1; #endif }; 技术原理 阴影坐标生成
+顶点着色器通过 GetShadowCoord(vertexInput) 计算阴影坐标，并存储在 shadowCoord 中。
+插值优化
+阴影坐标在顶点阶段计算后，通过插值器传递到片元着色器，减少片元阶段的计算量。
+自动编译控制
+Unity会根据项目设置和Shader特性，在编译时自动决定是否启用该宏，生成不同的Shader变体。
+对比其他阴影模式 宏名称 计算阶段 性能消耗 精度 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR 顶点着色器 较低 中等 REQUIRES_FRAGMENT_SHADOW_COORD_INTERPOLATOR 片元着色器 较高 较高 调试与手动控制 强制启用/禁用（不推荐）</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-19T23:21:49&#43;08:00">November 19, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/_light_layers/">Unity3D的内置宏 _LIGHT_LAYERS</a></h1>
+	<div class="entry__content">Unity3D的内置宏 ADDITIONAL_LIGHTS_VERTEX
+请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+在Unity URP/HDRP中，_LIGHT_LAYERS 是一个与 光源层级过滤（Light Layer Masking） 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 实现基于层级的光源与物体交互控制，允许开发者通过层掩码（Layer Masks）精确控制哪些光源可以影响特定物体。
+核心含义 1. 功能定位 光源筛选机制：激活该宏后，物体会根据自身的 Light Layer Mask 和光源的 Light Layer Mask 进行匹配，只有匹配层的光源才会对该物体产生光照影响。 渲染优化：通过层级过滤减少无效光源计算，提升复杂场景性能。 2. 技术目标 精细化光源控制：例如让装饰性灯光只影响场景道具，不影响角色 多世界渲染支持：用于分屏游戏或VR中不同视角的独立光照逻辑 触发条件 该宏的激活需要同时满足以下条件：
+项目设置启用
+URP/HDRP Asset 中开启光源层支持： URP: Lighting &gt; Light Layers &gt; Enable Light Layers HDRP: Lighting &gt; Light Layers Shader声明
+在着色器中通过#pragma指令声明支持：
+#pragma multi_compile _ _LIGHT_LAYERS 光源与物体配置
+光源的 Light Layer Mask 设置为非&quot;Everything&quot;值 物体的 Renderer组件 &gt; Rendering Layer Mask 设置为与光源匹配的层级 技术实现机制 1.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-19T22:21:49&#43;08:00">November 19, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/_additional_lights_vertex/">Unity3D的内置宏 _ADDITIONAL_LIGHTS_VERTEX</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+在Unity URP中，_ADDITIONAL_LIGHTS_VERTEX 是一个与 附加光源处理方式 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 控制附加光源的光照计算阶段，决定是在 顶点着色器 还是 片元着色器 中处理附加光源的贡献。
+核心含义 1. 光源计算阶段选择 启用时（_ADDITIONAL_LIGHTS_VERTEX 被定义）：
+附加光源的光照计算在 顶点着色器 阶段完成，计算结果通过顶点插值传递到片元着色器。 未启用时（默认或使用 _ADDITIONAL_LIGHTS）：
+附加光源的光照计算在 片元着色器 阶段逐像素完成。 2. 性能与质量的权衡 模式 性能消耗 光照精度 适用场景 _ADDITIONAL_LIGHTS_VERTEX 较低 中等（顶点插值） 移动端、低性能设备 _ADDITIONAL_LIGHTS 较高 高（逐像素） PC/主机、高质量渲染需求 触发条件 该宏的激活由以下因素决定：
+URP Asset设置
+在URP资源中启用 Additional Lights（附加光源） 设置 Per Object Light 类型为 Vertex 或 Fragment（对应不同模式） Shader编译指令
+在Shader中使用以下指令声明变体：
+#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS 实际光源数量
+当场景中存在 附加光源（点光源、聚光灯等） 且影响当前渲染对象时，Unity自动选择对应变体。
+技术实现原理 顶点着色器阶段处理（_ADDITIONAL_LIGHTS_VERTEX） // 顶点着色器中计算附加光源 Varyings vert(Attributes input) { Varyings output; // .</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-19T21:21:49&#43;08:00">November 19, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/stylized_water_2_doc/">StylizedWater2插件帮助文档精读</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+插件官方文档地址
+Stylized Water 2 入门指南 1. 准备工作 确保项目无控制台错误：未解决的代码错误会导致资源代码无法编译，材质可能显示为粉色。 项目设置： 使用 Universal Render Pipeline (URP)：在 Edit -&gt; Project Settings -&gt; Graphics 中检查是否已分配 URP 资源。 如果没有正确设置 URP，材质将显示为粉色。请参考 Unity 的 URP 文档进行设置。 注意：建议在项目早期决定使用 URP，因为在生产过程中切换到 URP 可能导致其他自定义着色器失效。 颜色空间：推荐使用 Linear 颜色空间（新项目默认使用 Gamma 空间），详细信息请参考 Unity 文档。 2. URP 设置 启用必要选项： Depth Texture：用于多种效果（如深度和交互动画）。如果禁用，这些效果将失效，且在 Android 上构建时水可能会不可见。 Opaque Texture：用于折射效果，启用折射时需要。 如果这些选项未启用，但着色器使用了相关功能，材质 UI 中会显示警告并提供快速修复按钮。 相机设置：每个相机可以覆盖这些设置。如果某些效果在特定场景或相机中不可见，请检查这些选项是否被设置为“Off”。 质量级别设置：如果使用了不同质量级别的管道设置，请确保这些选项也已启用，否则在较低质量级别下运行时，水效果可能失效。 3. 向场景中添加水 建议：创建或复制材质（而不是直接使用包中的材质），以避免更新资源时设置被意外覆盖。 方法： 方法 1：将 Assets/StylizedWater2/Prefabs 中的预制件拖入场景，并调整材质属性。 方法 2：通过 GameObject -&gt; 3D Object -&gt; Water -&gt; Object 菜单选项创建新的 Mesh Renderer。 方法 3： 在场景中创建一个平面网格。 创建新材质并分配 StylizedWater2/Default 着色器。 通过 Add Component -&gt; Stylized Water 2 -&gt; Water Object 添加 Water Object 组件（仅在需要使用平面反射时必要，但无负面影响）。 材质参数：每个参数都有工具提示，鼠标悬停可查看描述。 Stylized Water 2 着色器使用指南 1.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-19T20:21:49&#43;08:00">November 19, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/godot/godot_disable_fullscree/">Godot4.0的浮动游戏工作区自动全屏的问题</a></h1>
+	<div class="entry__content">在 Godot 4.0 中，当屏幕分辨率小于项目设置中指定的窗口大小，Godot 会自动将主窗口强制切换为全屏模式，这是一种为防止窗口内容显示不完整而设计的行为，但这对于想要保持“浮动窗口”状态（非全屏）的人来说是个问题。
+✅ 目标： 保持浮动窗口模式（Windowed），即使当前屏幕分辨率小于设置的窗口大小。
+🎯 解决思路 Godot 引擎中这个行为目前是默认的“安全机制”，但你可以通过如下方法来避免它强制全屏：
+✅ 方法 1：运行时手动设置窗口大小并强制浮动模式 在你的主脚本中（例如 autoload.gd 或 Main.gd）添加如下代码，确保窗口总是以“窗口模式”运行，并强制缩小尺寸：
+// 使用 C# 版本 using Godot; public partial class Main : Node { public override void _Ready() { // 强制取消全屏 DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed); // 获取屏幕尺寸 Vector2I screenSize = DisplayServer.ScreenGetSize(); // 获取当前项目设置的窗口大小 Vector2I targetSize = new Vector2I(1280, 720); // 或从 ProjectSettings 读取 // 如果屏幕太小，动态缩小窗口以避免强制全屏 if (targetSize.X &gt; screenSize.X || targetSize.Y &gt; screenSize.Y) { GD.Print(&#34;Screen too small, resizing window to fit.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-14T18:21:49&#43;08:00">November 14, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/godot/" rel="category">Godot</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/godot/" rel="tag">Godot</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/godot/godot_mouse_mode/">在 Godot 中锁定鼠标光标的方法</a></h1>
+	<div class="entry__content">在 Godot 中，有几种方法可以锁定鼠标光标，使其不超出游戏窗口。以下是使用 C# 的实现方法：
+1. 使用 Input.set_mouse_mode() 方法 这是最常用的方法，Godot 提供了几种鼠标模式：
+using Godot; public class MouseLock : Node { public override void _Ready() { // 锁定鼠标到窗口中心并隐藏 Input.SetMouseMode(Input.MouseMode.Captured); // 其他可用模式: // Input.MouseMode.Visible - 正常可见模式(默认) // Input.MouseMode.Hidden - 隐藏但可以自由移动 // Input.MouseMode.Captured - 锁定并隐藏(最适合FPS游戏) // Input.MouseMode.Confined - 限制在窗口内但可见 } public override void _Input(InputEvent @event) { if (@event is InputEventKey keyEvent &amp;&amp; keyEvent.Pressed) { if (keyEvent.Scancode == (int)KeyList.Escape) { // 按ESC键释放鼠标 Input.SetMouseMode(Input.MouseMode.Visible); } } } } 2.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-13T18:21:49&#43;08:00">November 13, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/godot/" rel="category">Godot</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/godot/" rel="tag">Godot</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/amplify_imposter_manual/">Amplify Imposter 插件使用指南</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+描述 Amplify Impostors 是一款小巧但功能强大的工具，可用于创建不同类型的 Impostors，这些 Impostors 是平面和简单多边形构成的复杂高多边形对象的替代品（substitutes ），可渲染原始对象的虚假版本（fake version）（因此得名）。与传统精灵非常相似，它们通常由单个平面四边形或简单多边形组成，并且像经典广告牌（classic billboard）一样始终面向相机。将它们视为要渲染的面向相机的纸板版本。使用此类技术的常见目的是能够用非常低的多边形表示远处的物体，例如树木、灌木丛、岩石、废墟、建筑物、道具等。
+有多种方法可以创建这些 impostor，每种方法都有各自的优点和缺点。此工具旨在提供最有用和最流行的技术，同时使创建过程尽可能简单。
+安装 打开 AmplifyImpostors.unitypackage Unity 加载后会显示“导入包”窗口，选择全部并点击导入 警告 - 如果您在同一个项目中使用 Amplify Shader Editor请确保两个软件包都是最新的；检查您的控制台是否存在与之相关的任何错误 快速入门说明 选择场景中的游戏对象或项目中的预制件 在检查器窗口中搜索并添加“Amplify Impostor”组件 按“Bake Impostor”并选择要保存impostor文件的位置 当前功能 Impostor类型 目前支持三种预先烘焙的 Impostor 类型 （左边是真实网格，右边是冒名顶替网格）
+效果图 示意图 描述 球面(spherical)：以典型的经纬度格式拍摄多张照片。着色器更简单、更快速，近距离拍摄时， impostor看起来基本没问题，但帧间跳动相当明显。可以通过增加轴帧数（以牺牲分辨率为代价）来缓解这一问题。 八面 (Octahedron) ：以十球面格式(icosphere format)拍摄多张照片。这样做是为了保证相邻帧数固定为 3，这样在相对于相机的任何给定位置，我们都可以混合最近的三帧。这样做的好处是消除帧之间的弹出。另一方面，着色器复杂度更高，当近距离观察时，混合变得太明显，出现明显的重影伪影。 半八面体(HemiOctahedron)：半八面体变体与正八面体类似，不同之处在于只从物体的上半球拍摄相同数量的镜头，从而有效地使混合精度翻倍。但缺点是，由于不烘焙下半球，从下方看时会产生不正确的结果。这种方法通常仅在您知道物体将始终从上方观看时使用（即：自上而下的相机(top-down cameras)）。 实时渲染 这些预烘焙解决方案中的每一个方案，都会渲染表面的构成部分贴图，以支持实时照明。这些方案支持：
+可编写脚本的渲染管道（HD 和 LW）（v4.9.0+） 标准/旧版前向渲染和延迟渲染 动态灯光和阴影 对象交叉点(object intersection)的深度写入 全局照明 烘焙光照贴图（通过自定义烘焙） GPU 实例 抖动交叉淡入淡出 其他的 自定义打包贴图（package map）：使用标准材质烘焙渲染最多 4 张贴图和自定义材质，使用自定义烘焙渲染最多 8 张不同的地图（支持 PNG 和未压缩的 TGA） 反照率 (RGB) | Alpha 蒙版 (A) 镜面反射 (RGB) | 平滑度 (A) 物体法线 (RGB) | 深度 (A) 发射 (RGB) | 环境光遮蔽 (A) 自定义形状编辑器（Custom Shape Editor）：自动生成自定义形状，以移除替代器的大部分透明区域，从而减少过度绘制。还支持手动编辑。 烘焙预设(baking presets)：定义烘焙替代者的预设，其中还包含各种导入和导出选项。 脚本化的渲染管道（scriptable render pipeline） 为了将 Amplify Impostors 与 SRP 一起使用，请务必导入所需的包 ( AmplifyImpostors\Plugins\EditorResources\RenderPipelinePackages )。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-12T19:21:49&#43;08:00">November 12, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/post/">1</a>
+				<span class="pagination__item pagination__item--active" data-total="15">2</span>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/3/">3</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/15/">15</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

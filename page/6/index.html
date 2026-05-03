@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta name="generator" content="Hugo 0.121.2">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Responsive card-based &amp; code-light Hugo theme">
+		<meta property="og:title" content="XGF" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/" />
+
+
+		<meta itemprop="name" content="XGF">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-home">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+			<div class="cards">
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/pixel_perfect_outline_shaders_unity/">Pixel-Perfect Outline Shaders for Unity</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+以下是基于你提供的内容的总结和解读，保留示例代码和图片链接：
+轮廓着色器的工作原理与优化 1. 经典轮廓技术 起源：在 2003 年游戏《XIII》中首次看到 3D 对象的轮廓效果，使用固定功能管线实现。 实现方式：通过网格的外壳（Outer Hull）和反转法线绘制轮廓，覆盖黑色纹理。 现代改进：使用顶点着色器在单独 Pass 中渲染略微膨胀的网格，剔除正面。 2. 经典轮廓技术的局限性 局限性 描述 轮廓宽度不均匀 轮廓宽度随物体形状和视角变化。 透视缩短 轮廓宽度随物体远离相机而变窄（透视投影）。 对象空间单位 轮廓宽度以对象空间单位指定，而非像素。 3. 经典轮廓着色器代码 Shader &#34;Tutorial/Outline&#34; { Properties { _Color (&#34;Color&#34;, Color) = (1, 1, 1, 1) _Glossiness (&#34;Smoothness&#34;, Range(0, 1)) = 0.5 _Metallic (&#34;Metallic&#34;, Range(0, 1)) = 0 _OutlineColor (&#34;Outline Color&#34;, Color) = (0, 0, 0, 1) _OutlineWidth (&#34;Outline Width&#34;, Range(0, 0.1)) = 0.03 } Subshader { Tags { &#34;RenderType&#34; = &#34;Opaque&#34; } CGPROGRAM #pragma surface surf Standard fullforwardshadows Input { float4 color : COLOR; } half4 _Color; half _Glossiness; half _Metallic; void surf(Input IN, inout SufaceStandardOutput o) { o.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-04-29T11:37:25&#43;08:00">April 29, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/build_xlua_for_android/">使用Android NDK编译xlua</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+基本上就是按照参考网页所示的那样子，先后安装好Android Studio，打开【File|Setting】菜单项打开界面，把google的CMake选好。注意这里一定要用google家的CMake，用原生CMake不行
+如果google CMake的版本过高的话，会报CMake Error: Could not create named generator Android Gradle - Ninja的错误，较新版本的google CMake会产生这个问题，反而低版本的不会，所以选用3.6.4111459版本的才行。Stack Overflow网站上有人就这个问题做了回答：
+Compatibility of CMake version might be an issue, Old NDK (below 13b) is not compatible with the new CMake, so, either update NDK or remove the new CMake (to force older CMake usage). Check your System Setting and version listed under SDK Tools Go to Appearance &amp; Behaviour -&gt; System Settings -&gt; Android SDK Incompatible 3.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-03-23T15:52:57&#43;08:00">March 23, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_srp_static_dynamic_batch_gpuinstance/">Unity3D的SRP,Static Batching、Dynamic Batching和GPU instancing</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+所谓的draw call batching（绘制批处理），就是指对将要绘制的N个网格，在保持渲染结果正确的前提下，将draw call进行合并，以一整批，而不是单个的方式，向GPU提交这些draw call操作。 绘制批处理有若干种实现方式，有些方式只是减少了提交draw call的次数，但执行draw call的次数没变少。有些方式则是直接减少了draw call的数量。
+在《Unity DrawCall、Batch、SetPassCall的区别》一文中对Batching的解释很到位，摘录如下：
+Batch 把数据加载到显存，设置渲染状态，CPU调用GPU渲染的过程称之为一个Batch。这其实就是渲染流程的运用阶段，最终输出一个渲染图元（点、线、面等），再传递给GPU进行几何阶段和光栅化阶段的渲染显示。一个Batch必然会触发一次或多次DrawCall，且包含了该对象的所有的网格和顶点数据以及材质信息。把数据加载到显存是指把渲染所需的数据从硬盘加载到内存（RAM），再将网格和纹理等加载到显卡（VRAM），这一步比较耗时。设置渲染状态就是设置场景中的网格的顶点（Vertex）/片元（Fragment）着色器，光源属性，材质等。Unity提供的动态合批（Dynamic Batching ）合并的就是这一过程，将渲染状态相同的对象合并成一个Batch，减少DrawCall。
+还有对SetPassCall的解释也很好，摘录如下：
+SetPassCall Shader脚本中一个Pass语义块就是一个完整的渲染流程，一个着色器可以包含多个Pass语义块，每当GPU运行一个Pass之前，就会产生一个SetPassCall，所以可以理解为一次完整的渲染流程次数。
+由此可见，一个Batch包含一个或多个DrawCall，都是产生是在CPU阶段，而目前普遍渲染的瓶颈恰恰就是CPU，GPU的处理速度比CPU快多了，Draw Call太高，CPU会把大量时间花费在处理Draw Call调用上。如果Batch太大，CPU需要频繁的从硬盘加载数据，切换渲染状态，这个消耗要比DrawCall大，所以后面Unity才逐渐弱化了DrawCall的显示。
+再提一下，优化的时候还要关注下Statistics窗口上的三角形数（Tris）和顶点数（Verts），这两个数据也是会影响到性能，比如单个物体的顶点数最好不要超过900，不然会影响到Unity的动态合批。Unity的Statistics窗口上的三角形数（Tris）和顶点数（Verts）并不仅仅是视锥中的梯形内的三角形数和顶点数，而是Camera中 field of view所有取值下的三角形数和顶点数。也就是说，即使当前Game视图中看不到这个 cube，只有 field of view在1-179 范围内都看不到这个cube，stats面板才不会统计，GPU才不会渲染，否则都会渲染，而且Unity不会把模型拆分，这个模型哪怕只有1个顶点需要渲染，Unity也会把整个模型都渲出来。
+四种优化方式的适用场合 优化方式的优先级 一些细节笔记 参考网页 Unity DrawCall、Batch、SetPassCall的区别
+浅谈Draw Call和Batch的区别
+Unity渲染优化的4种批处理：静态批处理，动态批处理，SRP Batcher 与 GPU Instancing
+Draw call batching
+为什么baches（draw calls）数那么高？ 它们有什么意义？
+请教Unity中的Draw Call Batch规则</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-03-18T20:20:49&#43;08:00">March 18, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_fbx_import_tangent_option/">批量设置FBX文件导入模型切线方式</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原理 利用AssetDatabase.FindAssets(&quot;t:Model&quot;)找出所有的FBX模型的GUID。再利用AssetDatabase.GUIDToAssetPath将GUID转为文件路径。然后使用 AssetImporter.GetAtPath函数拿到 模型导入器（ModelImporter） 对象。模型导入期对象里面就有一个importTangents属性项，当此项为None时表示没切线，其他选项都表示带有切线信息。下面是查找所有带有切线信息的模型的函数。
+/// &lt;summary&gt; /// 查找出带有切线信息的模型 /// &lt;/summary&gt; /// List&lt;string&gt; mikkTSpace 使用Morten Mikkelsen切线空间(MikkTSpace)算法计算生成切线的模型文件名 /// List&lt;string&gt; calculateLegacy 使用传统的算法计算生成切线的模型文件名 /// List&lt;string&gt; calculateLegacyWithSplitTangents,使用传统的算法，并对UV图表进行拆分的方式，计算生成切线的模型文件名 /// List&lt;string&gt; imported 从原始文件中导入切线的模型文件名 private void FindAllModelsContainTangent(List&lt;string&gt; mikkTSpace,List&lt;string&gt; calculateLegacy, List&lt;string&gt; calculateLegacyWithSplitTangents,List&lt;string&gt; imported) { // 使用了库函数，用&#34;t:Model&#34;参数检索所有的模型文件。即FBX文件 // 返回的是所有fbx的GUID string[] allModels = AssetDatabase.FindAssets(&#34;t:Model&#34;); for (int i = 0; i &lt; allModels.Length; i++) { // 把GUID换成资源文件路径名，然后使用AssetImporter模块获取到模型导入器 string modelPath = AssetDatabase.GUIDToAssetPath(allModels[i]); var modelImporter = AssetImporter.GetAtPath(modelPath) as ModelImporter; if (modelImporter == null) continue; switch (modelImporter.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-03-06T17:52:57&#43;08:00">March 06, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_ugui_optimization/">UGUI优化</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+影响性能的要素 像素填充率（FillRate） 概念：指每秒每秒显卡能填充的像素数
+填充率和over draw息息相关，over draw由GPU影响
+影响像素填充率的原因
+半透明物体过多
+绘制半透明物体需要： 1 开启ALPHA_BLEND 2 关闭Z TEST和Z WRITE 同一像素的over draw过高， 即重复绘制次数过多
+优化方法
+对于Alpha值为0，但是又要响应输入的不可见物体，采用 无绘制但能响应RayCast的组件来处理 减少填充区域的覆盖，比如一个矩形区域，它的周围空白不 可见区域比较多，那可以考虑把矩形转化为若干个三角形 Draw call draw call受CPU影响
+UGUI引入了canvas的概念，提供给相同材质的 界面组件进行合批，减少draw call
+优化方法
+使用同一组材质球的UI组件，放置在同一个canvas下 动静分离：canvas可以分组，如果某个界面，存在着会动 的元素和不会动的元素，则考虑分成两组。但canvas如果 先SetActive(false)，再SetActive(true)。则需要ForceUpdate 它强制重绘 绘制顺序不要穿插，比如A组件用了A材质球，B组件用了B材 质球，C组件用了A材质球，如果不存在相互遮盖关系的话， 那么应该在scene hierachy窗口中，将三个组件按上下顺序 排序为A,C,B 其他优化策略汇总 少用Mask组件 原理：Mask组件会额外消耗多一个Drawcall来创建遮罩做像素剔除。 Mask组件不利于层级合并。原本同一图集里的ui可以合并层级， 仅需一个Drawcall渲染，如果加入Mask，就会将一个ui整体分割 成了Mask下的子ui与其他ui，两者只能各自进行层级合并，至少 要两个Drawcall。 字体 尽量减少字体特效，outline，渐变等，可以使用本身带有描边的字体文件 ，尽量统一字体风格，减少不必要的额外字体文件，不用richtext 界面切换 原理：增加一个新层，并且将Camera的Culling Mask中取消勾选， 即不渲染该层，UI界面在切换时，将其Canvas所在Layer设置为该 层，看起来就像被隐藏了 优点：于切换时基本没有开销，也不会产生多余的 Draw Call 缺点：隐藏时依然还会有一定的持续开销，而其对应的Mesh 也会始终存在于内存中。 各种界面隐藏方案的优劣分析 SetActive产生GC,会导致画布丢弃它的VBO数据，从而重建和重新批处理，操作频繁时GC导致CPU占用可能会卡顿。 enable Canvas禁用画布,能降低dc，避免SetActive的GC开销，但测试依旧会有SendWillRenderCanvases函数的调用开销。 移出RootCanvas，似乎没有多大优化，理论上会降低dc且不会引起重建。 将单独界面使用Canvas，绑定一个Camera在隐藏时设置Layer进行CullingMask蔽，同时禁用GraphicsRaycaster，能避免重建，但随着canvas增多dc会增多，同时界面较时管理比较费力，注意动态UI的事件。 设置Canvas Group 的alpha为0：依旧会被渲染，但能避免setactive带来的巨大开销，且容易操作。 更改Scale的值为0：点信息被清除，这样不会减少dc开销，同时还会引起重建，不采用。 设置一个Canvas作为根节点，将其layer设置为相机屏蔽的层级，同时禁用GraphicsRaycaster，当需要隐藏某个界面时将其以该Canvas作为根节点移到其下，这样能避免重建同时减少dc，但会有一些SetParent带来的消耗。目前采用该方案。 如果只是隐藏某个Graphic类的，可以考虑获取canvasRenderer.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-03-06T15:52:57&#43;08:00">March 06, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_single_channel_texture/">杂谈Unity3D的single channel texture</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+经实测，在Unity3D 2020.2.6f1版本中，在导入纹理的钩子代码中，如果设置TextureImporter.textureType = TextureImporterType.SingleChannel，以及TextureImporterPlatformSettings.format = TextureImporterFormat.R8是一张2048的贴图，导入后其格式
+根据Unity的纹理格式文档描述：
+当TextureImporter.textureType为TextureImporterType.SingleChannel时，除了R8之外，可选的格式有：
+据UWA的人说，R Compressed 4 bit应该是但在本版本的Unity中，其对应的TextureImporterFormat.COM枚举值应该是EAC_R。
+根据Unity的纹理格式文档描述：
+R Compressed EAC 4 bit是一个High-quality compressed R (single-channel) 纹理。一个256x256的纹理，在内存中其大小为32KB。在Android平台下，OpenGLES2.0版本是不支持该格式的，如果指定了该格式，则会自动解压为 【ETC2 fallback】 标签项所指定的纹理格式。
+考虑到现在Android手机早就已经是支持OpenGLES3了，所以大胆使用此格式，作为单通道贴图的导入格式。
+参考网页 best-texture-format-for-a-single-channel Crunched single channel texture an-introduction-to-texture-compression-in-unity Unity Editor下判断图片是否带alpha通道 Unity 中纹理压缩的方式 – 搁浅の砖厂 Recommended, default, and supported texture formats, by platform C# (CSharp) UnityEditor TextureImporterSettings示例 https://huailiang.github.io/blog/2022/astc/</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-02-23T15:04:03&#43;08:00">February 23, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/animation/animancer_transition/">Animancer的Transition参数手册（翻译）</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+Transitions 与其硬编码淡入淡出的持续时间(hard-coding the fade durations)，开始和结束时间，动画剪辑的播放速度和动画事件，不如使用transition机制。此机制可以在编辑模式下的可视化地编辑它们。由非程序员在Inspector面板中定义这些细节，无需编辑和重新编译任何脚本。
+Animancer中包含的每个State类都有其自己的Transition Type，其中包含与之相关的各种详细信息，以便在将其传递给AnimancerComponent.Play(ITransition)时，这些详细信息可用来创建该State类型。例如，当播放一个AnimationClip对象（即一个动画片段剪辑）时，一个ClipState.Transition将创建一个ClipState实例对象。如下代码所示：
+using Animancer; using UnityEngine; public class TransitionExample : MonoBehaviour { [SerializeField] private AnimancerComponent _Animancer; [SerializeField] private ClipState.Transition _Animation; private void OnEnable() { _Animancer.Play(_Animation); } } 对应的inspector显示如下图：
+这个示例详细演示如何使用transitions。
+Fields 字段名字 代码值 inspector截图 Animation Clip Fade Duration FadeDuration Speed Speed Start Time NormalizedStartTime End Time Events.NormalizedEndTime Events Events 各个属性的说明如下表
+字段名字 说明 Animation 要播放的那个animation clip Fade Duration 从上一个动画淡入淡出到新动画所需的时间。此值不能为负，并且将其设置为0 sill会使动画立即播放。不管使用哪个字段输入值， 此时间字段始终被序列化为秒 Speed 动画以其正常速度的倍数播放的速度。负值会使它向后播放（因此可能希望将Start Time设置为1x，以便从末尾开始向后播放 Start Time 如果启用，播放时动画时刻将立即跳到该值。否则，它将显示默认值：0x（正速度）或1x（负速度）。如果动画的AnimancerNode.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-02-12T20:20:49&#43;08:00">February 12, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/animation/animancer_state/">Animancer的States（翻译）</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+State 当播放一段动画剪辑（animation clip）时，Animancer会创建一个ClipState来管理它并跟踪其进度。ClipState是最常见的一种AnimancerState，除此之外，有其他类型的AnimancerState，例如Controller States和 Mixer States。这些用来在一个state中管理多个动画剪辑。
+执行AnimancerComponent.Play函数播放一个animation clip，就返回一个AnimancerState对象，如下代码所示：
+void PlayAnimation(AnimancerComponent animancer, AnimationClip clip) { // Play the animation and control its state: var state = animancer.Play(clip); state.Time = ... state.NormalizedTime = ... state.Speed = ... state.OnEnd = ... } 也可以自己访问和创建状态，而无需立即播放它们：
+code description var state = animancer.States.GetOrCreate(clip); 访问状态而不播放状态（该Play方法在内部使用此状态）。 var state = animancer.States[clip]; 获取状态（如果存在）（否则为null）。 var state = animancer.States.Create(key, clip); 即使该动画已经存在，也要创建一个新状态。注意必须为每个状态提供不同的key。 var state = new ClipState(animancer, clip); 创建一个新状态而不给它一个Key。可以使用其AnimancerState.Key属性分配一个。 Keys 当用AnimancerComponent.Play方法创建一个state时，这个state存储在一个内部的Dictionary容器中，通过指定某个key，用以在以后用这个key来检索使用该state。
+默认地，该state所播放的那段动画剪辑所对应的AnimationClip实例对象，将作为该state的key值 NameAnimancerComponent将重载其GetKey方法，NameAnimancerComponent类不再使用它播放的AnimationClip对象，而是使用这个动画剪辑的名字字符串去作为key。但在启动时，可以在inspector面板中，在Animation中预先注册好这个 void PlayAnimation(AnimancerComponent animancer, AnimationClip clip) { // Trying to play an animation before registering it does nothing.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-02-11T20:30:49&#43;08:00">February 11, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/animation/u3d_animation_state_detail/">Unity3D的Animator中的animation transition参数细节</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+选项 描述 Has Exit Time 如果设置为true，则仅在指定的动画剪辑已经播放了给定百分比之后，才启用动画剪辑过渡（transition）。 如果禁用，则将在满足其过渡条件后，立即进行切换。 如果要创建由若干个动画剪辑组成的序列，请将其设置为true。 Exit Time 这是满足“Has Exit Time”选项勾选后，指定的播放动画长度的百分比（0-1范围）。 例如，如果将其设置为0.5，则在播放了50％的动画剪辑后，当满足转换条件后，动画的状态将转换。 Fixed Duration 这个属性将和下一个属性“ Transition Duration (s)”结合使用。如果本选项启用，的财产与下一个过渡期间结合在一起。 如果启用，则Transition Duration (s) 项以秒为单位;如果关闭，则以动画播放时间的百分比表示。 Transition Duration (s) 动画状态过渡所需的时间。 这是从一个动画剪辑过渡到另一个所用的时间。 在过渡期间动画剪辑会被混合在一起。 过渡时间越长，会让动画剪辑转换得更平滑些，否则就转换得更锐利。一个好的默认值是大约0.25。 Transition Offset 选项会把待处理的目标动画开始时刻做偏移。该值以动画剪辑的播放百分比表示。 比如将其设置为0.3。意思是说，当从动画剪辑A过渡到动画剪辑B时，那么A过渡到B之后，会从B的30%处开始播放，而不会从B的开始刻度处开始播放。 Interruption Source 此设置告诉Unity某个动画剪辑过渡。是否可以被其他过渡打断。 例如动画系统下有一个默认的Idle动画，Idle动画有Jump动画分支和Walk动画分支，而Walk动画分支下又有一个Jump1动画分支，当我们同时满足两个Jump动画的切换条件时，Interruption Source就可以判断优先从哪个动画源切换到Jump或Jump1。Interruption Source中四个选项如下表中的几个选项的一个 Interruption Source的各个选项表 选项 描述 None 关闭Interruption Source选项 Current State: 从当前源打断 Next State 从下一个源打断 Current State then Next State 优先从当前源打断，如果当前源不能切换到下一个状态则从下一个源打断。 Next State then Current State 和上一个选项相反 Ordered Interruption If set to false, this lets the transition be interrupted by other transitions independently of their order.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-01-02T20:20:49&#43;08:00">January 02, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_color_space/">Unity3D的Color Space细节解析</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+参考网页 https://zhuanlan.zhihu.com/p/36507196
+https://zhuanlan.zhihu.com/p/93216787
+https://blog.csdn.net/candycat1992/article/details/46228771
+https://developer.nvidia.com/gpugems/GPUGems3
+http://www.klayge.org/2011/02/26/gamma%E7%9A%84%E4%BC%A0%E8%AF%B4/
+https://zhuanlan.zhihu.com/p/36507196
+https://www.kinematicsoup.com/news/2016/6/15/gamma-and-linear-space-what-they-are-how-they-differ
+https://zhuanlan.zhihu.com/p/66558476
+https://www.cambridgeincolour.com/tutorials/gamma-correction.htm
+https://zhuanlan.zhihu.com/p/37679604
+https://zhuanlan.zhihu.com/p/271011254</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-01-01T20:20:49&#43;08:00">January 01, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+			</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/">1</a>
+				<a class="pagination__item pagination__item--desktop" href="/page/2/">2</a>
+				<a class="pagination__item pagination__item--desktop" href="/page/3/">3</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/5/">5</a>
+				<span class="pagination__item pagination__item--active" data-total="15">6</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/7/">7</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/15/">15</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

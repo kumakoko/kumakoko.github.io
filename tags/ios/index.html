@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>iOS | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="iOS" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/tags/ios/" />
+
+
+		<meta itemprop="name" content="iOS">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/tags/ios/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-term">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/tags/">Tags</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">iOS</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">iOS</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/mac_ios/u3d_ios_build_pack/">Unity3D出iOS的包操作指南</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 切换平台到iOS下 打开 【Unity|File|Build Setting】 菜单,选择iOS平台，然后点击左下角的 Switch Platform 切换到iOS平台，右边选择 Release。确保项目能在iOS平台上正确运行了再下一步打包。
+2 配置Unity项目PlayerSetting 界面上各个选项如下表所示：
+选项 细节 Company Name 公司名，与下面的Bundle Identifier对应 Product Name 项目名，也是与下面的Bundle Identifier对应 Bundle Identifier com.CompanyName.ProductName,这个在打包成xCode工程之后，需要和在苹果开发者网站上的app IDs一致，不然会报错：项目Identifier与开发者账号申请的证书的Identifier不同。 Scripting Backend 选择IL2CPP，支持64位。 Api Compatibility Level 如果项目中使用到了文件的操作，要选择“.NET 2.0” Target Device 项目要运行的平台，有哪个就选哪个，不过到时候审核的时候也是要iPhone和iPad分开审核。 Target SDK 这个选择DeviceSDK，选用设备的SDK就行了。 Target minimum iOS Version 限制最低可运行iOS版本，这个在xCode中也可以更细致调整。 PlayerSetting界面如下图所示：
+到这里，就可以打包了，点击 【File|Build And Run】 菜单，会弹出要保存的项目文件地址，Unity3D会把工程导出成一个可以给xcode使用的工程。
+3 构建开发版的包 首先在xcode的 Account 里面添加苹果开发者账号。从 xcode 7 开始,在开发阶段，如果只需要进行真机调试而不要求发布到AppStore上的话，可以使用一个普通的苹果用户ID作为真机调试账号。方法如下：
+第1步：首先点击菜单 【Xcode|Preferences&hellip;】 ,
+第2步：然后点击 【Accounts】 切换到如图所示界面，然后点击左下角的 “+” 号，会弹出一个填写对话框，在此对话框中添加你的苹果用户ID，密码等等，信息，最后点击 【Sign in】 按钮</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-31T11:52:43&#43;08:00">December 31, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/ios/" rel="category">iOS</a>, 
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/ios/" rel="tag">iOS</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/mac_ios/use_vscode_in_mac/">在Mac中如何安装VScode并作为Unity3D开发IDE</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 安装brew Homebrew 是Mac OSX上的软件包管理工具，能在Mac中方便的安装软件或者卸载软件，相当于linux下的apt-get、yum神器；Homebrew可以在Mac上安装一些MacOS上没有的，从Unix/Linux等系统移植过来的工具，Homebrew将这些工具统统安装到了 【/usr/local/Cellar】 目录中，并在 【/usr/local/bin】 中创建符号链接。
+1.1 Homebrew的安装 Homebrew的安装很简单，只需在终端下输入如下指令：
+/usr/bin/ruby -e &#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&#34; Homebrew安装成功后，会自动创建目录 /usr/local/Cellar 来存放Homebrew安装的程序。 这时你在命令行状态下面就可以使用 brew 命令了.
+1.2 Homebrew的使用 指令功能 指令格式 指令示例 安装软件 brew install 软件名 brew install wget 搜索软件 brew search 软件名 brew search wget 卸载软件 brew uninstall 软件名 brew uninstall wget 更新所有软件 brew update 通过 update 可以把包信息更新到最新，不过包更新是通过git命令，所以要先通过 brew install git 命令安装git。 更新具体软件 brew upgrade 软件名 brew upgrade git 显示已安装软件 brew list brew list 查看软件信息 brew info 软件名 brew info git 用浏览器打开官方网页查看软件信息 brew home 软件名 brew home git 查看那些已安装的程序需要更新 brew outdated brew outdated 显示包依赖 brew deps brew deps 创建你自己的Homebrew包 brew create 文件名 $ brew create https://foo.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-30T11:52:43&#43;08:00">December 30, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/ios/" rel="category">iOS</a>, 
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/ios/" rel="tag">iOS</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/mac_ios/high_ver_sdk_for_low_ver_xcode/">在低版本中的XCode中使用高版本的iOS SDK</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+当iPhone或iPad的手机的iOS系统，升级到了版本，例如11.1版本时，而当前的Xcode版本，例如Xcode9，所能编译出来的软件，最多只能支持的最高版本是11.0时，就会出现以下的问题:
+最好的解决的方式当然是直接升级XCode到最新版本，但有时候，升级XCode到最新的版本，需要你当前运行的MacOS的版本到某一个版本号，即还需要你首先升级操作系统，但往往有时候因为你的硬件比较陈旧，没法升级到某个新版本的MacOS了，这时候你就不得不购买新的iMac或者Mac Mini，而如果这时候你又 囊中羞涩 的话……。
+为了解决这个囧况，可以通过一些hack手段，让你当前低版本的XCode，能使用上新的iOS SDK。方法如下：
+1 首先下载iOS SDK 苹果网站上提供了SDK的下载，但往往在天朝内访问苹果实在太慢了，所以在 这里 有人整理出来所有的iOS SDK供下载。（ 务必注意的是，因为这些SDK是非官方渠道提供的，本站不保证其安全性和有效性，所以必须要慎用，使用的话责任自负，本站将不承担任何责任 ）。接着找到XCode程序的安装路径，一般是在 【/Appplications】 目录下，右键选择 【显示包内容】 打开，一路进入到 【/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport】 。把下载得到的SDK放置到这个DevicesSupport目录下，如图所示：
+2 修改SDKSetting.plist文件 3 修改SDKSettings.plist文件中的版本号 进入 【/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk】 目录，打开SDKSettings.plist文件，将里面所有跟版本有关的数字都修改为填上最新的SDK版本号，例如11.1即可。运行就好可以了，如下图所示：
+参考网页 解决低版本Xcode不支持高版本iOS真机调试的问题</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-30T11:35:31&#43;08:00">December 30, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/ios/" rel="category">iOS</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/ios/" rel="tag">iOS</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

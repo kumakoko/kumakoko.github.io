@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Posts | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Posts" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/post/" />
+
+
+		<meta itemprop="name" content="Posts">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/post/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-section">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Posts</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">Posts</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/mac_ios/high_ver_sdk_for_low_ver_xcode/">在低版本中的XCode中使用高版本的iOS SDK</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+当iPhone或iPad的手机的iOS系统，升级到了版本，例如11.1版本时，而当前的Xcode版本，例如Xcode9，所能编译出来的软件，最多只能支持的最高版本是11.0时，就会出现以下的问题:
+最好的解决的方式当然是直接升级XCode到最新版本，但有时候，升级XCode到最新的版本，需要你当前运行的MacOS的版本到某一个版本号，即还需要你首先升级操作系统，但往往有时候因为你的硬件比较陈旧，没法升级到某个新版本的MacOS了，这时候你就不得不购买新的iMac或者Mac Mini，而如果这时候你又 囊中羞涩 的话……。
+为了解决这个囧况，可以通过一些hack手段，让你当前低版本的XCode，能使用上新的iOS SDK。方法如下：
+1 首先下载iOS SDK 苹果网站上提供了SDK的下载，但往往在天朝内访问苹果实在太慢了，所以在 这里 有人整理出来所有的iOS SDK供下载。（ 务必注意的是，因为这些SDK是非官方渠道提供的，本站不保证其安全性和有效性，所以必须要慎用，使用的话责任自负，本站将不承担任何责任 ）。接着找到XCode程序的安装路径，一般是在 【/Appplications】 目录下，右键选择 【显示包内容】 打开，一路进入到 【/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport】 。把下载得到的SDK放置到这个DevicesSupport目录下，如图所示：
+2 修改SDKSetting.plist文件 3 修改SDKSettings.plist文件中的版本号 进入 【/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk】 目录，打开SDKSettings.plist文件，将里面所有跟版本有关的数字都修改为填上最新的SDK版本号，例如11.1即可。运行就好可以了，如下图所示：
+参考网页 解决低版本Xcode不支持高版本iOS真机调试的问题</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-30T11:35:31&#43;08:00">December 30, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/ios/" rel="category">iOS</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/ios/" rel="tag">iOS</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/cs_attribute_note/">C#中的Attribute学习笔记</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+C#的Attribute的一些细节描述： 1 C#的attribute，通常翻译为“ 特性 ”。经常出现的英文单词则翻译为“ 属性 ” 2 C#的attribute可以视为是一种 附着物。就像牡蛎吸附在船底或礁石上一样。这些附着物的作用是为它们的附着体，追加上一些额外的信息。而这些信息保存在附着物的体内。对，也即是被编译器编译进 程序集（assembly） 的 元数据（Metadata） 里，在程序运行的时候，随时可以从元数据里提取出这些附加信息，来决策或影响程序的运行。 3 C#的attribute不是什么别的，其本质上就是一个类，而且这个类在使用上要遵循以下的一些规则： 3.1 不使用new操作符来产生实例，而是使用在方括号里调用构造函数的来产生实例。构造函数的参数是一定要写的，有几个就得写几个。且参数的顺序不能错 3.2 方括号必需紧挨着放置在被附着目标的前面。 3.3 因为方括号里空间有限，不能像使用new那样先构造对象后，再对对象的 属性（Property） 一一赋值。因此，对Attribute实例属性的赋值，也需写在构造函数的圆括号里。但对property的赋值，可有可无，这是因为编译器肯定对property设置一个默认值。对多个property的赋值先后顺序也没有关系。 能被Attribute所附着的目标种类 Attribute能附着的目标的种类在枚举类型AttributeTargets中有定义，代码如下：
+namespace System { [ComVisible(true)] [Flags] public enum AttributeTargets { Assembly = 1, Module = 2, Class = 4, Struct = 8, Enum = 16, Constructor = 32, Method = 64, Property = 128, Field = 256, Event = 512, Interface = 1024, Parameter = 2048, Delegate = 4096, ReturnValue = 8192, GenericParameter = 16384, All = 32767 } } 从上面的定义可以看到，如果有指定多个attribute所能附着的目标类型的话，在设置AttributeTragets类型值是用按位或操作符连起来就好，例如：AttributeTargets.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-11-26T18:08:30&#43;08:00">November 26, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/cs_object_copy_and_assign/">C#中的对象和拷贝</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+问题：在C#中，先创建类A的实例a并赋值其成员变量，再创建实例b，然后执行 b = a，是否能让b自动拥有和a相同的成员变量值。
+核心解答 首先直接给出结论：执行 b = a 并不会让b拥有a的成员变量副本，而是让b和a指向内存中的同一个对象。这不是“赋值成员变量”，而是“引用赋值”。
+1. 代码演示与解释 下面用一段完整的代码来展示这个过程：
+using System; // 定义类A public class A { // 成员变量 public int Number { get; set; } public string Text { get; set; } } class Program { static void Main() { // 1. 创建实例a并赋值成员变量 A a = new A(); a.Number = 10; a.Text = &#34;Hello&#34;; // 2. 创建实例b（此时b指向一个新的空对象） A b = new A(); // 3. 执行 b = a b = a; // 4.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-11-23T18:08:30&#43;08:00">November 23, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/delete_dictionary_elements/">正确地删除Dictionary中的元素</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+你想要在C#中实现这样的功能：给定一个目标值，检查Dictionary中是否存在该值，如果存在，就将所有包含这个值的键值对都从字典中移除。
+实现思路 要实现这个需求，需要注意一个关键问题：不能在遍历字典的同时直接修改字典（会抛出InvalidOperationException）。因此，正确的步骤是：
+先遍历字典，找出所有值等于目标值的键，存入一个临时集合（如List&lt;TKey&gt;）。 遍历这个临时集合，根据其中的键从字典中移除对应的键值对。 完整代码示例 以下是通用的泛型实现，适用于任意类型的Dictionary（只要值类型支持相等比较）：
+using System; using System.Collections.Generic; using System.Linq; class Program { static void Main(string[] args) { // 示例字典：键为int，值为string Dictionary&lt;int, string&gt; testDict = new Dictionary&lt;int, string&gt;() { { 1, &#34;苹果&#34; }, { 2, &#34;香蕉&#34; }, { 3, &#34;苹果&#34; }, { 4, &#34;橙子&#34; }, { 5, &#34;苹果&#34; } }; Console.WriteLine(&#34;移除前的字典：&#34;); PrintDictionary(testDict); // 要移除的目标值 string targetValue = &#34;苹果&#34;; // 调用方法移除所有值为&#34;苹果&#34;的键值对 RemoveAllEntriesByValue(testDict, targetValue); Console.WriteLine($&#34;\n移除值为\&#34;{targetValue}\&#34;的所有项后：&#34;); PrintDictionary(testDict); } /// &lt;summary&gt; /// 移除Dictionary中所有值等于目标值的键值对 /// &lt;/summary&gt; /// &lt;typeparam name=&#34;TKey&#34;&gt;字典键的类型&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TValue&#34;&gt;字典值的类型&lt;/typeparam&gt; /// &lt;param name=&#34;dictionary&#34;&gt;要操作的字典&lt;/param&gt; /// &lt;param name=&#34;targetValue&#34;&gt;要移除的目标值&lt;/param&gt; public static void RemoveAllEntriesByValue&lt;TKey, TValue&gt;(Dictionary&lt;TKey, TValue&gt; dictionary, TValue targetValue) where TKey : notnull // 约束键不能为null（Dictionary的默认要求） { if (dictionary == null) { throw new ArgumentNullException(nameof(dictionary), &#34;字典不能为null&#34;); } // 第一步：找出所有值等于目标值的键（存入临时列表，避免遍历中修改字典） List&lt;TKey&gt; keysToRemove = dictionary .</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-11-22T18:08:30&#43;08:00">November 22, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_component_construction_func/">继承自Monobehaviour的组件组件的构造函数</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+问题1： 在unity中，继承自MonoBehaviour的组件类可以写构造函数吗？构造函数应该是public，protected，还是private的，构造函数的执行顺序比Awake和Start事件方法更早吗？
+你想了解在Unity中，继承自MonoBehaviour的组件类里构造函数的使用规则、访问修饰符选择，以及它和Awake/Start的执行顺序关系，这个问题触及了Unity组件生命周期的核心知识点。
+一、核心结论与详细解释 1. 可以写构造函数，但强烈不推荐 从语法上讲，你完全可以为MonoBehaviour子类编写构造函数，但Unity的组件系统设计逻辑决定了这是一种错误的实践。
+原因：
+Unity组件的实例化不是由new关键字创建的，而是由Unity引擎在场景加载、对象实例化（如Instantiate()）时自动创建的。 如果你手动写构造函数，Unity引擎并不会调用它（除非你自己用new创建，但这会导致组件脱离Unity的GameObject体系，失去所有MonoBehaviour的特性）。 构造函数中如果访问Unity的核心API（如transform、gameObject），会直接报错，因为此时组件还未被引擎初始化，这些引用都是null。 2. 构造函数的访问修饰符 即使你非要写构造函数，访问修饰符的选择也没有实际意义：
+public：语法合法，但无意义，因为你不会手动new一个MonoBehaviour组件。 protected/private：同样合法，但Unity引擎也不会调用，仅能被类内部/子类的代码调用（而这种调用本身就不符合Unity的使用规范）。 总结： 无论选择哪种修饰符，对Unity组件的正常使用都没有帮助，反而可能造成误解。
+3. 执行顺序对比 构造函数的执行顺序确实比Awake和Start更早，但这个“更早”没有实际价值：
+执行时机： 构造函数：当Unity引擎在内存中创建组件对象的“裸实例”时执行（场景加载/Instantiate的最早期）。 Awake：组件对象被引擎初始化（绑定到GameObject、初始化transform等引用）后立即执行（游戏开始/对象创建时）。 Start：在Awake之后，该组件第一次更新（Update）前执行。 关键问题：构造函数执行时，组件的gameObject、transform等核心属性都是null，无法进行任何有效的Unity相关操作，此时执行的代码几乎没有实际意义。 二、正确的替代方案 如果你想在组件初始化时执行代码，应该使用Unity提供的生命周期方法，而不是构造函数：
+using UnityEngine; public class MyComponent : MonoBehaviour { // 错误示范：不要写构造函数 // public MyComponent() // { // // 这里访问transform会报错！ // // transform.position = Vector3.zero; // } // 正确：初始化逻辑写在Awake（最早的有效时机） private void Awake() { // 此时所有Unity引用都已初始化，可以安全操作 transform.position = Vector3.zero; Debug.Log(&#34;Awake执行：组件初始化&#34;); } // 可选：延迟初始化写在Start（在Awake之后） private void Start() { Debug.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2018-04-23T20:20:49&#43;08:00">April 23, 2018</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/lua/cocos2d_lua_core/lua_advanced_3/">Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+##用表模拟面向对象编程中的类和对象
+1 用元表实现一个People类 People = {age = 18} --[[ 等同于这样的声明方式： function People.new(self) self就是People表本身 --]] function People:new() local p = {} -- 生成一个表p setmetatable(p, self) -- 表p的元表设置为表People self.__index = self --[[ 表People的__index值就是__People本身。前文说到，__index对应的值可以是 一个table也可以是一个table。现在以一个table作为__index的值 --]] return p end function People:growUp() self.age = self.age + 1 print(self.age) end -- 测试 p1 = People:new() --[[ p1：growUp()的调用等价于：p1.growUp(p1)。这个语句的执行可以分解为以下的一些步骤： 1 首先要拿到函数p1.growUp。从People:new函数中可以知道：p1就是People:new函数中的p，一开始就是一个空表， 但这个空表p的元表就是表People，且空表p的元表People表的__index方法就是它自己，这也就是说。虽然p表是一个空表， 但是当执行到p1.growUp时，会查找执行到People.growUp的函数去执行之。 2 得到了People.growUp函数之后执行值，这里p1:growUp()的调用方式是等价于People.growUp(p1)。在growUp函数内部 当执行到self.age = self.age+1语句时，一开始的p1表中没有age项目，但执行语句后，首先会从People表中复制一份age项到 p1表，然后再对p1自身的age项加1.所以输出19。p2也是遵循这个“复制一份age项到p2表”的操作，故而最后也是输出19 --]] p1:growUp() -- 输出19 p2 = People:new() p2:growUp() -- 输出19 ###2 在People类的基础上定义Man类</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2017-10-22T18:08:30&#43;08:00">October 22, 2017</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/lua/" rel="category">Lua</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/lua/" rel="tag">Lua</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/lua/cocos2d_lua_core/lua_advanced_2/">Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 2</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+##元表的__index方法和__newindex方法
+###1 使用__index方法的代码：
+--[[ Lua中访问table的元素是先通过__index元方法来查找是否有这个函数，如果没有则返回nil。可以通过改变__index元方法，能够 改变检索之后的结果。__index的值可以直接是一个table，可以是一个function。如果是table则以该table作为索引进行查询， 如果是function，则以table和缺少的table的元素键值的key为参数、 --]] Window = {} Window.mt = {} Window.prototype = {x = 0, y = 0, width=100, height = 100} --[[ 参数1是table，参数2是key，这是固定的格式 --]] Window.mt.__index = function(table, key) return Window.prototype[key] end function Window.new(t) setmetatable(t, Window.mt) -- 设置某个表t的元表为Window.mt return t end -- 测试 t = {x = 10, y = 20} w = Window.new(t) --[[ 表w就是表t，并且t的元表就是Window.mt。本来表t是没有“height”这一个元素项，但因为t指定了元表为Window.mt。 而Window.mt又对元方法__index进行了改写，所以t.height就是Window.prototype.width。如果t本身已经有&#34;height&#34;的话 那么t.height就不是Window.prototype.width了。 --]] print(w.height) ###2 使用了__newindex方法的代码
+Window = {} Window.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2017-10-21T18:08:30&#43;08:00">October 21, 2017</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/lua/" rel="category">Lua</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/lua/" rel="tag">Lua</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/lua/cocos2d_lua_core/lua_advanced_1/">Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 1</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+##用元表针对一个table实现+操作
+Set = {} -- 首先声明一个名字为&#34;Set&#34;的表，这个Set表，将会作为一个“类”。我们称之为“Set类” Set.mt = {} --[[为了避免命名空间污染，在Set表内部定义一个名为“mt”；类型为表的元素项。这个mt表将作为“表征Set类 的实例对象的表”的元表--]] --[[ Set表内部定义一个名为new，类型为函数的元素项。这个函数用来生一个“表征Set类的实例对象的表”。 从实现功能来看。这个函数类似于C++,Java中的 --]] function Set.new(t) local set = {} -- 生成一个表set，这个set表就等价于Set类的一个对象实例 Set.mt.__add = Set.union -- 表Set.mt的元方法__add就是类Set的union方法 setmetatable(set, Set.mt) -- 指定表set的的元表为Set.mt for i, v in ipairs(t) do -- 遍历传进来的table类型的参数t的每一项元素，然后将t的每一项元素的实值， set[v] = true -- 作为set表的键值 end return set -- 返回表set，即返回Set类的一个对象实例 end -- 合并两个集合a和b并且形成一个新Set对象 function Set.union(a, b) local res = Set.new() -- k short for key for k in pairs(a) do -- 遍历参数a的每一个键值，从new方法可以看到，这个a的键值就是new方法的参数t的实值 res[k] = true end for k in pairs(b) do -- 遍历参数b的每一个键值，从new方法可以看到，这个b的键值就是new方法的参数t的实值 res[k] = true end return res -- 完成两个循环之后，res表中就已经含有a和b的所有键值了。等同于合并了两个集合 end -- 把某一个Set对象格式化成字符串并返回 function Set.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2017-10-20T18:08:30&#43;08:00">October 20, 2017</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/lua/" rel="category">Lua</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/lua/" rel="tag">Lua</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/how_to_set_camera_for_isometric/">3转2时如何设置摄像机角度以实现isometric渲染效果</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址：
+问：应该如何在 3DS Max 中设置摄像机的观察角度，使得渲染出来的 2D 图是一个 isometric 效果。特别地应该如何获取到渲染出来的图像的精确高宽值。当我们想渲染出来的图的高宽比是 1:2 的时候，该如何设置摄像机的位置，设置摄像机的观察角度？
+答：1:如果想渲染出来的图的高宽比是 1:2 的话，这种投影其实不是严格的 isometric（等轴侧）投影。而是类似于 dimetric（正二测，两等角）投影。这种投影的特点便是三个轴中的水平两个轴是按照透视法缩短了。垂直的那个轴则稍微地比按透视法缩短的更为剪短了一点。
+Isometric（等轴侧） 投影则是三个轴都是按相等的比例透视缩短的。当使用等轴侧投影的时候，一个轴对齐的菱形将会被投影到水平面上。并且这个菱形的宽高比为：1.732:1 。如下图所示:
+在上图中，如果使用宽高比为 2:1 的正二测投影的话。则摄像机俯视水平面的观察角度应该为 30°。如果使用真正的等侧轴投影的话。则摄像机俯视水平面的观察角度应该为 35.264 度。在这里，摄像机的观察角度 A 和投影得到的菱形的宽高比 R 之间的关系是：
+sin(A) = R
+2: 在渲染时，还必须确保渲染用的摄像机，是使用了正交投影的模式。
+扩展阅读： Axonometric projection Isometric view setup Isometric View and Isometric Projection</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2017-03-09T14:59:52&#43;08:00">March 09, 2017</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/inside_hdr/">理解高动态范围光</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+现在大部分图形程序员（包括我）可能是从directxsdk处接触到这个概念并开始学习。DirectX SDK中的示例demo较为清晰地展示了一个完整的HDR技术所要采用的流程，如下：
+在 float render target 上去渲染当前的场景。 使用 RGBM ， LogLuv 等编码方式来节省所需的内存和带宽 通过 down sample 去计算场景亮度 根据亮度对场景做一个 矫正（tone mapping） 最后输出到一个 rgb8 的 render target 上 上面的流程的四个步骤就展示了四个高大上的概念，我们先一一弄懂这些基础概念，再进一步分析。 1 float render target 首先是float render target。render target（以下简称RT）这个概念就不在此详细描述了，这个概念都还没弄懂的话需要先放下这篇文章，先夯实基础再说。RT可以理解为一系列的像素点的集合。在计算机中自然需要用一个一个字节去表示像素点的RGBA信息。最常见的是使用一个字节去表示像素点的一个颜色分量。这样子表示一个像素点则需要四个字节共32位。但一个字节表示一个颜色分量，比如Red分量的话，最多就只能表示256阶的信息。在很多时候，尤其是在处理我们的HDR信息的时候，256阶是远远不够用。所以我们要采用32位或者更高精度的浮点数去表示每一位颜色分量。float render target正是表示这一个概念。
+1.1 RGBM RGBM是一种颜色编码方式，如上所述，为了解决这个精度不足以存储亮度范围信息的问题，我们可以创建一个精度更高的buffer，以扩展之前的那个限定在[0,1]取值域的取值范围，从而使得我们可以在RT上渲染一个更高的亮度范围的画面效果。但使用高精度的buffer则带来另一个问题：即需要更高的内存存储空间和更高的带宽，并且有些渲染硬件无法以操作8位精度的buffer的速度去操作16位浮点数的buffer。因此为了解决这个问题，我们需要采用一种编码方法将这些颜色数据编码成一个能以8位颜色分量的存储的数据。编码方式有多种，例如RGBM编码，LogLuv编码，等等。假如有一个给定的包含了RGB颜色分量的颜色值C，将其编码成一个含有RGBM四个分量的颜色值的步骤是：
+定义一个&quot;最大范围值&quot;,假定为变量MaxRange 取得C的RGB分量中最大的那个值。将这个最大值赋值给变量maxRGB。 用maxRGB除以MaxRange，得到商，将这个商赋值给变量M 用M乘以255得到结果值之后，取得大于这个结果值的最小整数，然后再将这个最小值除以255之后，再赋值给变量M 最后，用C的各个颜色分量，除以M和MaxRange的乘积，作为最终结果颜色的RGB分量，M就作为最后一个分量。 这些步骤写成shader代码如下:
+float MaxRange = 8; float4 EncodeRGBM(float3 rgb) { float maxRGB = max(rgb.x,max(rgb.g,rgb.b)); float M = maxRGB / MaxRange; M = ceil(M * 255.0) / 255.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2017-03-08T14:59:52&#43;08:00">March 08, 2017</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>, 
+		<a class="meta-tags__link" href="/tags/hdr/" rel="tag">HDR</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/post/">1</a>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/2/">2</a>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/3/">3</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/8/">8</a>
+				<span class="pagination__item pagination__item--active" data-total="15">9</span>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/10/">10</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/15/">15</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

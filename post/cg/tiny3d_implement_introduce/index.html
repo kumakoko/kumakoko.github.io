@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>软渲染示例程序Tiny3D的实现简介 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Tiny3D">
+		<meta property="og:title" content="软渲染示例程序Tiny3D的实现简介" />
+<meta property="og:description" content="Tiny3D" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/cg/tiny3d_implement_introduce/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-10-08T14:59:52+08:00" />
+<meta property="article:modified_time" content="2014-10-08T14:59:52+08:00" />
+
+
+		<meta itemprop="name" content="软渲染示例程序Tiny3D的实现简介">
+<meta itemprop="description" content="Tiny3D"><meta itemprop="datePublished" content="2014-10-08T14:59:52+08:00" />
+<meta itemprop="dateModified" content="2014-10-08T14:59:52+08:00" />
+<meta itemprop="wordCount" content="174">
+<meta itemprop="keywords" content="CG," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">软渲染示例程序Tiny3D的实现简介</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2014-10-08T14:59:52&#43;08:00">October 08, 2014</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">软渲染示例程序Tiny3D的实现简介</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#绘制图形的代码">绘制图形的代码</a>
+      <ul>
+        <li><a href="#devicedrawbox函数">Device::DrawBox函数</a></li>
+        <li><a href="#devicedrawplane函数">Device::DrawPlane函数</a></li>
+        <li><a href="#devicedrawprimitive函数">Device::DrawPrimitive函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#把三角形拆分梯形并渲染的trapezoidsplittriangleintotrapezoids函数">把三角形拆分梯形并渲染的Trapezoid::SplitTriangleIntoTrapezoids函数</a>
+      <ul>
+        <li><a href="#trapezoidsplittriangleintotrapezoids函数">Trapezoid::SplitTriangleIntoTrapezoids函数</a></li>
+        <li><a href="#devicerendertrapezoid函数">Device::RenderTrapezoid函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考文章">参考文章</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h2 id="绘制图形的代码">绘制图形的代码</h2>
+<p>Tiny3D核心的图形绘制代码调用栈如下图所示</p>
+<p><img src="/image/cg/tiny3d/draw_primitive_callstack.jpg" alt="核心图形绘制代码调用栈">
+<br>
+<br></p>
+<h3 id="devicedrawbox函数">Device::DrawBox函数</h3>
+<p>Tiny3D的核心绘制代码的入口函数<code>Device::DrawBox</code>函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// theta mesh的旋转角度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// box_vertices mesh的原始模型顶点数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> Device<span style="color:#f92672">::</span>DrawBox(<span style="color:#66d9ef">float</span> theta, <span style="color:#66d9ef">const</span> T3DVertex<span style="color:#f92672">*</span> box_vertices)
+</span></span></code></pre></div><p><code>Device::DrawBox</code>函数的实现如下代码所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Device<span style="color:#f92672">::</span>DrawBox(<span style="color:#66d9ef">float</span> theta, <span style="color:#66d9ef">const</span> T3DVertex<span style="color:#f92672">*</span> box_vertices)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    T3DMatrix4X4 m;
+</span></span><span style="display:flex;"><span>    T3DMatrixMakeRotation(<span style="color:#f92672">&amp;</span>m, <span style="color:#f92672">-</span><span style="color:#ae81ff">1.0f</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.5f</span>, <span style="color:#ae81ff">1.0f</span>, theta);
+</span></span><span style="display:flex;"><span>    transform_.SetWorldMatrix(m);
+</span></span><span style="display:flex;"><span>    transform_.Update();
+</span></span><span style="display:flex;"><span>    DrawPlane(<span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">3</span>]);
+</span></span><span style="display:flex;"><span>    DrawPlane(<span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">4</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">6</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">7</span>]);
+</span></span><span style="display:flex;"><span>    DrawPlane(<span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">4</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">1</span>]);
+</span></span><span style="display:flex;"><span>    DrawPlane(<span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">1</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">5</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">6</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">2</span>]);
+</span></span><span style="display:flex;"><span>    DrawPlane(<span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">2</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">6</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">7</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">3</span>]);
+</span></span><span style="display:flex;"><span>    DrawPlane(<span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">3</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">7</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">4</span>], <span style="color:#f92672">&amp;</span>box_vertices[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>步骤就是如下的几步：</p>
+<ol>
+<li>根据传递进来的mesh的旋转角度theta，调用<code>T3DMatrixMakeRotation</code>函数构建world matrix，然后更新到<code>Transform</code>类中去</li>
+<li>调用<code>Transform::Update</code>函数，更新world-view-projection matrix，这WVP matrix将在后面的用来变换顶点。</li>
+<li>把一个六面体BOX拆分成6个矩形面，调用DrawPlane函数进行绘制。
+<br>
+<br></li>
+</ol>
+<h3 id="devicedrawplane函数">Device::DrawPlane函数</h3>
+<p><code>Device::DrawPlane</code>函数的实现如下代码所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Device<span style="color:#f92672">::</span>DrawPlane(<span style="color:#66d9ef">const</span> T3DVertex<span style="color:#f92672">*</span> p1, <span style="color:#66d9ef">const</span> T3DVertex<span style="color:#f92672">*</span> p2, <span style="color:#66d9ef">const</span> T3DVertex<span style="color:#f92672">*</span> p3, <span style="color:#66d9ef">const</span> T3DVertex<span style="color:#f92672">*</span> p4)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    T3DVertex _p1 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>p1, _p2 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>p2, _p3 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>p3, _p4 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>p4;
+</span></span><span style="display:flex;"><span>    _p1.tc.u <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0f</span>, _p1.tc.v <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0f</span>;
+</span></span><span style="display:flex;"><span>    _p2.tc.u <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0f</span>, _p2.tc.v <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0f</span>;
+</span></span><span style="display:flex;"><span>    _p3.tc.u <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0f</span>, _p3.tc.v <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0f</span>;
+</span></span><span style="display:flex;"><span>    _p4.tc.u <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0f</span>, _p4.tc.v <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0f</span>;
+</span></span><span style="display:flex;"><span>    DrawPrimitive(<span style="color:#f92672">&amp;</span>_p1, <span style="color:#f92672">&amp;</span>_p2, <span style="color:#f92672">&amp;</span>_p3);
+</span></span><span style="display:flex;"><span>    DrawPrimitive(<span style="color:#f92672">&amp;</span>_p3, <span style="color:#f92672">&amp;</span>_p4, <span style="color:#f92672">&amp;</span>_p1);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在<code>Device::DrawPlane</code>函数中，就是把四边形的四个顶点，分别组成两个三角形，然后调用<code>Device::DrawPrimitive</code>函数绘制这两个三角形。
+<br>
+<br></p>
+<h3 id="devicedrawprimitive函数">Device::DrawPrimitive函数</h3>
+<p>此函数比较长，就不在这里摘录了，该函数的签名如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Device<span style="color:#f92672">::</span>DrawPrimitive(<span style="color:#66d9ef">const</span> T3DVertex<span style="color:#f92672">*</span> v1, <span style="color:#66d9ef">const</span> T3DVertex<span style="color:#f92672">*</span> v2, <span style="color:#66d9ef">const</span> T3DVertex<span style="color:#f92672">*</span> v3)
+</span></span></code></pre></div><p>该函数的内部实现步骤如下：</p>
+<ol>
+<li>使用<code>Transform::Apply</code>函数，对组成三角形的三个顶点v1,v2,v3，进行空间变换，将这几个顶点变换到裁剪空间。如下面的“裁剪空间和NDC坐标系”图所示。</li>
+<li>使用<code>Transform::CheckCVV</code>函数，判断这三个顶点是否有超出裁剪空间范围内，目前的算法是：这三个顶点只要有一个超出范围，即放弃渲染此三角形。</li>
+<li>完成了裁剪操作之后，使用<code>Transform::Homogenize</code>函数执行<strong>透视除法</strong>，将顶点变换从<strong>clip space</strong>变换到<strong>NDC坐标系</strong>以及<strong>屏幕坐标系</strong>中去。</li>
+<li>如果是<strong>纹理映射模式</strong>（<code>RENDER_STATE_TEXTURE</code>）或者<strong>颜色填充模式</strong>（<code>RENDER_STATE_COLOR</code>），使用<code>Trapezoid::SplitTriangleIntoTrapezoids</code>函数，将三角形分割成两个梯形，然后调用<code>Device::RenderTrapezoid</code>函数进行绘制。</li>
+<li>如果是<strong>线框模式</strong>（<code>RENDER_STATE_WIREFRAME</code>），即调用<code>Device::DrawLine</code>函数直接绘制三角形的三条边。</li>
+</ol>
+<p><img src="/image/cg/tiny3d/clip_space_to_ndc.png" alt="裁剪空间和NDC坐标系"></p>
+<br>
+<br>
+<hr>
+<br>
+<br>
+<h2 id="把三角形拆分梯形并渲染的trapezoidsplittriangleintotrapezoids函数">把三角形拆分梯形并渲染的Trapezoid::SplitTriangleIntoTrapezoids函数</h2>
+<br>
+<br>
+<h3 id="trapezoidsplittriangleintotrapezoids函数">Trapezoid::SplitTriangleIntoTrapezoids函数</h3>
+<p><code>Trapezoid::SplitTriangleIntoTrapezoids</code>函数把一个三角形拆分成两个梯形。这个函数代码较长很长，在此不做转录。具体步骤也在代码中已经注释清楚，这里贴一个辅助阅读代码的图</p>
+<p><img src="/image/cg/tiny3d/split_and_render_trapzoid.png" alt="把三角形分割成梯形并渲染的示意图"></p>
+<br>
+<br>
+<h3 id="devicerendertrapezoid函数">Device::RenderTrapezoid函数</h3>
+<p><code>Device::RenderTrapezoid</code>函数就是绘制梯形的函数，截下上面的“把三角形分割成梯形并渲染的示意图”来看。可分为以下步骤：</p>
+<ol>
+<li>根据传递进来的梯形对象指针trap，算出该梯形的顶边和底边分别对应于屏幕中的哪几行。假设从top行开始到bottom行结束</li>
+<li>在top行至bottom行范围内循环，在当前的第y行屏幕行中，trap调用其成员函数<code>Trapezoid::CalculateEdgeInterpolatedPoint</code>。处理梯形在当前行中<strong>左右腰边的插值点</strong>，这插值点用来作为扫描线的端点</li>
+<li>在top行至bottom行范围内循环，在当前的第y行屏幕行中，trap调用其成员函数<code>Trapezoid::InitializeScanline</code>。处理梯形在当前行中，对应生成的逐行扫描的扫描线。</li>
+<li>在top行至bottom行范围内循环，在当前的第y行屏幕行中，调用<code>Device::DrawScanline</code>函数，绘制扫描线</li>
+</ol>
+<h2 id="参考文章">参考文章</h2>
+<p><a href="https://carmencincotti.com/2022-05-02/homogeneous-coordinates-clip-space-ndc/">Homogeneous Coordinates, Clip Space, and NDC | WebGPU</a></p>
+<p><a href="https://stackoverflow.com/questions/21841598/when-does-the-transition-from-clip-space-to-screen-coordinates-happen/21841924#21841924">clip space and NDC space are not the same thing</a></p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/cg/">CG</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

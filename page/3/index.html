@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta name="generator" content="Hugo 0.121.2">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Responsive card-based &amp; code-light Hugo theme">
+		<meta property="og:title" content="XGF" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/" />
+
+
+		<meta itemprop="name" content="XGF">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-home">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+			<div class="cards">
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/amplify_imposter_custom_baking/">Amplify Imposter Custom Baking</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+介绍 标准烘焙器收集延迟的 GBuffer 信息，其中包含典型 PBR 渲染的所有材质数据。然而，这可能并不总是必要的，甚至可能不够。在某些情况下，想要为其创建替代者的对象具有一些特殊的实时着色器效果，而简单的 PBR 渲染无法涵盖这些效果。在其他情况下，可能只想减少生成的数据量，因为有更高的平台限制（即移动设备）。自定义烘焙背后的想法是允许告诉工具想要烘焙什么以及希望如何根据具体情况进行渲染。
+##要求 为本指南创建着色器可能非常困难，因此我们在包中包含了可与 Amplify Shader Editor 插件一起使用的必要模板和节点，从而使该过程变得更加轻松快捷。如果不熟悉它，Amplify Shader Editor 是我们自己的屡获殊荣的着色器编辑器，可以在基于节点的图形编辑器中创建着色器，而无需了解着色器代码。本指南假设使用 Amplify Shader Editor，因此如果对直观的基于节点的着色器创作工具感兴趣，请随时在此处查看其商店页面。还可以在此处的 wiki 页面中了解更多信息。
+可以在软件包的目录AmplifyImpostors/Examples/Scenes/CustomBaking中找到本指南的文件和示例。如果是高级用户，并且想要手动创建着色器，仍然可以通过将结果与给定的示例进行比较来遵循指南。
+Shader Graph 限制了使用自定义代码的能力，从而阻止了对 Amplify Impostors 的支持。请考虑使用替代方案Amplify Shader Editor，它从头开始设计，可扩展并可适应任何管道要求。
+描述 本指南演示了创建与示例中相同的自定义替代器的过程。目的是为包含特殊动态着色器的对象创建替代器。此着色器在对象顶部添加了一个程序化油漆层。此油漆层是程序化的，因为它使用对象位置来计算油漆的伪随机颜色。如果我们为这个对象烘焙一个常规替代器，我们将失去这种程序行为，最终得到一个静态版本。
+为了实现这一点，需要两个特殊的着色器。一个着色器将使用被代替的物体的原始着色器来烘焙不同的纹理贴图。此着色器包含不同的输出，这些输出将用于生成不同的纹理及其通道所包含的内容。称为“烘焙着色器”。另一个着色器将使用生成的纹理，并使用可能正在寻找的预期自定义效果，正确渲染地impostor。这是将在产品中使用的创建imposter效果的着色器。我们将其称为“运行时着色器”。最后，需要设置输出并将着色器链接到它们，使用可以在Impostor组件中创建和引用的预设资产文件来执行此操作。
+创建烘焙着色器 在的项目中单击鼠标右键，然后创建一个新的 Impostor Bake 着色器。 注意：如果看不到此条目，请确保在着色器编辑器之后导入 Impostors 包，并打开着色器编辑器画布以检测更改。 在编辑器中打开着色器后，首先放置纹理采样器并将它们打包到所选输出，并确保属性名称与原始着色器匹配。 然后创建与我们可以烘焙到地图中的静态部分相对应的图形节点和连接，在我们的例子中，这是除程序颜色部分之外的所有内容。此外，因为我们稍后需要特殊遮罩来重新创建最终的程序效果，并且因为我们想要节省一些纹理内存，所以我们会将其与剩余数据一起打包并将其连接到同一个输出。 添加“Pack Normal Depth”着色器功能节点，它将法线转换为必要的空间并在 Alpha 通道中创建深度信息。 （可选）如果的对象着色器使用“剪切”效果，请确保通过减去剪辑蒙版值并将其连接到“剪辑”输出来模仿它。 创建运行时着色器 在的项目中单击鼠标右键并创建一个新的 Impostor Runtime 着色器。 在编辑器中添加一个新的“Amplify Impostor 节点”，将 Albedo、World Normal 和 Alpha 输出连接到主节点中的可用输入。点击 ASE 画布中的保存按钮。 注意：这样做应该会编译一个使用烘焙中最重要的数据的 Impostor 兼容着色器，但我们仍然需要进一步定制它以支持预期的程序效果。 在我们的例子中，我们想要获取原始输出中没有的自定义地图，我们通过选择 Impostor 节点并将“Extra Samplers”字段更改为适当的数字（在我们的例子中为 1）并连接一个带有名称的纹理对象节点来实现此目的，稍后将使用该名称来引用此地图。在本例中，我们将其称为“_Mask”。 我们现在需要从原始着色器创建程序逻辑，该着色器使用波函数中的对象 XZ 位置来生成颜色。 最后，从额外输出将程序颜色过滤到蒙版，并将适当的通道连接到其输出。保存。 创建烘焙预设 通过转到“Assets &gt; Create &gt; Amplify Impostor Bake Preset”或点击 impostor 组件中的“New”按钮来创建新预设。在所选项目位置中选择它。 将着色器分配给预设并添加或删除输出，直到拥有与在 [步骤 2] 中创建的着色器相同数量的可用输出。 配置输出以表示它们所保存的数据。在本例中，第一个输出保存 RGB 中的反照率颜色数据，因此我们将其标记为 sRGB 颜色空间。务必标记包含 alpha 通道的输出，在本例中它是第一个，因此我们保留单选按钮不变。 现在，只需在 impostor 组件中选择新的预设，必要时覆盖字段并点击“Bake Impostor” 最终结果 这是最终结果，请注意右侧的替代器现在可以模仿原始对象的效果并按预期显示程序颜色。此外，这些替代器仅使用三个贴图来实现它，而不是像标准替代器那样使用四个贴图。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-12T18:21:49&#43;08:00">November 12, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/ai_imagine/mj_instructions/">Midjourney常用指令和提示词表格</a></h1>
+	<div class="entry__content">以下是 Midjourney 全部指令和参数的完整表格（截至最新版本），涵盖基础指令、参数、高级功能及设置选项：
+Midjourney 完整指令表 指令/参数 类型 说明 示例/用法 基础指令 /imagine 指令 输入提示词生成图像（核心功能） /imagine a mystical forest with glowing mushrooms --v 6 --ar 16:9 /settings 指令 调整默认参数（模型版本、质量、风格等） 选择 MJ Version 6 或 Niji V6（动漫风格） /describe 指令 上传图片生成4组可能的提示词 上传风景图，Midjourney 返回提示词如 &ldquo;a serene lake at sunset&rdquo; /info 指令 查看账户信息（剩余生成次数、订阅状态等） 输入后显示剩余Fast时间、订阅计划等 /help 指令 调出官方帮助指南 输入后返回基础教程链接 图像操作指令 /blend 指令 混合2-5张图片生成新图（需上传图片） 上传2张风格不同的插画，生成融合效果 /show 指令 通过任务ID重新显示生成结果（需输入任务ID） /show 1234567890 /fast 指令 切换至快速生成模式（消耗订阅时间） 免费用户默认不可用 /relax 指令 切换至慢速生成模式（不消耗时间，但排队慢） 订阅用户专用 提示词工具 /shorten 指令 优化提示词，删除冗余内容并分析关键词权重 /shorten a portrait of a cyberpunk samurai with neon armor, ultra-detailed /prefer option set 指令 创建自定义参数选项（需高级订阅） /prefer option set my_style --v 6 --stylize 1000 /prefer suffix 指令 为所有提示词添加固定后缀 /prefer suffix --ar 3:2 --chaos 20 /prefer auto_dm 指令 将生成结果私信发送（避免刷屏） 输入后所有结果通过私信发送 参数列表 --v &lt;1-6&gt; 参数 指定模型版本（默认最新版） --v 5.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-12T18:21:49&#43;08:00">November 12, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/ai/" rel="category">AI</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/ai/" rel="tag">AI</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/ai_imagine/sd_web_ui_desc/">Stable Diffusion Web UI界面参数解释</a></h1>
+	<div class="entry__content">外挂VAE模型 在 Stable Diffusion 中，VAE（Variational Autoencoder，变分自编码器）是一个关键组件，主要用于图像的 编码（压缩） 和 解码（重建）。它在生成高质量图像的过程中扮演着重要角色。
+VAE 的作用 图像编码（压缩）
+在 Stable Diffusion 的 训练阶段，VAE 负责将 原始图像（如 512×512 像素） 压缩成一个 低维潜在表示（latent space，如 64×64×4 的张量）。 这个潜在表示比原始图像小很多，使得后续的扩散模型（Diffusion Model）计算更高效。 图像解码（重建）
+在 生成图像阶段，扩散模型先在潜在空间（latent space）生成数据，然后 VAE 解码器 负责将潜在表示 转换回像素空间（如 512×512 图像）。 如果 VAE 解码器质量高，生成的图像会更清晰、细节更丰富。 为什么 VAE 重要？ 影响图像质量：VAE 的解码能力直接影响最终生成图像的清晰度和细节。如果 VAE 较弱，图像可能会出现模糊、伪影等问题。 可替换性：Stable Diffusion 允许用户 更换 VAE 模型（如 vae-ft-mse-840000），以改善生成效果。 与扩散模型协同工作：扩散模型主要在 潜在空间 操作，VAE 负责 图像空间 和 潜在空间 之间的转换。 VAE 在 Stable Diffusion 工作流程中的位置 输入图像（训练阶段） → VAE 编码器 → 潜在表示 → 扩散模型学习去噪。 生成图像（推理阶段） → 扩散模型生成潜在噪声 → VAE 解码器 → 最终图像。 如何更换 VAE？ 在 Stable Diffusion WebUI 或代码中，可以加载不同的 VAE 模型，例如：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-11-12T18:21:49&#43;08:00">November 12, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/ai/" rel="category">AI</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/ai/" rel="tag">AI</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/misc/useful_regex/">一些实用的正则表达式</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+生成一个正则表达式，把每一个中文自然段落前的空格都去掉 可以使用以下正则表达式来去除每个中文自然段落前的空格：
+正则表达式：
+^[ \t　]+ 替换为： 空字符串（即删除匹配到的内容）
+解释：
+^ 匹配行的开头（在多行模式下）。 [ \t　]+ 匹配一个或多个： 半角空格（ ） 制表符（\t） 全角空格（　，Unicode \u3000） 使用方式：
+启用多行模式（/m 标志），使 ^ 能匹配每行的开头。 全局匹配（/g 标志），处理所有符合条件的空格。 示例（JavaScript）：
+const text = ` 这是一个前面有半角空格的段落。 这是一个前面有全角空格的段落。 Another mixed space paragraph.`; const result = text.replace(/^[ \t　]+/gm, &#39;&#39;); console.log(result); 输出：
+这是一个前面有半角空格的段落。 这是一个前面有全角空格的段落。 Another mixed space paragraph. 注意事项：
+该正则表达式会删除每行开头的所有空格（包括全角/半角），适用于典型的首行缩进场景。 如果段落中存在需要保留的非开头空格（如英文单词间的空格），不会被误删。 如果文本包含代码块等需要保留缩进的结构，建议先提取自然段落再处理。 生成一个正则表达式，删除空白行，纯空格符的行也算空白行 可以使用以下正则表达式删除所有空白行（包括仅含空格/制表符等空白字符的行）：
+正则表达式：
+^\s*$ 替换为： 空字符串（即删除匹配到的整行）
+解释： ^ 匹配行的开头（需启用多行模式） \s* 匹配零个或多个空白字符（包括：空格、制表符\t、换页符等） $ 匹配行的结尾（需启用多行模式） 使用方式： 启用多行模式 (/m 标志)，使 ^ 和 $ 能匹配每行的开头和结尾 全局匹配 (/g 标志)，处理所有符合条件的行 示例（JavaScript）：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-10-22T23:21:49&#43;08:00">October 22, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/misc/" rel="category">Misc</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/misc/" rel="tag">Misc</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/gpu_driven_terain/gpu_driven_terrain_ref/">GPU Driven Terrain Rendering 参考资料汇总</a></h1>
+	<div class="entry__content">（译）Terrain Rendering in Far Cry 5
+ProjectS中的GPU Driven</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-10-08T14:59:52&#43;08:00">October 08, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity/" rel="category">Unity</a>, 
+		<a class="meta-categories__link" href="/categories/gpu-driven-terrain/" rel="category">GPU Driven Terrain</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity/" rel="tag">Unity</a>, 
+		<a class="meta-tags__link" href="/tags/gpu-driven-terrain/" rel="tag">GPU Driven Terrain</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_fov_and_screentoworldpoint/">Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+在Unity3D编程中经常会碰到以下的问题：
+比如一开始的FOV为60度，后来设置为22度，可以通过怎样的公式，使得使用22度FOV对应生成的3D位置点，通过这个公式，可以转换到其位置点和使用60度生成的一样呢
+当从一个FOV为60度的视角切换到22度的视角时，使用Camera.ScreenToWorldPoint函数生成的3D位置点会发生变化，因为FOV直接影响视锥体的宽度和高度。要解决这个问题，需要通过调整视锥体的缩放因子，来抵消FOV变化带来的位置偏移。
+问题分析 当FOV变化时，屏幕坐标对应的世界坐标会随之缩放。假设有一个屏幕坐标screenPos，在FOV为60度时通过Camera.ScreenToWorldPoint生成一个3D位置点P60。当FOV变为22度时，假设生成的3D位置点为P22。我们需要找到一个转换公式，使得P22转换回P60。
+FOV与世界坐标的关系 视锥体的高度（在深度为z处）与FOV通过以下公式相关：
+$$ Heightz=2×z×tan⁡(FOV2)\text{Height}_z = 2 \times z \times \tan\left(\frac{FOV}{2}\right)Heightz=2×z×tan(2FOV) $$
+其中：
+Height_z ：在深度为z处的视锥体高度。 FOV：垂直视野角度。 z：深度（从摄像机到目标点的距离）。 视锥体的宽度和高度成比例地变化，具体公式为：
+$$ Widthz=Heightz×Aspect Ratio\text{Width}_z = \text{Height}_z \times \text{Aspect Ratio}Widthz=Heightz×Aspect Ratio $$
+对于两个不同的FOV（如60度和22度），可以计算出它们对应的视锥体高度比值。为了让FOV为22度时生成的世界坐标与FOV为60度时生成的一致，需要应用这个比值进行缩放。
+缩放因子的推导 在FOV为60度时的视锥体高度：
+$$ \mathrm{Heigth}_{60}=2\times \mathrm{z}\times \tan \left( \frac{60^o}{2} \right) $$
+在FOV为22度时的视锥体高度：
+$$ \mathrm{Heigth}_{22}=2\times \mathrm{z}\times \tan \left( \frac{22^o}{2} \right) $$
+缩放因子： 需要将FOV为22度时的世界坐标缩放到FOV为60度的视锥体高度，因此缩放因子是这两个视锥体高度的比值：
+$$ ScaleFactor=\frac{Height_{60}}{Height_{22}}=\frac{\tan \left( 30^{o} \right)}{\tan \left( 11^{o} \right)} $$
+可以计算出这个缩放因子：
+$$ \mathrm{ScaleFactor}=\frac{0.5774}{0.1944}\approx 2.97 $$
+公式应用 在FOV为22度时生成的3D世界坐标P22可以通过如下公式转换为FOV为60度时的3D世界坐标P60：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-09-22T20:20:49&#43;08:00">September 22, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_from_depthmap_to_world_coord/">Unity3D中根据深度值重建像素点对应的世界坐标</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 深度图介绍 就是将深度信息(Z坐标值)保存在了一张贴图上的R通道上，因为R通道的值范围是[0, 1]，所以我们可以用ndc空间下的Z坐标值做下处理就能变成[0, 1]范围了（ (Zndc+1)*0.5
+2 C#接口取得深度图纹理的方法 Shader.GetGlobalTexture(&#34;_CameraDepthTexture&#34;) 3 在NDC空间下深度值的计算公式 4 从片元着色器中根据深度图反推出片元世界坐标且输出的shader Shader &#34;zznewclear13/DepthToPositionShader&#34; { Properties { [Toggle(REQUIRE_POSITION_VS)] _Require_Position_VS(&#34;Require Position VS&#34;, float) = 0 } HLSLINCLUDE #include &#34;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&#34; #include &#34;Packages/com.unity.render-pipelines.universal/ShaderLibrary/core.hlsl&#34; #pragma multi_compile _ REQUIRE_POSITION_VS sampler2D _CameraDepthTexture; struct Attributes { float4 positionOS : POSITION; float2 texcoord : TEXCOORD0; }; struct Varyings { float4 positionCS : SV_POSITION; float2 texcoord : TEXCOORD0; }; Varyings Vert(Attributes input) { Varyings output = (Varyings)0; // 根据顶点在其模型坐标系下的值，计算得到在裁剪空间中的齐次坐标 VertexPositionInputs vertexPositionInputs = GetVertexPositionInputs(input.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-07-11T20:20:49&#43;08:00">July 11, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/how_to_use_hlsl_include_with_pragmas/">HLSL语言的编译指令#include_with_pragmas的具体用法</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+#include_with_pragmas 在 HLSL 语言中的作用 #include_with_pragmas 是 Unity Shader 编译器提供的一个扩展指令，用于 在包含 HLSL 头文件 (.hlsl) 时，同时解析其中的 #pragma 指令。这与普通的 #include 不同，普通 #include 只会包含代码，但不会处理 #pragma 相关的指令。
+基本语法 #include_with_pragmas &#34;MyShaderHeader.hlsl&#34; 与普通的 #include 相比：
+#include 不会解析 #pragma multi_compile 等编译指令。 #include_with_pragmas 会解析 #pragma 指令，确保 .hlsl 文件中的 #pragma 也会影响 Shader 变体编译。 使用示例 示例 1：在 .hlsl 文件中定义 multi_compile MyShaderHeader.hlsl
+#pragma multi_compile _ FEATURE_ENABLED float4 CustomFunction() { return float4(1, 0, 0, 1); } MyShader.shader
+Shader &#34;Example/Shader&#34; { SubShader { Pass { HLSLPROGRAM #include_with_pragmas &#34;MyShaderHeader.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-03-08T14:59:52&#43;08:00">March 08, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>, 
+		<a class="meta-tags__link" href="/tags/hlsl/" rel="tag">HLSL</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/rendering_meshes_in_unity_without_meshrenderers/">不使用MeshRenderer去绘制Mesh【翻译】</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+在 Unity 中不使用 MeshRenderer 渲染网格 1. 概述 目的：使用 DrawMesh 系列方法在 Unity 中渲染大量网格，而无需创建和管理 GameObject。 特点： 网格会受到光照影响，可以投射和接收阴影。 可以针对所有相机或特定相机渲染。 支持 GPU 实例化和 Compute Shader。 2. 常用方法 DrawMesh：最简单的渲染方法，使用指定材质渲染网格。 DrawMeshInstanced：通过 GPU 实例化渲染大量相同网格，支持小规模变化（如颜色）。 DrawMeshInstancedIndirect：通过 ComputeBuffer 传递实例数量和位置等数据，适用于大规模实例化。 DrawMeshInstancedProcedural：与 DrawMeshInstancedIndirect 类似，但实例数量可以直接从 C# 传递。 DrawProcedural：在 GPU 上执行绘制调用，无需顶点或索引缓冲区，适用于 Compute Shader。 DrawProceduralIndirect：与 DrawProcedural 类似，但实例数量等数据从 ComputeBuffer 传递。 3. 代码示例 DrawMesh： public class ExampleDrawMesh : MonoBehaviour { public Mesh mesh; public Material material; void Update() { Graphics.DrawMesh(mesh, Vector3.zero, Quaternion.identity, material, 0); } } DrawMeshNow： public class ExampleDrawMeshNow : MonoBehaviour { public Mesh mesh; public Material material; public void OnPostRender() { material.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-02-17T19:08:53&#43;08:00">February 17, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_unity_engine_graphics_format_detail/">Unity3D中枚举类型UnityEngine.Experimental.Rendering.GraphicsFormat详解</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com 在Unity中，UnityEngine.Experimental.Rendering.GraphicsFormat 枚举类型定义了多种图形格式，用于描述纹理、渲染目标等的像素格式。每种格式都有不同的通道数、每个像素的字节数以及适用场景。以下是 GraphicsFormat 中每个值的具体含义、通道数、每个像素的字节数等详细信息：
+1. 常用图形格式 枚举值 含义 通道数 每个像素字节数 描述 None 无格式 - - 未定义格式。 R8_UNorm 单通道 8 位无符号归一化 1 1 适用于单通道数据，如灰度图。 R8_SNorm 单通道 8 位有符号归一化 1 1 适用于单通道有符号数据。 R8_UInt 单通道 8 位无符号整数 1 1 适用于单通道无符号整数数据。 R8_SInt 单通道 8 位有符号整数 1 1 适用于单通道有符号整数数据。 R16_UNorm 单通道 16 位无符号归一化 1 2 适用于单通道高精度数据。 R16_SNorm 单通道 16 位有符号归一化 1 2 适用于单通道高精度有符号数据。 R16_UInt 单通道 16 位无符号整数 1 2 适用于单通道高精度无符号整数数据。 R16_SInt 单通道 16 位有符号整数 1 2 适用于单通道高精度有符号整数数据。 R16_SFloat 单通道 16 位有符号浮点数 1 2 适用于单通道高精度浮点数数据。 R32_UInt 单通道 32 位无符号整数 1 4 适用于单通道超高精度无符号整数数据。 R32_SInt 单通道 32 位有符号整数 1 4 适用于单通道超高精度有符号整数数据。 R32_SFloat 单通道 32 位有符号浮点数 1 4 适用于单通道超高精度浮点数数据。 R8G8_UNorm 双通道 8 位无符号归一化 2 2 适用于双通道数据，如法线贴图的 XY 通道。 R8G8_SNorm 双通道 8 位有符号归一化 2 2 适用于双通道有符号数据。 R8G8_UInt 双通道 8 位无符号整数 2 2 适用于双通道无符号整数数据。 R8G8_SInt 双通道 8 位有符号整数 2 2 适用于双通道有符号整数数据。 R16G16_UNorm 双通道 16 位无符号归一化 2 4 适用于双通道高精度数据。 R16G16_SNorm 双通道 16 位有符号归一化 2 4 适用于双通道高精度有符号数据。 R16G16_UInt 双通道 16 位无符号整数 2 4 适用于双通道高精度无符号整数数据。 R16G16_SInt 双通道 16 位有符号整数 2 4 适用于双通道高精度有符号整数数据。 R16G16_SFloat 双通道 16 位有符号浮点数 2 4 适用于双通道高精度浮点数数据。 R32G32_UInt 双通道 32 位无符号整数 2 8 适用于双通道超高精度无符号整数数据。 R32G32_SInt 双通道 32 位有符号整数 2 8 适用于双通道超高精度有符号整数数据。 R32G32_SFloat 双通道 32 位有符号浮点数 2 8 适用于双通道超高精度浮点数数据。 R8G8B8A8_UNorm 四通道 8 位无符号归一化 4 4 适用于 RGBA 颜色数据。 R8G8B8A8_SNorm 四通道 8 位有符号归一化 4 4 适用于 RGBA 有符号数据。 R8G8B8A8_UInt 四通道 8 位无符号整数 4 4 适用于 RGBA 无符号整数数据。 R8G8B8A8_SInt 四通道 8 位有符号整数 4 4 适用于 RGBA 有符号整数数据。 R16G16B16A16_UNorm 四通道 16 位无符号归一化 4 8 适用于 RGBA 高精度数据。 R16G16B16A16_SNorm 四通道 16 位有符号归一化 4 8 适用于 RGBA 高精度有符号数据。 R16G16B16A16_UInt 四通道 16 位无符号整数 4 8 适用于 RGBA 高精度无符号整数数据。 R16G16B16A16_SInt 四通道 16 位有符号整数 4 8 适用于 RGBA 高精度有符号整数数据。 R16G16B16A16_SFloat 四通道 16 位有符号浮点数 4 8 适用于 RGBA 高精度浮点数数据。 R32G32B32A32_UInt 四通道 32 位无符号整数 4 16 适用于 RGBA 超高精度无符号整数数据。 R32G32B32A32_SInt 四通道 32 位有符号整数 4 16 适用于 RGBA 超高精度有符号整数数据。 R32G32B32A32_SFloat 四通道 32 位有符号浮点数 4 16 适用于 RGBA 超高精度浮点数数据。 B8G8R8A8_UNorm 四通道 BGRA 8 位无符号归一化 4 4 适用于 BGRA 颜色数据。 B8G8R8A8_SNorm 四通道 BGRA 8 位有符号归一化 4 4 适用于 BGRA 有符号数据。 B8G8R8A8_UInt 四通道 BGRA 8 位无符号整数 4 4 适用于 BGRA 无符号整数数据。 B8G8R8A8_SInt 四通道 BGRA 8 位有符号整数 4 4 适用于 BGRA 有符号整数数据。 B8G8R8X8_UNorm 四通道 BGRA 8 位无符号归一化（无 Alpha） 4 4 适用于 BGRA 颜色数据（无 Alpha 通道）。 B8G8R8X8_SNorm 四通道 BGRA 8 位有符号归一化（无 Alpha） 4 4 适用于 BGRA 有符号数据（无 Alpha 通道）。 B8G8R8X8_UInt 四通道 BGRA 8 位无符号整数（无 Alpha） 4 4 适用于 BGRA 无符号整数数据（无 Alpha 通道）。 B8G8R8X8_SInt 四通道 BGRA 8 位有符号整数（无 Alpha） 4 4 适用于 BGRA 有符号整数数据（无 Alpha 通道）。 R10G10B10A2_UNorm 四通道 RGBA，RGB 各 10 位，A 2 位 4 4 适用于高精度 RGB 和低精度 Alpha 数据。 R10G10B10A2_UInt 四通道 RGBA，RGB 各 10 位，A 2 位 4 4 适用于高精度 RGB 和低精度 Alpha 无符号整数数据。 R11G11B10_UFloat 三通道 RGB，R 和 G 各 11 位，B 10 位 3 4 适用于 HDR 数据，节省内存。 D16_UNorm 16 位深度 1 2 适用于深度缓冲区。 D24_UNorm_S8_UInt 24 位深度 + 8 位模板 2 4 适用于深度和模板缓冲区。 D32_SFloat 32 位深度 1 4 适用于高精度深度缓冲区。 D32_SFloat_S8_UInt 32 位深度 + 8 位模板 2 5 适用于高精度深度和模板缓冲区。 2.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2023-12-09T18:38:27&#43;08:00">December 09, 2023</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+			</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/">1</a>
+				<a class="pagination__item pagination__item--desktop" href="/page/2/">2</a>
+				<span class="pagination__item pagination__item--active" data-total="15">3</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/4/">4</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/15/">15</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Shader | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Shader" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/tags/shader/" />
+
+
+		<meta itemprop="name" content="Shader">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/tags/shader/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-term">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/tags/">Tags</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Shader</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">Shader</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/from_outline_to_urp_multipass/">从半透明模型的描边到URP Multipass Rendering</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+卡通渲染技术中，描边的实现的有多种做法，有基于后处理实现，也有基于非后处理，通过多次绘制模型的方法实现。
+通过多次绘制模型的实现，方法无非就是：
+绘制模型本体，同时写入深度值。 让模型顶点沿着法线外扩一定的偏移量，即让模型膨胀一些 全用描边的颜色绘制膨胀过的模型，且，在绘制时，使用cull front，即只绘制模型的背向摄像机面。在第1步中因为绘制模型本体时已经写入深度值。在本步骤中只要不改变深度测试函数的方式，那么除了膨胀部分之外，是无法写入像素的，能写入的部分，便形成了边缘。 上述的方式，一般应用于不透明的材质上。如果是半透明的材质的话就有问题，因为在第1步绘制半透明材质时，一般是不写入深度值的。那么第3步在绘制膨胀模型时，模型背部的地方就会被绘制上去。
+解决这个问题有很多，可以利用stencil test的方式。也可以在第一步绘制，不绘制任何颜色，只写入深度，然后再绘制模型，最后再绘制描边。后一种方法，如果用Unity内置管线，大约就是这个样子：
+Shader &#34;Unlit/半透明&#34; { Properties { _Diffuse(&#34;Diffuse&#34;,Color) = (1,1,1,1) // 漫反射 _MainTex(&#34;MainTex&#34;,2D) = &#34;white&#34;{} // 2D纹理贴图 _AlphaScale(&#34;Alpha Scale&#34;,Range(0,1)) = 1 // 控制Alpha参数 } SubShader { Tags { &#34;Queue&#34; = &#34;Transparent&#34; &#34;IgnoreProjector&#34; = &#34;True&#34; &#34;RenderType&#34; = &#34;Transparent&#34; } //渲染顺序设置Transparent LOD 100 // 用两个pass通道来处理，防止出现渲染错误，第一个pass通道 // 每个pass通道都会渲染一次 Pass { ZWrite On // 注意这里：写入深度 为了确认渲染顺序 ColorMask 0 // 掩码遮罩代表这个pass通道不写入任何颜色值 } Pass // 第二个pass通道 { Tags{&#34;LightMode&#34; = &#34;ForwardBase&#34;} ZWrite Off // 注意这里：关闭ZWrite（深度写入） Blend SrcAlpha OneMinusSrcAlpha // 源颜色因子 正常透明混合 CGPROGRAM #pragma vertex vert #pragma fragment frag #include &#34;UnityCG.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2022-04-29T11:37:25&#43;08:00">April 29, 2022</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/pixel_perfect_outline_shaders_unity/">Pixel-Perfect Outline Shaders for Unity</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+以下是基于你提供的内容的总结和解读，保留示例代码和图片链接：
+轮廓着色器的工作原理与优化 1. 经典轮廓技术 起源：在 2003 年游戏《XIII》中首次看到 3D 对象的轮廓效果，使用固定功能管线实现。 实现方式：通过网格的外壳（Outer Hull）和反转法线绘制轮廓，覆盖黑色纹理。 现代改进：使用顶点着色器在单独 Pass 中渲染略微膨胀的网格，剔除正面。 2. 经典轮廓技术的局限性 局限性 描述 轮廓宽度不均匀 轮廓宽度随物体形状和视角变化。 透视缩短 轮廓宽度随物体远离相机而变窄（透视投影）。 对象空间单位 轮廓宽度以对象空间单位指定，而非像素。 3. 经典轮廓着色器代码 Shader &#34;Tutorial/Outline&#34; { Properties { _Color (&#34;Color&#34;, Color) = (1, 1, 1, 1) _Glossiness (&#34;Smoothness&#34;, Range(0, 1)) = 0.5 _Metallic (&#34;Metallic&#34;, Range(0, 1)) = 0 _OutlineColor (&#34;Outline Color&#34;, Color) = (0, 0, 0, 1) _OutlineWidth (&#34;Outline Width&#34;, Range(0, 0.1)) = 0.03 } Subshader { Tags { &#34;RenderType&#34; = &#34;Opaque&#34; } CGPROGRAM #pragma surface surf Standard fullforwardshadows Input { float4 color : COLOR; } half4 _Color; half _Glossiness; half _Metallic; void surf(Input IN, inout SufaceStandardOutput o) { o.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-04-29T11:37:25&#43;08:00">April 29, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/opengl/an_introduction_to_shader_derivative_functions/">An Introduction to shader derivative functions（翻译）</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+文档内容总结 1. Shader Derivative Functions 简介 Shader Derivative Functions 是片段着色器中的指令，用于计算任何值相对于屏幕空间坐标的变化率。 在 HLSL 中，这些函数称为 ddx 和 ddy，在 GLSL 中称为 dFdx 和 dFdy。 这些函数在三角形光栅化过程中，通过计算 2x2 像素块中像素值之间的差异来求导数。 2. 导数计算 GPU 在光栅化时，会同时运行多个片段着色器实例，并将它们组织成 2x2 像素块。 dFdx 计算块中左右像素值的差异，dFdy 计算上下像素值的差异。 导数可以用于片段着色器中的任何变量，对于向量和矩阵类型，导数按元素计算。 3. 导数与 Mipmaps Mipmaps 是通过将纹理过滤成更小尺寸的预计算图像序列，用于避免纹理缩小时的锯齿问题。 导数在纹理采样时用于选择最佳的 mipmap 级别，纹理坐标相对于屏幕坐标的变化率越大，选择的 mipmap 级别越高。 4. 面法线计算（Flat Shader） 导数可以用于在片段着色器中计算当前三角形的面法线。 当前片段的世界坐标的水平和垂直导数是位于三角形表面的两个向量，它们的叉积是垂直于表面的向量，其范数为三角形的法线向量。 GLSL 代码示例： normalize(cross(dFdx(pos), dFdy(pos))); 5. 导数与分支 导数计算基于 GPU 硬件上多个着色器实例的并行执行。 在条件分支的情况下，如果核心中的线程没有全部执行相同的分支，则会出现代码执行的分歧，导致导数操作未定义。 为了避免这个问题，着色器编译器可能会展平分支或将纹理读取移到分支控制流之外。 6. 导数块对齐的揭示 通过一个简单的实验揭示了着色器导数的内部块对齐。 实验通过计算步进函数的导数，展示了当步进过渡发生在 2x2 像素块的中间或两个相邻块之间时，导数的不同结果。 7. 参考文献 How a GPU works - Kayvon Fatahalian Computer Graphics: Principles and Practice - Chapter 38.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-03-04T20:36:51&#43;08:00">March 04, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">Shader</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_shader_multi_compile_variants/">Unity3D Shader的内建multi_compile开关所涵盖的多样体</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+multi_compile_fwdbase 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdbase编译指令，包含了以下 9 个内建的keyword：
+DIRECTIONAL DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON LIGHTMAP_ON LIGHTMAP_SHADOW_MIXING LIGHTPROBE_SH SHADOWS_SCREEN SHADOWS_SHADOWMASK VERTEXLIGHT_ON 如果不做特别的指定的话，默认地启用了其中的 4 个内建keyword，分别是：DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON组成了 8 个多样体，如下：
+多样体（变体） DIRECTIONAL DIRECTIONAL LIGHTPROBE_SH DIRECTIONAL SHADOWS_SCREEN DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN DIRECTIONAL VERTEXLIGHT_ON DIRECTIONAL LIGHTPROBE_SH VERTEXLIGHT_ON DIRECTIONAL SHADOWS_SCREEN VERTEXLIGHT_ON DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON multi_compile_fwdadd 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdadd编译指令，包含了以下 5 个内建的keyword：
+DIRECTIONAL DIRECTIONAL_COOKIE POINT POINT_COOKIE SPOT 如果不做特别的指定的话，默认地启用了全部的 5 个内建keyword，组成了 8 个多样体，如下：
+keyword组成的多样体（变体） DIRECTIONAL DIRECTIONAL_COOKIE POINT POINT_COOKIE SPOT multi_compile_fwdadd_fullshadows 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdadd_fullshadows编译指令，包含了以下 5 个内建的keyword：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-31T11:37:25&#43;08:00">January 31, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/multicompile_shaderfeature_shadervariant_assetbundle/">Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+multi_compile编译指示符 multi_compile编译指示符的文档在这里。假如有以下的shader示例语句：
+#pragma multi_compile _USE_SEMITRANSPARENT _USE_OPAQUE #pragma multi_compile _MULTI_RED _MULTI_GREEN _MULTI_BLU ... fixed4 frag (v2f i) : SV_Target { fixed4 col = tex2D(_MainTex, i.uv); #if _MULTI_RED col = col * fixed4(1,0,0,1); #elif _MULTI_GREEN col = col * fixed4(0,1,0,1); #elif _MULTI_BLUE col = col * fixed4(0,0,1,1); #endif #if _USE_SEMITRANSPARENT col.a = 0.5; #elif _USE_OPAQUE col.a = 1.0; #endif return col; } 那么根据排列组合，就会有 $ 2 \times 3 = 6 $ 种代码段的组合，即分别是 _USE_SEMITRANSPARENT与_MULTI_RED ， _USE_SEMITRANSPARENT与_MULTI_GREEN ， _USE_SEMITRANSPARENT与_MULTI_BLUE ， _USE_OPAQUE与_MULTI_RED ， _USE_OPAQUE与_MULTI_GREEN ， _USE_OPAQUE与_MULTI_BLUE。总得来说，就是各种排列组合对应编译生成的变体， $\color{#FF0000}{无论有没有被使用上，都会被编译打包到游戏包或者资源包中}$ 。所以 在运行时 ，可以使用 Material.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-04T13:20:28&#43;08:00">January 04, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_shader_optimization/">Unity3D shader优化技巧集合</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+一些优化的tips，基于2019.3版本 只做需要的计算，比如一直在shader设置某个固定颜色，就等于白做计算 能给vs做的，就不要给fs做，能在脚本设置的，就不要在shader里做，比如在shader代码里面用 if-else ,就不如在脚本中用 keyword 优化surface shader：启用 approxview 编译指示符，在光照计算时，在vs中而不是在fs中做视线向量的规格化 优化surface shader：启用 halfasview 编译指示符，在光照计算时，使用半角向量做光照计算，且半角向量的计算在vs中执行 优化surface shader：启用 noforwardadd 编译指示符，确保在 Forward rendering 模式中， 只使用一个有向平行光光源 在fs中执行光照计算，其他的实时光源都只在vs中进行计算，此指示符确保只在一个pass中执行渲染操作 优化surface shader：编译指令 noambient 禁用着色器上的环境照明和球谐光。这样可以使性能稍快一些。 数据精度的优化：世界坐标系下的坐标值，纹理映射坐标值，用 float 数据精度的优化：除了HDR颜色之外的数据，使用 half 数据精度的优化：纹理数据的相关的一些简单操作用 fixed 各种GPU的区别： 桌面GPU ，内部都会统一用 float 计算 各种GPU的区别： 移动GPU 内部能真正支持half精度，大胆地使用它 各种GPU的区别： 老旧的GPU 才内部实现了 fixed ， OpenGL ES3 及后续的都内部把 fixed 处理为 half 了 Alpha Testing ：在iOS等等使用了PowerVR芯片的平台，表现不佳。 ColorMask ：在某些平台上（大多数是在iOS和Android设备的移动GPU），使用 ColorMask 忽略某些通道（例如 ColorMask RGB ）可能会占用大量资源，因此仅在确实需要时才使用它。 参考网页： https://docs.unity3d.com/Manual/SL-ShaderPerformance.html
+https://www.cnblogs.com/sifenkesi/p/4716791.html</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-31T11:37:25&#43;08:00">December 31, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/my_books/u3d_shader_annotation/">《Unity3D内建着色器源码剖析》</a></h1>
+	<div class="entry__content">书籍信息 信息 详情 定价 89.00 出版社 人民邮电出版社 版次 1 出版时间 2019年08月 开本 16 装帧 平装 页数 334 ISBN编码 9787115507044 官方QQ群 群1号码：672523982
+书籍配套代码 代码文件 MD5值 Unity3D内建着色器源代码 版本2017.2.0f3 MD5: 1737874a497c6fa04031af3c90ff2f99 第12章的代码工程 MD5：640938e9f1a259b7e693b1abe866f368 书中参考引用到的一些技术文章 微软网站上关于DXT及BC系列格式的详细介绍 微软MSDN上有介绍块状压缩的文章 nVidia开发者网站有一篇介绍单程立体渲染原理的文章。 Unity3D官网也有单程立体渲染的介绍 《Unity3D内建着色器源码剖析》勘误表 第1版第1刷 章节 页数 位置 错误内容 正确内容 1.2.2 正文第4页 第5段第5行 $$\left&lt; p_1,p_2,p_3 \right&gt;$$ 的排列顺序称为顺时针方向（clockwise，CW）。 $$ \left&lt; p_1,p_3,p_2 \right&gt; $$ 的排列顺序称为顺时针方向（clockwise，CW）。…… 1.2.2 正文第4页 第6段第2行 在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_2,p_3 \right&gt; $$ 在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_3,p_2 \right&gt; $$ 1.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-12-30T15:25:10&#43;08:00">December 30, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">Shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

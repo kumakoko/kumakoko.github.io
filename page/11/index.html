@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta name="generator" content="Hugo 0.121.2">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Responsive card-based &amp; code-light Hugo theme">
+		<meta property="og:title" content="XGF" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/" />
+
+
+		<meta itemprop="name" content="XGF">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-home">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+			<div class="cards">
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_mesh_edge_flicker/">在Unity3D中模型渲染时边缘抖动有杂点的问题解决方案</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+项目主美反映了一个问题，即在U3D中，给模型使用了镜面高光的材质，结果模型的边缘有很多白色的杂点，如果换用了普通漫反射材质的话，杂点的明显稍微没那么强烈，如下图，左边是使用了镜面高光材质，右边是使用了漫反射材质。
+一开始，我以为是因为模型的Z-fighting问题，即两个带纹理的模型因为太靠近了，导致因渲染时的精度问题而造成模型的穿插。但后来检查了模型，并不存在“靴子里面还套着小腿”的这种情况。所以不是Z-fighting的问题。
+后来google了一下，发现老外们也曾经发现过类似的问题。最终有人提出这是一个因为抗锯齿做得不好的问题，解决方案就是给摄像机加一个基于image post process机制的脚本AntialiasingAsPostEffect，然后选用FXAA反走样的着色器。加入之后，效果不错，杂点问题得到了较为明显的改善。
+KlayGE引擎开发者，大神龚敏敏认为基于post process处理的技术目前已经是逐渐成为主流。nVidia等公司有很多大牛也提出了不少的算法。比如FXAA算法就是由nVidia的研究员Timothy Lottes提出的算法。所以可以预见不远的将来这项技术会逐渐普及。但目前因为硬件能力的问题，在手机移动平台上，依然要注意使用这种算法的性能问题。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-03-18T20:20:49&#43;08:00">March 18, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_lightmap_color_distortion/">Unity3D烘焙光照图在移动平台上颜色失真的分析和应对方案</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+Unity烘焙的LightMap是32bit的HDR图，而移动设备通常不支持 HDR图(32bit per channel) ，会按照 LDR图(8bit per channel) 的形式进行处理，因此会出现色偏问题。即颜色变淡，在例子中地面为绿色，因此相比于PC平台，切到移动平台如Android或者iOS上之后，黄色变淡，使得地面的绿色更加显眼。对此Unity3D技术支持人员的的建议是：
+可尝试自行修改LightMap的DecodeLightmap函数，该函数可在 Unity\Editor\Data\CGIncludes\UnityCG.cginc 文件中找到。需要说明的是，这种方法也不能达到与PC端完全一致的效果。 为了避免类似问题，请不要使用过于强烈的Light进行烘焙，因为Light的强度(Intensity)越高，色偏问题会越严重。 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-03-17T20:20:49&#43;08:00">March 17, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_render_path_detail/">Unity3D的渲染路径的细节一览表</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 功能列表 功能 Vertex Lit Rendering Path Forward Rendering Path Deferred Rendering Path 逐像素光照效果（Normal map等） N Y Y 多render pass支持 仅在一个render pass中完成光照计算 允许多render pass 允许多render pass 逐像素实时阴影 N 仅支持一盏Directional Light Y 双光照贴图(Dual Lightmaps) N N Y 深度缓冲区和法线缓冲区 N Additional Render Pass Y 软粒子（soft particle） N N Y 半透明的物体（Semitransparent objects） N Y Y 反走样（抗锯齿 anti aliasing） N Y Y 灯光剔除蒙版(Lighting Culling masks) 受限制 Y Y 光照保真度（Lighting Fidelity） 所有光照计算在顶点着色器中执行 部分光照计算在片元着色器中执行 所有光照计算在片元着色器中执行 每像素光照的性能耗费 像素数 像素数*被实时光照亮的像素数 PC上的所需的最低shader model版本 任意版本 最低2.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-03-12T20:20:49&#43;08:00">March 12, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/mobile_gpu_term/">移动GPU技术参数术语整理一览表</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+术语 解释 IMR Immediate Mode Rendering 立即渲染模式 TBR Tile Based Rendering 分块渲染模式。该模式架构在把三角形场景变成像素图（光栅化）前，先把整个画面分成小块，这些小块的渲染在GPU上的高速缓存里进行，这样就避免了对帧缓存（位于系统内存里）的频繁读写和修改。当然，由于一个三角形可能被分在几个不同的块里，三角形的数据（几何数据）可能被需要多次读取，但总的来说还是能大大减少对系统内存的访问，节约了带宽的同时也减少了电力消耗。 TBDR Tile Base Defered Rending 分块延迟渲染模式。该模式相对于TBR而言，在光栅化之后，有一个HSR（Hidden Surface Removal)）硬件单元，通过对一个块内的三角形进行测试，剔除掉被遮挡的三角形，合成一幅由所有可见部分组成的画面，交给后续的流水线去渲染。这样不可见部分就不需要Pixel Shader去做相应的计算，也不需要去拾取相应的纹理，节省了计算量的同时也节省了带宽，对移动设备来说有很大的帮助。 Unified Shader 统一式渲染架构 即顶点着色器和片元着色器是共用同一个ALU Discrete Shader 分离式渲染架构 即顶点着色器和片元着色器是分开的，不共用同一个ALU GFLOPS FLOPS是Floating-point Operations Per Second 即每秒所执行的浮点运算次数的英文缩写。它是一个衡量计算机计算能力的量，这个量经常使用在那些需要大量浮点运算的科学运算中。有时也会被记为flop/s。GFLOPS就是 Giga Floating-point Operations Per Second。即每秒10亿次的浮点运算数，常作为GPU性能参数，但不一定代表GPU的实际表现，因为还要考虑具体如何拆分多边形和像素、以及纹理填充，理论上该数值越高越好。1GFlops = 1,000MFlops。 像素填充率 像素填充率是指图形处理单元在每秒内所渲染的像素数量，单位是MPixel/S（每秒百万像素），或者GPixel/S（每秒十亿像素），是用来度量当前显卡的像素处理性能的最常用指标。显卡的渲染管线是显示核心的重要组成部分，是显示核心中负责给图形配上颜色的一组专门通道。渲染管线越多，每组管线工作的频率（一般就是显卡的核心频率）越高，那么所绘出的显卡的填充率就越高，显卡的性能就越高，因此可以从显卡的象素填充率上大致判断出显卡的性能。像素填充率的最大值为3D时钟乘以渲染途径的数量。如NVIDIA的GeForce 2 GTS芯片，核心频率为200 MHz，4条渲染管道，每条渲染管道包含2个纹理单元。那么它的填充率就为4x2像素x2亿/秒=16亿像素/秒。 纹理填充率 纹理填充率是指一秒钟内纹理渲染的数目，计算公式为：3D芯片时钟 * 像素渲染管线数目 * 单个纹理使用的texel数目。例如：ATi Rage 128GL的主频为125MHz，有两条像素渲染管线。每条管线可以为一个双线性过滤像素上色，而双线性过滤需要4个texles。因此Rage 128GL纹理填充率为：125（时钟）* 2（像素渲染管线条数）* 4（texels）= 1000 Mtexels/s或1G texels/s。 显存带宽 显存带宽是指显示芯片与显存之间的数据传输速率，它以字节/秒为单位。显存带宽是决定显卡性能和速度最重要的因素之一。显存带宽=显存频率×显存位宽/8 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-03-08T15:14:34&#43;08:00">March 08, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_special_directory/">Unity3D工程中的特殊文件夹及其在不同平台下的目录</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+目录名 作用 仅能放置于工程根目录吗 会打包进最终发布包吗 仅在编辑阶段使用吗 读取方式 打包时会原样保留原始文件格式吗 Editor 放置一些第三方或者自定义的编辑辅助工具的代码 N N Y - Editor Default Resources 编辑器用到的一些资源，比如图片、文本文件、等等。放在这里 Y N Y 调用EditorGUIUtility.Load读取 - Gizmos 用来在编辑阶段绘制一些辅助图标辅助线条 Y N Y 在MonoBehavior类的OnDrawGizmos方法中使用 - Plugins Andoird 或者 iOS平台下，要给工程接一些SDK时可以把SDK依赖的库文件如 .so .jar .a文件放置从此处 N Y N - N Resources Resources文件夹下的资源不管你用还是不用都会被打包进.apk或者.ipa N Y N Resource.Load函数： 编辑时和运行时都可以通过Resource.Load来直接读取。Resources.LoadAssetAtPath它可以读取Assets目录下的任意文件夹下的资源，它可以在编辑时或者编辑器运行时用，它但是它不能在真机上用，它的路径是 ”Assets/xx/xx.xxx” 必须是这种路径，并且要带文件的后缀名。 N StreamingAssets 并且它是一个只读的文件夹，就是程序运行时只能读 不能写。它在各个平台下的路径是不同的 N Y N Application.streamingAssetsPath 是访问这些目录下的资源路径的方法。它会根据当前的平台选择对应的路径。 Y Application类中定义的若干路径在不同平台下的具体值如下表：
+变量Application.dataPath
+Windows: &ndash; Android: /data/app/xxx.xxx.xxx.apk iOS: Application/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/xxx.app/Data 变量Application.streamingAssetsPath</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-02-17T20:20:49&#43;08:00">February 17, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_gi_introduction/">Unity3D的全局光照及Lighting Window面板参数简介</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 什么是全局光照（Global Illumination） 在阐述什么是全局光照之前，我们先简与之对应的局部光照。粗略地说，所谓局部光照，就是我们在渲染一个场景时，仅仅考虑光源和物体之间的交互，而不考虑物体与物体之间的光线交互——即每一个物体表面的颜色，仅仅由光源发出的光线贡献，而不考虑由其他物体所反射过来的光线的贡献。
+全局光照则是在局部光照的基础上，增加考虑物体与物体之间光线交互。所以说如果局部光照系统就是由光源+待渲染物体+视点组成的话，那么全局光照系统就是由光源+各待渲染物体之间的反射光+待渲染物体+视点组成。
+从是否是即时性来分，GI可分为实时（又可称为在线）光照和 非实时（又可称为离线） 光照。如果是离线光照的话，待渲染物体之间的反射光就是通过辐射度算法或者是光线追踪算法逐点计算出来的。这些算法是相当耗时的，无法应用在实时GI上（当然随着硬件的发展，不排除原本只适用于离线光照的算法在未来能应用在实时上）。
+2 光照的各种方式 如上所述，GI是在局部光照的基础上，增加了对待渲染物体之间的光线交互的计算。从而使得渲染效果更逼真。对Unity3D而言。照明模式（lighting mode）分为实时照明和烘焙照明两大类，其中烘焙照明又可以分为预计算光照和烘焙光照贴图这两种。首先看实时照明的方式。
+2.1 实时照明 在不做任何修改设置的情况下，Unity的光源(包括directional light,、spot light、point light)都是实时的，代表这些光源会把光线照射到场景并以每一帧的频率更新，由于光源是可以在场景内移动的对象，场景灯光的更新是实时的，你可以在游戏窗口和场景窗口看到改变。如下图
+注意上图：因为没有反射光源的关系阴影是全黑的，只有投射光锥体范围内的对象表面才有光源影响。实时照明是场景里照亮物体最基本的方法，用来照亮角色和会动的对象，但默认设置里Unity实时照明里的光线不会反射，（也就是说，从A物体反射出来的光线，就算是在物理学上应该会入射到B物体。但在渲染中，计算B物体的最终颜色时，并不考虑这个从A物体反射过来的光线的贡献）。因此，我们才导入了全局光照系统，启用了预先计算的技术，都是为了表现一个更逼真的场景。
+2.2 烘焙照明 2.2.1 烘焙全局光照贴图（Baked GI Lighting） 当烘焙一张光照贴图(Lightmap)时，场景内的静态对象会根据当前场景内的光照，算出一张渲染结果贴图，并覆盖在场景对象之上建立照明效果，如下图：
+这些”光照贴图”可以包含场景内投射到物体表面的直接光源，以及在不同物体间反射的”间接光源”，这样的光照贴图可以通过使用着色器(Shader)描述物体的表面信息(Albedo)和凹凸(Normals)信息。
+使用这种烘焙方式所产生出来的光照贴图，是无法在运行期发生变化的，因此被定义为静态(Static)，虽然仍可在这层贴图上继续迭加光源计算，但两者已无法交互运算，通常我们采用这光照法来让低阶的手机能顺利执行，解决光在游戏中运行的性能问题。
+2.2.2预计算全局光照(Precomputed Realtime GI Lighting) 虽然这种静态光照贴图无法在游戏执行时改变场景光照效果，但预先计算的实时全局光照系统，则能实时地去计算算复杂的场景光源的变化，通过这种方法，就能建立一个丰富的全局光照反射场景，并实时反映光源的改变。好比做个日晷，阴影的位置和颜色会随着光源移动改变，这在原本的烘焙光照系统是无法达成的。
+为了能够实时地实现这些效果，需要在实时运算之前先将场景中的相关光照数据做一次”预计算”，所谓的预计算负责计算游戏过程中光的复杂行为，它可以在时间空档时进行计算，因此称作一个”脱机”运算，或者可称为“离线”运算。
+3 Unity3D 5中的全局烘焙照明 在上节我们提到Unity3D 5的GI系统有两种烘焙模式，因此，Unity3D 5在Lighting Windows窗口中提供了这两种的模式的操作。 Unity3D 5的Lighting Window可以在通过菜单【Windows|Lighting】打开。
+在Unity3D 5的灯光组件中，有一个Baking属性，这个Baking属性有三种选项，分别是Realtime、Baked、Mixed这三种属性。而这三种属性，则又分别对应于Lighting Window中的Scene Tab界面中的【Precomputed Realtime GI】和【Baked GI】这两个选项的组合，如下图
+3.1只勾选【Precomputed Realtime GI】选项 关闭当在scene tab面板中，关闭了【Baked GI】选项。或者将场景中的全部光源类型设置为【Realtime】的时候这意味着没有任何的光会被预先烘焙出光照贴图。引擎在“烘焙”时，仅仅是存储场景内静态物体间的关系，当烘焙完成后你可以自由的调整光源或物体材质，并实时地看到效果。 此时在Scene中观察Baked结果可以看到没有任何静态颜色被烘焙出来。
+如果在scene tab中，仅启用了【Precomputed Realtime GI】选项时，则场景中的光源应该选择Realtime类型。烘焙选项【Realtime Resolutio】对应前文所说的间接光照图，值越高间接光的效果就越明显（其实应该是越准确，当分辨率太低时间接光会因像素过滤而变弱） 。如下图，注意红色盒子投递在白色盒子上的影子。如下图当Realtime Resolution的值为10时
+如下图当Realtime Resolution的值为1时
+3.2 只勾选【Baked GI】选项 当在scene tab中，取消【Precomputed Realtime GI】选项，而启用【Baked GI】的话。这时候光源则依赖于他的Baking属性去分别参与静态光照贴图的烘焙：属性为Realtime的灯光，不参与静态光照烘焙，但同时作用于动态与静态物体上；属性为Mixed的光源，参与静态光照贴图的烘焙，而在运行时，则仅作用于非静态物体；属性为Baked光源，仅作用于静态光照贴图的烘焙，在运行时不参与实时光照计算。如下图可再次观察SceneView可以看到烘焙出来的颜色。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-02-17T20:10:49&#43;08:00">February 17, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/sv_position_and_position/">着色器语言的语义SV_POSITION和POSITION之辨析</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+简单地说POSITION语意用于顶点着色器，用来指定这些个位置坐标值，是在变换前的顶点的object space坐标。SV_POSITION语意则用于像素着色器，用来标识经过顶点着色器变换之后的顶点坐标。
+SV是Systems Value的简写。在SV_Position的情况下，如果它是绑定在一个从VS输出的数据结构上的话，意味着这个输出的数据结构包含了最终的转换过的，将用于光栅器的顶点坐标。或者，如果你将这个标志绑定到一个输入给PS的数据数据的话，它会包含一个基于屏幕空间的像素的坐标。所有的这些SV语义都在DirectX SDK文档中有描述。
+vertex shader将会输出顶点的坐标到裁剪空间中，并且这些坐标是使用齐次坐标系的。一般地，这些基于裁剪空间的齐次坐标，是通过对输入的对象空间坐标位置乘以一个WVP矩阵而得到的。然后在光栅器中，这些齐次坐标将会进行透视除法，即对这些坐标的每个分量除以w，做完透视除法后，这些坐标值将会限定在一个左下角是-1，右上角是1的视口范围中。然后做完“把Y坐标翻转，把取值范围从[-1,1]限制到[0,1]，接着xy方向分别乘以视口的宽高”的视口变换之后，你便获得了“以SV_Position为标识的，传递给PS的，取值范围是[0,视口高宽]，视口左上角为坐标原点的”像素位置坐标。
+从D3D10开始出现的SV_Position语意，提供了类似于在Direct3D9对应的Shader Model3.0版本中的VPOS语意。在SM3.0中增加的VPOS语意，是特意用来表示某个像素点的坐标为屏幕空间坐标的。在D3D10及更高的版本中，SV_Position语意同样指定了某个像素点的坐标为屏幕空间坐标。但与VPOS不同的是，指定了SV_Position语意的屏幕空间坐标，光栅器已经自动地对这个值做了0.5像素的偏移，也就是说这个坐标对应的是该像素的中心点而不是左上角。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-02-08T15:14:34&#43;08:00">February 08, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>, 
+		<a class="meta-categories__link" href="/categories/shader/" rel="category">Shader</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/opengl/modern_opengl_debugging/">现代的OpenGL调试方式（翻译）</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址： http://www.learnopengl.com/#!In-Practice/Debugging
+1 Debugging Graphics programming can be a lot of fun, but it can also be a large source of frustration whenever something isn&rsquo;t rendering right or perhaps not even rendering at all! Seeing as most of what we do involves manipulating pixels it can be difficult to figure out the cause of error whenever something doesn&rsquo;t work the way it&rsquo;s supposed to. Debugging these kind of errors is different than what you&rsquo;re used to when debugging errors on the CPU.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2014-10-21T18:08:30&#43;08:00">October 21, 2014</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/tiny3d_implement_introduce/">软渲染示例程序Tiny3D的实现简介</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+绘制图形的代码 Tiny3D核心的图形绘制代码调用栈如下图所示
+Device::DrawBox函数 Tiny3D的核心绘制代码的入口函数Device::DrawBox函数
+// theta mesh的旋转角度 // box_vertices mesh的原始模型顶点数据 void Device::DrawBox(float theta, const T3DVertex* box_vertices) Device::DrawBox函数的实现如下代码所示：
+void Device::DrawBox(float theta, const T3DVertex* box_vertices) { T3DMatrix4X4 m; T3DMatrixMakeRotation(&amp;m, -1.0f, -0.5f, 1.0f, theta); transform_.SetWorldMatrix(m); transform_.Update(); DrawPlane(&amp;box_vertices[0], &amp;box_vertices[1], &amp;box_vertices[2], &amp;box_vertices[3]); DrawPlane(&amp;box_vertices[4], &amp;box_vertices[5], &amp;box_vertices[6], &amp;box_vertices[7]); DrawPlane(&amp;box_vertices[0], &amp;box_vertices[4], &amp;box_vertices[5], &amp;box_vertices[1]); DrawPlane(&amp;box_vertices[1], &amp;box_vertices[5], &amp;box_vertices[6], &amp;box_vertices[2]); DrawPlane(&amp;box_vertices[2], &amp;box_vertices[6], &amp;box_vertices[7], &amp;box_vertices[3]); DrawPlane(&amp;box_vertices[3], &amp;box_vertices[7], &amp;box_vertices[4], &amp;box_vertices[0]); } 步骤就是如下的几步：
+根据传递进来的mesh的旋转角度theta，调用T3DMatrixMakeRotation函数构建world matrix，然后更新到Transform类中去 调用Transform::Update函数，更新world-view-projection matrix，这WVP matrix将在后面的用来变换顶点。 把一个六面体BOX拆分成6个矩形面，调用DrawPlane函数进行绘制。 Device::DrawPlane函数 Device::DrawPlane函数的实现如下代码所示：
+void Device::DrawPlane(const T3DVertex* p1, const T3DVertex* p2, const T3DVertex* p3, const T3DVertex* p4) { T3DVertex _p1 = *p1, _p2 = *p2, _p3 = *p3, _p4 = *p4; _p1.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2014-10-08T14:59:52&#43;08:00">October 08, 2014</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
+	</span>
+</div>
+	</div>
+</article>
+					</div>
+					<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/mainsection/kgl/">KumaGL</a></h1>
+	<div class="entry__content">KumaGL在Github中的地址 KumaGL的可执行程序包在这里下载
+项目名 描述 截图 001_EmptyWindow 一个空的Kuma GL程序框架。展示了整合ImGui库作为KumaGL框架的GUI接口 002_Triangle 使用KumaGL着色器绘制三角形 003_Texture 使用KumaGL载入纹理并显示 004_Transform 图元之间的层次变换关系 005_DynamicVertexBuffer 动态定点缓冲区的使用 006_DynamicTexture 动态纹理的的使用、写入和更新的方法 007_Camera 摄像机的使用 008_Font 使用Freetype绘制文字 009_Assimp 使用Assimp库作为KumaGL的模型数据加载库，加载并显示一个静态模型 010_Lighting 用着色器编写Phong光照效果 012_FrameBuffer 使用帧缓冲区对象的效果 015_Blur 用着色器编写运动模糊效果 016_NormalMapping 用使用法线贴图实现凹凸效果 017_ParallaxMapping 用使用视差贴图的效果 020_DeferredRendering 延迟着色效果 022_HDR 高动态范围光照效果 024_VertexDisplacement 演示在顶点着色器中改变顶点位置形成动画效果 040_ImageEffect 使用了若干二维图像后期处理的效果 050_ParticleSystem 使用几何着色器生成高效粒子系统的效果 080_WaterEffect 带有反射和水波的水面效果 090_PbrLighting PBR光照效果 099_OldMovieEffect 老电影屏幕的花屏效果 100_PixelMagic 使用像素着色器直接作画的效果 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2014-04-09T13:39:08&#43;08:00">April 09, 2014</time>
+	</div>
+</article>
+					</div>
+			</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/">1</a>
+				<a class="pagination__item pagination__item--desktop" href="/page/2/">2</a>
+				<a class="pagination__item pagination__item--desktop" href="/page/3/">3</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/10/">10</a>
+				<span class="pagination__item pagination__item--active" data-total="15">11</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/12/">12</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/page/15/">15</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

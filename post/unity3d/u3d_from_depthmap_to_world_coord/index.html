@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Unity3D中根据深度值重建像素点对应的世界坐标 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Unity3D中根据深度值重建像素点对应的世界坐标">
+		<meta property="og:title" content="Unity3D中根据深度值重建像素点对应的世界坐标" />
+<meta property="og:description" content="Unity3D中根据深度值重建像素点对应的世界坐标" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/unity3d/u3d_from_depthmap_to_world_coord/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-07-11T20:20:49+08:00" />
+<meta property="article:modified_time" content="2024-07-11T20:20:49+08:00" />
+
+
+		<meta itemprop="name" content="Unity3D中根据深度值重建像素点对应的世界坐标">
+<meta itemprop="description" content="Unity3D中根据深度值重建像素点对应的世界坐标"><meta itemprop="datePublished" content="2024-07-11T20:20:49+08:00" />
+<meta itemprop="dateModified" content="2024-07-11T20:20:49+08:00" />
+<meta itemprop="wordCount" content="595">
+<meta itemprop="keywords" content="Unity3D," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity3D中根据深度值重建像素点对应的世界坐标</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2024-07-11T20:20:49&#43;08:00">July 11, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">Unity3D中根据深度值重建像素点对应的世界坐标</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-深度图介绍">1 深度图介绍</a></li>
+    <li><a href="#2-c接口取得深度图纹理的方法">2 C#接口取得深度图纹理的方法</a></li>
+    <li><a href="#3-在ndc空间下深度值的计算公式">3 在NDC空间下深度值的计算公式</a></li>
+    <li><a href="#4-从片元着色器中根据深度图反推出片元世界坐标且输出的shader">4 从片元着色器中根据深度图反推出片元世界坐标且输出的shader</a></li>
+    <li><a href="#5-在unity3d默认渲染管线中在后处理阶段用深度图重建世界坐标">5 在Unity3D默认渲染管线中在后处理阶段用深度图重建世界坐标</a></li>
+    <li><a href="#参考网页">参考网页</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h2 id="1-深度图介绍">1 深度图介绍</h2>
+<p>就是将深度信息(Z坐标值)保存在了一张贴图上的R通道上，因为R通道的值范围是[0, 1]，所以我们可以用ndc空间下的Z坐标值做下处理就能变成[0, 1]范围了（ (Zndc+1)*0.5</p>
+<h2 id="2-c接口取得深度图纹理的方法">2 C#接口取得深度图纹理的方法</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>Shader.GetGlobalTexture(<span style="color:#e6db74">&#34;_CameraDepthTexture&#34;</span>)
+</span></span></code></pre></div><h2 id="3-在ndc空间下深度值的计算公式">3 在NDC空间下深度值的计算公式</h2>
+<p><img src="/image/u3d/u3d_from_depth_to_ws/00.jpg" alt="在NDC空间下深度值的计算公式"></p>
+<h2 id="4-从片元着色器中根据深度图反推出片元世界坐标且输出的shader">4 从片元着色器中根据深度图反推出片元世界坐标且输出的shader</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span>Shader <span style="color:#e6db74">&#34;zznewclear13/DepthToPositionShader&#34;</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    Properties
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>       [Toggle(REQUIRE_POSITION_VS)] 
+</span></span><span style="display:flex;"><span>	   _Require_Position_VS(<span style="color:#e6db74">&#34;Require Position VS&#34;</span>, <span style="color:#66d9ef">float</span>) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    HLSLINCLUDE
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span>include <span style="color:#e6db74">&#34;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span>include <span style="color:#e6db74">&#34;Packages/com.unity.render-pipelines.universal/ShaderLibrary/core.hlsl&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span>pragma multi_compile _ REQUIRE_POSITION_VS
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    sampler2D _CameraDepthTexture;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span> Attributes
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float4</span> positionOS   <span style="color:#f92672">:</span> POSITION;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float2</span> texcoord     <span style="color:#f92672">:</span> TEXCOORD0;
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span> Varyings
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float4</span> positionCS   <span style="color:#f92672">:</span> SV_POSITION;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float2</span> texcoord     <span style="color:#f92672">:</span> TEXCOORD0;
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Varyings Vert(Attributes input)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Varyings output <span style="color:#f92672">=</span> (Varyings)<span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 根据顶点在其模型坐标系下的值，计算得到在裁剪空间中的齐次坐标</span>
+</span></span><span style="display:flex;"><span>        VertexPositionInputs vertexPositionInputs <span style="color:#f92672">=</span> 
+</span></span><span style="display:flex;"><span>		                     GetVertexPositionInputs(input.positionOS.xyz);
+</span></span><span style="display:flex;"><span>							 
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// vertexPositionInputs.positionCS的是齐次裁剪空间坐标，即一个 float4 值，</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 形式为 (x, y, z, w)，其中 w 是用于透视除法的分量。透视除法会在后续的处理</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 步骤中进行，得到标准化设备坐标（NDC），最终决定物体在屏幕上的位置。</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 在透视除法之前，齐次裁剪空间的 x 和 y 值可以超出任何特定范围，因为它们与</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// w 是关联的。最终，它们会通过透视除法得到以下标准化的范围</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 透视除法后（标准化设备坐标）的取值范围：</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// x / w 和 y / w 的取值范围为 [-1, 1]。</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// -1 表示屏幕的最左边（x 方向）或最下方（y 方向）。</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 1 表示屏幕的最右边（x 方向）或最上方（y 方向）。</span>
+</span></span><span style="display:flex;"><span>        output.positionCS <span style="color:#f92672">=</span> vertexPositionInputs.positionCS;
+</span></span><span style="display:flex;"><span>        output.texcoord <span style="color:#f92672">=</span> input.texcoord;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> output;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float4</span> Frag(Varyings input) <span style="color:#f92672">:</span> SV_TARGET
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>	    <span style="color:#75715e">// 根据片元的在裁剪空间中的坐标值，算出片元对应的在屏幕空间的坐标值</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// _ScreenParams的xy分量是渲染目标纹理的宽度和高度（以像素为单位），</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// z分量是1.0 + 1.0/宽度，w为1.0 + 1.0/高度。所以屏幕空间的坐标值为</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//【齐次裁剪空间坐标】的坐标值的xy，分别除以渲染目标纹理的高宽</span>
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 因为input.positionCS.xy的取值范围是[0,渲染目标纹理的宽]和</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// [0,渲染目标纹理的高]，故而positionSS的xy分量，经过上一步的运算后，</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 分别得到的取值范围是[0,1]。就是一个有效的纹理坐标uv值</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float2</span> positionSS <span style="color:#f92672">=</span> input.positionCS.xy <span style="color:#f92672">*</span> (_ScreenParams.zw <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 利用纹理坐标uv值，对深度图纹理进行采样，得到的值，就是当前屏幕空间中</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 片元对应的深度值，即NDC空间中的坐标值z分量</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// _CameraDepthTexture是Unity3D的内置着色器变量</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float</span> depth <span style="color:#f92672">=</span> tex2D(_CameraDepthTexture, positionSS).r;
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 因为NDC空间的取值范围是：</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// X和Y轴的取值范围：[-1, 1]。</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// -1表示屏幕的最左侧或最底部。1表示屏幕的最右侧或最顶部。</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Z轴的取值范围是[0, 1]。0和1分别表示相机的近截平面和远截平面</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 而positionSS的取值范围是[0,1]，所以需要做【乘2减1】的操作，将其映射到</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// [-1,1]的取值范围内。</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float3</span> positionNDC <span style="color:#f92672">=</span> <span style="color:#66d9ef">float3</span>(positionSS <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, depth);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#if UNITY_UV_STARTS_AT_TOP</span>
+</span></span><span style="display:flex;"><span>        positionNDC.y <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>positionNDC.y;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 得到裁剪空间的NDC坐标之后，就可以反向地推出片元对应的屏幕空间了</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#if REQUIRE_POSITION_VS</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// UNITY_MATRIX_I_P是投影矩阵的逆矩阵(inverse projection matrix)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float4</span> positionVS <span style="color:#f92672">=</span> mul(UNITY_MATRIX_I_P, <span style="color:#66d9ef">float4</span>(positionNDC, <span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 当你通过逆投影矩阵将点从 clip space 变换回 view space 时，生成的点仍</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 然是齐次坐标 (x, y, z, w)，因此需要除以 w 来将其转换回标准的三维欧几里</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 得坐标。这是因为：在齐次坐标系下，w 分量影响了 x、y 和 z 分量的比例。</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 如果不除以 w，这些分量的值将无法正确反映物体在视图空间中的位置，导致不正</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 确的几何表示。view space中的坐标应该是三维欧几里得坐标，而不是齐次坐标。</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 透视除法确保得到的 x&#39;、y&#39;、z&#39; 是正确的三维位置。</span>
+</span></span><span style="display:flex;"><span>        positionVS <span style="color:#f92672">/=</span> positionVS.w;
+</span></span><span style="display:flex;"><span>		
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 再通过观察矩阵的逆矩阵，将顶点变换回世界坐标</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float4</span> positionWS <span style="color:#f92672">=</span> mul(UNITY_MATRIX_I_V, positionVS);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#else</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float4</span> positionWS <span style="color:#f92672">=</span> mul(UNITY_MATRIX_I_VP, <span style="color:#66d9ef">float4</span>(positionNDC, <span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>        positionWS <span style="color:#f92672">/=</span> positionWS.w;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> positionWS;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float4</span> DepthFrag(Varyings input) <span style="color:#f92672">:</span> SV_TARGET
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    ENDHLSL
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    SubShader
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Tags{ <span style="color:#e6db74">&#34;RenderType&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Opaque&#34;</span> }
+</span></span><span style="display:flex;"><span>        LOD <span style="color:#ae81ff">100</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Pass
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Tags{<span style="color:#e6db74">&#34;LightMode&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UniversalForward&#34;</span>}
+</span></span><span style="display:flex;"><span>            ZWrite On
+</span></span><span style="display:flex;"><span>            ZTest LEqual
+</span></span><span style="display:flex;"><span>            HLSLPROGRAM
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>pragma vertex Vert
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>pragma fragment Frag
+</span></span><span style="display:flex;"><span>            ENDHLSL
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Pass
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Tags{<span style="color:#e6db74">&#34;LightMode&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;DepthOnly&#34;</span>}
+</span></span><span style="display:flex;"><span>            ZWrite On
+</span></span><span style="display:flex;"><span>            ZTest LEqual
+</span></span><span style="display:flex;"><span>            HLSLPROGRAM
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>pragma vertex Vert
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>pragma fragment DepthFrag
+</span></span><span style="display:flex;"><span>            ENDHLSL
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="5-在unity3d默认渲染管线中在后处理阶段用深度图重建世界坐标">5 在Unity3D默认渲染管线中在后处理阶段用深度图重建世界坐标</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> UnityEngine;
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">[RequireComponent(typeof(Camera))]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PostEffectUseDepthTex</span> : MonoBehaviour
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Camera m_Camera;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Material m_GetWorldPosByDepthMat;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> Start()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        m_Camera = GetComponent&lt;Camera&gt;();
+</span></span><span style="display:flex;"><span>        m_GetWorldPosByDepthMat = 
+</span></span><span style="display:flex;"><span>		          <span style="color:#66d9ef">new</span> Material(Shader.Find(<span style="color:#e6db74">&#34;My/DepthTex/GetWorldPosByDepth&#34;</span>));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> OnRenderImage(RenderTexture src, RenderTexture dst)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 用摄像机的观察矩阵和投影矩阵相乘，然后得出其逆矩阵</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 将其传递给shader的_ClipToWorldMatrix，即从齐次裁剪空间变换回世界空间中</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> VPMatrix = m_Camera.projectionMatrix * m_Camera.worldToCameraMatrix;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> clipToWorldMatrix = VPMatrix.inverse;
+</span></span><span style="display:flex;"><span>        m_GetWorldPosByDepthMat.SetMatrix(<span style="color:#e6db74">&#34;_ClipToWorldMatrix&#34;</span>, clipToWorldMatrix);
+</span></span><span style="display:flex;"><span>        Graphics.Blit(src, dst, m_GetWorldPosByDepthMat);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>下面是shader代码</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#75715e">// 后处理中根据深度图重建世界坐标, 注意: 只适用于后处理OnRenderImage那边，即使用内置管线</span>
+</span></span><span style="display:flex;"><span>Shader <span style="color:#e6db74">&#34;My/DepthTex/GetWorldPosByDepth&#34;</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    Properties
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        _MainTex(<span style="color:#e6db74">&#34;Texture&#34;</span>, <span style="color:#ae81ff">2</span>D) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;white&#34;</span> {}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    SubShader
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        ZTest Always
+</span></span><span style="display:flex;"><span>        ZWrite Off
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Pass
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            CGPROGRAM
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>pragma vertex vert
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>pragma fragment frag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>include <span style="color:#e6db74">&#34;UnityCG.cginc&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">struct</span> appdata
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">float4</span> vertex <span style="color:#f92672">:</span> POSITION;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">float2</span> uv <span style="color:#f92672">:</span> TEXCOORD0;
+</span></span><span style="display:flex;"><span>            };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">struct</span> v2f
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">float4</span> vertex <span style="color:#f92672">:</span> SV_POSITION;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">float2</span> uv <span style="color:#f92672">:</span> TEXCOORD0;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">float2</span> uv_depth <span style="color:#f92672">:</span> TEXCOORD1; <span style="color:#75715e">// 用来对深度图进行采样的坐标</span>
+</span></span><span style="display:flex;"><span>            };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            sampler2D _CameraDepthTexture; <span style="color:#75715e">//深度图</span>
+</span></span><span style="display:flex;"><span>            sampler2D _MainTex; <span style="color:#75715e">//后处理提供的屏幕图</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float4</span> _MainTex_TexelSize;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">float4x4</span> _ClipToWorldMatrix; <span style="color:#75715e">//裁剪空间到世界空间转换矩阵, 需要c#部分提供</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            v2f vert(appdata v)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                v2f o;
+</span></span><span style="display:flex;"><span>                o.vertex <span style="color:#f92672">=</span> UnityObjectToClipPos(v.vertex);
+</span></span><span style="display:flex;"><span>                o.uv <span style="color:#f92672">=</span> v.uv;
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 因为传递进来的就是一个覆盖全屏幕的矩形，所以顶点的纹理采样uv</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 就可以直接用作对深度图的纹理采样UV</span>
+</span></span><span style="display:flex;"><span>                o.uv_depth <span style="color:#f92672">=</span> v.uv;
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">if</span> UNITY_UV_STARTS_AT_TOP
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (_MainTex_TexelSize.y <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>                    o.uv_depth.y <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> o.uv_depth.y;
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>endif
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> o;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            fixed4 frag(v2f i) <span style="color:#f92672">:</span> <span style="color:#a6e22e">SV_Target</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 对深度图纹理进行采样</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">float</span> depth <span style="color:#f92672">=</span> SAMPLE_DEPTH_TEXTURE(
+</span></span><span style="display:flex;"><span>				                    _CameraDepthTexture, i.uv_depth);
+</span></span><span style="display:flex;"><span>				
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 在Unity中，UNITY_REVERSED_Z 是一个内置宏，用来指示是否使用了反向Z缓冲（Reversed Z-buffering）。</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// Unity引擎从Unity 5.5开始支持反向Z缓冲，这种方式可以在远平面处提高深度缓冲的精度。</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 通常，在深度缓冲中，靠近相机的物体会有较大的深度值，远离相机的物体会有较小的深度值。</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 然而，在启用了反向Z缓冲的情况下，Z值的方向是反的：近处的物体会有较小的Z值，远处的物</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 体会有较大的Z值。这种反转可以减少Z-fighting（Z轴上的对象深度接近时的渲染问题），</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 特别是在需要较远的远裁剪面时提高精度。</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 在Shader中使用时，可以通过这个宏来决定如何处理深度值。例如：</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">if</span> <span style="color:#f92672">defined</span>(UNITY_REVERSED_Z)
+</span></span><span style="display:flex;"><span>                depth <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> depth;
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>endif
+</span></span><span style="display:flex;"><span>			    <span style="color:#75715e">// 后处理的那张贴图就对应整个屏幕, 所以可以直接用片元的纹理映射坐标，即齐次裁剪空间下的坐标，</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// 对应创建创建ndc坐标(参见前面的shader)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">float4</span> ndcPos <span style="color:#f92672">=</span> <span style="color:#66d9ef">float4</span>(i.uv.x <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, i.uv.y <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, 
+</span></span><span style="display:flex;"><span>				                       depth <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">//ndcPos和clipPos只是差一个倍数(就是w分量)</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">float4</span> worldPos <span style="color:#f92672">=</span> mul(_ClipToWorldMatrix, ndcPos); 
+</span></span><span style="display:flex;"><span>                worldPos <span style="color:#f92672">/=</span> worldPos.w;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#75715e">//用世界坐标做相关处理</span>
+</span></span><span style="display:flex;"><span>                fixed4 c <span style="color:#f92672">=</span> tex2D(_MainTex, i.uv);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> c;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            ENDCG
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    FallBack Off
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="参考网页">参考网页</h2>
+<p><a href="https://liangz0707.github.io/whoimi/blogs/unity/%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87%E6%81%A2%E5%A4%8D.html">世界坐标恢复</a></p>
+<p><a href="https://www.bilibili.com/read/cv14565799/">Unity使用深度信息重建世界坐标</a></p>
+<p><a href="https://blog.csdn.net/qq_35064654/article/details/138001736">【UnityShader预备知识】内置变量和函数</a></p>
+<p><a href="https://www.cnblogs.com/sailJs/p/17229234.html">深度图及后处理中用深度图重建世界坐标</a></p>
+<p><a href="https://docs.unity3d.com/6000.0/Documentation/Manual/urp/writing-shaders-urp-reconstruct-world-position.html">Reconstruct world space positions in a shader in URP</a></p>
+<p><a href="https://docs.unity3d.com/cn/Packages/com.unity.render-pipelines.universal@12.1/manual/writing-shaders-urp-reconstruct-world-position.html">从深度纹理重建像素的世界空间位置</a></p>
+<p><a href="https://blog.csdn.net/qq_51603875/article/details/135473912?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ECtr-1-135473912-blog-77489948.235%5Ev43%5Epc_blog_bottom_relevance_base1&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ECtr-1-135473912-blog-77489948.235%5Ev43%5Epc_blog_bottom_relevance_base1&amp;utm_relevant_index=2">Unity中URP下深度图的线性转化</a></p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/rendering_meshes_in_unity_without_meshrenderers/">不使用MeshRenderer去绘制Mesh【翻译】</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_unity_engine_graphics_format_detail/">Unity3D中枚举类型UnityEngine.Experimental.Rendering.GraphicsFormat详解</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_unity_engine_texture_format_detail/">Unity3D中枚举类型UnityEngine.TextureFormat详解</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/accessing_texture_data_efficiently/">高效地访问纹理数据</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/2d_pixel_perfect_package/">Unity的2D Pixel Perfect包的工作原理</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

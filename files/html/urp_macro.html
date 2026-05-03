@@ -1,0 +1,479 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style type="text/css">
+<!--
+.STYLE2 {color: #008040}
+body,td,th {
+	font-family: Courier New, Courier, monospace;
+}
+.STYLE3 {
+	color: #0000FF;
+	font-weight: bold;
+}
+.STYLE4 {
+	color: #FF0000;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+
+<body>
+<p><a href="www.xionggf.com">返回首页</a></p>
+<h1>URP shader库中的一些常用宏 </h1>
+<h2>com.unity.render-pipelines.core/ShaderLibrary/Macros.hlsl</h2>
+<table width="1259" border="1" cellspacing="1" cellpadding="1">
+  <tr>
+    <th width="360" scope="col">宏</th>
+    <th width="886" scope="col">定义</th>
+  </tr>
+  <tr>
+    <td><span class="STYLE4">TRANSFORM_TEX</span>(tex, name)</td>
+    <td>((tex.xy) * name##_ST.xy + name##_ST.zw)</td>
+  </tr>
+  <tr>
+    <td>GET_TEXELSIZE_NAME(name)</td>
+    <td>(name##_TexelSize)</td>
+  </tr>
+  <tr>
+    <td>PI</td>
+    <td>3.14159265358979323846</td>
+  </tr>
+  <tr>
+    <td>TWO_PI</td>
+    <td>6.28318530717958647693</td>
+  </tr>
+  <tr>
+    <td>FOUR_PI</td>
+    <td>12.5663706143591729538</td>
+  </tr>
+  <tr>
+    <td>INV_PI</td>
+    <td>0.31830988618379067154</td>
+  </tr>
+  <tr>
+    <td>INV_TWO_PI</td>
+    <td>0.15915494309189533577</td>
+  </tr>
+  <tr>
+    <td>INV_FOUR_PI</td>
+    <td>0.07957747154594766788</td>
+  </tr>
+  <tr>
+    <td>HALF_PI</td>
+    <td>1.57079632679489661923</td>
+  </tr>
+  <tr>
+    <td>INV_HALF_PI</td>
+    <td>0.63661977236758134308</td>
+  </tr>
+  <tr>
+    <td>LOG2_E</td>
+    <td>1.44269504088896340736</td>
+  </tr>
+  <tr>
+    <td>INV_SQRT2</td>
+    <td>0.70710678118654752440</td>
+  </tr>
+  <tr>
+    <td>PI_DIV_FOUR</td>
+    <td>0.78539816339744830961</td>
+  </tr>
+  <tr>
+    <td>FLT_INF</td>
+    <td><span class="STYLE3">asfloat</span>(0x7F800000)</td>
+  </tr>
+  <tr>
+    <td>FLT_EPS</td>
+    <td>5.960464478e-8<span class="STYLE2">  // 2^-24, machine epsilon: 1 + EPS = 1 (half of the ULP for 1.0f)</span></td>
+  </tr>
+  <tr>
+    <td>FLT_MIN</td>
+    <td>1.175494351e-38 <span class="STYLE2">// Minimum normalized positive floating-point number</span></td>
+  </tr>
+  <tr>
+    <td>FLT_MAX</td>
+    <td>  3.402823466e+38 <span class="STYLE2">// Maximum representable floating-point number</span></td>
+  </tr>
+  <tr>
+    <td>HALF_EPS</td>
+    <td> 4.8828125e-4    <span class="STYLE2">// 2^-11, machine epsilon: 1 + EPS = 1 (half of the ULP for 1.0f)</span></td>
+  </tr>
+  <tr>
+    <td>HALF_MIN</td>
+    <td> 6.103515625e-5  <span class="STYLE2">/* 2^-14, the same value for 10, 11 and 16-bit: https://www.khronos.org/opengl/wiki/Small_Float_Formats */</span></td>
+  </tr>
+  <tr>
+    <td>HALF_MIN_SQRT</td>
+    <td>0.0078125  <span class="STYLE2">// 2^-7 == sqrt(HALF_MIN), useful for ensuring HALF_MIN after x^2</span></td>
+  </tr>
+  <tr>
+    <td>HALF_MAX</td>
+    <td>65504.0</td>
+  </tr>
+  <tr>
+    <td>UINT_MAX</td>
+    <td>0xFFFFFFFFu</td>
+  </tr>
+  <tr>
+    <td>INT_MAX</td>
+    <td>0x7FFFFFFF</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<h2>com.unity.render-pipelines.core/ShaderLibrary/API/GLES2.hlsl</h2>
+<p><span class="STYLE2">// GLES2 might not have shadow hardware comparison support</span><br />
+  <span class="STYLE3">#if defined</span>(UNITY_ENABLE_NATIVE_SHADOWS_LOOKUPS)<br />
+  &nbsp;&nbsp;<span class="STYLE3">#define</span> <span class="STYLE4">SHADOW2D_TEXTURE_AND_SAMPLER</span> <span class="STYLE3">sampler2DShadow</span><br />
+  &nbsp;&nbsp;<span class="STYLE3">#define</span> <span class="STYLE4">SHADOWCUBE_TEXTURE_AND_SAMPLER</span> <span class="STYLE3">samplerCUBEShadow</span><br />
+  &nbsp;&nbsp;<span class="STYLE3">#define</span> <span class="STYLE4">SHADOW2D_SAMPLE</span>(textureName, samplerName, coord3) <span class="STYLE3">shadow2D</span>(textureName, coord3)<br />
+  &nbsp;&nbsp;<span class="STYLE3">#define</span> <span class="STYLE4">SHADOWCUBE_SAMPLE</span>(textureName, samplerName, coord4) ((<span class="STYLE3">texCUBE</span>(textureName,(coord4).xyz) &lt; (coord4).w) ? 0.0 : 1.0)<br />
+  <span class="STYLE3">#else</span><br />
+  &nbsp;&nbsp;<span class="STYLE2">// emulate hardware comparison</span><br />
+  &nbsp;&nbsp;<span class="STYLE3">#define</span> <span class="STYLE4">SHADOW2D_TEXTURE_AND_SAMPLER</span> <span class="STYLE3">sampler2D_float</span><br />
+  &nbsp;&nbsp;<span class="STYLE3">#define</span> <span class="STYLE4">SHADOWCUBE_TEXTURE_AND_SAMPLER</span> <span class="STYLE3">samplerCUBE_float</span><br />
+  &nbsp;&nbsp;<span class="STYLE3">#define</span> <span class="STYLE4">SHADOW2D_SAMPLE</span>(textureName, samplerName, coord3) ((<span class="STYLE4">SAMPLE_DEPTH_TEXTURE</span>(textureName, samplerName, (coord3).xy) &lt; (coord3).z) ? 0.0 : 1.0)<br />
+  &nbsp;&nbsp;<span class="STYLE3">#define</span> <span class="STYLE4">SHADOWCUBE_SAMPLE</span>(textureName, samplerName, coord4) ((<span class="STYLE3">texCUBE</span>(textureName,(coord4).xyz).r &lt; (coord4).w) ? 0.0 : 1.0)<br />
+  <span class="STYLE3">#endif</span> </p>
+<h2>纹理相关的宏</h2>
+<table border="1" cellspacing="1" cellpadding="1">
+  <caption align="top">
+    纹理类型的宏
+  </caption>
+  <tr>
+    <th width="400" scope="col">宏</th>
+    <th width="400" scope="col">D3D11.hlsl</th>
+    <th width="400" scope="col"><div align="center">GLCore.hlsl</div></th>
+    <th width="400" scope="col">GLES2.hlsl </th>
+    <th width="400" scope="col">GLES3.hlsl </th>
+    <th width="400" scope="col">Metal.hlsl </th>
+    <th width="400" scope="col">Switch.hlsl</th>
+    <th width="400" scope="col">Vulkan.hlsl</th>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURE2D</span>(textureName) </th>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> </span> textureName</td>
+    <td><div align="left"><span class="STYLE3"><span class="STYLE3">Texture2D</span> </span> textureName</div></td>
+    <td><span class="STYLE3">sampler2D</span> textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> </span> textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> </span> textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> </span> textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> </span> textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURE2D_ARRAY</span>(textureName) </th>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> Array</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3"><span class="STYLE3">Texture2D</span> Array</span>  textureName</div></td>
+    <td><span class="STYLE3">samplerCUBE</span> textureName <span class="STYLE2">/* No support to texture2DArray*/</span></td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> Array</span>  textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURECUBE</span>(textureName)</th>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><div align="left"><span class="STYLE3">TextureCube</span> textureName</div></td>
+    <td><span class="STYLE3">samplerCUBE</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURECUBE_ARRAY</span>(textureName)</th>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>   textureName</div></td>
+    <td><p><span class="STYLE3">samplerCUBE</span> textureName</p>
+    <p><span class="STYLE2">/* No supoport to textureCubeArray and can't emulate with texture2DArray*/</span></p></td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+  </tr>
+  <tr>
+    <th height="29" scope="row"><span class="STYLE4">TEXTURE3D</span>(textureName) </th>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3">Texture3D</span>  textureName</div></td>
+    <td><span class="STYLE3">sampler3D</span> textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURE2D_FLOAT</span>(textureName) </th>
+    <td><span class="STYLE3">Texture2D</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3">Texture2D</span>  textureName</div></td>
+    <td><span class="STYLE3">sampler2D_float</span> textureName</td>
+    <td><span class="STYLE3">Texture2D</span>  textureName</td>
+    <td><span class="STYLE3">Texture2D</span>  textureName</td>
+    <td><span class="STYLE3">Texture2D</span>  textureName</td>
+    <td><span class="STYLE3">Texture2D</span>  textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURE2D_ARRAY_FLOAT</span>(textureName)</th>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span>Array</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3"><span class="STYLE3">Texture2D</span>Array</span>  textureName</div></td>
+    <td><span class="STYLE4">TEXTURECUBE_FLOAT</span>(textureName) <span class="STYLE2">/* No support to texture2DArray*/</span></td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span>Array</span>  textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURECUBE_FLOAT</span>(textureName) </th>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><div align="left"><span class="STYLE3">TextureCube</span> textureName</div></td>
+    <td><span class="STYLE3">samplerCUBE_float</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURECUBE_ARRAY_FLOAT</span>(textureName)</th>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</div></td>
+    <td><span class="STYLE4">TEXTURECUBE_FLOAT</span>(textureName) <span class="STYLE2">/* No support to texture2DArray*/</span></td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURE3D_FLOAT</span>(textureName) </th>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3">Texture3D</span>  textureName</div></td>
+    <td><span class="STYLE3">sampler3D_float</span> textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURE2D_HALF</span>(textureName) </th>
+    <td><span class="STYLE3">Texture2D</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3">Texture2D</span>  textureName</div></td>
+    <td><span class="STYLE3">sampler2D_half</span> textureName</td>
+    <td><span class="STYLE3">Texture2D</span>  textureName</td>
+    <td><span class="STYLE3">Texture2D</span>  textureName</td>
+    <td><span class="STYLE3">Texture2D</span>  textureName</td>
+    <td><span class="STYLE3">Texture2D</span>  textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURE2D_ARRAY_HALF</span>(textureName)</th>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span>Array</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3"><span class="STYLE3">Texture2D</span>Array</span>  textureName</div></td>
+    <td><span class="STYLE4">TEXTURECUBE_HALF</span>(textureName) <span class="STYLE2">/* No support to texture2DArray*/</span></td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span> Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">Texture2D</span>Array</span>  textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURECUBE_HALF</span>(textureName) </th>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><div align="left"><span class="STYLE3">TextureCube</span> textureName</div></td>
+    <td> <span class="STYLE3">samplerCUBE_half</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+    <td><span class="STYLE3">TextureCube</span> textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURECUBE_ARRAY_HALF</span>(textureName) </th>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</div></td>
+    <td><span class="STYLE4">TEXTURECUBE_HALF</span>(textureName) <span class="STYLE2">/* No support to texture2DArray*/</span></td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+    <td><span class="STYLE3"><span class="STYLE3">TextureCube</span>Array</span>  textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURE3D_HALF</span>(textureName) </th>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><div align="left"><span class="STYLE3">Texture3D</span>  textureName</div></td>
+    <td><span class="STYLE3">sampler3D_half</span> textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+    <td><span class="STYLE3">Texture3D</span>  textureName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">SAMPLER</span>(samplerName)</th>
+    <td><span class="STYLE3">SamplerState</span> samplerName</td>
+    <td><div align="left"><span class="STYLE3">SamplerState</span> samplerName</div></td>
+    <td>&nbsp;</td>
+    <td><span class="STYLE3">SamplerState</span> samplerName</td>
+    <td><span class="STYLE3">SamplerState</span> samplerName</td>
+    <td><span class="STYLE3">SamplerState</span> samplerName</td>
+    <td><span class="STYLE3">SamplerState</span> samplerName</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURE2D_PARAM</span>(textureName, samplerName)                 </th>
+    <td><span class="STYLE4">TEXTURE2D</span>(textureName),         <span class="STYLE4">SAMPLER</span>(samplerName)</td>
+    <td><div align="left"><span class="STYLE4">TEXTURE2D</span>(textureName), <span class="STYLE4">SAMPLER</span>(samplerName)</div></td>
+    <td><span class="STYLE3">sampler2D</span> textureName</td>
+    <td><span class="STYLE4">TEXTURE2D</span>(textureName), <span class="STYLE4">SAMPLER</span>(samplerName)</td>
+    <td><span class="STYLE4">TEXTURE2D</span>(textureName), <span class="STYLE4">SAMPLER</span>(samplerName)</td>
+    <td><span class="STYLE4">TEXTURE2D</span>(textureName), <span class="STYLE4">SAMPLER</span>(samplerName)</td>
+    <td><span class="STYLE4">TEXTURE2D</span>(textureName), <span class="STYLE4">SAMPLER</span>(samplerName)</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">TEXTURE2D_ARRAY_PARAM</span>(textureName, samplerName) </th>
+    <td><p><span class="STYLE4">TEXTURE2D_ARRAY</span>(textureName),   </p>
+    <p><span class="STYLE4">SAMPLER</span>(samplerName)</p></td>
+    <td><p align="left"><span class="STYLE4">TEXTURE2D_ARRAY</span>(textureName), </p>
+    <p align="left"><span class="STYLE4">SAMPLER</span>(samplerName)</p></td>
+    <td><span class="STYLE3">samplerCUBE</span> textureName</td>
+    <td><p><span class="STYLE4">TEXTURE2D_ARRAY</span>(textureName), </p>
+    <p><span class="STYLE4">SAMPLER</span>(samplerName)</p></td>
+    <td><p><span class="STYLE4">TEXTURE2D_ARRAY</span>(textureName), </p>
+    <p><span class="STYLE4">SAMPLER</span>(samplerName)</p></td>
+    <td><p><span class="STYLE4">TEXTURE2D_ARRAY</span>(textureName), </p>
+    <p><span class="STYLE4">SAMPLER</span>(samplerName)</p></td>
+    <td><p><span class="STYLE4">TEXTURE2D_ARRAY</span>(textureName), </p>
+    <p><span class="STYLE4">SAMPLER</span>(samplerName)</p></td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2)                               </th>
+    <td>textureName.<span class="STYLE3">Sample</span>(samplerName, coord2)</td>
+    <td><div align="left">textureName.<span class="STYLE3">Sample</span>(samplerName, coord2)</div></td>
+    <td><span class="STYLE3">tex2D</span>(textureName, coord2)</td>
+    <td>textureName.<span class="STYLE3">Sample</span>(samplerName, coord2)</td>
+    <td>textureName.<span class="STYLE3">Sample</span>(samplerName, coord2)</td>
+    <td>textureName.<span class="STYLE3">Sample</span>(samplerName, coord2)</td>
+    <td>textureName.<span class="STYLE3">Sample</span>(samplerName, coord2)</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod)</th>
+    <td>textureName.<span class="STYLE3">SampleLevel</span>(samplerName, coord2, lod)</td>
+    <td><div align="left">textureName.<span class="STYLE3">SampleLevel</span>(samplerName, coord2, lod)</div></td>
+    <td><span class="STYLE3">tex2Dlod</span>(textureName, <span class="STYLE3">float4</span>(coord2, 0, lod))</td>
+    <td>textureName.<span class="STYLE3">SampleLevel</span>(samplerName, coord2, lod)</td>
+    <td>textureName.<span class="STYLE3">SampleLevel</span>(samplerName, coord2, lod)</td>
+    <td>textureName.<span class="STYLE3">SampleLevel</span>(samplerName, coord2, lod)</td>
+    <td>textureName.<span class="STYLE3">SampleLevel</span>(samplerName, coord2, lod)</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_BIAS</span>(textureName, samplerName, coord2, bias)</th>
+    <td>textureName.<span class="STYLE3">SampleBias</span>(samplerName, coord2, bias)</td>
+    <td><div align="left">textureName.<span class="STYLE3">SampleBias</span>(samplerName, coord2, bias)</div></td>
+    <td><span class="STYLE3">tex2Dbias</span>(textureName, <span class="STYLE3">float4</span>(coord2, 0, bias))</td>
+    <td>textureName.<span class="STYLE3">SampleBias</span>(samplerName, coord2, bias)</td>
+    <td>textureName.<span class="STYLE3">SampleBias</span>(samplerName, coord2, bias)</td>
+    <td>textureName.<span class="STYLE3">SampleBias</span>(samplerName, coord2, bias)</td>
+    <td>textureName.<span class="STYLE3">SampleBias</span>(samplerName, coord2, bias)</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_GRAD</span>(textureName, samplerName, coord2, dpdx, dpdy)</th>
+    <td>textureName.<span class="STYLE3">SampleGrad</span>(samplerName, coord2, dpdx, dpdy)</td>
+    <td><div align="left">textureName.<span class="STYLE3">SampleGrad</span>(samplerName, coord2, dpdx, dpdy)</div></td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2)</td>
+    <td>textureName.<span class="STYLE3">SampleGrad</span>(samplerName, coord2, dpdx, dpdy)</td>
+    <td>textureName.<span class="STYLE3">SampleGrad</span>(samplerName, coord2, dpdx, dpdy)</td>
+    <td>textureName.<span class="STYLE3">SampleGrad</span>(samplerName, coord2, dpdx, dpdy)</td>
+    <td>textureName.<span class="STYLE3">SampleGrad</span>(samplerName, coord2, dpdx, dpdy)</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2) </th>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2) </td>
+    <td><div align="left"><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2) </div></td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2) </td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2) </td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2) </td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2) </td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2) </td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod)</th>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod)</td>
+    <td><div align="left"><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod)</div></td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod)</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">SAMPLE_TEXTURE2D_BIAS</span>(textureName, samplerName, coord2, bias)</th>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_BIAS</span>(textureName, samplerName, coord2, bias)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_BIAS</span>(textureName, samplerName, coord2, bias)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_BIAS</span>(textureName, samplerName, coord2, bias)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_BIAS</span>(textureName, samplerName, coord2, bias)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_BIAS</span>(textureName, samplerName, coord2, bias)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_BIAS</span>(textureName, samplerName, coord2, bias)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_BIAS</span>(textureName, samplerName, coord2, bias)</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">SAMPLE_TEXTURE2D_GRAD</span>(textureName, samplerName, coord2, dpdx, dpdy)</th>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_GRAD</span>(textureName, samplerName, coord2, dpdx, dpdy)</td>
+    <td><div align="left"><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_GRAD</span>(textureName, samplerName, coord2, dpdx, dpdy)</div></td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_GRAD</span>(textureName, samplerName, coord2, dpdx, dpdy)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_GRAD</span>(textureName, samplerName, coord2, dpdx, dpdy)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_GRAD</span>(textureName, samplerName, coord2, dpdx, dpdy)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_GRAD</span>(textureName, samplerName, coord2, dpdx, dpdy)</td>
+    <td><span class="STYLE4">PLATFORM_SAMPLE_TEXTURE2D_GRAD</span>(textureName, samplerName, coord2, dpdx, dpdy)</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">SAMPLE_TEXTURE2D_SHADOW</span>(textureName, samplerName, coord3)</th>
+    <td>textureName.<span class="STYLE3">SampleCmpLevelZero</span>(samplerName, (coord3).xy, (coord3).z)</td>
+    <td>textureName.<span class="STYLE3">SampleCmpLevelZero</span>(samplerName, (coord3).xy, (coord3).z)</td>
+    <td>SHADOW2D_SAMPLE(textureName, samplerName, coord3)</td>
+    <td>textureName.<span class="STYLE3">SampleCmpLevelZero</span>(samplerName, (coord3).xy, (coord3).z)</td>
+    <td>textureName.<span class="STYLE3">SampleCmpLevelZero</span>(samplerName, (coord3).xy, (coord3).z)</td>
+    <td>textureName.<span class="STYLE3">SampleCmpLevelZero</span>(samplerName, (coord3).xy, (coord3).z)</td>
+    <td>textureName.<span class="STYLE3">SampleCmpLevelZero</span>(samplerName, (coord3).xy, (coord3).z)</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">SAMPLE_DEPTH_TEXTURE</span>(textureName, samplerName, coord2)</th>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D</span>(textureName, samplerName, coord2).r</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">SAMPLE_DEPTH_TEXTURE_LOD</span>(textureName, samplerName, coord2, lod</th>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod).r</td>
+    <td><span class="STYLE4">SAMPLE_TEXTURE2D_LOD</span>(textureName, samplerName, coord2, lod).r</td>
+  </tr>
+  <tr>
+    <th scope="row"><span class="STYLE4">LOAD_TEXTURE2D</span>(textureName, unCoord2</th>
+    <td>textureName.<span class="STYLE3">Load</span>(<span class="STYLE3">int3</span>(unCoord2, 0))</td>
+    <td>textureName.<span class="STYLE3">Load</span>(<span class="STYLE3">int3</span>(unCoord2, 0))</td>
+    <td><span class="STYLE3">half4</span>(0, 0, 0, 0)</td>
+    <td>textureName.<span class="STYLE3">Load</span>(<span class="STYLE3">int3</span>(unCoord2, 0))</td>
+    <td>textureName.<span class="STYLE3">Load</span>(<span class="STYLE3">int3</span>(unCoord2, 0))</td>
+    <td>textureName.<span class="STYLE3">Load</span>(<span class="STYLE3">int3</span>(unCoord2, 0))</td>
+    <td>textureName.<span class="STYLE3">Load</span>(<span class="STYLE3">int3</span>(unCoord2, 0))</td>
+  </tr>
+  <tr>
+    <th scope="row">&nbsp;</th>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</body>
+</html>

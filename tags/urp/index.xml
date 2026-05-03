@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>URP on XGF</title>
+    <link>http://www.xionggf.com/tags/urp/</link>
+    <description>Recent content in URP on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 01 Jun 2021 16:02:07 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/tags/urp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>URP Shader Pass Tag</title>
+      <link>http://www.xionggf.com/post/unity3d/urp_doc/urp_shader_pass_tag/</link>
+      <pubDate>Tue, 01 Jun 2021 16:02:07 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/urp_doc/urp_shader_pass_tag/</guid>
+      <description>原文地址&#xA;以下是将上述回答表格化的结果：&#xA;URP 中 ShaderLab Pass 标签参考 1. LightMode 标签 标签值 描述 适用场景 UniversalForward 渲染对象几何体并计算所有光照贡献。 Forward 渲染路径 UniversalGBuffer 渲染对象几何体但不计算光照贡献。 Deferred 渲染路径 UniversalForwardOnly 渲染对象几何体并计算所有光照贡献，可在 Forward 和 Deferred 渲染路径中使用。 Deferred 渲染路径中需要 Forward 渲染的对象（如 Clear Coat 法线） DepthNormalsOnly 用于深度和法线预渲染，生成环境光遮蔽（AO）。 Deferred 渲染路径，结合 UniversalForwardOnly 使用 Universal2D 渲染对象并计算 2D 光照贡献。 2D 渲染器 ShadowCaster 渲染对象从光源视角的深度到阴影贴图或深度纹理。 阴影生成 DepthOnly 渲染从相机视角的深度信息到深度纹理。 深度渲染 Meta 仅在 Unity 编辑器烘焙光照贴图时执行，构建时会被剥离。 光照贴图烘焙 SRPDefaultUnlit 用于绘制额外 Pass（如对象轮廓），适用于 Forward 和 Deferred 渲染路径。 绘制额外 Pass（如轮廓） MotionVectors 用于支持运动矢量（Motion Vectors）的 Pass。 运动矢量渲染 2.</description>
+    </item>
+  </channel>
+</rss>

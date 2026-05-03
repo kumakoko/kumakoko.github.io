@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>CG | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="CG" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/categories/cg/" />
+
+
+		<meta itemprop="name" content="CG">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/categories/cg/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-term">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/categories/">Categories</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">CG</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">CG</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/inside_hdr/">理解高动态范围光</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+现在大部分图形程序员（包括我）可能是从directxsdk处接触到这个概念并开始学习。DirectX SDK中的示例demo较为清晰地展示了一个完整的HDR技术所要采用的流程，如下：
+在 float render target 上去渲染当前的场景。 使用 RGBM ， LogLuv 等编码方式来节省所需的内存和带宽 通过 down sample 去计算场景亮度 根据亮度对场景做一个 矫正（tone mapping） 最后输出到一个 rgb8 的 render target 上 上面的流程的四个步骤就展示了四个高大上的概念，我们先一一弄懂这些基础概念，再进一步分析。 1 float render target 首先是float render target。render target（以下简称RT）这个概念就不在此详细描述了，这个概念都还没弄懂的话需要先放下这篇文章，先夯实基础再说。RT可以理解为一系列的像素点的集合。在计算机中自然需要用一个一个字节去表示像素点的RGBA信息。最常见的是使用一个字节去表示像素点的一个颜色分量。这样子表示一个像素点则需要四个字节共32位。但一个字节表示一个颜色分量，比如Red分量的话，最多就只能表示256阶的信息。在很多时候，尤其是在处理我们的HDR信息的时候，256阶是远远不够用。所以我们要采用32位或者更高精度的浮点数去表示每一位颜色分量。float render target正是表示这一个概念。
+1.1 RGBM RGBM是一种颜色编码方式，如上所述，为了解决这个精度不足以存储亮度范围信息的问题，我们可以创建一个精度更高的buffer，以扩展之前的那个限定在[0,1]取值域的取值范围，从而使得我们可以在RT上渲染一个更高的亮度范围的画面效果。但使用高精度的buffer则带来另一个问题：即需要更高的内存存储空间和更高的带宽，并且有些渲染硬件无法以操作8位精度的buffer的速度去操作16位浮点数的buffer。因此为了解决这个问题，我们需要采用一种编码方法将这些颜色数据编码成一个能以8位颜色分量的存储的数据。编码方式有多种，例如RGBM编码，LogLuv编码，等等。假如有一个给定的包含了RGB颜色分量的颜色值C，将其编码成一个含有RGBM四个分量的颜色值的步骤是：
+定义一个&quot;最大范围值&quot;,假定为变量MaxRange 取得C的RGB分量中最大的那个值。将这个最大值赋值给变量maxRGB。 用maxRGB除以MaxRange，得到商，将这个商赋值给变量M 用M乘以255得到结果值之后，取得大于这个结果值的最小整数，然后再将这个最小值除以255之后，再赋值给变量M 最后，用C的各个颜色分量，除以M和MaxRange的乘积，作为最终结果颜色的RGB分量，M就作为最后一个分量。 这些步骤写成shader代码如下:
+float MaxRange = 8; float4 EncodeRGBM(float3 rgb) { float maxRGB = max(rgb.x,max(rgb.g,rgb.b)); float M = maxRGB / MaxRange; M = ceil(M * 255.0) / 255.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2017-03-08T14:59:52&#43;08:00">March 08, 2017</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>, 
+		<a class="meta-tags__link" href="/tags/hdr/" rel="tag">HDR</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/mobile_gpu_term/">移动GPU技术参数术语整理一览表</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+术语 解释 IMR Immediate Mode Rendering 立即渲染模式 TBR Tile Based Rendering 分块渲染模式。该模式架构在把三角形场景变成像素图（光栅化）前，先把整个画面分成小块，这些小块的渲染在GPU上的高速缓存里进行，这样就避免了对帧缓存（位于系统内存里）的频繁读写和修改。当然，由于一个三角形可能被分在几个不同的块里，三角形的数据（几何数据）可能被需要多次读取，但总的来说还是能大大减少对系统内存的访问，节约了带宽的同时也减少了电力消耗。 TBDR Tile Base Defered Rending 分块延迟渲染模式。该模式相对于TBR而言，在光栅化之后，有一个HSR（Hidden Surface Removal)）硬件单元，通过对一个块内的三角形进行测试，剔除掉被遮挡的三角形，合成一幅由所有可见部分组成的画面，交给后续的流水线去渲染。这样不可见部分就不需要Pixel Shader去做相应的计算，也不需要去拾取相应的纹理，节省了计算量的同时也节省了带宽，对移动设备来说有很大的帮助。 Unified Shader 统一式渲染架构 即顶点着色器和片元着色器是共用同一个ALU Discrete Shader 分离式渲染架构 即顶点着色器和片元着色器是分开的，不共用同一个ALU GFLOPS FLOPS是Floating-point Operations Per Second 即每秒所执行的浮点运算次数的英文缩写。它是一个衡量计算机计算能力的量，这个量经常使用在那些需要大量浮点运算的科学运算中。有时也会被记为flop/s。GFLOPS就是 Giga Floating-point Operations Per Second。即每秒10亿次的浮点运算数，常作为GPU性能参数，但不一定代表GPU的实际表现，因为还要考虑具体如何拆分多边形和像素、以及纹理填充，理论上该数值越高越好。1GFlops = 1,000MFlops。 像素填充率 像素填充率是指图形处理单元在每秒内所渲染的像素数量，单位是MPixel/S（每秒百万像素），或者GPixel/S（每秒十亿像素），是用来度量当前显卡的像素处理性能的最常用指标。显卡的渲染管线是显示核心的重要组成部分，是显示核心中负责给图形配上颜色的一组专门通道。渲染管线越多，每组管线工作的频率（一般就是显卡的核心频率）越高，那么所绘出的显卡的填充率就越高，显卡的性能就越高，因此可以从显卡的象素填充率上大致判断出显卡的性能。像素填充率的最大值为3D时钟乘以渲染途径的数量。如NVIDIA的GeForce 2 GTS芯片，核心频率为200 MHz，4条渲染管道，每条渲染管道包含2个纹理单元。那么它的填充率就为4x2像素x2亿/秒=16亿像素/秒。 纹理填充率 纹理填充率是指一秒钟内纹理渲染的数目，计算公式为：3D芯片时钟 * 像素渲染管线数目 * 单个纹理使用的texel数目。例如：ATi Rage 128GL的主频为125MHz，有两条像素渲染管线。每条管线可以为一个双线性过滤像素上色，而双线性过滤需要4个texles。因此Rage 128GL纹理填充率为：125（时钟）* 2（像素渲染管线条数）* 4（texels）= 1000 Mtexels/s或1G texels/s。 显存带宽 显存带宽是指显示芯片与显存之间的数据传输速率，它以字节/秒为单位。显存带宽是决定显卡性能和速度最重要的因素之一。显存带宽=显存频率×显存位宽/8 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-03-08T15:14:34&#43;08:00">March 08, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/sv_position_and_position/">着色器语言的语义SV_POSITION和POSITION之辨析</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+简单地说POSITION语意用于顶点着色器，用来指定这些个位置坐标值，是在变换前的顶点的object space坐标。SV_POSITION语意则用于像素着色器，用来标识经过顶点着色器变换之后的顶点坐标。
+SV是Systems Value的简写。在SV_Position的情况下，如果它是绑定在一个从VS输出的数据结构上的话，意味着这个输出的数据结构包含了最终的转换过的，将用于光栅器的顶点坐标。或者，如果你将这个标志绑定到一个输入给PS的数据数据的话，它会包含一个基于屏幕空间的像素的坐标。所有的这些SV语义都在DirectX SDK文档中有描述。
+vertex shader将会输出顶点的坐标到裁剪空间中，并且这些坐标是使用齐次坐标系的。一般地，这些基于裁剪空间的齐次坐标，是通过对输入的对象空间坐标位置乘以一个WVP矩阵而得到的。然后在光栅器中，这些齐次坐标将会进行透视除法，即对这些坐标的每个分量除以w，做完透视除法后，这些坐标值将会限定在一个左下角是-1，右上角是1的视口范围中。然后做完“把Y坐标翻转，把取值范围从[-1,1]限制到[0,1]，接着xy方向分别乘以视口的宽高”的视口变换之后，你便获得了“以SV_Position为标识的，传递给PS的，取值范围是[0,视口高宽]，视口左上角为坐标原点的”像素位置坐标。
+从D3D10开始出现的SV_Position语意，提供了类似于在Direct3D9对应的Shader Model3.0版本中的VPOS语意。在SM3.0中增加的VPOS语意，是特意用来表示某个像素点的坐标为屏幕空间坐标的。在D3D10及更高的版本中，SV_Position语意同样指定了某个像素点的坐标为屏幕空间坐标。但与VPOS不同的是，指定了SV_Position语意的屏幕空间坐标，光栅器已经自动地对这个值做了0.5像素的偏移，也就是说这个坐标对应的是该像素的中心点而不是左上角。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2015-02-08T15:14:34&#43;08:00">February 08, 2015</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>, 
+		<a class="meta-categories__link" href="/categories/shader/" rel="category">Shader</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/tiny3d_implement_introduce/">软渲染示例程序Tiny3D的实现简介</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+绘制图形的代码 Tiny3D核心的图形绘制代码调用栈如下图所示
+Device::DrawBox函数 Tiny3D的核心绘制代码的入口函数Device::DrawBox函数
+// theta mesh的旋转角度 // box_vertices mesh的原始模型顶点数据 void Device::DrawBox(float theta, const T3DVertex* box_vertices) Device::DrawBox函数的实现如下代码所示：
+void Device::DrawBox(float theta, const T3DVertex* box_vertices) { T3DMatrix4X4 m; T3DMatrixMakeRotation(&amp;m, -1.0f, -0.5f, 1.0f, theta); transform_.SetWorldMatrix(m); transform_.Update(); DrawPlane(&amp;box_vertices[0], &amp;box_vertices[1], &amp;box_vertices[2], &amp;box_vertices[3]); DrawPlane(&amp;box_vertices[4], &amp;box_vertices[5], &amp;box_vertices[6], &amp;box_vertices[7]); DrawPlane(&amp;box_vertices[0], &amp;box_vertices[4], &amp;box_vertices[5], &amp;box_vertices[1]); DrawPlane(&amp;box_vertices[1], &amp;box_vertices[5], &amp;box_vertices[6], &amp;box_vertices[2]); DrawPlane(&amp;box_vertices[2], &amp;box_vertices[6], &amp;box_vertices[7], &amp;box_vertices[3]); DrawPlane(&amp;box_vertices[3], &amp;box_vertices[7], &amp;box_vertices[4], &amp;box_vertices[0]); } 步骤就是如下的几步：
+根据传递进来的mesh的旋转角度theta，调用T3DMatrixMakeRotation函数构建world matrix，然后更新到Transform类中去 调用Transform::Update函数，更新world-view-projection matrix，这WVP matrix将在后面的用来变换顶点。 把一个六面体BOX拆分成6个矩形面，调用DrawPlane函数进行绘制。 Device::DrawPlane函数 Device::DrawPlane函数的实现如下代码所示：
+void Device::DrawPlane(const T3DVertex* p1, const T3DVertex* p2, const T3DVertex* p3, const T3DVertex* p4) { T3DVertex _p1 = *p1, _p2 = *p2, _p3 = *p3, _p4 = *p4; _p1.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2014-10-08T14:59:52&#43;08:00">October 08, 2014</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/categories/cg/">1</a>
+				<span class="pagination__item pagination__item--active" data-total="2">2</span>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

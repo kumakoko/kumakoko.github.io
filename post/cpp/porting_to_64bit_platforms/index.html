@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>移植代码到64位平台 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="move constuctor and right value of C&#43;&#43;">
+		<meta property="og:title" content="移植代码到64位平台" />
+<meta property="og:description" content="move constuctor and right value of C&#43;&#43;" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/cpp/porting_to_64bit_platforms/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-04-16T10:53:26+08:00" />
+<meta property="article:modified_time" content="2020-04-16T10:53:26+08:00" />
+
+
+		<meta itemprop="name" content="移植代码到64位平台">
+<meta itemprop="description" content="move constuctor and right value of C&#43;&#43;"><meta itemprop="datePublished" content="2020-04-16T10:53:26+08:00" />
+<meta itemprop="dateModified" content="2020-04-16T10:53:26+08:00" />
+<meta itemprop="wordCount" content="803">
+<meta itemprop="keywords" content="C&#43;&#43;," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">移植代码到64位平台</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2020-04-16T10:53:26&#43;08:00">April 16, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/c&#43;&#43;/" rel="category">C&#43;&#43;</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/c&#43;&#43;/" rel="tag">C&#43;&#43;</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">移植代码到64位平台</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#不再适用相同的规则">不再适用相同的规则</a></li>
+    <li><a href="#整数大小的差异">整数大小的差异</a></li>
+    <li><a href="#指针和整数之间的转换">指针和整数之间的转换</a></li>
+    <li><a href="#程序间通信">程序间通信</a></li>
+    <li><a href="#字节填充规则">字节填充规则</a></li>
+    <li><a href="#实测long类型的大小">实测long类型的大小</a></li>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#参考网页">参考网页</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<p>C和C++大量依赖于指针的使用，即包含内存地址的变量。尽管指针类型在概念上与整数类型不同，但其物理地址值 <strong>始终是一个整数</strong> 。开发人员在C/C ++中大量使用整数类型而不是指针类型，即使在编译器随附的系统头文件中也是如此。在过去的几十年中，大多数计算机处理器都使用32位内存地址，因此开发环境是 <strong>围绕地址长度为32位的假设</strong> 建立的。C/C++代码中存在着大量 <strong>指针和整数之间的隐式和显式转换</strong> 。使用指针，或union的重叠内存结构方式（overlapping memory structures），去访问变量，也是司空见惯。</p>
+<p>当然，32位架构有其局限性。具体来说，它们将计算机内存限制为4GB。应用程序需求不断增长，迫切需要迁移到更长的地址。经常使用的旧式类型带来了新的含义和价值。最具戏剧性，最明显的的变化，是从32位转向64位指针。</p>
+<h2 id="不再适用相同的规则">不再适用相同的规则</h2>
+<p>基本类型的某些大小已更改。其中一些保持不变。但是，突然之间，在C和C++代码库中使用的许多隐式假设不再有效。在32位系统中编写和测试的代码在迁移到64位计算机时不再有效。</p>
+<p>幸运的是，已经识别并分类了代码可能易于从32位计算机迁移到64位计算机的大多数区域。一些编译器使用主动检查技术来捕获在迁移期间可能出现的漏洞。静态分析工具的供应商（包括Coverity和Klocwork）可以提供进一步帮助将代码从32位机器平稳迁移到64位机器的机制。尽管这些工具不能直接解决代码迁移问题，但它们提供了便利的可扩展性和API，可以创建与32位到64位迁移相关的自定义检查程序。增强这些工具可以进一步帮助发现并有效解决这些兼容性问题。</p>
+<p>本文的目的是帮助您使代码库与体系结构无关，因此可以在32位计算机或64位计算机上构建相同的代码库，并为每台计算机生成可行的代码。此外，如果32位程序通过二进制数据交换（通过文件或套接字）与64位程序进行通信，则有多种方法可以确保二进制结构不受两种体系结构类型之间的迁移的影响。</p>
+<p>本文包含详细的分析和建议，以解决与32位到64位迁移有关的众多问题。</p>
+<p>为了使您的程序与体系结构无关，有两个目标需要实现。 其中之一是内部一致性，即确保程序中使用的所有类型都是一致的，而不管代码是在32位还是64位计算机上编译的。 让我们看一下两种架构上基本类型的大小（请参见表1）。</p>
+<p><img src="/image/cpp/porting_to_64bit_platforms/t1.gif" alt=""></p>
+<p>此处的显着区别是指针类型和long类型的大小变化。由于大小更改，某些基于隐式依赖关系构建的代码可能无法正确迁移。可能的问题主要与整数与整数之间，或者是整数和指针之间的数据交换有关。</p>
+<h2 id="整数大小的差异">整数大小的差异</h2>
+<p>在32位系统上，int和long类型都是32位，这意味着程序员可以互换使用这两种类型。此外，C没有严格的输入规则，因此函数中的int参数可以传递long参数而不会出错。尽管这不是一个好的编码实践，但是此代码可能会在数年内完美运行。但是，在64位系统中，在某些编译器中，int和long具有不同的大小，并且代码在迁移后将无法正常工作。将long值分配给int变量可能会导致截断。以下代码在32位系统中可以正常工作，但在64位系统中则极有可能正常工作。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> sum;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">long</span> val1, val2;
+</span></span><span style="display:flex;"><span>sum <span style="color:#f92672">=</span> val1 <span style="color:#f92672">+</span> val2;  <span style="color:#75715e">// possible truncation in 64-bit system
+</span></span></span></code></pre></div><p>以下代码可能会在某些编译器中引起编译器警告，但是此代码（在32位模式下工作）可能将无法在64位模式下工作，因为堆栈上的值大小会发生变化。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">add</span>(<span style="color:#66d9ef">int</span> parm1, <span style="color:#66d9ef">int</span> parm2);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// .....
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">long</span> val1, val2;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">long</span> sum <span style="color:#f92672">=</span> add(val1,val2);    <span style="color:#75715e">// mismatch of parm size on 64-bit machine
+</span></span></span></code></pre></div><p>可能还会发生其他一些细微的事情，从而影响代码的完整性。例如，编译时函数<code>sizeof()</code>返回类型为<code>size_t</code>的结果，<code>size_t</code>类型的占据的字节大小，则取决于该程序中指针类型变量占据的字节数的大小。将此值分配给整数可能导致被截断。如下代码所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> mySize <span style="color:#f92672">=</span> <span style="color:#66d9ef">sizeof</span>(MyStructure);  <span style="color:#75715e">// possible size truncation
+</span></span></span></code></pre></div><p>另一个更细微的错误是位字段的符号扩展。 例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Mask</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> flags:<span style="color:#ae81ff">20</span>, width:<span style="color:#ae81ff">12</span>;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Mask</span> myMask;
+</span></span><span style="display:flex;"><span>myMask.flags <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x80000</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> bigFlags <span style="color:#f92672">=</span> (myMask.flags <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">12</span>);
+</span></span></code></pre></div><p>在32位计算机上，无符号值0x80000在左移位后将变为0x80000000，在将其赋给无符号long后，它将产生相同的值0x80000000。因此，在64位计算机上，您希望将值0x80000000分配给一个无符号long，并将变为0x0000000080000000。但是，结果值为0xFFFFFFFF80000000。这是因为：</p>
+<p>由于没有固有的20位整数类型，因此<code>myMask.flags</code>将 <strong>自动提升为32位</strong> 。由于我们只需要20位，所以有一个符号位的空间。因此，由于隐式转换规则（ISO C），标志将提升为<code>int</code>而不是<code>unsigned int</code>。如果以后将此值分配给<code>unsigned long</code>，则将传播符号位。尽管我们无法更改C编译器的默认行为，但我们可以了解其行为并通过隐式强制转换来防止此类错误，如下代码所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> bigFlags <span style="color:#f92672">=</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span>)(myMask.flags <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">12</span>);
+</span></span></code></pre></div><h2 id="指针和整数之间的转换">指针和整数之间的转换</h2>
+<p>尽管在指针和整数之间进行强制转换不是一种好的编程习惯（传统上将数字0转换为NULL指针除外），但仍被广泛使用。 <strong>从32位架构转换为64位架构时，指针和整数之间的转换容易出错，并且可能会造成可移植性问题。</strong></p>
+<p>有一种将整数转换为指针并返回，而无需显式转换的安全方法。这些宏仅将常量0转换为指针。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#define INT2PTR(type,n) ((type *)(((char*)0)+(n)))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> <span style="color:#75715e">#define PTR2INT(p) (((char*)p)-((char*)0))
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> p <span style="color:#f92672">=</span> INT2PTR(<span style="color:#66d9ef">char</span>,<span style="color:#ae81ff">160</span>);     <span style="color:#75715e">// creating a char pointer with address 160
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>size_t displ <span style="color:#f92672">=</span> PTR2INT(<span style="color:#f92672">&amp;</span>obj1);   <span style="color:#75715e">// getting numeric value of the address 
+</span></span></span></code></pre></div><p>这些宏使用指针算术，并且不对指针和数字值的相对大小做任何假设。 这些宏与体系结构无关，并且将在每个系统上工作。使用此类宏，实际上将消除所有与指针相关的问题，从而将大多数可移植性问题，减少为上一段中所述的整数问题。如果要摆脱整数和指针之间的直接转换是不切实际的，那么许多与整数有关的问题也可能与指针有关。</p>
+<h2 id="程序间通信">程序间通信</h2>
+<p>尽管不同体系结构之间的内存大小和布局可能有所不同，但相同的代码可能在每种体系结构上均正常工作。指针在32位计算机上为4个字节长，在64位计算机上为8个字节长，但是只要这些大小仅与正在运行的进程有关，就没有问题。</p>
+<p>但是，有时程序需要使用二进制数据与外界进行通信。由32位程序写入的数据可能由64位程序读取。在这种情况下，输入/输出二进制结构应仅包含不受32位到64位迁移影响的那些类型。</p>
+<p>整数类型有两种；“概念”类型和“物理”类型。第一组，概念上，主要在<code>sys/types.h</code>中定义。它包括<code>uint</code>，<code>u_char</code>，<code>u_long</code>，<code>size_t</code>，<code>uid_t</code>等类型，以及许多其他类型。这些类型的目的是表示这些类型的逻辑和含义，而无需强调任何物理特征，例如大小，符号等。虽然这些类型在一个系统中非常有用，但是当二进制数据传递到另一个系统时，不应使用它们。。</p>
+<p>例如，如果写入文件的结构具有二进制字段，则无论哪个系统要读取它们，这些字段的大小都是固定的。系统之间的共享结构必须明确指定字段的大小。为此，有一个<code>inttypes.h</code>头文件，其中包含具有显式大小的可用类型。可以在每个系统上使用不同的基本类型来实现这些类型，但是无论系统如何，它们都保证字段的适当大小。这些类型包括uint8_t，uint16_t，uint32_t，uint64_t等。 <strong>所有输出结构都应仅使用这些类型来强制实施，以使代码免于迁移</strong> 。</p>
+<h2 id="字节填充规则">字节填充规则</h2>
+<p>虽然与32/64位问题不完全相关，但相关问题涉及结构和填充。通常将结构 <strong>填充（padding）</strong> 到 <strong>特定边界（certain boundary）</strong>。 例如，如果1个字节的char字段，后跟一个4个字节的字段，则编译器将添加3个松弛字节，以使4个字节的字段的对齐为4的倍数。 <strong>对齐（alignment）</strong> 通常是通过编译器选项定义的。 因此，在32位和64位计算机之间通用的结构，必须具有匹配的编译器对齐设置。</p>
+<ul>
+<li>
+<p>整数类型差异：尽管其中一些缺陷可由编译器发现并产生警告，但是您可以编写一条规则，捕获所有显式和隐式强制转换（转换），标记出可能在两个系统之间更改的强制转换。特别是，所有强制转换为long的都可能被报告为依赖于体系结构。在大多数情况下，使用系统标题中定义的适当类型，将生成更稳定和一致的代码，而不管代码在何处编译。</p>
+</li>
+<li>
+<p>在指针和整数之间进行转换：以前，我们建议尽可能避免这些强制转换，甚至建议使用安全的宏，这些宏可以严格通过指针算法来访问指针的数值。如果接受此技术，则所有大小差异都将减少为以上段落中所述的整数转换。如果无法转换为新样式的宏，仍然可以依靠编译器的功能来捕获整数和指针之间的强制转换。由于各种编译器在捕获有问题的转换方面的能力各不相同，因此也可以使用商业静态分析工具来捕获此类错误。</p>
+</li>
+<li>
+<p>程序间通信的结构：这里的目标是确保在两个不同的体系结构上编译相同的结构时，无论体系结构如何，每个字段的位移都保持相同。从本质上讲，这意味着结构中的每个字段都具有完全相同的大小，而不管它是32位还是64位体系结构。</p>
+</li>
+</ul>
+<p>有两种主要方法可以实现此目标：</p>
+<ul>
+<li>使用具有明确大小的预选类型，例如<code>uint8_t</code>，<code>uint16_t</code>，<code>uint32_t</code>，<code>uint64_t</code>等。尽管每种类型都可以类型定义为不同的基本类型，但是可以确保每种类型在结构中具有相同的大小。确保所有类型仅对与体系结构无关的基本类型进行<code>typedef</code>定义，例如<code>char</code>，<code>short</code>，<code>int</code>和<code>long long</code>，但不包括<code>long</code>。
+这些方法的任何组合都是可行的。例如，使用Coverity或Klocwork可以编写执行以下操作的规则：</li>
+</ul>
+<p>在传递给预定义I/O函数的所有结构中，检查所有禁止的<code>typedef -s</code>。这通常包括<code>size_t</code>，<code>uid_t</code>和其他在不同体系结构上具有不同大小的对象。I/O结构中此类元素的所有用法都标记为不可移植。
+检查所有允许的<code>typedef -s</code>。这包括<code>uint8_t</code>，<code>uint16_t</code>等。它们是受信任的<code>typedef -s</code>，并且无条件地被允许。
+对于任何其他整数类型，我们找到其基本类型，并在其与体系结构相关的情况下（例如<code>long</code>）对其进行标记。</p>
+<h2 id="实测long类型的大小">实测long类型的大小</h2>
+<p>本文的撰写参考了<a href="https://www.drdobbs.com/cpp/porting-to-64-bit-platforms/226600156">这篇文章</a>。这篇文章给出的结论是<code>long</code>和<code>int</code>类型占据的位数是不一致的。但其实到底<code>long</code>和<code>int</code>的占据的位数是不是不一致，还是要看具体依赖的平台。在stackoverflow的<a href="https://stackoverflow.com/questions/384502/what-is-the-bit-size-of-long-on-64-bit-windows">这个网页</a>和<a href="https://stackoverflow.com/questions/7607502/sizeoflong-in-64-bit-c/39207744#39207744">这个网页</a>里有人提问<code>long</code>和<code>int</code>类型占据的位数问题。总的来说，就是得依赖于编译器。以下面的测试程序为例子：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#if defined(WIN32)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;This is a 32-bits program!&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type int is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type unsigned int is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type char is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">char</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type unsigned char is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type short is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">short</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type unsigned short is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">short</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type long is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">long</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type unsigned long is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type long long is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type unsigned long long is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type float is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type double is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">double</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type size_t is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(size_t) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type int* is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span><span style="color:#f92672">*</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type short* is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">short</span><span style="color:#f92672">*</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type long* is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">long</span><span style="color:#f92672">*</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 32-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#else
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;This is a 64-bits program!&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type int is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type unsigned int is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type char is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">char</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type unsigned char is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type short is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">short</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type unsigned short is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">short</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type long is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">long</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type unsigned long is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type long long is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type unsigned long long is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type float is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type double is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">double</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type size_t is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(size_t) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type int* is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span><span style="color:#f92672">*</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type short* is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">short</span><span style="color:#f92672">*</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;size of type long* is &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">long</span><span style="color:#f92672">*</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; in 64-bits program&#34;</span> <span style="color:#f92672">&lt;&lt;</span> endl;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    system(<span style="color:#e6db74">&#34;PAUSE&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>使用Visual C++ 15.9.27对其编译运行。其运行结果是：</p>
+<p><img src="/image/cpp/porting_to_64bit_platforms/32bits.png" alt=""></p>
+<p>上面是32位的版本，下面是64位的版本：</p>
+<p><img src="/image/cpp/porting_to_64bit_platforms/64bits.png" alt=""></p>
+<h2 id="摘要">摘要</h2>
+<p>迁移到64位体系结构的大多数潜在问题是众所周知的。可以使用各种工具来自动检测那些缺陷。在这里，我们列出了一些已开发的规则，这些规则可以帮助公司静态地检测问题。使用静态分析使公司能够及早发现问题，并在整个代码库中快速，全面地发现问题。</p>
+<ul>
+<li>所有无保护的整数截断，其中较长的整数类型被分配（强制）给较短的整数类型，而没有范围检查。</li>
+<li>从无符号整数到有符号整数的所有隐式转换。</li>
+<li>在指针和整数之间进行转换（常数0除外）。</li>
+<li>检查预选结构或传递给预选I/O功能的结构是否存在不安全迁移的字段。</li>
+<li>检查结构对齐的一致性。</li>
+</ul>
+<p>一些公司为其代码库定义了某些命名约定和私有类型。有时需要扎根这些约定，并以它们包含可容纳32位到64位迁移的规则的方式扩展它们。对于一家给定的公司来说可能有所不同，但是有一种经过现场测试的方法可以实现从32位架构到64位架构的平稳迁移。</p>
+<h2 id="参考网页">参考网页</h2>
+<p><a href="https://www.drdobbs.com/cpp/porting-to-64-bit-platforms/226600156">Porting to 64-bit Platforms</a>
+<a href="https://www.drdobbs.com/moving-to-64-bits/184401972">Move to 64-Bits</a></p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/cpp/cpp_rvalue_test/">C&#43;&#43;的右值和移动构造函数的测试程序说明</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cpp/special_using_of_cpp_macro/">C/C&#43;&#43;中macro的一些特殊使用</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

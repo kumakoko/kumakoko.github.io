@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>从半透明模型的描边到URP Multipass Rendering | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="从半透明模型的描边到URP Multipass Rendering">
+		<meta property="og:title" content="从半透明模型的描边到URP Multipass Rendering" />
+<meta property="og:description" content="从半透明模型的描边到URP Multipass Rendering" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/unity3d/from_outline_to_urp_multipass/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-04-29T11:37:25+08:00" />
+<meta property="article:modified_time" content="2022-04-29T11:37:25+08:00" />
+
+
+		<meta itemprop="name" content="从半透明模型的描边到URP Multipass Rendering">
+<meta itemprop="description" content="从半透明模型的描边到URP Multipass Rendering"><meta itemprop="datePublished" content="2022-04-29T11:37:25+08:00" />
+<meta itemprop="dateModified" content="2022-04-29T11:37:25+08:00" />
+<meta itemprop="wordCount" content="359">
+<meta itemprop="keywords" content="Unity3D,shader," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">从半透明模型的描边到URP Multipass Rendering</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2022-04-29T11:37:25&#43;08:00">April 29, 2022</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">从半透明模型的描边到URP Multipass Rendering</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#参考网页">参考网页</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<p>卡通渲染技术中，描边的实现的有多种做法，有<strong>基于后处理实现</strong>，也有<strong>基于非后处理，通过多次绘制模型的方法</strong>实现。</p>
+<p>通过多次绘制模型的实现，方法无非就是：</p>
+<ol>
+<li>绘制模型本体，同时<strong>写入深度值</strong>。</li>
+<li>让模型顶点<strong>沿着法线外扩</strong>一定的偏移量，即让模型膨胀一些</li>
+<li>全用描边的颜色绘制膨胀过的模型，且，在绘制时，使用<strong>cull front</strong>，即<strong>只绘制模型的背向摄像机面</strong>。在第1步中因为绘制模型本体时已经写入深度值。在本步骤中只要不改变深度测试函数的方式，那么除了膨胀部分之外，是无法写入像素的，能写入的部分，便形成了边缘。</li>
+</ol>
+<p>上述的方式，一般应用于不透明的材质上。如果是半透明的材质的话就有问题，因为在第1步绘制半透明材质时，一般是不写入深度值的。那么第3步在绘制膨胀模型时，模型背部的地方就会被绘制上去。</p>
+<p>解决这个问题有很多，可以利用stencil test的方式。也可以在第一步绘制，不绘制任何颜色，只写入深度，然后再绘制模型，最后再绘制描边。后一种方法，如果用Unity内置管线，大约就是这个样子：</p>
+<pre tabindex="0"><code>Shader &#34;Unlit/半透明&#34;
+{
+    Properties
+    {
+        _Diffuse(&#34;Diffuse&#34;,Color) = (1,1,1,1)  //  漫反射
+        _MainTex(&#34;MainTex&#34;,2D) = &#34;white&#34;{}  //  2D纹理贴图
+        _AlphaScale(&#34;Alpha Scale&#34;,Range(0,1)) = 1  //  控制Alpha参数
+    }
+    
+    SubShader
+    {
+        Tags { &#34;Queue&#34; = &#34;Transparent&#34; &#34;IgnoreProjector&#34; = &#34;True&#34; &#34;RenderType&#34; = &#34;Transparent&#34; }   //渲染顺序设置Transparent
+        
+        LOD 100
+        // 用两个pass通道来处理，防止出现渲染错误，第一个pass通道
+        // 每个pass通道都会渲染一次
+        Pass  
+        {
+            ZWrite On   //  注意这里：写入深度 为了确认渲染顺序
+            ColorMask 0  //  掩码遮罩代表这个pass通道不写入任何颜色值
+        }
+
+        Pass  //  第二个pass通道
+        {
+            Tags{&#34;LightMode&#34; = &#34;ForwardBase&#34;}
+
+            ZWrite Off  // 注意这里：关闭ZWrite（深度写入）
+            Blend SrcAlpha OneMinusSrcAlpha  //  源颜色因子  正常透明混合
+
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &#34;UnityCG.cginc&#34;
+            #include &#34;Lighting.cginc&#34;
+
+            struct v2f 
+            {
+                float4 vertex :SV_POSITION;  //  输出顶点信息
+                fixed3 worldNormal : TEXCOORD0;
+                float3 worldPos:TEXCOORD1;
+                float2 uv:TEXCOORD2;
+            };
+
+            fixed4 _Diffuse;
+            float _AlphaScale;
+            sampler2D _MainTex;
+            float4 _MainTex_ST; 
+            
+            v2f vert(appdata_base v)  //  顶点着色器
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                fixed3 worldNormal = UnityObjectToWorldNormal(v.normal); 
+                o.worldNormal = worldNormal;
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex); 
+                o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+                return o;
+            }
+
+            fixed4 frag(v2f i) : SV_Target
+            {
+                fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
+                fixed4 texColor = tex2D(_MainTex, i.uv);  
+                fixed3 worldLightDir = UnityWorldSpaceLightDir(i.worldPos);
+
+                fixed3 diffuse = 
+                texColor.rgb * _LightColor0.rgb * _Diffuse.rgb * 
+                max(0, dot(worldLightDir,i.worldNormal) * 0.5 + 0.5); 
+                fixed3 color = ambient + diffuse;
+                return fixed4(color, texColor.a * _AlphaScale); 
+            }
+            ENDCG
+        }
+    }
+    FallBack &#34;Transparent/VertexLit&#34;    
+}
+</code></pre><p>内置管线的方式很直观。但URP到目前为止（版本10.3.2），无法支持太多的PASS，</p>
+<p>打开【com.unity.rende-pipelines.unversal@10.3.2/Runtime/Passes/DrawObjects.cs】文件可以看到：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span> <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DrawObjectsPass</span> : ScriptableRenderPass
+</span></span><span style="display:flex;"><span> {
+</span></span><span style="display:flex;"><span>    FilteringSettings m_FilteringSettings;
+</span></span><span style="display:flex;"><span>    RenderStateBlock m_RenderStateBlock;
+</span></span><span style="display:flex;"><span>    List&lt;ShaderTagId&gt; m_ShaderTagIdList = <span style="color:#66d9ef">new</span> List&lt;ShaderTagId&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">string</span> m_ProfilerTag;
+</span></span><span style="display:flex;"><span>    ProfilingSampler m_ProfilingSampler;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> m_IsOpaque;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">readonly</span> <span style="color:#66d9ef">int</span> s_DrawObjectPassDataPropID = Shader.PropertyToID(<span style="color:#e6db74">&#34;_DrawObjectPassData&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 注意观察参数ShaderTagId[] shaderTagIds</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> DrawObjectsPass(<span style="color:#66d9ef">string</span> profilerTag, ShaderTagId[] shaderTagIds,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> opaque, RenderPassEvent evt, RenderQueueRange renderQueueRange,
+</span></span><span style="display:flex;"><span>    LayerMask layerMask, StencilState stencilState, <span style="color:#66d9ef">int</span> stencilReference)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">base</span>.profilingSampler = <span style="color:#66d9ef">new</span> ProfilingSampler(nameof(DrawObjectsPass));
+</span></span><span style="display:flex;"><span>        m_ProfilerTag = profilerTag;
+</span></span><span style="display:flex;"><span>        m_ProfilingSampler = <span style="color:#66d9ef">new</span> ProfilingSampler(profilerTag);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">foreach</span> (ShaderTagId sid <span style="color:#66d9ef">in</span> shaderTagIds)
+</span></span><span style="display:flex;"><span>            m_ShaderTagIdList.Add(sid);
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        renderPassEvent = evt;
+</span></span><span style="display:flex;"><span>        m_FilteringSettings = <span style="color:#66d9ef">new</span> FilteringSettings(
+</span></span><span style="display:flex;"><span>                                          renderQueueRange, layerMask);
+</span></span><span style="display:flex;"><span>        m_RenderStateBlock = <span style="color:#66d9ef">new</span> RenderStateBlock(RenderStateMask.Nothing);
+</span></span><span style="display:flex;"><span>        m_IsOpaque = opaque;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (stencilState.enabled)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            m_RenderStateBlock.stencilReference = stencilReference;
+</span></span><span style="display:flex;"><span>            m_RenderStateBlock.mask = RenderStateMask.Stencil;
+</span></span><span style="display:flex;"><span>            m_RenderStateBlock.stencilState = stencilState;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 注意观察参数new ShaderTagId</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> DrawObjectsPass(<span style="color:#66d9ef">string</span> profilerTag, <span style="color:#66d9ef">bool</span> opaque, 
+</span></span><span style="display:flex;"><span>    RenderPassEvent evt, RenderQueueRange renderQueueRange, 
+</span></span><span style="display:flex;"><span>    LayerMask layerMask, StencilState stencilState, <span style="color:#66d9ef">int</span> stencilReference)
+</span></span><span style="display:flex;"><span>        : <span style="color:#66d9ef">this</span>(profilerTag,
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> ShaderTagId[] { 
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> ShaderTagId(<span style="color:#e6db74">&#34;SRPDefaultUnlit&#34;</span>), 
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> ShaderTagId(<span style="color:#e6db74">&#34;UniversalForward&#34;</span>), 
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> ShaderTagId(<span style="color:#e6db74">&#34;UniversalForwardOnly&#34;</span>), 
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> ShaderTagId(<span style="color:#e6db74">&#34;LightweightForward&#34;</span>)},
+</span></span><span style="display:flex;"><span>            opaque, evt, renderQueueRange, layerMask, stencilState, stencilReference)
+</span></span><span style="display:flex;"><span>    {}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>所以为了在URP中解决这个问题，一般采用双材质球的方式，去把这些多个pass拆分到两个或者多个材质球去完成。在第一个材质球中，第一个pass的LightMode为SRPDefaultUnlit。在此pass中只写入深度，第二个pass的LightMode为&quot;UniversalForward&quot;。绘制描边，然后在第二个材质球中，在第一个pass中负责绘制半透明模型即可。</p>
+<h2 id="参考网页">参考网页</h2>
+<ul>
+<li><a href="https://www.csdn.net/tags/NtTaMgysNDMwNi1ibG9n.html">unity 半透明效果shader</a></li>
+<li><a href="https://www.jianshu.com/p/619ab1d67496?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation">Unity 模型本体半透明 轮廓描边</a></li>
+<li><a href="https://www.yisu.com/zixun/583622.html">unity怎么实现半透明物体的描边和投影</a></li>
+<li><a href="https://github.com/chavaloart/urp-multi-pass">Chavaloart URP-Multi-pass</a></li>
+<li><a href="https://westriverlin.blog.csdn.net/article/details/106127307?spm=1001.2101.3001.6661.1&amp;utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-106127307-blog-106264067.pc_relevant_default&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-106127307-blog-106264067.pc_relevant_default&amp;utm_relevant_index=1">URP 管线通过 Renderer Features 使用额外 Pass</a></li>
+<li><a href="https://blog.csdn.net/zakerhero/article/details/106264067">如何在Unity的URP下使用多pass（multi pass）</a></li>
+<li><a href="https://www.233tw.com/unity/36861">如何在Unity的URP下使用多pass（multi pass）</a></li>
+<li><a href="https://www.jianshu.com/p/e1569a783f9d">初识Unity的URP并用multiple pass制作半透明物体</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/354190065">LWRP/URP/HDRP中的多Pass shader，以描边效果为例</a></li>
+</ul>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
+			<a class="entry__tag btn" href="/tags/shader/">Shader</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/pixel_perfect_outline_shaders_unity/">Pixel-Perfect Outline Shaders for Unity</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_shader_multi_compile_variants/">Unity3D Shader的内建multi_compile开关所涵盖的多样体</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/multicompile_shaderfeature_shadervariant_assetbundle/">Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_shader_optimization/">Unity3D shader优化技巧集合</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/my_books/u3d_shader_annotation/">《Unity3D内建着色器源码剖析》</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

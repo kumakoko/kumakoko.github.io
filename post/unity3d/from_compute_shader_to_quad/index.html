@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>从计算着色器到四边形-2【翻译】 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="使用计算着色器在 Unity 的通用渲染管道中添加镜头光晕高光">
+		<meta property="og:title" content="从计算着色器到四边形-2【翻译】" />
+<meta property="og:description" content="使用计算着色器在 Unity 的通用渲染管道中添加镜头光晕高光" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/unity3d/from_compute_shader_to_quad/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2016-02-17T19:08:53+08:00" />
+<meta property="article:modified_time" content="2016-02-17T19:08:53+08:00" />
+
+		<meta itemprop="name" content="从计算着色器到四边形-2【翻译】">
+<meta itemprop="description" content="使用计算着色器在 Unity 的通用渲染管道中添加镜头光晕高光"><meta itemprop="datePublished" content="2016-02-17T19:08:53+08:00" />
+<meta itemprop="dateModified" content="2016-02-17T19:08:53+08:00" />
+<meta itemprop="wordCount" content="4307">
+<meta itemprop="keywords" content="Unity3D," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">从计算着色器到四边形-2【翻译】</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2016-02-17T19:08:53&#43;08:00">February 17, 2016</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">从计算着色器到四边形-2【翻译】</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#兼容性compatibility">兼容性（COMPATIBILITY）</a></li>
+    <li><a href="#计划plan">计划（PLAN）</a></li>
+    <li><a href="#计算着色器compute-shaders">计算着色器(COMPUTE SHADERS)</a></li>
+    <li><a href="#间接绘制draw-indirect">间接绘制(DRAW INDIRECT)</a></li>
+    <li><a href="#光斑着色器the-flare-shader">光斑着色器(THE FLARE SHADER)</a></li>
+    <li><a href="#overdraw噩梦an-overdraw-nightmare">overdraw噩梦（AN OVERDRAW NIGHTMARE）</a></li>
+    <li><a href="#产生更少的亮点generating-fewer-bright-spots">产生更少的亮点(GENERATING FEWER BRIGHT SPOTS)</a></li>
+    <li><a href="#优化调整optimisation-tweaking">优化调整(OPTIMISATION TWEAKING)</a></li>
+    <li><a href="#进一步的考虑further-considerations">进一步的考虑(FURTHER CONSIDERATIONS)</a></li>
+    <li><a href="#完成的finished">完成的(FINISHED)</a></li>
+    <li><a href="#补充说明">补充说明：</a>
+      <ul>
+        <li><a href="#sv_groupthreadid">SV_GroupThreadID</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考网页">参考网页</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<p><a href="https://samdriver.xyz/article/compute-shader-intro">原文地址</a></p>
+<p>Unity&rsquo;s scriptable render pipeline system lets us add new features to the renderer relatively painlessly. A previous article explored the basics of creating a custom RendererFeature, now let&rsquo;s add in a compute shader and DrawProceduralIndirect to make an exaggerated lens flare effect. We&rsquo;ll be working with Unity&rsquo;s Universal Render Pipeline (URP) and its forward renderer, although the general principles will apply elsewhere too.</p>
+<blockquote>
+<p>通过Unity的scriptable render pipeline机制，我们能够相对轻松地向渲染器添加新功能。上一篇文章探讨了<a href="https://samdriver.xyz/article/scriptable-render">创建自定义 RendererFeature</a> 的基础知识，现在我们添加计算着色器，并且使用<code>DrawProceduralIndirect</code>接口制作夸张的镜头眩光效果。这些效果是使用 Unity  URP和forward renderer实现的。原则上这些实现方法也可以用于其他的渲染管线上。</p>
+</blockquote>
+<h2 id="兼容性compatibility">兼容性（COMPATIBILITY）</h2>
+<p>I&rsquo;m writing this using Unity 2019.3 and the URP. We&rsquo;ll not be using anything marked as experimental so it should continue to work in future versions. Note that the URP is designed to be compatible on a wide range of devices, but we&rsquo;ll be using compute shaders and some shader model 5 features which would limit our deployment targets. Take care to check compatibility especially if you want your code to work on mobile platforms.</p>
+<blockquote>
+<p>我使用 Unity 2019.3 和 URP 编写本文。我们不会使用任何<strong>标记为实验性</strong>（marked as experimental ）的代码和插件包，因此它应该在未来的版本中继续工作。要注意的是，URP的设计目标之一，是为了打包出来的应用程序能在各种设备和平台上兼容，但本文中将会用到<strong>计算着色器</strong>和一些<strong>shader model 5.0版本</strong>才有的着色器功能——这意味着打包出来的应用程序的可运行平台将会有所限制。请注意检查兼容性，尤其是当您希望代码在移动平台上运行时。</p>
+</blockquote>
+<h2 id="计划plan">计划（PLAN）</h2>
+<p>We&rsquo;re going to make an (intentionally) unrealistic type of lens flare effect. We&rsquo;ll let the scene get rendered as normal then find anywhere that&rsquo;s particularly bright and overlay a lense flare image there. Transferring data back and forth between the graphics card and general memory is pretty slow, so we want to do all that in &ldquo;GPU land&rdquo; which means using a compute shader and a couple of compute buffers.</p>
+<blockquote>
+<p>我们将故意制作一种与真实现象不符的镜头光晕效果。我们将让场景正常渲染，然后找到特别明亮的地方并在那里覆盖镜头光晕图像。在显卡和通用内存之间来回传输数据非常慢，因此我们希望在“GPU 区域”中完成所有这些操作，这意味着使用计算着色器和几个计算缓冲区。</p>
+</blockquote>
+<ol>
+<li>Render the scene as normal</li>
+<li>Find bright pixels</li>
+<li>Draw a lense flare on each of the bright pixels</li>
+</ol>
+<blockquote>
+<ol>
+<li>像平常一样渲染场景</li>
+<li>寻找明亮的像素</li>
+<li>在每个明亮像素上绘制镜头光晕</li>
+</ol>
+</blockquote>
+<p>URP 已经由 Unity 的优秀人员制定，因此第一步已经为我们完成。我们将把我们的作品添加为一个ScriptableRendererFeature，以便在所有其他渲染完成后插入。</p>
+<h2 id="计算着色器compute-shaders">计算着色器(COMPUTE SHADERS)</h2>
+<p>As with the vertex and fragment (or pixel) shaders you may be familiar with, compute shaders are bits of code that run on the graphics card. Unlike the traditional shaders they&rsquo;re more general purpose, they can write to arbitrary buffers rather than being limited to vertices or fragments. In our case we&rsquo;ll make a compute buffer that gets filled with information about which pixels are bright. As with all shaders, graphics cards are really good at running large numbers of threads all executing the same compute shader.</p>
+<blockquote>
+<p>与您可能熟悉的顶点和片段（或像素）着色器一样，计算着色器是在显卡上运行的代码位。与传统着色器不同，它们具有更通用的用途，可以写入任意缓冲区，而不是仅限于顶点或片段。在我们的例子中，我们将创建一个计算缓冲区，其中填充有关哪些像素是亮的信息。与所有着色器一样，显卡非常擅长运行大量线程，所有线程都执行相同的计算着色器。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// input texture</span>
+</span></span><span style="display:flex;"><span>Texture2D&lt;float3&gt; _sourceTexture;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// a compute buffer that we can append to for output</span>
+</span></span><span style="display:flex;"><span>AppendStructuredBuffer&lt;int2&gt; _brightPoints;
+</span></span></code></pre></div><p>The input texture is defined as it might be for any other shader. Although notice that in this case we don&rsquo;t need a sampler, instead we&rsquo;ll be able to directly access the texels using their integer coordinates.</p>
+<blockquote>
+<p>输入纹理的定义与任何其他着色器的定义相同。尽管请注意，在这种情况下我们不需要采样器，但我们将能够使用整数坐标直接访问纹素。</p>
+</blockquote>
+<p>An <code>AppendStructuredBuffer</code> is a dressed up compute buffer. A raw buffer would just be a an array of bytes, while a <strong>structured buffer</strong> means we can define a structure for each element in the buffer. For now that&rsquo;s just <code>int2</code> but we could define a struct. An append buffer lets us use .Append() to add an item to the end. Importantly .Append() is a thread-safe operation. Even if we have thousands of threads all trying to add something to the buffer at the same time it&rsquo;ll not become a horrible mess. (A thread un-safe version might have threadA checking for an empty spot and start writing there, but at the same time threadB also thinks the spot is empty and writes in it too, causing lost or corrupt data.)</p>
+<blockquote>
+<p><code>AppendStructuredBuffer</code> 是一个精心设计的计算缓冲区。原始缓冲区只是一个字节数组，而<strong>结构化缓冲区</strong>意味着我们可以为缓冲区中的每个元素定义一个结构。虽然现在这只是<code>int2</code>，但我们可以定义一个struct.追加缓冲区让我们可以使用<code>.Append()</code>函数在缓冲区末尾添加一项。重要的<code>.Append()</code>是<strong>线程安全</strong>的操作。即使我们有数千个线程都试图同时向缓冲区添加一些内容，它也不会变得一团糟。 （线程不安全版本可能会让 thread A 检查空位并开始在那里写入，但同时 thread B 也认为该空位为空并写入其中，从而导致数据丢失或损坏。）</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// tell Unity that the function &#34;FindBrights&#34; is a compute kernel</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 告诉 Unity 计算着色器的compute kernel是“FindBrights”函数</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pragma</span> kernel FindBrights
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// define thread groups for the FindBrights kernel</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 为 FindBrights 内核定义线程组</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 表示每个线程组包含了32x32共1024个线程</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[numthreads(32, 32, 1)]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// these three system-value semantics let us know which thread we&#39;re in.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 这三个系统值语义让我们知道当前在哪个GPU线程中执行。</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> FindBrights (uint3 globalId : SV_DispatchThreadID, uint3 localId : SV_GroupThreadID, uint3 groupId : SV_GroupID)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// access one texel from the texture</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// DTid.x 和 DTid.y 可以用来访问对应的线程在线程组中的位置</span>
+</span></span><span style="display:flex;"><span>  float3 colour = _sourceTexture[globalId.xy];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (CalculateLuminance(colour) &gt; <span style="color:#ae81ff">1.43</span>)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// add our position to _brightPoints if colour is bright enough</span>
+</span></span><span style="display:flex;"><span>    _brightPoints.Append(int2(globalId.xy));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>#pragma kernel FindBrights</code> is some of the only Unity-specific code. It lets Unity know that a function named FindBrights is a compute kernel, meaning it&rsquo;s something that can be used as a compute shader rather than just being a plain function.</p>
+<blockquote>
+<p><code>#pragma kernel FindBrights</code>是面向于Unity的一些特定代码。它让 Unity 知道一个名为的函数FindBrights是一个计算内核，这意味着它可以用作计算着色器，而不仅仅是一个普通函数。</p>
+</blockquote>
+<p><code>numthreads</code> introduces us to how compute shaders get &ldquo;dispatched&rdquo;. Although you can run a single instance of your compute shader using a single thread, usually you&rsquo;ll want to run many threads at once so they can process large amounts of data in parallel (which graphics cards are very good at.) Each thread belongs to a group with numthreads defining how many threads are in each group. For convenience the group size is defined in 3 dimensions, with both [numthreads(32, 32, 1)] and [numthreads(1024, 1, 1)] creating the same number of threads. 1024 is the maximum total number of threads in a group in D3D11 (regardless of whether that&rsquo;s 32x32, 512x2, or 32x16x2.) There&rsquo;s lots of interesting optimisations to think about with group size, but as a general rule as big as possible is good. Thankfully we&rsquo;re not limited to processing tiny 32x32 regions. When our CPU-side code calls to dispatch a compute shader it can decide how many groups of threads to make (again defined by 3 dimensions) so we can throw millions of threads at the graphics card if needed.</p>
+<blockquote>
+<p><code>numthreads</code>向我们介绍了如何“<strong>调度</strong>”计算着色器。尽管您可以使用单个线程运行计算着色器的单个实例，但通常您会希望一次运行多个线程，以便它们可以并行处理大量数据（显卡非常擅长这一点）。每一线程都会从属于某一个组，并且在<code>numthreads</code>语句中定义每个组中有多少个线程。为了方便起见，组大小被定义为 3 个维度，并且用[numthreads(32, 32, 1)]语句和用[numthreads(1024, 1, 1)]语句，都会创建相同数量的线程。 在 D3D11 中组中线程的最大总数为1024（无论是 32x32、512x2 还是 32x16x2）。关于组大小，有很多有趣的优化需要考虑，但作为一般规则，尽可能大是好的。值得庆幸的是，我们不限于处理微小的 32x32 区域。当我们的 CPU 端代码调用分派计算着色器时，它可以决定要创建多少组线程（同样由 3 维定义），以便我们可以在需要时向显卡投入数百万个线程。</p>
+</blockquote>
+<p>Usually you&rsquo;ll want each thread to work on different data, in our case we want each thread to look at a different texel. We can use system-value semantics to get a thread&rsquo;s personal and group identity. <code>uint3 globalId : SV_DispatchThreadID</code> gives us a uint3 variable which is automatically filled with a thread&rsquo;s &ldquo;position&rdquo; within the whole dispatch. <code>SV_GroupThreadID</code> is a thread&rsquo;s position within its group. <code>SV_GroupID</code> is the index of the group itself.</p>
+<p>Here&rsquo;s how those values would look for a kernel with <code>[numthreads(3,3,1)]</code> dispatched with</p>
+<blockquote>
+<p>通常您会希望每个线程处理不同的数据，在我们的例子中，我们希望每个线程查看不同的纹素。我们可以使用<strong>系统值语义</strong>来获取线程的个人和组身份。<code>uint3 globalId : SV_DispatchThreadID</code>给我们一个<code>uint3</code>变量，该变量自动填充整个调度中线程的“<strong>位置</strong>(就是指对应该线程的全局ID值)”。<code>uint3 localId : SV_GroupThreadID</code>是线程在其组中的位置。<code>uint3 groupId : SV_GroupID</code>是组本身的索引。</p>
+<p>下面是如何用这些由<code>[numthreads(3,3,1)]</code>组织的值，去查找一个kenel，这个查找操作是通过<code>DispatchCompute(..., 2, 1, 1)</code>调度（dispatched）执行的;</p>
+</blockquote>
+<p>SV_DispatchThreadID</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(0,0,0)</td>
+<td>(1,0,0)</td>
+<td>(2,0,0)</td>
+<td>(3,0,0)</td>
+<td>(4,0,0)</td>
+<td>(5,0,0)</td>
+</tr>
+<tr>
+<td>(0,1,0)</td>
+<td>(1,1,0)</td>
+<td>(2,1,0)</td>
+<td>(3,1,0)</td>
+<td>(4,1,0)</td>
+<td>(5,1,0)</td>
+</tr>
+<tr>
+<td>(0,2,0)</td>
+<td>(1,2,0)</td>
+<td>(2,2,0)</td>
+<td>(3,2,0)</td>
+<td>(4,2,0)</td>
+<td>(5,2,0)</td>
+</tr>
+<tr>
+<td>SV_GroupThreadID</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&mdash;&mdash;-</td>
+<td>&mdash;&mdash;-</td>
+<td>&mdash;&mdash;-</td>
+<td>&mdash;&mdash;-</td>
+<td>&mdash;&mdash;-</td>
+<td>&mdash;&mdash;-</td>
+</tr>
+<tr>
+<td>(0,0,0)</td>
+<td>(1,0,0)</td>
+<td>(2,0,0)</td>
+<td>(0,0,0)</td>
+<td>(1,0,0)</td>
+<td>(2,0,0)</td>
+</tr>
+<tr>
+<td>(0,1,0)</td>
+<td>(1,1,0)</td>
+<td>(2,1,0)</td>
+<td>(0,1,0)</td>
+<td>(1,1,0)</td>
+<td>(2,1,0)</td>
+</tr>
+<tr>
+<td>(0,2,0)</td>
+<td>(1,2,0)</td>
+<td>(2,2,0)</td>
+<td>(0,2,0)</td>
+<td>(1,2,0)</td>
+<td>(2,2,0)</td>
+</tr>
+<tr>
+<td>SV_GroupID</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>&mdash;&mdash;-</td>
+<td>&mdash;&mdash;-</td>
+<td>&mdash;&mdash;-</td>
+<td>&mdash;&mdash;-</td>
+<td>&mdash;&mdash;-</td>
+<td>&mdash;&mdash;-</td>
+</tr>
+<tr>
+<td>(0,0,0)</td>
+<td>(0,0,0)</td>
+<td>(0,0,0)</td>
+<td>(1,0,0)</td>
+<td>(1,0,0)</td>
+<td>(1,0,0)</td>
+</tr>
+<tr>
+<td>(0,0,0)</td>
+<td>(0,0,0)</td>
+<td>(0,0,0)</td>
+<td>(1,0,0)</td>
+<td>(1,0,0)</td>
+<td>(1,0,0)</td>
+</tr>
+<tr>
+<td>(0,0,0)</td>
+<td>(0,0,0)</td>
+<td>(0,0,0)</td>
+<td>(1,0,0)</td>
+<td>(1,0,0)</td>
+<td>(1,0,0)</td>
+</tr>
+</tbody>
+</table>
+<p>In our case we want each thread to look at a unique texel, so we&rsquo;ll use SV_DispatchThreadID as an index to access the input texture: <code>float3 colour = _sourceTexture[globalId.xy];</code> As we want to access a specific texel we can skip the sampler middleman and directly access the data we need. That bypasses filtering, clamping, mipmaps and all that other stuff that&rsquo;s useful for rendering but isn&rsquo;t needed here.</p>
+<p><code>CalculateLuminance()</code> is a simple function to give us a luminance value from a linear sRGB colour. The only noteworthy thing here is that in HLSL (and many other, usually older, languages) functions have to be defined earlier in your source code than where they&rsquo;re called.</p>
+<blockquote>
+<p>在我们的例子中，我们希望每个线程查看唯一的纹理元素，因此我们将用作SV_DispatchThreadID访问输入纹理的索引：<code>float3 colour = _sourceTexture[globalId.xy];</code>当我们想要访问特定的纹理元素时，我们可以跳过作为中间角色的采样器（sampler）直接访问我们需要的数据。这会绕过<strong>过滤（filtering）</strong>、<strong>钳位（clamping）</strong>、<strong>mipmap</strong> 以及所有其他对渲染有用但这里不需要的东西。</p>
+<p><code>CalculateLuminance()</code>是一个简单的函数，可以为我们提供线性 sRGB 颜色的亮度值。这里唯一值得注意的是，在 HLSL（以及许多其他通常较旧的语言）中，函数必须在源代码中比调用它们的位置更早定义。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">float</span> CalculateLuminance(float3 colourLinear)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// magic numbers copied from wikipedia, the source of all the best magic numbers</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// https://en.wikipedia.org/wiki/Relative_luminance</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> colourLinear.x * <span style="color:#ae81ff">0.2126</span> +
+</span></span><span style="display:flex;"><span>         colourLinear.y * <span style="color:#ae81ff">0.7152</span> + 
+</span></span><span style="display:flex;"><span>		 colourLinear.z * <span style="color:#ae81ff">0.0722</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>最后，如果该线程的像素足够亮，我们将其位置添加到<code>_brightPoints</code>缓冲区中。您会记得之前的情况，AppendStructuredBuffer这意味着我们的许多线程可以安全地附加到它而不会丢失数据。</p>
+<h2 id="间接绘制draw-indirect">间接绘制(DRAW INDIRECT)</h2>
+<p>We now have a compute shader that produces a buffer with the position of every bright pixel in the rendered scene. Next we need to draw a flare for each of those. We&rsquo;ll use a form of <code>DrawProcedural</code> to do that. <code>DrawProcedural</code> lets us render a mesh (or in our case just a couple of triangles) without needing to provide the vertices and indices that are normally used to define a mesh. Instead we say that we want to draw a certain number of triangles and promise that the vertex shader will somehow produce the vertices needed (it&rsquo;s often also used with a geometry shader but we&rsquo;ll stick with just a vertex shader here.) In classic mesh rendering a vertex shader manipulates existing vertices, instead we&rsquo;ll make one that reads the data in our <code>_brightPoints</code> buffer and generates vertices from it.</p>
+<blockquote>
+<p>我们现在有一个计算着色器，它可以生成一个缓冲区，其中包含渲染场景中每个明亮像素的位置。接下来我们需要为每一个明亮像素画一个耀斑。要做到这一点，我们将使用一种形式的绘图方法：DrawProcedural。DrawProcedural让我们渲染一个网格（或者在我们的例子中只是几个三角形），但不需要提供通常用于定义网格的顶点值和顶点索引值。相反，我们说我们想要绘制一定数量的三角形，并承诺顶点着色器将以某种方式生成所需的顶点（它通常也与几何着色器一起使用，但我们在这里只使用顶点着色器。）。在经典的渲染网格的方式中，顶点着色器会操作现有的顶点，而现在则相反，我们将创建一个顶点着色器，这个着色器从我们的<code>_brightPoints</code>缓冲区中读取数据，并从中生成顶点。</p>
+</blockquote>
+<p>DrawProcedural needs to know how many vertices and instances it&rsquo;ll be drawing. We know each flare will be drawn as a two triangle quad, but how many of those instances? That&rsquo;ll depend on how many bright points were found by the compute shader. That buffer&rsquo;s data - and its counter - only exists in GPU-land, and copying it back so we can give it to DrawProcedural isn&rsquo;t good for performance. Here enters DrawProceduralIndirect which works the same but instead of needing to directly tell it the triangle and instance count we can tell it what buffer to look in to find them. We can get the instance count we need into a buffer using ComputeBuffer.CopyCount or the CommandBuffer version CopyCounterValue. These copy the length of an AppendStructuredBuffer into a given location within another buffer.</p>
+<p>Setting up a buffer to hold the draw arguments needed by DrawProceduralIndirect:</p>
+<blockquote>
+<p><code>DrawProcedural</code>需要知道它将绘制<strong>多少个顶点和实例</strong>（instance）。我们知道每个耀斑都会被绘制为两个三角形组成四边形，但是有多少个这样的实例呢？这取决于计算着色器找到了多少亮点。该缓冲区的数据及其计数器仅存在于 GPU 区域中，如果将其复制回来，以便将其提供<code>DrawProcedural</code>的话，性能并不好。所以这里引入了<code>DrawProceduralIndirect</code>函数，其工作原理和<code>DrawProcedural</code>相同，但不需要直接告诉它三角形和实例计数，我们可以告诉它在哪个缓冲区中查找以找到它们。我们可以使用<code>ComputeBuffer.CopyCount</code>或<code>CommandBufferversion</code>将所需的实例计数放入缓冲区<code>CopyCounterValue</code>。它们将 an 的长度复制<code>AppendStructuredBuffer</code>到另一个缓冲区内的给定位置。</p>
+<p>设置一个缓冲区来保存所需的绘制参数<code>DrawProceduralIndirect</code>：</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// a buffer used as draw arguments for an indirect call must be created as the IndirectArguments type.</span>
+</span></span><span style="display:flex;"><span>drawArgsBuffer = <span style="color:#66d9ef">new</span> ComputeBuffer(<span style="color:#ae81ff">4</span>, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">uint</span>), ComputeBufferType.IndirectArguments);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// set this buffer up once then keep reusing it every frame with an updated instance count</span>
+</span></span><span style="display:flex;"><span>drawArgsBuffer.SetData(<span style="color:#66d9ef">new</span> <span style="color:#66d9ef">uint</span>[] {
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">6</span>, <span style="color:#75715e">// vertices per instance (2 triangles of 3 vertices)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>, <span style="color:#75715e">// instance count (will be set from brightPoints counter)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>, <span style="color:#75715e">// byte offset of first vertex</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ae81ff">0</span>, <span style="color:#75715e">// byte offset of first instance</span>
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><p>Within Execute of our ScriptableRenderPass:</p>
+<blockquote>
+<p>在我们定义的ScriptableRenderPass范围内执行：</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// [after dispatching the compute shader that generates brightPoints]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// offset of 1 uint because we want to write into the instance count entry</span>
+</span></span><span style="display:flex;"><span>cmd.CopyCounterValue(brightPoints, drawArgsBuffer, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">uint</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// draw some number of triangles, as decided by contents of drawArgsBuffer</span>
+</span></span><span style="display:flex;"><span>cmd.DrawProceduralIndirect(Matrix4x4.identity, flareMaterial, <span style="color:#ae81ff">0</span>, MeshTopology.Triangles,
+</span></span><span style="display:flex;"><span>  drawArgsBuffer, <span style="color:#ae81ff">0</span>, properties);
+</span></span></code></pre></div><h2 id="光斑着色器the-flare-shader">光斑着色器(THE FLARE SHADER)</h2>
+<p>We&rsquo;re back to regular vertex and fragment shaders to draw each flare. The interesting part is in the vertex shader which now has to create a vertex based on our _brightPoints buffer.</p>
+<blockquote>
+<p>我们回到常规的顶点和片段着色器来绘制每个耀斑。有趣的部分是顶点着色器，它现在必须基于我们的_brightPoints缓冲区创建一个顶点。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>StructuredBuffer&lt;int2&gt; _brightPoints;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// use system-value semantics to know where on the _brightPoints buffer we should read from</span>
+</span></span><span style="display:flex;"><span>v2f vert (<span style="color:#66d9ef">uint</span> vertexID : SV_VertexID, <span style="color:#66d9ef">uint</span> instanceID : SV_InstanceID)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  int2 brightPoint = _brightPoints[instanceID];
+</span></span><span style="display:flex;"><span>  float2 pos = PositionFromBrightPoint(brightPoint, vertexID);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  v2f o;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// this shader skips ztest so .z doesn&#39;t matter, so long as it&#39;s within clip space</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// setting .w to 1.0 means .xyz don&#39;t get changed by the w division</span>
+</span></span><span style="display:flex;"><span>  o.position = float4(pos.x, pos.y, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">1.0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// as with position&#39;s offset, vertexID tells us what uv this vertex should have</span>
+</span></span><span style="display:flex;"><span>  o.uv = UvFromBrightPoint(vertexID);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>First the shader needs to know where in the buffer to look. As with our compute shader we can use system-value semantics to get some information to help us. Using SV_InstanceID will give us the index of the instance that this vertex belongs to. We&rsquo;ll use that to look up a value from the _brightPoints buffer, meaning all 6 vertices of an instance will access the same bright position. It&rsquo;s no use if all those vertices end up at the same spot (the triangle would be zero size and wouldn&rsquo;t get rendered) so we also need SV_VertexID to identify which of the 6 vertices we&rsquo;re dealing with and offset it accordingly.</p>
+<p>I&rsquo;ll skip listing the functions that produce position and UV values based on vertexID as there&rsquo;s not much to explain there. Feel free to check the full source linked below if you&rsquo;re interested.</p>
+<blockquote>
+<p>首先，着色器需要知道要查看缓冲区中的位置。与我们的计算着色器一样，我们可以使用系统值语义来获取一些信息来帮助我们。使用<code>SV_InstanceID</code>将为我们提供该顶点所属实例的索引。我们将使用这索引从_brightPoints缓冲区查找值，这意味着每一个多边形实例的所有 6 个顶点，将访问相同的明亮位置。如果所有这些顶点最终都位于同一点，则没有任何用处（三角形的大小将为零并且不会被渲染），因此我们还需要<code>SV_VertexID</code>确定我们正在处理的 6 个顶点中的哪一个并相应地对其进行偏移。</p>
+<p>我将跳过列出基于 vertexID 生成位置和 UV 值的函数，因为那里没有太多解释。如果您有兴趣，请随时查看下面链接的完整来源。</p>
+</blockquote>
+<h2 id="overdraw噩梦an-overdraw-nightmare">overdraw噩梦（AN OVERDRAW NIGHTMARE）</h2>
+<p><img src="image/u3d/from_compute_shader_to_quad/scene-every-pixel.webp" alt="enter description here"></p>
+<p>We now have something that does what we set out to do. But it seems to be causing some worrying performance problems for such a simple scene. Let&rsquo;s put it through RenderDoc to see what&rsquo;s going on.</p>
+<blockquote>
+<p>渲染 3D 场景，其中包含可见太阳照亮的立方体和球体。太阳和物体上最亮的区域表现出非常明亮的星形透镜耀斑。</p>
+</blockquote>
+<p>We now have something that does what we set out to do. But it seems to be causing some worrying performance problems for such a simple scene. Let&rsquo;s put it through RenderDoc to see what&rsquo;s going on.</p>
+<blockquote>
+<p>现在我们已经有了一些可以实现我们计划的东西。但对于这样一个简单的场景来说，它似乎会导致一些令人担忧的性能问题。我们通过RenderDoc来看看到底发生了什么。</p>
+</blockquote>
+<p><img src="image/u3d/from_compute_shader_to_quad/every-pixel-performance.webp" alt="RenderDoc 实用程序的时序分析的屏幕截图。 DrawInstancedDirect 的持续时间数比其他条目大得多"></p>
+<p>Drawing the lens flares is taking around 98% of the total frame&rsquo;s render time. Oops. The problem isn&rsquo;t that they&rsquo;re complex to draw. Drawing 27k triangles isn&rsquo;t that much either. The problem is there&rsquo;s a huge amount of overlapping. Almost every pixel around the flares is maxing out the overdraw count given by RenderDoc.</p>
+<blockquote>
+<p>绘制镜头光斑大约占用整个帧渲染时间的 98%。哎呀。问题不在于它们绘制起来很复杂。绘制 27k 个三角形也不算多。问题是存在大量重叠。耀斑周围的几乎每个像素都超出了 RenderDoc 给出的透支计数。</p>
+</blockquote>
+<p>This is obviously already a big problem but it could be even worse. Because we don&rsquo;t directly control how many flare quads are rendered or author their position it&rsquo;s quite possible to have very highly variable performance impact depending on the scene. In a game performance could be fine most the time but drop during brightly lit sections because the screen is suddenly full of flare quads.</p>
+<blockquote>
+<p>这显然已经是一个大问题了，但情况可能会更糟。因为我们不直接控制渲染多少个耀斑四边形或创作它们的位置，所以根据场景的不同，很可能会产生非常可变的性能影响。在游戏中，大多数时候性能都很好，但在明亮的部分会下降，因为屏幕突然充满了耀斑四边形。</p>
+</blockquote>
+<h2 id="产生更少的亮点generating-fewer-bright-spots">产生更少的亮点(GENERATING FEWER BRIGHT SPOTS)</h2>
+<p>Compared to the 32,000µs to render the flares, our compute shader to find where they should be was a delightfully small 40µs. So we can afford to make the compute shader more complex if it cuts down on how much we need to draw. Instead of finding every bright pixel, let&rsquo;s chop the image up into a grid and find a maximum of one bright pixel in each cell. The thread group system used to dispatch the compute shader is already effectively splitting the image into grid cells so we can use that.</p>
+<blockquote>
+<p>与渲染耀斑所需的 32,000μs 相比，我们的计算着色器找到它们应该在的位置的时间只有 40μs，非常小。因此，如果计算着色器减少了我们需要绘制的数量，我们就可以让计算着色器变得更复杂。我们不是寻找每个明亮像素，而是将图像分割成一个网格，并在每个单元格中找到最多一个明亮像素。用于调度计算着色器的线程组系统已经有效地将图像分割成网格单元，因此我们可以使用它。</p>
+</blockquote>
+<p>Our new compute shader needs to communicate with the other threads in its group so that together they can work out which thread has the brightest pixel and add that one to the _brightPoints buffer.</p>
+<blockquote>
+<p>我们的新计算着色器需要与其组中的其他线程进行通信，以便它们可以一起计算出哪个线程具有最亮的像素并将其添加到缓冲区中_brightPoints。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">#define</span> GROUP_SIZE <span style="color:#ae81ff">32</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>groupshared <span style="color:#66d9ef">float</span> cachedLuminance[GROUP_SIZE][GROUP_SIZE];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pragma</span> kernel FindBrights
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[numthreads(GROUP_SIZE, GROUP_SIZE, 1)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> FindBrights (uint3 globalId : SV_DispatchThreadID, uint3 localId : SV_GroupThreadID, uint3 groupId : SV_GroupID)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>#define lets us make a compile-time constant, which means anywhere we type GROUP_SIZE it&rsquo;ll automatically be replaced by whatever we define (in this case it gets replaced by 32). That&rsquo;s extremely useful when we want to use the same value in multiple places which may not accept a regular variable. In this case we&rsquo;re using it to define the 2D array cachedLuminance with dimensions that match our thread group size.</p>
+<blockquote>
+<p>#define让我们创建一个编译时常量，这意味着我们在任何地方键入GROUP_SIZE它都会自动被我们定义的内容替换（在本例中它被 32 替换）。当我们想要在多个可能不接受常规变量的地方使用相同的值时，这非常有用。在本例中，我们使用它来定义cachedLuminance尺寸与线程组大小相匹配的二维数组。</p>
+</blockquote>
+<p>groupshared added before a variable declaration makes it shared between every thread in that group. It&rsquo;s not shared between all threads running this compute shader, only those in the same group. We have to be careful with shared variables. Unlike the AppendStructuredBuffer there&rsquo;s no automatic thread safety here, and it&rsquo;s easy to end up making a mess by having threads all reading and writing at the same time.</p>
+<blockquote>
+<p>groupshared在变量声明之前添加使其在该组中的每个线程之间共享。它不在运行此计算着色器的所有线程之间共享，仅在同一组中的线程之间共享。我们必须小心共享变量。与这里不同的是，AppendStructuredBuffer这里没有自动线程安全，并且让线程同时读写很容易导致混乱。</p>
+</blockquote>
+<p>Accessing a groupshared variable is pretty fast. A common pattern is to have every thread do some texture lookup and/or calculation of a value then store it in a groupshared array that acts as a cache so the other threads that need to know about their neighbours&rsquo; values don&rsquo;t have to calculate it themselves. There is a size limit to keep in mind, in total a compute kernel can&rsquo;t declare more than 32KB of groupshared data in D3D11. Our array uses 32 × 32 × 4 = 4,096 bytes so we&rsquo;re safe.</p>
+<blockquote>
+<p>访问groupshared变量非常快。一种常见的模式是让每个线程执行一些纹理查找和/或值计算，然后将其存储在groupshared充当缓存的数组中，以便需要了解其邻居值的其他线程不必计算它他们自己。需要记住一个大小限制，计算内核groupshared在 D3D11 中总共不能声明超过 32KB 的数据。我们的数组使用 32 × 32 × 4 = 4,096 字节，所以我们是安全的。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> FindBrights (uint3 globalId : SV_DispatchThreadID, uint3 localId : SV_GroupThreadID, uint3 groupId : SV_GroupID)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// every pixel gets its luminance calculated and stored</span>
+</span></span><span style="display:flex;"><span>  float3 colourHere = _sourceTexture[globalId.xy];
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">float</span> luminanceHere = CalculateLuminance(colourHere);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  cachedLuminance[localId.x][localId.y] = luminanceHere;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// wait for every thread in this group to write their values</span>
+</span></span><span style="display:flex;"><span>  GroupMemoryBarrier();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// ...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As with the previous version of the shader we access one pixel on each thread and calculate its luminance. But now instead of deciding if it counts as bright, we store it in our groupshared array. We want each thread in the group to write to just one location in the array so we use SV_GroupThreadID to give each thread in the group a unique index.</p>
+<blockquote>
+<p>与以前版本的着色器一样，我们访问每个线程上的一个像素并计算其亮度。但现在我们不是决定它是否算明亮，而是将其存储在groupshared数组中。我们希望组中的每个线程只写入数组中的一个位置，因此我们为SV_GroupThreadID组中的每个线程提供唯一的索引。</p>
+</blockquote>
+<p>The rest of the shader will rely on the data in cachedLuminance written by other threads, so before continuing we need to make sure that all the other threads have finished writing to it. GroupMemoryBarrier() achieves that by pausing this thread until all other threads in the group have completed all prior group memory activity. Often the threads in a group will be executing at exactly the same time (it&rsquo;s one of the ways the GPU can work so fast), but there&rsquo;s no guarantee of that and the exact details vary with group size and the hardware itself. You might be able to skip using GroupMemoryBarrier on your machine, but cause all kinds of difficult to reproduce errors on another.</p>
+<blockquote>
+<p>着色器的其余部分将依赖于其他线程写入的数据cachedLuminance，因此在继续之前我们需要确保所有其他线程都已完成写入。GroupMemoryBarrier()通过暂停该线程直到组中的所有其他线程完成所有先前的组内存活动来实现这一点。通常，组中的线程会完全相同地执行（这是 GPU 能够如此快速工作的方式之一），但无法保证这一点，并且确切的细节因组大小和硬件本身而异。您也许可以跳过GroupMemoryBarrier在您的计算机上使用，但会在另一台计算机上导致各种难以重现的错误。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> FindBrights (uint3 globalId : SV_DispatchThreadID, uint3 localId : SV_GroupThreadID, uint3 groupId : SV_GroupID)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// every pixel gets its luminance calculated and stored by one thread each</span>
+</span></span><span style="display:flex;"><span>  float3 colourHere = _sourceTexture[globalId.xy];
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">float</span> luminanceHere = CalculateLuminance(colourHere);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  cachedLuminance[localId.x][localId.y] = luminanceHere;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// wait for every thread in this group to write their values</span>
+</span></span><span style="display:flex;"><span>  GroupMemoryBarrier();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// All but one thread will stop here.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (!(localId.x == <span style="color:#ae81ff">0</span> &amp;&amp; localId.y == <span style="color:#ae81ff">0</span>))
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// The one remaining thread finds the highest luminance in the group.</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">bool</span> foundBright = <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">float</span> brightest = _luminanceThreshold;
+</span></span><span style="display:flex;"><span>  int2 brightestLocation;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> y = <span style="color:#ae81ff">0</span>; y &lt; GROUP_SIZE; ++y)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> x = <span style="color:#ae81ff">0</span>; x &lt; GROUP_SIZE; ++x)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> luminance = cachedLuminance[x][y];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (luminance &gt; brightest)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      foundBright = <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>      brightest = luminance;
+</span></span><span style="display:flex;"><span>      brightestLocation = int2(x, y);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (foundBright)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    _brightPoints.Append(int2(
+</span></span><span style="display:flex;"><span>      groupId.x * GROUP_SIZE + brightestLocation.x,
+</span></span><span style="display:flex;"><span>      groupId.y * GROUP_SIZE + brightestLocation.y
+</span></span><span style="display:flex;"><span>    ));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><img src="image/u3d/from_compute_shader_to_quad/group-32-scene.webp" alt="渲染 3D 场景，其中包含可见太阳照亮的立方体和球体。太阳和物体上最亮的区域呈现出分散且微弱的星形透镜耀斑。"></p>
+<p>Once we have every pixel&rsquo;s luminance stored we&rsquo;ll have just one thread look through them all and pick the brightest. So we check localId and have all but one thread return;. Stopping most threads but leaving one running is generally not a great thing to do. The way GPUs work mean the other threads can&rsquo;t be used to do anything else and are going to be wasted while the one remaining thread continues its work. In this case it&rsquo;ll not be a significant performance problem, but adopting a more parallel-friendly algorithm would be a good optimisation.</p>
+<blockquote>
+<p>一旦我们存储了每个像素的亮度，我们将只有一个线程查看所有像素并选择最亮的。因此，我们检查localId并发现除了一个线程之外的所有线程return;。停止大多数线程但让其中一个线程运行通常并不是一件好事。 GPU 的工作方式意味着其他线程不能用于执行其他任何操作，并且在剩余线程继续工作时会被浪费。在这种情况下，这不会是一个重大的性能问题，但采用更加并行友好的算法将是一个很好的优化。</p>
+</blockquote>
+<p>The process of finding the brightest is straightforward. The single remaining thread iterates through every item in cachedLuminance and keeps track of the highest value. If we do find a sufficiently bright pixel its position is reconstructed and it&rsquo;s added to the same _brightPoints buffer as before.</p>
+<blockquote>
+<p>寻找最聪明的人的过程很简单。剩余的单个线程迭代其中的每个项目cachedLuminance并跟踪最高值。如果我们确实找到了一个足够亮的像素，它的位置就会被重建，并且会被添加到_brightPoints与之前相同的缓冲区中。</p>
+</blockquote>
+<p><img src="image/u3d/from_compute_shader_to_quad/group-32-performance.webp" alt="RenderDoc 实用程序的时序分析的屏幕截图。 DrawInstancedDirect 现在的时间成本要小得多，但 Dispatch 条目增加了。"></p>
+<p>The rest of the process remains the same but now there&rsquo;s far fewer bright points generated. Sure enough drawing is much faster and our compute shader is significantly slower than before. The overall performance is greatly improved though, with total frame time around 8% of previously.</p>
+<blockquote>
+<p>其余过程保持不变，但现在生成的亮点少得多。果然绘图速度快得多，而我们的计算着色器比以前慢得多。不过，整体性能大幅提升，总帧时间约为之前的 8%。</p>
+</blockquote>
+<h2 id="优化调整optimisation-tweaking">优化调整(OPTIMISATION TWEAKING)</h2>
+<p><img src="image/u3d/from_compute_shader_to_quad/group-8-performance.webp" alt="RenderDoc 实用程序的时序分析的屏幕截图。 DrawInstancedDirect 和 Dispatch 都减少了时间成本。"></p>
+<p>Earlier we talked about how thread group size can affect performance. In this case reducing the group size to 8x8 (and increasing the number of groups dispatched so it still covers the whole image) causes a significant increase in speed on my machine. Even though we end up drawing more flares the total frame time is about 50% of what it was with the 32 group size.</p>
+<blockquote>
+<p>前面我们讨论了线程组大小如何影响性能。在这种情况下，将组大小减少到 8x8（并增加调度的组数量，使其仍然覆盖整个图像）会导致我的计算机速度显着提高。尽管我们最终绘制了更多耀斑，但总帧时间约为 32 组大小的 50%。</p>
+</blockquote>
+<p>I&rsquo;ve identified two possible causes for this improvement. The flaw in our compute kernel is that in each group of threads all but one is wasted for a significant time. In an 8×8 group that means 1 in 64 threads are usefully active for the kernel&rsquo;s duration, in the 32×32 groups just 1 in 1024 threads are. So in the larger group more of the GPU&rsquo;s resources are being wasted by our non-optimal algorithm design. (Note that this reasoning falls apart in scenarios where the 8×8 group performs less work than the 32×32 group - the real solution here is improving the algorithm.)</p>
+<blockquote>
+<p>我已经确定了这种改进的两个可能原因。我们的计算内核中的缺陷是，在每组线程中，除了一个线程之外，所有线程都浪费了相当长的时间。在 8×8 组中，这意味着 64 个线程中有 1 个在内核持续时间内处于有效活动状态，而在 32×32 组中，只有 1024 个线程中有 1 个处于有效活动状态。因此，在更大的组中，更多的 GPU 资源被我们的非优化算法设计所浪费。 （请注意，在 8×8 组执行的工作量少于 32×32 组的情况下，这种推理会失效 - 这里真正的解决方案是改进算法。）</p>
+</blockquote>
+<p>The second possible cause is more hardware specific. I&rsquo;m using an AMD card which has a 64-wide &ldquo;wavefront.&rdquo; In overly simplistic terms that means threads are generated and run together in groups of 64. So using a group size of 64 (8×8) lets the whole group run together without being split up. The threads in a wavefront progress through the instructions at exactly the same time. Once we have enough threads in a group to need more than one wavefront some of the wavefronts will have to actually stop at our GroupMemoryBarrier().</p>
+<p>Some more testing supports the theory that there&rsquo;s something special about going past 8×8 for this graphics card:</p>
+<blockquote>
+<p>第二个可能的原因更多是硬件特定的。我使用的是具有 64 宽“波前”的 AMD 卡。用过于简单的术语来说，这意味着线程以 64 个为一组生成并一起运行。因此，使用 64 (8×8) 的组大小可以让整个组一起运行，而不会被拆分。波前中的线程完全同时执行指令。一旦我们在一组中有足够多的线程需要多个波前，一些波前将不得不实际停止在我们的GroupMemoryBarrier().</p>
+<p>更多的测试支持了这样的理论，即该显卡超过 8×8 有一些特别之处：</p>
+</blockquote>
+<p>组大小	6	7	8	9	10	11	12
+每组线程数	36	49	64	81	100	121	144
+持续时间（微秒）	274	270	274	502	504	520	第521章</p>
+<p>Keep in mind that many cards aren&rsquo;t AMD and will have different results (an Nvidia card&rsquo;s equivalent property is 32.) This kind of tuning can be highly platform specific so be cautious. Also avoid blindly following rules about performance like this one. Computers are complex and there&rsquo;s always a lot of factors involved, so do your own experiments with your own rendering system. If you want the performance gain to work across multiple machines you&rsquo;ll also need to do the testing across multiple machines.</p>
+<blockquote>
+<p>请记住，许多卡不是 AMD 的，并且会产生不同的结果（Nvidia 卡的等效属性为 32）。这种调整可能是高度特定于平台的，因此请谨慎。还要避免盲目遵循像这样的有关性能的规则。计算机很复杂，总是涉及很多因素，因此请使用自己的渲染系统进行自己的实验。如果您希望在多台机器上获得性能提升，您还需要在多台机器上进行测试。</p>
+</blockquote>
+<p>The usual optimisation warnings apply. Don&rsquo;t spend time chasing after magic tuning numbers on a system that isn&rsquo;t final yet. Check that the possible improvement would be meaningful to overall performance. Getting from 0.30% of frame time to 0.26% is neat but there&rsquo;s probably other places that would show more benefit from your work.</p>
+<p>For a closer look at measuring performance and improving this algorithm, see this follow-up article.</p>
+<blockquote>
+<p>通常的优化警告适用。不要花时间在尚未最终确定的系统上追求神奇的调整数字。检查可能的改进是否对整体性能有意义。将帧时间从 0.30% 提高到 0.26% 很不错，但可能还有其他地方可以从您的工作中获得更多好处。</p>
+<p>要详细了解测量性能和改进该算法，请参阅这篇<a href="https://samdriver.xyz/article/optimise-compute-shader">后续文章</a>。</p>
+</blockquote>
+<h2 id="进一步的考虑further-considerations">进一步的考虑(FURTHER CONSIDERATIONS)</h2>
+<p>We&rsquo;ve barely mentioned what the rest of the rendering system is doing, which is by design. The aim is our lens flare effect should be able to sit on top of whatever rendering is going on, so long as it provides an image we can feed to the compute shader. But there are a couple of things about that image we need to handle.</p>
+<blockquote>
+<p>我们几乎没有提到渲染系统的其余部分正在做什么，这是设计使然的。目标是我们的镜头眩光效果应该能够位于正在发生的任何渲染之上，只要它提供了我们可以输入到计算着色器的图像。但关于该图像，我们需要处理一些事情。</p>
+</blockquote>
+<p>HDR helps a lot with finding the bright points that we want to higlight with flares. We don&rsquo;t need to make any special adaptations in code to handle its presence or absence, but would generally need to set a lower threshold for a pixel to count as being bright if we&rsquo;re not using HDR. Like the often overused bloom effects in older games without HDR support the flares will have a tendency to appear in areas which aren&rsquo;t bright enough to warrant the effect.</p>
+<blockquote>
+<p>HDR 对于找到我们想要用耀斑突出显示的亮点有很大帮助。我们不需要在代码中进行任何特殊的调整来处理它的存在或不存在，但如果我们不使用 HDR，通常需要为像素设置一个较低的阈值才能算作亮。就像在没有 HDR 支持的旧游戏中经常过度使用的光晕效果一样，耀斑往往会出现在亮度不足以保证效果的区域。</p>
+</blockquote>
+<p>The luminance calculation assumes the colour value is in linear colour space. We could check that and swap it out for a more accurate version, but the difference is fairly minor. Our render feature being fed non-linear colours means the rendering system likely isn&rsquo;t handling gamma correctly in general, so one more minor colour error isn&rsquo;t going to have much impact.</p>
+<blockquote>
+<p>亮度计算假设颜色值位于线性颜色空间中。我们可以检查这一点并将其替换为更准确的版本，但差异相当小。我们的渲染功能提供非线性颜色，这意味着渲染系统通常可能无法正确处理伽玛，因此再出现一个较小的颜色错误不会产生太大影响。</p>
+</blockquote>
+<p>MSAA does need some special handling. When a scene is being rendered with MSAA active we can&rsquo;t read from the render target in the normal way as it&rsquo;ll be made up of multiple samples. When MSAA is detected we can resolve the texture to a temporary render texture, then feed that to the bright detection compute shader. In theory Unity should detect that and do it for us but I encountered odd behaviour where some texture seemed to get reused from the previous frame without clearing, creating artefacts. The flares we draw don&rsquo;t benefit from MSAA (there&rsquo;s no visible mesh edges) so ideally we&rsquo;d draw them into the resolved buffer and use that for the final output. Unfortunately I don&rsquo;t think we can tell the URP to directly use something else as the buffer to present. So we end up resolving once more than is necessary, a loss of around 80µs per frame</p>
+<blockquote>
+<p>MSAA 确实需要一些特殊处理。当使用 MSAA 活动渲染场景时，我们无法以正常方式从渲染目标读取，因为它将由多个样本组成。当检测到 MSAA 时，我们可以将纹理解析为临时渲染纹理，然后将其提供给明亮检测计算着色器。理论上，Unity 应该检测到这一点并为我们做到这一点，但我遇到了奇怪的行为，其中一些纹理似乎从前一帧中重新使用，而没有清除，从而创建了伪影。我们绘制的耀斑不会受益于 MSAA（没有可见的网格边缘），因此理想情况下，我们会将它们绘制到解析缓冲区中并将其用于最终输出。不幸的是，我认为我们不能告诉 URP 直接使用其他东西作为呈现的缓冲区。因此，我们最终解决了一次不必要的问题，每帧损失约 80μs。</p>
+</blockquote>
+<h2 id="完成的finished">完成的(FINISHED)</h2>
+<p>There&rsquo;s plenty more code in the finished project which isn&rsquo;t explored in detail here. I wanted to focus on the core use of a compute shader to generate a buffer that&rsquo;s then used to render out results. I also added a couple of features to the flares. The luminance and colour of the pixel is recorded along with its position, and used to adjust the flare graphic slightly. I also added a bouncy rotation effect to the flares because it looks fun.</p>
+<blockquote>
+<p>已完成的项目中还有大量代码，此处不再详细探讨。我想重点关注计算着色器的核心用途，以生成缓冲区，然后用于渲染结果。我还为耀斑添加了一些功能。像素的亮度和颜色及其位置被记录下来，并用于稍微调整耀斑图形。我还为耀斑添加了弹性旋转效果，因为它看起来很有趣。</p>
+</blockquote>
+<p>The example project can be <a href="https://samdriver.xyz/article-data/compute-shader-intro/brightSpots.zip">downloaded directly as a .zip</a>, or on <a href="https://github.com/Anatta336/bright-spots">GitHub</a>. The code is fairly heavily commented although does assume some prior knowledge. As usual with Unity projects you&rsquo;ll need to do a little ritual after downloading. When you first open the project it&rsquo;ll take a few minutes to build the local library. You&rsquo;ll then need to Open Scene to open the actual sample scene in the project (Unity silently generates a default start scene and shows you that instead.) To be safe you should then restart Unity as some assets don&rsquo;t seem to deserialize completely at first.</p>
+<blockquote>
+<p>示例项目可以直接下载为 .zip或在GitHub上下载。尽管假设有一些先验知识，但该代码有相当多的注释。像往常一样，对于 Unity 项目，您需要在下载后执行一些操作。当您第一次打开项目时，需要几分钟的时间来构建本地库。然后，您需要打开场景来打开项目中的实际示例场景（Unity 会默默地生成一个默认的开始场景并向您显示该场景。）为了安全起见，您应该重新启动 Unity，因为某些资源似乎并未完全反序列化首先。</p>
+</blockquote>
+<h2 id="补充说明">补充说明：</h2>
+<h3 id="sv_groupthreadid">SV_GroupThreadID</h3>
+<h4 id="详细解释">详细解释</h4>
+<p>在计算着色器中，<code>SV_GroupThreadID</code> 是一个系统定义的语义，它用于表示当前线程在其线程组（Thread Group）内的 <strong>唯一索引</strong>。这个语义在编写计算着色器时非常有用，因为它允许程序员准确识别并操作线程组中的各个线程。</p>
+<p><code>SV_GroupThreadID</code> 提供了一个三维向量（通常用 uint3 类型来表示），它包含当前线程在其所属线程组内的x、y和z方向上的索引。这个索引是从零开始的，最大值由 numthreads 属性定义的每个线程组的维度决定。</p>
+<h4 id="用途">用途：</h4>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>线程特定操作</td>
+<td>SV_GroupThreadID 允许在计算着色器中执行基于特定线程位置的操作，例如初始化特定线程的数据，或者基于线程的位置修改数据。</td>
+</tr>
+<tr>
+<td>优化数据局部性</td>
+<td>利用 SV_GroupThreadID，可以有效地管理和优化数据访问模式，确保数据局部性（data locality），这有助于提高缓存效率和整体性能。</td>
+</tr>
+<tr>
+<td>并行模式控制</td>
+<td>在需要根据线程在组内的位置采取不同操作的场合，SV_GroupThreadID 是一个关键工具，例如在执行并行约简（reduction）或扫描（scan）算法时。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="示例">示例</h4>
+<p>以下是一个使用 SV_GroupThreadID 的计算着色器示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#a6e22e">[numthreads(8, 8, 1)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> CSMain(uint3 GroupID : SV_GroupID, uint3 ThreadID : SV_GroupThreadID)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ThreadID 包含了当前线程在其线程组内的位置</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 可以根据 ThreadID.x 和 ThreadID.y 来进行特定操作</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 假设我们处理一个 8x8 的数据块</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (ThreadID.x == <span style="color:#ae81ff">0</span> &amp;&amp; ThreadID.y == <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 执行一些只有组中第一个线程需要做的特殊处理</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 其他线程执行常规处理</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在这个例子中，我们使用 SV_GroupThreadID 来识别线程组中的每个线程，并且特别检查第一个线程（索引为 [0, 0, 0]）来执行一些特殊操作。</p>
+<h2 id="参考网页">参考网页</h2>
+<p><a href="https://nedmakesgames.github.io/blog/compute-gen-mesh">https://nedmakesgames.github.io/blog/compute-gen-mesh</a></p>
+<p><a href="https://github.com/z4gon/mesh-deformation-compute-shader-unity">https://github.com/z4gon/mesh-deformation-compute-shader-unity</a></p>
+<p><a href="https://www.edraflame.com/blog/unity-graphics-drawmesh-drawmeshinstanced/">https://www.edraflame.com/blog/unity-graphics-drawmesh-drawmeshinstanced/</a></p>
+<p><a href="https://www.edraflame.com/blog/unity-graphics-drawmesh-drawmeshinstanced/">https://www.edraflame.com/blog/unity-graphics-drawmesh-drawmeshinstanced/</a></p>
+<p><a href="https://polycoding.net/marching-cubes/part-2/">https://polycoding.net/marching-cubes/part-2/</a></p>
+<p><a href="https://github.com/z4gon/grass-compute-shader-unity">https://github.com/z4gon/grass-compute-shader-unity</a></p>
+<p>UnityURP-MobileDrawMeshInstancedIndirectExample
+<a href="https://github.com/ColinLeung-NiloCat/UnityURP-MobileDrawMeshInstancedIndirectExample">https://github.com/ColinLeung-NiloCat/UnityURP-MobileDrawMeshInstancedIndirectExample</a></p>
+<p>DrawMeshInstanceIndirect examples.
+<a href="https://github.com/ttvertex/Unity-InstancedIndirectExamples">https://github.com/ttvertex/Unity-InstancedIndirectExamples</a>
+<a href="https://github.com/ttvertex/Unity-InstancedIndirectExamples">https://github.com/ttvertex/Unity-InstancedIndirectExamples</a></p>
+<p>使用Graphics.DrawMeshInstanced进行gpu instancing绘制</p>
+<p><a href="https://blog.csdn.net/le12380/article/details/104842394">https://blog.csdn.net/le12380/article/details/104842394</a></p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/from_cs_to_quad/">从计算着色器到四边形【翻译】</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/cg_programming_unity_debugging_of_shaders/">在Unity3D中使用Visual Studio调试shader【翻译】</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_player_prefs/">Unity3D PlayerPrefs的存储位置</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_collision_trigger/">Unity3D的碰撞检测响应处理细节</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_png_iccp_warning/">解决Unity3D在编译时出现libpng iccp警告的问题</a></li>
+		
+	</ul>
+</div>
+
+	
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2024 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

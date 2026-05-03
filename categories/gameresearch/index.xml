@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GameResearch on XGF</title>
+    <link>http://localhost:1313/categories/gameresearch/</link>
+    <description>Recent content in GameResearch on XGF</description>
+    <generator>Hugo</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 17 Feb 2016 19:08:53 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/categories/gameresearch/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>仓库番游戏研究资料汇总</title>
+      <link>http://localhost:1313/post/game_research/sokoban/</link>
+      <pubDate>Wed, 17 Feb 2016 19:08:53 +0800</pubDate>
+      <guid>http://localhost:1313/post/game_research/sokoban/</guid>
+      <description>&lt;h2 id=&#34;xsb文件和lurd文件格式简介&#34;&gt;XSB文件和LURD文件格式简介&lt;/h2&gt;&#xA;&lt;h3 id=&#34;xsb文件介绍&#34;&gt;XSB文件介绍&lt;/h3&gt;&#xA;&lt;p&gt;在sokoban游戏社区中，推箱子关卡一般用XSB格式来保存和交流。XSB文件格式的由来可参阅此&lt;a href=&#34;http://sokoban.ws/blog/?p=217&#34;&gt;文章&lt;/a&gt;。详细说明如下表格：&lt;/p&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;字符&lt;/th&gt;&#xA;          &lt;th&gt;含义&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;@&lt;/td&gt;&#xA;          &lt;td&gt;人(man)&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;+&lt;/td&gt;&#xA;          &lt;td&gt;人在目标点 (man on goal)&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;$&lt;/td&gt;&#xA;          &lt;td&gt;箱子 (box)&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;*&lt;/td&gt;&#xA;          &lt;td&gt;箱子在目标点 (box on goal)&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;#&lt;/td&gt;&#xA;          &lt;td&gt;墙(wall)&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;.&lt;/td&gt;&#xA;          &lt;td&gt;目标点 (goal)&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;-&lt;/td&gt;&#xA;          &lt;td&gt;XSB格式空格代表“地板”，又因为连续多个空格在网页或即时通讯软件中偶尔显示有问题，也用“-”或“&lt;em&gt;”代替空格。(floor, represented by &amp;rsquo; &amp;rsquo; or &amp;lsquo;-&amp;rsquo; or &amp;lsquo;&lt;/em&gt;&amp;rsquo;)&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;例子如下&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;----#####----------&#xA;----#---#----------&#xA;----#$--#----------&#xA;--###--$##---------&#xA;--#--$-$-#---------&#xA;###-#-##-#---######&#xA;#---#-##-#####--..#&#xA;#-$--$----------..#&#xA;#####-###-#@##--..#&#xA;----#-----#########&#xA;----#######--------&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/image/sokoban_research/sokoimage.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;lurd文件介绍&#34;&gt;LURD文件介绍&lt;/h3&gt;&#xA;&lt;p&gt;一个LURD文件如下：&lt;/p&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ullluuuLUllDlldddrRRRRRRRRRRdrUllllllluuululldDDuu&#xA;lldddrRRRRRRRRRRRRlllllllluuulLulDDDuulldddrRRRRRR&#xA;RRRRRllllllluuulluuurDDuullDDDDDuulldddrRRRRRRRRRR&#xA;uRRlDllllllluuuLLulDDDuulldddrRRRRRRRRRRdRRlUlllll&#xA;lllllllulldRRRRRRRRRRRRRuRDldR&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;其中&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;l 或 L ==&amp;gt; 左&#xA;r 或 R ==&amp;gt; 右&#xA;u 或 U ==&amp;gt; 上&#xA;d 或 D ==&amp;gt; 下&#xA;小写字母是&lt;strong&gt;移动&lt;/strong&gt;， 大写字母是&lt;strong&gt;推动&lt;/strong&gt;。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

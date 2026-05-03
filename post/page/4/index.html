@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Posts | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Posts" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/post/" />
+
+
+		<meta itemprop="name" content="Posts">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/post/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-section">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Posts</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">Posts</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_unity_engine_texture_format_detail/">Unity3D中枚举类型UnityEngine.TextureFormat详解</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+在Unity中，UnityEngine.TextureFormat 枚举类型定义了多种纹理格式，每种格式都有不同的通道数、每个像素的字节数以及适用场景。以下是 UnityEngine.TextureFormat 中每个值的具体含义、通道数、每个像素的字节数等详细信息：
+1. 常用纹理格式 枚举值 含义 通道数 每个像素字节数 描述 Alpha8 单通道 Alpha 1 1 仅存储 Alpha 通道，适用于遮罩或透明度贴图。 ARGB4444 4 通道 ARGB，每通道 4 位 4 2 每个通道 4 位，适用于低精度颜色贴图。 RGB24 3 通道 RGB，每通道 8 位 3 3 存储 RGB 颜色，无 Alpha 通道，适用于普通颜色贴图。 RGBA32 4 通道 RGBA，每通道 8 位 4 4 存储 RGBA 颜色，适用于带透明度的颜色贴图。 RGB565 3 通道 RGB，R 和 B 各 5 位，G 6 位 3 2 压缩格式，适用于低精度颜色贴图。 R16 单通道 16 位 1 2 存储单通道 16 位数据，适用于高度图或深度图。 DXT1 DXT1 压缩格式 3 0.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2023-12-08T18:38:27&#43;08:00">December 08, 2023</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/accessing_texture_data_efficiently/">高效地访问纹理数据</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+Working with pixel data in Unity Pixel data describes the color of individual pixels in a texture. Unity provides methods that enable you to read from or write to pixel data with C# scripts.
+像素数据描述纹理中各个像素的颜色。Unity 提供了使用 C# 脚本读取或写入像素数据的方法。
+You might use these methods to duplicate or update a texture (for example, adding a detail to a player’s profile picture), or use the texture’s data in a particular way, like reading a texture that represents a world map to determine where to place an object.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2023-11-22T20:20:49&#43;08:00">November 22, 2023</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/2d_pixel_perfect_package/">Unity的2D Pixel Perfect包的工作原理</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+Unity的 2D Pixel Perfect 包（现为 Pixel Perfect Camera 组件）是专为像素风格游戏设计的工具，其核心目标是确保2D精灵（Sprites）在屏幕上以整数像素呈现，避免模糊或锯齿，保持复古像素艺术的清晰锐利。以下是它的工作原理和关键实现方式：
+1. 核心原理：像素对齐（Pixel Snapping） 问题根源：
+当游戏相机或精灵的坐标包含小数部分（如位置为 (10.3, 5.7)），Unity的渲染器会进行子像素插值，导致精灵边缘模糊（抗锯齿效果）。 解决方案：
+Pixel Perfect Camera 会动态调整相机位置和渲染分辨率，确保所有2D精灵的顶点坐标对齐到屏幕像素网格（即整数坐标），消除小数偏移。 2. 关键工作流程 (1) 设置目标分辨率 Assets Pixels Per Unit (PPU)：
+在精灵导入设置中定义 Pixels Per Unit（如 16 表示1 Unity单位 = 16像素）。
+示例：若角色精灵为 32x32 像素，PPU=16，则精灵在Unity中的大小为 2x2 单位。
+Reference Resolution：
+在 Pixel Perfect Camera 组件中设置目标分辨率（如 256x144），表示游戏设计的基准像素分辨率。
+(2) 动态调整相机 整数倍缩放（Scale to Fit）：
+相机会根据当前屏幕分辨率，选择整数倍缩放（1x, 2x, 3x&hellip;）以适配窗口，避免非整数拉伸。
+例如：
+目标分辨率 256x144，屏幕为 768x432 → 缩放3倍（256*3=768）。 若屏幕为 900x500，可能缩放3倍并留黑边（Letterboxing）。 像素对齐（Pixel Snapping）：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2023-11-12T18:21:49&#43;08:00">November 12, 2023</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_http_details/">Http详解及如何在Unity上使用</a></h1>
+	<div class="entry__content">** 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com。**
+1 HTTP协议简介 超文本传输协议（英文：HyperText Transfer Protocol，缩写：HTTP）是一种用于分布式、协作式和超媒体信息系统的应用层协议。
+HTTP是一个基于TCP/IP通信协议。来传递数据（HTML 文件, 图片文件, 查询结果等）。它指定了客户端可能发送给服务器什么样的消息，以及得到什么样的响应。请求和响应消息的头以ASCII形式给出；而消息内容则具有一个类似MIME的格式。
+HTTP协议永远都是客户端发起请求，服务器回送响应。见下图：
+2 HTTP工作流程 一次HTTP操作称为一个事务，其工作过程可分为四步：
+客户机与服务器建立TCP连接。只要单击某个超级链接/输入网址/提交表单等。 建立连接后，客户机发送http请求给服务器. 服务器接到请求后，响应信息。 客户端接收服务器所返回的信息，然后客户机与服务器断开TCP连接。 3 HTTP发展及各版本 版本 产生时间 内容 发展现状 HTTP/1.1 1997年 持久连接(长连接)、节约带宽、HOST域、管道机制、分块传输编码 2015年前使用最广泛 HTTP/2 2015年 多路复用、服务器推送、头信息压缩、二进制协议等 逐渐覆盖市场 3.1 HTTP1.1 版本 HTTP 1.1 新增了delete options 等几种请求数据的方式，客户端和服务端三次握手后，建立tcp链接，一个tcp链接可以传送多个请求和响应，这样就减少了握手和建立tcp和关闭tcp链接的消耗，传输更快 HTTP 1.1 支持持久链接 请求头有一个connection 参数，参数值是close/keep-alive 意思是本次请求处理完后，服务器是关闭该tcp链接还是继续使用该链接
+3.2 HTTP 2.0 版本 HTTP2.0使用了多路复用的技术，做到同一个链接并发处理多个请求，而且并发请求的数量比HTTP1.1大了好几个数量级。
+4 HTTP主要特点 简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。 灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。 无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。 无状态：无状态是指协议对于事务处理没有记忆能力。也就是说，打开一个服务器上的网页和上一次打开这个服务器上的网页之间没有任何联系。HTTP是一个无状态的面向连接的协议，无状态不代表HTTP不能保持TCP连接，更不能代表HTTP使用的是UDP协议（无连接）。 支持B/S及C/S模式 5 HTTP协议安全机制 HTTPS (Secure Hypertext Transfer Protocol)：安全超文本传输协议。HTTPS是在HTTP上建立SSL加密层，并对传输数据进行加密，是HTTP协议的安全版。HTTPS提供的安全通信，应用了对称加密，非对称加密，数据签名等技术。
+HTTP缺点：不够安全——明文传输，不做加密，易被中间人攻击（中间人截获甚至篡改信息） HTTPS主要作用： （1）对数据进行加密，并建立一个信息安全通道，来保证传输过程中的数据安全; （2）对网站服务器进行真实身份认证。 6 HTTP请求方法 根据HTTP标准，HTTP请求可以使用多种请求方法。到目前为止，有以下的方法</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2023-01-08T18:38:27&#43;08:00">January 08, 2023</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/misc/http_detail_table/">Http的报头、消息返回码等细节一览表</a></h1>
+	<div class="entry__content">** 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com。**
+1 HTTP头部 1.1 Requests Header Header 解释 示例 Accept 指定客户端能够接收的内容类型 Accept: text/plain, text/html Accept-Charset 浏览器可以接受的字符编码集。 Accept-Charset: iso-8859-5 Accept-Encoding 指定浏览器可以支持的web服务器返回内容压缩编码类型。 Accept-Encoding: compress, gzip Accept-Language 浏览器可接受的语言 Accept-Language: en,zh Accept-Ranges 可以请求网页实体的一个或者多个子范围字段 Accept-Ranges: bytes Authorization HTTP授权的授权证书 Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ== Cache-Control 指定请求和响应遵循的缓存机制 Cache-Control: no-cache Connection 表示是否需要持久连接。（HTTP 1.1默认进行持久连接） Connection: close Cookie HTTP请求发送时，会把保存在该请求域名下的所有cookie值一起发送给web服务器。 Cookie: $Version=1; Skin=new; Content-Length 请求的内容长度 Content-Length: 348 Content-Type 请求的与实体对应的MIME信息 Content-Type: application/x-www-form-urlencoded Date 请求发送的日期和时间 Date: Tue, 15 Nov 2010 08:12:31 GMT Expect 请求的特定的服务器行为 Expect: 100-continue From 发出请求的用户的Email From: user@email.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2023-01-07T18:38:27&#43;08:00">January 07, 2023</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/misc/" rel="category">MISC</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/misc/" rel="tag">MISC</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/octahedron_mapping/">八面体（Octahedron）及其坐标映射</a></h1>
+	<div class="entry__content">八面体（Octahedron）及其坐标映射 八面体是一种 正八面体几何结构，它可以用于 映射方向向量（3D）到2D，以便进行 高效的纹理存储和查询。在 Impostor 渲染 中，八面体映射（Octahedral Mapping）是一种将 球面方向向量 投影到 二维平面 的方法，广泛用于 环境贴图、光照计算、Impostor 纹理存储 等。
+1. 为什么使用八面体坐标？ 通常，我们用一个 单位向量（( x, y, z )）表示方向。但如果要将方向存储在 2D 纹理（如 Impostor 贴图）中，我们需要找到一种 从 3D 到 2D 的映射方法。
+常见的映射方法：
+球面坐标（Spherical Coordinates）：容易产生极点扭曲（pole distortion）。 立方体映射（Cubemap）：存储效率不高，容易出现采样接缝（seams）。 八面体映射（Octahedral Mapping）： 相比 球面坐标，它没有极点扭曲问题。 相比 立方体映射，它存储利用率高达 100%，没有浪费区域。 计算简单，适用于 GPU 计算。 因此，八面体映射是一种高效的 3D → 2D 映射 方法。
+2. 八面体坐标转换 八面体映射的核心思想是 将单位球的上、下两个半球折叠到一个正方形上。
+(1) 3D 方向向量到八面体坐标（VectortoOctahedron） 假设有一个 单位方向向量： [ V = (x, y, z) ] 步骤：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2022-12-25T20:36:51&#43;08:00">December 25, 2022</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/interior_mapping_document/">伪内部空间映射的相关文档</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+CSDN上的参考网页 Unity Shader Interior mapping 内部映射
+CSDN上的案例学习——Interior Mapping 室内映射（假室内效果）
+CSDN上的UE5黑客帝国3d print假室内的一些使用记录
+unity 跟随目标_使用Cubemap在Unity中制作虚拟室内效果
+知乎上的参考网页 案例学习——Interior Mapping 室内映射（假室内效果）
+一种假室内(Fake Interior)效果的实现，这种是带上了室内深度效果的，即每个室内的深度纵深是不一样的。
+其他 Joost van Dongen的论文《Interior Mapping A new techique for rendering realistic buildings》
+下面的这份代码是《一种假室内(Fake Interior)效果的实现》中提到的代码实现
+Shader &#34;Custom/FakeRoom&#34; { Properties { [NoScaleOffset]_WindowTex (&#34;Window Texture&#34;, 2D) = &#34;black&#34; {} _RoomTex (&#34;Room Texture&#34;, CUBE) = &#34;&#34;{} _RoomDepth (&#34;Room Depth&#34;, Range(0.01, 1)) = 1.0 } SubShader { Tags { &#34;RenderType&#34;=&#34;Opaque&#34; } Cull Back Pass { CGPROGRAM #pragma vertex vert #pragma fragment frag #include &#34;UnityCG.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2022-12-08T18:38:27&#43;08:00">December 08, 2022</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/volumetric_clouds_write_up/">Volumetric Clouds Write-up(翻译)</a></h1>
+	<div class="entry__content">原文地址
+The basis of this effect is drawing a vertical stack of quads, each one showing a slice of the cloud. The cloud texture itself is just a world-mapped, top-down animated noise that is piped into opacity.
+这种效果的基础是绘制一组垂直堆叠的四边形（简称为：四边形堆栈，vertical stack of quads），每个四边形都显示一片云。 云纹理本身只是一个世界映射的(world-mapped)、自上而下的(top-down)的动画噪声，它通过渲染，管道传输到不透明度中。
+To animate the noise, I use the same trick that I use in countless other shaders to create a natural looking motion that appears free of obvious repetition, which is to blend the noise with either a copy of itself with a different UV scale, or a different noise texture, and pan these two noise textures against each other in opposite directions, and then blend them together through multiplication or some other desired blend mode.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2022-11-11T20:20:49&#43;08:00">November 11, 2022</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/unity_texture_compression_detail/">Unity纹理压缩格式详解</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+Crunch compression(紧凑压缩) Crunch compression是一种建筑在DXT或ETC压缩之上的压缩格式，提供额外的可变比特率压缩。当Unity加载紧凑压缩的纹理时，它会在CPU上将纹理解压缩为DXT或 ETC，然后将DXT或ETC压缩的纹理数据上传到GPU。
+紧凑压缩有助于纹理使用尽可能少的磁盘空间，但对运行时内存使用没有影响。紧凑压缩 纹理可能需要很长时间来压缩，但运行时的解压缩速度相当快。您可以调整紧凑压缩的有损程度，以在文件大小和质量之间取得平衡。
+Unity的各种纹理压缩格式信息 参考网页 聊聊 Unity 的 Alpha Is Transparency 有什么用 What does the &ldquo;alpha is transparency&rdquo; setting actually do? 光照贴图的中的编码格式 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2022-06-08T18:38:27&#43;08:00">June 08, 2022</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/from_outline_to_urp_multipass/">从半透明模型的描边到URP Multipass Rendering</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+卡通渲染技术中，描边的实现的有多种做法，有基于后处理实现，也有基于非后处理，通过多次绘制模型的方法实现。
+通过多次绘制模型的实现，方法无非就是：
+绘制模型本体，同时写入深度值。 让模型顶点沿着法线外扩一定的偏移量，即让模型膨胀一些 全用描边的颜色绘制膨胀过的模型，且，在绘制时，使用cull front，即只绘制模型的背向摄像机面。在第1步中因为绘制模型本体时已经写入深度值。在本步骤中只要不改变深度测试函数的方式，那么除了膨胀部分之外，是无法写入像素的，能写入的部分，便形成了边缘。 上述的方式，一般应用于不透明的材质上。如果是半透明的材质的话就有问题，因为在第1步绘制半透明材质时，一般是不写入深度值的。那么第3步在绘制膨胀模型时，模型背部的地方就会被绘制上去。
+解决这个问题有很多，可以利用stencil test的方式。也可以在第一步绘制，不绘制任何颜色，只写入深度，然后再绘制模型，最后再绘制描边。后一种方法，如果用Unity内置管线，大约就是这个样子：
+Shader &#34;Unlit/半透明&#34; { Properties { _Diffuse(&#34;Diffuse&#34;,Color) = (1,1,1,1) // 漫反射 _MainTex(&#34;MainTex&#34;,2D) = &#34;white&#34;{} // 2D纹理贴图 _AlphaScale(&#34;Alpha Scale&#34;,Range(0,1)) = 1 // 控制Alpha参数 } SubShader { Tags { &#34;Queue&#34; = &#34;Transparent&#34; &#34;IgnoreProjector&#34; = &#34;True&#34; &#34;RenderType&#34; = &#34;Transparent&#34; } //渲染顺序设置Transparent LOD 100 // 用两个pass通道来处理，防止出现渲染错误，第一个pass通道 // 每个pass通道都会渲染一次 Pass { ZWrite On // 注意这里：写入深度 为了确认渲染顺序 ColorMask 0 // 掩码遮罩代表这个pass通道不写入任何颜色值 } Pass // 第二个pass通道 { Tags{&#34;LightMode&#34; = &#34;ForwardBase&#34;} ZWrite Off // 注意这里：关闭ZWrite（深度写入） Blend SrcAlpha OneMinusSrcAlpha // 源颜色因子 正常透明混合 CGPROGRAM #pragma vertex vert #pragma fragment frag #include &#34;UnityCG.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2022-04-29T11:37:25&#43;08:00">April 29, 2022</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/post/">1</a>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/2/">2</a>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/3/">3</a>
+				<span class="pagination__item pagination__item--active" data-total="15">4</span>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/5/">5</a>
+			<span class="pagination__item pagination__item--gap">&hellip;</span>
+				<a class="pagination__item pagination__item--desktop" href="/post/page/15/">15</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

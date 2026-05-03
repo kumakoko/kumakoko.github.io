@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>MISC | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="MISC" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/categories/misc/" />
+
+
+		<meta itemprop="name" content="MISC">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/categories/misc/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-term">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/categories/">Categories</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">MISC</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">MISC</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/misc/useful_regex/">一些实用的正则表达式</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+生成一个正则表达式，把每一个中文自然段落前的空格都去掉 可以使用以下正则表达式来去除每个中文自然段落前的空格：
+正则表达式：
+^[ \t　]+ 替换为： 空字符串（即删除匹配到的内容）
+解释：
+^ 匹配行的开头（在多行模式下）。 [ \t　]+ 匹配一个或多个： 半角空格（ ） 制表符（\t） 全角空格（　，Unicode \u3000） 使用方式：
+启用多行模式（/m 标志），使 ^ 能匹配每行的开头。 全局匹配（/g 标志），处理所有符合条件的空格。 示例（JavaScript）：
+const text = ` 这是一个前面有半角空格的段落。 这是一个前面有全角空格的段落。 Another mixed space paragraph.`; const result = text.replace(/^[ \t　]+/gm, &#39;&#39;); console.log(result); 输出：
+这是一个前面有半角空格的段落。 这是一个前面有全角空格的段落。 Another mixed space paragraph. 注意事项：
+该正则表达式会删除每行开头的所有空格（包括全角/半角），适用于典型的首行缩进场景。 如果段落中存在需要保留的非开头空格（如英文单词间的空格），不会被误删。 如果文本包含代码块等需要保留缩进的结构，建议先提取自然段落再处理。 生成一个正则表达式，删除空白行，纯空格符的行也算空白行 可以使用以下正则表达式删除所有空白行（包括仅含空格/制表符等空白字符的行）：
+正则表达式：
+^\s*$ 替换为： 空字符串（即删除匹配到的整行）
+解释： ^ 匹配行的开头（需启用多行模式） \s* 匹配零个或多个空白字符（包括：空格、制表符\t、换页符等） $ 匹配行的结尾（需启用多行模式） 使用方式： 启用多行模式 (/m 标志)，使 ^ 和 $ 能匹配每行的开头和结尾 全局匹配 (/g 标志)，处理所有符合条件的行 示例（JavaScript）：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-10-22T23:21:49&#43;08:00">October 22, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/misc/" rel="category">Misc</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/misc/" rel="tag">Misc</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/misc/http_detail_table/">Http的报头、消息返回码等细节一览表</a></h1>
+	<div class="entry__content">** 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com。**
+1 HTTP头部 1.1 Requests Header Header 解释 示例 Accept 指定客户端能够接收的内容类型 Accept: text/plain, text/html Accept-Charset 浏览器可以接受的字符编码集。 Accept-Charset: iso-8859-5 Accept-Encoding 指定浏览器可以支持的web服务器返回内容压缩编码类型。 Accept-Encoding: compress, gzip Accept-Language 浏览器可接受的语言 Accept-Language: en,zh Accept-Ranges 可以请求网页实体的一个或者多个子范围字段 Accept-Ranges: bytes Authorization HTTP授权的授权证书 Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ== Cache-Control 指定请求和响应遵循的缓存机制 Cache-Control: no-cache Connection 表示是否需要持久连接。（HTTP 1.1默认进行持久连接） Connection: close Cookie HTTP请求发送时，会把保存在该请求域名下的所有cookie值一起发送给web服务器。 Cookie: $Version=1; Skin=new; Content-Length 请求的内容长度 Content-Length: 348 Content-Type 请求的与实体对应的MIME信息 Content-Type: application/x-www-form-urlencoded Date 请求发送的日期和时间 Date: Tue, 15 Nov 2010 08:12:31 GMT Expect 请求的特定的服务器行为 Expect: 100-continue From 发出请求的用户的Email From: user@email.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2023-01-07T18:38:27&#43;08:00">January 07, 2023</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/misc/" rel="category">MISC</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/misc/" rel="tag">MISC</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/misc/solve_github_problem/">解决访问GitHub的Failed to connect to github.com port 443: Operation timed out问题</a></h1>
+	<div class="entry__content">当碰到以下问题时：
+突然电脑无法访问github了。 用科学上网却可以访问到GitHub 科学上网中，使用git时，却出现了以下的问题：Failed to connect to github.com port 443: Operation timed out 不要着急，解决方案如下：
+第1步， 打开https://github.com.ipaddress.com/。记录下 Domain Summary下的IP Address，例如是140.82.113.4
+第2步， 打开https://fastly.net.ipaddress.com/github.global.ssl.fastly.net#ipinfo。记录下 Hostname Summary下的IP Address，例如是199.232.69.194
+第3步，打开https://github.com.ipaddress.com/assets-cdn.github.com。记录下FAQ下的IP，通常是四个，例如
+186.185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153 第4步。打开电脑的hosts文件，把下列的地址写在最后，然后保存即可。
+140.82.113.4 github.com 199.232.69.194 github.global.ssl.fastly.net 185.199.108.153 assets-cdn.github.com 185.199.109.153 assets-cdn.github.com 185.199.110.153 assets-cdn.github.com 185.199.111.153 assets-cdn.github.com 参考网页 GitHub无法访问、443 Operation timed out的解决办法</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-04-12T15:14:34&#43;08:00">April 12, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/misc/" rel="category">MISC</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

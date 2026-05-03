@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>深度探索DxFramework 8-1 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="深度探索DxFramework">
+		<meta property="og:title" content="深度探索DxFramework 8-1" />
+<meta property="og:description" content="深度探索DxFramework" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_8_1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2007-10-19T18:08:30+08:00" />
+<meta property="article:modified_time" content="2007-10-19T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content="深度探索DxFramework 8-1">
+<meta itemprop="description" content="深度探索DxFramework"><meta itemprop="datePublished" content="2007-10-19T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2007-10-19T18:08:30+08:00" />
+<meta itemprop="wordCount" content="904">
+<meta itemprop="keywords" content="DxFramework," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">深度探索DxFramework 8-1</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2007-10-19T18:08:30&#43;08:00">October 19, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">深度探索DxFramework 8-1</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#81-demo的场景地图分析">8.1. demo的场景地图分析</a>
+      <ul>
+        <li><a href="#811-场景坐标系和屏幕坐标系">8.1.1. 场景坐标系和屏幕坐标系</a></li>
+        <li><a href="#812-场景数据的组织">8.1.2. 场景数据的组织</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h1 id="第8章-world-map的剖析-1">第8章 World Map的剖析 1</h1>
+<p>World map demo展示了经典的2D RPG的一些基本的实现技术。在world map demo中，玩家通过键盘操纵主角，即一个小精灵。在几个场景中来回行走。。游戏运行时如图：</p>
+<p><img src="/image/inside_dxf/world_map_demo_screenshot.png" alt=""></p>
+<p>这个demo的程序代码分别在以下几个文件中，它们分别是：</p>
+<ol>
+<li>worldmap.h</li>
+<li>worldmap.cpp</li>
+<li>mapobject.cpp</li>
+<li>mapobject.h</li>
+<li>map_pc.h</li>
+<li>map_pc.cpp</li>
+</ol>
+<p>这个Demo主要实现了的几个技术点功能是：</p>
+<ol>
+<li>游戏场景的瓷砖拼图实现。</li>
+<li>大于屏幕的地图的卷轴（scrolling）显示技术</li>
+<li>游戏场景地图之间的切换。</li>
+<li>主角和场景之间的碰撞检测</li>
+<li>小地图的显示。</li>
+</ol>
+<p>玩一玩这个demo。并且用面向对象的思维方式思考一下，这个demo可以划分成怎样的类？对象的粒度，类的层次应该如何搭建比较合适？我们可以追随这个demo的设计者的思维，看看为了实现这个demo，他们是如何进行架构分析的。</p>
+<p>前面我们提过，每一个利用DxFramework开发的游戏实例，都是一个game state。world map demo也不能违反这个规定，所以实现了一个类C_WorldMap，此类继承自C_GameState。此类作为一个游戏“总管”，负责了游戏场景地图的初始化和渲染；外设输入的响应；游戏状态的更新；以及对所有在地图上的游戏对象（game object），比如主角等，进行管理。</p>
+<p>类C_MapObject继承自C_GameObject2D。它可以用来作为任何一种在游戏场景地图上的物体（map object）的基类。比如主角，敌人，各种道具等等。world map demo只实现了“主角”这一个在地图上的物体。如果要实现各种宝物的话，可以继承自C_MapObject，派生一个具有宝物行为和属性的类即可。</p>
+<p>类C_MapPC则表示了由玩家控制的主角player。C_MapPC继承自C_MapObject。表明了主角player也是“生存”在场景中，拥有map object的一般行为。world map demo主要就是利用了这三个类实现了游戏，架构很简单明了。下面是这个demo的静态类图：</p>
+<p>上面的图反映了world map demo的类层次架构，而这个demo的运行时序则如下图：</p>
+<p>DxFramework调用类C_WorldMap的构造函数，构造出游戏场景；构造出各种游戏对象（game object）实例对象，在这demo中就是C_MapPC类的一个实例对象。然后在每一帧中，DxFramework调用void C_WorldMap::Update()函数，在这个函数中响应了外设的输入；更新world map demo的游戏场景和游戏对象的各个属性状态。其后DxFramework调用void C_WorldMap::Render2D()，把游戏场景，各种游戏对象，统计窗口，小地图依次渲染出来。</p>
+<h2 id="81-demo的场景地图分析">8.1. demo的场景地图分析</h2>
+<p>游戏场景是一个游戏中最重要的部件之一。作为角色，道具，游戏剧本的载体。游戏中发生的各种各样的事件，游戏剧情的发展，都离不开游戏场景这一个“容器”。因此，场景作为游戏世界的一个具体表现，它应该负责整个游戏框架内场景状态的各种操作，控制。同时它也应该能对“在它上面”的游戏组成元素进行有效的管理，比如对各种敌人的添加，删除，状态更新等等。游戏场景各种角色道具剧本都应该以特定的次序添加到场景中。它还应该负责对玩家的输入操作进行管理和派发，等等。正因为如此，demo用整个游戏实例类C_Worldmap来实现场景管理是合理的。下面就来一步一步分析world map demo是如何组织和管理场景的。</p>
+<h3 id="811-场景坐标系和屏幕坐标系">8.1.1. 场景坐标系和屏幕坐标系</h3>
+<p>在讨论场景之前，有必要弄明白两个非常重要的概念：场景坐标系 ，屏幕坐标系。所作者在写作过程中曾经以“世界坐标系”表达这同一个概念，但是在3D渲染流水线中也有一个“世界坐标系”。考虑到这样会导致读者产生混淆，所以在这里改用“场景坐标系”表示这一概念谓的场景坐标系就是指，以实际游戏场景地图的某个点为原点，指定。。。。屏幕坐标系是指。。。</p>
+<p>为什么要建立两个坐标系？用一个屏幕坐标系也完全可以实现的啊？道理很简单，因为一个屏幕不能全部显现整副地图，地图需要卷动才能显现各部分于屏幕上。引入场景坐标系，将大大方便了后文提到的“地图卷轴”技术的实现。</p>
+<p>指定一个坐标系有两个要素，第一个就是原点的定位，第二个就是坐标轴的朝向。千言万语不如一张图来得直观。世界坐标系和屏幕坐标系的关系如下图：</p>
+<p><img src="/image/inside_dxf/world_coordination_and_screen_corrdination.png" alt=""></p>
+<p>明白了场景坐标系和屏幕坐标系后，可以开始着手分析了游戏场景的组成了World map采用了常用的正方形瓷砖拼图（tile）的方式来组织地图元素。什么是瓷砖拼图？观察上面的游戏运行时的图，可以发现，大多数场景都是呈有规律状地重复排列的。因此，美术人员在着手绘制游戏场景的时候，并不需要整幅整副图去绘制。而是绘制一系列大小相同而样子不同的图片，这些图片便称之为瓷砖（tile）。然后针对不同的场景设定要求，利用编辑器，把整个场景划分成一系列和瓷砖大小一样的格子。接着好像铺地板一样，把瓷砖贴到相对应的格子中。外观表现相同的格子就贴同一种瓷砖就可以了。这样子，利用有限的瓷砖图片，就可以组合成各种各样不同的场景，既可以大量地节省美术人员的时间，也可以提高游戏的性能。一般地，美术人员绘制好所有的瓷砖图片之后，都会把这些瓷砖整合成一张大的图片。这样子的好处是，用一个大存储空间来保存这些图片数据，其运行效率和工作性能都比用几个小的存储空间保存多个图片要好。world map demo使用的场景瓷砖图片的文件如下：</p>
+<p><img src="/image/inside_dxf/tiles.png" alt=""></p>
+<p>可以看到，world map使用了四种瓷砖，通过对这四种瓷砖进行各样的排列，就能拼成各种不同的游戏场景地图。这四种瓷砖分别是草地，岩石，树林，河水。</p>
+<h3 id="812-场景数据的组织">8.1.2. 场景数据的组织</h3>
+<p>有了不同的瓷砖，在计算机中，就必须要用不同的数值去表示它。在world map demo中。分别使用整数0，1，2，3表示草地，岩石，树林，河水。在游戏中，游戏场景地图数据都是用文件的方式保存在磁盘中，在初始化的时候再从磁盘中载入到内存中。world map demo也不例外。这个demo的所有游戏场景地图的信息都是保存在map.dat文件中。因为不同的游戏的场景信息复杂度不同，所以每个游戏都有着它自身特性的场景地图文件格式。map.dat也有着它自身的格式，下面就首先来分析map.dat的格式和里面信息的具体含义。map.dat是一个纯文本文件，因此它的可读性非常好。它的片断如下：</p>
+<pre tabindex="0"><code>MAP TEMPLATE
+------------
+{ [MAP LABEL] } { # OF X TILES } { # OF Y TILES }
+
+{ TILE LAYOUT } { TILE LAYOUT }
+{ TILE LAYOUT } { TILE LAYOUT }
+
+{ NORTH MAP LABEL }
+{ SOUTH MAP LABEL }
+{ EAST MAP LABEL }
+{ WEST MAP LABEL }
+- Set label to NULL if next scene cannot be entered from 
+that direction.Must NOT contain &#34;[&#34; and &#34;]&#34;.
+
+{ TELEPORT LABEL } { DEST X IN NEW SCENE } { DEST Y IN NEW SCENE }
+- DEST X and DEST Y cannot be on a teleport tile. Set 
+label to NULL if there is no teleport in scene. 
+
+NOTE: Maps must be at least the length and width of the map 
+view portion of the screen.
+For this example any dimension greater than or equal to 12 x 12 tiles is acceptable.
+</code></pre><p>上面的是片断是map.dat文件中最开始的部分。是一个地图模板和注释。world map demo的载入游戏地图文件的代码能够保证跳过这些模板和注释而不去读取它。这些具体的文件分析和读取的代码将会在后面分析，现在先看看地图模板。</p>
+<p>第一行中：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{ [MAP LABEL] }</td>
+<td>表示某一场景的名称字符串。</td>
+<td></td>
+</tr>
+<tr>
+<td>{ # OF X TILES }</td>
+<td>分别表示场景沿着水平方向的瓷砖个数。</td>
+<td></td>
+</tr>
+<tr>
+<td>{ # OF Y TILES }</td>
+<td>分别表示场景沿着垂直方向的瓷砖个数。</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>第二第三行中</p>
+<p>{ TILE LAYOUT } { TILE LAYOUT }
+{ TILE LAYOUT } { TILE LAYOUT }</p>
+<p>表示本场景的瓷砖布局，每一个{TILE LAYOUT}表示一块瓷砖的种类，0表示草地，1表示岩石，2表示河水，3表示树林</p>
+<p>第四行中：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{ NORTH MAP LABEL }</td>
+<td>表示在游戏世界中，处于本地图北面的，和本地图相连的地图的名字字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>{ SOUTH MAP LABEL }</td>
+<td>表示在游戏世界中，处于本地图南面的，和本地图相连的地图的名字字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>{ EAST MAP LABEL }</td>
+<td>表示在游戏世界中，处于本地图东面的，和本地图相连的地图的名字字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>{ WEST MAP LABEL }</td>
+<td>表示在游戏世界中，处于本地图西面的，和本地图相连的地图的名字字符串</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>如果在某方向上没有别的地图和本地图相连，那么这个名字字符串就为[NULL]。
+理解了文件格式和含义之后，接着后面的文件内容就很好理解了，如下面的文件内容片断：</p>
+<pre tabindex="0"><code>[TEST1] 36 36
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 3 3 3 3 3 3
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 3 3 3 3 3 3
+…… …… ……
+2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3
+NULL NULL NULL TEST2
+</code></pre><p>表示的是本地图的名字是&quot;TEST1&quot;，地图横向有36个瓷砖，纵向也有36个瓷砖，本地图的北面，南面，东面都没有相连的地图。西面有名字为&quot;TEST2&quot;的地图与本地图相连。明白了地图数据的组织方式，接着就看看是如何把这些数据从磁盘中载入内存让它跑起来，代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_WorldMap<span style="color:#f92672">::</span>LoadMap(tstring mapNum)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ifstream <span style="color:#a6e22e">readFromFile</span>(<span style="color:#e6db74">&#34;data/map.dat&#34;</span>);
+</span></span><span style="display:flex;"><span>    string str;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> col, row;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//清空地图所有的格子，并且先把它们全设置为可通行
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (row <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; row <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">36</span>; <span style="color:#f92672">++</span>row)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (col <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; col <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">36</span>; <span style="color:#f92672">++</span>col)
+</span></span><span style="display:flex;"><span>            Map[row][col].walkOn <span style="color:#f92672">=</span> TRUE;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// &gt;&gt;操作符把文本文件的中的字符逐个读入到一个string中，直到碰
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 到空格为止。碰到空格的时候，就把文件指针移到下一个非空格字符
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 处，继续读取找到字符串为“[TEST1]”的那一行
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">do</span> { readFromFile <span style="color:#f92672">&gt;&gt;</span> str; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (toTString(str) <span style="color:#f92672">!=</span> mapNum);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 读取TEST1的地图的水平方向瓷砖数和垂直方向的瓷砖数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// &gt;&gt;操作符能把数字字符串自动格式化为数字
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    readFromFile <span style="color:#f92672">&gt;&gt;</span> mapX;
+</span></span><span style="display:flex;"><span>    readFromFile <span style="color:#f92672">&gt;&gt;</span> mapY;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 读取每个瓷砖的地形信息
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (row <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; row <span style="color:#f92672">&lt;</span> mapY; <span style="color:#f92672">++</span>row) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (col <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; col <span style="color:#f92672">&lt;</span> mapX; <span style="color:#f92672">++</span>col) {
+</span></span><span style="display:flex;"><span>            readFromFile <span style="color:#f92672">&gt;&gt;</span> Map[row][col].ident;
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 读取该格子是否能通过的数据信息，如果地形数据为0，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 表示该tile是草地，可以通过
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> (Map[row][col].ident <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) { <span style="color:#75715e">//草地
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                Map[row][col].walkOn <span style="color:#f92672">=</span> TRUE;
+</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>                Map[row][col].walkOn <span style="color:#f92672">=</span> FALSE;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    string northMapStr, southMapStr;
+</span></span><span style="display:flex;"><span>    string eastMapStr, westMapStr;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 分别读取与当前地图连接的，处于当前地图的东，南，西，北四个方
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 向的地图的名字如果当前地图在某个方向有与之连接的地图，则记下
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 其名字，没有的话就为NULL。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    readFromFile <span style="color:#f92672">&gt;&gt;</span> northMapStr;
+</span></span><span style="display:flex;"><span>    northMap <span style="color:#f92672">=</span> _T(<span style="color:#e6db74">&#34;[&#34;</span>)<span style="color:#f92672">+</span> toTString(northMapStr) <span style="color:#f92672">+</span> _T(<span style="color:#e6db74">&#34;]&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    readFromFile <span style="color:#f92672">&gt;&gt;</span> southMapStr;
+</span></span><span style="display:flex;"><span>    southMap <span style="color:#f92672">=</span> _T(<span style="color:#e6db74">&#34;[&#34;</span>)<span style="color:#f92672">+</span> toTString(southMapStr) <span style="color:#f92672">+</span> _T(<span style="color:#e6db74">&#34;]&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    readFromFile <span style="color:#f92672">&gt;&gt;</span> eastMapStr;
+</span></span><span style="display:flex;"><span>    eastMap <span style="color:#f92672">=</span> _T(<span style="color:#e6db74">&#34;[&#34;</span>)<span style="color:#f92672">+</span> toTString(eastMapStr) <span style="color:#f92672">+</span> _T(<span style="color:#e6db74">&#34;]&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    readFromFile <span style="color:#f92672">&gt;&gt;</span> westMapStr;
+</span></span><span style="display:flex;"><span>    westMap <span style="color:#f92672">=</span> _T(<span style="color:#e6db74">&#34;[&#34;</span>)<span style="color:#f92672">+</span> toTString(westMapStr) <span style="color:#f92672">+</span> _T(<span style="color:#e6db74">&#34;]&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    readFromFile.close();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 根据设定的小地图窗口的高宽度，以及大地图的水平方向和垂直方向
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 的格子数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">float</span> miniCol <span style="color:#f92672">=</span> miniMapSize<span style="color:#f92672">/</span>mapX;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> miniRow <span style="color:#f92672">=</span> miniMapSize<span style="color:#f92672">/</span>mapY;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果小地图的行数和列数不相等，就要使得大地图的瓷砖变小点
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (miniCol <span style="color:#f92672">&lt;</span> miniRow) {
+</span></span><span style="display:flex;"><span>        tileWidth <span style="color:#f92672">=</span> miniCol <span style="color:#f92672">-</span> <span style="color:#ae81ff">1.0f</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        tileWidth <span style="color:#f92672">=</span> miniRow <span style="color:#f92672">-</span> <span style="color:#ae81ff">1.0f</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//计算小地图的放缩比例
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    miniMapScale <span style="color:#f92672">=</span> tileWidth<span style="color:#f92672">/</span>tileSize;
+</span></span><span style="display:flex;"><span>    miniMapLeft <span style="color:#f92672">=</span> miniMapLeftEdge <span style="color:#f92672">+</span> 
+</span></span><span style="display:flex;"><span>                (miniMapSize<span style="color:#f92672">-</span>(tileWidth<span style="color:#f92672">*</span>mapX))<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0f</span>;
+</span></span><span style="display:flex;"><span>    miniMapTop <span style="color:#f92672">=</span> miniMapTopEdge <span style="color:#f92672">+</span> 
+</span></span><span style="display:flex;"><span>                (miniMapSize<span style="color:#f92672">-</span>(tileWidth<span style="color:#f92672">*</span>mapY))<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0f</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>通过上面的分析，弄明白了游戏场景地图的组成方式和数据组织方式。弄明白场景地图数据是如何组织和载入之后，接着就要看看怎样把地图“秀”出来。我们知道，很多游戏，尤其是现今热门的MMORPG游戏，其场景地图都是十分巨大的，所以一个屏幕不可能把整个地图都完整地显示出来而只能显示其中一部分。为了能够完整地观察整个场景，所以必须要采用一种技术，使得地图好像能够在屏幕中上下左右“卷动”，就好像一本卷轴一样。这就是所谓的“地图卷轴技术”。</p>
+<p>地图卷轴的技术实现有多种方法，world map demo的方法是：根据当前player在游戏世界中的坐标，计算出要绘制在屏幕上的那部分地图的左上角的世界坐标。然后根据这世界坐标计算出当前显示的地图的瓷砖编号，便可以知道什么位置该绘制什么瓷砖。最后计算出每个要绘制的瓷砖的屏幕坐标，便可以进行绘制操作。在很多RPG游戏。主角基本上都是保持在屏幕中心，或者是在场景窗口的中心。主角的运动看起来就像是主角不动而场景在主角的背后不断地卷动。world map demo也是采用这种方法。当主角没有走到场景的边缘，也就是说地图还能“卷动”的时候，主角都是保持在场景窗口的中心的。这样的好处是。可以通过主角在游戏世界中的坐标来确定当前要绘制的那部分地图的坐标。如何绘制？这就是C_WorldMap::Render2D()函数的内容。代码实现如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_WorldMap<span style="color:#f92672">::</span>Render2D()
+</span></span><span style="display:flex;"><span>{        
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 首先计算当前地图的第一行第一列的起始坐标。在此，是首先假定了
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// player没有靠近地图边缘,而是在屏幕中间绘制。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// p_Player-&gt;GetWorldXPos()获取到player在当前的世界中的
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 坐标X值，其值为像素。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// colCoord，rowCoord为当前显示在屏幕的一部分地图的左上角
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 在整个世界中的坐标X，Y值，其值也为像素。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// tileSize也是player一帧的矩形大小，在这里为64
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> colCoord <span style="color:#f92672">=</span> p_Player<span style="color:#f92672">-&gt;</span>GetWorldXPos() <span style="color:#f92672">-</span> 
+</span></span><span style="display:flex;"><span>                    (mapViewWidth<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> tileSize<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> rowCoord <span style="color:#f92672">=</span> p_Player<span style="color:#f92672">-&gt;</span>GetWorldYPos() <span style="color:#f92672">-</span> 
+</span></span><span style="display:flex;"><span>                    (mapViewHeight<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> tileSize<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 当player靠近地图边缘的时候，地图背景不再滚动，而是player
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 在移动。如果还是假定player在屏幕中间绘制的话，地图的世界坐
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 标就会超出范围值。下面代码防止地图出界。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (colCoord <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) 
+</span></span><span style="display:flex;"><span>        colCoord <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (rowCoord <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) 
+</span></span><span style="display:flex;"><span>        rowCoord <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (colCoord <span style="color:#f92672">&gt;=</span> (mapX<span style="color:#f92672">*</span>tileSize)<span style="color:#f92672">-</span>mapViewWidth) 
+</span></span><span style="display:flex;"><span>        colCoord <span style="color:#f92672">=</span> (mapX<span style="color:#f92672">*</span>tileSize)<span style="color:#f92672">-</span>mapViewWidth;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (rowCoord <span style="color:#f92672">&gt;=</span> (mapY<span style="color:#f92672">*</span>tileSize)<span style="color:#f92672">-</span>mapViewHeight) 
+</span></span><span style="display:flex;"><span>        rowCoord <span style="color:#f92672">=</span> (mapY<span style="color:#f92672">*</span>tileSize)<span style="color:#f92672">-</span>mapViewHeight;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 计算出在屏幕左上角绘制的地图瓷砖的横纵向索引，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这个索引将作为起始索引。 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> colStart <span style="color:#f92672">=</span> colCoord<span style="color:#f92672">/</span>tileSize;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> rowStart <span style="color:#f92672">=</span> rowCoord<span style="color:#f92672">/</span>tileSize;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 计算出当前在屏幕中显示的水平方向，垂直方向的瓷砖个数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> colLength <span style="color:#f92672">=</span> mapViewWidth<span style="color:#f92672">/</span>tileSize;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> rowLength <span style="color:#f92672">=</span> mapViewHeight<span style="color:#f92672">/</span>tileSize;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 计算偏移量，如值不为0，就表示有一些瓷砖只渲染其中一部分
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> colOff <span style="color:#f92672">=</span> colCoord <span style="color:#f92672">%</span> tileSize;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> rowOff <span style="color:#f92672">=</span> rowCoord <span style="color:#f92672">%</span> tileSize;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 为什么要减去1？注意一下下面的进行渲染的二重循环中，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 循环变量的最大边界值就知道了
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (colOff <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)     
+</span></span><span style="display:flex;"><span>        colLength<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (rowOff <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)     
+</span></span><span style="display:flex;"><span>        rowLength<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> TileNum;
+</span></span><span style="display:flex;"><span>    D3DXVECTOR2 coords;<span style="color:#75715e">//这个是每块瓷砖的屏幕坐标
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//当有些瓷砖只是渲染一部分的时候，瓷砖的屏幕坐标就要有一部分的偏移。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    coords.x <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)<span style="color:#f92672">-</span>colOff;
+</span></span><span style="display:flex;"><span>    coords.y <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)<span style="color:#f92672">-</span>rowOff;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//渲染场景地图
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> row <span style="color:#f92672">=</span> rowStart; 
+</span></span><span style="display:flex;"><span>         row <span style="color:#f92672">&lt;=</span> rowStart <span style="color:#f92672">+</span> rowLength; <span style="color:#f92672">++</span>row) 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>( <span style="color:#66d9ef">int</span> col <span style="color:#f92672">=</span> colStart; 
+</span></span><span style="display:flex;"><span>             col <span style="color:#f92672">&lt;=</span> colStart <span style="color:#f92672">+</span> colLength; <span style="color:#f92672">++</span>col)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//得到渲染哪块瓷砖的索引
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            TileNum <span style="color:#f92672">=</span> Map[row][col].ident;
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//渲染该砖块，不熟悉的读者可再看一看
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">//C_Sprite::SetAnimation(int frame)函数的实现
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            p_MapTiles<span style="color:#f92672">-&gt;</span>SetAnimation(TileNum);
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//根据计算出来的屏幕坐标渲染瓷砖
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            p_MapTiles<span style="color:#f92672">-&gt;</span>Render2D(coords);
+</span></span><span style="display:flex;"><span>            coords.x <span style="color:#f92672">+=</span> tileSize;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        coords.x <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)<span style="color:#f92672">-</span>colOff;
+</span></span><span style="display:flex;"><span>        coords.y <span style="color:#f92672">+=</span> tileSize;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//渲染各个game object
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    iterator <span style="color:#f92672">=</span> gameObjectList.begin();  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (iterator <span style="color:#f92672">!=</span> gameObjectList.end()) 
+</span></span><span style="display:flex;"><span>    {    <span style="color:#75715e">//游戏对象的渲染。在后面有分析
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        (<span style="color:#f92672">*</span>iterator)<span style="color:#f92672">-&gt;</span>Render2D(); 
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">++</span>iterator;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 渲染统计窗口和小地图。这些必须要在渲染完地图和game 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// object之后才渲染，统计窗口将会剪裁覆盖掉多生成的部分瓷砖
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    RenderStatWindow();
+</span></span><span style="display:flex;"><span>    RenderMiniMap2D();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>从游戏中我们可以看到，当主角player走到一个地图的边界区域，如果此边界区域有别的地图与它相连的话，那么要把主角player自动切换到那个相连的地图上去。代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_WorldMap<span style="color:#f92672">::</span>CheckForNextScene() 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 向北走，如果 当前的世界坐标Y值＋向北移动一步的位移值，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 将要超出当前地图世界坐标的最小Y值的话
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (p_Player<span style="color:#f92672">-&gt;</span>GetWorldYPos()<span style="color:#f92672">+</span> 
+</span></span><span style="display:flex;"><span>        p_Player<span style="color:#f92672">-&gt;</span>GetStepSize() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//切换到与本地图相连接的，处于本地图北部的地图
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        SetupScene(northMap);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 在新地图上，主角player的世界坐标X值保持不变，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// Y值设置在新地图的最南边
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        p_Player<span style="color:#f92672">-&gt;</span>SetWorldYPos(((mapY<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>tileSize) <span style="color:#f92672">-</span> 
+</span></span><span style="display:flex;"><span>                            (p_Player<span style="color:#f92672">-&gt;</span>GetStepSize()<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>));
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 向南走，如果 当前的世界坐标Y值－向南移动一步的位移值 将要超出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 当前地图的最大Y值的时候，表示主角player在当前地图的最南端。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (p_Player<span style="color:#f92672">-&gt;</span>GetWorldYPos()<span style="color:#f92672">-</span> p_Player<span style="color:#f92672">-&gt;</span>GetStepSize()
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&gt;=</span> (mapY<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>tileSize)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//切换到与本地图相连接的，处于本地图南部的地图
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        SetupScene(southMap);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 在新地图上，主角player的世界坐标X值保持不变，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// Y值设置在新地图的最北边
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        p_Player<span style="color:#f92672">-&gt;</span>SetWorldYPos(p_Player<span style="color:#f92672">-&gt;</span>GetStepSize()<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 向东走，如果 当前的世界坐标X值 - 向东移动一步的位移值 将要超出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 当前地图的最大X值的时候，表示主角player在当前地图的最东端。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(p_Player<span style="color:#f92672">-&gt;</span>GetWorldXPos() <span style="color:#f92672">-</span> p_Player<span style="color:#f92672">-&gt;</span>GetStepSize()
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&gt;=</span> (mapX<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>tileSize)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//切换到与本地图相连接的，处于本地图东部的地图
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        SetupScene(eastMap);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 在新地图上，主角player的世界坐标Y值保持不变，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// X值设置在新地图的最西端
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        p_Player<span style="color:#f92672">-&gt;</span>SetWorldXPos(p_Player<span style="color:#f92672">-&gt;</span>GetStepSize()<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 向西走，如果当前的世界坐标X值 ＋ 向西移动一步的位移值 将要超出
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 当前地图的最小X值的时候，表示主角player在当前地图的最西端。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (p_Player<span style="color:#f92672">-&gt;</span>GetWorldXPos() <span style="color:#f92672">+</span> 
+</span></span><span style="display:flex;"><span>        p_Player<span style="color:#f92672">-&gt;</span>GetStepSize() <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        SetupScene(westMap);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 在新地图上，主角player的世界坐标Y值保持不变，
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// X值设置在新地图的最东端
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        p_Player<span style="color:#f92672">-&gt;</span>SetWorldXPos(((mapX<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>tileSize) <span style="color:#f92672">-</span> 
+</span></span><span style="display:flex;"><span>                            (p_Player<span style="color:#f92672">-&gt;</span>GetStepSize()<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>));
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>通过上面的代码分析，明白了场景的数据是如何组织和渲染的。现在再深入分析游戏主角player的实现。</p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/dxframework/">DxFramework</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_7_1/">深度探索DxFramework 7-1</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_6_1/">深度探索DxFramework 6-1</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_5_1/">深度探索DxFramework 5-1</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_4_1/">深度探索DxFramework 4-1</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_3_2/">深度探索DxFramework 3-2</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

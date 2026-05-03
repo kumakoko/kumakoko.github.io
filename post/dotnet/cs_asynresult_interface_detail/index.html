@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>.NET Framework的IAsyncResult接口的细节 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content=".NET Framework的IAsyncResult接口的细节">
+		<meta property="og:title" content=".NET Framework的IAsyncResult接口的细节" />
+<meta property="og:description" content=".NET Framework的IAsyncResult接口的细节" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/dotnet/cs_asynresult_interface_detail/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2013-10-21T18:08:30+08:00" />
+<meta property="article:modified_time" content="2013-10-21T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content=".NET Framework的IAsyncResult接口的细节">
+<meta itemprop="description" content=".NET Framework的IAsyncResult接口的细节"><meta itemprop="datePublished" content="2013-10-21T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2013-10-21T18:08:30+08:00" />
+<meta itemprop="wordCount" content="232">
+<meta itemprop="keywords" content=".NET," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">.NET Framework的IAsyncResult接口的细节</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2013-10-21T18:08:30&#43;08:00">October 21, 2013</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">.NET Framework的IAsyncResult接口的细节</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#示例程序">示例程序</a></li>
+    <li><a href="#iasyncresult的属性描述表">IAsyncResult的属性描述表</a></li>
+    <li><a href="#waithandlewaitone的一些细节">WaitHandle.WaitOne的一些细节</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h2 id="概述">概述</h2>
+<p>IAsynResult接口用来表征一个异步操作的结果。它的定义声明如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#a6e22e">[System.Runtime.InteropServices.ComVisible(true)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IAsyncResult</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">object</span> AsyncState { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>    WaitHandle AsyncWaitHandle { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> CompletedSynchronously { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> IsCompleted { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>有一些.NET Framework预定义的类是继承实现这个接口，如下：</p>
+<ol>
+<li>AsyncResult</li>
+<li>SecurityTokenProvider.SecurityTokenAsyncResult</li>
+<li>AsyncResult</li>
+<li>Task</li>
+<li>CommittableTransaction</li>
+</ol>
+<h2 id="示例程序">示例程序</h2>
+<p>接下来的示例演示了如何使用了IAsyncResult接口中的AsyncWaitHandle属性，去获取到一个WaitHandle类型的值，以及如何使用一个delegate去等待一个异步调用。当异步调用完成后，WaitHandle类型的返回值将会被赋值上。这示例由两个类组成，一个是包含了异步调用函数的类；另一个类则是包含了调用异步函数的方法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Threading; 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> Examples.AdvancedProgramming.AsynchronousOperations
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncDemo</span> 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将要被异步执行的函数</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> TestMethod(<span style="color:#66d9ef">int</span> callDuration, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">int</span> threadId) 
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Console.WriteLine(<span style="color:#e6db74">&#34;Test method begins.&#34;</span>);
+</span></span><span style="display:flex;"><span>            Thread.Sleep(callDuration); <span style="color:#75715e">// 被异步执行的函数所在的线程休眠callDuration所指定的时间</span>
+</span></span><span style="display:flex;"><span>            threadId = Thread.CurrentThread.ManagedThreadId; <span style="color:#75715e">// 拿到系统给本异步执行的函数分配的运行线程的id</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> String.Format(<span style="color:#e6db74">&#34;My call time was {0}.&#34;</span>, callDuration.ToString());
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 将要被异步执行的函数的签名声明</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">delegate</span> <span style="color:#66d9ef">string</span> AsyncMethodCaller(<span style="color:#66d9ef">int</span> callDuration, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">int</span> threadId);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>调用AsyncDemo的类如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Threading;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> Examples.AdvancedProgramming.AsynchronousOperations
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncMain</span> 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main() 
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> threadId;
+</span></span><span style="display:flex;"><span>            AsyncDemo ad = <span style="color:#66d9ef">new</span> AsyncDemo();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 创建一个delegate，这个delegate指向AsyncDemo.TestMethod方法</span>
+</span></span><span style="display:flex;"><span>            AsyncMethodCaller caller = <span style="color:#66d9ef">new</span> AsyncMethodCaller(ad.TestMethod);
+</span></span><span style="display:flex;"><span>       
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//  这里的BeginInvoke是Delegate的异步调用方法，该方法有以下特性：</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//  a、委托的BeginInvoke方法，在线程池分配的子线程中执行委托</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//  b、委托执行时不会阻塞主线程（调用委托的BeginInvoke线程），主线程继续向下执行。</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//  c、委托执行时会阻塞子线程。</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//  d、委托结束时，如果有返回值，子线程讲返回值传递给主线程；如果有回调函数，子线程</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//     将继续执行回调函数。</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//  参考网页 </span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//  https://www.cnblogs.com/EasonLeung/p/3683492.html</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//  https://www.cnblogs.com/markhe/articles/5587956.html</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//  https://www.jb51.net/article/155167.htm</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 第一个参数就是AsyncMethodCaller函数签名中的int callDuration参数</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 第二个参数就是AsyncMethodCaller函数签名中的out int threadId参数</span>
+</span></span><span style="display:flex;"><span>            IAsyncResult result = caller.BeginInvoke(<span style="color:#ae81ff">3000</span>, <span style="color:#66d9ef">out</span> threadId, <span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            Thread.Sleep(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>            Console.WriteLine(<span style="color:#e6db74">&#34;Main thread {0} does some work.&#34;</span>,Thread.CurrentThread.ManagedThreadId);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Wait for the WaitHandle to become signaled.</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 执行本句代码之后，会阻塞当前运行的线程，直到WaitHanle得到赋值为止</span>
+</span></span><span style="display:flex;"><span>            result.AsyncWaitHandle.WaitOne();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 参考网址： https://docs.microsoft.com/zh-cn/dotnet/api/system.threading.waithandle.waitone?view=netframework-3.5#System_Threading_WaitHandle_WaitOne</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// WaitHanle得到赋值之后，本线程可以继续执行下去了，要获取到本次delegate调用的回调值，需要</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 调用EndInvoke方法</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">string</span> returnValue = caller.EndInvoke(<span style="color:#66d9ef">out</span> threadId, result);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 获取完毕之后，关闭wait handle</span>
+</span></span><span style="display:flex;"><span>            result.AsyncWaitHandle.Close();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            Console.WriteLine(<span style="color:#e6db74">&#34;The call executed on thread {0}, with return value \&#34;{1}\&#34;.&#34;</span>,
+</span></span><span style="display:flex;"><span>                threadId, returnValue);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>上面的代码执行流程大致是：</p>
+<ol>
+<li>主线程1执行相关的初始化工作Main thread 1 does some work。</li>
+<li>调用BeginInvoke方法，启动TestMethod该函数，此方法将会在另一个线程3中执行此函数。</li>
+<li>调用BeginInvoke方法会马上返回一个IAsyncResult类型的返回值，调用该返回值的WaitHandle成员AsyncWaitHandle的WaitOne方法阻塞本线程1直到线程3结束返回为止。</li>
+<li>线程1恢复后，接下来可以调用EndInvoke方法取到回调值。</li>
+<li>调用IAsyncResult类型的返回值的AsyncWaitHandle成员的Close方法结束操作。</li>
+</ol>
+<h2 id="iasyncresult的属性描述表">IAsyncResult的属性描述表</h2>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AsyncState</td>
+<td>获取一个用户定义的对象，该对象限定或包含有关异步操作的信息。</td>
+</tr>
+<tr>
+<td>AsyncWaitHandle</td>
+<td>获取用于等待异步操作完成的 WaitHandle。</td>
+</tr>
+<tr>
+<td>CompletedSynchronously</td>
+<td>获取一个值，该值指示异步操作是否同步完成。</td>
+</tr>
+<tr>
+<td>IsCompleted</td>
+<td>获取一个值，该值指示异步操作是否已完成。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="waithandlewaitone的一些细节">WaitHandle.WaitOne的一些细节</h2>
+<p>##参考网页：
+<a href="https://docs.microsoft.com/en-us/dotnet/api/system.iasyncresult?view=netframework-4.8">https://docs.microsoft.com/en-us/dotnet/api/system.iasyncresult?view=netframework-4.8</a></p>
+<p><a href="https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/calling-synchronous-methods-asynchronously?view=netframework-4.8">https://docs.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/calling-synchronous-methods-asynchronously?view=netframework-4.8</a></p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/.net/">.NET</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/begin_receive_and_end_receive/">NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>OpenGL | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="OpenGL" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/tags/opengl/" />
+
+
+		<meta itemprop="name" content="OpenGL">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/tags/opengl/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-term">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/tags/">Tags</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">OpenGL</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">OpenGL</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/software_virtual_texture/">Software Virtual Texture 学习笔记</a></h1>
+	<div class="entry__content">在MegaTexture的基础上，id Software进一步提出了Virtual Texture的概念，这个概念取自于Virtual Memory。与虚拟内存类似的是，一个很大的Texture将不会全部加载到内存中，而是根据实际需求将需要的部分加载；与虚拟内存不同的是，它不会阻塞执行，可以使用更高的Mipmap来暂时显示，它对基于block的压缩贴图有很好的支持。
+基本思路是：将纹理的Mipmap chain分割为相同大小的Tile或Page，这里的纹理是虚纹理，然后通过某种映射，映射到一张内存中存在的纹理，这里的纹理是物理纹理，在游戏视野发生变化的时候，一部分物理纹理会被替换出去，一部分物理纹理会被加载。
+这样的机制不仅仅减少了带宽消耗和内存（显存）消耗，也带来了其它好处。比如有利于合批，而不用因为使用不同的Texture而打断合批，这样可以根据需求来组织几何使得更利于Culling。当然合批的好处是states change变少，LightMap也可以预计算到一张大的Virtual Texture上用来合批。
+1 地址映射 地址映射在Virtual Texture中是一个很重要的环节，即是“如何将一个virtual texture上的texel，对应地映射到phyiscal texture上去”。同时还需要处理“假如高分辨率的page没有加载的话，如何获得已加载的相对应的低分辨率的page”
+1.1 四叉树映射 使用四叉树主要是为了和Mipmap对应，也就是每个低MIP的Map会对应有四个高MIP的Map，四叉树中只存储加载的Mipmap信息。这里的对应关系就是每个加载的Virtual Texture的Page对应一个四叉树的节点，具体的计算如下：
+这里存在每个四叉树的节点中的内容就是bias和scale，这样就可以将虚拟纹理的地址转换成物理纹理的地址。如果没有找到，也可以用父节点的地址来得到低分辨率。但是这里要找到对应的节点需要搜索这个四叉树，搜索的速度取决于树的高度，也就是Mipmap的层级，在差的低MIP的地址上效率会比较低。
+1.2 单像素对应虚纹理的一个Page的映射 为了减少索引，首先容易想到的就是，为每个虚纹理的Page都存储一份信息，这样就能直接转换了。这个方案就是创建一个带Mipmap的Texture，一个Texel对应虚纹理的一个Page，Texel的内容就是四叉树映射里面的bias和scale。
+假如对应的MIP没有加载，存储的就是高MIP的转换信息，这样显然就提高了地址转换的效率。但是这会带来内存增加，因为我们需要每个虚纹理的Page都对应一个Texel。其中bias和scale都是二维的向量，即使设计虚纹理和物理纹理的比例一致，我们也需要至少scale、SBias、TBias三个量，而且这三个量的精度要求很高，至少需要16bit的浮点数精度。如果要达到这样的精度就需要F32*4的纹理格式，那么必然会产生一个巨大的映射纹理，因此需要减小映射纹理的大小。
+1.3 双纹理映射 这个方案仍然有一个对应每个虚纹理Page的Texture，但是不同的是，纹理的内容存储的是物理纹理Page的坐标，用这个坐标再去索引另外一张Texture。另外一张贴图的内容才是bias和scale，但不是每个虚拟纹理，而是每个物理纹理Page一个Texel。下图是虚拟纹理对应的Texture：
+这样就减少了映射纹理的大小，但是同时多了一次纹理查询。
+2.1.4 Page和MIP level映射 总结上面两个基于映射纹理的方案，要么是纹理需要很大的存储，要么是需要多次查询。如果从映射纹理比较大的角度考虑优化，可以考虑适当减少每个像素的大小，这个方案就是从这个角度出发的。在这个方案中，仍然是每个虚拟纹理的Page对应一个texel，但是存储的内容是物理纹理Page的Offset和虚拟纹理所在的MIP level。
+这样存储的好处就是，Page Offset对精度的要求没有那么大，用32bit的Texture即可。当然也可以压缩到更小格式的纹理中，如RGB565。这种方案的使用最广泛，基本各家引擎的实现都使用了这种方案。
+2.1.5 HashTable映射 这是最直接的方法，好处是节省内存，查询速度快，但是当遇到没有加载的virtual Page的时候，需要多次查询。这个和四叉树还有一个问题，即如何设计一个GPU友好的数据结构。
+2.2 Texture Filtering 由于虚拟纹理并没有完整加载，所以各种采样过滤在Page的边界会有问题，我们需要自己设计解决这些问题的方法，适当的使用软实现的采样。
+2.2.1 Bi-linear Filtering 这个解决方案比较简单，就是给Physical Page加上一个像素的border。
+2.2.2 Anisotropic Filtering Anisotropic Filtering可能需要更多的相邻像素，假如我们需要支持8倍的Anisotropic Filtering，那我们需要采样步长为4的相邻像素，也就是我们的border要增加到4个像素。增加4个像素的border会增加Physical Texture的大小，但是带来了一个好处，就是适配了block compression。
+具体实现可以分为软实现和硬实现，硬实现放到下文的Tri-linear说，这里说软实现。软实现其实就是在Shader中实现Anisotropic Filtering的算法，在决定采样的MIP level的时候，需要把虚纹理相对于物理纹理的比例考虑进去，剩下的就是正常的Anisotropic Filtering。
+2.2.3 Tri-linear Filtering Tri-linear Filtering的实现方案可以分为两种：一种是软实现，一种是硬实现。
+所谓的软实现与Anisotropic Filtering一样，在Shader中实现Tri-linear Filtering。也就是说，需要在Shader中计算MIP level，然后进行两次地址的转换，采样两个物理纹理的Page后进行插值。
+硬实现的方法是直接给物理纹理生成一个一层的Mipmap，然后利用硬件去直接采样。同样的，对于Anisotropic Filtering，也打开Anisotropic Filtering直接进行采样。这样的好处当然是由于硬件的加速，采样的效率会提升，但是这样同时会导致增加25%的纹理大小，而且由于Mipmap的边界会变成两个像素，对于block compression和超过4倍的Anisotropic Filtering来说，在遇到Page的边界时都会出现问题。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-12-15T20:36:51&#43;08:00">December 15, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>, 
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>, 
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/sparse_virtual_textures_study_note/">Sparse virtual textures 学习笔记</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+Nathan Gauër的Sparse virtual textures
+稀疏虚拟纹理概述 sparse virtual texture（SVT）方案是由Id Software提出，用来解决Texture加载问题的一套解决方案，解决了带宽和内存不足的问题。
+在Id Software的方案之后，业界又相继提出以下的的方案：
+Procedural Virtual Texture Adaptive Procedural Virtual Texture Hardware Virtual Texture 稀疏虚拟纹理的历史沿革 最早期的SVT思想，是受Mesh的LOD启发。不同LOD的Mesh对应着不同的网格面数，对应地也应加载不同大小的texture。
+在1998年，Tanner发表了一篇《The Clipmap: A Virtual Mipmap》的论文，文中提到了一种叫clipmap的技术。后来被Id Software引入并改进，称之为MegaTexture
+clipmap的基本思想是：设置一个mipmap大小的上限，超过这个上限的mipmap会被clip掉，也就是不会加载到内存中
+Software Virtual Texture 在MegaTexture的基础上，Id Software提出了virtual texture的概念，这个概念取自于virtual memory。与virtual memory似的是，一个很大的texture将不会全部加载到内存中，而是根据实际需求将需要的部分加载。如下图所示：
+基本思路是：将虚拟纹理的Mipmap chain分割为相同大小的Tile或Page，这里的纹理是虚纹理，然后通过某种映射，映射到一张内存中存在的纹理，这里的纹理是物理纹理，在游戏视野发生变化的时候，一部分物理纹理会被替换出去，一部分物理纹理会被加载。
+稀疏虚拟纹理(sparse virtual texture)。简单地说，就是在着色器中重新实现分页（pagination），可以拥有无限的纹理，同时保持 GPU 内存使用量恒定。
+1 步骤 1 - 手工制作分页 1.1 分页概述 要理解 SVT 如何工作，首先要了解什么是分页：
+在大多数计算机上，数据存储在 RAM 中。RAM 是一个线性缓冲区，其第一个字节位于地址 0，最后一个字节位于地址N。因为某些原因，使用真实地址并不方便。因此有人发明了分段（segmentation），后来演变为分页。这个想法很简单：使用虚拟地址（virtual address），由 CPU 将其转换为实际 RAM 地址。
+在上图中：左侧是虚拟内存，可以看见虚拟内存的地址是线性连续的。共分为4个page。虚拟内存中每个page，都线性映射到page table中的一个entry。
+下面举例说明，利用page和page table，如何将一个virtual RAM address（VRA）映射到physical RAM address（PRA）。例子中的page的大小是4KB，即4096个字节。每个虚拟地址VRA，可以用公式表示为：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2024-12-15T20:36:51&#43;08:00">December 15, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>, 
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>, 
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/opengl/an_introduction_to_shader_derivative_functions/">An Introduction to shader derivative functions（翻译）</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+文档内容总结 1. Shader Derivative Functions 简介 Shader Derivative Functions 是片段着色器中的指令，用于计算任何值相对于屏幕空间坐标的变化率。 在 HLSL 中，这些函数称为 ddx 和 ddy，在 GLSL 中称为 dFdx 和 dFdy。 这些函数在三角形光栅化过程中，通过计算 2x2 像素块中像素值之间的差异来求导数。 2. 导数计算 GPU 在光栅化时，会同时运行多个片段着色器实例，并将它们组织成 2x2 像素块。 dFdx 计算块中左右像素值的差异，dFdy 计算上下像素值的差异。 导数可以用于片段着色器中的任何变量，对于向量和矩阵类型，导数按元素计算。 3. 导数与 Mipmaps Mipmaps 是通过将纹理过滤成更小尺寸的预计算图像序列，用于避免纹理缩小时的锯齿问题。 导数在纹理采样时用于选择最佳的 mipmap 级别，纹理坐标相对于屏幕坐标的变化率越大，选择的 mipmap 级别越高。 4. 面法线计算（Flat Shader） 导数可以用于在片段着色器中计算当前三角形的面法线。 当前片段的世界坐标的水平和垂直导数是位于三角形表面的两个向量，它们的叉积是垂直于表面的向量，其范数为三角形的法线向量。 GLSL 代码示例： normalize(cross(dFdx(pos), dFdy(pos))); 5. 导数与分支 导数计算基于 GPU 硬件上多个着色器实例的并行执行。 在条件分支的情况下，如果核心中的线程没有全部执行相同的分支，则会出现代码执行的分歧，导致导数操作未定义。 为了避免这个问题，着色器编译器可能会展平分支或将纹理读取移到分支控制流之外。 6. 导数块对齐的揭示 通过一个简单的实验揭示了着色器导数的内部块对齐。 实验通过计算步进函数的导数，展示了当步进过渡发生在 2x2 像素块的中间或两个相邻块之间时，导数的不同结果。 7. 参考文献 How a GPU works - Kayvon Fatahalian Computer Graphics: Principles and Practice - Chapter 38.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-03-04T20:36:51&#43;08:00">March 04, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">Shader</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/opengl/modern_opengl_debugging/">现代的OpenGL调试方式（翻译）</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址： http://www.learnopengl.com/#!In-Practice/Debugging
+1 Debugging Graphics programming can be a lot of fun, but it can also be a large source of frustration whenever something isn&rsquo;t rendering right or perhaps not even rendering at all! Seeing as most of what we do involves manipulating pixels it can be difficult to figure out the cause of error whenever something doesn&rsquo;t work the way it&rsquo;s supposed to. Debugging these kind of errors is different than what you&rsquo;re used to when debugging errors on the CPU.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2014-10-21T18:08:30&#43;08:00">October 21, 2014</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

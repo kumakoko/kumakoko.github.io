@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>网络上的奇珍异宝 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="网络上的奇珍异宝" />
+<meta property="og:description" content="免责声明
+本站所提供的所有Windows，Android，iOS及其他的平台上的可执行程序，除特别声明者，都是本站从网络上搜集下载整理，在保证遵循程序开发者制定的第三方对程序的再发布的规则下，本站本着方便自己和他人的原则提供了下载。本站不保证这些软件的安全性和有效性，请慎重下载使用。本站所提及到的所有软件，如若能从该软件的官网下载的话，本站强烈建议用户直接从官网下载！
+各种开源库
+项目名 简介 glew 在Windows上搞OpenGL开发总是要面临着Microsoft的不更新的刁难。GLEW提供了一整套OpenGL的扩展实现，并且是跨平台的 glus OpenGL的一个扩展工具库 nVidia Cg Toolkit 由nVidia提供的Cg开发包。做shader编程都用它 UNet Unity3D的内置网络库 layabox H5游戏开源引擎 TypeScript中文网 TypeScript语言的中文学习网站 Spine-Unity Unity3D环境下的Spine动画插件官网 实用开发工具
+项目名 简介 PicoPixel 做图形编程的时候，想像使用C语言的printf函数那样子输出纹理的内容吗？用它！ PngQuant 能大幅度地压缩PNG图片文件体积而几乎不损失原始图像质量的工具，这个工具是基于命令行的。有人给他做了一个界面工具PngGoo OpenGL Extension Viewer 用来查看Android手机对OpenGLES扩展功能的支持度的小软件 Tile2D 由国人开发的一个通用的2D地图编辑器。金点时空开发的《圣剑英雄传——英雄救美》就是使用这个编辑器编辑的场景地图。这是一个DOS程序，所以在Windows 7及以上版本的操作系统需要使用DOSBOX去执行 DosBox 想在其他平台上跑dos程序，用它就是最合适的。本站提供一个本地下载 GLSL语法高亮提示 用在Notepad&#43;&#43;上的，可以高亮显示GLSL语法文件的配置文件 ShaderLab语法高亮提示 用在Notepad&#43;&#43;上的，可以高亮显示Unity3D Shaderlab语法文件的配置文件 ILSpy 用来反编译C#代码的利器，本站提供了一个本地下载 Math Animation 用动画展示数学原理和公式的网页，由本站整理 RenderDoc 一个Shader调试工具，支持OpenGL，Direct3D11，支持Win7及之后的平台，支持Linux UnityAssetsStudio 一个可以Unity3D打成APK包后，查看和导出里面的资源的工具 UnityAssetsExplorer 一个可以Unity3D打成APK包后，查看和导出里面的资源的工具 URP Unity性能测试分析解决方案UPR。URP有以下三个特点：1.无SDK：UPR通过无侵入式测试模式，不影响开发者原有的制作流程，避免额外的时间成本。2.不需要Root：目前Android 手机的Root难度越来越高，不要求Root才能最大程度的提供便利性。3.不需要提交APK：由于Unity游戏APK比较容易被破解，提交APK给第三方对于开发者而言往往需要非常慎重。尤其是对于开发中的重点项目，基本上不可能把APK提交到第三方进行测试。 World Machine 一款用来制作地形的工具，如果不用于商业用途的话，这个软件是可以免费使用的，本站提供一个下载，下载包的MD5值是805121a7036782047b04a75168dffbea，但如果此官网依然能访问，最好直接从官网下载。 MaCrea 可以用用来生成材质贴图的免费工具，本站提供一个下载，下载包的MD5值是0271de94ae3da1ea55e47fa5141bd225，但如果此官网依然能访问，最好直接从官网下载。 CubeMapGen 用来生成可进行卷积运算的立方体映射贴图。本站提供一个下载，下载包的MD5值是a6eb480b987618c023c79a4297fdb057，但如果此官网依然能访问，最好直接从官网下载。 Adreno GPU Profiler 一个Shader调试工具，支持OpenGL，Direct3D11，支持Win7及之后的平台，支持Linux,MacOS BorPak 用来解压使用OpenBOR引擎开发的游戏的资源包的工具 技术大神的集散地" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/mainsection/gems/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-04-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2014-04-09T00:00:00+00:00" />
+
+
+		<meta itemprop="name" content="网络上的奇珍异宝">
+<meta itemprop="description" content="免责声明
+本站所提供的所有Windows，Android，iOS及其他的平台上的可执行程序，除特别声明者，都是本站从网络上搜集下载整理，在保证遵循程序开发者制定的第三方对程序的再发布的规则下，本站本着方便自己和他人的原则提供了下载。本站不保证这些软件的安全性和有效性，请慎重下载使用。本站所提及到的所有软件，如若能从该软件的官网下载的话，本站强烈建议用户直接从官网下载！
+各种开源库
+项目名 简介 glew 在Windows上搞OpenGL开发总是要面临着Microsoft的不更新的刁难。GLEW提供了一整套OpenGL的扩展实现，并且是跨平台的 glus OpenGL的一个扩展工具库 nVidia Cg Toolkit 由nVidia提供的Cg开发包。做shader编程都用它 UNet Unity3D的内置网络库 layabox H5游戏开源引擎 TypeScript中文网 TypeScript语言的中文学习网站 Spine-Unity Unity3D环境下的Spine动画插件官网 实用开发工具
+项目名 简介 PicoPixel 做图形编程的时候，想像使用C语言的printf函数那样子输出纹理的内容吗？用它！ PngQuant 能大幅度地压缩PNG图片文件体积而几乎不损失原始图像质量的工具，这个工具是基于命令行的。有人给他做了一个界面工具PngGoo OpenGL Extension Viewer 用来查看Android手机对OpenGLES扩展功能的支持度的小软件 Tile2D 由国人开发的一个通用的2D地图编辑器。金点时空开发的《圣剑英雄传——英雄救美》就是使用这个编辑器编辑的场景地图。这是一个DOS程序，所以在Windows 7及以上版本的操作系统需要使用DOSBOX去执行 DosBox 想在其他平台上跑dos程序，用它就是最合适的。本站提供一个本地下载 GLSL语法高亮提示 用在Notepad&#43;&#43;上的，可以高亮显示GLSL语法文件的配置文件 ShaderLab语法高亮提示 用在Notepad&#43;&#43;上的，可以高亮显示Unity3D Shaderlab语法文件的配置文件 ILSpy 用来反编译C#代码的利器，本站提供了一个本地下载 Math Animation 用动画展示数学原理和公式的网页，由本站整理 RenderDoc 一个Shader调试工具，支持OpenGL，Direct3D11，支持Win7及之后的平台，支持Linux UnityAssetsStudio 一个可以Unity3D打成APK包后，查看和导出里面的资源的工具 UnityAssetsExplorer 一个可以Unity3D打成APK包后，查看和导出里面的资源的工具 URP Unity性能测试分析解决方案UPR。URP有以下三个特点：1.无SDK：UPR通过无侵入式测试模式，不影响开发者原有的制作流程，避免额外的时间成本。2.不需要Root：目前Android 手机的Root难度越来越高，不要求Root才能最大程度的提供便利性。3.不需要提交APK：由于Unity游戏APK比较容易被破解，提交APK给第三方对于开发者而言往往需要非常慎重。尤其是对于开发中的重点项目，基本上不可能把APK提交到第三方进行测试。 World Machine 一款用来制作地形的工具，如果不用于商业用途的话，这个软件是可以免费使用的，本站提供一个下载，下载包的MD5值是805121a7036782047b04a75168dffbea，但如果此官网依然能访问，最好直接从官网下载。 MaCrea 可以用用来生成材质贴图的免费工具，本站提供一个下载，下载包的MD5值是0271de94ae3da1ea55e47fa5141bd225，但如果此官网依然能访问，最好直接从官网下载。 CubeMapGen 用来生成可进行卷积运算的立方体映射贴图。本站提供一个下载，下载包的MD5值是a6eb480b987618c023c79a4297fdb057，但如果此官网依然能访问，最好直接从官网下载。 Adreno GPU Profiler 一个Shader调试工具，支持OpenGL，Direct3D11，支持Win7及之后的平台，支持Linux,MacOS BorPak 用来解压使用OpenBOR引擎开发的游戏的资源包的工具 技术大神的集散地"><meta itemprop="datePublished" content="2014-04-09T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2014-04-09T00:00:00+00:00" />
+<meta itemprop="wordCount" content="275">
+<meta itemprop="keywords" content="" />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item main-nav__item--active">
+				
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">网络上的奇珍异宝</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2014-04-09T00:00:00Z">April 09, 2014</time>
+	</div>
+				<h1 class="entry__title">网络上的奇珍异宝</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents"></nav>
+</details>
+				<div class="entry__content"><p><strong>免责声明</strong></p>
+<p><strong>本站所提供的所有Windows，Android，iOS及其他的平台上的可执行程序，除特别声明者，都是本站从网络上搜集下载整理，在保证遵循程序开发者制定的第三方对程序的再发布的规则下，本站本着方便自己和他人的原则提供了下载。本站不保证这些软件的安全性和有效性，请慎重下载使用。本站所提及到的所有软件，如若能从该软件的官网下载的话，本站强烈建议用户直接从官网下载！</strong></p>
+<hr>
+<p><strong>各种开源库</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">项目名</th>
+<th style="text-align:left">简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="http://glew.sourceforge.net/">glew</a></td>
+<td style="text-align:left">在Windows上搞OpenGL开发总是要面临着Microsoft的不更新的刁难。GLEW提供了一整套OpenGL的扩展实现，并且是跨平台的</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.opengl-tutorial.org/">glus</a></td>
+<td style="text-align:left">OpenGL的一个扩展工具库</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://developer.nvidia.com/cg-toolkit">nVidia Cg Toolkit</a></td>
+<td style="text-align:left">由nVidia提供的Cg开发包。做shader编程都用它</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://bitbucket.org/Unity-Technologies/networking">UNet</a></td>
+<td style="text-align:left">Unity3D的内置网络库</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.layabox.com">layabox</a></td>
+<td style="text-align:left">H5游戏开源引擎</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.tslang.cn/">TypeScript中文网</a></td>
+<td style="text-align:left">TypeScript语言的中文学习网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://zh.esotericsoftware.com/spine-unity">Spine-Unity</a></td>
+<td style="text-align:left">Unity3D环境下的Spine动画插件官网</td>
+</tr>
+</tbody>
+</table>
+<p><strong>实用开发工具</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">项目名</th>
+<th style="text-align:left">简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="http://www.pixelandpolygon.com/">PicoPixel</a></td>
+<td style="text-align:left">做图形编程的时候，想像使用C语言的printf函数那样子输出纹理的内容吗？用它！</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://pngquant.org/">PngQuant</a></td>
+<td style="text-align:left">能大幅度地压缩PNG图片文件体积而几乎不损失原始图像质量的工具，这个工具是基于命令行的。有人给他做了一个界面工具PngGoo</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="/files/gems/OpenGL_Extensions_Viewer_v1.3.3_apkpure.com.apk">OpenGL Extension Viewer</a></td>
+<td style="text-align:left">用来查看Android手机对OpenGLES扩展功能的支持度的小软件</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="/files/gems/tile2d.zip">Tile2D</a></td>
+<td style="text-align:left">由国人开发的一个通用的2D地图编辑器。金点时空开发的《圣剑英雄传——英雄救美》就是使用这个编辑器编辑的场景地图。这是一个DOS程序，所以在Windows 7及以上版本的操作系统需要使用<a href="www.dosbox.com">DOSBOX</a>去执行</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.dosbox.com/">DosBox</a></td>
+<td style="text-align:left">想在其他平台上跑dos程序，用它就是最合适的。本站提供一个<a href="/files/gems/DOSBox0.74-win32-installer.exe">本地下载</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="/files/gems/glsl_user_define.xml">GLSL语法高亮提示</a></td>
+<td style="text-align:left">用在Notepad++上的，可以高亮显示GLSL语法文件的配置文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="/files/gems/ShaderLabCG.xml">ShaderLab语法高亮提示</a></td>
+<td style="text-align:left">用在Notepad++上的，可以高亮显示Unity3D Shaderlab语法文件的配置文件</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.ilspy.net">ILSpy</a></td>
+<td style="text-align:left">用来反编译C#代码的利器，本站提供了一个<a href="/files/gems/ilspy_master_2.4.0.1963_binaries.zip">本地下载</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="/files/gems/math_animation.html">Math Animation</a></td>
+<td style="text-align:left">用动画展示数学原理和公式的网页，由本站整理</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://renderdoc.org/">RenderDoc</a></td>
+<td style="text-align:left">一个Shader调试工具，支持OpenGL，Direct3D11，支持Win7及之后的平台，支持Linux</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="AssetStudio-master.zip">UnityAssetsStudio</a></td>
+<td style="text-align:left">一个可以Unity3D打成APK包后，查看和导出里面的资源的工具</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="UnityAssetsExplorer.zip">UnityAssetsExplorer</a></td>
+<td style="text-align:left">一个可以Unity3D打成APK包后，查看和导出里面的资源的工具</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://upr.unity.com/instructions">URP</a></td>
+<td style="text-align:left">Unity性能测试分析解决方案UPR。URP有以下三个特点：<strong>1.无SDK</strong>：UPR通过无侵入式测试模式，不影响开发者原有的制作流程，避免额外的时间成本。<strong>2.不需要Root</strong>：目前Android 手机的Root难度越来越高，不要求Root才能最大程度的提供便利性。<strong>3.不需要提交APK</strong>：由于Unity游戏APK比较容易被破解，提交APK给第三方对于开发者而言往往需要非常慎重。尤其是对于开发中的重点项目，基本上不可能把APK提交到第三方进行测试。</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.world-machine.com">World Machine</a></td>
+<td style="text-align:left">一款用来制作地形的工具，如果不用于商业用途的话，这个软件是可以免费使用的，本站提供一个<a href="WM3024_Basic.exe">下载</a>，下载包的MD5值是<strong>805121a7036782047b04a75168dffbea</strong>，但如果此官网依然能访问，最好直接从官网下载。</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.taron.de/macrea/MaCrea.rar">MaCrea</a></td>
+<td style="text-align:left">可以用用来生成材质贴图的免费工具，本站提供一个<a href="MaCrea.zip">下载</a>，下载包的MD5值是<strong>0271de94ae3da1ea55e47fa5141bd225</strong>，但如果此官网依然能访问，最好直接从官网下载。</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://gpuopen.com/archive/gamescgi/cubemapgen/">CubeMapGen</a></td>
+<td style="text-align:left">用来生成可进行卷积运算的立方体映射贴图。本站提供一个<a href="AMD-CubeMapGen.zip">下载</a>，下载包的MD5值是<strong>a6eb480b987618c023c79a4297fdb057</strong>，但如果此官网依然能访问，最好直接从官网下载。</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://developer.qualcomm.com/software/adreno-gpu-profiler">Adreno GPU Profiler</a></td>
+<td style="text-align:left">一个Shader调试工具，支持OpenGL，Direct3D11，支持Win7及之后的平台，支持Linux,MacOS</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="borpak.zip">BorPak</a></td>
+<td style="text-align:left">用来解压使用OpenBOR引擎开发的游戏的资源包的工具</td>
+</tr>
+</tbody>
+</table>
+<p><strong>技术大神的集散地</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">主页名</th>
+<th style="text-align:left">简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="https://github.com/morgan3d">Morgan McGuire</a></td>
+<td style="text-align:left">Morgan McGuire教授的github主页，Known for Roblox, NVIDIA, Markdeep, Skylanders, Titan Quest, G3D, Graphics Codex, Quadplay, Vicarious Visions, Unity, Activision, Williams College, U.Waterloo</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://casual-effects.com/g3d/www/index.html">The G3D Innovation Engine</a></td>
+<td style="text-align:left">The G3D Innovation Engine is a commercial-grade C++ 3D engine available as Open Source.</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.gameprogrammer.net/delphi3dArchive/phongfordummies.htm">Delphi3D</a></td>
+<td style="text-align:left">用Delphi也是可以做3D图形程序的。原来的www.delphi3d.net。德国的一位高手的主页，里面有不少精彩的文章</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.humus.name/">Humus</a></td>
+<td style="text-align:left">瑞典图形学高手Emil Persson的主页。他给ATI公司写了很多图形Demo。</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.flipcode.net/archives/">FlipCode</a></td>
+<td style="text-align:left">比较老，但是比较多经典技术文章的网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.klayge.org/">KlayGE引擎</a></td>
+<td style="text-align:left">国内技术大神龚敏敏的引擎</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://blog.selfshadow.com/">self shadow</a></td>
+<td style="text-align:left">一位图形学研究者的网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.d3dcoder.net/">d3dcoder</a></td>
+<td style="text-align:left">Frank Luna，即DirectX龙书的作者的网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.shadertoy.com/">shadertoy</a></td>
+<td style="text-align:left">基于WebGL的一个在线着色器编辑网站，大牛云集</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.learnopengl.com/">Learning OpenGL</a></td>
+<td style="text-align:left">由Joey De Vries发起的一个现代（Core-profile）的OpenGL教学平台 ，目前看来是最好的现代OpenGL学习网站。这里是中文镜像网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.directxtutorial.com/">DirectXTutorial</a></td>
+<td style="text-align:left">一个DirectX9，DirectX11的教学网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.rastertek.com/">RasterTek</a></td>
+<td style="text-align:left">又一个DirectX10,11,12的教学网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.scratchapixel.com/">Scratch a Pixel</a></td>
+<td style="text-align:left">图形学学习网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://ogldev.atspace.co.uk/">OGL DEV</a></td>
+<td style="text-align:left">OpenGL开发者网站。Modern OpenGL Tutorial</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.opengl-tutorial.org/">OpenGL Tutorial</a></td>
+<td style="text-align:left">OpenGL教程网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://devernay.free.fr/cours/opengl/materials.html">常见物质的光照材质表</a></td>
+<td style="text-align:left">由一位法国人提供的真实世界中物质的光照材质表</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.paulsprojects.net/">Paul&rsquo;s Projects</a></td>
+<td style="text-align:left">一位OpenGL玩家的网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://aras-p.info/">Aras Pranckevičius</a></td>
+<td style="text-align:left">Unity3D引擎的一位开发者的网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.edxgraphics.com/">edxgraphics</a></td>
+<td style="text-align:left">Shiqi Liu的图形学网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://graphics.stanford.edu/">斯坦福大学计算机图形实验室</a></td>
+<td style="text-align:left">斯坦福大学计算机图形实验室</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://gamma.cs.unc.edu/">北卡罗来纳州大学教堂山分校</a></td>
+<td style="text-align:left">北卡罗莱纳州大学教堂山分校</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://staff.ustc.edu.cn/~lgliu/">中国科技大学刘利刚教授</a></td>
+<td style="text-align:left">刘教授的主页，他的研究领域是计算机图形学和图像处理</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://forum.china.unity3d.com/forum.php">Unity3D官方中文开发论坛</a></td>
+<td style="text-align:left">Unity3D官方中文开发论坛</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.mbsoftworks.sk/">mbsoftworks</a></td>
+<td style="text-align:left">又一个图形学和游戏编程网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://vulkan-tutorial.com/">Vulkan tutorial</a></td>
+<td style="text-align:left">Vulkan入门教程网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://sunandblackcat.com/">Sun &amp; Black cat</a></td>
+<td style="text-align:left">阳光和黑猫，一个图形学玩家</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://vulkan.lunarg.com/">Vulkan SDK提供者</a></td>
+<td style="text-align:left">被Google收购的LunarG所提供的vulkan SDK和各种教程。</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://proland.inrialpes.fr/">Proland</a></td>
+<td style="text-align:left">A C++/OpenGL library for the real-time realistic rendering of very large and detailed 3D natural scenes on GPU</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://thebookofshaders.com/">The book of shaders</a></td>
+<td style="text-align:left">用fragment shader作画</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.gpuworld.cn/">GPU世界</a></td>
+<td style="text-align:left">国内的GPU产业与技术专题网站！</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.opengpu.org/">Open GPU网站</a></td>
+<td style="text-align:left">国内有很多图形编程爱好者都聚集在这里</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.hewebgl.com/">WebGL中文网</a></td>
+<td style="text-align:left">WebGL中文网，涵盖了WebGL和Three.js的内容</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.raytracegroundup.com">《光线跟踪算法技术》</a></td>
+<td style="text-align:left">《光线跟踪算法技术》这本书的配套网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://prideout.net/">prideout</a></td>
+<td style="text-align:left">图形学研究者</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.patreon.com/peerplay">peerplay</a></td>
+<td style="text-align:left">分形和raymarching研究者</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://github.com/pgeerkens/HexGridUtilitiesForGames">六边形地图工具库</a></td>
+<td style="text-align:left">另一个镜像地址在<a href="https://archive.codeplex.com/?p=hexgridutilities">这里</a></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.redblobgames.com/">RedblobGames</a></td>
+<td style="text-align:left">Amit Patel的游戏研究网站，其中的六边形地图研究资料非常丰富</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.3dcpptutorials.sk">3d cpp</a></td>
+<td style="text-align:left">3d cpp</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://unitytaiwan.blogspot.com/">Unity Taiwan</a></td>
+<td style="text-align:left">Unity Taiwan</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://cwyman.org">Chris Wyman&rsquo;s Web Page</a></td>
+<td style="text-align:left">Nvidia的又一位大牛</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.qter.org/">Qt开源社区</a></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.qtcn.org/">QT中国社区</a></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://inqlude.org/">Qt第三方库集合</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>各种免费素材资源下载</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">站点名</th>
+<th style="text-align:left">简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="http://spritedatabase.net/">sprite date base</a></td>
+<td style="text-align:left">各种平台下的经典游戏的素材库</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://opengameart.org/">Open Game Art</a></td>
+<td style="text-align:left">免费的游戏素材资源下载</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.spriters-resource.com/">Spriter Resource</a></td>
+<td style="text-align:left">各主机平台下的游戏的图片资源网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://www.pinterest.com/">pinterest</a></td>
+<td style="text-align:left">各主机平台下的游戏的图片资源网站</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="http://www.3dmodelfree.com/">3D Model Free</a></td>
+<td style="text-align:left">国外的免费的3D模型下载网</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="/files/gems/%E5%B2%B3%E9%A3%9E%E4%BC%A0%E5%B2%B3%E9%9B%B7%E7%BA%BF%E5%AD%98%E6%A1%A3.zip">精忠报国岳飞传存档</a></td>
+<td style="text-align:left">轩辕春秋论坛制作的战棋游戏《精忠报国岳飞传》的岳飞线，岳雷线，神话线存档</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="/files/gems/double_dragon_asset.7z">《双截龙》资源素材</a></td>
+<td style="text-align:left">各平台下的《双截龙》游戏素材</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="/files/gems/jzcx_document.zip">《决战朝鲜》文档资料</a></td>
+<td style="text-align:left">西山居出品的战棋游戏《决战朝鲜》的相关文档资料</td>
+</tr>
+<tr>
+<td style="text-align:center"><a href="https://github.com/justjavac/free-programming-books-zh_CN">Github上的中文书籍索引</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>AI和美术素材相关网站</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">站点名</th>
+<th style="text-align:left">简介</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><a href="https://huaban.com/">花瓣网</a></td>
+<td style="text-align:left">各种设计素材，美术设计师出没的网站</td>
+</tr>
+</tbody>
+</table>
+</div>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

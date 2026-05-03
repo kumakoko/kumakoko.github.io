@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Understanding C# async / await 第1章 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="C#中的async和await">
+		<meta property="og:title" content="Understanding C# async / await 第1章" />
+<meta property="og:description" content="C#中的async和await" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/dotnet/understand_csharp_async_wait_1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-11-21T17:08:30+08:00" />
+<meta property="article:modified_time" content="2020-11-21T17:08:30+08:00" />
+
+
+		<meta itemprop="name" content="Understanding C# async / await 第1章">
+<meta itemprop="description" content="C#中的async和await"><meta itemprop="datePublished" content="2020-11-21T17:08:30+08:00" />
+<meta itemprop="dateModified" content="2020-11-21T17:08:30+08:00" />
+<meta itemprop="wordCount" content="643">
+<meta itemprop="keywords" content=".NET," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Understanding C# async / await 第1章</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2020-11-21T17:08:30&#43;08:00">November 21, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">Understanding C# async / await 第1章</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#理解-c-的-async--await-1编译过程"><strong>理解 C# 的 async / await (1)：编译过程</strong></a>
+      <ul>
+        <li><a href="#1-概述"><strong>1. 概述</strong></a></li>
+        <li><a href="#2-准备工作"><strong>2. 准备工作</strong></a></li>
+        <li><a href="#3-使用-async--await"><strong>3. 使用 async / await</strong></a></li>
+        <li><a href="#4-编译后的代码"><strong>4. 编译后的代码</strong></a></li>
+        <li><a href="#5-多-await-方法"><strong>5. 多 await 方法</strong></a></li>
+        <li><a href="#6-状态机与回调"><strong>6. 状态机与回调</strong></a></li>
+        <li><a href="#7-使用-taskyield"><strong>7. 使用 Task.Yield()</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#总结"><strong>总结</strong></a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><a href="https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-1-compilation">Understanding C# async / await 第1章原文地址</a></p>
+<p><a href="https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-2-awaitable-awaiter-pattern">Understanding C# async / await 第2章原文地址</a></p>
+<p><a href="https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-3-runtime-context">Understanding C# async / await 第3章原文地址</a></p>
+<hr>
+<p>以下是基于你提供的内容的总结和解读，保留示例代码和关键细节：</p>
+<hr>
+<h2 id="理解-c-的-async--await-1编译过程"><strong>理解 C# 的 async / await (1)：编译过程</strong></h2>
+<h3 id="1-概述"><strong>1. 概述</strong></h3>
+<p>C# 的 <code>async</code> 和 <code>await</code> 关键字为异步编程提供了极大的便利。本文将深入探讨这些语法糖背后的实际代码实现。</p>
+<h3 id="2-准备工作"><strong>2. 准备工作</strong></h3>
+<p>首先，定义一些辅助方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">HelperMethods</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> IO()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">using</span> (WebClient client = <span style="color:#66d9ef">new</span> WebClient())
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Enumerable.Repeat(<span style="color:#e6db74">&#34;http://weblogs.asp.net/dixin&#34;</span>, <span style="color:#ae81ff">10</span>).Select(client.DownloadString).ToArray();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> Method(<span style="color:#66d9ef">int</span> arg0, <span style="color:#66d9ef">int</span> arg1)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> result = arg0 + arg1;
+</span></span><span style="display:flex;"><span>        IO(); <span style="color:#75715e">// 模拟长时间运行的 IO 操作</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> Task&lt;<span style="color:#66d9ef">int</span>&gt; MethodTask(<span style="color:#66d9ef">int</span> arg0, <span style="color:#66d9ef">int</span> arg1)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Task&lt;<span style="color:#66d9ef">int</span>&gt; task = <span style="color:#66d9ef">new</span> Task&lt;<span style="color:#66d9ef">int</span>&gt;(() =&gt; Method(arg0, arg1));
+</span></span><span style="display:flex;"><span>        task.Start(); <span style="color:#75715e">// 返回已启动的任务</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> task;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Before() { }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Continuation1(<span style="color:#66d9ef">int</span> arg) { }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Continuation2(<span style="color:#66d9ef">int</span> arg) { }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>Method()</code> 是一个模拟长时间 IO 操作的方法，<code>MethodTask()</code> 将其包装为 <code>Task</code> 并返回。</p>
+<h3 id="3-使用-async--await"><strong>3. 使用 async / await</strong></h3>
+<p>定义一个异步方法 <code>MethodAsync()</code>，并在其中使用 <code>await</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncMethods</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">int</span>&gt; MethodAsync(<span style="color:#66d9ef">int</span> arg0, <span style="color:#66d9ef">int</span> arg1)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> result = <span style="color:#66d9ef">await</span> HelperMethods.MethodTask(arg0, arg1);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> result;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>await</code> 关键字用于等待 <code>MethodTask()</code> 返回的 <code>Task</code>。</p>
+<h3 id="4-编译后的代码"><strong>4. 编译后的代码</strong></h3>
+<p>编译后，<code>MethodAsync()</code> 的代码会被转换为以下形式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CompiledAsyncMethods</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [DebuggerStepThrough]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [AsyncStateMachine(typeof(MethodAsyncStateMachine))]</span> <span style="color:#75715e">// async</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> <span style="color:#75715e">/*async*/</span> Task&lt;<span style="color:#66d9ef">int</span>&gt; MethodAsync(<span style="color:#66d9ef">int</span> arg0, <span style="color:#66d9ef">int</span> arg1)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        MethodAsyncStateMachine methodAsyncStateMachine = <span style="color:#66d9ef">new</span> MethodAsyncStateMachine()
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Arg0 = arg0,
+</span></span><span style="display:flex;"><span>            Arg1 = arg1,
+</span></span><span style="display:flex;"><span>            Builder = AsyncTaskMethodBuilder&lt;<span style="color:#66d9ef">int</span>&gt;.Create(),
+</span></span><span style="display:flex;"><span>            State = -<span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>        methodAsyncStateMachine.Builder.Start(<span style="color:#66d9ef">ref</span> methodAsyncStateMachine);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> methodAsyncStateMachine.Builder.Task;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>async</code> 关键字被移除，实际逻辑被转移到一个状态机 <code>MethodAsyncStateMachine</code> 中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[CompilerGenerated]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[StructLayout(LayoutKind.Auto)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">MethodAsyncStateMachine</span> : IAsyncStateMachine
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> State;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> AsyncTaskMethodBuilder&lt;<span style="color:#66d9ef">int</span>&gt; Builder;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Arg0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Arg1;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Result;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> TaskAwaiter&lt;<span style="color:#66d9ef">int</span>&gt; awaitor;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> IAsyncStateMachine.MoveNext()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span>.State != <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">this</span>.awaitor = HelperMethods.MethodTask(<span style="color:#66d9ef">this</span>.Arg0, <span style="color:#66d9ef">this</span>.Arg1).GetAwaiter();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">this</span>.awaitor.IsCompleted)
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">this</span>.State = <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">this</span>.Builder.AwaitUnsafeOnCompleted(<span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">this</span>.awaitor, <span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">this</span>.State = -<span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.Result = <span style="color:#66d9ef">this</span>.awaitor.GetResult();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">catch</span> (Exception exception)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.State = -<span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.Builder.SetException(exception);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.State = -<span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.Builder.SetResult(<span style="color:#66d9ef">this</span>.Result);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [DebuggerHidden]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> IAsyncStateMachine.SetStateMachine(IAsyncStateMachine param0)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.Builder.SetStateMachine(param0);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>状态机的 <code>MoveNext()</code> 方法包含了实际的异步逻辑。</p>
+<h3 id="5-多-await-方法"><strong>5. 多 await 方法</strong></h3>
+<p>定义一个更复杂的异步方法 <code>MultiCallMethodAsync()</code>，包含多个 <code>await</code> 和 continuation 代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsyncMethods</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">int</span>&gt; MultiCallMethodAsync(<span style="color:#66d9ef">int</span> arg0, <span style="color:#66d9ef">int</span> arg1, <span style="color:#66d9ef">int</span> arg2, <span style="color:#66d9ef">int</span> arg3)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        HelperMethods.Before();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> resultOfAwait1 = <span style="color:#66d9ef">await</span> MethodAsync(arg0, arg1);
+</span></span><span style="display:flex;"><span>        HelperMethods.Continuation1(resultOfAwait1);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> resultOfAwait2 = <span style="color:#66d9ef">await</span> MethodAsync(arg2, arg3);
+</span></span><span style="display:flex;"><span>        HelperMethods.Continuation2(resultOfAwait2);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> resultToReturn = resultOfAwait1 + resultOfAwait2;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> resultToReturn;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>编译后，<code>MultiCallMethodAsync()</code> 也会被转换为状态机 <code>MultiCallMethodAsyncStateMachine</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#a6e22e">[CompilerGenerated]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[StructLayout(LayoutKind.Auto)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">MultiCallMethodAsyncStateMachine</span> : IAsyncStateMachine
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> State;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> AsyncTaskMethodBuilder&lt;<span style="color:#66d9ef">int</span>&gt; Builder;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Arg0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Arg1;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Arg2;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> Arg3;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ResultOfAwait1;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ResultOfAwait2;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> ResultToReturn;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> TaskAwaiter&lt;<span style="color:#66d9ef">int</span>&gt; awaiter;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> IAsyncStateMachine.MoveNext()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">switch</span> (<span style="color:#66d9ef">this</span>.State)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">case</span> -<span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                    HelperMethods.Before();
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">this</span>.awaiter = AsyncMethods.MethodAsync(<span style="color:#66d9ef">this</span>.Arg0, <span style="color:#66d9ef">this</span>.Arg1).GetAwaiter();
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">this</span>.awaiter.IsCompleted)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">this</span>.State = <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">this</span>.Builder.AwaitUnsafeOnCompleted(<span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">this</span>.awaiter, <span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">this</span>.ResultOfAwait1 = <span style="color:#66d9ef">this</span>.awaiter.GetResult();
+</span></span><span style="display:flex;"><span>                    HelperMethods.Continuation1(<span style="color:#66d9ef">this</span>.ResultOfAwait1);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">this</span>.awaiter = AsyncMethods.MethodAsync(<span style="color:#66d9ef">this</span>.Arg2, <span style="color:#66d9ef">this</span>.Arg3).GetAwaiter();
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (!<span style="color:#66d9ef">this</span>.awaiter.IsCompleted)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">this</span>.State = <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">this</span>.Builder.AwaitUnsafeOnCompleted(<span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">this</span>.awaiter, <span style="color:#66d9ef">ref</span> <span style="color:#66d9ef">this</span>);
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">case</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">this</span>.ResultOfAwait2 = <span style="color:#66d9ef">this</span>.awaiter.GetResult();
+</span></span><span style="display:flex;"><span>                    HelperMethods.Continuation2(<span style="color:#66d9ef">this</span>.ResultOfAwait2);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">this</span>.ResultToReturn = <span style="color:#66d9ef">this</span>.ResultOfAwait1 + <span style="color:#66d9ef">this</span>.ResultOfAwait2;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">this</span>.State = -<span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">this</span>.Builder.SetResult(<span style="color:#66d9ef">this</span>.ResultToReturn);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">catch</span> (Exception exception)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.State = -<span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">this</span>.Builder.SetException(exception);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [DebuggerHidden]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> IAsyncStateMachine.SetStateMachine(IAsyncStateMachine stateMachine)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.Builder.SetStateMachine(stateMachine);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="6-状态机与回调"><strong>6. 状态机与回调</strong></h3>
+<p>状态机的核心思想是将代码按 <code>await</code> 拆分为多个部分，并通过回调链式执行。例如，<code>MultiCallMethodAsync()</code> 可以简化为以下形式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> Task&lt;<span style="color:#66d9ef">int</span>&gt; MultiCallMethodAsync(<span style="color:#66d9ef">int</span> arg0, <span style="color:#66d9ef">int</span> arg1, <span style="color:#66d9ef">int</span> arg2, <span style="color:#66d9ef">int</span> arg3)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    TaskCompletionSource&lt;<span style="color:#66d9ef">int</span>&gt; taskCompletionSource = <span style="color:#66d9ef">new</span> TaskCompletionSource&lt;<span style="color:#66d9ef">int</span>&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        HelperMethods.Before();
+</span></span><span style="display:flex;"><span>        MethodAsync(arg0, arg1).ContinueWith(await1 =&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">int</span> resultOfAwait1 = await1.Result;
+</span></span><span style="display:flex;"><span>                HelperMethods.Continuation1(resultOfAwait1);
+</span></span><span style="display:flex;"><span>                MethodAsync(arg2, arg3).ContinueWith(await2 =&gt;
+</span></span><span style="display:flex;"><span>                {
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">int</span> resultOfAwait2 = await2.Result;
+</span></span><span style="display:flex;"><span>                        HelperMethods.Continuation2(resultOfAwait2);
+</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">int</span> resultToReturn = resultOfAwait1 + resultOfAwait2;
+</span></span><span style="display:flex;"><span>                        taskCompletionSource.SetResult(resultToReturn);
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">catch</span> (Exception exception)
+</span></span><span style="display:flex;"><span>                    {
+</span></span><span style="display:flex;"><span>                        taskCompletionSource.SetException(exception);
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>                });
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">catch</span> (Exception exception)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                taskCompletionSource.SetException(exception);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span> (Exception exception)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        taskCompletionSource.SetException(exception);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> taskCompletionSource.Task;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="7-使用-taskyield"><strong>7. 使用 Task.Yield()</strong></h3>
+<p><code>Task.Yield()</code> 可以强制方法异步完成：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task YeildAsync()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    HelperMethods.Before();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> Task.Yield(); <span style="color:#75715e">// 立即返回，不等待 continuation 代码执行</span>
+</span></span><span style="display:flex;"><span>    HelperMethods.Continuation(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>其实现类似于：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">static</span> Task YeildAsync()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    TaskCompletionSource&lt;<span style="color:#66d9ef">object</span>&gt; taskCompletionSource = <span style="color:#66d9ef">new</span> TaskCompletionSource&lt;<span style="color:#66d9ef">object</span>&gt;();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        HelperMethods.Before();
+</span></span><span style="display:flex;"><span>        Task yeild = <span style="color:#66d9ef">new</span> Task(() =&gt; { });
+</span></span><span style="display:flex;"><span>        yeild.Start();
+</span></span><span style="display:flex;"><span>        yeild.ContinueWith(<span style="color:#66d9ef">await</span> =&gt;
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                HelperMethods.Continuation(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>                taskCompletionSource.SetResult(<span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">catch</span> (Exception exception)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                taskCompletionSource.SetException(exception);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">catch</span> (Exception exception)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        taskCompletionSource.SetException(exception);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> taskCompletionSource.Task;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="总结"><strong>总结</strong></h2>
+<ul>
+<li><strong>async / await 是语法糖</strong>：编译后会生成状态机，将代码按 <code>await</code> 拆分为多个部分，并通过回调链式执行。</li>
+<li><strong>状态机</strong>：状态机负责管理异步操作的执行顺序和结果。</li>
+<li><strong>Task.Yield()</strong>：强制方法异步完成，类似于 JavaScript 的 <code>setTimeout()</code>。</li>
+</ul>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/.net/">.NET</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_attribute_note/">C#中的Attribute学习笔记</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_object_copy_and_assign/">C#中的对象和拷贝</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/delete_dictionary_elements/">正确地删除Dictionary中的元素</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/iterator_and_yield/">C#中的迭代器和yield</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_asynresult_interface_detail/">.NET Framework的IAsyncResult接口的细节</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

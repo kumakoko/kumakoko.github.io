@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>.NET on XGF</title>
+    <link>http://www.xionggf.com/tags/.net/</link>
+    <description>Recent content in .NET on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 21 Nov 2020 19:08:30 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/tags/.net/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding C# async / await 第3章</title>
+      <link>http://www.xionggf.com/post/dotnet/understand_csharp_async_wait_3/</link>
+      <pubDate>Sat, 21 Nov 2020 19:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/dotnet/understand_csharp_async_wait_3/</guid>
+      <description>Understanding C# async / await 第1章原文地址&#xA;Understanding C# async / await 第2章原文地址&#xA;Understanding C# async / await 第3章原文地址&#xA;以下是基于你提供的内容的总结和解读，保留示例代码和关键细节：&#xA;理解 C# 的 async / await (3)：运行时上下文 1. 概述 在前两篇文章中，我们探讨了 async 和 await 的编译过程和 Awaitable-Awaiter 模式。本文将深入探讨 await 在运行时的上下文处理机制，特别是如何通过 ExecutionContext 和 SynchronizationContext 解决跨线程问题。&#xA;2. 跨线程问题 在 WPF 应用程序中，以下代码可以正常工作：&#xA;this.Button.Click += async (sender, e) =&amp;gt; { string html = await new WebClient().DownloadStringTaskAsync(&amp;#34;https://weblogs.asp.net/dixin&amp;#34;); this.TextBox.Text = html; }; 但如果将其改写为 Task.ContinueWith() 的回调形式：&#xA;this.Button.Click += (sender, e) =&amp;gt; { new WebClient().</description>
+    </item>
+    <item>
+      <title>Understanding C# async / await 第2章</title>
+      <link>http://www.xionggf.com/post/dotnet/understand_csharp_async_wait_2/</link>
+      <pubDate>Sat, 21 Nov 2020 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/dotnet/understand_csharp_async_wait_2/</guid>
+      <description>Understanding C# async / await 第1章原文地址&#xA;Understanding C# async / await 第2章原文地址&#xA;Understanding C# async / await 第3章原文地址&#xA;理解 C# 的 async / await (2)：Awaitable-Awaiter 模式 1. 什么是 Awaitable？ 在 C# 中，任何具有 GetAwaiter() 方法的对象都是 awaitable 的。Task 是最常见的 awaitable 类型，但其他类型也可以实现这一模式。例如：&#xA;Task&amp;lt;int&amp;gt; task = new Task&amp;lt;int&amp;gt;(() =&amp;gt; 0); int result = await task.ConfigureAwait(false); // 返回 ConfiguredTaskAwaitable&amp;lt;TResult&amp;gt; ConfiguredTaskAwaitable&amp;lt;TResult&amp;gt; 是一个 awaitable 类型，但它并不是 Task。&#xA;2. Awaitable-Awaiter 模式 通过观察不同的 awaitable / awaiter 类型，可以总结出以下规则：&#xA;Awaitable 对象必须有一个 GetAwaiter() 方法（实例方法或扩展方法）。 Awaiter 对象必须满足以下条件： 实现 INotifyCompletion 或 ICriticalNotifyCompletion 接口。 有一个 IsCompleted 属性，返回布尔值。 有一个 GetResult() 方法，返回 void 或一个结果。 这种模式与 可迭代-迭代器模式（IEnumerable / IEnumerator）非常相似。</description>
+    </item>
+    <item>
+      <title>Understanding C# async / await 第1章</title>
+      <link>http://www.xionggf.com/post/dotnet/understand_csharp_async_wait_1/</link>
+      <pubDate>Sat, 21 Nov 2020 17:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/dotnet/understand_csharp_async_wait_1/</guid>
+      <description>Understanding C# async / await 第1章原文地址&#xA;Understanding C# async / await 第2章原文地址&#xA;Understanding C# async / await 第3章原文地址&#xA;以下是基于你提供的内容的总结和解读，保留示例代码和关键细节：&#xA;理解 C# 的 async / await (1)：编译过程 1. 概述 C# 的 async 和 await 关键字为异步编程提供了极大的便利。本文将深入探讨这些语法糖背后的实际代码实现。&#xA;2. 准备工作 首先，定义一些辅助方法：&#xA;internal class HelperMethods { private static void IO() { using (WebClient client = new WebClient()) { Enumerable.Repeat(&amp;#34;http://weblogs.asp.net/dixin&amp;#34;, 10).Select(client.DownloadString).ToArray(); } } internal static int Method(int arg0, int arg1) { int result = arg0 + arg1; IO(); // 模拟长时间运行的 IO 操作 return result; } internal static Task&amp;lt;int&amp;gt; MethodTask(int arg0, int arg1) { Task&amp;lt;int&amp;gt; task = new Task&amp;lt;int&amp;gt;(() =&amp;gt; Method(arg0, arg1)); task.</description>
+    </item>
+    <item>
+      <title>C#中的Attribute学习笔记</title>
+      <link>http://www.xionggf.com/post/dotnet/cs_attribute_note/</link>
+      <pubDate>Tue, 26 Nov 2019 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/dotnet/cs_attribute_note/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;C#的Attribute的一些细节描述： 1 C#的attribute，通常翻译为“ 特性 ”。经常出现的英文单词则翻译为“ 属性 ” 2 C#的attribute可以视为是一种 附着物。就像牡蛎吸附在船底或礁石上一样。这些附着物的作用是为它们的附着体，追加上一些额外的信息。而这些信息保存在附着物的体内。对，也即是被编译器编译进 程序集（assembly） 的 元数据（Metadata） 里，在程序运行的时候，随时可以从元数据里提取出这些附加信息，来决策或影响程序的运行。 3 C#的attribute不是什么别的，其本质上就是一个类，而且这个类在使用上要遵循以下的一些规则： 3.1 不使用new操作符来产生实例，而是使用在方括号里调用构造函数的来产生实例。构造函数的参数是一定要写的，有几个就得写几个。且参数的顺序不能错 3.2 方括号必需紧挨着放置在被附着目标的前面。 3.3 因为方括号里空间有限，不能像使用new那样先构造对象后，再对对象的 属性（Property） 一一赋值。因此，对Attribute实例属性的赋值，也需写在构造函数的圆括号里。但对property的赋值，可有可无，这是因为编译器肯定对property设置一个默认值。对多个property的赋值先后顺序也没有关系。 能被Attribute所附着的目标种类 Attribute能附着的目标的种类在枚举类型AttributeTargets中有定义，代码如下：&#xA;namespace System { [ComVisible(true)] [Flags] public enum AttributeTargets { Assembly = 1, Module = 2, Class = 4, Struct = 8, Enum = 16, Constructor = 32, Method = 64, Property = 128, Field = 256, Event = 512, Interface = 1024, Parameter = 2048, Delegate = 4096, ReturnValue = 8192, GenericParameter = 16384, All = 32767 } } 从上面的定义可以看到，如果有指定多个attribute所能附着的目标类型的话，在设置AttributeTragets类型值是用按位或操作符连起来就好，例如：AttributeTargets.</description>
+    </item>
+    <item>
+      <title>C#中的对象和拷贝</title>
+      <link>http://www.xionggf.com/post/dotnet/cs_object_copy_and_assign/</link>
+      <pubDate>Sat, 23 Nov 2019 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/dotnet/cs_object_copy_and_assign/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;问题：在C#中，先创建类A的实例a并赋值其成员变量，再创建实例b，然后执行 b = a，是否能让b自动拥有和a相同的成员变量值。&#xA;核心解答 首先直接给出结论：执行 b = a 并不会让b拥有a的成员变量副本，而是让b和a指向内存中的同一个对象。这不是“赋值成员变量”，而是“引用赋值”。&#xA;1. 代码演示与解释 下面用一段完整的代码来展示这个过程：&#xA;using System; // 定义类A public class A { // 成员变量 public int Number { get; set; } public string Text { get; set; } } class Program { static void Main() { // 1. 创建实例a并赋值成员变量 A a = new A(); a.Number = 10; a.Text = &amp;#34;Hello&amp;#34;; // 2. 创建实例b（此时b指向一个新的空对象） A b = new A(); // 3. 执行 b = a b = a; // 4.</description>
+    </item>
+    <item>
+      <title>正确地删除Dictionary中的元素</title>
+      <link>http://www.xionggf.com/post/dotnet/delete_dictionary_elements/</link>
+      <pubDate>Fri, 22 Nov 2019 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/dotnet/delete_dictionary_elements/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;你想要在C#中实现这样的功能：给定一个目标值，检查Dictionary中是否存在该值，如果存在，就将所有包含这个值的键值对都从字典中移除。&#xA;实现思路 要实现这个需求，需要注意一个关键问题：不能在遍历字典的同时直接修改字典（会抛出InvalidOperationException）。因此，正确的步骤是：&#xA;先遍历字典，找出所有值等于目标值的键，存入一个临时集合（如List&amp;lt;TKey&amp;gt;）。 遍历这个临时集合，根据其中的键从字典中移除对应的键值对。 完整代码示例 以下是通用的泛型实现，适用于任意类型的Dictionary（只要值类型支持相等比较）：&#xA;using System; using System.Collections.Generic; using System.Linq; class Program { static void Main(string[] args) { // 示例字典：键为int，值为string Dictionary&amp;lt;int, string&amp;gt; testDict = new Dictionary&amp;lt;int, string&amp;gt;() { { 1, &amp;#34;苹果&amp;#34; }, { 2, &amp;#34;香蕉&amp;#34; }, { 3, &amp;#34;苹果&amp;#34; }, { 4, &amp;#34;橙子&amp;#34; }, { 5, &amp;#34;苹果&amp;#34; } }; Console.WriteLine(&amp;#34;移除前的字典：&amp;#34;); PrintDictionary(testDict); // 要移除的目标值 string targetValue = &amp;#34;苹果&amp;#34;; // 调用方法移除所有值为&amp;#34;苹果&amp;#34;的键值对 RemoveAllEntriesByValue(testDict, targetValue); Console.WriteLine($&amp;#34;\n移除值为\&amp;#34;{targetValue}\&amp;#34;的所有项后：&amp;#34;); PrintDictionary(testDict); } /// &amp;lt;summary&amp;gt; /// 移除Dictionary中所有值等于目标值的键值对 /// &amp;lt;/summary&amp;gt; /// &amp;lt;typeparam name=&amp;#34;TKey&amp;#34;&amp;gt;字典键的类型&amp;lt;/typeparam&amp;gt; /// &amp;lt;typeparam name=&amp;#34;TValue&amp;#34;&amp;gt;字典值的类型&amp;lt;/typeparam&amp;gt; /// &amp;lt;param name=&amp;#34;dictionary&amp;#34;&amp;gt;要操作的字典&amp;lt;/param&amp;gt; /// &amp;lt;param name=&amp;#34;targetValue&amp;#34;&amp;gt;要移除的目标值&amp;lt;/param&amp;gt; public static void RemoveAllEntriesByValue&amp;lt;TKey, TValue&amp;gt;(Dictionary&amp;lt;TKey, TValue&amp;gt; dictionary, TValue targetValue) where TKey : notnull // 约束键不能为null（Dictionary的默认要求） { if (dictionary == null) { throw new ArgumentNullException(nameof(dictionary), &amp;#34;字典不能为null&amp;#34;); } // 第一步：找出所有值等于目标值的键（存入临时列表，避免遍历中修改字典） List&amp;lt;TKey&amp;gt; keysToRemove = dictionary .</description>
+    </item>
+    <item>
+      <title>C#中的迭代器和yield</title>
+      <link>http://www.xionggf.com/post/dotnet/iterator_and_yield/</link>
+      <pubDate>Thu, 21 Nov 2013 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/dotnet/iterator_and_yield/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;在.NET中通过使用接口IEnumerator和IEnumerable及其泛型等价物。来封装 迭代器模式 。所谓 迭代器模式 即是：允许你访问一个数据项序列，能依次遍历该序列中的每一项元素，而无需关心元素在序列内部的组织形式。&#xA;1.非泛型版本的IEnumerator和IEnumerable接口 首先看IEnumerator接口的定义，代码如下：&#xA;public interface IEnumerator { /* 获取集合中位于枚举数当前位置的元素。在下列任一情况下，不定义Current： 1 枚举器位于集合中第一个元素之前，紧跟在创建枚举器之后。 在读取Current的值之前， 必须调用MoveNext，以将枚举器前进到集合的第一个元素。 2 对MoveNext的最后一次调用返回了 false，指示集合的末尾。 3 由于对集合所做的更改（如添加、修改或删除元素），枚举器无效。 在调用 Current 之前，MoveNext返回相同的对象。 MoveNext将Current设置为下一个元素。 */ object Current { get; } /* 将枚举数推进到集合的下一个元素。 如果枚举数已成功地推进到下一个元素，则为true； 如果枚举数传递到集合的末尾，则为false。 在创建枚举器之后，或在调用Reset方法之后，枚举数将定位到集合的第一个元素之前， 对MoveNext方法的第一次调用将枚举器移动到集合的第一个元素上。 如果MoveNext越过集合的末尾，则枚举器将定位到集合中的最后一个元素之后，MoveNext返回false。 当枚举器位于此位置时，对MoveNext的后续调用也将返回false，直到调用Reset。 如果对集合所做的更改（如添加、修改或删除元素），则MoveNext的行为是不确定的。 */ bool MoveNext(); /* 将枚举数设置为其初始位置，该位置位于集合中第一个元素之前。 */ void Reset(); } 顾名思义，IEnumerator就是表征一个“ 迭代器 ”（又可称为 枚举器 ）应有的功能接口，该接口所函数的方法如上述代码注释中所描述，接下来看IEumerable接口，代码如下：&#xA;public interface IEnumerable { IEnumerator GetEnumerator(); } IEnumerable用来表征“一个数据集合是 可迭代 的（ 可枚举 的）”，即是说该数据集合中的每个元素都是可以被一一迭代的。IEnumerable接口也很简单，只有一个方法，就是返回 能访问到该数据集合每个元素的迭代器 。</description>
+    </item>
+    <item>
+      <title>.NET Framework的IAsyncResult接口的细节</title>
+      <link>http://www.xionggf.com/post/dotnet/cs_asynresult_interface_detail/</link>
+      <pubDate>Mon, 21 Oct 2013 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/dotnet/cs_asynresult_interface_detail/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;概述 IAsynResult接口用来表征一个异步操作的结果。它的定义声明如下：&#xA;[System.Runtime.InteropServices.ComVisible(true)] public interface IAsyncResult { object AsyncState { get; } WaitHandle AsyncWaitHandle { get; } bool CompletedSynchronously { get; } bool IsCompleted { get; } } 有一些.NET Framework预定义的类是继承实现这个接口，如下：&#xA;AsyncResult SecurityTokenProvider.SecurityTokenAsyncResult AsyncResult Task CommittableTransaction 示例程序 接下来的示例演示了如何使用了IAsyncResult接口中的AsyncWaitHandle属性，去获取到一个WaitHandle类型的值，以及如何使用一个delegate去等待一个异步调用。当异步调用完成后，WaitHandle类型的返回值将会被赋值上。这示例由两个类组成，一个是包含了异步调用函数的类；另一个类则是包含了调用异步函数的方法。&#xA;using System; using System.Threading; namespace Examples.AdvancedProgramming.AsynchronousOperations { public class AsyncDemo { // 将要被异步执行的函数 public string TestMethod(int callDuration, out int threadId) { Console.WriteLine(&amp;#34;Test method begins.&amp;#34;); Thread.Sleep(callDuration); // 被异步执行的函数所在的线程休眠callDuration所指定的时间 threadId = Thread.CurrentThread.ManagedThreadId; // 拿到系统给本异步执行的函数分配的运行线程的id return String.</description>
+    </item>
+    <item>
+      <title>NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解</title>
+      <link>http://www.xionggf.com/post/dotnet/begin_receive_and_end_receive/</link>
+      <pubDate>Sun, 20 Oct 2013 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/dotnet/begin_receive_and_end_receive/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;分类 信息 类所属的空间: System.Net.Sockets 类所属于的程序集: System.dll, netstandard.dll, System.Net.Sockets.dll, System.Net.dll 使用BeginReceive和EndReceive的示例代码 using System; using System.Net; using System.Net.Sockets; using System.Threading; using System.Text; // State object for receiving data from remote device. public class StateObject { public Socket workSocket = null; // Socket连接的对象 public const int BufferSize = 256; // 客户端接受socket数据的缓冲区字节数大小 public byte[] buffer = new byte[BufferSize]; // 客户端接受socket数据的缓冲区 public StringBuilder sb = new StringBuilder();// 客户端接受数据字符串的容器 } public class AsynchronousClient { private const int port = 11000; // 端口号 // ManualResetEvent类详见 http://www.</description>
+    </item>
+  </channel>
+</rss>

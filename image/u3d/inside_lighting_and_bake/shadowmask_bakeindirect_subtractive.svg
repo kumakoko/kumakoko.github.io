@@ -1,0 +1,1662 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2267.73876953pt" height="995.86743164pt">
+ <g id="SFixTitle" />
+ <g id="SContent">
+  <g transform="scale(1.33333)">
+   <g>
+    <g>
+     <g />
+     <g shape-rendering="crispEdges" />
+    </g>
+    <g>
+     <g />
+    </g>
+    <g>
+     <g />
+    </g>
+   </g>
+   <g transform="matrix(1,0,0,1,50.40000153,54)">
+    <defs>
+     <clipPath id="CLIP0">
+      <path d="M-0.5,-0.5 L2167.5,-0.5 L2167.5,888.5 L-0.5,888.5 Z " />
+     </clipPath>
+    </defs>
+    <g clip-path="url(#CLIP0)">
+     <g />
+     <g shape-rendering="crispEdges">
+      <g>
+       <path d="M245.177764893,0 L1199.207763672,0 L1199.207763672,49.325969696 L245.177764893,49.325969696 Z " stroke="none" stroke-width="0" fill="#FFC7CE" fill-opacity="1" />
+      </g>
+      <g>
+       <path d="M1199.207763672,0 L2166.938964844,0 L2166.938964844,49.325969696 L1199.207763672,49.325969696 Z " stroke="none" stroke-width="0" fill="#FFC7CE" fill-opacity="1" />
+      </g>
+      <g>
+       <path d="M0,49.325969696 L245.177764893,49.325969696 L245.177764893,246.629852295 L0,246.629852295 Z " stroke="none" stroke-width="0" fill="#C6EFCE" fill-opacity="1" />
+      </g>
+      <g>
+       <path d="M0,246.629852295 L245.177764893,246.629852295 L245.177764893,493.25970459 L0,493.25970459 Z " stroke="none" stroke-width="0" fill="#C6EFCE" fill-opacity="1" />
+      </g>
+      <g>
+       <path d="M0,493.259643555 L245.177764893,493.259643555 L245.177764893,690.563537598 L0,690.563537598 Z " stroke="none" stroke-width="0" fill="#C6EFCE" fill-opacity="1" />
+      </g>
+      <g>
+       <path d="M0,690.563598633 L245.177764893,690.563598633 L245.177764893,887.867492676 L0,887.867492676 Z " stroke="none" stroke-width="0" fill="#C6EFCE" fill-opacity="1" />
+      </g>
+     </g>
+    </g>
+    <defs>
+     <clipPath id="CLIP1">
+      <path d="M-0.5,-1.541436553 L2167.5,-1.541436553 L2167.5,889.458557129 L-0.5,889.458557129 Z " />
+     </clipPath>
+    </defs>
+    <g clip-path="url(#CLIP1)">
+     <g>
+      <g />
+      <path d="M 2166.938964844,443.933685303 L 2166.938964844,493.259643555" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,443.933685303 L 245.177993774,493.259643555" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,443.933685303 L 0,493.259643555" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.207763672,887.867980957 L 2166.938964844,887.867980957" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,443.933685303 L 1199.208007813,493.259643555" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177764893,887.867980957 L 1199.207763672,887.867980957" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,887.867980957 L 245.177764893,887.867980957" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,98.651939392 L 2166.938964844,147.977905273" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,789.215576172 L 1199.208007813,838.541564941" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,98.651939392 L 1199.208007813,147.977905273" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,98.651931763 L 245.177993774,147.977905273" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,542.585632324 L 2166.938964844,591.911621094" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,98.651931763 L 0,147.977905273" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,542.585632324 L 245.177993774,591.911621094" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,542.585632324 L 0,591.911621094" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,838.541564941 L 1199.208007813,887.867553711" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,197.303878784 L 2166.938964844,246.629852295" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,641.237609863 L 1199.208007813,690.563598633" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,197.303878784 L 1199.208007813,246.629852295" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,838.541564941 L 2166.938964844,887.867553711" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,197.303863525 L 245.177993774,246.629821777" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,641.237609863 L 2166.938964844,690.563598633" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,197.303863525 L 0,246.629821777" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,641.237609863 L 245.177993774,690.563598633" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,641.237609863 L 0,690.563598633" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,493.259643555 L 2166.938964844,542.585632324" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,295.955810547 L 2166.938964844,345.281768799" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,295.955810547 L 1199.208007813,345.281768799" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,295.955810547 L 245.177993774,345.281768799" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,739.889587402 L 2166.938964844,789.215576172" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,295.955810547 L 0,345.281768799" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,739.889587402 L 245.177993774,789.215576172" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,739.889587402 L 0,789.215576172" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,739.889587402 L 1199.208007813,789.215576172" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,394.607727051 L 2166.938964844,443.933685303" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,394.607727051 L 1199.208007813,443.933685303" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,394.607727051 L 245.177993774,443.933685303" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,690.563598633 L 2166.938964844,739.889587402" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,394.607727051 L 0,443.933685303" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,838.541564941 L 245.177993774,887.867553711" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,838.541564941 L 0,887.867553711" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,690.563598633 L 1199.208007813,739.889587402" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,49.325969696 L 2166.938964844,98.651931763" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,49.325969696 L 1199.208007813,98.651931763" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.207763672,49.326000214 L 2166.938964844,49.326000214" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,49.325969696 L 245.177993774,98.651931763" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177764893,49.326000214 L 1199.207763672,49.326000214" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,49.325969696 L 0,98.651931763" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,49.326000214 L 245.177764893,49.326000214" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.207763672,493.260009766 L 2166.938964844,493.260009766" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,493.259643555 L 245.177993774,542.585632324" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177764893,493.260009766 L 1199.207763672,493.260009766" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,493.259643555 L 0,542.585632324" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,493.260009766 L 245.177764893,493.260009766" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,542.585632324 L 1199.208007813,591.911621094" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,147.977905273 L 2166.938964844,197.303863525" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,147.977905273 L 1199.208007813,197.303863525" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,147.977905273 L 245.177993774,197.303863525" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,591.911621094 L 2166.938964844,641.237609863" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,147.977905273 L 0,197.303863525" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,591.911621094 L 245.177993774,641.237609863" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,591.911621094 L 0,641.237609863" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,246.629852295 L 2166.938964844,295.955810547" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,246.629852295 L 1199.208007813,295.955810547" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.207763672,246.630004883 L 2166.938964844,246.630004883" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,246.629852295 L 245.177993774,295.955810547" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177764893,246.630004883 L 1199.207763672,246.630004883" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,246.629852295 L 0,295.955810547" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,246.630004883 L 245.177764893,246.630004883" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.207763672,690.564025879 L 2166.938964844,690.564025879" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,690.563598633 L 245.177993774,739.889587402" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177764893,690.564025879 L 1199.207763672,690.564025879" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,690.563598633 L 0,739.889587402" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,690.564025879 L 245.177764893,690.564025879" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,493.259643555 L 1199.208007813,542.585632324" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,345.281768799 L 2166.938964844,394.607727051" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,345.281768799 L 1199.208007813,394.607727051" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,345.281768799 L 245.177993774,394.607727051" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,789.215576172 L 2166.938964844,838.541564941" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,345.281768799 L 0,394.607727051" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,591.911621094 L 1199.208007813,641.237609863" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,789.215576172 L 245.177993774,838.541564941" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,789.215576172 L 0,838.541564941" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 2166.938964844,0 L 2166.938964844,49.325965881" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.208007813,0 L 1199.208007813,49.325965881" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 1199.207763672,0 L 2166.938964844,0" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177993774,0 L 245.177993774,49.325965881" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 245.177764893,0 L 1199.207763672,0" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,0 L 0,49.325965881" stroke="#000000" stroke-width="2.05524874" fill="none" />
+      <path d="M 0,0 L 245.177764893,0" stroke="#000000" stroke-width="2.05524874" fill="none" />
+     </g>
+    </g>
+    <defs>
+     <clipPath id="CLIP2">
+      <path d="M-0.5,-0.5 L2167.5,-0.5 L2167.5,888.5 L-0.5,888.5 Z " />
+     </clipPath>
+    </defs>
+    <g clip-path="url(#CLIP2)">
+     <g>
+      <defs>
+       <clipPath id="CLIP3">
+        <path d="M245.427764893,0.25 L1198.957763672,0.25 L1198.957763672,49.075969696 L245.427764893,49.075969696 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP3)">
+       <g>
+        <g transform="matrix(1,0,0,1,569.31921387,34.42541504)">
+         <text x="0" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">动</text>
+         <text x="20.04000092" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">态</text>
+         <text x="40.08000183" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">物</text>
+         <text x="60.12000275" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">体</text>
+         <text x="80.16000366" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">（</text>
+         <text x="100.20000458" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">dynamic</text>
+         <text x="172.5710144" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006"> </text>
+         <text x="178.06048584" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">GameObject</text>
+         <text x="285.70700073" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">）</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP4">
+        <path d="M1199.457763672,0.25 L2166.688964844,0.25 L2166.688964844,49.075969696 L1199.457763672,49.075969696 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP4)">
+       <g>
+        <g transform="matrix(1,0,0,1,1546.89331055,34.42541504)">
+         <text x="0" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">静</text>
+         <text x="20.04000092" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">态</text>
+         <text x="40.08000183" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">物</text>
+         <text x="60.12000275" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">体</text>
+         <text x="80.16000366" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">（</text>
+         <text x="100.20000458" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">static</text>
+         <text x="144.67353821" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">）</text>
+         <text x="164.71353149" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#9C0006">GameObject</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP5">
+        <path d="M0.25,49.575969696 L244.927764893,49.575969696 L244.927764893,246.379852295 L0.25,246.379852295 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP5)">
+       <g>
+        <g transform="matrix(1,0,0,1,61.36804962,157.74034119)">
+         <text x="0" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#006100">Baked</text>
+         <text x="52.45822525" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#006100"> </text>
+         <text x="57.94769669" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#006100">Indirect</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP6">
+        <path d="M245.427764893,49.575969696 L1198.957763672,49.575969696 L1198.957763672,98.401939392 L245.427764893,98.401939392 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP6)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,86.0635376)">
+         <text x="1" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">1.</text>
+         <text x="21.04000092" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="41.08000183" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="61.12000275" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="81.16000366" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="101.20000458" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">直</text>
+         <text x="121.24000549" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="141.27999878" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="161.32000732" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="181.36001587" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="201.40002441" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="221.44003296" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="241.4800415" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">实</text>
+         <text x="261.52005005" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">时</text>
+         <text x="281.56005859" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">计</text>
+         <text x="301.60006714" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">算</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP7">
+        <path d="M1199.457763672,49.575969696 L2166.688964844,49.575969696 L2166.688964844,98.401939392 L1199.457763672,98.401939392 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP7)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,86.0635376)">
+         <text x="1" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">1.</text>
+         <text x="21.04000092" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="41.08000183" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="61.12000275" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="81.16000366" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="101.20000458" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">直</text>
+         <text x="121.24000549" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="141.27999878" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="161.32000732" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="181.36001587" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="201.40002441" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="221.44003296" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="241.4800415" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">实</text>
+         <text x="261.52005005" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">时</text>
+         <text x="281.56005859" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">计</text>
+         <text x="301.60006714" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">算</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP8">
+        <path d="M245.427764893,98.901939392 L1198.957763672,98.901939392 L1198.957763672,147.727905273 L245.427764893,147.727905273 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP8)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,135.77487183)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">2.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="136.45593262" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="156.49594116" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="176.53594971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="196.57595825" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="216.6159668" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="236.65597534" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="256.69598389" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="276.73599243" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Light</text>
+         <text x="317.33459473" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold"> </text>
+         <text x="321.8651123" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Probes</text>
+         <text x="379.26483154" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="399.30484009" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">获</text>
+         <text x="419.34484863" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">取</text>
+         <text x="439.38485718" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">到</text>
+         <text x="459.42486572" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="479.46487427" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="499.50488281" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="519.54486084" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="539.58483887" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="559.62481689" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="579.66479492" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="599.70477295" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">信</text>
+         <text x="619.74475098" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">息</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP9">
+        <path d="M1199.457763672,98.901939392 L2166.688964844,98.901939392 L2166.688964844,147.727905273 L1199.457763672,147.727905273 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP9)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,135.77487183)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">2.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="136.45593262" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="156.49594116" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="176.53594971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="196.57595825" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="216.6159668" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="236.65597534" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="256.69598389" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="276.73599243" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">LightMap</text>
+         <text x="355.4967041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="375.53671265" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">获</text>
+         <text x="395.57672119" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">取</text>
+         <text x="415.61672974" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">到</text>
+         <text x="435.65673828" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="455.69674683" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="475.73675537" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="495.77676392" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="515.81677246" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="535.85675049" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="555.89672852" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="575.93670654" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">信</text>
+         <text x="595.97668457" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">息</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP10">
+        <path d="M245.427764893,148.227905273 L1198.957763672,148.227905273 L1198.957763672,197.053878784 L245.427764893,197.053878784 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP10)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,185.10084534)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">3.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">动</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP11">
+        <path d="M1199.457763672,148.227905273 L2166.688964844,148.227905273 L2166.688964844,197.053878784 L1199.457763672,197.053878784 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP11)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,185.10084534)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">3.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">动</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP12">
+        <path d="M245.427764893,197.553878784 L1198.957763672,197.553878784 L1198.957763672,246.379852295 L245.427764893,246.379852295 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP12)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,234.42681885)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">4.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">静</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP13">
+        <path d="M1199.457763672,197.553878784 L2166.688964844,197.553878784 L2166.688964844,246.379852295 L1199.457763672,246.379852295 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP13)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,234.42681885)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">4.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">静</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP14">
+        <path d="M0.25,246.879852295 L244.927764893,246.879852295 L244.927764893,493.00970459 L0.25,493.00970459 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP14)">
+       <g>
+        <g transform="matrix(1,0,0,1,26.81666565,390.49728394)">
+         <text x="0" y="-26.22806168" font-family="DengXian" font-size="20.04000092" fill="#006100">Distance</text>
+         <text x="73.20275879" y="-26.22806168" font-family="DengXian" font-size="20.04000092" fill="#006100"> </text>
+         <text x="78.69223022" y="-26.22806168" font-family="DengXian" font-size="20.04000092" fill="#006100">Shadowmask</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP15">
+        <path d="M245.427764893,246.879852295 L1198.957763672,246.879852295 L1198.957763672,295.705810547 L245.427764893,295.705810547 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP15)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,283.36743164)">
+         <text x="1" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">1.</text>
+         <text x="21.04000092" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="41.08000183" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="61.12000275" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="81.16000366" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="101.20000458" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">直</text>
+         <text x="121.24000549" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="141.27999878" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="161.32000732" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="181.36001587" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="201.40002441" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="221.44003296" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="241.4800415" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">实</text>
+         <text x="261.52005005" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">时</text>
+         <text x="281.56005859" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">计</text>
+         <text x="301.60006714" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">算</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP16">
+        <path d="M1199.457763672,246.879852295 L2166.688964844,246.879852295 L2166.688964844,295.705810547 L1199.457763672,295.705810547 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP16)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,283.36743164)">
+         <text x="1" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">1.</text>
+         <text x="21.04000092" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="41.08000183" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="61.12000275" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="81.16000366" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="101.20000458" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">直</text>
+         <text x="121.24000549" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="141.27999878" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="161.32000732" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="181.36001587" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="201.40002441" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="221.44003296" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="241.4800415" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">实</text>
+         <text x="261.52005005" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">时</text>
+         <text x="281.56005859" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">计</text>
+         <text x="301.60006714" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">算</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP17">
+        <path d="M245.427764893,296.205810547 L1198.957763672,296.205810547 L1198.957763672,345.031768799 L245.427764893,345.031768799 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP17)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,333.07873535)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">2.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="136.45593262" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="156.49594116" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="176.53594971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="196.57595825" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="216.6159668" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="236.65597534" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="256.69598389" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="276.73599243" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Light</text>
+         <text x="317.33459473" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold"> </text>
+         <text x="321.8651123" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Probe</text>
+         <text x="371.27038574" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="391.31039429" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">获</text>
+         <text x="411.35040283" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">取</text>
+         <text x="431.39041138" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">到</text>
+         <text x="451.43041992" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="471.47042847" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="491.51043701" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="511.55044556" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="531.5904541" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="551.63043213" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="571.67041016" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="591.71038818" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">信</text>
+         <text x="611.75036621" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">息</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP18">
+        <path d="M1199.457763672,296.205810547 L2166.688964844,296.205810547 L2166.688964844,345.031768799 L1199.457763672,345.031768799 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP18)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,333.07873535)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">2.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="136.45593262" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="156.49594116" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="176.53594971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="196.57595825" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="216.6159668" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="236.65597534" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="256.69598389" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="276.73599243" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Light</text>
+         <text x="317.33459473" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold"> </text>
+         <text x="321.8651123" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Probe</text>
+         <text x="371.27038574" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="391.31039429" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">获</text>
+         <text x="411.35040283" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">取</text>
+         <text x="431.39041138" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">到</text>
+         <text x="451.43041992" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="471.47042847" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="491.51043701" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="511.55044556" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="531.5904541" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="551.63043213" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="571.67041016" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="591.71038818" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">信</text>
+         <text x="611.75036621" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">息</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP19">
+        <path d="M245.427764893,345.531768799 L1198.957763672,345.531768799 L1198.957763672,394.357727051 L245.427764893,394.357727051 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP19)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,382.4046936)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">3.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">动</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP20">
+        <path d="M1199.457763672,345.531768799 L2166.688964844,345.531768799 L2166.688964844,394.357727051 L1199.457763672,394.357727051 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP20)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,382.4046936)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">3.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">动</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP21">
+        <path d="M245.427764893,394.857727051 L1198.957763672,394.857727051 L1198.957763672,443.683685303 L245.427764893,443.683685303 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP21)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,431.73065186)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">4.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">静</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP22">
+        <path d="M1199.457763672,394.857727051 L2166.688964844,394.857727051 L2166.688964844,443.683685303 L1199.457763672,443.683685303 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP22)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,431.73065186)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">4.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">静</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP23">
+        <path d="M245.427764893,444.183685303 L1198.957763672,444.183685303 L1198.957763672,493.009643555 L245.427764893,493.009643555 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP23)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,481.05661011)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">5.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="76.33592224" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="141.09408569" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="145.62461853" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="215.67655945" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="235.71655273" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">静</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="416.07662964" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Light</text>
+         <text x="456.67523193" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold"> </text>
+         <text x="461.20574951" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Probes</text>
+         <text x="518.60546875" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="538.64544678" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="558.6854248" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="578.72540283" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="598.76538086" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="618.80535889" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="638.84533691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">预</text>
+         <text x="658.88531494" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="678.92529297" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="698.965271" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="719.00524902" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="739.04522705" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="759.08520508" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="779.12518311" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="799.16516113" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="819.20513916" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="839.24511719" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP24">
+        <path d="M1199.457763672,444.183685303 L2166.688964844,444.183685303 L2166.688964844,493.009643555 L1199.457763672,493.009643555 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP24)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,481.05661011)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">5.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="76.33592224" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="141.09408569" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="145.62461853" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="215.67655945" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="235.71655273" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">静</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="416.07662964" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">LightMap</text>
+         <text x="494.83734131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="514.87731934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="534.91729736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="554.95727539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="574.99725342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="595.03723145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="615.07720947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">预</text>
+         <text x="635.1171875" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="655.15716553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="675.19714355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="695.23712158" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="715.27709961" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="735.31707764" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="755.35705566" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="775.39703369" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="795.43701172" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="815.47698975" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP25">
+        <path d="M0.25,493.509643555 L244.927764893,493.509643555 L244.927764893,690.313537598 L0.25,690.313537598 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP25)">
+       <g>
+        <g transform="matrix(1,0,0,1,66.16278076,601.67401123)">
+         <text x="0" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#006100">Shadowmask</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP26">
+        <path d="M245.427764893,493.509643555 L1198.957763672,493.509643555 L1198.957763672,542.335632324 L245.427764893,542.335632324 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP26)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,529.99719238)">
+         <text x="1" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">1.</text>
+         <text x="21.04000092" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="41.08000183" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="61.12000275" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="81.16000366" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="101.20000458" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">直</text>
+         <text x="121.24000549" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="141.27999878" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="161.32000732" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="181.36001587" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="201.40002441" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="221.44003296" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="241.4800415" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">实</text>
+         <text x="261.52005005" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">时</text>
+         <text x="281.56005859" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">计</text>
+         <text x="301.60006714" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">算</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP27">
+        <path d="M1199.457763672,493.509643555 L2166.688964844,493.509643555 L2166.688964844,542.335632324 L1199.457763672,542.335632324 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP27)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,529.99719238)">
+         <text x="1" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">1.</text>
+         <text x="21.04000092" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="41.08000183" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="61.12000275" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="81.16000366" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="101.20000458" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">直</text>
+         <text x="121.24000549" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="141.27999878" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="161.32000732" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="181.36001587" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="201.40002441" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="221.44003296" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="241.4800415" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">实</text>
+         <text x="261.52005005" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">时</text>
+         <text x="281.56005859" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">计</text>
+         <text x="301.60006714" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">算</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP28">
+        <path d="M245.427764893,542.835632324 L1198.957763672,542.835632324 L1198.957763672,591.661621094 L245.427764893,591.661621094 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP28)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,579.70855713)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">2.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="136.45593262" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="156.49594116" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="176.53594971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="196.57595825" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="216.6159668" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="236.65597534" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="256.69598389" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="276.73599243" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Light</text>
+         <text x="317.33459473" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold"> </text>
+         <text x="321.8651123" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Probe</text>
+         <text x="371.27038574" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="391.31039429" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">获</text>
+         <text x="411.35040283" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">取</text>
+         <text x="431.39041138" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">到</text>
+         <text x="451.43041992" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="471.47042847" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="491.51043701" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="511.55044556" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="531.5904541" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="551.63043213" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="571.67041016" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="591.71038818" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">信</text>
+         <text x="611.75036621" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">息</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP29">
+        <path d="M1199.457763672,542.835632324 L2166.688964844,542.835632324 L2166.688964844,591.661621094 L1199.457763672,591.661621094 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP29)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,579.70855713)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">2.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="136.45593262" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="156.49594116" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="176.53594971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="196.57595825" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="216.6159668" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="236.65597534" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="256.69598389" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="276.73599243" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">LightMap</text>
+         <text x="355.4967041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="375.53671265" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">获</text>
+         <text x="395.57672119" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">取</text>
+         <text x="415.61672974" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">到</text>
+         <text x="435.65673828" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="455.69674683" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="475.73675537" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="495.77676392" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="515.81677246" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="535.85675049" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="555.89672852" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="575.93670654" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">信</text>
+         <text x="595.97668457" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">息</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP30">
+        <path d="M245.427764893,592.161621094 L1198.957763672,592.161621094 L1198.957763672,640.987609863 L245.427764893,640.987609863 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP30)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,629.0345459)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">3.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">动</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP31">
+        <path d="M1199.457763672,592.161621094 L2166.688964844,592.161621094 L2166.688964844,640.987609863 L1199.457763672,640.987609863 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP31)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,629.0345459)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">3.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">动</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP32">
+        <path d="M245.427764893,641.487609863 L1198.957763672,641.487609863 L1198.957763672,690.313598633 L245.427764893,690.313598633 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP32)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,678.36053467)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">4.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">无</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">论</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">是</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">否</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="136.45593262" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="201.21411133" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="205.74464417" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">静</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="436.11663818" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="456.15664673" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="476.19665527" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Light</text>
+         <text x="516.79528809" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold"> </text>
+         <text x="521.32580566" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Probes</text>
+         <text x="578.7255249" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="598.76550293" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="618.80548096" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="638.84545898" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="658.88543701" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="678.92541504" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="698.96539307" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">预</text>
+         <text x="719.00537109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="739.04534912" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="759.08532715" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="779.12530518" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="799.1652832" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="819.20526123" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="839.24523926" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="859.28521729" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="879.32519531" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="899.36517334" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP33">
+        <path d="M1199.457763672,641.487609863 L2166.688964844,641.487609863 L2166.688964844,690.313598633 L1199.457763672,690.313598633 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP33)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,678.36053467)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">4.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">无</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">论</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">是</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">否</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="136.45593262" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="201.21411133" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="205.74464417" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">静</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="436.11663818" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="456.15664673" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="476.19665527" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">LightMap</text>
+         <text x="554.95739746" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="574.99737549" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="595.03735352" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="615.07733154" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="635.11730957" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="655.1572876" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="675.19726563" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">预</text>
+         <text x="695.23724365" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="715.27722168" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="735.31719971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="755.35717773" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="775.39715576" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="795.43713379" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="815.47711182" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="835.51708984" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="855.55706787" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="875.5970459" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP34">
+        <path d="M0.25,690.813598633 L244.927764893,690.813598633 L244.927764893,887.617492676 L0.25,887.617492676 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP34)">
+       <g>
+        <g transform="matrix(1,0,0,1,74.79328918,798.97796631)">
+         <text x="0" y="-4.6479497" font-family="DengXian" font-size="20.04000092" fill="#006100">Subtractive</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP35">
+        <path d="M245.427764893,690.813598633 L1198.957763672,690.813598633 L1198.957763672,739.639587402 L245.427764893,739.639587402 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP35)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,727.30114746)">
+         <text x="1" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">1.</text>
+         <text x="21.04000092" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="41.08000183" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="61.12000275" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="81.16000366" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="101.20000458" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">直</text>
+         <text x="121.24000549" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="141.27999878" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="161.32000732" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="181.36001587" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="201.40002441" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="221.44003296" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="241.4800415" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">实</text>
+         <text x="261.52005005" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">时</text>
+         <text x="281.56005859" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">计</text>
+         <text x="301.60006714" y="-2.81812525" font-family="SimSun" font-size="20.04000092" fill="#000000">算</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP36">
+        <path d="M1199.457763672,690.813598633 L2166.688964844,690.813598633 L2166.688964844,739.639587402 L1199.457763672,739.639587402 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP36)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,727.68652344)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">1.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">直</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="136.45593262" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="156.49594116" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="176.53594971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="196.57595825" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="216.6159668" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="236.65597534" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="256.69598389" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="276.73599243" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">LightMap</text>
+         <text x="355.4967041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="375.53671265" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">获</text>
+         <text x="395.57672119" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">取</text>
+         <text x="415.61672974" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">到</text>
+         <text x="435.65673828" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="455.69674683" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="475.73675537" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="495.77676392" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">直</text>
+         <text x="515.81677246" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="535.85675049" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="555.89672852" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="575.93670654" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">信</text>
+         <text x="595.97668457" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">息</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP37">
+        <path d="M245.427764893,740.139587402 L1198.957763672,740.139587402 L1198.957763672,788.965576172 L245.427764893,788.965576172 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP37)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,777.01251221)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">2.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="136.45593262" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="156.49594116" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="176.53594971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="196.57595825" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="216.6159668" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="236.65597534" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="256.69598389" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="276.73599243" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Light</text>
+         <text x="317.33459473" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold"> </text>
+         <text x="321.8651123" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Probe</text>
+         <text x="371.27038574" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="391.31039429" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">获</text>
+         <text x="411.35040283" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">取</text>
+         <text x="431.39041138" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">到</text>
+         <text x="451.43041992" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="471.47042847" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="491.51043701" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="511.55044556" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="531.5904541" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="551.63043213" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="571.67041016" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="591.71038818" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">信</text>
+         <text x="611.75036621" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">息</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP38">
+        <path d="M1199.457763672,740.139587402 L2166.688964844,740.139587402 L2166.688964844,788.965576172 L1199.457763672,788.965576172 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP38)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,777.01251221)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">2.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="136.45593262" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="156.49594116" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="176.53594971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">部</text>
+         <text x="196.57595825" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">分</text>
+         <text x="216.6159668" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="236.65597534" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="256.69598389" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="276.73599243" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">LightMap</text>
+         <text x="355.4967041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="375.53671265" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">获</text>
+         <text x="395.57672119" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">取</text>
+         <text x="415.61672974" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">到</text>
+         <text x="435.65673828" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="455.69674683" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="475.73675537" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="495.77676392" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">间</text>
+         <text x="515.81677246" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">接</text>
+         <text x="535.85675049" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">照</text>
+         <text x="555.89672852" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">明</text>
+         <text x="575.93670654" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">信</text>
+         <text x="595.97668457" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">息</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP39">
+        <path d="M245.427764893,789.465576172 L1198.957763672,789.465576172 L1198.957763672,838.291564941 L245.427764893,838.291564941 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP39)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,826.33850098)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">3.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">动</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">由</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">主</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">平</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">行</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">光</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">产</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">生</text>
+         <text x="786.26837158" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="806.30834961" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="826.34832764" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="846.38830566" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="866.42828369" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="886.46826172" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="906.50823975" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="926.54821777" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP40">
+        <path d="M1199.457763672,789.465576172 L2166.688964844,789.465576172 L2166.688964844,838.291564941 L1199.457763672,838.291564941 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP40)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,826.33850098)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">3.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">不</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="96.37592316" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="161.13409424" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="165.66462708" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="235.71656799" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="255.75656128" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">动</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="436.11663818" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">S</text>
+         <text x="445.58868408" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">hadowMap</text>
+         <text x="525.74865723" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="545.78863525" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="565.82861328" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="585.86859131" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="605.90856934" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="625.94854736" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="645.98852539" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">由</text>
+         <text x="666.02850342" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">主</text>
+         <text x="686.06848145" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">平</text>
+         <text x="706.10845947" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">行</text>
+         <text x="726.1484375" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">光</text>
+         <text x="746.18841553" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">产</text>
+         <text x="766.22839355" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">生</text>
+         <text x="786.26837158" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">的</text>
+         <text x="806.30834961" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="826.34832764" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="846.38830566" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="866.42828369" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="886.46826172" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="906.50823975" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="926.54821777" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP41">
+        <path d="M245.427764893,838.791564941 L1198.957763672,838.791564941 L1198.957763672,887.617553711 L245.427764893,887.617553711 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP41)">
+       <g>
+        <g transform="matrix(1,0,0,1,246.13925171,875.66448975)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">4.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">无</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">论</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">是</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">否</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="136.45593262" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="201.21411133" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="205.74464417" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">静</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="436.11663818" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="456.15664673" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="476.19665527" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Light</text>
+         <text x="516.79528809" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold"> </text>
+         <text x="521.32580566" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">Probes</text>
+         <text x="578.7255249" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="598.76550293" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="618.80548096" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="638.84545898" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="658.88543701" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="678.92541504" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="698.96539307" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">预</text>
+         <text x="719.00537109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="739.04534912" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="759.08532715" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="779.12530518" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="799.1652832" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="819.20526123" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="839.24523926" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="859.28521729" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="879.32519531" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="899.36517334" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+      <defs>
+       <clipPath id="CLIP42">
+        <path d="M1199.457763672,838.791564941 L2166.688964844,838.791564941 L2166.688964844,887.617553711 L1199.457763672,887.617553711 Z " />
+       </clipPath>
+      </defs>
+      <g clip-path="url(#CLIP42)">
+       <g>
+        <g transform="matrix(1,0,0,1,1200.16918945,875.66448975)">
+         <text x="1" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">4.</text>
+         <text x="16.21591949" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">无</text>
+         <text x="36.25592041" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">论</text>
+         <text x="56.29592133" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">是</text>
+         <text x="76.33592224" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">否</text>
+         <text x="96.37592316" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">超</text>
+         <text x="116.41592407" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">过</text>
+         <text x="136.45593262" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Shadow</text>
+         <text x="201.21411133" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000"> </text>
+         <text x="205.74464417" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#000000">Distance</text>
+         <text x="275.79656982" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">范</text>
+         <text x="295.83657837" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">围</text>
+         <text x="315.87658691" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">内</text>
+         <text x="335.91659546" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="355.956604" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">静</text>
+         <text x="375.99661255" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">态</text>
+         <text x="396.03662109" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="416.07662964" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="436.11663818" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">通</text>
+         <text x="456.15664673" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">过</text>
+         <text x="476.19665527" y="-5.01000023" font-family="Calibri" font-size="20.04000092" fill="#FF0000" font-weight="bold">LightMap</text>
+         <text x="554.95739746" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">机</text>
+         <text x="574.99737549" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#FF0000" font-weight="bold">制</text>
+         <text x="595.03735352" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">，</text>
+         <text x="615.07733154" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">可</text>
+         <text x="635.11730957" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">投</text>
+         <text x="655.1572876" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">射</text>
+         <text x="675.19726563" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">预</text>
+         <text x="695.23724365" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">烘</text>
+         <text x="715.27722168" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">焙</text>
+         <text x="735.31719971" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">的</text>
+         <text x="755.35717773" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">阴</text>
+         <text x="775.39715576" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">影</text>
+         <text x="795.43713379" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">在</text>
+         <text x="815.47711182" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">本</text>
+         <text x="835.51708984" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">物</text>
+         <text x="855.55706787" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">体</text>
+         <text x="875.5970459" y="-5.01000023" font-family="SimSun" font-size="20.04000092" fill="#000000">上</text>
+        </g>
+       </g>
+      </g>
+     </g>
+    </g>
+    <defs>
+     <clipPath id="CLIP43">
+      <path d="M-0.5,-0.5 L2167.5,-0.5 L2167.5,888.5 L-0.5,888.5 Z " />
+     </clipPath>
+    </defs>
+    <g clip-path="url(#CLIP43)">
+     <g />
+    </g>
+   </g>
+   <g />
+   <g />
+   <g />
+   <g>
+    <g>
+     <g />
+     <g shape-rendering="crispEdges" />
+    </g>
+    <g>
+     <g />
+    </g>
+    <g>
+     <g />
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs />
+</svg>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HDR on XGF</title>
+    <link>http://www.xionggf.com/tags/hdr/</link>
+    <description>Recent content in HDR on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 08 Mar 2017 14:59:52 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/tags/hdr/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>理解高动态范围光</title>
+      <link>http://www.xionggf.com/post/cg/inside_hdr/</link>
+      <pubDate>Wed, 08 Mar 2017 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/inside_hdr/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;现在大部分图形程序员（包括我）可能是从directxsdk处接触到这个概念并开始学习。DirectX SDK中的示例demo较为清晰地展示了一个完整的HDR技术所要采用的流程，如下：&#xA;在 float render target 上去渲染当前的场景。 使用 RGBM ， LogLuv 等编码方式来节省所需的内存和带宽 通过 down sample 去计算场景亮度 根据亮度对场景做一个 矫正（tone mapping） 最后输出到一个 rgb8 的 render target 上 上面的流程的四个步骤就展示了四个高大上的概念，我们先一一弄懂这些基础概念，再进一步分析。 1 float render target 首先是float render target。render target（以下简称RT）这个概念就不在此详细描述了，这个概念都还没弄懂的话需要先放下这篇文章，先夯实基础再说。RT可以理解为一系列的像素点的集合。在计算机中自然需要用一个一个字节去表示像素点的RGBA信息。最常见的是使用一个字节去表示像素点的一个颜色分量。这样子表示一个像素点则需要四个字节共32位。但一个字节表示一个颜色分量，比如Red分量的话，最多就只能表示256阶的信息。在很多时候，尤其是在处理我们的HDR信息的时候，256阶是远远不够用。所以我们要采用32位或者更高精度的浮点数去表示每一位颜色分量。float render target正是表示这一个概念。&#xA;1.1 RGBM RGBM是一种颜色编码方式，如上所述，为了解决这个精度不足以存储亮度范围信息的问题，我们可以创建一个精度更高的buffer，以扩展之前的那个限定在[0,1]取值域的取值范围，从而使得我们可以在RT上渲染一个更高的亮度范围的画面效果。但使用高精度的buffer则带来另一个问题：即需要更高的内存存储空间和更高的带宽，并且有些渲染硬件无法以操作8位精度的buffer的速度去操作16位浮点数的buffer。因此为了解决这个问题，我们需要采用一种编码方法将这些颜色数据编码成一个能以8位颜色分量的存储的数据。编码方式有多种，例如RGBM编码，LogLuv编码，等等。假如有一个给定的包含了RGB颜色分量的颜色值C，将其编码成一个含有RGBM四个分量的颜色值的步骤是：&#xA;定义一个&amp;quot;最大范围值&amp;quot;,假定为变量MaxRange 取得C的RGB分量中最大的那个值。将这个最大值赋值给变量maxRGB。 用maxRGB除以MaxRange，得到商，将这个商赋值给变量M 用M乘以255得到结果值之后，取得大于这个结果值的最小整数，然后再将这个最小值除以255之后，再赋值给变量M 最后，用C的各个颜色分量，除以M和MaxRange的乘积，作为最终结果颜色的RGB分量，M就作为最后一个分量。 这些步骤写成shader代码如下:&#xA;float MaxRange = 8; float4 EncodeRGBM(float3 rgb) { float maxRGB = max(rgb.x,max(rgb.g,rgb.b)); float M = maxRGB / MaxRange; M = ceil(M * 255.0) / 255.</description>
+    </item>
+  </channel>
+</rss>

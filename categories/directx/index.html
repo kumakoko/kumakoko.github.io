@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>DirectX | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="DirectX" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/categories/directx/" />
+
+
+		<meta itemprop="name" content="DirectX">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/categories/directx/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-term">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/categories/">Categories</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">DirectX</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">DirectX</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_10_4/">深度探索DxFramework 10-4</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+#第10章 进入三维的世界 4
+10.5.4.变换包围盒 变换包围盒，除了变换包围盒顶点的坐标之外，还得变换包围盒的面的法线向量。如果有一个转换矩阵M对平面的各点进行变换，那么这个平面的法线向量的正确变换矩阵应该G为对各点进行变换的矩阵的逆转置矩阵（inverse-transpose matrix）。所以有下列代码：
+void C_BoundingBox::TransformBoundingBox(D3DXMATRIX* p_TransformMatrix) { D3DXMATRIX tempMatrix; //取得转换矩阵的逆矩阵，然后再将其转置 D3DXMatrixInverse(&amp;tempMatrix, NULL, p_TransformMatrix); D3DXMatrixTranspose(&amp;tempMatrix, &amp;tempMatrix); int i; //变换包围盒的各个角顶点 for (i = 0; i &lt; 8; i++) { D3DXVec3TransformCoord(&amp;point[i], &amp;point[i], p_TransformMatrix); } //实质上就是对平面的法线进行变换 for (i = 0; i &lt; 6; i++) { D3DXPlaneTransform(&amp;plane[i], &amp;plane[i], &amp;tempMatrix); } } 10.6 观察世界的窗口，摄像机类 10.6.1 视口设置 10.6.2 雾化效果 雾化是指在三维图形程序中模拟真实世界中的云雾，水蒸汽，灰尘等大气效果。从生活经验我们可以得知，在雾气比较严重的地方，距离观察点近的地方物体比较清晰，远处的物体则随着它离观察点的距离的增加而变得越来越模糊。通过使用雾化效果将能增加三维场景的真实感。在Direct3D中，雾化效果是根据当前景物的颜色和雾的颜色，与随着物体和观察点距离增大而衰减的混合因子(fog blending factor)混合实现的。这里的术语“观察点”，就是当前摄像机在世界坐标中的位置，或者说，观察坐标系的原点在世界坐标系下的位置。当距离景物距离观察点越远的时候，混合因子就越小，场景中物体的颜色就越小，而雾的颜色就越大，景物就会变得越模糊。Direct3D渲染流水线计算雾化效果的公式如下：
+COLOR = f*COLORscene + (1-f)*COLORfog
+其中COLOR表示最终经过了雾化处理的颜色。COLORscene表示景物原有的颜,色。COLORfog表示雾的颜色，这颜色是由应用程序自定义的。f表示雾化的混合因子。Direct3D有两种雾化处理方法：顶点雾化（vertex fogging）和像素雾化（pixel fogging）。顶点雾化在渲染流水线中的顶点变换和光照阶段实现。基本原理是根据多边形的每个顶点与观察点的距离计算出每个顶点的雾化程度。然后根据计算结果，针对每个多边形进行插值计算。像素雾化则在像素绘制阶段实现，它通过判断每个像素对于观察点的深度值进行雾化效果计算。像素雾化与顶点雾化相比，计算结果更为精确，但也将消耗更多的系统性能。
+由上面的雾化计算公式可以看到：雾化效果是物体可见程度的反映。雾化效果计算公式算出的结果值越小就表示景物的可见度就越低。而最终的计算结果 除了取决于景物颜色和雾的颜色之外，还取决于雾化混合因子的取值。Direct3D提供了一些枚举值表示几种雾化因子的计算方式。如下：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2007-10-26T18:08:30&#43;08:00">October 26, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_10_3/">深度探索DxFramework 10-3</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+第10章 进入三维的世界 3 10.5 无规矩不成方圆，C_BoundingBox类 10.5.1.包围盒的种类 DXFrameWork的包围盒是一个凸六面体，由6个面，8个顶点，12条边组成的闭合体。因此，DXFrameWork也使用了相关的数据结构来描述包围盒。代码如下：
+class C_BoundingBox { ... public: D3DXVECTOR3 point[8]; //8个顶点 D3DXPLANE plane[6]; //6个表面 } 8个顶点和6个面和编号的示意图如下：
+###10.5.2.包围盒的数据结构和初始化设置
+//根据给定的图元计算出它的包围盒 void C_BoundingBox::FindBoundingBox(C_Primitive* p_Primitive) { unsigned i; //获取 DWORD numVertices = p_Primitive-&gt;numVertices; // Lock the vertex buffer C_VertexManipulator vertexMemory; p_Primitive-&gt;LockVertexBuffer(&amp;vertexMemory); // Find the mins and maxs for each X Y and Z axis D3DXVECTOR3 position; float minX; float minY; float minZ; float maxX; float maxY; float maxZ; position = vertexMemory[0].</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2007-10-25T18:08:30&#43;08:00">October 25, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_10_2/">深度探索DxFramework 10-2</a></h1>
+	<div class="entry__content"> 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+第10章 进入三维的世界 2 10.4 Direct3D的渲染流水线 10.4.1.渲染流水线的体系架构和速度 渲染流水线的主要功能就是，在给定如三维的物体、摄像机、光源、光照模式、纹理等条件下，如何在显示器屏幕或者是其他输出设备中生成绘制一幅二维的图像。和现实生活中的流水线，比如工厂的装配线类似，渲染流水线也可以分为多个“阶段”（stage）。就是指在整个渲染过程中，执行了其中一部分功能的一个过程。如果各个阶段是以并行的方式运行的话，那么流水线整体的快慢程度是由流水线中最慢的那个阶段所决定的。在实时计算机图形学中，渲染流水线可以在概念上将其大约分成三个阶段：应用程序阶段、几何阶段和光栅化阶段。每个阶段有可以看成是一个比较细的流水线，可以由其他阶段组成，而且这些个子阶段有些是可以并行运行的，如下图：
+最慢的流水线阶段决定了绘制速度，即图像更新速度，这个速度一般用fps（frame per second）表示。也就是每秒绘制的图像数。在这里请注意，在渲染流水线中，绘制一帧所需的时间，不能简单地对数据通过各阶段所花费的时间做一个简单的相加。而是只需要找到最慢的阶段的速度，就是能得到整个阶段的绘制速度。这也就是渲染流水线的特性。在此举一个例子来说明：
+假定某个输出设备（比如是显示器）的绘制速度最高是60fps，整个流水线中最费时的阶段为50毫秒每帧。那么每绘制一帧。在先不考虑输出设备的情况下，流水线能提供的最高渲染速度为1/0.05＝50fps。接着可以把这个值调整为输出设备的频率。输出设备最高的可以是60fps，那么也就是说，输出设备的所能调整到的、小于或者等于50fps的绘制速度，就是整个流水线的最大绘制速度。
+如其名字，应用程序阶段是由使用渲染流水线的应用程序来驱动的。可以通过软件实现之。比如在这一阶段，可以计算物体的碰撞检测，力反馈等物理仿真运算。（在本书写作之际，物理加速卡已经开始进入实际应用阶段，在往后发展中这部分阶段也可以用硬件完成。）接着的就是几何阶段，在这阶段中实现对三维物体的变换、投影、光照等处理，可以用软件或者硬件实现。这阶段的主要内容是计算绘制的内容、如何绘制、何处绘制等等。最后，光栅化阶段是利用了前面阶段产生的数据进行图像绘制。
+10.4.2.渲染流水线的应用程序阶段 应用程序阶段在几何阶段之前。在这一阶段的功能就是把要渲染的几何体输入到几何阶段。在应用程序阶段，通常实现了物体之间的碰撞检测。此外，应用程序也是检查其他输入信息的地方，比如鼠标，键盘，各种各样的虚拟现实设备的输入信息。在这一阶段中还实现了一些不在其他阶段执行的计算。
+10.4.3.渲染流水线的几何阶段 几何阶段主要负责了大部分的顶点和几何操作。几何阶段可以划分成如下几个子阶段。在一些情况下。一些子阶段是可以并行运行的。几何阶段可以进一步划分成如下图的几个子阶段。
+在极端情况下，渲染流水线中所有的阶段都可以用软件来实现。但是值得注意的是，几何阶段执行的是计算量非常高的任务。正因为如此，现代显卡把几何阶段所需完成的很多功能都用硬件实现了。
+10.4.4.模型和观察变换 在往屏幕显示的物体过程中，表征物体的模型往往是需要变换到一些不同的坐标系统中去。最开始物体是处于它自身的模型空间里，这个模型可以认为它没有进行任何的变换。对模型进行模型变换，便可指定它在所处场景中的位置（position）和朝向（orientation）。同一模型可以和多个模型变换联系在一起，允许同一个模型有多个副本。这样子可以使得同一模型在同一场景中有多个不同的位置朝向。而不需要对这模型做复制操作。模型变换的变换对象是模型的顶点和法线。如果将模型应用模型变换之后，所有的模型都将处于同一世界中。这时候可称为此模型处于世界空间或者是世界坐标中。世界空间是唯一的，所有的模型经模型变换后都处于同一个世界。
+在实际绘制中，只有能被摄像机观察到的模型才进行绘制。相机在世界坐标中有位置和三个相互正交的朝向，用来对相机自身进行定位。为了便于裁剪和投影，在完成模型变换之后，必须对所有的模型进行变换。变换到以相机坐标为原点。以其三个相互正交的朝向方向为坐标轴方向的空间中去，这个空间便称为观察空间。
+10.4.5.光照和着色计算 为了使得渲染结果更加真实，可以给场景配上一个或多个光源。同时还可以选择是否使用灯光影响几何体的外观。几何模型可以给其每个顶点指定相关联的颜色，或者是覆盖上一副图像（就是所谓的纹理，后面章节将详细介绍）。对于存在着灯光的场景来说，可以用光照方程计算模型上每一个顶点的颜色，这个方程近似地模拟了光子和物体表面之间的实际作用。在现实世界中，光源发出光子，然后被表面反射或者是吸收。在实时计算机图形学中，是没有过多的时间来模拟这种现象的。因此，这些简单的光照方程并没有包含着非常真实的反射和阴影。此外，模型在图形上通常是以三角形来表示。目前大部分的图形硬件也都是采用三角形为基本渲染图元（primitive）。物体表面每个顶点的颜色可由光源及其自身的顶点位置和法线、顶点所在的材质等属性来计算。当在屏幕中绘制三角形的时候，可以通过对三角形的顶点进行插值运算。为了模拟更加高级真实的光照效果，可以采用像素着色技术。
+一般地，光照计算是在世界空间中进行的。但是如果在对物体模型做观察变换的同时也把光源变换到观察空间中去的话，其光照效果将会是一样的。因为这时候，光源，摄像机，和物体模型之间的相对位置依然保持不变。
+10.4.6.投影变换 完成光照处理之后，渲染流水线开始进行投影，目的就是为了将视体变换成为一个单位立方体。这个立方体的对角顶点分别为(-1,-1,-1)和(1,1,1)。通常地也称为单位立方体为规范化视体（canonical view volume）。现在主要有两种投影方法：正交投影（orthogonal projection）和透视投影（perspective projection）。
+正交投影的视截体通常是一个矩形的盒子，正交投影就是把这个视体变换成为单位立方体。正投影的主要特性就是平行线在变换之后彼此之间仍然能保持平行。这种变换是平移和缩放的组合。相比之下，透视投影要复杂一些。在透视投影中，物体的投影后大小遵循“近大远小”的原则。即物体离相机越远，投影之后将会变得越小；平行线在地平线处可以相交。从几何上而言，透视投影的视截体可以称为视锥，即一个以矩形为底面的，顶部被截掉的金字塔。同样的视锥也可以通过透视投影变换成一个单位立方体。经过投影变换后，图像的Z坐标信息将不存在（存储在Z缓冲区中了），这种投影变换将模型从三维投影到二维。
+10.4.7.裁剪 只有当模型部分或者完全地存在于视体内部的时候，才需要将其发送到光栅化阶段绘制出来。如果一个图元完全地位于一个视截体内部的时候，可以直接将其送入下一阶段。完全不在视截体内部的模型，可以完全不将其送入下一阶段。对那些只有部分在视截体内部的模型，则需要对其进行裁剪。例如：当一条线段的一个端点在视截体内部而另一端点在外部的时候，就需要根据视截体对该线段进行裁剪。位于视截体外部的端点将被新的端点所代替，新的端点是线段和视截体的交点。投影变换之后的模型只对单位立方体进行裁剪。在裁剪之前进行观察变换和投影变换的优势就在于可以使得裁剪方法和问题比较一致。除了视截体的6个平面之外，用户可以自定义裁剪平面来进行裁剪操作。
+10.4.8.屏幕映射 在视截体内部经过裁剪了的图元才能进入屏幕映射阶段。进入此阶段。坐标仍然三维的，每个图元的x坐标和y坐标都将变换到屏幕坐标系上。屏幕坐标系连同z坐标一起称为窗口坐标系。假定一个窗口里对场景进行了绘制，窗口的左下角坐标为(x1,y1)，右上角坐标为(x2,y2)。其中x1&lt;X2，y1&lt;y2。屏幕映射首先进行平移，然后进行缩放。在映射过程中z坐标不受影响。新的x和y坐标系称为屏幕坐标系，与z坐标一起（-1≤z≤1）进入光栅阶段。
+10.4.9.光栅化阶段 给定来自几何阶段，经过变换投影之后的顶点、颜色和纹理坐标。光栅阶段的目的就是给每个像素（pixel，picture element的所写）指定正确的颜色，以便于正确绘制整幅图像。这个过程称为光栅化或者是扫描转换，也就是说把屏幕空间中的二维顶点转化为屏幕上的像素。屏幕空间中，每个顶点右一个z值（通常称之为深度值）、一种或者两种颜色、以及一组或者多组纹理坐标。其中纹理坐标将会和顶点或者是屏幕上的像素联系在一起。
+在几何阶段中，渲染流水线操作的对象是一些多边形。而在光栅化阶段中，是对像素进行操作。每个像素的信息存储在颜色缓冲器（color buffer）里。颜色缓冲器是一个矩形的颜色序列。每种颜色都含有红色，绿色，蓝色三种分量。
+为了避免在绘制时产生撕裂现象，图形系统一般都使用双重缓冲机制。也就是说：渲染流水线首先在后台缓冲区（back buffer）中绘制好要绘制的内容，然后切换到前台缓冲区（front buffer）中。如此不断地绘制，切换。
+光栅化阶段还负责可见性问题。这也就是意味着当绘制完整个场景之后，颜色缓冲区将包含从摄像机观察点从可以观察得到的图元。大部分的图形硬件通过Z缓冲器来解决可见性问题。Z缓冲器和颜色缓冲器的大小形状是一样的。每个像素都存储着一个Z值。这个Z值是从摄像机到最近图元的距离。当将某图元绘制成像素的时候，就要把同一像素位置处的图元Z值和同一像素的Z缓冲器的内容进行比较。如果新得到的Z值小于Z缓冲器的Z值，则说明将要绘制的图元与摄像机的距离比原来距离相机最近的图元还要近。这样子，像素的Z值和颜色值就由当前图元所对应的值来更新。反之，则保持不变。
+因为Z缓冲区对每次将要绘制在同一像素位置上的图元都要进行比较操作，所以使用了Z缓冲区算法，对于不透明的像素绘制顺序是任意的。对于部分透明的像素而言则不能任意顺序绘制。必须在绘制所有非透明像素之后进行。而且必须从后到前的顺序进行。
+在三维场景的绘制中，纹理是一种能够提高真实感的有效技术。简单而言，对某一物体进行纹理贴图就是指把一幅图像贴到该物体表面上。纹理图像可以是一维，二维，或者是三维。其中二维图像最为普遍。目标物体可以是一系列连在一起的三角形，也可能是一些四边形，球体，圆柱体等等。
+颜色缓冲区用来存储像素的颜色。Z缓冲区用来存储每个像素的Z值。还能使用其他的缓冲器来产生一些特殊的图像效果。使用alpha通道和颜色缓冲器联系在一起可以存储一个与每个像素相关的不透明值。从而使得图像产生一些半透明的效果。
+帧缓冲器（frame buffer）通常包含一个系统中所具有的所有缓冲器。还有一种缓冲器称为累积缓冲器（acceleration buffer）。在这个缓冲器中可以用一组操作符对图像进行累积。例如为了产生运动模糊。可以对一系列表示运动的图像进行累积和平均。图元发送到并通过光栅化阶段后。从相机视点能看到的东西就可以在屏幕中显示出来了。
+10.4.10 Direct3D的渲染流水线架构 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2007-10-24T18:08:30&#43;08:00">October 24, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_10_1/">深度探索DxFramework 10-1</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+第10章 进入三维的世界 1 10.1.3D预备数学知识和相关代码的分析 10.2 向量，矩阵，四元数 10.3 三维几何工具集 10.3.1 与三维空间的平面相关算法 对于给定的3D点P0和法向量N，过点P0并且和N垂直的平面就可以定义为满足方程N.(P-P0) = 0的集合。（不明白这个定义怎么来的读者，可以回忆一下两向量点积的几何意义）。如下图，平面中任意点与P0的连线都与法线N是垂直的。
+如果令法向量N为（A,B,C），点P0为（P0x,P0y,P0z）。则平面的方程为：
+$ Ax + By + Cz + D = 0 $ ( 此时 $ Ax + By +Cz + D = \overset{\rightharpoonup}{N}\cdot P $ ，$ D = -\overset{\rightharpoonup}{N}\cdot P $ )
+根据平面法线的指向，平面把它所处的空间划分成两个半空间，法线所指向的半空间称为正半空间，也可以称为正侧空间。另一半则称为负半空间，也称为负侧空间。判断某点和某平面的位置关系可以依照上面三个判断式，如下：
+判断式 位置关系 Ax+By+Cz+D=0 点（x,y,z）在平面上 Ax+By+Cz+D&gt;0 点（x,y,z）在正半空间 Ax+By+Cz+D&lt;0 点（x,y,z）在负半空间 在此可以举一个例子来说明。如下图：
+在图中，平面A由法线N(0,1,0)和点P0(0,5,0)定义。那么，定义式Ax+By+Cz+D=0的D为： D=－N.P0 = -(00+15+0*0) = -5
+P3的坐标为(6,5,2)，代入方程式Ax+By+Cz+D中，为： 60+51+0*2-5=0
+所以P3在平面上。P1的坐标为(0,10,0)，代入方程式Ax+By+Cz+D中，为： 00+101+0*0-5=5&gt;0
+所以P1在平面的正半空间。P2的坐标为(0,2,0)，代入方程式Ax+By+Cz+D中，为： 00+21+0*0-5=-3&lt;0
+所以P1在平面的负半空间。tool3d.cpp文件中定义了点和平面的位置关系判断的两个函数，如下：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2007-10-23T18:08:30&#43;08:00">October 23, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_9_1/">深度探索DxFramework 9-1</a></h1>
+	<div class="entry__content"> 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+第9章 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2007-10-21T18:08:30&#43;08:00">October 21, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_8_2/">深度探索DxFramework 8-2</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+第8章 World Map的剖析 2 8.2 Demo的游戏角色 8.2.1 游戏角色（role）的概念 world map demo用C_MapPC类描述了游戏主角player。而C_MapPC又继承自C_MapObject。追本溯源，就必须先要分析和理解C_MapPC类的实现。前面提过，C_MapObject继承自C_GameObject2D。是作为任何一种在游戏场景地图上的游戏对象（game object）的基类。比如主角，敌人，各种宝物等等。在这个demo中。这些“地图上的游戏对象”有什么共同的属性？答案就在C_MapObejct类的成员变量中：
+class C_MapObject : public C_GameObject2D { protected: DIR_TYPE face; //角色的朝向，东，南，西，北 int moveX; //每次角色移动距离的 int moveY; //大小，以像素为单位 int stepSize; //moveX/moveY变量的修正值 int xPos, yPos; //角色在世界中的坐标 int xModifier, //用在包围盒计算的修正值，将会在 int yModifier; //CheckWalkOn成员函数中使用 int animFrame; //当前播放的动画帧 C_Sprite* p_MapSprite // sprite on map }; DIR_TYPE类型的face成员变量很好理解，在大部分2D游戏中，主角，或者是NPC。都有着四个或者更多的朝向。如果是静止的物品，比如说是一个不会动的道具，那么它的朝向就只有一个。对应地，每一个朝向也对应着一系列的动画帧，如图：
+int类型的成员变量moveX，moveY也容易理解，当游戏对象在世界中移动时，每一帧都产生了位移。world map demo是基于二维空间的，所以必须使用两个变量来分别描述游戏对象沿着X轴和Y轴产生的位移。游戏对象既然生存在“游戏世界”中，所以就需要两个成员变量xPos，yPos来描述它在世界中的位置，以便进行绘制和其他相关的操作。作为一个2D游戏对象，要能渲染出来，就肯定少不了需要一个C_Sprite实例来作为它的成员。如果这个2D游戏对象还有动画效果的话，就应还需要一个变量来维护当前正绘制的动画帧。C_Sprite类型的对象指针p_MapSprite和int类型成员变animFrame正是满足所需。另外的几个修正值变量：stepSize，xModifier，yModifer将会在后面代码分析中详细描述它们的含义和作用。
+在world map demo中，游戏对象有几个重要的行为。它们是：
+游戏对象和场景间的碰撞检测。即是说某个游戏对象，比如主角，能否通过某一个格子而向前移动。 游戏对象沿着某个方向移动。 游戏对象在游戏场景地图中绘制。 游戏对象在小地图中绘制。 //负责移动map object在地图上移动的函数 void C_MapObject::Move(DIR_TYPE direction) { if (direction == DIR_NORTH) { moveY = -stepSize; } else if (direction == DIR_SOUTH) { moveY = stepSize; } else if (direction == DIR_EAST) { moveX = stepSize; } else { //(direction == DIR_WEST) moveX = -stepSize; } face = direction; ++animFrame; } 上面的函数很好理解，stepSize成员变量的作用在此也很明白了。就是根据不同的移动方向，设定沿X轴，Y轴移动的位移量。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2007-10-20T18:08:30&#43;08:00">October 20, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_8_1/">深度探索DxFramework 8-1</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+第8章 World Map的剖析 1 World map demo展示了经典的2D RPG的一些基本的实现技术。在world map demo中，玩家通过键盘操纵主角，即一个小精灵。在几个场景中来回行走。。游戏运行时如图：
+这个demo的程序代码分别在以下几个文件中，它们分别是：
+worldmap.h worldmap.cpp mapobject.cpp mapobject.h map_pc.h map_pc.cpp 这个Demo主要实现了的几个技术点功能是：
+游戏场景的瓷砖拼图实现。 大于屏幕的地图的卷轴（scrolling）显示技术 游戏场景地图之间的切换。 主角和场景之间的碰撞检测 小地图的显示。 玩一玩这个demo。并且用面向对象的思维方式思考一下，这个demo可以划分成怎样的类？对象的粒度，类的层次应该如何搭建比较合适？我们可以追随这个demo的设计者的思维，看看为了实现这个demo，他们是如何进行架构分析的。
+前面我们提过，每一个利用DxFramework开发的游戏实例，都是一个game state。world map demo也不能违反这个规定，所以实现了一个类C_WorldMap，此类继承自C_GameState。此类作为一个游戏“总管”，负责了游戏场景地图的初始化和渲染；外设输入的响应；游戏状态的更新；以及对所有在地图上的游戏对象（game object），比如主角等，进行管理。
+类C_MapObject继承自C_GameObject2D。它可以用来作为任何一种在游戏场景地图上的物体（map object）的基类。比如主角，敌人，各种道具等等。world map demo只实现了“主角”这一个在地图上的物体。如果要实现各种宝物的话，可以继承自C_MapObject，派生一个具有宝物行为和属性的类即可。
+类C_MapPC则表示了由玩家控制的主角player。C_MapPC继承自C_MapObject。表明了主角player也是“生存”在场景中，拥有map object的一般行为。world map demo主要就是利用了这三个类实现了游戏，架构很简单明了。下面是这个demo的静态类图：
+上面的图反映了world map demo的类层次架构，而这个demo的运行时序则如下图：
+DxFramework调用类C_WorldMap的构造函数，构造出游戏场景；构造出各种游戏对象（game object）实例对象，在这demo中就是C_MapPC类的一个实例对象。然后在每一帧中，DxFramework调用void C_WorldMap::Update()函数，在这个函数中响应了外设的输入；更新world map demo的游戏场景和游戏对象的各个属性状态。其后DxFramework调用void C_WorldMap::Render2D()，把游戏场景，各种游戏对象，统计窗口，小地图依次渲染出来。
+8.1. demo的场景地图分析 游戏场景是一个游戏中最重要的部件之一。作为角色，道具，游戏剧本的载体。游戏中发生的各种各样的事件，游戏剧情的发展，都离不开游戏场景这一个“容器”。因此，场景作为游戏世界的一个具体表现，它应该负责整个游戏框架内场景状态的各种操作，控制。同时它也应该能对“在它上面”的游戏组成元素进行有效的管理，比如对各种敌人的添加，删除，状态更新等等。游戏场景各种角色道具剧本都应该以特定的次序添加到场景中。它还应该负责对玩家的输入操作进行管理和派发，等等。正因为如此，demo用整个游戏实例类C_Worldmap来实现场景管理是合理的。下面就来一步一步分析world map demo是如何组织和管理场景的。
+8.1.1. 场景坐标系和屏幕坐标系 在讨论场景之前，有必要弄明白两个非常重要的概念：场景坐标系 ，屏幕坐标系。所作者在写作过程中曾经以“世界坐标系”表达这同一个概念，但是在3D渲染流水线中也有一个“世界坐标系”。考虑到这样会导致读者产生混淆，所以在这里改用“场景坐标系”表示这一概念谓的场景坐标系就是指，以实际游戏场景地图的某个点为原点，指定。。。。屏幕坐标系是指。。。
+为什么要建立两个坐标系？用一个屏幕坐标系也完全可以实现的啊？道理很简单，因为一个屏幕不能全部显现整副地图，地图需要卷动才能显现各部分于屏幕上。引入场景坐标系，将大大方便了后文提到的“地图卷轴”技术的实现。
+指定一个坐标系有两个要素，第一个就是原点的定位，第二个就是坐标轴的朝向。千言万语不如一张图来得直观。世界坐标系和屏幕坐标系的关系如下图：
+明白了场景坐标系和屏幕坐标系后，可以开始着手分析了游戏场景的组成了World map采用了常用的正方形瓷砖拼图（tile）的方式来组织地图元素。什么是瓷砖拼图？观察上面的游戏运行时的图，可以发现，大多数场景都是呈有规律状地重复排列的。因此，美术人员在着手绘制游戏场景的时候，并不需要整幅整副图去绘制。而是绘制一系列大小相同而样子不同的图片，这些图片便称之为瓷砖（tile）。然后针对不同的场景设定要求，利用编辑器，把整个场景划分成一系列和瓷砖大小一样的格子。接着好像铺地板一样，把瓷砖贴到相对应的格子中。外观表现相同的格子就贴同一种瓷砖就可以了。这样子，利用有限的瓷砖图片，就可以组合成各种各样不同的场景，既可以大量地节省美术人员的时间，也可以提高游戏的性能。一般地，美术人员绘制好所有的瓷砖图片之后，都会把这些瓷砖整合成一张大的图片。这样子的好处是，用一个大存储空间来保存这些图片数据，其运行效率和工作性能都比用几个小的存储空间保存多个图片要好。world map demo使用的场景瓷砖图片的文件如下：
+可以看到，world map使用了四种瓷砖，通过对这四种瓷砖进行各样的排列，就能拼成各种不同的游戏场景地图。这四种瓷砖分别是草地，岩石，树林，河水。
+8.1.2. 场景数据的组织 有了不同的瓷砖，在计算机中，就必须要用不同的数值去表示它。在world map demo中。分别使用整数0，1，2，3表示草地，岩石，树林，河水。在游戏中，游戏场景地图数据都是用文件的方式保存在磁盘中，在初始化的时候再从磁盘中载入到内存中。world map demo也不例外。这个demo的所有游戏场景地图的信息都是保存在map.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2007-10-19T18:08:30&#43;08:00">October 19, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_7_1/">深度探索DxFramework 7-1</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+第7章 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2007-10-18T18:08:30&#43;08:00">October 18, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_6_1/">深度探索DxFramework 6-1</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+第6章 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2007-10-17T18:08:30&#43;08:00">October 17, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_5_1/">深度探索DxFramework 5-1</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+第5章 </div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2007-10-16T18:08:30&#43;08:00">October 16, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+<div class="pagination block">
+				<span class="pagination__item pagination__item--active" data-total="2">1</span>
+				<a class="pagination__item pagination__item--desktop" href="/categories/directx/page/2/">2</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

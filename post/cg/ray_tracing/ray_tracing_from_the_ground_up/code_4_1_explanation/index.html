@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>《光线跟踪算法技术》代码4.1解释 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="《光线跟踪算法技术》代码解释">
+		<meta property="og:title" content="《光线跟踪算法技术》代码4.1解释" />
+<meta property="og:description" content="《光线跟踪算法技术》代码解释" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/cg/ray_tracing/ray_tracing_from_the_ground_up/code_4_1_explanation/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-04-11T00:30:11+08:00" />
+<meta property="article:modified_time" content="2020-04-11T00:30:11+08:00" />
+
+
+		<meta itemprop="name" content="《光线跟踪算法技术》代码4.1解释">
+<meta itemprop="description" content="《光线跟踪算法技术》代码解释"><meta itemprop="datePublished" content="2020-04-11T00:30:11+08:00" />
+<meta itemprop="dateModified" content="2020-04-11T00:30:11+08:00" />
+<meta itemprop="wordCount" content="273">
+<meta itemprop="keywords" content="" />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">《光线跟踪算法技术》代码4.1解释</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2020-04-11T00:30:11&#43;08:00">April 11, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">《光线跟踪算法技术》代码4.1解释</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents"></nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<p>首先上代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> World<span style="color:#f92672">::</span>render_scene(<span style="color:#66d9ef">void</span>) <span style="color:#66d9ef">const</span> {
+</span></span><span style="display:flex;"><span>    RGBColor pixel_color;
+</span></span><span style="display:flex;"><span>    Ray ray;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> zw <span style="color:#f92672">=</span> <span style="color:#ae81ff">100.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> n <span style="color:#f92672">=</span> (<span style="color:#66d9ef">int</span>)sqrt((<span style="color:#66d9ef">float</span>)vp.num_samples);
+</span></span><span style="display:flex;"><span>    Point2D pp; <span style="color:#75715e">// sample point on a pixel
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    open_window(vp.hres,vp.vres);
+</span></span><span style="display:flex;"><span>    ray.d <span style="color:#f92672">=</span> Vector3D(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> r <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; r <span style="color:#f92672">&lt;</span> vp.vres; r<span style="color:#f92672">++</span>)       <span style="color:#75715e">// up
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> c <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; c <span style="color:#f92672">&lt;</span> vp.hres; c<span style="color:#f92672">++</span>) { <span style="color:#75715e">// across
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            pixel_color <span style="color:#f92672">=</span> black; 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> p <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; p <span style="color:#f92672">&lt;</span> n; p<span style="color:#f92672">++</span>)         <span style="color:#75715e">// up pixel
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> q <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; q <span style="color:#f92672">&lt;</span> n; q<span style="color:#f92672">++</span>) {   <span style="color:#75715e">// across pixel
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                    pp.x <span style="color:#f92672">=</span> vp.s <span style="color:#f92672">*</span> (c <span style="color:#f92672">-</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> vp.hres <span style="color:#f92672">+</span> (q <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span>) <span style="color:#f92672">/</span> n); 
+</span></span><span style="display:flex;"><span>                    pp.y <span style="color:#f92672">=</span> vp.s <span style="color:#f92672">*</span> (r <span style="color:#f92672">-</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> vp.vres <span style="color:#f92672">+</span> (p <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span>) <span style="color:#f92672">/</span> n);
+</span></span><span style="display:flex;"><span>                    ray.o <span style="color:#f92672">=</span> Point3D(pp.x,pp.y,zw);
+</span></span><span style="display:flex;"><span>                    pixel_color <span style="color:#f92672">+=</span> tracer_ptr<span style="color:#f92672">-&gt;</span>trace_ray(ray);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            pixel_color <span style="color:#f92672">/=</span> vp.num_samples;
+</span></span><span style="display:flex;"><span>            display_pixel(r, c, pixel_color);
+</span></span><span style="display:flex;"><span>        } 
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>假设令采样列与采样行值<code>n</code>为5，<code>vp.vres</code>与<code>vp.hres</code>为100，令像素大小<code>vp.s</code>为1，那么，当<code>r</code>为0，<code>c</code>为0时，上述代码中，代入具体数值后，用来进行采样的双重循环的代码段如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> p <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; p <span style="color:#f92672">&lt;</span> n; p<span style="color:#f92672">++</span>)         <span style="color:#75715e">// up pixel
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> q <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; q <span style="color:#f92672">&lt;</span> n; q<span style="color:#f92672">++</span>) {   <span style="color:#75715e">// across pixel
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        pp.x <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">50</span> <span style="color:#f92672">+</span> (q <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>        pp.y <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">50</span> <span style="color:#f92672">+</span> (p <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span>)<span style="color:#f92672">/</span><span style="color:#ae81ff">5</span>;
+</span></span><span style="display:flex;"><span>        ray.o <span style="color:#f92672">=</span> Point3D(pp.x,pp.y,zw);
+</span></span><span style="display:flex;"><span>        pixel_color <span style="color:#f92672">+=</span> tracer_ptr<span style="color:#f92672">-&gt;</span>trace_ray(ray);
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>当<code>p</code>和<code>q</code>取值如下表时，对应的<code>pp.x</code>和<code>pp.y</code>的取值如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">pp.x\pp.y</th>
+<th style="text-align:center">0</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">(-49.9,-49.9)</td>
+<td style="text-align:center">(-49.7,-49.9)</td>
+<td style="text-align:center">(-49.5,-49.9)</td>
+<td style="text-align:center">(-49.3,-49.9)</td>
+<td style="text-align:center">(-49.1,-49.9)</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">(-49.9,-49.7)</td>
+<td style="text-align:center">(-49.7,-49.7)</td>
+<td style="text-align:center">(-49.5,-49.7)</td>
+<td style="text-align:center">(-49.3,-49.7)</td>
+<td style="text-align:center">(-49.1,-49.7)</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">(-49.9,-49.5)</td>
+<td style="text-align:center">(-49.7,-49.5)</td>
+<td style="text-align:center">(-49.5,-49.5)</td>
+<td style="text-align:center">(-49.3,-49.5)</td>
+<td style="text-align:center">(-49.1,-49.5)</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">(-49.9,-49.3)</td>
+<td style="text-align:center">(-49.7,-49.3)</td>
+<td style="text-align:center">(-49.5,-49.3)</td>
+<td style="text-align:center">(-49.3,-49.3)</td>
+<td style="text-align:center">(-49.1,-49.3)</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">(-49.9,-49.1)</td>
+<td style="text-align:center">(-49.7,-49.1)</td>
+<td style="text-align:center">(-49.5,-49.1)</td>
+<td style="text-align:center">(-49.3,-49.1)</td>
+<td style="text-align:center">(-49.1,-49.1)</td>
+</tr>
+</tbody>
+</table>
+<p>而如果不进行均匀采样的话，当<code>c</code>，<code>r</code>为0时，对应的<code>ray.o</code>的x，y分量为 <strong>(-49.5,-49.5)</strong> 。即程序清单3.12中的计算方式。也即对应于表格中的<code>pp.x</code>和<code>pp.y</code>都等于2时的取值，简而言之，就是说，均匀采样，就是把采样格子再划分得细点儿。如下图所示：</p>
+<p><img src="/image/cg/ray_trace/ray_tracing_from_the_ground_up/uniform_sample.png" alt=""></p>
+<p>如果不执行均匀采样的话，那么向(-49.5,-49.5)处投射光线，是无法和红色的三角形相交的，对应的像素点采样的就不会产生着色。而如果使用均匀采样的话，将会对原来的“一格”像素格，再划分25格进行光线相交检测显然，有部分的“细分像素格”是和红色三角形相交的，故而，这个像素格应该会产生着色。颜色值就是这25个颜色格的颜色和的平均值。</p>
+<p>程序清单3.12中的计算方式的代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> World<span style="color:#f92672">::</span>render_scene(<span style="color:#66d9ef">void</span>) <span style="color:#66d9ef">const</span>{
+</span></span><span style="display:flex;"><span>    RGBColor pixel_color;
+</span></span><span style="display:flex;"><span>    Ray ray;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">double</span> zw <span style="color:#f92672">=</span> <span style="color:#ae81ff">100.0</span>;      <span style="color:#75715e">// hard wired int
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">double</span> x , y;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    open_window(vp.hres,vp.vres);
+</span></span><span style="display:flex;"><span>    ray.d <span style="color:#f92672">=</span> Vector3D(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> r <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; r <span style="color:#f92672">&lt;</span> vp.vres; r<span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> c <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; c <span style="color:#f92672">&lt;=</span> vp.hres; c<span style="color:#f92672">++</span>){
+</span></span><span style="display:flex;"><span>            x <span style="color:#f92672">=</span> vp.s <span style="color:#f92672">*</span> (c<span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span><span style="color:#f92672">*</span>(vp.hres<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>));
+</span></span><span style="display:flex;"><span>            y <span style="color:#f92672">=</span> vp.s <span style="color:#f92672">*</span> (c<span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span><span style="color:#f92672">*</span>(vp.vres<span style="color:#f92672">-</span><span style="color:#ae81ff">1.0</span>));
+</span></span><span style="display:flex;"><span>            ray.o <span style="color:#f92672">=</span> Point3D(x,y,zw);
+</span></span><span style="display:flex;"><span>            pixel_color <span style="color:#f92672">=</span> trace_ptr<span style="color:#f92672">-&gt;</span>trace_ray(ray);
+</span></span><span style="display:flex;"><span>            display_pixel(r,c,pixel_color);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></div>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/how_to_set_camera_for_isometric/">3转2时如何设置摄像机角度以实现isometric渲染效果</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/inside_hdr/">理解高动态范围光</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/tiny3d_implement_introduce/">软渲染示例程序Tiny3D的实现简介</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

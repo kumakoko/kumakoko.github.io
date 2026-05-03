@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>C#中的Attribute学习笔记 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="C#中的Attribute学习笔记">
+		<meta property="og:title" content="C#中的Attribute学习笔记" />
+<meta property="og:description" content="C#中的Attribute学习笔记" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/dotnet/cs_attribute_note/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-11-26T18:08:30+08:00" />
+<meta property="article:modified_time" content="2019-11-26T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content="C#中的Attribute学习笔记">
+<meta itemprop="description" content="C#中的Attribute学习笔记"><meta itemprop="datePublished" content="2019-11-26T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2019-11-26T18:08:30+08:00" />
+<meta itemprop="wordCount" content="643">
+<meta itemprop="keywords" content=".NET," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">C#中的Attribute学习笔记</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2019-11-26T18:08:30&#43;08:00">November 26, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">C#中的Attribute学习笔记</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#c的attribute的一些细节描述">C#的Attribute的一些细节描述：</a></li>
+    <li><a href="#能被attribute所附着的目标种类">能被Attribute所附着的目标种类</a></li>
+    <li><a href="#创建自定义特性">创建自定义特性</a>
+      <ul>
+        <li><a href="#声明自定义特性">声明自定义特性</a></li>
+        <li><a href="#构建自定义特性">构建自定义特性</a></li>
+        <li><a href="#在目标程序元素上应用自定义特性">在目标程序元素上应用自定义特性</a></li>
+        <li><a href="#通过反射访问特性">通过反射访问特性</a></li>
+      </ul>
+    </li>
+    <li><a href="#参考网页">参考网页</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h2 id="c的attribute的一些细节描述">C#的Attribute的一些细节描述：</h2>
+<ul>
+<li>1 C#的attribute，通常翻译为“ <strong>特性</strong> ”。经常出现的英文单词则翻译为“ <strong>属性</strong> ”</li>
+<li>2 C#的attribute可以视为是一种 <strong>附着物</strong>。就像牡蛎吸附在船底或礁石上一样。这些附着物的作用是为它们的附着体，追加上一些额外的信息。而这些信息保存在附着物的体内。对，也即是被编译器编译进 <strong>程序集（assembly）</strong> 的 <strong>元数据（Metadata）</strong> 里，在程序运行的时候，随时可以从元数据里提取出这些附加信息，来决策或影响程序的运行。</li>
+<li>3 C#的attribute不是什么别的，其本质上就是一个类，而且这个类在使用上要遵循以下的一些规则：
+<ul>
+<li>3.1 不使用new操作符来产生实例，而是使用在方括号里调用构造函数的来产生实例。构造函数的参数是一定要写的，有几个就得写几个。且参数的顺序不能错</li>
+<li>3.2 方括号必需紧挨着放置在被附着目标的前面。</li>
+<li>3.3 因为方括号里空间有限，不能像使用new那样先构造对象后，再对对象的 <strong>属性（Property）</strong> 一一赋值。因此，对Attribute实例属性的赋值，也需写在构造函数的圆括号里。但对property的赋值，可有可无，这是因为编译器肯定对property设置一个默认值。对多个property的赋值先后顺序也没有关系。</li>
+</ul>
+</li>
+</ul>
+<h2 id="能被attribute所附着的目标种类">能被Attribute所附着的目标种类</h2>
+<p>Attribute能附着的目标的种类在枚举类型<code>AttributeTargets</code>中有定义，代码如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> System
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [ComVisible(true)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [Flags]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">enum</span> AttributeTargets
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Assembly = <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>        Module = <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>        Class = <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>        Struct = <span style="color:#ae81ff">8</span>,
+</span></span><span style="display:flex;"><span>        Enum = <span style="color:#ae81ff">16</span>,
+</span></span><span style="display:flex;"><span>        Constructor = <span style="color:#ae81ff">32</span>,
+</span></span><span style="display:flex;"><span>        Method = <span style="color:#ae81ff">64</span>,
+</span></span><span style="display:flex;"><span>        Property = <span style="color:#ae81ff">128</span>,
+</span></span><span style="display:flex;"><span>        Field = <span style="color:#ae81ff">256</span>,
+</span></span><span style="display:flex;"><span>        Event = <span style="color:#ae81ff">512</span>,
+</span></span><span style="display:flex;"><span>        Interface = <span style="color:#ae81ff">1024</span>,
+</span></span><span style="display:flex;"><span>        Parameter = <span style="color:#ae81ff">2048</span>,
+</span></span><span style="display:flex;"><span>        Delegate = <span style="color:#ae81ff">4096</span>,
+</span></span><span style="display:flex;"><span>        ReturnValue = <span style="color:#ae81ff">8192</span>,
+</span></span><span style="display:flex;"><span>        GenericParameter = <span style="color:#ae81ff">16384</span>,
+</span></span><span style="display:flex;"><span>        All = <span style="color:#ae81ff">32767</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>从上面的定义可以看到，如果有指定多个attribute所能附着的目标类型的话，在设置<code>AttributeTragets</code>类型值是用按位或操作符连起来就好，例如：<code>AttributeTargets.Method | AttributeTargets.Class</code>。  默认情况下，当我们声明并定义一个新<code>Attribute</code>类时，它的可附着目标就是<code>AttributeTargets.All</code>。如果你明确地指定只用于若干种目标类型的话，要如下代码所示进行操作：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#a6e22e"> [AttributeUsage(AttributeTargets.Class|AttributeTargets.Field)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomAttribute</span> : System.Attribute     
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// CustomAttribute类的具体实现</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>要声明某个自定义特性类附着于哪些具体的目标类型，需要用到另一个特性类<code>AttributeUsage</code>去声明之。通过使用<code>AttributeUsage</code>类，还能指定：</p>
+<ul>
+<li>1.如果一个Attribute附着在了某个类上，可以指定该Attribute随着继承关系，附着、或者不附着在派生类上。</li>
+<li>2 可以指定 <strong>一个</strong> Attribute的 <strong>多个</strong> 实例，附着在 <strong>同一个</strong> 目标上。</li>
+</ul>
+<p>如下代码所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#a6e22e">[AttributeUsage(AttributeTargets.Class | AttributeTargets.Field, Inherited = false,AllowMultiple = true)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">CustomAttribute</span> : System.Attribute     
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// CustomAttribute类的具体实现</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="创建自定义特性">创建自定义特性</h2>
+<p>.Net 框架允许创建自定义特性，用于存储声明性的信息，且可在运行时被检索。该信息根据设计标准和应用程序需要，可与任何目标元素相关。</p>
+<p>创建并使用自定义特性包含四个步骤：</p>
+<ul>
+<li>声明自定义特性</li>
+<li>构建自定义特性</li>
+<li>在目标程序元素上应用自定义特性</li>
+<li>通过反射访问特性</li>
+</ul>
+<h3 id="声明自定义特性">声明自定义特性</h3>
+<p>一个新的自定义特性应派生自<code>System.Attribute</code>类。如下代码所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// 一个自定义特性 BugFix 被赋给类及其成员</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[AttributeUsage(AttributeTargets.Class | AttributeTargets.Constructor | AttributeTargets.Field | AttributeTargets.Method | AttributeTargets.Property,AllowMultiple = true)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DeBugInfo</span> : System.Attribute
+</span></span></code></pre></div><p>上面的代码已声明了一个名为<code>DeBugInfo</code>的自定义特性。</p>
+<h3 id="构建自定义特性">构建自定义特性</h3>
+<p>让我们构建一个名为<code>DeBugInfo</code>的自定义特性，该特性将存储调试程序获得的信息。它存储下面的信息：</p>
+<ul>
+<li>bug 的代码编号</li>
+<li>辨认该 bug 的开发人员名字</li>
+<li>最后一次审查该代码的日期</li>
+<li>一个存储了开发人员标记的字符串消息</li>
+</ul>
+<p><code>DeBugInfo</code>类将带有用于存储前三个信息的私有property，共三个，以及一个用于存储消息的公有property。所以bug编号、开发人员名字和审查日期将是DeBugInfo类的必需的 <strong>定位（ positional）参数</strong> ，消息将是一个可选的 <strong>具名（named）参数</strong>。</p>
+<p>每个特性必须至少有一个构造函数。必需的定位参数，应通过构造函数传递。下面的代码演示了<code>DeBugInfo</code>类：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// 一个自定义特性 BugFix 被赋给类及其成员</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[AttributeUsage(AttributeTargets.Class |
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">AttributeTargets.Constructor |AttributeTargets.Field |
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">AttributeTargets.Method |AttributeTargets.Property,
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">AllowMultiple = true)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DeBugInfo</span> : System.Attribute
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> bugNo;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">string</span> developer;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">string</span> lastReview;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> message;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> DeBugInfo(<span style="color:#66d9ef">int</span> bg, <span style="color:#66d9ef">string</span> dev, <span style="color:#66d9ef">string</span> d)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.bugNo = bg;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.developer = dev;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.lastReview = d;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> BugNo{<span style="color:#66d9ef">get</span> {<span style="color:#66d9ef">return</span> bugNo;}}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Developer{<span style="color:#66d9ef">get</span>{<span style="color:#66d9ef">return</span> developer;}}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> LastReview{<span style="color:#66d9ef">get</span>{<span style="color:#66d9ef">return</span> lastReview;}}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Message
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">get</span>{<span style="color:#66d9ef">return</span> message;}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">set</span>{message = <span style="color:#66d9ef">value</span>;}
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="在目标程序元素上应用自定义特性">在目标程序元素上应用自定义特性</h3>
+<p>通过把特性放置在紧接着它的目标类型之前，来应用该特性：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#a6e22e">[DeBugInfo(45, &#34;Zara Ali&#34;, &#34;12/8/2012&#34;, Message = &#34;Return type mismatch&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">[DeBugInfo(49, &#34;Nuha Ali&#34;, &#34;10/10/2012&#34;, Message = &#34;Unused variable&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rectangle</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 成员变量</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">double</span> length;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">double</span> width;
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Rectangle(<span style="color:#66d9ef">double</span> l, <span style="color:#66d9ef">double</span> w)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        length = l;
+</span></span><span style="display:flex;"><span>        width = w;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [DeBugInfo(55, &#34;Zara Ali&#34;, &#34;19/10/2012&#34;,Message = &#34;Return type mismatch&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> GetArea()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> length * width;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">  
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [DeBugInfo(56, &#34;Zara Ali&#34;, &#34;19/10/2012&#34;)]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Display()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;Length: {0}&#34;</span>, length);
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;Width: {0}&#34;</span>, width);
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;Area: {0}&#34;</span>, GetArea());
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="通过反射访问特性">通过反射访问特性</h3>
+<p>在本实例中，使用前面定义的<code>DeBugInfo</code>特性，将其附着在<code>Rectangle</code>类中。并使用 <strong>反射（Reflection）</strong> 机制来读取 <code>Rectangle</code>类中的元数据。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Reflection;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> BugFixApplication
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// 一个自定义特性 BugFix 被赋给类及其成员</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">   [AttributeUsage(AttributeTargets.Class|AttributeTargets.Constructor| 
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">   AttributeTargets.Field|AttributeTargets.Method|AttributeTargets.Property,
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">   AllowMultiple = true)]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DeBugInfo</span> : System.Attribute
+</span></span><span style="display:flex;"><span>   {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> bugNo;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">string</span> developer;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">string</span> lastReview;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> message;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> DeBugInfo(<span style="color:#66d9ef">int</span> bg, <span style="color:#66d9ef">string</span> dev, <span style="color:#66d9ef">string</span> d)
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">this</span>.bugNo = bg;
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">this</span>.developer = dev;
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">this</span>.lastReview = d;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> BugNo{<span style="color:#66d9ef">get</span>{<span style="color:#66d9ef">return</span> bugNo;}}
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Developer{<span style="color:#66d9ef">get</span>{<span style="color:#66d9ef">return</span> developer;}}     
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> LastReview{<span style="color:#66d9ef">get</span>{<span style="color:#66d9ef">return</span> lastReview;}}
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Message
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">get</span>{<span style="color:#66d9ef">return</span> message;}
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">set</span>{message = <span style="color:#66d9ef">value</span>;}
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">   [DeBugInfo(45, &#34;Zara Ali&#34;, &#34;12/8/2012&#34;,Message = &#34;Return type mismatch&#34;)]</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">   [DeBugInfo(49, &#34;Nuha Ali&#34;, &#34;10/10/2012&#34;,Message = &#34;Unused variable&#34;)]</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Rectangle</span>
+</span></span><span style="display:flex;"><span>   {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 成员变量</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">double</span> length;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">double</span> width;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> Rectangle(<span style="color:#66d9ef">double</span> l, <span style="color:#66d9ef">double</span> w)
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>         length = l;
+</span></span><span style="display:flex;"><span>         width = w;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">      [DeBugInfo(55, &#34;Zara Ali&#34;, &#34;19/10/2012&#34;,Message = &#34;Return type mismatch&#34;)]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">double</span> GetArea()
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">return</span> length * width;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
+</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">      [DeBugInfo(56, &#34;Zara Ali&#34;, &#34;19/10/2012&#34;)]</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Display()
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>         Console.WriteLine(<span style="color:#e6db74">&#34;Length: {0}&#34;</span>, length);
+</span></span><span style="display:flex;"><span>         Console.WriteLine(<span style="color:#e6db74">&#34;Width: {0}&#34;</span>, width);
+</span></span><span style="display:flex;"><span>         Console.WriteLine(<span style="color:#e6db74">&#34;Area: {0}&#34;</span>, GetArea());
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>   
+</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ExecuteRectangle</span>
+</span></span><span style="display:flex;"><span>   {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
+</span></span><span style="display:flex;"><span>      {
+</span></span><span style="display:flex;"><span>         Rectangle r = <span style="color:#66d9ef">new</span> Rectangle(<span style="color:#ae81ff">4.5</span>, <span style="color:#ae81ff">7.5</span>);
+</span></span><span style="display:flex;"><span>         r.Display();
+</span></span><span style="display:flex;"><span>         Type type = <span style="color:#66d9ef">typeof</span>(Rectangle);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">foreach</span> (Object attributes <span style="color:#66d9ef">in</span> type.GetCustomAttributes(<span style="color:#66d9ef">false</span>))
+</span></span><span style="display:flex;"><span>         {
+</span></span><span style="display:flex;"><span>            DeBugInfo dbi = (DeBugInfo)attributes;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">null</span> != dbi)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>               Console.WriteLine(<span style="color:#e6db74">&#34;Bug no: {0}&#34;</span>, dbi.BugNo);
+</span></span><span style="display:flex;"><span>               Console.WriteLine(<span style="color:#e6db74">&#34;Developer: {0}&#34;</span>, dbi.Developer);
+</span></span><span style="display:flex;"><span>               Console.WriteLine(<span style="color:#e6db74">&#34;Last Reviewed: {0}&#34;</span>,dbi.LastReview);
+</span></span><span style="display:flex;"><span>               Console.WriteLine(<span style="color:#e6db74">&#34;Remarks: {0}&#34;</span>, dbi.Message);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>         
+</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">foreach</span> (MethodInfo m <span style="color:#66d9ef">in</span> type.GetMethods())
+</span></span><span style="display:flex;"><span>         {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">foreach</span> (Attribute a <span style="color:#66d9ef">in</span> m.GetCustomAttributes(<span style="color:#66d9ef">true</span>))
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>               DeBugInfo dbi = (DeBugInfo)a;
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">null</span> != dbi)
+</span></span><span style="display:flex;"><span>               {
+</span></span><span style="display:flex;"><span>                  Console.WriteLine(<span style="color:#e6db74">&#34;Bug no: {0}, for Method: {1}&#34;</span>,dbi.BugNo, m.Name);
+</span></span><span style="display:flex;"><span>                  Console.WriteLine(<span style="color:#e6db74">&#34;Developer: {0}&#34;</span>, dbi.Developer);
+</span></span><span style="display:flex;"><span>                  Console.WriteLine(<span style="color:#e6db74">&#34;Last Reviewed: {0}&#34;</span>,dbi.LastReview);
+</span></span><span style="display:flex;"><span>                  Console.WriteLine(<span style="color:#e6db74">&#34;Remarks: {0}&#34;</span>, dbi.Message);
+</span></span><span style="display:flex;"><span>               }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>         }
+</span></span><span style="display:flex;"><span>         Console.ReadLine();
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>   }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当上面的代码被编译和执行时，它会产生下列结果：</p>
+<pre tabindex="0"><code>Length: 4.5
+Width: 7.5
+Area: 33.75
+Bug No: 49
+Developer: Nuha Ali
+Last Reviewed: 10/10/2012
+Remarks: Unused variable
+Bug No: 45
+Developer: Zara Ali
+Last Reviewed: 12/8/2012
+Remarks: Return type mismatch
+Bug No: 55, for Method: GetArea
+Developer: Zara Ali
+Last Reviewed: 19/10/2012
+Remarks: Return type mismatch
+Bug No: 56, for Method: Display
+Developer: Zara Ali
+Last Reviewed: 19/10/2012
+Remarks: 
+</code></pre><h2 id="参考网页">参考网页</h2>
+<p><a href="https://blog.csdn.net/FantasiaX/article/details/1627694">深入浅出Attribute 上</a></p>
+<p><a href="https://blog.csdn.net/fantasiax/article/details/1636913">深入浅出Attribute 中</a></p>
+<p><a href="https://blog.csdn.net/FantasiaX/article/details/1627694">深入浅出Attribute 下</a></p>
+<p><a href="https://www.runoob.com/csharp/csharp-attribute.html">C# 特性（Attribute）</a></p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/.net/">.NET</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_object_copy_and_assign/">C#中的对象和拷贝</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/delete_dictionary_elements/">正确地删除Dictionary中的元素</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/iterator_and_yield/">C#中的迭代器和yield</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_asynresult_interface_detail/">.NET Framework的IAsyncResult接口的细节</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/begin_receive_and_end_receive/">NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

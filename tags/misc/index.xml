@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>MISC on XGF</title>
+    <link>http://www.xionggf.com/tags/misc/</link>
+    <description>Recent content in MISC on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 22 Oct 2024 23:21:49 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/tags/misc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一些实用的正则表达式</title>
+      <link>http://www.xionggf.com/post/misc/useful_regex/</link>
+      <pubDate>Tue, 22 Oct 2024 23:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/misc/useful_regex/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;生成一个正则表达式，把每一个中文自然段落前的空格都去掉 可以使用以下正则表达式来去除每个中文自然段落前的空格：&#xA;正则表达式：&#xA;^[ \t　]+ 替换为： 空字符串（即删除匹配到的内容）&#xA;解释：&#xA;^ 匹配行的开头（在多行模式下）。 [ \t　]+ 匹配一个或多个： 半角空格（ ） 制表符（\t） 全角空格（　，Unicode \u3000） 使用方式：&#xA;启用多行模式（/m 标志），使 ^ 能匹配每行的开头。 全局匹配（/g 标志），处理所有符合条件的空格。 示例（JavaScript）：&#xA;const text = ` 这是一个前面有半角空格的段落。 这是一个前面有全角空格的段落。 Another mixed space paragraph.`; const result = text.replace(/^[ \t　]+/gm, &amp;#39;&amp;#39;); console.log(result); 输出：&#xA;这是一个前面有半角空格的段落。 这是一个前面有全角空格的段落。 Another mixed space paragraph. 注意事项：&#xA;该正则表达式会删除每行开头的所有空格（包括全角/半角），适用于典型的首行缩进场景。 如果段落中存在需要保留的非开头空格（如英文单词间的空格），不会被误删。 如果文本包含代码块等需要保留缩进的结构，建议先提取自然段落再处理。 生成一个正则表达式，删除空白行，纯空格符的行也算空白行 可以使用以下正则表达式删除所有空白行（包括仅含空格/制表符等空白字符的行）：&#xA;正则表达式：&#xA;^\s*$ 替换为： 空字符串（即删除匹配到的整行）&#xA;解释： ^ 匹配行的开头（需启用多行模式） \s* 匹配零个或多个空白字符（包括：空格、制表符\t、换页符等） $ 匹配行的结尾（需启用多行模式） 使用方式： 启用多行模式 (/m 标志)，使 ^ 和 $ 能匹配每行的开头和结尾 全局匹配 (/g 标志)，处理所有符合条件的行 示例（JavaScript）：</description>
+    </item>
+    <item>
+      <title>Http的报头、消息返回码等细节一览表</title>
+      <link>http://www.xionggf.com/post/misc/http_detail_table/</link>
+      <pubDate>Sat, 07 Jan 2023 18:38:27 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/misc/http_detail_table/</guid>
+      <description>** 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com。**&#xA;1 HTTP头部 1.1 Requests Header Header 解释 示例 Accept 指定客户端能够接收的内容类型 Accept: text/plain, text/html Accept-Charset 浏览器可以接受的字符编码集。 Accept-Charset: iso-8859-5 Accept-Encoding 指定浏览器可以支持的web服务器返回内容压缩编码类型。 Accept-Encoding: compress, gzip Accept-Language 浏览器可接受的语言 Accept-Language: en,zh Accept-Ranges 可以请求网页实体的一个或者多个子范围字段 Accept-Ranges: bytes Authorization HTTP授权的授权证书 Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ== Cache-Control 指定请求和响应遵循的缓存机制 Cache-Control: no-cache Connection 表示是否需要持久连接。（HTTP 1.1默认进行持久连接） Connection: close Cookie HTTP请求发送时，会把保存在该请求域名下的所有cookie值一起发送给web服务器。 Cookie: $Version=1; Skin=new; Content-Length 请求的内容长度 Content-Length: 348 Content-Type 请求的与实体对应的MIME信息 Content-Type: application/x-www-form-urlencoded Date 请求发送的日期和时间 Date: Tue, 15 Nov 2010 08:12:31 GMT Expect 请求的特定的服务器行为 Expect: 100-continue From 发出请求的用户的Email From: user@email.</description>
+    </item>
+  </channel>
+</rss>

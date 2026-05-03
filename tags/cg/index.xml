@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CG on XGF</title>
+    <link>http://www.xionggf.com/tags/cg/</link>
+    <description>Recent content in CG on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 25 Dec 2024 20:36:51 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/tags/cg/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>层次化Z缓冲区拣选算法学习笔记</title>
+      <link>http://www.xionggf.com/post/cg/hierarchical_z_buffer_occlusion_culling/</link>
+      <pubDate>Wed, 25 Dec 2024 20:36:51 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/hierarchical_z_buffer_occlusion_culling/</guid>
+      <description>1 Nick Darnell的Hiz算法总结和分析笔记 基于层次化Z缓冲区的遮挡拣选（Hierarchical Z-buffer occlusion culling）的实现方式有多种，其中有一种是基于论文Real-Time Rendering (Section 3.3.3)。&#xA;1.1 层次化Z缓冲区（Hierarchical Z-buffer,HiZ）剔除步骤 让美术准备好用来遮挡住其他物体的遮挡体（occlusion geometry） CPU端：获取到所有的遮挡体，且将在视截体之外的给剔除掉 GPU端：把上一步剔除剩下的遮挡体，将其深度值渲染到深度缓冲区D-RT0 GPU端：对D-RT0进行采样，并填充整个mipchain CPU端：对当前场景中的所有可见物体，获取到其物体的包围球 GPU端：把上一步获取到的物体包围球，计算该包围球对应的屏幕空间宽度，然后使用该宽度计算 mip 级别，从步骤 4 中生成HiZ 贴图中进行采样 CPU端：读回计算着色器的缓冲区输出 1.2 对分层Z缓冲区进行降采样的HLSL代码 上述步骤中的第4步用到的降采样的方式如下：&#xA;取当前的，右边一个、下方一个和右下方一个像素进行比较，取其值最大者，作为降采样像素中的新深度值。下面两个图是降采样前后版本的示例，黑色表示较近的深度，像素越白，深度值越远/越高。&#xA;降采样HLSL代码如下所示&#xA;float4 vTexels; vTexels.x = LastMip.Load( nCoords ); vTexels.y = LastMip.Load( nCoords, uint2(1,0) ); vTexels.z = LastMip.Load( nCoords, uint2(0,1) ); vTexels.w = LastMip.Load( nCoords, uint2(1,1) ); float fMaxDepth = max( max( vTexels.x, vTexels.y ), max( vTexels.z, vTexels.w ) ); 1.3 层次化Z缓冲区的剔除核心算法 cbuffer CB { matrix View; matrix Projection; matrix ViewProjection; float4 FrustumPlanes[6]; // 视截体的6个面，基于世界坐标，每个面的法线朝外 float2 ViewportSize; // 视口的高和宽，基于像素 float2 PADDING; }; // GPU只读的缓冲区，因为声明了使用t0着色器，故而每一个点是一个float4 // float4的xyz分量记录了包围球的球心坐标，w分量记录了球的半径。基于 // 世界坐标系 StructuredBuffer Buffer0&#x9;: register(t0); // Is Visible 1 (Visible) 0 (Culled) // GPU可读写的缓冲区，每一个点是一个uint，值为1时该点可视，0时该点不可视 RWStructuredBuffer BufferOut&#x9;: register(u0); Texture2D HizMap&#x9;: register(t1); SamplerState HizMapSampler&#x9;: register(s0); // 计算给定的点vPoint到平面方程的距离 // vPlane: 四个xyzw分量，分别包含了平面方程的四个系数abcd: ax + by + cz = d // vPoint: Point to be tested against the plane.</description>
+    </item>
+    <item>
+      <title>Software Virtual Texture 学习笔记</title>
+      <link>http://www.xionggf.com/post/cg/software_virtual_texture/</link>
+      <pubDate>Sun, 15 Dec 2024 20:36:51 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/software_virtual_texture/</guid>
+      <description>在MegaTexture的基础上，id Software进一步提出了Virtual Texture的概念，这个概念取自于Virtual Memory。与虚拟内存类似的是，一个很大的Texture将不会全部加载到内存中，而是根据实际需求将需要的部分加载；与虚拟内存不同的是，它不会阻塞执行，可以使用更高的Mipmap来暂时显示，它对基于block的压缩贴图有很好的支持。&#xA;基本思路是：将纹理的Mipmap chain分割为相同大小的Tile或Page，这里的纹理是虚纹理，然后通过某种映射，映射到一张内存中存在的纹理，这里的纹理是物理纹理，在游戏视野发生变化的时候，一部分物理纹理会被替换出去，一部分物理纹理会被加载。&#xA;这样的机制不仅仅减少了带宽消耗和内存（显存）消耗，也带来了其它好处。比如有利于合批，而不用因为使用不同的Texture而打断合批，这样可以根据需求来组织几何使得更利于Culling。当然合批的好处是states change变少，LightMap也可以预计算到一张大的Virtual Texture上用来合批。&#xA;1 地址映射 地址映射在Virtual Texture中是一个很重要的环节，即是“如何将一个virtual texture上的texel，对应地映射到phyiscal texture上去”。同时还需要处理“假如高分辨率的page没有加载的话，如何获得已加载的相对应的低分辨率的page”&#xA;1.1 四叉树映射 使用四叉树主要是为了和Mipmap对应，也就是每个低MIP的Map会对应有四个高MIP的Map，四叉树中只存储加载的Mipmap信息。这里的对应关系就是每个加载的Virtual Texture的Page对应一个四叉树的节点，具体的计算如下：&#xA;这里存在每个四叉树的节点中的内容就是bias和scale，这样就可以将虚拟纹理的地址转换成物理纹理的地址。如果没有找到，也可以用父节点的地址来得到低分辨率。但是这里要找到对应的节点需要搜索这个四叉树，搜索的速度取决于树的高度，也就是Mipmap的层级，在差的低MIP的地址上效率会比较低。&#xA;1.2 单像素对应虚纹理的一个Page的映射 为了减少索引，首先容易想到的就是，为每个虚纹理的Page都存储一份信息，这样就能直接转换了。这个方案就是创建一个带Mipmap的Texture，一个Texel对应虚纹理的一个Page，Texel的内容就是四叉树映射里面的bias和scale。&#xA;假如对应的MIP没有加载，存储的就是高MIP的转换信息，这样显然就提高了地址转换的效率。但是这会带来内存增加，因为我们需要每个虚纹理的Page都对应一个Texel。其中bias和scale都是二维的向量，即使设计虚纹理和物理纹理的比例一致，我们也需要至少scale、SBias、TBias三个量，而且这三个量的精度要求很高，至少需要16bit的浮点数精度。如果要达到这样的精度就需要F32*4的纹理格式，那么必然会产生一个巨大的映射纹理，因此需要减小映射纹理的大小。&#xA;1.3 双纹理映射 这个方案仍然有一个对应每个虚纹理Page的Texture，但是不同的是，纹理的内容存储的是物理纹理Page的坐标，用这个坐标再去索引另外一张Texture。另外一张贴图的内容才是bias和scale，但不是每个虚拟纹理，而是每个物理纹理Page一个Texel。下图是虚拟纹理对应的Texture：&#xA;这样就减少了映射纹理的大小，但是同时多了一次纹理查询。&#xA;2.1.4 Page和MIP level映射 总结上面两个基于映射纹理的方案，要么是纹理需要很大的存储，要么是需要多次查询。如果从映射纹理比较大的角度考虑优化，可以考虑适当减少每个像素的大小，这个方案就是从这个角度出发的。在这个方案中，仍然是每个虚拟纹理的Page对应一个texel，但是存储的内容是物理纹理Page的Offset和虚拟纹理所在的MIP level。&#xA;这样存储的好处就是，Page Offset对精度的要求没有那么大，用32bit的Texture即可。当然也可以压缩到更小格式的纹理中，如RGB565。这种方案的使用最广泛，基本各家引擎的实现都使用了这种方案。&#xA;2.1.5 HashTable映射 这是最直接的方法，好处是节省内存，查询速度快，但是当遇到没有加载的virtual Page的时候，需要多次查询。这个和四叉树还有一个问题，即如何设计一个GPU友好的数据结构。&#xA;2.2 Texture Filtering 由于虚拟纹理并没有完整加载，所以各种采样过滤在Page的边界会有问题，我们需要自己设计解决这些问题的方法，适当的使用软实现的采样。&#xA;2.2.1 Bi-linear Filtering 这个解决方案比较简单，就是给Physical Page加上一个像素的border。&#xA;2.2.2 Anisotropic Filtering Anisotropic Filtering可能需要更多的相邻像素，假如我们需要支持8倍的Anisotropic Filtering，那我们需要采样步长为4的相邻像素，也就是我们的border要增加到4个像素。增加4个像素的border会增加Physical Texture的大小，但是带来了一个好处，就是适配了block compression。&#xA;具体实现可以分为软实现和硬实现，硬实现放到下文的Tri-linear说，这里说软实现。软实现其实就是在Shader中实现Anisotropic Filtering的算法，在决定采样的MIP level的时候，需要把虚纹理相对于物理纹理的比例考虑进去，剩下的就是正常的Anisotropic Filtering。&#xA;2.2.3 Tri-linear Filtering Tri-linear Filtering的实现方案可以分为两种：一种是软实现，一种是硬实现。&#xA;所谓的软实现与Anisotropic Filtering一样，在Shader中实现Tri-linear Filtering。也就是说，需要在Shader中计算MIP level，然后进行两次地址的转换，采样两个物理纹理的Page后进行插值。&#xA;硬实现的方法是直接给物理纹理生成一个一层的Mipmap，然后利用硬件去直接采样。同样的，对于Anisotropic Filtering，也打开Anisotropic Filtering直接进行采样。这样的好处当然是由于硬件的加速，采样的效率会提升，但是这样同时会导致增加25%的纹理大小，而且由于Mipmap的边界会变成两个像素，对于block compression和超过4倍的Anisotropic Filtering来说，在遇到Page的边界时都会出现问题。</description>
+    </item>
+    <item>
+      <title>Sparse virtual textures 学习笔记</title>
+      <link>http://www.xionggf.com/post/cg/sparse_virtual_textures_study_note/</link>
+      <pubDate>Sun, 15 Dec 2024 20:36:51 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/sparse_virtual_textures_study_note/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;Nathan Gauër的Sparse virtual textures&#xA;稀疏虚拟纹理概述 sparse virtual texture（SVT）方案是由Id Software提出，用来解决Texture加载问题的一套解决方案，解决了带宽和内存不足的问题。&#xA;在Id Software的方案之后，业界又相继提出以下的的方案：&#xA;Procedural Virtual Texture Adaptive Procedural Virtual Texture Hardware Virtual Texture 稀疏虚拟纹理的历史沿革 最早期的SVT思想，是受Mesh的LOD启发。不同LOD的Mesh对应着不同的网格面数，对应地也应加载不同大小的texture。&#xA;在1998年，Tanner发表了一篇《The Clipmap: A Virtual Mipmap》的论文，文中提到了一种叫clipmap的技术。后来被Id Software引入并改进，称之为MegaTexture&#xA;clipmap的基本思想是：设置一个mipmap大小的上限，超过这个上限的mipmap会被clip掉，也就是不会加载到内存中&#xA;Software Virtual Texture 在MegaTexture的基础上，Id Software提出了virtual texture的概念，这个概念取自于virtual memory。与virtual memory似的是，一个很大的texture将不会全部加载到内存中，而是根据实际需求将需要的部分加载。如下图所示：&#xA;基本思路是：将虚拟纹理的Mipmap chain分割为相同大小的Tile或Page，这里的纹理是虚纹理，然后通过某种映射，映射到一张内存中存在的纹理，这里的纹理是物理纹理，在游戏视野发生变化的时候，一部分物理纹理会被替换出去，一部分物理纹理会被加载。&#xA;稀疏虚拟纹理(sparse virtual texture)。简单地说，就是在着色器中重新实现分页（pagination），可以拥有无限的纹理，同时保持 GPU 内存使用量恒定。&#xA;1 步骤 1 - 手工制作分页 1.1 分页概述 要理解 SVT 如何工作，首先要了解什么是分页：&#xA;在大多数计算机上，数据存储在 RAM 中。RAM 是一个线性缓冲区，其第一个字节位于地址 0，最后一个字节位于地址N。因为某些原因，使用真实地址并不方便。因此有人发明了分段（segmentation），后来演变为分页。这个想法很简单：使用虚拟地址（virtual address），由 CPU 将其转换为实际 RAM 地址。&#xA;在上图中：左侧是虚拟内存，可以看见虚拟内存的地址是线性连续的。共分为4个page。虚拟内存中每个page，都线性映射到page table中的一个entry。&#xA;下面举例说明，利用page和page table，如何将一个virtual RAM address（VRA）映射到physical RAM address（PRA）。例子中的page的大小是4KB，即4096个字节。每个虚拟地址VRA，可以用公式表示为：</description>
+    </item>
+    <item>
+      <title>HBAO</title>
+      <link>http://www.xionggf.com/post/cg/what_is_hbao/</link>
+      <pubDate>Sun, 08 Dec 2024 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/what_is_hbao/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;HBAO（Horizon-Based Ambient Occlusion，基于水平的环境光遮蔽） 是一种用于实时渲染的环境光遮蔽（Ambient Occlusion, AO）技术。它的目的是模拟物体表面因周围几何体的遮挡而产生的阴影效果，从而增强场景的深度感和真实感。&#xA;1. 环境光遮蔽（AO）简介 环境光遮蔽是一种全局光照技术，用于模拟物体表面因周围几何体的遮挡而产生的阴影效果。它可以增强场景的深度感和真实感，尤其是在角落、缝隙和物体接触处。&#xA;常见的 AO 技术包括：&#xA;SSAO（Screen Space Ambient Occlusion，屏幕空间环境光遮蔽）：基于屏幕空间信息计算 AO。 HBAO（Horizon-Based Ambient Occlusion，基于水平的环境光遮蔽）：改进的 AO 技术，基于水平角计算遮蔽。 GTAO（Ground Truth Ambient Occlusion，真实环境光遮蔽）：更精确的 AO 技术，基于物理模拟。 2. HBAO 的工作原理 HBAO 的核心思想是通过计算每个像素周围几何体的水平角（Horizon Angle）来确定遮蔽程度。具体步骤如下：&#xA;2.1 采样周围几何体 对于每个像素，在其法线方向的半球范围内采样周围的几何体。 采样点的深度值用于计算遮蔽。 2.2 计算水平角 对于每个采样方向，计算几何体的水平角（Horizon Angle）。 水平角表示几何体在某个方向上的最大遮挡角度。 2.3 计算遮蔽强度 根据水平角和采样方向，计算当前像素的遮蔽强度。 遮蔽强度越大，表示该像素被周围几何体遮挡得越多。 2.4 应用遮蔽效果 将计算出的遮蔽强度应用到像素的颜色值上，生成 AO 效果。 3. HBAO 的优势 高质量 AO 效果：&#xA;HBAO 能够生成更真实、更平滑的 AO 效果，尤其是在复杂几何体周围。 性能优化：&#xA;相比传统的 SSAO，HBAO 通过优化采样和计算方式，减少了性能开销。 可配置性强：&#xA;HBAO 提供了多种参数（如采样半径、遮蔽强度等），可以根据需求调整 AO 效果。 兼容性：</description>
+    </item>
+    <item>
+      <title>什么是UV density</title>
+      <link>http://www.xionggf.com/post/cg/what_is_uv_density/</link>
+      <pubDate>Sun, 08 Dec 2024 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/what_is_uv_density/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;UV Density（UV密度）是指在3D建模和纹理映射过程中，每单位面积上UV坐标的密集程度。它描述了UV坐标如何在模型的表面上分布，直接影响纹理的细节和清晰度。&#xA;UV坐标是将三维模型的表面（即网格）展开到二维平面上所使用的坐标系。每个顶点都有一个对应的UV坐标，用于在纹理贴图中定位该顶点上的纹理图像。 UV密度高意味着同样的纹理会在模型的更多区域覆盖，因此每个单位面积上的纹理细节更丰富，通常会表现出更高的纹理分辨率。 UV密度的影响： 纹理清晰度：UV密度越高，纹理的细节越清晰，尤其在大模型或复杂形状的区域。 纹理失真：如果UV密度不均匀，可能会导致某些区域的纹理出现拉伸或压缩，影响视觉效果。 性能：较高的UV密度意味着更多的纹理数据，可能会影响渲染性能，尤其是在低性能的设备上。 如何控制UV密度： 在3D建模时，合理分配UV空间，确保模型表面的大致区域都有足够的纹理空间。 在纹理贴图时，可以通过调整纹理的分辨率或者UV映射方式来优化UV密度。 总之，UV密度是纹理映射的重要指标，合理控制它能确保纹理效果的质量和性能。</description>
+    </item>
+    <item>
+      <title>HLSL语言的编译指令#include_with_pragmas的具体用法</title>
+      <link>http://www.xionggf.com/post/cg/how_to_use_hlsl_include_with_pragmas/</link>
+      <pubDate>Fri, 08 Mar 2024 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/how_to_use_hlsl_include_with_pragmas/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;#include_with_pragmas 在 HLSL 语言中的作用 #include_with_pragmas 是 Unity Shader 编译器提供的一个扩展指令，用于 在包含 HLSL 头文件 (.hlsl) 时，同时解析其中的 #pragma 指令。这与普通的 #include 不同，普通 #include 只会包含代码，但不会处理 #pragma 相关的指令。&#xA;基本语法 #include_with_pragmas &amp;#34;MyShaderHeader.hlsl&amp;#34; 与普通的 #include 相比：&#xA;#include 不会解析 #pragma multi_compile 等编译指令。 #include_with_pragmas 会解析 #pragma 指令，确保 .hlsl 文件中的 #pragma 也会影响 Shader 变体编译。 使用示例 示例 1：在 .hlsl 文件中定义 multi_compile MyShaderHeader.hlsl&#xA;#pragma multi_compile _ FEATURE_ENABLED float4 CustomFunction() { return float4(1, 0, 0, 1); } MyShader.shader&#xA;Shader &amp;#34;Example/Shader&amp;#34; { SubShader { Pass { HLSLPROGRAM #include_with_pragmas &amp;#34;MyShaderHeader.</description>
+    </item>
+    <item>
+      <title>八面体（Octahedron）及其坐标映射</title>
+      <link>http://www.xionggf.com/post/cg/octahedron_mapping/</link>
+      <pubDate>Sun, 25 Dec 2022 20:36:51 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/octahedron_mapping/</guid>
+      <description>八面体（Octahedron）及其坐标映射 八面体是一种 正八面体几何结构，它可以用于 映射方向向量（3D）到2D，以便进行 高效的纹理存储和查询。在 Impostor 渲染 中，八面体映射（Octahedral Mapping）是一种将 球面方向向量 投影到 二维平面 的方法，广泛用于 环境贴图、光照计算、Impostor 纹理存储 等。&#xA;1. 为什么使用八面体坐标？ 通常，我们用一个 单位向量（( x, y, z )）表示方向。但如果要将方向存储在 2D 纹理（如 Impostor 贴图）中，我们需要找到一种 从 3D 到 2D 的映射方法。&#xA;常见的映射方法：&#xA;球面坐标（Spherical Coordinates）：容易产生极点扭曲（pole distortion）。 立方体映射（Cubemap）：存储效率不高，容易出现采样接缝（seams）。 八面体映射（Octahedral Mapping）： 相比 球面坐标，它没有极点扭曲问题。 相比 立方体映射，它存储利用率高达 100%，没有浪费区域。 计算简单，适用于 GPU 计算。 因此，八面体映射是一种高效的 3D → 2D 映射 方法。&#xA;2. 八面体坐标转换 八面体映射的核心思想是 将单位球的上、下两个半球折叠到一个正方形上。&#xA;(1) 3D 方向向量到八面体坐标（VectortoOctahedron） 假设有一个 单位方向向量： [ V = (x, y, z) ] 步骤：</description>
+    </item>
+    <item>
+      <title>在HLSL中对浮点数和整数之间进行转换</title>
+      <link>http://www.xionggf.com/post/cg/hlsl_float_to_int/</link>
+      <pubDate>Sat, 25 Dec 2021 20:36:51 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/hlsl_float_to_int/</guid>
+      <description>以下是逐行注释和详细说明的Unity Shader代码分析：&#xA;1. 打包整数函数 PackInt float PackInt(uint i, uint numBits) // 打包整数 { uint maxInt = (1u &amp;lt;&amp;lt; numBits) - 1u; // 计算最大整数值 return saturate(i * rcp(maxInt)); // 将整数归一化到[0, 1]范围 } 功能说明 该函数将一个无符号整数 i 打包为一个浮点数，范围在 [0, 1] 之间。 通过将整数 i 除以最大整数值 maxInt，将其归一化到 [0, 1] 范围。 参数说明 i：需要打包的无符号整数。 numBits：整数的位数，用于计算最大整数值。 关键点 1u &amp;lt;&amp;lt; numBits：通过左移操作计算 2^numBits，即最大整数值加1。 maxInt = (1u &amp;lt;&amp;lt; numBits) - 1u：计算最大整数值。例如，numBits = 8 时，maxInt = 255。 rcp(maxInt)：计算 1.0 / maxInt，用于归一化。 saturate：将结果限制在 [0, 1] 范围内，防止溢出。 示例 输入：i = 128, numBits = 8 计算： maxInt = (1u &amp;lt;&amp;lt; 8) - 1u = 255 rcp(maxInt) = 1.</description>
+    </item>
+    <item>
+      <title>3转2时如何设置摄像机角度以实现isometric渲染效果</title>
+      <link>http://www.xionggf.com/post/cg/how_to_set_camera_for_isometric/</link>
+      <pubDate>Thu, 09 Mar 2017 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/how_to_set_camera_for_isometric/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原文地址：&#xA;问：应该如何在 3DS Max 中设置摄像机的观察角度，使得渲染出来的 2D 图是一个 isometric 效果。特别地应该如何获取到渲染出来的图像的精确高宽值。当我们想渲染出来的图的高宽比是 1:2 的时候，该如何设置摄像机的位置，设置摄像机的观察角度？&#xA;答：1:如果想渲染出来的图的高宽比是 1:2 的话，这种投影其实不是严格的 isometric（等轴侧）投影。而是类似于 dimetric（正二测，两等角）投影。这种投影的特点便是三个轴中的水平两个轴是按照透视法缩短了。垂直的那个轴则稍微地比按透视法缩短的更为剪短了一点。&#xA;Isometric（等轴侧） 投影则是三个轴都是按相等的比例透视缩短的。当使用等轴侧投影的时候，一个轴对齐的菱形将会被投影到水平面上。并且这个菱形的宽高比为：1.732:1 。如下图所示:&#xA;在上图中，如果使用宽高比为 2:1 的正二测投影的话。则摄像机俯视水平面的观察角度应该为 30°。如果使用真正的等侧轴投影的话。则摄像机俯视水平面的观察角度应该为 35.264 度。在这里，摄像机的观察角度 A 和投影得到的菱形的宽高比 R 之间的关系是：&#xA;sin(A) = R&#xA;2: 在渲染时，还必须确保渲染用的摄像机，是使用了正交投影的模式。&#xA;扩展阅读： Axonometric projection Isometric view setup Isometric View and Isometric Projection</description>
+    </item>
+    <item>
+      <title>理解高动态范围光</title>
+      <link>http://www.xionggf.com/post/cg/inside_hdr/</link>
+      <pubDate>Wed, 08 Mar 2017 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/inside_hdr/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;现在大部分图形程序员（包括我）可能是从directxsdk处接触到这个概念并开始学习。DirectX SDK中的示例demo较为清晰地展示了一个完整的HDR技术所要采用的流程，如下：&#xA;在 float render target 上去渲染当前的场景。 使用 RGBM ， LogLuv 等编码方式来节省所需的内存和带宽 通过 down sample 去计算场景亮度 根据亮度对场景做一个 矫正（tone mapping） 最后输出到一个 rgb8 的 render target 上 上面的流程的四个步骤就展示了四个高大上的概念，我们先一一弄懂这些基础概念，再进一步分析。 1 float render target 首先是float render target。render target（以下简称RT）这个概念就不在此详细描述了，这个概念都还没弄懂的话需要先放下这篇文章，先夯实基础再说。RT可以理解为一系列的像素点的集合。在计算机中自然需要用一个一个字节去表示像素点的RGBA信息。最常见的是使用一个字节去表示像素点的一个颜色分量。这样子表示一个像素点则需要四个字节共32位。但一个字节表示一个颜色分量，比如Red分量的话，最多就只能表示256阶的信息。在很多时候，尤其是在处理我们的HDR信息的时候，256阶是远远不够用。所以我们要采用32位或者更高精度的浮点数去表示每一位颜色分量。float render target正是表示这一个概念。&#xA;1.1 RGBM RGBM是一种颜色编码方式，如上所述，为了解决这个精度不足以存储亮度范围信息的问题，我们可以创建一个精度更高的buffer，以扩展之前的那个限定在[0,1]取值域的取值范围，从而使得我们可以在RT上渲染一个更高的亮度范围的画面效果。但使用高精度的buffer则带来另一个问题：即需要更高的内存存储空间和更高的带宽，并且有些渲染硬件无法以操作8位精度的buffer的速度去操作16位浮点数的buffer。因此为了解决这个问题，我们需要采用一种编码方法将这些颜色数据编码成一个能以8位颜色分量的存储的数据。编码方式有多种，例如RGBM编码，LogLuv编码，等等。假如有一个给定的包含了RGB颜色分量的颜色值C，将其编码成一个含有RGBM四个分量的颜色值的步骤是：&#xA;定义一个&amp;quot;最大范围值&amp;quot;,假定为变量MaxRange 取得C的RGB分量中最大的那个值。将这个最大值赋值给变量maxRGB。 用maxRGB除以MaxRange，得到商，将这个商赋值给变量M 用M乘以255得到结果值之后，取得大于这个结果值的最小整数，然后再将这个最小值除以255之后，再赋值给变量M 最后，用C的各个颜色分量，除以M和MaxRange的乘积，作为最终结果颜色的RGB分量，M就作为最后一个分量。 这些步骤写成shader代码如下:&#xA;float MaxRange = 8; float4 EncodeRGBM(float3 rgb) { float maxRGB = max(rgb.x,max(rgb.g,rgb.b)); float M = maxRGB / MaxRange; M = ceil(M * 255.0) / 255.</description>
+    </item>
+    <item>
+      <title>软渲染示例程序Tiny3D的实现简介</title>
+      <link>http://www.xionggf.com/post/cg/tiny3d_implement_introduce/</link>
+      <pubDate>Wed, 08 Oct 2014 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/cg/tiny3d_implement_introduce/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;绘制图形的代码 Tiny3D核心的图形绘制代码调用栈如下图所示&#xA;Device::DrawBox函数 Tiny3D的核心绘制代码的入口函数Device::DrawBox函数&#xA;// theta mesh的旋转角度 // box_vertices mesh的原始模型顶点数据 void Device::DrawBox(float theta, const T3DVertex* box_vertices) Device::DrawBox函数的实现如下代码所示：&#xA;void Device::DrawBox(float theta, const T3DVertex* box_vertices) { T3DMatrix4X4 m; T3DMatrixMakeRotation(&amp;amp;m, -1.0f, -0.5f, 1.0f, theta); transform_.SetWorldMatrix(m); transform_.Update(); DrawPlane(&amp;amp;box_vertices[0], &amp;amp;box_vertices[1], &amp;amp;box_vertices[2], &amp;amp;box_vertices[3]); DrawPlane(&amp;amp;box_vertices[4], &amp;amp;box_vertices[5], &amp;amp;box_vertices[6], &amp;amp;box_vertices[7]); DrawPlane(&amp;amp;box_vertices[0], &amp;amp;box_vertices[4], &amp;amp;box_vertices[5], &amp;amp;box_vertices[1]); DrawPlane(&amp;amp;box_vertices[1], &amp;amp;box_vertices[5], &amp;amp;box_vertices[6], &amp;amp;box_vertices[2]); DrawPlane(&amp;amp;box_vertices[2], &amp;amp;box_vertices[6], &amp;amp;box_vertices[7], &amp;amp;box_vertices[3]); DrawPlane(&amp;amp;box_vertices[3], &amp;amp;box_vertices[7], &amp;amp;box_vertices[4], &amp;amp;box_vertices[0]); } 步骤就是如下的几步：&#xA;根据传递进来的mesh的旋转角度theta，调用T3DMatrixMakeRotation函数构建world matrix，然后更新到Transform类中去 调用Transform::Update函数，更新world-view-projection matrix，这WVP matrix将在后面的用来变换顶点。 把一个六面体BOX拆分成6个矩形面，调用DrawPlane函数进行绘制。 Device::DrawPlane函数 Device::DrawPlane函数的实现如下代码所示：&#xA;void Device::DrawPlane(const T3DVertex* p1, const T3DVertex* p2, const T3DVertex* p3, const T3DVertex* p4) { T3DVertex _p1 = *p1, _p2 = *p2, _p3 = *p3, _p4 = *p4; _p1.</description>
+    </item>
+  </channel>
+</rss>

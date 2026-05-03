@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle">
+		<meta property="og:title" content="Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle" />
+<meta property="og:description" content="Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/unity3d/multicompile_shaderfeature_shadervariant_assetbundle/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-01-04T13:20:28+08:00" />
+<meta property="article:modified_time" content="2020-01-04T13:20:28+08:00" />
+
+
+		<meta itemprop="name" content="Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle">
+<meta itemprop="description" content="Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle"><meta itemprop="datePublished" content="2020-01-04T13:20:28+08:00" />
+<meta itemprop="dateModified" content="2020-01-04T13:20:28+08:00" />
+<meta itemprop="wordCount" content="322">
+<meta itemprop="keywords" content="Unity3D,shader,ShaderLab," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2020-01-04T13:20:28&#43;08:00">January 04, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#multi_compile编译指示符">multi_compile编译指示符</a></li>
+    <li><a href="#shader_feature编译指示符">shader_feature编译指示符</a></li>
+    <li><a href="#shader-variant和assetbundle">shader variant和assetbundle</a></li>
+    <li><a href="#参考网页">参考网页</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h2 id="multi_compile编译指示符">multi_compile编译指示符</h2>
+<p>multi_compile编译指示符的文档在<a href="https://docs.unity3d.com/Manual/SL-MultipleProgramVariants.html">这里</a>。假如有以下的shader示例语句：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">#pragma</span> multi_compile  _USE_SEMITRANSPARENT _USE_OPAQUE
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pragma</span> multi_compile  _MULTI_RED _MULTI_GREEN _MULTI_BLU
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fixed4 frag (v2f i) : SV_Target
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    fixed4 col = tex2D(_MainTex, i.uv);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#if</span> _MULTI_RED
+</span></span><span style="display:flex;"><span>        col = col * fixed4(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#elif</span> _MULTI_GREEN
+</span></span><span style="display:flex;"><span>        col = col * fixed4(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#elif</span>  _MULTI_BLUE
+</span></span><span style="display:flex;"><span>        col = col * fixed4(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#endif</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#if</span> _USE_SEMITRANSPARENT
+</span></span><span style="display:flex;"><span>        col.a = <span style="color:#ae81ff">0.5</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#elif</span> _USE_OPAQUE
+</span></span><span style="display:flex;"><span>        col.a = <span style="color:#ae81ff">1.0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#endif</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> col;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>那么根据排列组合，就会有 $ 2 \times 3 = 6 $ 种代码段的组合，即分别是  <strong>_USE_SEMITRANSPARENT与_MULTI_RED</strong> ， <strong>_USE_SEMITRANSPARENT与_MULTI_GREEN</strong> ， <strong>_USE_SEMITRANSPARENT与_MULTI_BLUE</strong> ， <strong>_USE_OPAQUE与_MULTI_RED</strong> ， <strong>_USE_OPAQUE与_MULTI_GREEN</strong> ， <strong>_USE_OPAQUE与_MULTI_BLUE</strong>。总得来说，就是各种排列组合对应编译生成的变体， <strong>$\color{#FF0000}{无论有没有被使用上，都会被编译打包到游戏包或者资源包中}$</strong> 。所以 <strong>在运行时</strong> ，可以使用 <strong>Material.EnableKeyword</strong> 和 <strong>Material.DisableKeyword</strong> 的方式去启用禁用各个 <strong>shader variant</strong> 。如下代码段所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> OnGUI()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (GUI.Button(<span style="color:#66d9ef">new</span> Rect(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">150</span>,<span style="color:#ae81ff">50</span>),<span style="color:#e6db74">&#34;Red&#34;</span>))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> mat = m_Renderer.material;
+</span></span><span style="display:flex;"><span>        mat.EnableKeyword(<span style="color:#e6db74">&#34;_MULTI_RED&#34;</span>);
+</span></span><span style="display:flex;"><span>        mat.DisableKeyword(<span style="color:#e6db74">&#34;_MULTI_GREEN&#34;</span>);
+</span></span><span style="display:flex;"><span>        mat.DisableKeyword(<span style="color:#e6db74">&#34;_MULTI_BLUE&#34;</span>);
+</span></span><span style="display:flex;"><span>        m_Renderer.material = mat;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (GUI.Button(<span style="color:#66d9ef">new</span> Rect(<span style="color:#ae81ff">170</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">50</span>), <span style="color:#e6db74">&#34;Green&#34;</span>))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> mat = m_Renderer.material;
+</span></span><span style="display:flex;"><span>        mat.DisableKeyword(<span style="color:#e6db74">&#34;_MULTI_RED&#34;</span>);
+</span></span><span style="display:flex;"><span>        mat.EnableKeyword(<span style="color:#e6db74">&#34;_MULTI_GREEN&#34;</span>);
+</span></span><span style="display:flex;"><span>        mat.DisableKeyword(<span style="color:#e6db74">&#34;_MULTI_BLUE&#34;</span>);
+</span></span><span style="display:flex;"><span>        m_Renderer.material = mat;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (GUI.Button(<span style="color:#66d9ef">new</span> Rect(<span style="color:#ae81ff">340</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">50</span>), <span style="color:#e6db74">&#34;Blue&#34;</span>))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> mat = m_Renderer.material;
+</span></span><span style="display:flex;"><span>        mat.DisableKeyword(<span style="color:#e6db74">&#34;_MULTI_RED&#34;</span>);
+</span></span><span style="display:flex;"><span>        mat.DisableKeyword(<span style="color:#e6db74">&#34;_MULTI_GREEN&#34;</span>);
+</span></span><span style="display:flex;"><span>        mat.EnableKeyword(<span style="color:#e6db74">&#34;_MULTI_BLUE&#34;</span>);
+</span></span><span style="display:flex;"><span>        m_Renderer.material = mat;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (GUI.Button(<span style="color:#66d9ef">new</span> Rect(<span style="color:#ae81ff">510</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">50</span>), <span style="color:#e6db74">&#34;SemiTransparent&#34;</span>))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> mat = m_Renderer.material;
+</span></span><span style="display:flex;"><span>        mat.EnableKeyword(<span style="color:#e6db74">&#34;_USE_SEMITRANSPARENT&#34;</span>);
+</span></span><span style="display:flex;"><span>        mat.DisableKeyword(<span style="color:#e6db74">&#34;_USE_OPAQUE&#34;</span>);
+</span></span><span style="display:flex;"><span>        m_Renderer.material = mat;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (GUI.Button(<span style="color:#66d9ef">new</span> Rect(<span style="color:#ae81ff">680</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">150</span>, <span style="color:#ae81ff">50</span>), <span style="color:#e6db74">&#34;Opaque&#34;</span>))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> mat = m_Renderer.material;
+</span></span><span style="display:flex;"><span>        mat.DisableKeyword(<span style="color:#e6db74">&#34;_USE_SEMITRANSPARENT&#34;</span>);
+</span></span><span style="display:flex;"><span>        mat.EnableKeyword(<span style="color:#e6db74">&#34;_USE_OPAQUE&#34;</span>);
+</span></span><span style="display:flex;"><span>        m_Renderer.material = mat;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>从上面的代码可以看出，凡是属于同一组的，且为互斥关系的各个keyword，在启用某一个keyword的时候，需要同时把其他的keyword给禁用掉。</p>
+<h2 id="shader_feature编译指示符">shader_feature编译指示符</h2>
+<p>shader_feature编译指示符的文档在<a href="https://docs.unity3d.com/Manual/SL-MultipleProgramVariants.html">这里</a>。假如有以下的shader示例语句：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">// 在界面选项中可以决定此keyword是否开启或者关闭，如果开启的话</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 会将此keyword的开启记录在使用了该shader的材质球文件中。如果</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 关闭的话则不会编译这段shader代码进去</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#pragma</span> shader_feature _IS_PURPLE
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#if</span> _IS_PURPLE
+</span></span><span style="display:flex;"><span>    uniform <span style="color:#66d9ef">fixed</span> _IsPurple;
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif</span>
+</span></span><span style="display:flex;"><span>    v2f vert (appdata v)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        v2f o;
+</span></span><span style="display:flex;"><span>        o.vertex = UnityObjectToClipPos(v.vertex);
+</span></span><span style="display:flex;"><span>        o.uv = TRANSFORM_TEX(v.uv, _MainTex);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> o;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    fixed4 frag (v2f i) : SV_Target
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        fixed4 col = tex2D(_MainTex, i.uv);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#if</span> _IS_PURPLE
+</span></span><span style="display:flex;"><span>        col = col * fixed4(<span style="color:#ae81ff">0.5</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0.5</span>,<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> col;
+</span></span><span style="display:flex;"><span>    }
+</span></span></code></pre></div><p>从上面的代码中可以看出， <strong>shader_feature</strong> 在形式上和 <strong>multi_compile</strong> 类似。也都是以类似“宏”的方式去控制某个语句是否生效。但通常， <strong>shader_feature</strong> 中所声明的那个keyword，一般都在材质/shader的inspector面板中，在 <strong>预编辑阶段</strong> 中指定其启用或者不启用，将其保存在一个材质球文件中。而能否在运行时使用Material.EnableKeyword、Material.DisableKeyword启用禁用某个关键字，则有以下两种情况：</p>
+<p>假定有两个材质球文件 <strong>UseShaderFeaturePurple.mat</strong> ， <strong>UseShaderFeature.mat</strong>。这两个材质球都使用了 <strong>同一个</strong> shader文件。UseShaderFeaturePurple材质球在编辑阶段，启用了 <strong>_IS_PURPLE</strong> keyword，UseShaderFeature材质球没有启用 <strong>_IS_PURPLE</strong> keyword。那么在运行时：</p>
+<blockquote>
+<ol>
+<li>在 <strong>编辑器模式</strong> 中， <strong>只要有</strong> UseShaderFeaturePurple材质球，那么使用了UseShaderFeature材质球的那个game object，可以在运行时，通过使用 <strong>Marterial.EnableKeyword</strong> 方法，使得UseShaderFeature材质球的shader代码，也能执行启用了 <strong>_IS_PURPLE</strong>  keyword的代码段。</li>
+<li>在 <strong>非编辑器模式</strong>中， <strong>就算</strong> 有UseShaderFeaturePurple材质球，只要该材质球未被使用上，就不会被打包进游戏包中，这时候如果使用了UseShaderFeature材质球的那个game object，使用Material.EnableKeyword方法 <strong>也是无法启用</strong> 这个keyword。</li>
+</ol>
+</blockquote>
+<p>在编辑器和在独立运行包中的差异，可以参阅<a href="https://github.com/kumakoko/MultiCompileAndShaderFeature">示例工程</a>。工程的编译好的windows版程序在<a href="/files/UseShaderFeature.7z">这里</a>下载</p>
+<h2 id="shader-variant和assetbundle">shader variant和assetbundle</h2>
+<p>从上一节对shader_feature的介绍可以看到，为了尽可能减少shader代码的体积，shader_feature的原则就是能够stripping掉的shader代码，就会stripping掉它。所以在打包带有shader_feature的代码，尤其是使用assetbundle的方式时候，会经常出问题。据Unity3D研发团队介绍，在未引入<a href="https://docs.unity3d.com/ScriptReference/ShaderVariantCollection.html?_ga=2.26374778.655300204.1578111125-2046294295.1576392735">ShaderVariantCollection</a>机制之前，一个包含了shader_feature编译指示符的shader，要打包在assetbundle里面且被正确的引用，需要<a href="https://support.unity3d.com/hc/en-us/articles/115001971483-How-to-use-Shader-Features-with-Asset-Bundles-">include all the materials that use a specific shader in the same AssetBundle.</a>。即如果某材质球用到了这个有shader_feature的shader的话，这shader和这材质球就必须要打在同一个assetbundle里。显然这是不利于分包和资源组织的。Unity3D引入了ShaderVariantCollection解决了此问题。</p>
+<p>在引入ShaderVariantCollection之后，可以一定程度上解决这个问题。使用ShaderVariantCollection解决问题的步骤如下：</p>
+<blockquote>
+<ol>
+<li>创建一个ShaderVariantCollection文件</li>
+<li>将包含有shader_featured的shader文件添加到ShaderVariantCollection文件中的集合里</li>
+<li>向ShaderVariantCollection文件中的集合添加变体标签(variant tags)</li>
+<li>ShaderVariantCollection文件和记录在它里面的shader文件，打包在同一个assetbundle中</li>
+</ol>
+</blockquote>
+<p>Unity3D研发团队提供了一个演示使用ShaderVariantCollection文件的视频，点击<a href="/files/shaderFeatureVideo3.mp4">下载</a>。
+关于更详尽的shader variant及shader打包的规则， <strong>Nicholas10128</strong> 在github上有一份比较详尽的<a href="https://github.com/Nicholas10128/AAAResearch/blob/master/Experiences/Shader%E6%89%93%E5%8C%85%E6%A8%A1%E5%9D%97/Shader%E6%89%93%E5%8C%85%E6%A8%A1%E5%9D%97.md">文档</a>。</p>
+<h2 id="参考网页">参考网页</h2>
+<p><a href="https://support.unity3d.com/hc/en-us/articles/115001971483-How-to-use-Shader-Features-with-Asset-Bundles-">How To Use Shader Features With Asset Bundles?</a></p>
+<p><a href="https://www.cnblogs.com/Esfog/p/Shader_Variant.html">UnityShaderVariant的一些探究心得</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/68888831">知乎 Shader变体收集与打包</a></p>
+<p><a href="https://answer.uwa4d.com/question/595c9ec472c96d467bd7cfad/">使用shader_feature的shader在bundle中不起作用？</a></p>
+<p><a href="http://qiankanglai.me/2018/08/06/shadervariantcollection/index.html">ShaderVariantCollection解决shader_feature丢失</a></p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
+			<a class="entry__tag btn" href="/tags/shader/">Shader</a>
+			<a class="entry__tag btn" href="/tags/shaderlab/">ShaderLab</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_shader_optimization/">Unity3D shader优化技巧集合</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/my_books/u3d_shader_annotation/">《Unity3D内建着色器源码剖析》</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/editor/model_import_setting_wnd_model_tab/">Unity3D的Model Import Settings window - Model tab</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/update_fixedupdate_lateupdate/">Update、FixedUpdate、LateUpdate函数，定时器和帧速率</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/mac_ios/high_ver_sdk_for_low_ver_xcode/">在低版本中的XCode中使用高版本的iOS SDK</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

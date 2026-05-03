@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>深度探索DxFramework 4-1 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="深度探索DxFramework">
+		<meta property="og:title" content="深度探索DxFramework 4-1" />
+<meta property="og:description" content="深度探索DxFramework" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_4_1/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2007-10-15T18:08:30+08:00" />
+<meta property="article:modified_time" content="2007-10-15T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content="深度探索DxFramework 4-1">
+<meta itemprop="description" content="深度探索DxFramework"><meta itemprop="datePublished" content="2007-10-15T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2007-10-15T18:08:30+08:00" />
+<meta itemprop="wordCount" content="275">
+<meta itemprop="keywords" content="DxFramework," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">深度探索DxFramework 4-1</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2007-10-15T18:08:30&#43;08:00">October 15, 2007</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">深度探索DxFramework 4-1</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#41-demo实现的功能点和整体架构">4.1 Demo实现的功能点和整体架构</a>
+      <ul>
+        <li><a href="#411-实现的功能点">4.1.1 实现的功能点</a></li>
+        <li><a href="#412-demo的整体架构">4.1.2 Demo的整体架构</a></li>
+      </ul>
+    </li>
+    <li><a href="#42-demo实例类的定义和初始化">4.2 Demo实例类的定义和初始化</a></li>
+    <li><a href="#43-对外设输入的响应">4.3 对外设输入的响应</a></li>
+    <li><a href="#44-更新各属性状态">4.4 更新各属性状态</a></li>
+    <li><a href="#45-渲染">4.5 渲染</a></li>
+    <li><a href="#46-本demo的技术点总结">4.6 本Demo的技术点总结</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h1 id="第4章-初始锋芒-剖析demoa">第4章 初始锋芒 剖析DemoA</h1>
+<h2 id="41-demo实现的功能点和整体架构">4.1 Demo实现的功能点和整体架构</h2>
+<h3 id="411-实现的功能点">4.1.1 实现的功能点</h3>
+<h3 id="412-demo的整体架构">4.1.2 Demo的整体架构</h3>
+<h2 id="42-demo实例类的定义和初始化">4.2 Demo实例类的定义和初始化</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C_DemoA</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> C_GameState
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    C_DemoA();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>C_DemoA();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span>    <span style="color:#a6e22e">Input</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span>    <span style="color:#a6e22e">Update</span>();       
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span>    <span style="color:#a6e22e">Render2D</span>(); 
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>    C_Sprite<span style="color:#f92672">*</span>    p_Background;    <span style="color:#75715e">//背景图片
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    C_Sprite<span style="color:#f92672">*</span>    p_Box;            <span style="color:#75715e">//用来演示的小方盒
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 各种dxfrramework支持的图片格式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    C_Sprite<span style="color:#f92672">*</span>    p_Bmp8;            <span style="color:#75715e">//8位bmp格式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    C_Sprite<span style="color:#f92672">*</span>    p_Bmp24;        <span style="color:#75715e">//24位bmp格式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    C_Sprite<span style="color:#f92672">*</span>    p_Png8;            <span style="color:#75715e">//8位png格式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    C_Sprite<span style="color:#f92672">*</span>    p_Png24;        <span style="color:#75715e">//24位png格式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    C_Sprite<span style="color:#f92672">*</span>    p_Png32;        <span style="color:#75715e">//32位png格式
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    DVECTOR2    translation;            <span style="color:#75715e">// box的屏幕坐标
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span>            alpha;                    <span style="color:#75715e">// box的透明度
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> VELOCITY;            <span style="color:#75715e">// box的移动速度，为常量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> ANIMATION_SPEED;    <span style="color:#75715e">// box的动画变化速度，为常量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>C_DemoA<span style="color:#f92672">::</span>C_DemoA() 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">255</span>;
+</span></span><span style="display:flex;"><span>    p_Background <span style="color:#f92672">=</span>  <span style="color:#66d9ef">new</span> C_Sprite(_T(<span style="color:#e6db74">&#34;demoa_background.png&#34;</span>));     
+</span></span><span style="display:flex;"><span>    p_Box <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> C_Sprite(_T(<span style="color:#e6db74">&#34;box-3-2-2.png&#34;</span>));
+</span></span><span style="display:flex;"><span>    translation <span style="color:#f92672">=</span> DVECTOR2(<span style="color:#ae81ff">400</span>,<span style="color:#ae81ff">300</span>) <span style="color:#f92672">-</span> p_Box<span style="color:#f92672">-&gt;</span>GetCenter();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//载入DxFramework所能支持的不同格式的图片，创建精灵
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    p_Bmp8    <span style="color:#f92672">=</span>  <span style="color:#66d9ef">new</span> C_Sprite(_T(<span style="color:#e6db74">&#34;bitmap8.bmp&#34;</span>));
+</span></span><span style="display:flex;"><span>    p_Bmp24 <span style="color:#f92672">=</span>  <span style="color:#66d9ef">new</span> C_Sprite(_T(<span style="color:#e6db74">&#34;bitmap24.bmp&#34;</span>));
+</span></span><span style="display:flex;"><span>    p_Png8    <span style="color:#f92672">=</span>  <span style="color:#66d9ef">new</span> C_Sprite(_T(<span style="color:#e6db74">&#34;png8.png&#34;</span>));
+</span></span><span style="display:flex;"><span>    p_Png24 <span style="color:#f92672">=</span>  <span style="color:#66d9ef">new</span> C_Sprite(_T(<span style="color:#e6db74">&#34;png24.png&#34;</span>));
+</span></span><span style="display:flex;"><span>    p_Png32 <span style="color:#f92672">=</span>  <span style="color:#66d9ef">new</span> C_Sprite(_T(<span style="color:#e6db74">&#34;png32.png&#34;</span>));
+</span></span><span style="display:flex;"><span>    gp_Timer<span style="color:#f92672">-&gt;</span>Reset();    <span style="color:#75715e">//把计时器清零，准备用来对小方盒产生动画效果
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//因为使用了背景图片，所以不必每帧都清空颜色缓冲区和z缓冲区
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    gp_View<span style="color:#f92672">-&gt;</span>SetClear(false);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="43-对外设输入的响应">4.3 对外设输入的响应</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_DemoA<span style="color:#f92672">::</span>Input() 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 按ESC键退出demo，返回主菜单
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_ESCAPE)<span style="color:#f92672">==</span> BUTTON_PRESSED){
+</span></span><span style="display:flex;"><span>        gp_Model<span style="color:#f92672">-&gt;</span>ChangeState(MENU);
+</span></span><span style="display:flex;"><span>    } 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 按F2，F3键切换到demo B，demo C
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_F2)<span style="color:#f92672">==</span> BUTTON_PRESSED){
+</span></span><span style="display:flex;"><span>        gp_Model<span style="color:#f92672">-&gt;</span>ChangeState(DEMOB);
+</span></span><span style="display:flex;"><span>    }   
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_F3)<span style="color:#f92672">==</span> BUTTON_PRESSED){
+</span></span><span style="display:flex;"><span>        gp_Model<span style="color:#f92672">-&gt;</span>ChangeState(DEMOC);
+</span></span><span style="display:flex;"><span>    }   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//按上下左右箭头键，向上，向下，向左，向右移动小方盒
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">double</span> increment <span style="color:#f92672">=</span> VELOCITY <span style="color:#f92672">*</span> gp_Timer<span style="color:#f92672">-&gt;</span>GetElapsed();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_UP) <span style="color:#f92672">==</span>  BUTTON_DOWN) 
+</span></span><span style="display:flex;"><span>        translation.y <span style="color:#f92672">-=</span> increment;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_DOWN) <span style="color:#f92672">==</span>  BUTTON_DOWN)
+</span></span><span style="display:flex;"><span>        translation.y <span style="color:#f92672">+=</span> increment;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_LEFT) <span style="color:#f92672">==</span>  BUTTON_DOWN)
+</span></span><span style="display:flex;"><span>        translation.x <span style="color:#f92672">-=</span> increment;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_RIGHT) <span style="color:#f92672">==</span>  BUTTON_DOWN)
+</span></span><span style="display:flex;"><span>        translation.x <span style="color:#f92672">+=</span> increment;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="44-更新各属性状态">4.4 更新各属性状态</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_DemoA<span style="color:#f92672">::</span>Update() 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//把当前时刻除以动画显示速度，得到余数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">double</span> tempTime <span style="color:#f92672">=</span> gp_Timer<span style="color:#f92672">-&gt;</span>TimeMod(ANIMATION_SPEED);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果等于0，表示到了切换帧的时间了。把当前显示的动画帧切换到其他动画帧去
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(tempTime <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>){
+</span></span><span style="display:flex;"><span>        p_Box<span style="color:#f92672">-&gt;</span>Animate();
+</span></span><span style="display:flex;"><span>        alpha <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    }<span style="color:#66d9ef">else</span>{
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 如果不等于0的话，就用余数除以动画显示速度，乘以圆周率，做正弦操作
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// 使得alpha值产生周期性重复变化的效果
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        alpha <span style="color:#f92672">=</span> (<span style="color:#66d9ef">int</span>)(<span style="color:#ae81ff">255</span> <span style="color:#f92672">*</span> sin(D3DX_PI <span style="color:#f92672">*</span> tempTime<span style="color:#f92672">/</span>ANIMATION_SPEED));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 对小方盒的坐标做检查，放置小方盒超出屏幕范围
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (translation.x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) 
+</span></span><span style="display:flex;"><span>        translation.x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (translation.x <span style="color:#f92672">&gt;</span> (C_View<span style="color:#f92672">::</span>SCREEN_WIDTH<span style="color:#f92672">-</span>p_Box<span style="color:#f92672">-&gt;</span>GetWidth())) 
+</span></span><span style="display:flex;"><span>        translation.x <span style="color:#f92672">=</span> C_View<span style="color:#f92672">::</span>SCREEN_WIDTH<span style="color:#f92672">-</span>p_Box<span style="color:#f92672">-&gt;</span>GetWidth();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (translation.y <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) 
+</span></span><span style="display:flex;"><span>        translation.y <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (translation.y <span style="color:#f92672">&gt;</span> (C_View<span style="color:#f92672">::</span>SCREEN_HEIGHT<span style="color:#f92672">-</span>p_Box<span style="color:#f92672">-&gt;</span>GetHeight())
+</span></span><span style="display:flex;"><span>        translation.y <span style="color:#f92672">=</span> C_View<span style="color:#f92672">::</span>SCREEN_HEIGHT<span style="color:#f92672">-</span>p_Box<span style="color:#f92672">-&gt;</span>GetHeight();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="45-渲染">4.5 渲染</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_DemoA<span style="color:#f92672">::</span>Render2D() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//渲染背景
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    p_Background<span style="color:#f92672">-&gt;</span>Render2D();     
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    p_Box<span style="color:#f92672">-&gt;</span>Render2D( translation, DVECTOR2(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>), <span style="color:#ae81ff">0</span>, DVECTOR2(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>                     D3DCOLOR_ARGB(alpha,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>,<span style="color:#ae81ff">255</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//渲染不同格式的图形
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    p_Bmp8<span style="color:#f92672">-&gt;</span>Render2D(DVECTOR2(<span style="color:#ae81ff">459</span>,<span style="color:#ae81ff">461</span>));
+</span></span><span style="display:flex;"><span>    p_Bmp24<span style="color:#f92672">-&gt;</span>Render2D(DVECTOR2(<span style="color:#ae81ff">523</span>,<span style="color:#ae81ff">461</span>));
+</span></span><span style="display:flex;"><span>    p_Png8<span style="color:#f92672">-&gt;</span>Render2D(DVECTOR2(<span style="color:#ae81ff">587</span>,<span style="color:#ae81ff">461</span>));
+</span></span><span style="display:flex;"><span>    p_Png24<span style="color:#f92672">-&gt;</span>Render2D(DVECTOR2(<span style="color:#ae81ff">651</span>,<span style="color:#ae81ff">461</span>));
+</span></span><span style="display:flex;"><span>    p_Png32<span style="color:#f92672">-&gt;</span>Render2D(DVECTOR2(<span style="color:#ae81ff">715</span>,<span style="color:#ae81ff">461</span>));
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 显示当前的alpha值
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    gp_Model<span style="color:#f92672">-&gt;</span>GetFont()<span style="color:#f92672">-&gt;</span>Render2D(_T(<span style="color:#e6db74">&#34;Alpha Value = &#34;</span>)<span style="color:#f92672">+</span> 
+</span></span><span style="display:flex;"><span>                       toTString(alpha),DVECTOR2(<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">350</span>), BLACK);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="46-本demo的技术点总结">4.6 本Demo的技术点总结</h2>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/dxframework/">DxFramework</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_3_2/">深度探索DxFramework 3-2</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_3_1/">深度探索DxFramework 3-1</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_2_2/">深度探索DxFramework 2-2</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_2_1/">深度探索DxFramework 2-1</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_1/">深度探索DxFramework 1</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

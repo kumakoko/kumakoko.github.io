@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>一些实用的正则表达式 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="一些实用的正则表达式">
+		<meta property="og:title" content="一些实用的正则表达式" />
+<meta property="og:description" content="一些实用的正则表达式" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/misc/useful_regex/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-10-22T23:21:49+08:00" />
+<meta property="article:modified_time" content="2024-10-22T23:21:49+08:00" />
+
+
+		<meta itemprop="name" content="一些实用的正则表达式">
+<meta itemprop="description" content="一些实用的正则表达式"><meta itemprop="datePublished" content="2024-10-22T23:21:49+08:00" />
+<meta itemprop="dateModified" content="2024-10-22T23:21:49+08:00" />
+<meta itemprop="wordCount" content="357">
+<meta itemprop="keywords" content="Misc," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">一些实用的正则表达式</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2024-10-22T23:21:49&#43;08:00">October 22, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/misc/" rel="category">Misc</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/misc/" rel="tag">Misc</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">一些实用的正则表达式</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#生成一个正则表达式把每一个中文自然段落前的空格都去掉">生成一个正则表达式，把每一个中文自然段落前的空格都去掉</a></li>
+    <li><a href="#生成一个正则表达式删除空白行纯空格符的行也算空白行">生成一个正则表达式，删除空白行，纯空格符的行也算空白行</a>
+      <ul>
+        <li><a href="#解释">解释：</a></li>
+        <li><a href="#使用方式">使用方式：</a></li>
+        <li><a href="#进阶优化版">进阶优化版：</a></li>
+        <li><a href="#不同场景的适配">不同场景的适配：</a></li>
+        <li><a href="#注意事项">注意事项：</a></li>
+      </ul>
+    </li>
+    <li><a href="#word中把空白行删除的方法是什么">word中把空白行删除的方法是什么</a>
+      <ul>
+        <li><a href="#方法-1使用查找替换推荐">方法 1：使用查找替换（推荐）</a></li>
+        <li><a href="#方法-2显示隐藏符号后手动删除">方法 2：显示隐藏符号后手动删除</a></li>
+        <li><a href="#方法-3通过段落设置过滤">方法 3：通过段落设置过滤</a></li>
+        <li><a href="#进阶技巧使用通配符支持复杂匹配">进阶技巧：使用通配符（支持复杂匹配）</a></li>
+        <li><a href="#-注意事项">⚠️ 注意事项</a></li>
+      </ul>
+    </li>
+    <li><a href="#生成一个通配符在word中把每一个中文自然段落前的空格都去掉">生成一个通配符，在word中，把每一个中文自然段落前的空格都去掉。</a>
+      <ul>
+        <li><a href="#最终解决方案"><strong>最终解决方案</strong></a></li>
+        <li><a href="#分步操作指南"><strong>分步操作指南</strong></a></li>
+        <li><a href="#原理解释"><strong>原理解释</strong></a></li>
+        <li><a href="#实际效果演示"><strong>实际效果演示</strong></a></li>
+        <li><a href="#注意事项-1"><strong>注意事项</strong></a></li>
+        <li><a href="#失败排查表"><strong>失败排查表</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h2 id="生成一个正则表达式把每一个中文自然段落前的空格都去掉">生成一个正则表达式，把每一个中文自然段落前的空格都去掉</h2>
+<p>可以使用以下正则表达式来去除每个中文自然段落前的空格：</p>
+<p><strong>正则表达式：</strong></p>
+<pre tabindex="0"><code class="language-regex" data-lang="regex">^[ \t　]+
+</code></pre><p><strong>替换为：</strong>
+空字符串（即删除匹配到的内容）</p>
+<p><strong>解释：</strong></p>
+<ol>
+<li><code>^</code> 匹配行的开头（在多行模式下）。</li>
+<li><code>[ \t　]+</code> 匹配一个或多个：
+<ul>
+<li>半角空格（<code> </code>）</li>
+<li>制表符（<code>\t</code>）</li>
+<li>全角空格（<code>　</code>，Unicode <code>\u3000</code>）</li>
+</ul>
+</li>
+</ol>
+<p><strong>使用方式：</strong></p>
+<ul>
+<li><strong>启用多行模式</strong>（<code>/m</code> 标志），使 <code>^</code> 能匹配每行的开头。</li>
+<li><strong>全局匹配</strong>（<code>/g</code> 标志），处理所有符合条件的空格。</li>
+</ul>
+<p><strong>示例（JavaScript）：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">text</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`    这是一个前面有半角空格的段落。
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">　这是一个前面有全角空格的段落。
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    Another mixed space paragraph.`</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">text</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^[ \t　]+/gm</span>, <span style="color:#e6db74">&#39;&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">result</span>);
+</span></span></code></pre></div><p><strong>输出：</strong></p>
+<pre tabindex="0"><code>这是一个前面有半角空格的段落。
+这是一个前面有全角空格的段落。
+Another mixed space paragraph.
+</code></pre><p><strong>注意事项：</strong></p>
+<ol>
+<li>该正则表达式会删除<strong>每行开头</strong>的所有空格（包括全角/半角），适用于典型的首行缩进场景。</li>
+<li>如果段落中存在需要保留的<strong>非开头空格</strong>（如英文单词间的空格），不会被误删。</li>
+<li>如果文本包含代码块等需要保留缩进的结构，建议先提取自然段落再处理。</li>
+</ol>
+<hr>
+<h2 id="生成一个正则表达式删除空白行纯空格符的行也算空白行">生成一个正则表达式，删除空白行，纯空格符的行也算空白行</h2>
+<p>可以使用以下正则表达式删除所有空白行（包括仅含空格/制表符等空白字符的行）：</p>
+<p><strong>正则表达式：</strong></p>
+<pre tabindex="0"><code class="language-regex" data-lang="regex">^\s*$
+</code></pre><p><strong>替换为：</strong>
+空字符串（即删除匹配到的整行）</p>
+<hr>
+<h3 id="解释">解释：</h3>
+<ol>
+<li><code>^</code> 匹配行的开头（需启用多行模式）</li>
+<li><code>\s*</code> 匹配零个或多个空白字符（包括：空格、制表符\t、换页符等）</li>
+<li><code>$</code> 匹配行的结尾（需启用多行模式）</li>
+</ol>
+<hr>
+<h3 id="使用方式">使用方式：</h3>
+<ul>
+<li><strong>启用多行模式</strong> (<code>/m</code> 标志)，使 <code>^</code> 和 <code>$</code> 能匹配每行的开头和结尾</li>
+<li><strong>全局匹配</strong> (<code>/g</code> 标志)，处理所有符合条件的行</li>
+</ul>
+<p><strong>示例（JavaScript）：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">text</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`第一段内容（非空白行）
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">    　  （纯空格/全角空格行）
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">\t\t（制表符行）
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">（空行）`</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">result</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">text</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/^\s*$/gm</span>, <span style="color:#e6db74">&#39;&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">result</span>);
+</span></span></code></pre></div><p><strong>输出结果：</strong></p>
+<pre tabindex="0"><code>第一段内容（非空白行）
+（空行）
+</code></pre><hr>
+<h3 id="进阶优化版">进阶优化版：</h3>
+<p>如果希望同时删除连续的多个空白行（将多个连续空白行合并为一个空行）：</p>
+<pre tabindex="0"><code class="language-regex" data-lang="regex">^\s*$\n+
+</code></pre><p>替换为：</p>
+<pre tabindex="0"><code class="language-regex" data-lang="regex">\n
+</code></pre><hr>
+<h3 id="不同场景的适配">不同场景的适配：</h3>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>正则表达式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>删除所有空白行</td>
+<td><code>^\s*$</code></td>
+<td>包括纯空格/制表符行</td>
+</tr>
+<tr>
+<td>保留至少一个空行</td>
+<td><code>^\s*$(?=\n^\s*$)</code></td>
+<td>将多个连续空白行合并为一个空行</td>
+</tr>
+<tr>
+<td>处理 CRLF 换行符（Windows）</td>
+<td><code>^\s*\r?\n</code></td>
+<td>适配 <code>\r\n</code> 换行符</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="注意事项">注意事项：</h3>
+<ol>
+<li>在 VSCode、Sublime 等编辑器中直接使用 <code>^\s*$</code> 即可</li>
+<li>在 Notepad++ 中需使用 <code>^\s+$\r?\n</code> 来包含换行符</li>
+<li>如果文件最后一行是空白行，可能需要额外处理文件末尾的空行</li>
+</ol>
+<hr>
+<h2 id="word中把空白行删除的方法是什么">word中把空白行删除的方法是什么</h2>
+<p>在 Microsoft Word 中删除空白行（包括仅含空格/制表符的&quot;伪空白行&quot;），可以通过以下 3 种方法实现：</p>
+<hr>
+<h3 id="方法-1使用查找替换推荐">方法 1：使用查找替换（推荐）</h3>
+<p><strong>适用场景</strong>：快速批量删除所有空白行</p>
+<ol>
+<li>按 <code>Ctrl + H</code> 打开替换对话框</li>
+<li>在 <strong>查找内容</strong> 输入：
+<pre tabindex="0"><code>^p^p
+</code></pre>（<code>^p</code> 表示段落标记/换行符）</li>
+<li>在 <strong>替换为</strong> 输入：
+<pre tabindex="0"><code>^p
+</code></pre></li>
+<li>点击 <strong>全部替换</strong>，<strong>重复操作</strong>直到提示&quot;已完成 0 处替换&quot;</li>
+<li>继续处理含空格的&quot;伪空白行&quot;：
+<ul>
+<li>在 <strong>查找内容</strong> 输入：
+<pre tabindex="0"><code>^w^p
+</code></pre>（<code>^w</code> 表示任意空白字符，包括空格/制表符）</li>
+<li><strong>替换为</strong> 留空</li>
+<li>点击 <strong>全部替换</strong></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="方法-2显示隐藏符号后手动删除">方法 2：显示隐藏符号后手动删除</h3>
+<p><strong>适用场景</strong>：少量空白行处理</p>
+<ol>
+<li>点击 <strong>开始</strong> 选项卡 -&gt; <strong>¶</strong> 显示/隐藏编辑标记</li>
+<li>识别以下两种空白行：
+<ul>
+<li><strong>纯空白行</strong>：连续两个 <code>¶</code> 符号</li>
+<li><strong>伪空白行</strong>：行内有空格 <code>·</code> 或制表符 <code>→</code>，结尾带 <code>¶</code></li>
+</ul>
+</li>
+<li>手动删除这些行</li>
+</ol>
+<hr>
+<h3 id="方法-3通过段落设置过滤">方法 3：通过段落设置过滤</h3>
+<p><strong>适用场景</strong>：保留段落结构的同时压缩空白</p>
+<ol>
+<li>全选文本 (<code>Ctrl + A</code>)</li>
+<li>右键选择 <strong>段落</strong></li>
+<li>在 <strong>间距</strong> 部分：
+<ul>
+<li>段前间距：设置为 <code>0 行</code></li>
+<li>段后间距：设置为 <code>0 行</code></li>
+<li>行距：选择 <strong>单倍行距</strong></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="进阶技巧使用通配符支持复杂匹配">进阶技巧：使用通配符（支持复杂匹配）</h3>
+<ol>
+<li>按 <code>Ctrl + H</code> 打开替换对话框</li>
+<li>勾选 <strong>使用通配符</strong></li>
+<li>查找内容输入：
+<pre tabindex="0"><code>[ ]{1,}^13
+</code></pre>（<code>[ ]</code> 表示任意空格，<code>{1,}</code> 表示至少 1 个，<code>^13</code> 是段落标记的 ASCII 码）</li>
+<li>替换为输入：
+<pre tabindex="0"><code>^p
+</code></pre></li>
+<li>点击 <strong>全部替换</strong></li>
+</ol>
+<hr>
+<h3 id="-注意事项">⚠️ 注意事项</h3>
+<ol>
+<li>操作前建议 <strong>备份文档</strong></li>
+<li>如果处理网页复制的文本，建议先执行 <code>Ctrl + A</code> -&gt; <code>Ctrl + Q</code> 清除格式</li>
+<li>不同版本 Word 的段落标记可能有差异：
+<ul>
+<li>Windows：<code>^p</code>（CR+LF）</li>
+<li>macOS：<code>^r</code>（CR）</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="生成一个通配符在word中把每一个中文自然段落前的空格都去掉">生成一个通配符，在word中，把每一个中文自然段落前的空格都去掉。</h2>
+<p>在 Microsoft Word 中使用通配符删除中文段落前的空格，可按照以下步骤操作：</p>
+<hr>
+<h3 id="最终解决方案"><strong>最终解决方案</strong></h3>
+<p><strong>通配符表达式：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>(^13|^)([ 　]{1,})([一-鿿])
+</span></span></code></pre></div><p><strong>替换为：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>\1\3
+</span></span></code></pre></div><hr>
+<h3 id="分步操作指南"><strong>分步操作指南</strong></h3>
+<ol>
+<li>
+<p><strong>打开替换对话框</strong><br>
+按下 <code>Ctrl + H</code> 打开查找和替换窗口。</p>
+</li>
+<li>
+<p><strong>启用通配符模式</strong></p>
+<ul>
+<li>点击左下角 <strong>更多</strong> → 勾选 <strong>使用通配符</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>输入表达式</strong></p>
+<ul>
+<li><strong>查找内容</strong>：<code>(&lt;^13|^)([ 　]{1,})([一-鿿])</code><br>
+（直接复制以下内容到输入框，确保包含半角空格和全角空格）
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>(^13|^)([ 　]{1,})([一-鿿])
+</span></span></code></pre></div></li>
+<li><strong>替换为</strong>：<code>\1\3</code></li>
+</ul>
+</li>
+<li>
+<p><strong>执行替换</strong><br>
+点击 <strong>全部替换</strong>，即可删除所有中文段落前的空格。</p>
+</li>
+</ol>
+<hr>
+<h3 id="原理解释"><strong>原理解释</strong></h3>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>`(^13</td>
+<td>^)`</td>
+</tr>
+<tr>
+<td><code>([ 　]{1,})</code></td>
+<td>匹配 1 个及以上半角空格/全角空格（需手动输入这两种空格），对应 <code>\2</code></td>
+</tr>
+<tr>
+<td><code>([一-鿿])</code></td>
+<td>匹配任意中文字符（Unicode 范围），对应替换结果的 <code>\3</code></td>
+</tr>
+</tbody>
+</table>
+<p>通过保留段落标记/文档开头 (<code>\1</code>) 和首个中文字符 (<code>\3</code>)，精准移除中间的空格。</p>
+<hr>
+<h3 id="实际效果演示"><strong>实际效果演示</strong></h3>
+<p><strong>替换前：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>^13    这是带半角空格的段落
+</span></span><span style="display:flex;"><span>　　^13　　这是带全角空格的段落
+</span></span><span style="display:flex;"><span>    文档开头的空格段落
+</span></span></code></pre></div><p><strong>替换后：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>^13这是带半角空格的段落
+</span></span><span style="display:flex;"><span>^13这是带全角空格的段落
+</span></span><span style="display:flex;"><span>文档开头的空格段落
+</span></span></code></pre></div><hr>
+<h3 id="注意事项-1"><strong>注意事项</strong></h3>
+<ol>
+<li>
+<p><strong>空格输入技巧</strong></p>
+<ul>
+<li>在「查找内容」中需手动输入：
+<ul>
+<li>半角空格：按键盘空格键</li>
+<li>全角空格：切换中文输入法，按 <code>Shift + 空格</code> 后输入</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>兼容性验证</strong><br>
+此方案适用于：</p>
+<ul>
+<li>Microsoft Word 2010 及以上版本</li>
+<li>中英文混合排版场景（不会误删英文单词间的空格）</li>
+</ul>
+</li>
+<li>
+<p><strong>进阶扩展</strong><br>
+如需同时删除段首的 <strong>数字/字母前空格</strong>，可将 <code>[一-鿿]</code> 改为 <code>[一-鿿a-zA-Z0-9]</code></p>
+</li>
+</ol>
+<hr>
+<h3 id="失败排查表"><strong>失败排查表</strong></h3>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>提示“未找到搜索项”</td>
+<td>未正确输入全角空格</td>
+<td>在查找框中手动输入全角空格</td>
+</tr>
+<tr>
+<td>替换后段落标记丢失</td>
+<td>错误删除 <code>^13</code></td>
+<td>检查表达式中的 `(^13</td>
+</tr>
+<tr>
+<td>中文后的空格未被删除</td>
+<td>未启用通配符模式</td>
+<td>勾选「使用通配符」</td>
+</tr>
+</tbody>
+</table>
+<p>通过此方案，可高效解决中文段落首行缩进清理问题。</p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/misc/">MISC</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

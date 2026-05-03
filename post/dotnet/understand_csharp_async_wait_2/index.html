@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Understanding C# async / await 第2章 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="C#中的async和await">
+		<meta property="og:title" content="Understanding C# async / await 第2章" />
+<meta property="og:description" content="C#中的async和await" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/dotnet/understand_csharp_async_wait_2/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2020-11-21T18:08:30+08:00" />
+<meta property="article:modified_time" content="2020-11-21T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content="Understanding C# async / await 第2章">
+<meta itemprop="description" content="C#中的async和await"><meta itemprop="datePublished" content="2020-11-21T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2020-11-21T18:08:30+08:00" />
+<meta itemprop="wordCount" content="407">
+<meta itemprop="keywords" content=".NET," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Understanding C# async / await 第2章</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2020-11-21T18:08:30&#43;08:00">November 21, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">Understanding C# async / await 第2章</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#理解-c-的-async--await-2awaitable-awaiter-模式"><strong>理解 C# 的 async / await (2)：Awaitable-Awaiter 模式</strong></a>
+      <ul>
+        <li><a href="#1-什么是-awaitable"><strong>1. 什么是 Awaitable？</strong></a></li>
+        <li><a href="#2-awaitable-awaiter-模式"><strong>2. Awaitable-Awaiter 模式</strong></a></li>
+        <li><a href="#3-缺失的-iawaitable--iawaiter-接口"><strong>3. 缺失的 IAwaitable / IAwaiter 接口</strong></a></li>
+        <li><a href="#4-实现-awaitable--awaiter"><strong>4. 实现 Awaitable / Awaiter</strong></a></li>
+        <li><a href="#5-使用内置的-awaitable--awaiter"><strong>5. 使用内置的 Awaitable / Awaiter</strong></a></li>
+        <li><a href="#6-使用-rxreactive-extensions"><strong>6. 使用 Rx（Reactive Extensions）</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#总结"><strong>总结</strong></a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><a href="https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-1-compilation">Understanding C# async / await 第1章原文地址</a></p>
+<p><a href="https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-2-awaitable-awaiter-pattern">Understanding C# async / await 第2章原文地址</a></p>
+<p><a href="https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-3-runtime-context">Understanding C# async / await 第3章原文地址</a></p>
+<hr>
+<h2 id="理解-c-的-async--await-2awaitable-awaiter-模式"><strong>理解 C# 的 async / await (2)：Awaitable-Awaiter 模式</strong></h2>
+<h3 id="1-什么是-awaitable"><strong>1. 什么是 Awaitable？</strong></h3>
+<p>在 C# 中，任何具有 <code>GetAwaiter()</code> 方法的对象都是 <strong>awaitable</strong> 的。<code>Task</code> 是最常见的 awaitable 类型，但其他类型也可以实现这一模式。例如：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>Task&lt;<span style="color:#66d9ef">int</span>&gt; task = <span style="color:#66d9ef">new</span> Task&lt;<span style="color:#66d9ef">int</span>&gt;(() =&gt; <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> result = <span style="color:#66d9ef">await</span> task.ConfigureAwait(<span style="color:#66d9ef">false</span>); <span style="color:#75715e">// 返回 ConfiguredTaskAwaitable&lt;TResult&gt;</span>
+</span></span></code></pre></div><p><code>ConfiguredTaskAwaitable&lt;TResult&gt;</code> 是一个 awaitable 类型，但它并不是 <code>Task</code>。</p>
+<h3 id="2-awaitable-awaiter-模式"><strong>2. Awaitable-Awaiter 模式</strong></h3>
+<p>通过观察不同的 awaitable / awaiter 类型，可以总结出以下规则：</p>
+<ul>
+<li><strong>Awaitable</strong> 对象必须有一个 <code>GetAwaiter()</code> 方法（实例方法或扩展方法）。</li>
+<li><strong>Awaiter</strong> 对象必须满足以下条件：
+<ul>
+<li>实现 <code>INotifyCompletion</code> 或 <code>ICriticalNotifyCompletion</code> 接口。</li>
+<li>有一个 <code>IsCompleted</code> 属性，返回布尔值。</li>
+<li>有一个 <code>GetResult()</code> 方法，返回 <code>void</code> 或一个结果。</li>
+</ul>
+</li>
+</ul>
+<p>这种模式与 <strong>可迭代-迭代器模式</strong>（<code>IEnumerable</code> / <code>IEnumerator</code>）非常相似。</p>
+<h3 id="3-缺失的-iawaitable--iawaiter-接口"><strong>3. 缺失的 IAwaitable / IAwaiter 接口</strong></h3>
+<p>尽管 .NET 核心没有定义 <code>IAwaitable</code> 和 <code>IAwaiter</code> 接口，但可以通过以下方式模拟它们：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IAwaitable</span>&lt;<span style="color:#66d9ef">out</span> TResult&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    IAwaiter&lt;TResult&gt; GetAwaiter();
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">IAwaiter</span>&lt;<span style="color:#66d9ef">out</span> TResult&gt; : INotifyCompletion
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> IsCompleted { <span style="color:#66d9ef">get</span>; }
+</span></span><span style="display:flex;"><span>    TResult GetResult();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这些接口仅用于更好地理解 awaitable / awaiter 模式。</p>
+<h3 id="4-实现-awaitable--awaiter"><strong>4. 实现 Awaitable / Awaiter</strong></h3>
+<p>以下是实现 awaitable / awaiter 的示例：</p>
+<ul>
+<li>
+<p><strong>FuncAwaitable / FuncAwaiter</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">internal</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">FuncAwaitable</span>&lt;TResult&gt; : IAwaitable&lt;TResult&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Func&lt;TResult&gt; function;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> FuncAwaitable(Func&lt;TResult&gt; function) =&gt; <span style="color:#66d9ef">this</span>.function = function;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> IAwaiter&lt;TResult&gt; GetAwaiter() =&gt; <span style="color:#66d9ef">new</span> FuncAwaiter&lt;TResult&gt;(<span style="color:#66d9ef">this</span>.function);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">FuncAwaiter</span>&lt;TResult&gt; : IAwaiter&lt;TResult&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Task&lt;TResult&gt; task;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> FuncAwaiter(Func&lt;TResult&gt; function)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.task = <span style="color:#66d9ef">new</span> Task&lt;TResult&gt;(function);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.task.Start();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">bool</span> IsCompleted =&gt; <span style="color:#66d9ef">this</span>.task.IsCompleted;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> TResult GetResult() =&gt; <span style="color:#66d9ef">this</span>.task.Result;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> OnCompleted(Action continuation) =&gt; <span style="color:#66d9ef">new</span> Task(continuation).Start();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>使用方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> result = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">new</span> FuncAwaitable&lt;<span style="color:#66d9ef">int</span>&gt;(() =&gt; <span style="color:#ae81ff">0</span>);
+</span></span></code></pre></div></li>
+<li>
+<p><strong>使用扩展方法</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FuncExtensions</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> TaskAwaiter&lt;TResult&gt; GetAwaiter&lt;TResult&gt;(<span style="color:#66d9ef">this</span> Func&lt;TResult&gt; function)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Task&lt;TResult&gt; task = <span style="color:#66d9ef">new</span> Task&lt;TResult&gt;(function);
+</span></span><span style="display:flex;"><span>        task.Start();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> task.GetAwaiter();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>使用方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> result = <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">new</span> Func&lt;<span style="color:#66d9ef">int</span>&gt;(() =&gt; <span style="color:#ae81ff">0</span>);
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="5-使用内置的-awaitable--awaiter"><strong>5. 使用内置的 Awaitable / Awaiter</strong></h3>
+<ul>
+<li>
+<p><strong>Task 和 TaskAwaiter</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ActionExtensions</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> TaskAwaiter GetAwaiter(<span style="color:#66d9ef">this</span> Action action)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Task task = <span style="color:#66d9ef">new</span> Task(action);
+</span></span><span style="display:flex;"><span>        task.Start();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> task.GetAwaiter();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>使用方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">await</span> <span style="color:#66d9ef">new</span> Action(() =&gt; { });
+</span></span></code></pre></div></li>
+<li>
+<p><strong>Task.Run()</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> result = <span style="color:#66d9ef">await</span> Task.Run(() =&gt; HelperMethods.IO(arg0, arg1));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">await</span> Task.Run(HelperMethods.IO);
+</span></span></code></pre></div></li>
+</ul>
+<h3 id="6-使用-rxreactive-extensions"><strong>6. 使用 Rx（Reactive Extensions）</strong></h3>
+<p>通过 <code>System.Reactive.Linq.dll</code>，<code>IObservable&lt;T&gt;</code> 和 <code>IConnectableObservable&lt;T&gt;</code> 也可以成为 awaitable：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task AwaitObservable1()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    IObservable&lt;<span style="color:#66d9ef">int</span>&gt; observable = Observable.Range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">3</span>).Do(Console.WriteLine);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> observable;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>输出：</p>
+<pre tabindex="0"><code>0
+1
+2
+</code></pre><p>另一个示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">async</span> Task&lt;<span style="color:#66d9ef">string</span>&gt; AwaitObservable2()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    IObservable&lt;<span style="color:#66d9ef">string</span>&gt; observable = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">string</span>[]
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-1-compilation&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-2-awaitable-awaiter-pattern&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#34;https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-3-runtime-context&#34;</span>,
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        .ToObservable&lt;<span style="color:#66d9ef">string</span>&gt;()
+</span></span><span style="display:flex;"><span>        .SelectMany(<span style="color:#66d9ef">async</span> url =&gt; <span style="color:#66d9ef">await</span> <span style="color:#66d9ef">new</span> WebClient().DownloadStringTaskAsync(url))
+</span></span><span style="display:flex;"><span>        .Select(StringExtensions.GetTitleFromHtml)
+</span></span><span style="display:flex;"><span>        .Do(Console.WriteLine);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">await</span> observable;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>输出每个页面的标题：</p>
+<pre tabindex="0"><code>Dixin&#39;s Blog - Understanding C# async / await (1) Compilation
+Dixin&#39;s Blog - Understanding C# async / await (3) Runtime Context
+Dixin&#39;s Blog - Understanding C# async / await (2) The Awaitable-Awaiter Pattern
+</code></pre><h2 id="总结"><strong>总结</strong></h2>
+<ul>
+<li><strong>Awaitable-Awaiter 模式</strong>：通过 <code>GetAwaiter()</code> 方法和相关接口，任何类型都可以成为 awaitable。</li>
+<li><strong>实现方式</strong>：可以通过实例方法或扩展方法实现 <code>GetAwaiter()</code>。</li>
+<li><strong>内置支持</strong>：<code>Task</code> 和 <code>TaskAwaiter</code> 是最常用的 awaitable / awaiter。</li>
+<li><strong>Rx 支持</strong>：通过 Rx，<code>IObservable&lt;T&gt;</code> 也可以成为 awaitable</li>
+</ul>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/.net/">.NET</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/understand_csharp_async_wait_1/">Understanding C# async / await 第1章</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_attribute_note/">C#中的Attribute学习笔记</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_object_copy_and_assign/">C#中的对象和拷贝</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/delete_dictionary_elements/">正确地删除Dictionary中的元素</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/iterator_and_yield/">C#中的迭代器和yield</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

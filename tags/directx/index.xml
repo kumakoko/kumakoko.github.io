@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DirectX on XGF</title>
+    <link>http://www.xionggf.com/tags/directx/</link>
+    <description>Recent content in DirectX on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 21 Nov 2005 18:08:30 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/tags/directx/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深度探索Skinned Mesh【翻译】</title>
+      <link>http://www.xionggf.com/post/d3d/skinned_mesh_with_d3d9/</link>
+      <pubDate>Mon, 21 Nov 2005 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/d3d/skinned_mesh_with_d3d9/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;译注 我在学习蒙皮骨骼动画的技术实现时，阅读了大量的中英文文档。但绝大部分文档，要么是语焉不详过度抽象，并且流于纸上谈兵。要么就是翻译得实在让人难以理解。Frank Luna的这篇文章是我所阅读过的最棒的蒙皮骨骼动画论文。Frank不仅有生花妙笔，把一些难以理解的技术要点以深入浅出的方式说得清清楚楚，而且还有着很强的实作能力，给文章配上了对应的示例程序。让读者能深入到每一个实现细节中。因此，我把Frank的这篇文章翻译出来，以供大家交流。欢迎批评指正。&#xA;前言 在大量的3D仿真程序，尤其是3D计算机游戏中扮演了一个重要的角色。本论文描述了用以驱动一个现代的实时的角色动画系统所需的数据结构和算法。另外，本文还对D3DX9.0c动画系统的进行了详细的研究。&#xA;本文第1章描述了用来表征3D角色及其运动的数据结构。第2章聚焦在用来描述一个动画序列（animation sequence）的数据集。第3章考察了基于刚体（rigid body）的动画技术，并且强调了使用该技术的问题所在。第4章解析一个新的动画技术：顶点混合（vertex blending），也通常称为蒙皮动画（skinned mesh animation）。该技术可以避免刚体动画带来的问题。第5章则展示了如何通过使用D3DX动画相关的API去实现一个角色蒙皮动画。第6章展示了如何使用多个不同的动画序列。第7章则演示了通过使用D3DX动画混合（animation blending）相关的API，如何用既有的动画，产生新的动画。最后，第8章则解释了通过使用D3DX的动画回调（animation callback）相关的API，来并行执行代码。&#xA;1 角色网格层级概述 图1展现了一个角色网格（character mesh）。途中高亮的链接成条的骨块（chain of bones）被称之为一个骨架（skeleton）。骨骼动画系统就自然而然地以该骨架结构为实现底层，构架而成，骨架外部被一个皮肤（skin）所环绕。在此，“皮肤”将被建模成一个三维的几何体（也即顶点及其构成的多边形）。和真实世界中一样，骨架中的每一个骨块将会影响皮肤的形状和位置。。从数学的观点来说，这些骨块通过变换矩阵（transformation matrix）的方式来表征的。这些变换矩阵可以适当地变换皮肤的几何体。因而，当我们操纵骨架运动时，附着在该骨架的皮肤也会随着当前骨架的姿势（pose）来运动。&#xA;图1：角色网格，高亮的骨块链条【bone chain】表示了角色的骨架【skeleton】黑色的多边形则表示了角色的皮肤&#xA;1.1 骨块及其继承式的变换 首先，所有的骨块都初始布局在骨块空间（bone space）中。骨块B有两个关联的变换。第一个是其局部变换（local transform），称之为L，另一个是组合变换（combined transform），称之为C。局部变换负责在骨块空间中，让骨块B绕着它的关节（joint）旋转（如图2左图所示）。如果骨块B的关节还连接到另一个称为B的父骨块（parent bone）的骨块时。局部变换L还负责了骨块B相对其父骨块的平移量（如图2右图所示）&#xA;图2: a图中的骨块在骨块空间中，绕着它的环枢关节【pivot joint】旋转，b图中的骨块发生偏移，为其父骨块腾出了空位&#xA;与局部变换形成对照，组合变换则负责对构成角色骨架的骨块进行摆姿势（posing）的操作，如图3所示。也就是说。组合变换将把一个骨块，从它自身的骨块空间，变换到角色空间（character space）中去。。因而，组合变换就是用来操作皮肤的在角色空间中的位置和形状的。&#xA;图3: “组合变换”把骨块从骨块空间变换到角色空间，在本图中，在骨块中间的骨块，变成了角色的右上臂的骨块&#xA;我们该如何确定组合变换。这个确定过程并不是很直截了当。因为骨块之间并不是相互独立的，而是相互之间会影响其位置。暂时先不考虑旋转，首先考虑如图4所示的一个手臂的骨架。如下图：&#xA;图4: 图中所示的是一个手臂的骨架。观察如何使用T(v0), T(v1)和T(v2)定位手掌的位置。同样地，观察如何使用T(v0), T(v1)定位前臂，使用T(v0)定位上臂。【实际上T(v0)并不起什么作用，因为上臂已经是根骨块不需要进行平移】&#xA;在骨块空间中，给定一个上臂，前臂，手掌的骨块。我们需要找出每个骨块的组合变换，用来将这些骨块定位在图4所示的位置。因为每个骨块的局部变换使得该骨块与其父骨块发生偏移。从图4中我们可以容易看到：一个骨块的位置，首先通过使用（applying）它自身的局部变换，然后使用它的父骨块的局部变换，再使用其父骨块的父骨块的局部变换，依次类推。&#xA;图5:层级式变换。观察一个骨块的父骨块的变换，如何影响该骨块和该骨块的子骨块&#xA;现在我们看到，处于骨块层级架构中的每个骨块，都从各自的父骨块中继承得到平移量和旋转量。这也就是说，得到一个骨块的组合变换，是通过：首先由作用其自身的局部变换（先平移接着旋转）；然后再作用其父骨块的局部变换；再作用其祖父骨块的局部变换，依次类推。一直到作为根节点的那个祖先骨块为止。从数学观点上来说。第i个骨块的组合变换矩阵C i是由以下公式得到：&#xA;$ C_i = L_i \times P_i $&#xA;其中 $ L_i $ 是编号为第i号的骨块的局部变换矩阵。 $ P_i $ i是编号为第i号的骨块的父骨块的组合变换矩阵。注意，通过做矩阵级乘，得到某骨块的组合变换时，需要先乘以骨块自身的局部变换矩阵，而后再乘以父骨块的组合变换矩阵。&#xA;1.2 D3DXFRAME 现在介绍D3DX库提供的用以构建骨骼层次数据的结构体D3DXFRAME。我们将使用这个结构体来表征角色的骨块。通过对一些指针变量进行赋值，我们可以连接起整个骨架中的骨块。如图6中所示的骨架。&#xA;图6: 图1所示的角色模型的骨骼层次示意图）。垂直向下的箭头表示下部的骨块是上部的骨块的第一个子骨块。水平向右的箭头表示左右两边的骨块是兄弟关系。&#xA;应当承认，在角色动画范畴内的上下文概念中。名字BONE通常就是指D3DXFRAME。但D3DXFRAME是一个通用的数据结构，也可用来描述一个非角色网格层级（non-character mesh hierarchies）的数据。无论如何，只要在角色动画范畴内，我们可以交替使用“bone”和“frame”表示同一个概念。</description>
+    </item>
+    <item>
+      <title>Direct3D8下载入显示MD2 Model的demo的设计文档</title>
+      <link>http://www.xionggf.com/post/d3d/dx8_md2_demo/</link>
+      <pubDate>Fri, 21 Oct 2005 18:08:30 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/d3d/dx8_md2_demo/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;Model demo主要演示了模型的载入和渲染，本demo所使用的模型是由ID Software所定义的MD2格式，MD2格式在《Quake II》游戏中所被广泛使用。&#xA;MD2的文件由两部分组成，一部分是 文件头（fileheader） ；另一部分是 文件数据（filedata） 。文件头包含有很多重要的数据、如：文件数据的大小，文件格式的版本号等等。因此每个文件的文件头的大小都应该是一致的。这也就是为什么我们一般都用一个结构体来描述这些文件头。与之相反的是每个文件的文件数据都不同的。因为文件数据包含了模型的 顶点（vertices）数 ， 三角形（triangles）面数 ， 纹理映射坐标（texture coordinate） 等等。下图表示了MD2模型文件的大略格式。&#xA;因此我们可以使用一个结构体来表示MD2文件头的组织。如下：&#xA;//MD2的文件头数据，这个数据结构的成员顺序是要严格定义不能调乱的 struct MD2_FileHeader { int m_nIdentify; //识别号 int m_nVersion; //版本号 int m_nSkinWidth; //模型皮肤纹理的宽度 int m_nSkinHeight; //模型皮肤纹理的高度 int m_nFrameSize; //每帧的大小，以字节为单位 int m_nSkinNum; //与模型相关联的皮肤数量 int m_nVertexNum; //模型的顶点数 int m_nUVNum; //纹理坐标的数量 int m_nTriangleNum; //模型中三角形面片的数量 int m_nOpenGLCmdNum; //OpenGL的命令数目 int m_nFrameNum; //帧数目 int m_nSkinsOffset; //皮肤数据在文件中的偏移地址 int m_nTexCoordOffset; //纹理映射坐标数据在文件中的偏移量 int m_nTrianglesOffset; //三角形面片数据在文件中的偏移量 int m_nFrameOffset; //帧数据在文件中的偏移量 int m_nOpenGLCmdOffset; //OpenGL命令在文件中的偏移量 int m_nEndOffset; //文件结束位置在文件中的偏移量 }; 下面是结构体中的各成员变量的具体含义：</description>
+    </item>
+  </channel>
+</rss>

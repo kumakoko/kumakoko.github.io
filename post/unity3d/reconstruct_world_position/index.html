@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>一段根据片元深度值重建对应的深度坐标值的代码及其解释 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="一段根据片元深度值重建对应的深度坐标值的代码及其解释">
+		<meta property="og:title" content="一段根据片元深度值重建对应的深度坐标值的代码及其解释" />
+<meta property="og:description" content="一段根据片元深度值重建对应的深度坐标值的代码及其解释" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/unity3d/reconstruct_world_position/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-11-29T23:21:49+08:00" />
+<meta property="article:modified_time" content="2024-11-29T23:21:49+08:00" />
+
+
+		<meta itemprop="name" content="一段根据片元深度值重建对应的深度坐标值的代码及其解释">
+<meta itemprop="description" content="一段根据片元深度值重建对应的深度坐标值的代码及其解释"><meta itemprop="datePublished" content="2024-11-29T23:21:49+08:00" />
+<meta itemprop="dateModified" content="2024-11-29T23:21:49+08:00" />
+<meta itemprop="wordCount" content="227">
+<meta itemprop="keywords" content="Unity3D," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">一段根据片元深度值重建对应的深度坐标值的代码及其解释</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2024-11-29T23:21:49&#43;08:00">November 29, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">一段根据片元深度值重建对应的深度坐标值的代码及其解释</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#关键分析">关键分析：</a></li>
+    <li><a href="#数学原理">数学原理：</a></li>
+    <li><a href="#典型应用场景">典型应用场景：</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#75715e">// 从深度信息重建世界空间坐标</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 参数：</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//   screenPos - 屏幕空间坐标（通常来自顶点着色器的SV_Position）</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//   viewDir - 视图空间方向向量</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">//   sceneDepth - 包含原始深度和线性深度值的结构体</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">float3</span> ReconstructWorldPosition(<span style="color:#66d9ef">float4</span> screenPos, <span style="color:#66d9ef">float3</span> viewDir, SceneDepth sceneDepth)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 平台深度缓冲处理 ----------------------------------------</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">if</span> UNITY_REVERSED_Z <span style="color:#75715e">// 处理Reversed-Z平台（如DirectX）</span>
+</span></span><span style="display:flex;"><span>        real rawDepth <span style="color:#f92672">=</span> sceneDepth.raw; <span style="color:#75715e">// 直接使用原始深度值</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">else</span> <span style="color:#75715e">// OpenGL等常规深度缓冲平台</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将深度值从[0,1]映射到[Near,1]，适配OpenGL的NDC范围</span>
+</span></span><span style="display:flex;"><span>        real rawDepth <span style="color:#f92672">=</span> lerp(UNITY_NEAR_CLIP_VALUE, <span style="color:#ae81ff">1</span>, sceneDepth.raw);
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span>endif
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 正交投影处理 --------------------------------------------</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">if</span> <span style="color:#f92672">defined</span>(ORTHOGRAPHIC_SUPPORT)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 将屏幕坐标转换为NDC空间（-1到1范围）</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float4</span> viewPos <span style="color:#f92672">=</span> <span style="color:#66d9ef">float4</span>(
+</span></span><span style="display:flex;"><span>            (screenPos.xy <span style="color:#f92672">/</span> screenPos.w) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2.0</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1.0</span>, <span style="color:#75715e">// 透视除法后映射到NDC</span>
+</span></span><span style="display:flex;"><span>            rawDepth, <span style="color:#75715e">// 深度值</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ae81ff">1.0</span>
+</span></span><span style="display:flex;"><span>        );
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 获取视图-世界变换矩阵</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float4x4</span> viewToWorld <span style="color:#f92672">=</span> UNITY_MATRIX_I_VP;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Unity版本兼容性修复（7.3.1后需要反转矩阵第二行）</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">if</span> UNITY_REVERSED_Z
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 修正矩阵：_12, _22, _32, _42分量取反</span>
+</span></span><span style="display:flex;"><span>            viewToWorld._12_22_32_42 <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>viewToWorld._12_22_32_42;
+</span></span><span style="display:flex;"><span>        <span style="color:#960050;background-color:#1e0010">#</span>endif
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 矩阵变换得到世界坐标</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float4</span> viewWorld <span style="color:#f92672">=</span> mul(viewToWorld, viewPos);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float3</span> viewWorldPos <span style="color:#f92672">=</span> viewWorld.xyz <span style="color:#f92672">/</span> viewWorld.w; <span style="color:#75715e">// 透视除法</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span>endif
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 透视投影处理 --------------------------------------------</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 获取当前相机世界坐标</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float3</span> camPos <span style="color:#f92672">=</span> GetCurrentViewPosition().xyz;
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 计算透视投影的世界坐标：</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// sceneDepth.eye - 线性深度值（相机到表面的距离）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// viewDir/screenPos.w - 视图方向归一化（screenPos.w存储投影前的z分量）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float3</span> worldPos <span style="color:#f92672">=</span> sceneDepth.eye <span style="color:#f92672">*</span> (viewDir <span style="color:#f92672">/</span> screenPos.w) <span style="color:#f92672">-</span> camPos;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float3</span> perspWorldPos <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>worldPos; <span style="color:#75715e">// 方向修正（视图空间到世界空间转换）</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 结果混合 -----------------------------------------------</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">if</span> <span style="color:#f92672">defined</span>(ORTHOGRAPHIC_SUPPORT)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 使用unity_OrthoParams.w（0=透视，1=正交）混合两种投影结果</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> lerp(perspWorldPos, viewWorldPos, unity_OrthoParams.w);
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> perspWorldPos; <span style="color:#75715e">// 仅返回透视投影结果</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">#</span>endif
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>第一部分是关于处理深度值，这里有一个条件编译<code>UNITY_REVERSED_Z</code>。Unity中不同的平台可能使用不同的深度缓冲范围，比如DirectX通常使用Reversed-Z，即近平面为1，远平面为0，而OpenGL则是0到1。所以这里如果是Reversed-Z，直接使用sceneDepth.raw；否则，用<code>lerp</code>将原始深度值调整到<code>UNITY_NEAR_CLIP_VALUE</code>到1之间，可能是为了适配OpenGL的NDC空间。</p>
+<p>接下来被注释掉的那行代码是调用<code>ComputeWorldSpacePosition</code>函数，可能是Unity内置的函数，但当前代码没有使用，而是自己实现了计算。</p>
+<p>然后是条件编译<code>ORTHOGRAPHIC_SUPPORT</code>，处理正交投影的情况。这里首先将屏幕坐标转换为NDC（-1到1），然后构造viewPos，使用<code>UNITY_MATRIX_I_VP</code>矩阵（即视图投影矩阵的逆矩阵）将viewPos转换到世界空间。但注意到在<code>UNITY_REVERSED_Z</code>的情况下，需要调整矩阵的第二行，可能是由于Unity的某个版本修正导致的矩阵问题，所以需要将第二行的符号取反。之后得到viewWorldPos，除以齐次坐标的w分量得到正确的三维坐标。</p>
+<p>接下来处理透视投影的情况。获取相机位置<code>camPos</code>，然后根据<code>sceneDepth.eye</code>（可能是线性深度值）、<code>viewDir</code>和<code>screenPos.w</code>来计算worldPos。这里可能需要推导一下公式：可能是在视图空间中的位置计算，然后转换到世界空间？不过代码中的计算看起来是<code>worldPos = sceneDepth.eye * (viewDir / screenPos.w) - camPos</code>; 然后<code>perspWorldPos</code>是<code>-worldPos</code>，这可能是因为视图方向的方向问题？</p>
+<p>最后，根据是否支持正交投影，用lerp混合透视投影和正交投影的结果，混合系数是<code>unity_OrthoParams.w</code>，这个参数可能表示当前是否处于正交投影模式（w分量可能为0或1）。</p>
+<p>现在需要详细注释每个步骤。可能需要注意的点：</p>
+<ul>
+<li>
+<p><code>UNITY_REVERSED_Z</code>的处理：不同平台的深度值处理。</p>
+</li>
+<li>
+<p><code>ORTHOGRAPHIC_SUPPORT</code>部分的正交投影坐标转换，特别是矩阵调整的原因。</p>
+</li>
+<li>
+<p>透视投影部分的计算，可能需要解释<code>sceneDepth.eye</code>的含义，以及如何通过<code>viewDir</code>和深度值重建世界坐标。</p>
+</li>
+<li>
+<p>最后的<code>lerp</code>如何根据投影模式选择正确的坐标。</p>
+</li>
+</ul>
+<p>可能遇到的问题：对某些矩阵运算或者参数的具体含义不太确定，需要查阅Unity文档或者常见Shader编写方法。例如，<code>sceneDepth</code>的结构可能包含raw深度和线性深度eye；screenPos可能是经过透视除法的坐标，或者需要自己处理；<code>viewDir</code>可能是在视图空间中的方向向量。</p>
+<p>此外，代码中的注释提到在<code>UNITY_REVERSED_Z</code>的情况下，调整<code>viewToWorld</code>矩阵的第二行，是因为Unity的一个修复导致的问题，所以需要翻转某些符号。这可能涉及到坐标系的变换，比如从右手系到左手系，或者矩阵求逆后的修正。</p>
+<p>在透视投影部分，计算<code>worldPos</code>的公式可能需要进一步推导。例如，假设<code>sceneDepth.eye</code>是线性深度值（即从相机到物体的距离），<code>viewDir</code>可能是从屏幕位置到某个方向的向量，而screenPos.w可能保存的是齐次坐标的w分量，即投影后的w，可能在透视投影中为视图空间中的z值。所以<code>viewDir/screenPos.w</code>可能是在归一化某个方向向量，或者进行透视校正。</p>
+<h2 id="关键分析">关键分析：</h2>
+<ol>
+<li>
+<p><strong>深度处理机制</strong>：</p>
+<ul>
+<li><code>UNITY_REVERSED_Z</code> 处理不同图形API的深度缓冲差异</li>
+<li>OpenGL平台需要特殊处理NDC范围（默认[-1,1] vs DirectX的[0,1]）</li>
+</ul>
+</li>
+<li>
+<p><strong>正交投影计算</strong>：</p>
+<ul>
+<li>使用逆视图投影矩阵（UNITY_MATRIX_I_VP）进行坐标变换</li>
+<li>版本兼容性处理：针对Unity 7.3.1+的矩阵修正</li>
+<li>通过NDC坐标直接计算世界空间位置</li>
+</ul>
+</li>
+<li>
+<p><strong>透视投影计算</strong>：</p>
+<ul>
+<li>基于视图方向向量和线性深度值重建位置</li>
+<li><code>screenPos.w</code> 存储投影前的z分量，用于方向向量归一化</li>
+<li>通过相机位置进行坐标系转换</li>
+</ul>
+</li>
+<li>
+<p><strong>投影模式混合</strong>：</p>
+<ul>
+<li><code>unity_OrthoParams.w</code> 作为混合因子（0=透视，1=正交）</li>
+<li>动态切换投影模式的计算结果</li>
+</ul>
+</li>
+</ol>
+<h2 id="数学原理">数学原理：</h2>
+<ul>
+<li><strong>透视投影</strong>：<code>worldPos = depth * (viewDirection) - cameraPos</code></li>
+<li><strong>正交投影</strong>：<code>worldPos = invVP * ndcCoord</code></li>
+<li><strong>深度重建</strong>：利用深度缓冲值反向计算视锥体内的原始位置</li>
+</ul>
+<h2 id="典型应用场景">典型应用场景：</h2>
+<ul>
+<li>屏幕空间反射/折射</li>
+<li>后期处理效果（如景深、SSAO）</li>
+<li>粒子系统世界空间定位</li>
+<li>动态贴花投影</li>
+</ul>
+<p>该代码展示了Unity Shader中处理多投影模式的核心技术，通过条件编译和矩阵操作实现了跨平台的深度重建功能。</p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/surface_depth/">一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/dynamiclightmap_on/">Unity3D的内置宏 DYNAMICLIGHTMAP_ON</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/requires_vertex_shadow_coord_interpolator/">Unity3D的内置宏 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/_light_layers/">Unity3D的内置宏 _LIGHT_LAYERS</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/_additional_lights_vertex/">Unity3D的内置宏 _ADDITIONAL_LIGHTS_VERTEX</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

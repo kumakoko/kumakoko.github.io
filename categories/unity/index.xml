@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Unity on XGF</title>
+    <link>http://www.xionggf.com/categories/unity/</link>
+    <description>Recent content in Unity on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 08 Oct 2024 14:59:52 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/categories/unity/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GPU Driven Terrain Rendering 参考资料汇总</title>
+      <link>http://www.xionggf.com/post/unity3d/gpu_driven_terain/gpu_driven_terrain_ref/</link>
+      <pubDate>Tue, 08 Oct 2024 14:59:52 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/gpu_driven_terain/gpu_driven_terrain_ref/</guid>
+      <description>（译）Terrain Rendering in Far Cry 5&#xA;ProjectS中的GPU Driven</description>
+    </item>
+  </channel>
+</rss>

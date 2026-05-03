@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>使用mipmap streaming来优化GPU的纹理内存 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="使用mipmap streaming来优化GPU的纹理内存">
+		<meta property="og:title" content="使用mipmap streaming来优化GPU的纹理内存" />
+<meta property="og:description" content="使用mipmap streaming来优化GPU的纹理内存" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/unity3d/texture_streaming/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-12-19T20:20:49+08:00" />
+<meta property="article:modified_time" content="2024-12-19T20:20:49+08:00" />
+
+
+		<meta itemprop="name" content="使用mipmap streaming来优化GPU的纹理内存">
+<meta itemprop="description" content="使用mipmap streaming来优化GPU的纹理内存"><meta itemprop="datePublished" content="2024-12-19T20:20:49+08:00" />
+<meta itemprop="dateModified" content="2024-12-19T20:20:49+08:00" />
+<meta itemprop="wordCount" content="459">
+<meta itemprop="keywords" content="Unity3D," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">使用mipmap streaming来优化GPU的纹理内存</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2024-12-19T20:20:49&#43;08:00">December 19, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">使用mipmap streaming来优化GPU的纹理内存</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-mipmap-streaming-简介">1 mipmap streaming 简介</a>
+      <ul>
+        <li><a href="#11-mipmap-streaming的工作原理">1.1 mipmap streaming的工作原理</a></li>
+        <li><a href="#12-mipmap-streaming的限制">1.2 mipmap streaming的限制</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-启用-mipmap-streaming">2 启用 mipmap streaming</a>
+      <ul>
+        <li><a href="#21-让texture和mipmap-streaming一起工作">2.1 让texture和mipmap streaming一起工作</a></li>
+        <li><a href="#22-光照贴图">2.2 光照贴图</a></li>
+        <li><a href="#23-自定义网格">2.3 自定义网格</a></li>
+        <li><a href="#24-没有使用renderer组件的object">2.4 没有使用Renderer组件的Object</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-配置-mipmap-streaming">3 配置 mipmap streaming</a>
+      <ul>
+        <li><a href="#31-设置哪些相机使用-mipmap-流">3.1 设置哪些相机使用 mipmap 流</a></li>
+        <li><a href="#32-在单个摄像头上禁用-mipmap-流式传输">3.2 在单个摄像头上禁用 mipmap 流式传输</a></li>
+        <li><a href="#33-在单个摄像头上启用-mipmap-流式传输">3.3 在单个摄像头上启用 mipmap 流式传输</a></li>
+        <li><a href="#34-设置相机使用的-mipmap-level">3.4 设置相机使用的 mipmap level</a></li>
+        <li><a href="#35-设置纹理的内存预算memory-budget">3.5 设置纹理的内存预算（memory budget）</a></li>
+        <li><a href="#36-估计内存预算">3.6 估计内存预算</a></li>
+        <li><a href="#37-在运行时设置内存预算">3.7 在运行时设置内存预算</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-重设纹理的-mipmap-level">4 重设纹理的 mipmap level</a>
+      <ul>
+        <li><a href="#41-使用-priority-属性">4.1 使用 Priority 属性</a></li>
+        <li><a href="#42-使用-api">4.2 使用 API</a></li>
+        <li><a href="#43-重设所有纹理的-mipmap-level">4.3 重设所有纹理的 mipmap level</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-预加载-mipmap-level">5 预加载 mipmap level</a></li>
+    <li><a href="#6-分析-mipmap-流式传输">6 分析 mipmap 流式传输</a>
+      <ul>
+        <li><a href="#61-在脚本中获取-mipmap-流信息">6.1 在脚本中获取 mipmap 流信息</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<p><strong>本文所涉及到的API和Unity3D编辑器都是基于6000.0.25f1c1版本</strong></p>
+<h2 id="1-mipmap-streaming-简介">1 mipmap streaming 简介</h2>
+<p>使用 mipmap 流来限制 GPU 内存中纹理的大小。</p>
+<h3 id="11-mipmap-streaming的工作原理">1.1 mipmap streaming的工作原理</h3>
+<ol>
+<li>对于每个被摄像机观察到的纹理，Unity会自动计算并加载其特定级别的mipmap，而不是加载所有级别。这意味着 Unity 只会将每个纹理的指定mipmap level的内容从磁盘传输到 CPU 和 GPU。</li>
+<li>Unity 会以尽可能高的分辨率加载 mipmap level，但如果较高分辨率的 mipmap level不符合您设置的内存限制，则使用较低的 mipmap level。mipmap可预配置</li>
+<li>Unity 在 GPU 上缓存指定mipmap level的纹理内容，以避免重复加载。</li>
+</ol>
+<h3 id="12-mipmap-streaming的限制">1.2 mipmap streaming的限制</h3>
+<ol>
+<li>Unity不支持对地形纹理使用mipmap streaming，因为 Unity 始终需要最高分辨率的 mipmap level。</li>
+<li>Unity不支持对<strong>纹理数组</strong>、<strong>cubemap</strong>，<strong>3D纹理</strong>使用mipmap streaming。</li>
+<li>如果使用<code>Graphics.DrawMeshNow</code>等 API来渲染纹理，Unity 将无法获得计算 mipmap level所需的信息。使用<code>Texture2D.requestedMipmapLevel</code> API 手动设置纹理的 mipmap level，或者禁用mipmap streaming。</li>
+<li>如果纹理有tiling和offset属性，但又没指定使用_ST属性，Unity可能无法正确计算这种纹理的mipmap level。</li>
+</ol>
+<br/>
+<hr>
+<br/>
+<h2 id="2-启用-mipmap-streaming">2 启用 mipmap streaming</h2>
+<p>要启用 mipmap streaming，按照以下步骤操作：</p>
+<ol>
+<li>点击【<strong>Edit|Project Settings</strong>】菜单项，弹出【<strong>Project Settings</strong>】面板，选中【<strong>Quality</strong>】项</li>
+<li>在【<strong>Texture</strong>】部分中，启用【<strong>Mipmap Streaming</strong>】</li>
+</ol>
+<p>在默认情况下，这时候为场景中的所有摄像机都打开了mipmap streaming。在编辑器中，mipmap streaming在edit mode或者play mode下都处于开启状态。</p>
+<h3 id="21-让texture和mipmap-streaming一起工作">2.1 让texture和mipmap streaming一起工作</h3>
+<p>要让texture和mipmap streaming一起工作，需按以下步骤操作：</p>
+<ol>
+<li>在项目窗口中选择一个纹理文件。</li>
+<li>在【<strong>Texture Import Settings</strong>】窗口中，选择【<strong>Advanced</strong>】选项下的子选项：</li>
+<li>确保【<strong>Advanced</strong>】选项中的【<strong>Generate Mipmap</strong>】子选项被勾选上</li>
+<li>然后勾选【<strong>Advanced</strong>】选项中的【<strong>Streaming Mipmap Levels</strong>】子选项被</li>
+</ol>
+<p>如果为 Android 构建项目，还必须遵循以下步骤：</p>
+<ol>
+<li>打开【<strong>Build Profiles</strong>】窗口。</li>
+<li>设置【<strong>Compression Method</strong>】为<code>LZ4</code>或<code>LZ4HC</code>。</li>
+</ol>
+<h3 id="22-光照贴图">2.2 光照贴图</h3>
+<p>要对光照贴图启用 mipmap streaming，需要按照下列步骤操作：</p>
+<ol>
+<li>点击【<strong>Edit|Project Settings</strong>】菜单项，弹出【<strong>Project Settings</strong>】面板，选中【<strong>Player</strong>】项</li>
+<li>在【<strong>other settings</strong>】项中，启用【<strong>Ligtmap Streaming</strong>】项。</li>
+</ol>
+<p>可以像上面介绍的设置普通纹理mipmap streaming的方式，去设置光照贴图的mipmap streaming，但当Unity重新生成光照贴图时，它们会重置为默认值。要解决这个问题，可以告诉Unity在生成光照贴图时应用这些值。即启用【<strong>Player</strong>】面板中的【<strong>Lightmap Setting</strong>】值，和指定【<strong>Streaming Priority</strong>】值。</p>
+<h3 id="23-自定义网格">2.3 自定义网格</h3>
+<p>如果在代码中创建自定义的mesh，Unity不会自动计算网格的UV密度(uv density)的话。这是因为Unity加载了错误的 mipmap level。为了防止这种情况，需要执行以下操作之一：</p>
+<ul>
+<li>创建网格后，使用<code>Mesh.RecalculateUVDistributionMetrics</code>函数，手动计算网格的UV密度。</li>
+<li>将网格作为模型文件导入。</li>
+<li></li>
+</ul>
+<h3 id="24-没有使用renderer组件的object">2.4 没有使用Renderer组件的Object</h3>
+<p>Unity 无法为以下不使用Renderer组件的Object计算正确的mipmap level，因为它们不使用标准Renderer组件：</p>
+<ul>
+<li><strong>贴花纹理</strong>(decal texture)</li>
+<li><strong>反射探针</strong>(reflection probe)纹理，因为它们使用 mipmap level来存储<strong>材质粗糙度</strong>（material roughness）的查找表。</li>
+<li><strong>精灵</strong>(sprite)，因为它们使用的是精灵渲染器（sprite）</li>
+<li>着色器使用<code>Mesh.uv</code>（也称为 UV0）以外的通道中的 UV 纹理坐标。</li>
+<li>除缩放和平移之外，改变了了纹理坐标的shader。</li>
+<li></li>
+</ul>
+<p>对于这些object，使用<code>Texture2D.requestedMipmapLevel</code>函数将手动设置 mipmap level。如果不这样做，Unity将使用低分辨率 mipmap level。</p>
+<br/>
+<hr>
+<br/>
+<h2 id="3-配置-mipmap-streaming">3 配置 mipmap streaming</h2>
+<h3 id="31-设置哪些相机使用-mipmap-流">3.1 设置哪些相机使用 mipmap 流</h3>
+<p>默认情况下，所有的摄像机在场景启用时都使用mipmap streaming</p>
+<h3 id="32-在单个摄像头上禁用-mipmap-流式传输">3.2 在单个摄像头上禁用 mipmap 流式传输</h3>
+<p>按以下步骤操作：</p>
+<ol>
+<li>选择场景中的一台带有<code>Camera</code>组件的GameObject</li>
+<li>在【<strong>inspector</strong>】面板中，给这GameObject增加<code>Streaming Controller</code>组件</li>
+<li>然后禁用掉<code>Streaming Controller</code>组件</li>
+</ol>
+<h3 id="33-在单个摄像头上启用-mipmap-流式传输">3.3 在单个摄像头上启用 mipmap 流式传输</h3>
+<p>按以下步骤操作：</p>
+<ol>
+<li>点击【<strong>Edit|Project Settings</strong>】菜单项，弹出【<strong>Project Settings</strong>】面板，选中【<strong>Quality</strong>】项</li>
+<li>在【<strong>Texture</strong>】部分中，启用【<strong>Mipmap Streaming</strong>】选项下，禁用【<strong>Add All Cameras</strong>】</li>
+<li>给带有<code>Camera</code>组件的GameObject增加<code>Streaming Controller</code>组件，并确保其已启用</li>
+</ol>
+<h3 id="34-设置相机使用的-mipmap-level">3.4 设置相机使用的 mipmap level</h3>
+<p>使用<code>Streaming Controller</code>组件中的Mipmap Bias设置强制 Unity 加载比 mipmap 流自动选择的 mipmap level更小或更大的 mipmap level。</p>
+<p>在从纹理到摄像机对应的mipmap level之上，Unity会把<code>Streaming Controller</code>组件指定的<code>Mipmap Bias</code>值添加上去。。例如，如果<code>Mipmap Bias</code>值设置为2，并且mipmap streaming为纹理选择的mipmap level为1，则Unity加载的mipmap level为3（1 + 2）。</p>
+<p>还可以使用<code>StreamingController.streamingMipmapBias</code> API 来控制此<code>Mipmap Bias</code>值。</p>
+<h3 id="35-设置纹理的内存预算memory-budget">3.5 设置纹理的内存预算（memory budget）</h3>
+<p>要设置Unity用于纹理的<strong>最大GPU内存</strong>，请按照以下步骤操作：</p>
+<ol>
+<li>点击【<strong>Edit|Project Settings</strong>】菜单项，弹出【<strong>Project Settings</strong>】面板，选中【<strong>Quality</strong>】项</li>
+<li>在【<strong>Texture</strong>】部分中，以 MB 为单位设置【<strong>Memory Budget</strong>】项，即指定<strong>内存预算</strong>值。</li>
+</ol>
+<p>内存预算适用于所有带mipmap的纹理，而不管这些纹理是否启用了mipmap steaming。例如，如果将内存预算设置为 100 MB，并且有 90 MB 的纹理不使用 mipmap streaming，则 mipmap 流的内存预算为 10 MB。</p>
+<p>为了<strong>避免超出</strong>内存预算，Unity 会执行以下操作：</p>
+<ol>
+<li>为纹理加载较低分辨率的 mipmap level。这可能会导致纹理弹出或加载缓慢。</li>
+<li>从 GPU 内存中删除未使用的 mipmap level，为所需的 mipmap level腾出空间。</li>
+</ol>
+<p>可以使用【<strong>Max Level Reduction</strong>】属性来阻止 Unity 删除小于特定级别的 mipmap level。此值也是 Unity 在首次启动时加载的 mipmap level。例如，如果您将【<strong>Max Level Reduction</strong>】设置为 2，则 Unity 仅加载级别 2 及以上的 mipmap level，并将<strong>它们保留在内存</strong>中。</p>
+<p>Unity 必须将 mipmap level保持在 GPU 内存中的最大级别减少值以上。这可能意味着 Unity 超出了内存预算。</p>
+<h3 id="36-估计内存预算">3.6 估计内存预算</h3>
+<p>要估算项目的内存预算，按照以下步骤操作：</p>
+<ol>
+<li>在项目运行时，使用<code>Texture.desiredTextureMemory</code>函数获取 Unity 加载的纹理的总大小。</li>
+<li>将内存预算设置为略高于该值。</li>
+</ol>
+<p>这样可以确保 Unity 有足够的纹理内存可用于场景中资源最密集的区域，并防止纹理分辨率降低。如果有额外的可用内存，则可以设置更大的内存预算，以便 Unity 可以将场景中不可见的纹理数据保存在 GPU 缓存中。注意：<strong>如果在编辑器中使用Texture.desiredTextureMemory，总大小可能包括 Unity 用于渲染编辑器窗口的纹理</strong>。</p>
+<h3 id="37-在运行时设置内存预算">3.7 在运行时设置内存预算</h3>
+<p>可以使用以下 API 来设置和控制运行时的内存预算：</p>
+<ol>
+<li><code>QualitySettings.streamingMipmapsActive</code></li>
+<li><code>Texture2D.streamingTextureDiscardUnusedMips</code></li>
+</ol>
+<br/>
+<hr>
+<br/>
+<h2 id="4-重设纹理的-mipmap-level">4 重设纹理的 mipmap level</h2>
+<p>可以使用以下方法来让Unity重设纹理的mipmap level：</p>
+<ol>
+<li>设置纹理的【<strong>Texture Import Settings</strong>】窗口中的【<strong>Property</strong>】属性（需先开启【<strong>Streaming Mipmap Levels</strong>】属性）</li>
+<li>调用<code>Texture2D.requestedMipmapLevel</code>方法 。</li>
+</ol>
+<h3 id="41-使用-priority-属性">4.1 使用 Priority 属性</h3>
+<p>请按以下步骤操作：</p>
+<ol>
+<li>在项目窗口中选中纹理。</li>
+<li>设置【<strong>Property</strong>】属性在-128和127之间。</li>
+</ol>
+<p>当 Unity 需要降低 mipmap level以满足内存限制时，它会按优先级从低到高的顺序考虑纹理，直到达到限制。这意味着优先级值较高的纹理更有可能保留其更高分辨率的 mipmap level。</p>
+<p>Unity 会移除优先级较低的纹理的 mipmap level。例如，如果您将一个纹理的优先级设置为1，将另一个纹理的优先级设置为5，则 Unity 可能会在考虑第二个纹理之前移除第一个纹理的四个mipmap level。</p>
+<p>还可以使用以下 API 来设置优先级值：</p>
+<ol>
+<li><code>TextureImporter.streamingMipmapsPriority</code></li>
+<li><code>Texture2D.streamingMipmapsPriority</code></li>
+<li><code>IHVImageFormatImporter.streamingMipmapsPriority</code></li>
+</ol>
+<h3 id="42-使用-api">4.2 使用 API</h3>
+<p>使用以下 API：</p>
+<ol>
+<li><code>Texture2D.requestedMipmapLevel</code> 请求 Unity 重设纹理的 mipmap level。</li>
+<li><code>Texture2D.IsRequestedMipmapLevelLoaded</code> 检查 Unity 是否加载您请求的 mipmap level。</li>
+<li><code>Texture2D.ClearRequestedMipmapLevel</code> 。不再重设 mipmap level，</li>
+</ol>
+<p>您可以使用Mesh.GetUVDistributionMetricAPI 估算网格的UV density
+。这可以帮助您根据位置计算所需的 mipmap level相机
+. 有关示例代码，请参阅Mesh.GetUVDistributionMetric。</p>
+<h3 id="43-重设所有纹理的-mipmap-level">4.3 重设所有纹理的 mipmap level</h3>
+<p>使用<code>Texture.streamingTextureForceLoadAll</code>加载所有纹理的所有 mipmap level。</p>
+<h2 id="5-预加载-mipmap-level">5 预加载 mipmap level</h2>
+<p>如果启用摄像机。在运行时，mipmap steaming需要时间<strong>将mipmap level流式传输到内存</strong>（stream the mipmap levels into memory）中。</p>
+<p>可以使用<strong>纹理预加载</strong>（texture preloading）来防止这种情况。执行以下操作：</p>
+<ol>
+<li>为已禁用的<code>Camera</code>组件的添加<code>Streaming Controller</code>组件。</li>
+<li>调用<code>StreamingController.SetPreloading</code>方法来预加载 mipmap level。</li>
+</ol>
+<p>使用<code>StreamingController.CancelPreloading</code>方法取消预加载。</p>
+<p>启用预加载后，可以使用以下 API：</p>
+<ul>
+<li><code>StreamingController.IsPreloading</code> 检查相机是否正在预加载。</li>
+<li><code>Texture.streamingTextureLoadingCount</code>和<code>Texture.streamingTexturePendingLoadCount</code>用于检查 Unity 仍在加载多少个 mipmap level的纹理。</li>
+</ul>
+<p>如果这些 API 返回的值表明 Unity 已完成预加载，您可能需要等待几帧才能启用摄像机，以确保预加载已完成。</p>
+<br/>
+<hr>
+<br/>
+<h2 id="6-分析-mipmap-流式传输">6 分析 mipmap 流式传输</h2>
+<p>以<strong>6000.0.25f1c1</strong>版本的Unity编辑器为例，编辑器中的【<strong>Scene</strong>】视图窗口中，有一个【<strong>Debug Draw Mode</strong>】可以可视化和调试场景中的mipmap streaming。要启用该模式，请按以下步骤操作：</p>
+<ol>
+<li>在【<strong>Scene</strong>】视图窗口顶上的按钮，选择【<strong>Debug Draw Mode</strong>】。（就是那个虫子按钮）</li>
+<li>在下拉列表中选择【<strong>Texture Mipmap Streaming</strong>】选项</li>
+</ol>
+<p><strong>注意上面的操作仅适用于使用Built-in渲染管线的情况</strong></p>
+<p><strong>Debug Draw Mode</strong>下GameObject会以以下的几种颜色表征</p>
+<ol>
+<li>如果纹理使用较少的 mipmap level，则显示为绿色。</li>
+<li>如果纹理使用较少的 mipmap level，则显示红色，因为 mipmap 流没有足够的资源来加载所有级别。</li>
+<li>如果纹理不使用 mipmap 流，或者没有渲染器计算 mipmap level，则为蓝色。</li>
+</ol>
+<p>注意：如果使用<code>MainTexture</code>相关的函数设置主纹理，则该纹理将不会在<strong>Debug Draw Mode</strong>下显示。</p>
+<h3 id="61-在脚本中获取-mipmap-流信息">6.1 在脚本中获取 mipmap 流信息</h3>
+<p>要获取有关纹理内存的信息，请使用以下属性：</p>
+<ul>
+<li><code>Texture.currentTextureMemory</code></li>
+<li><code>Texture.desiredTextureMemory</code></li>
+<li><code>Texture.totalTextureMemory</code></li>
+<li><code>Texture.targetTextureMemory</code></li>
+<li><code>Texture.nonStreamingTextureMemory</code></li>
+</ul>
+<p>要获取有关 mipmap streaming影响的纹理或渲染器数量的信息，请使用以下属性：</p>
+<ul>
+<li><code>Texture.streamingMipmapUploadCount</code></li>
+<li><code>Texture.nonStreamingTextureCount</code></li>
+<li><code>Texture.streamingTextureCount</code></li>
+<li><code>Texture.streamingRendererCount</code></li>
+</ul>
+<p>要获取有关纹理的 mipmap level的信息，请使用以下属性：</p>
+<ul>
+<li><code>Texture2D.desiredMipmapLevel</code></li>
+<li><code>Texture2D.loadingMipmapLevel</code></li>
+<li><code>Texture2D.loadedMipmapLevel</code></li>
+</ul>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/reconstruct_world_position/">一段根据片元深度值重建对应的深度坐标值的代码及其解释</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/surface_depth/">一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/dynamiclightmap_on/">Unity3D的内置宏 DYNAMICLIGHTMAP_ON</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/requires_vertex_shadow_coord_interpolator/">Unity3D的内置宏 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/unity3d/_light_layers/">Unity3D的内置宏 _LIGHT_LAYERS</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

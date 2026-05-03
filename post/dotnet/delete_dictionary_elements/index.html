@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>正确地删除Dictionary中的元素 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="C#中的对象和拷贝">
+		<meta property="og:title" content="正确地删除Dictionary中的元素" />
+<meta property="og:description" content="C#中的对象和拷贝" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/dotnet/delete_dictionary_elements/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-11-22T18:08:30+08:00" />
+<meta property="article:modified_time" content="2019-11-22T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content="正确地删除Dictionary中的元素">
+<meta itemprop="description" content="C#中的对象和拷贝"><meta itemprop="datePublished" content="2019-11-22T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2019-11-22T18:08:30+08:00" />
+<meta itemprop="wordCount" content="453">
+<meta itemprop="keywords" content=".NET," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">正确地删除Dictionary中的元素</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2019-11-22T18:08:30&#43;08:00">November 22, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">正确地删除Dictionary中的元素</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#实现思路">实现思路</a></li>
+        <li><a href="#完整代码示例">完整代码示例</a></li>
+        <li><a href="#代码关键说明">代码关键说明</a></li>
+        <li><a href="#运行结果">运行结果</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+    <li><a href="#另一种方法">另一种方法</a>
+      <ul>
+        <li><a href="#其他实现方法及对比">其他实现方法及对比</a></li>
+        <li><a href="#各方法对比总结">各方法对比总结</a></li>
+        <li><a href="#总结-1">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<p>你想要在C#中实现这样的功能：给定一个目标值，检查<code>Dictionary</code>中是否存在该值，如果存在，就将所有包含这个值的键值对都从字典中移除。</p>
+<h3 id="实现思路">实现思路</h3>
+<p>要实现这个需求，需要注意一个关键问题：<strong>不能在遍历字典的同时直接修改字典</strong>（会抛出<code>InvalidOperationException</code>）。因此，正确的步骤是：</p>
+<ol>
+<li>先遍历字典，找出所有值等于目标值的键，存入一个临时集合（如<code>List&lt;TKey&gt;</code>）。</li>
+<li>遍历这个临时集合，根据其中的键从字典中移除对应的键值对。</li>
+</ol>
+<h3 id="完整代码示例">完整代码示例</h3>
+<p>以下是通用的泛型实现，适用于任意类型的<code>Dictionary</code>（只要值类型支持相等比较）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Collections.Generic;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Linq;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 示例字典：键为int，值为string</span>
+</span></span><span style="display:flex;"><span>        Dictionary&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">string</span>&gt; testDict = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">string</span>&gt;()
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            { <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;苹果&#34;</span> },
+</span></span><span style="display:flex;"><span>            { <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;香蕉&#34;</span> },
+</span></span><span style="display:flex;"><span>            { <span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#34;苹果&#34;</span> },
+</span></span><span style="display:flex;"><span>            { <span style="color:#ae81ff">4</span>, <span style="color:#e6db74">&#34;橙子&#34;</span> },
+</span></span><span style="display:flex;"><span>            { <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#34;苹果&#34;</span> }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">&#34;移除前的字典：&#34;</span>);
+</span></span><span style="display:flex;"><span>        PrintDictionary(testDict);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 要移除的目标值</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> targetValue = <span style="color:#e6db74">&#34;苹果&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 调用方法移除所有值为&#34;苹果&#34;的键值对</span>
+</span></span><span style="display:flex;"><span>        RemoveAllEntriesByValue(testDict, targetValue);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        Console.WriteLine(<span style="color:#e6db74">$&#34;\n移除值为\&#34;</span>{targetValue}<span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">&#34;的所有项后：&#34;</span>);
+</span></span><span style="display:flex;"><span>        PrintDictionary(testDict);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// &lt;summary&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// 移除Dictionary中所有值等于目标值的键值对</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// &lt;/summary&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// &lt;typeparam name=&#34;TKey&#34;&gt;字典键的类型&lt;/typeparam&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// &lt;typeparam name=&#34;TValue&#34;&gt;字典值的类型&lt;/typeparam&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// &lt;param name=&#34;dictionary&#34;&gt;要操作的字典&lt;/param&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// &lt;param name=&#34;targetValue&#34;&gt;要移除的目标值&lt;/param&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> RemoveAllEntriesByValue&lt;TKey, TValue&gt;(Dictionary&lt;TKey, TValue&gt; dictionary, TValue targetValue)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">where</span> TKey : notnull <span style="color:#75715e">// 约束键不能为null（Dictionary的默认要求）</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (dictionary == <span style="color:#66d9ef">null</span>)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(nameof(dictionary), <span style="color:#e6db74">&#34;字典不能为null&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 第一步：找出所有值等于目标值的键（存入临时列表，避免遍历中修改字典）</span>
+</span></span><span style="display:flex;"><span>        List&lt;TKey&gt; keysToRemove = dictionary
+</span></span><span style="display:flex;"><span>            .Where(kvp =&gt; EqualityComparer&lt;TValue&gt;.Default.Equals(kvp.Value, targetValue))
+</span></span><span style="display:flex;"><span>            .Select(kvp =&gt; kvp.Key)
+</span></span><span style="display:flex;"><span>            .ToList();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 第二步：遍历临时列表，移除对应键值对</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">foreach</span> (TKey key <span style="color:#66d9ef">in</span> keysToRemove)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            dictionary.Remove(key);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// &lt;summary&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// 辅助方法：打印字典内容</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">/// &lt;/summary&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> PrintDictionary&lt;TKey, TValue&gt;(Dictionary&lt;TKey, TValue&gt; dict)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> kvp <span style="color:#66d9ef">in</span> dict)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Console.WriteLine(<span style="color:#e6db74">$&#34;键：{kvp.Key}，值：{kvp.Value}&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="代码关键说明">代码关键说明</h3>
+<ol>
+<li><strong>泛型方法设计</strong>：<code>RemoveAllEntriesByValue</code> 是泛型方法，支持任意类型的<code>Dictionary</code>（如<code>Dictionary&lt;string, int&gt;</code>、<code>Dictionary&lt;Guid, double&gt;</code>等），通用性强。</li>
+<li><strong>空值检查</strong>：添加了字典为<code>null</code>的异常处理，保证代码健壮性。</li>
+<li><strong>值比较</strong>：使用<code>EqualityComparer&lt;TValue&gt;.Default</code>进行值比较，相比直接用<code>==</code>更通用（支持值类型、引用类型、可空类型）。</li>
+<li><strong>临时集合存储键</strong>：先把要移除的键存入<code>List&lt;TKey&gt;</code>，再遍历移除，避免遍历字典时修改字典导致的异常。</li>
+</ol>
+<h3 id="运行结果">运行结果</h3>
+<pre tabindex="0"><code>移除前的字典：
+键：1，值：苹果
+键：2，值：香蕉
+键：3，值：苹果
+键：4，值：橙子
+键：5，值：苹果
+
+移除值为&#34;苹果&#34;的所有项后：
+键：2，值：香蕉
+键：4，值：橙子
+</code></pre><h3 id="总结">总结</h3>
+<ol>
+<li><strong>核心原则</strong>：遍历字典时不能直接修改字典，必须先收集要移除的键到临时集合，再批量移除。</li>
+<li><strong>通用实现</strong>：使用泛型和<code>EqualityComparer</code>保证方法适配任意类型的<code>Dictionary</code>，且值比较逻辑更严谨。</li>
+<li><strong>健壮性</strong>：添加空值校验，避免空引用异常，符合C#开发的最佳实践。</li>
+</ol>
+<h2 id="另一种方法">另一种方法</h2>
+<p>除了先遍历收集待移除键、再批量删除的方式外，还有其他方法能实现“移除Dictionary中所有指定值的键值对”的需求，</p>
+<h3 id="其他实现方法及对比">其他实现方法及对比</h3>
+<p>除了经典的“先收集键再删除”，还有以下几种可行方案，我会逐一说明原理、代码和适用场景：</p>
+<hr>
+<h4 id="方法1创建新字典替换原字典">方法1：创建新字典（替换原字典）</h4>
+<p><strong>核心思路</strong>：不修改原字典，而是筛选出<strong>不需要删除</strong>的键值对，创建一个新字典，最后用新字典替换原字典。
+<strong>适用场景</strong>：字典数据量不大、允许替换原字典引用的场景（如字典是局部变量）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Collections.Generic;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Linq;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Program</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main(<span style="color:#66d9ef">string</span>[] args)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Dictionary&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">string</span>&gt; testDict = <span style="color:#66d9ef">new</span> Dictionary&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">string</span>&gt;()
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            { <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;苹果&#34;</span> }, { <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;香蕉&#34;</span> }, { <span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#34;苹果&#34;</span> }, { <span style="color:#ae81ff">4</span>, <span style="color:#e6db74">&#34;橙子&#34;</span> }
+</span></span><span style="display:flex;"><span>        };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> targetValue = <span style="color:#e6db74">&#34;苹果&#34;</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 筛选出值不等于目标值的键值对，创建新字典</span>
+</span></span><span style="display:flex;"><span>        testDict = testDict.Where(kvp =&gt; !EqualityComparer&lt;<span style="color:#66d9ef">string</span>&gt;.Default.Equals(kvp.Value, targetValue))
+</span></span><span style="display:flex;"><span>                           .ToDictionary(kvp =&gt; kvp.Key, kvp =&gt; kvp.Value);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 打印结果</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> kvp <span style="color:#66d9ef">in</span> testDict)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            Console.WriteLine(<span style="color:#e6db74">$&#34;键：{kvp.Key}，值：{kvp.Value}&#34;</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>关键说明</strong>：</p>
+<ul>
+<li>优点：代码极简，一行LINQ就能完成，无需处理“遍历中修改字典”的问题；</li>
+<li>缺点：会创建新字典对象，原字典会被GC回收，若字典是全局/共享对象，替换引用可能引发其他问题；且数据量大时，内存开销略高。</li>
+</ul>
+<hr>
+<h4 id="方法2使用临时字典中转适合不可直接替换的场景">方法2：使用临时字典中转（适合不可直接替换的场景）</h4>
+<p><strong>核心思路</strong>：先清空原字典，再把“不需要删除”的键值对重新添加回去。
+<strong>适用场景</strong>：字典是全局对象、不允许替换引用（如其他地方持有该字典的引用）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> RemoveByValue_ResetDict&lt;TKey, TValue&gt;(Dictionary&lt;TKey, TValue&gt; dict, TValue targetValue)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">where</span> TKey : notnull
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (dict == <span style="color:#66d9ef">null</span>) <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ArgumentNullException(nameof(dict));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第一步：临时保存需要保留的键值对</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> temp = dict.Where(kvp =&gt; !EqualityComparer&lt;TValue&gt;.Default.Equals(kvp.Value, targetValue))
+</span></span><span style="display:flex;"><span>                   .ToList();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 第二步：清空原字典，重新添加保留项</span>
+</span></span><span style="display:flex;"><span>    dict.Clear();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> kvp <span style="color:#66d9ef">in</span> temp)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        dict.Add(kvp.Key, kvp.Value);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>关键说明</strong>：</p>
+<ul>
+<li>优点：不替换原字典对象，仅修改其内容，适合字典被多引用的场景；</li>
+<li>缺点：清空+重新添加的操作，性能略低于“收集键再删除”（尤其字典量大时）。</li>
+</ul>
+<hr>
+<h4 id="方法3使用hashset预存值优化多次查询的场景">方法3：使用HashSet预存值（优化多次查询的场景）</h4>
+<p><strong>核心思路</strong>：如果需要频繁根据值删除，可维护一个“值→键集合”的反向索引（HashSet），查询时直接取键删除。
+<strong>适用场景</strong>：需要多次、高频根据值删除字典项的场景（如业务中频繁按值清理数据）。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// 维护字典+反向索引</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ValueIndexedDict</span>&lt;TKey, TValue&gt; <span style="color:#66d9ef">where</span> TKey : notnull
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Dictionary&lt;TKey, TValue&gt; _mainDict = <span style="color:#66d9ef">new</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 反向索引：值 → 对应的键集合</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">readonly</span> Dictionary&lt;TValue, HashSet&lt;TKey&gt;&gt; _valueToKeys = <span style="color:#66d9ef">new</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 添加键值对（同时维护反向索引）</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> Add(TKey key, TValue <span style="color:#66d9ef">value</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        _mainDict.Add(key, <span style="color:#66d9ef">value</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (!_valueToKeys.ContainsKey(<span style="color:#66d9ef">value</span>))
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            _valueToKeys[<span style="color:#66d9ef">value</span>] = <span style="color:#66d9ef">new</span> HashSet&lt;TKey&gt;();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        _valueToKeys[<span style="color:#66d9ef">value</span>].Add(key);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 根据值删除所有键值对</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> RemoveAllByValue(TValue <span style="color:#66d9ef">value</span>)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (!_valueToKeys.TryGetValue(<span style="color:#66d9ef">value</span>, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">var</span> keys)) <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 从主字典删除</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> key <span style="color:#66d9ef">in</span> keys)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            _mainDict.Remove(key);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 从反向索引删除</span>
+</span></span><span style="display:flex;"><span>        _valueToKeys.Remove(<span style="color:#66d9ef">value</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 调用示例</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Test</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Main()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> dict = <span style="color:#66d9ef">new</span> ValueIndexedDict&lt;<span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">string</span>&gt;();
+</span></span><span style="display:flex;"><span>        dict.Add(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;苹果&#34;</span>);
+</span></span><span style="display:flex;"><span>        dict.Add(<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;香蕉&#34;</span>);
+</span></span><span style="display:flex;"><span>        dict.Add(<span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#34;苹果&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        dict.RemoveAllByValue(<span style="color:#e6db74">&#34;苹果&#34;</span>); <span style="color:#75715e">// 直接删除所有值为&#34;苹果&#34;的项</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>关键说明</strong>：</p>
+<ul>
+<li>优点：高频删除时性能极高（O(1)级查询）；</li>
+<li>缺点：增加了内存开销（维护反向索引），且需要封装字典操作（添加/修改/删除时都要同步维护反向索引）。</li>
+</ul>
+<h3 id="各方法对比总结">各方法对比总结</h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>核心逻辑</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>经典遍历（收集键）</td>
+<td>先收集待删键，再遍历删除</td>
+<td>性能均衡、内存开销小</td>
+<td>代码略多</td>
+<td>大多数常规场景（推荐）</td>
+</tr>
+<tr>
+<td>创建新字典</td>
+<td>LINQ筛选后ToDictionary</td>
+<td>代码极简</td>
+<td>替换引用、内存开销略高</td>
+<td>局部字典、数据量小</td>
+</tr>
+<tr>
+<td>清空重加</td>
+<td>清空原字典+重新添加保留项</td>
+<td>不替换字典对象</td>
+<td>性能略低</td>
+<td>全局字典、多引用场景</td>
+</tr>
+<tr>
+<td>反向索引</td>
+<td>维护值→键的HashSet</td>
+<td>高频删除性能极高</td>
+<td>内存开销大、需额外维护</td>
+<td>频繁按值删除的场景</td>
+</tr>
+</tbody>
+</table>
+<h3 id="总结-1">总结</h3>
+<ol>
+<li><strong>首选经典方法</strong>：“先收集待删键，再批量删除”是通用且性能均衡的方案，适配90%以上的常规场景；</li>
+<li><strong>极简场景用新字典</strong>：如果字典是局部变量、数据量小，直接用<code>Where+ToDictionary</code>最简洁；</li>
+<li><strong>高频删除用反向索引</strong>：如果业务中需要频繁按值删除，提前维护反向索引能大幅提升性能（以内存换速度）。</li>
+</ol>
+<p>核心原则：所有方法本质都是“筛选保留项/标记待删项”，区别仅在于实现形式和性能取舍，需根据实际场景（数据量、引用方式、操作频率）选择。</p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/.net/">.NET</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/iterator_and_yield/">C#中的迭代器和yield</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/cs_asynresult_interface_detail/">.NET Framework的IAsyncResult接口的细节</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/dotnet/begin_receive_and_end_receive/">NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

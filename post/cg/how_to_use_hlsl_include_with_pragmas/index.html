@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>HLSL语言的编译指令#include_with_pragmas的具体用法 | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="HLSL语言的编译指令#include_with_pragmas的具体用法">
+		<meta property="og:title" content="HLSL语言的编译指令#include_with_pragmas的具体用法" />
+<meta property="og:description" content="HLSL语言的编译指令#include_with_pragmas的具体用法" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/cg/how_to_use_hlsl_include_with_pragmas/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-03-08T14:59:52+08:00" />
+<meta property="article:modified_time" content="2024-03-08T14:59:52+08:00" />
+
+
+		<meta itemprop="name" content="HLSL语言的编译指令#include_with_pragmas的具体用法">
+<meta itemprop="description" content="HLSL语言的编译指令#include_with_pragmas的具体用法"><meta itemprop="datePublished" content="2024-03-08T14:59:52+08:00" />
+<meta itemprop="dateModified" content="2024-03-08T14:59:52+08:00" />
+<meta itemprop="wordCount" content="224">
+<meta itemprop="keywords" content="CG,HLSL," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">HLSL语言的编译指令#include_with_pragmas的具体用法</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2024-03-08T14:59:52&#43;08:00">March 08, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>, 
+		<a class="meta-tags__link" href="/tags/hlsl/" rel="tag">HLSL</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">HLSL语言的编译指令#include_with_pragmas的具体用法</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#include_with_pragmas-在-hlsl-语言中的作用"><code>#include_with_pragmas</code> 在 HLSL 语言中的作用</a></li>
+      </ul>
+    </li>
+    <li><a href="#基本语法"><strong>基本语法</strong></a></li>
+    <li><a href="#使用示例"><strong>使用示例</strong></a>
+      <ul>
+        <li><a href="#示例-1在-hlsl-文件中定义-multi_compile"><strong>示例 1：在 <code>.hlsl</code> 文件中定义 <code>multi_compile</code></strong></a></li>
+        <li><a href="#示例-2对比-include-与-include_with_pragmas"><strong>示例 2：对比 <code>#include</code> 与 <code>#include_with_pragmas</code></strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#include_with_pragmas-的应用场景"><strong><code>#include_with_pragmas</code> 的应用场景</strong></a></li>
+    <li><a href="#总结"><strong>总结</strong></a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<h3 id="include_with_pragmas-在-hlsl-语言中的作用"><code>#include_with_pragmas</code> 在 HLSL 语言中的作用</h3>
+<p><code>#include_with_pragmas</code> 是 Unity Shader 编译器提供的一个扩展指令，用于 <strong>在包含 HLSL 头文件 (<code>.hlsl</code>) 时，同时解析其中的 <code>#pragma</code> 指令</strong>。这与普通的 <code>#include</code> 不同，普通 <code>#include</code> 只会包含代码，但不会处理 <code>#pragma</code> 相关的指令。</p>
+<hr>
+<h2 id="基本语法"><strong>基本语法</strong></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#75715e">#include_with_pragmas &#34;MyShaderHeader.hlsl&#34;</span>
+</span></span></code></pre></div><p>与普通的 <code>#include</code> 相比：</p>
+<ul>
+<li><code>#include</code> <strong>不会解析 <code>#pragma multi_compile</code> 等编译指令</strong>。</li>
+<li><code>#include_with_pragmas</code> <strong>会解析 <code>#pragma</code> 指令</strong>，确保 <code>.hlsl</code> 文件中的 <code>#pragma</code> 也会影响 Shader 变体编译。</li>
+</ul>
+<hr>
+<h2 id="使用示例"><strong>使用示例</strong></h2>
+<h3 id="示例-1在-hlsl-文件中定义-multi_compile"><strong>示例 1：在 <code>.hlsl</code> 文件中定义 <code>multi_compile</code></strong></h3>
+<p><strong><code>MyShaderHeader.hlsl</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#75715e">#pragma multi_compile _ FEATURE_ENABLED</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">float4</span> CustomFunction() { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">float4</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>); }
+</span></span></code></pre></div><p><strong><code>MyShader.shader</code></strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span>Shader <span style="color:#e6db74">&#34;Example/Shader&#34;</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    SubShader
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        Pass
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            HLSLPROGRAM
+</span></span><span style="display:flex;"><span>            <span style="color:#960050;background-color:#1e0010">#</span>include_with_pragmas <span style="color:#e6db74">&#34;MyShaderHeader.hlsl&#34;</span> <span style="color:#75715e">// 解析 MyShaderHeader.hlsl 里的 #pragma</span>
+</span></span><span style="display:flex;"><span>            ENDHLSL
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="示例-2对比-include-与-include_with_pragmas"><strong>示例 2：对比 <code>#include</code> 与 <code>#include_with_pragmas</code></strong></h3>
+<p><strong>错误的方式（使用 <code>#include</code>，不会解析 <code>#pragma</code>）</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span>HLSLPROGRAM
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include &#34;MyShaderHeader.hlsl&#34;  // 这里不会解析 `#pragma multi_compile`</span>
+</span></span><span style="display:flex;"><span>ENDHLSL
+</span></span></code></pre></div><blockquote>
+<p><strong>问题</strong>：如果 <code>MyShaderHeader.hlsl</code> 里面有 <code>#pragma multi_compile _ FEATURE_ENABLED</code>，它不会生效，因为 Unity 的 Shader 编译器 <strong>不会在普通 <code>#include</code> 里解析 <code>#pragma</code> 指令</strong>。</p>
+</blockquote>
+<p><strong>正确的方式（使用 <code>#include_with_pragmas</code>）</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span>HLSLPROGRAM
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include_with_pragmas &#34;MyShaderHeader.hlsl&#34;  // 这里会解析 `#pragma multi_compile`</span>
+</span></span><span style="display:flex;"><span>ENDHLSL
+</span></span></code></pre></div><blockquote>
+<p><strong>效果</strong>：Unity 会正确解析 <code>#pragma multi_compile _ FEATURE_ENABLED</code>，并生成 Shader 变体。</p>
+</blockquote>
+<hr>
+<h2 id="include_with_pragmas-的应用场景"><strong><code>#include_with_pragmas</code> 的应用场景</strong></h2>
+<ol>
+<li>
+<p><strong>在多个 Shader 共享 <code>#pragma multi_compile</code> 变体时</strong></p>
+<ul>
+<li>避免在每个 Shader 文件中重复写 <code>#pragma multi_compile</code>。</li>
+<li>只需在一个 <code>.hlsl</code> 文件中定义 <code>#pragma</code>，然后用 <code>#include_with_pragmas</code> 引入。</li>
+</ul>
+</li>
+<li>
+<p><strong>模块化 Shader 结构</strong></p>
+<ul>
+<li>例如，将不同的 Shader 功能模块拆分到多个 <code>.hlsl</code> 文件中，每个模块包含自己的 <code>#pragma</code>，这样主 Shader 只需要 <code>#include_with_pragmas</code>，避免重复编写 <code>#pragma</code> 规则。</li>
+</ul>
+</li>
+<li>
+<p><strong>防止 <code>unknown pragma ignored</code> 警告</strong></p>
+<ul>
+<li>如果 <code>#pragma multi_compile</code> 直接放在 <code>.hlsl</code> 里，而使用的是 <code>#include</code>，可能会触发 <code>unknown pragma ignored</code> 警告。</li>
+<li>通过 <code>#include_with_pragmas</code>，可以确保 Unity 解析 <code>#pragma</code> 语句，不会被忽略。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="总结"><strong>总结</strong></h2>
+<ul>
+<li><code>#include_with_pragmas</code> <strong>和 <code>#include</code> 的区别</strong>：
+<ul>
+<li><code>#include</code> <strong>不会解析 <code>#pragma</code> 指令</strong>。</li>
+<li><code>#include_with_pragmas</code> <strong>会解析 <code>#pragma</code>，确保 Shader 变体正常生效</strong>。</li>
+</ul>
+</li>
+<li><strong>适用于共享 <code>#pragma</code> 规则的情况</strong>，如 <code>multi_compile</code>、<code>shader_feature</code> 等，减少重复代码。</li>
+<li><strong>避免 <code>unknown pragma ignored</code> 警告</strong>，确保 <code>multi_compile</code> 和 <code>shader_feature</code> 变体能正确解析。</li>
+</ul>
+<p>如果你的 <code>.hlsl</code> 里有 <code>#pragma</code> 语句，推荐使用 <code>#include_with_pragmas</code> 来确保它们正确生效！</p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/cg/">CG</a>
+			<a class="entry__tag btn" href="/tags/hlsl/">HLSL</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/octahedron_mapping/">八面体（Octahedron）及其坐标映射</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/hlsl_float_to_int/">在HLSL中对浮点数和整数之间进行转换</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/how_to_set_camera_for_isometric/">3转2时如何设置摄像机角度以实现isometric渲染效果</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/inside_hdr/">理解高动态范围光</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/tiny3d_implement_introduce/">软渲染示例程序Tiny3D的实现简介</a></li>
+		
+	</ul>
+</div>
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

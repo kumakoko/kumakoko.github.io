@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Windows Programming on XGF</title>
+    <link>http://www.xionggf.com/tags/windows-programming/</link>
+    <description>Recent content in Windows Programming on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 09 Apr 2016 13:39:08 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/tags/windows-programming/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一分钟搞定boost库编译</title>
+      <link>http://www.xionggf.com/post/windows/boost_compilation/</link>
+      <pubDate>Sat, 09 Apr 2016 13:39:08 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/windows/boost_compilation/</guid>
+      <description>假定已经从www.boost.org下载了最新的boost安装包，以boost1.39.0为例：&#xA;把压缩包解压到某目录，比如E:\sdk下，这时候，将得到目录：E:\sdk\boost_1_39_0在此目录下，将有一个子目录boost，里面就是所有的boost内容。&#xA;进入 E:\sdk\boost_1_39_0\tools\jam\src 目录，点击 build.bat 文件，将执行 bjam.exe 文件的构建，构建完毕后，将生成E:\sdk\boost_1_39_0\tools\jam\src\bin.ntx86目录。 bjam.exe 就在此目录下。&#xA;将 bjam.exe 拷贝到E:\sdk\boost_1_39_0下，在在系统菜单中，点出“运行”对话框，执行cmd命令，调出控制台窗口，然后把当前目录定位到E:\sdk\boost_1_39_0。&#xA;输入如下命令：&#xA;bjam stage --toolset=msvc-8.0 link=shared runtime-link=shared threading=multi debug release 注意上面的命令行中，等号两端的变量不能留有空格，比如-toolset = msvc-8.0会报错。这样子，就将使用VC2005，以生成多线程版本的，同时生成调试版和发行版的动态链接库文件的形式构建所有需要构建的boost库，如果想生成所有版本的：包括单多线程，静态动态链接的，调试版发行版的全部都有的库，则可以用下面一句命令搞定：&#xA;bjam --toolset=msvc-8.0 --build-type=complete </description>
+    </item>
+    <item>
+      <title>Windows平台上无法启动Android ADB Server的解决方案</title>
+      <link>http://www.xionggf.com/post/windows/launch_adb_question/</link>
+      <pubDate>Thu, 09 Apr 2015 13:39:08 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/windows/launch_adb_question/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;在Windows系统上使用adb时。经常会出现adb devices命令长时间无响应、adb start-server 失败、eclipse adt初始化时卡在dbms-init上等现象。造成这个问题的大部分原因，是在于adb server所默认使用的5037号端口被占用了。这种情况尤其在Windows系统装了类似于360手机助手等软件时经常出现。比如360助手在启动之后，会启动一个名字为360MobileLink.exe的进程。这个进程一般会占用这个默认端口号。&#xA;解决这个问题的最直接野蛮的方法，就是找出占用5037端口的进程，然后关闭它。我们可以使用命令行操作，如下：&#xA;netstat -aon | findstr 127.0.0.1:5037 执行此命令后，便会打印出占用这个端口的进程的PID，根据这个PID值。我们再输入命令如下：&#xA;tasklist|findstr &amp;#34;进程PID&amp;#34; 执行此命令后，便会打印出这个进程对应的可执行文件名，启动任务管理器关闭它即可。关闭了这个进程后，执行&#xA;adb kill-server adb start-server 便可重新启动adb server。所以在开发时，最好先打开elipse等软件，启动了adb之后，再启动360手机助手等软件，才不会发生这种占用端口的问题。&#xA;还有另一种方法就是自己配置adb server使用的端口号，只要在系统环境变量中定义 ANDROID_ADB_SERVER_PORT 的值即可。最好选择一个5位数的端口号（10000 ~ 65535），使用一个生僻的值。不易重复。Windows下只要在环境变量中增加一个ANDROID_ADB_SERVER_PORT值填你自己定义的端口。Linux下只要 export $ANDROID_ADB_SERVER_PORT = 自定义端口，即可。</description>
+    </item>
+    <item>
+      <title>使用VS2005编译freetype的动态链接库</title>
+      <link>http://www.xionggf.com/post/windows/build_freetype_dll_with_vs2005/</link>
+      <pubDate>Thu, 09 Apr 2015 13:39:08 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/windows/build_freetype_dll_with_vs2005/</guid>
+      <description>使用VS2005编译freetype的动态链接库 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;使用freetype是2.3.8版本，freetype2.3.8包解压缩后，在**.\builds\win32\visualc**目录下有基于vs2005的sln文件，不过这个解决方案文件，只是包含有生成静态链接的工程设置，要编译动态链接库，还需要手动去处理一下。步骤如下：&#xA;参考./doc目录下的INSTALL.ANY文档。该文档其实已经把标准编译所要包含的文件及它们的作用说得很清楚了，现在使用VC2005建立一个空的win32DLL工程，然后按照INSTALL.ANY的说明把需要加入的文件加入工程内，INSTALL.ANY文件内有一很明显的提醒：“DO NOT COMPILE ALL C FILES!”，就是不要编译所有的C文件，这点应该注意。 要进行修改的文件是ftoption.h，该文件在**/include/freetype/config**目录下，该目录主要存放一些配置头文件。ftoption.h文件里对每一可定制项目都有很详细的解释，为了可以编译成DLL，要进行的修改是： 首先备份一下ftoption.h，如，另存为ftoption_bak.h文件。&#xA;根据ftoption.h在 &amp;ldquo;DLL export compilation&amp;rdquo; 项里的描述，FreeType2库在需要导出的函数前都使用了FT_EXPORT(用在函数定义处)，FT_EXPORT_DEF(用在函数声明处）两个宏，需要重新定义这两个宏。FreeType2库对于FT_EXPORT和FT_EXPORT_DEF宏的缺省定义在ftconfig.h文件中。所以在ftopion.h的该处重新定义自己的FT_EXPORT和FT_EXPORT_DEF就可以了,重新定义如下所示：&#xA;#ifdef FT2_DLL //因为在静态库与动态中都使用该文件，所以区别使用该指示字，使用FT2_DLL表示要编译为DLL动态库。 #ifdef FT2_EXPORTS //按照微软的标准做法，定义__declspec(dllexport)与__declspec(dllimport) #define FT_EXPORT( x ) __declspec(dllexport) x #define FT_EXPORT_DEF( x ) x #else //按照微软的说法，其它__declspec(dllimport)也可以不要的，但这样做,更有效率并且如果不这么做的话有时会出现问题 #define FT_EXPORT( x ) __declspec(dllimport) x #define FT_EXPORT_DEF( x ) x #endif #endif </description>
+    </item>
+    <item>
+      <title>给VC添加新的源代码文件扩展名以便能被编译【翻译】</title>
+      <link>http://www.xionggf.com/post/windows/add_file_extension_to_vc/</link>
+      <pubDate>Wed, 09 Apr 2014 13:39:08 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/windows/add_file_extension_to_vc/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;原文地址&#xA;读了microsoft的mvp网站上的一篇关于添加VC源文件扩展名的文章，顺便就把它摘要翻译下来，以备参考&#xA;Q: 如何使得Visual Studio能够把.cc后缀名的文件当作C++源文件来（编译）处理。&#xA;A: 可以使用/Tp编译选项指示编译器把.cc文件当作C++源文件来进行处理。可以把/Tp命令添加在工程的&amp;quot;custom build&amp;quot;选项中。或者可以通过修改注册表，把.cc后缀名添加到“可当成是C++源文件来处理的文件”的后缀名列表中。要修改的键如下：&#xA;HKEY_CURRENT_USER/Software/Microsoft/DevStudio/X.0/Build System/Components/Platforms/Win32 (x86)/Tools/32-bit/C/C++/Input_Spec&#xA;HKEY_CURRENT_USER/Software/Microsoft/DevStudio/6.0/Build System/Components/Tools/&amp;lt;Component 0x3&amp;gt;/Input_Spec&#xA;HKEY_CURRENT_USER/Software/Microsoft/DevStudio/X.0/Text Editor/Tabs/Language Settings/C/C++/FileExtensions&#xA;上面的X是Devstudio的版本号（5或者是6）。同时可以通过修改下面的键来使得有新后缀名的文件也能使用语法高亮显示功能。修改注册表要比通过设置/Tp命令来得方便，当然也可以使用后者。最后，不能通过修改注册表来在同一工程中混合使用C源文件和C++源文件。唯一的可行方法就是使用custom build规则。</description>
+    </item>
+  </channel>
+</rss>

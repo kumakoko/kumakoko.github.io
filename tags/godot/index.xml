@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Godot on XGF</title>
+    <link>http://www.xionggf.com/tags/godot/</link>
+    <description>Recent content in Godot on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 14 Nov 2024 18:21:49 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/tags/godot/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Godot4.0的浮动游戏工作区自动全屏的问题</title>
+      <link>http://www.xionggf.com/post/godot/godot_disable_fullscree/</link>
+      <pubDate>Thu, 14 Nov 2024 18:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/godot/godot_disable_fullscree/</guid>
+      <description>在 Godot 4.0 中，当屏幕分辨率小于项目设置中指定的窗口大小，Godot 会自动将主窗口强制切换为全屏模式，这是一种为防止窗口内容显示不完整而设计的行为，但这对于想要保持“浮动窗口”状态（非全屏）的人来说是个问题。&#xA;✅ 目标： 保持浮动窗口模式（Windowed），即使当前屏幕分辨率小于设置的窗口大小。&#xA;🎯 解决思路 Godot 引擎中这个行为目前是默认的“安全机制”，但你可以通过如下方法来避免它强制全屏：&#xA;✅ 方法 1：运行时手动设置窗口大小并强制浮动模式 在你的主脚本中（例如 autoload.gd 或 Main.gd）添加如下代码，确保窗口总是以“窗口模式”运行，并强制缩小尺寸：&#xA;// 使用 C# 版本 using Godot; public partial class Main : Node { public override void _Ready() { // 强制取消全屏 DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed); // 获取屏幕尺寸 Vector2I screenSize = DisplayServer.ScreenGetSize(); // 获取当前项目设置的窗口大小 Vector2I targetSize = new Vector2I(1280, 720); // 或从 ProjectSettings 读取 // 如果屏幕太小，动态缩小窗口以避免强制全屏 if (targetSize.X &amp;gt; screenSize.X || targetSize.Y &amp;gt; screenSize.Y) { GD.Print(&amp;#34;Screen too small, resizing window to fit.</description>
+    </item>
+    <item>
+      <title>在 Godot 中锁定鼠标光标的方法</title>
+      <link>http://www.xionggf.com/post/godot/godot_mouse_mode/</link>
+      <pubDate>Wed, 13 Nov 2024 18:21:49 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/godot/godot_mouse_mode/</guid>
+      <description>在 Godot 中，有几种方法可以锁定鼠标光标，使其不超出游戏窗口。以下是使用 C# 的实现方法：&#xA;1. 使用 Input.set_mouse_mode() 方法 这是最常用的方法，Godot 提供了几种鼠标模式：&#xA;using Godot; public class MouseLock : Node { public override void _Ready() { // 锁定鼠标到窗口中心并隐藏 Input.SetMouseMode(Input.MouseMode.Captured); // 其他可用模式: // Input.MouseMode.Visible - 正常可见模式(默认) // Input.MouseMode.Hidden - 隐藏但可以自由移动 // Input.MouseMode.Captured - 锁定并隐藏(最适合FPS游戏) // Input.MouseMode.Confined - 限制在窗口内但可见 } public override void _Input(InputEvent @event) { if (@event is InputEventKey keyEvent &amp;amp;&amp;amp; keyEvent.Pressed) { if (keyEvent.Scancode == (int)KeyList.Escape) { // 按ESC键释放鼠标 Input.SetMouseMode(Input.MouseMode.Visible); } } } } 2.</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Unity3D | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Unity3D" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/categories/unity3d/" />
+
+
+		<meta itemprop="name" content="Unity3D">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/categories/unity3d/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-term">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/categories/">Categories</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity3D</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">Unity3D</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_single_channel_texture/">杂谈Unity3D的single channel texture</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+经实测，在Unity3D 2020.2.6f1版本中，在导入纹理的钩子代码中，如果设置TextureImporter.textureType = TextureImporterType.SingleChannel，以及TextureImporterPlatformSettings.format = TextureImporterFormat.R8是一张2048的贴图，导入后其格式
+根据Unity的纹理格式文档描述：
+当TextureImporter.textureType为TextureImporterType.SingleChannel时，除了R8之外，可选的格式有：
+据UWA的人说，R Compressed 4 bit应该是但在本版本的Unity中，其对应的TextureImporterFormat.COM枚举值应该是EAC_R。
+根据Unity的纹理格式文档描述：
+R Compressed EAC 4 bit是一个High-quality compressed R (single-channel) 纹理。一个256x256的纹理，在内存中其大小为32KB。在Android平台下，OpenGLES2.0版本是不支持该格式的，如果指定了该格式，则会自动解压为 【ETC2 fallback】 标签项所指定的纹理格式。
+考虑到现在Android手机早就已经是支持OpenGLES3了，所以大胆使用此格式，作为单通道贴图的导入格式。
+参考网页 best-texture-format-for-a-single-channel Crunched single channel texture an-introduction-to-texture-compression-in-unity Unity Editor下判断图片是否带alpha通道 Unity 中纹理压缩的方式 – 搁浅の砖厂 Recommended, default, and supported texture formats, by platform C# (CSharp) UnityEditor TextureImporterSettings示例 https://huailiang.github.io/blog/2022/astc/</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-02-23T15:04:03&#43;08:00">February 23, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/animation/animancer_transition/">Animancer的Transition参数手册（翻译）</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+Transitions 与其硬编码淡入淡出的持续时间(hard-coding the fade durations)，开始和结束时间，动画剪辑的播放速度和动画事件，不如使用transition机制。此机制可以在编辑模式下的可视化地编辑它们。由非程序员在Inspector面板中定义这些细节，无需编辑和重新编译任何脚本。
+Animancer中包含的每个State类都有其自己的Transition Type，其中包含与之相关的各种详细信息，以便在将其传递给AnimancerComponent.Play(ITransition)时，这些详细信息可用来创建该State类型。例如，当播放一个AnimationClip对象（即一个动画片段剪辑）时，一个ClipState.Transition将创建一个ClipState实例对象。如下代码所示：
+using Animancer; using UnityEngine; public class TransitionExample : MonoBehaviour { [SerializeField] private AnimancerComponent _Animancer; [SerializeField] private ClipState.Transition _Animation; private void OnEnable() { _Animancer.Play(_Animation); } } 对应的inspector显示如下图：
+这个示例详细演示如何使用transitions。
+Fields 字段名字 代码值 inspector截图 Animation Clip Fade Duration FadeDuration Speed Speed Start Time NormalizedStartTime End Time Events.NormalizedEndTime Events Events 各个属性的说明如下表
+字段名字 说明 Animation 要播放的那个animation clip Fade Duration 从上一个动画淡入淡出到新动画所需的时间。此值不能为负，并且将其设置为0 sill会使动画立即播放。不管使用哪个字段输入值， 此时间字段始终被序列化为秒 Speed 动画以其正常速度的倍数播放的速度。负值会使它向后播放（因此可能希望将Start Time设置为1x，以便从末尾开始向后播放 Start Time 如果启用，播放时动画时刻将立即跳到该值。否则，它将显示默认值：0x（正速度）或1x（负速度）。如果动画的AnimancerNode.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-02-12T20:20:49&#43;08:00">February 12, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/animation/animancer_state/">Animancer的States（翻译）</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+原文地址
+State 当播放一段动画剪辑（animation clip）时，Animancer会创建一个ClipState来管理它并跟踪其进度。ClipState是最常见的一种AnimancerState，除此之外，有其他类型的AnimancerState，例如Controller States和 Mixer States。这些用来在一个state中管理多个动画剪辑。
+执行AnimancerComponent.Play函数播放一个animation clip，就返回一个AnimancerState对象，如下代码所示：
+void PlayAnimation(AnimancerComponent animancer, AnimationClip clip) { // Play the animation and control its state: var state = animancer.Play(clip); state.Time = ... state.NormalizedTime = ... state.Speed = ... state.OnEnd = ... } 也可以自己访问和创建状态，而无需立即播放它们：
+code description var state = animancer.States.GetOrCreate(clip); 访问状态而不播放状态（该Play方法在内部使用此状态）。 var state = animancer.States[clip]; 获取状态（如果存在）（否则为null）。 var state = animancer.States.Create(key, clip); 即使该动画已经存在，也要创建一个新状态。注意必须为每个状态提供不同的key。 var state = new ClipState(animancer, clip); 创建一个新状态而不给它一个Key。可以使用其AnimancerState.Key属性分配一个。 Keys 当用AnimancerComponent.Play方法创建一个state时，这个state存储在一个内部的Dictionary容器中，通过指定某个key，用以在以后用这个key来检索使用该state。
+默认地，该state所播放的那段动画剪辑所对应的AnimationClip实例对象，将作为该state的key值 NameAnimancerComponent将重载其GetKey方法，NameAnimancerComponent类不再使用它播放的AnimationClip对象，而是使用这个动画剪辑的名字字符串去作为key。但在启动时，可以在inspector面板中，在Animation中预先注册好这个 void PlayAnimation(AnimancerComponent animancer, AnimationClip clip) { // Trying to play an animation before registering it does nothing.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-02-11T20:30:49&#43;08:00">February 11, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/animation/u3d_animation_state_detail/">Unity3D的Animator中的animation transition参数细节</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+选项 描述 Has Exit Time 如果设置为true，则仅在指定的动画剪辑已经播放了给定百分比之后，才启用动画剪辑过渡（transition）。 如果禁用，则将在满足其过渡条件后，立即进行切换。 如果要创建由若干个动画剪辑组成的序列，请将其设置为true。 Exit Time 这是满足“Has Exit Time”选项勾选后，指定的播放动画长度的百分比（0-1范围）。 例如，如果将其设置为0.5，则在播放了50％的动画剪辑后，当满足转换条件后，动画的状态将转换。 Fixed Duration 这个属性将和下一个属性“ Transition Duration (s)”结合使用。如果本选项启用，的财产与下一个过渡期间结合在一起。 如果启用，则Transition Duration (s) 项以秒为单位;如果关闭，则以动画播放时间的百分比表示。 Transition Duration (s) 动画状态过渡所需的时间。 这是从一个动画剪辑过渡到另一个所用的时间。 在过渡期间动画剪辑会被混合在一起。 过渡时间越长，会让动画剪辑转换得更平滑些，否则就转换得更锐利。一个好的默认值是大约0.25。 Transition Offset 选项会把待处理的目标动画开始时刻做偏移。该值以动画剪辑的播放百分比表示。 比如将其设置为0.3。意思是说，当从动画剪辑A过渡到动画剪辑B时，那么A过渡到B之后，会从B的30%处开始播放，而不会从B的开始刻度处开始播放。 Interruption Source 此设置告诉Unity某个动画剪辑过渡。是否可以被其他过渡打断。 例如动画系统下有一个默认的Idle动画，Idle动画有Jump动画分支和Walk动画分支，而Walk动画分支下又有一个Jump1动画分支，当我们同时满足两个Jump动画的切换条件时，Interruption Source就可以判断优先从哪个动画源切换到Jump或Jump1。Interruption Source中四个选项如下表中的几个选项的一个 Interruption Source的各个选项表 选项 描述 None 关闭Interruption Source选项 Current State: 从当前源打断 Next State 从下一个源打断 Current State then Next State 优先从当前源打断，如果当前源不能切换到下一个状态则从下一个源打断。 Next State then Current State 和上一个选项相反 Ordered Interruption If set to false, this lets the transition be interrupted by other transitions independently of their order.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-01-02T20:20:49&#43;08:00">January 02, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_color_space/">Unity3D的Color Space细节解析</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+参考网页 https://zhuanlan.zhihu.com/p/36507196
+https://zhuanlan.zhihu.com/p/93216787
+https://blog.csdn.net/candycat1992/article/details/46228771
+https://developer.nvidia.com/gpugems/GPUGems3
+http://www.klayge.org/2011/02/26/gamma%E7%9A%84%E4%BC%A0%E8%AF%B4/
+https://zhuanlan.zhihu.com/p/36507196
+https://www.kinematicsoup.com/news/2016/6/15/gamma-and-linear-space-what-they-are-how-they-differ
+https://zhuanlan.zhihu.com/p/66558476
+https://www.cambridgeincolour.com/tutorials/gamma-correction.htm
+https://zhuanlan.zhihu.com/p/37679604
+https://zhuanlan.zhihu.com/p/271011254</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2021-01-01T20:20:49&#43;08:00">January 01, 2021</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/generic_animation_root_motion/">Unity3D动画中Root Motion的概念和使用</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+Unity3D的Mecanim动画系统可以直接复用3DS MAX中制作的动画文件中的位移，这个就是通过applyRootMotion选项来达成的，我们只需要在使用Animator控制动画播放的同时，设置Animator组件的applyRootMotion字段为true就可以了。
+applyRootMotion，从字面上理解来看，是“应用于根节点的运动”，官方文档的解释如下：
+The Root Transform is a projection on the Y plane of the Body Transform and is computed at runtime. At every frame, a change in the Root Transform is computed. This change in transform is then applied to the Game Object to make it move.
+直接翻译的意思是：
+root transform是指body transform在在Y平面上的投影（即Y=0的平面，可以理解为模型所站立的“地面”。且这个投影是在运行时执行计算。在每一帧，root transform的每一个变化都会被计算。然后这些变化将会作用到game object上，使得它发生运动
+也就是说，root motion就是指：在动画中物体产生的位移，可以在运行时，让绑定了Animator组件的game object，也发生实际的位移。且这个位移，是根据播放动画中每一帧物体的位移，在 X 和 Z 轴上投影计算而得。
+对于某些技能动画，整个动画是有一定位移的，但是动画的位移是动作设计师在设计时根据动作需要调出来的，位移是跟动作的幅度直接相关和匹配的。那么在释放技能的时候就只需要直接播放动画，只要应用这个 Root Motion 的特性，就可以很好的完成角色在播放动作的同时进行移动，动作播放完毕之后就在动画结束帧角色所在的位置。而不要额外地做计算工作。接下来看下animation clip inspector面板上若干和root motion有关的属性选项
+animation clip inspector 界面上的一些属性介绍 以下是Unity 2019.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-05-09T18:38:27&#43;08:00">May 09, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_shader_multi_compile_variants/">Unity3D Shader的内建multi_compile开关所涵盖的多样体</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+multi_compile_fwdbase 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdbase编译指令，包含了以下 9 个内建的keyword：
+DIRECTIONAL DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON LIGHTMAP_ON LIGHTMAP_SHADOW_MIXING LIGHTPROBE_SH SHADOWS_SCREEN SHADOWS_SHADOWMASK VERTEXLIGHT_ON 如果不做特别的指定的话，默认地启用了其中的 4 个内建keyword，分别是：DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON组成了 8 个多样体，如下：
+多样体（变体） DIRECTIONAL DIRECTIONAL LIGHTPROBE_SH DIRECTIONAL SHADOWS_SCREEN DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN DIRECTIONAL VERTEXLIGHT_ON DIRECTIONAL LIGHTPROBE_SH VERTEXLIGHT_ON DIRECTIONAL SHADOWS_SCREEN VERTEXLIGHT_ON DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON multi_compile_fwdadd 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdadd编译指令，包含了以下 5 个内建的keyword：
+DIRECTIONAL DIRECTIONAL_COOKIE POINT POINT_COOKIE SPOT 如果不做特别的指定的话，默认地启用了全部的 5 个内建keyword，组成了 8 个多样体，如下：
+keyword组成的多样体（变体） DIRECTIONAL DIRECTIONAL_COOKIE POINT POINT_COOKIE SPOT multi_compile_fwdadd_fullshadows 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdadd_fullshadows编译指令，包含了以下 5 个内建的keyword：</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-31T11:37:25&#43;08:00">January 31, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/universal_additional_camera_data_component/">The Universal Additional Camera Data component</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+URP版本：8.2.0
+源参考网页
+通用附加相机数据组件（Universal Addtional Camera Data Component） 是通用渲染管线（URP）用于内部数据存储的组件。通用附加相机数据组件使URP可以扩展和覆盖Unity标准相机组件的功能和外观。
+在URP中，具有Camera组件的GameObject还必须具有通用附加摄影机数据组件。如果您的项目使用URP，则在创建Camera GameObject时，Unity会自动添加通用附加相机数据组件。您不能从带有Camera组件的game object中删除通用附加相机数据组件。
+如果您使用脚本来控制和自定义URP，则可以通过以下脚本访问摄像机的通用附加摄像机数据组件：
+var cameraData = camera.GetUniversalAdditionalCameraData(); 有关更多信息，请参见UniversalAdditionalCameraData API文档。如果需要通过脚本频繁访问通用附加摄像机数据组件，则应缓存对其的引用，以避免不必要的CPU工作。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-15T19:21:39&#43;08:00">January 15, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/urp/">Universal Render Pipeline</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+1 URP的常见问题回答 URP和HDRP(High Definition Render Pipeline)不能混用。 可以从内建render pipeline转到URP。可以用升级器(upgrade)升级内建shader到URP shader。如果自定义的shader的话，需要手动去upgrade。 不能在运行期换pipeline asset。 URP和HDRP之间不能换用。 通过Package Manager获取URP的package 在URP Asset的【Player Setting】界面上可以找到Dynamic Batching的checkbox 选中材质球时，在Inspector面板中，找到Render Face选项，选择Both选项，即可开启Double Sided Global Illumination。 URP适用于各种平台，包括PC和mobile 在Built-in RP和URP功能对照表中，标识为Not Supported的功能，表示没有且不会在后续版本中实现。 如果在build URP工程时很慢，检查以下shader stripping是否设置对，要strip掉可以strip掉的shader。 缺省地，URP是在linear space中工作，可以在Player Setting中将其设置为在gamma space中工作。 通过创建ScriptableRendererFeature脚本，使用scriptable render pass可以扩展URP的功能。 2 URP Asset URP版本：8.2.0 源网页
+要使用URP asset，需要创建一个URP asset，并在【Graphic settings】界面将其赋值使用。URP asset控制图形渲染的功能，设置图形渲染的质量等级。URP asset本身是一个scriptable object。它继承自RenderPipelineAsset类。在一个工程中可以使用多个URP asset，并且可以在它们之间切换使用，比如有个URP asset是启用了阴影，另一个URP asset关闭了阴影。
+URP有以下几大类的控制选项，如下：
+General Quality Lighting Shadows Post-processing Advanced 下面的图显示了这几个控制选项的UI：
+2.1 General 这是一些用于控制管道渲染框架的核心部分常规设置
+属性名 描述 对应的编辑器变量名称 Depth Texture 当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个深度纹理_CameraDepthTexture。缺省地URP将把这个深度纹理交给你场景中的所有的摄像机去使用之。 m_RequireDepthTextureProp Opaque Texture 当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个不透明的深度纹理_CameraOpaqueTexture。缺省地，URP将这个深度纹理交给你场景中的所有的摄像机使用。这个深度纹理起的作用，就很类似于built-in render pipeline中的GrabPass。在URP渲染任意的透明状网格(transparent mesh)时，该纹理将会提供一个当前场景的一个快照(snapshot) m_RequireOpaqueTextureProp Opaque Downsampling 设置Opaque Texture属性的降采样方式，有None(不采样)、2倍线性过滤(2x Bilinear)，、4倍线性过滤(4x Bilinear)，、4倍盒状过滤(4x Bilinear)，其中4倍盒状过滤产生一种轻柔羽化的效果 m_OpaqueDownsamplingProp Terrain Holes 禁用此项的话，在build包的时候，URP将会移出所有的Terrain hole shader变体，将会减少build包的时间 &ndash; 2.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-15T19:21:39&#43;08:00">January 15, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/multicompile_shaderfeature_shadervariant_assetbundle/">Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+multi_compile编译指示符 multi_compile编译指示符的文档在这里。假如有以下的shader示例语句：
+#pragma multi_compile _USE_SEMITRANSPARENT _USE_OPAQUE #pragma multi_compile _MULTI_RED _MULTI_GREEN _MULTI_BLU ... fixed4 frag (v2f i) : SV_Target { fixed4 col = tex2D(_MainTex, i.uv); #if _MULTI_RED col = col * fixed4(1,0,0,1); #elif _MULTI_GREEN col = col * fixed4(0,1,0,1); #elif _MULTI_BLUE col = col * fixed4(0,0,1,1); #endif #if _USE_SEMITRANSPARENT col.a = 0.5; #elif _USE_OPAQUE col.a = 1.0; #endif return col; } 那么根据排列组合，就会有 $ 2 \times 3 = 6 $ 种代码段的组合，即分别是 _USE_SEMITRANSPARENT与_MULTI_RED ， _USE_SEMITRANSPARENT与_MULTI_GREEN ， _USE_SEMITRANSPARENT与_MULTI_BLUE ， _USE_OPAQUE与_MULTI_RED ， _USE_OPAQUE与_MULTI_GREEN ， _USE_OPAQUE与_MULTI_BLUE。总得来说，就是各种排列组合对应编译生成的变体， $\color{#FF0000}{无论有没有被使用上，都会被编译打包到游戏包或者资源包中}$ 。所以 在运行时 ，可以使用 Material.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-01-04T13:20:28&#43;08:00">January 04, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
+		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
+		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
+		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+<div class="pagination block">
+				<a class="pagination__item pagination__item--desktop" href="/categories/unity3d/">1</a>
+				<a class="pagination__item pagination__item--desktop" href="/categories/unity3d/page/2/">2</a>
+				<a class="pagination__item pagination__item--desktop" href="/categories/unity3d/page/3/">3</a>
+				<a class="pagination__item pagination__item--desktop" href="/categories/unity3d/page/4/">4</a>
+				<span class="pagination__item pagination__item--active" data-total="7">5</span>
+				<a class="pagination__item pagination__item--desktop" href="/categories/unity3d/page/6/">6</a>
+				<a class="pagination__item pagination__item--desktop" href="/categories/unity3d/page/7/">7</a>
+</div>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

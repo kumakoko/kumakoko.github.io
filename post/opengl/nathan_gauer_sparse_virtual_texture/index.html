@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>Nathan Gauër的Sparse virtual textures（翻译） | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="Nathan Gauër的Sparse virtual textures（翻译）">
+		<meta property="og:title" content="Nathan Gauër的Sparse virtual textures（翻译）" />
+<meta property="og:description" content="Nathan Gauër的Sparse virtual textures（翻译）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/post/opengl/nathan_gauer_sparse_virtual_texture/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2024-12-15T20:36:51+08:00" />
+<meta property="article:modified_time" content="2024-12-15T20:36:51+08:00" />
+
+		<meta itemprop="name" content="Nathan Gauër的Sparse virtual textures（翻译）">
+<meta itemprop="description" content="Nathan Gauër的Sparse virtual textures（翻译）"><meta itemprop="datePublished" content="2024-12-15T20:36:51+08:00" />
+<meta itemprop="dateModified" content="2024-12-15T20:36:51+08:00" />
+<meta itemprop="wordCount" content="574">
+<meta itemprop="keywords" content="OpenGL,CG," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Nathan Gauër的Sparse virtual textures（翻译）</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2024-12-15T20:36:51&#43;08:00">December 15, 2024</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>, 
+		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>, 
+		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">Nathan Gauër的Sparse virtual textures（翻译）</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#稀疏虚拟纹理">稀疏虚拟纹理</a>
+      <ul>
+        <li><a href="#步骤-1---手工制作分页">步骤 1 - 手工制作分页</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
+<p><a href="https://studiopixl.com/2022-04-27/sparse-virtual-textures">原文地址</a></p>
+<h2 id="稀疏虚拟纹理">稀疏虚拟纹理</h2>
+<p><strong>稀疏虚拟纹理</strong>(sparse virtual texture)。简单地说，就是在着色器中重新实现<strong>分页</strong>（<strong>pagination</strong>），可以拥有无限的纹理，同时保持 GPU 内存使用量恒定。</p>
+<h3 id="步骤-1---手工制作分页">步骤 1 - 手工制作分页</h3>
+</br>
+<h4 id="分页概述">分页概述</h4>
+</br>
+<p>要理解 SVT 如何工作，首先要了解什么是分页：</p>
+<p>在大多数计算机上，数据存储在 RAM 中。RAM 是一个线性缓冲区，其<strong>第一个</strong>字节位于地址 0，<strong>最后一个</strong>字节位于地址N。因为某些原因，使用真实地址并不方便。因此有人发明了<strong>分段</strong>（<strong>segmentation</strong>），后来演变为分页。这个想法很简单：使用<strong>虚拟地址</strong>（<strong>virtual address</strong>），由 CPU 将其转换为实际 RAM 地址。</p>
+<p><img src="/image/opengl/nathan_gauer_sparse_virtual_textures/2022-svt-01.webp" alt="内存空间分页示意图"></p>
+<blockquote>
+<p>在上图中：左侧是虚拟内存，可以看见虚拟内存的地址是线性连续的。共分为4个page。虚拟内存中每个page，都线性映射到page table中的一个entry。</p>
+</blockquote>
+<p>下面举例说明，利用page和page table，如何将一个virtual RAM address（VRA）映射到physical RAM address（PRA）。例子中的page的大小是4KB，即4096个字节。每个虚拟地址VRA，可以用公式表示为：</p>
+<pre tabindex="0"><code>VRA = PageIndex * 4096 + Offset
+</code></pre><p>其中<code>PageIndex</code>表示该page对应于page table中的第几个entry，从0开始算起。<code>4096</code>就是page的大小4KB，<code>Offset</code>则是该VRA在page中，相对于page起始地址的偏移值。</p>
+<ol>
+<li>假如有VRA为9416，将其除以4096，得到商为2，余为1224。</li>
+<li>上一步得到的商就是PageIndex值，余数就是Offset，这表示，VRA=9416的地址，对应的page table的第2个entry。</li>
+<li>假定第2个entry记录的实际物理页空间的首地址为20480，则PRA = 20480 + Offset = 21704</li>
+</ol>
+<p>获取你的记忆地址。
+地址 = 9416
+将其拆分为页面对齐的值和其余部分。
+9416 =&gt; 8192 + 1224。
+对齐地址 = 8192
+休息 = 1224
+取对齐值，然后除以页面大小。
+8192/4096 = 2
+索引 = 2
+这个结果就是页表中的索引。
+读取此索引处的页表条目，这是您的新对齐地址：
+页表[2] = 20480
+将其余内容添加回此地址：
+物理地址 = 20480 + 1224
+您有您的实际地址。
+将页面概念添加到着色器
+为了实现这种技术，我需要：</p>
+<p>查找要加载的页面
+将它们加载到“主内存”中
+添加此分页表/翻译技术。
+这可以使用计算着色器和线性缓冲区来实现，但为什么不直接使用纹理呢？这样，我只需添加一个特殊的渲染过程来计算可见性，并修改我预先存在的前向渲染过程以支持分页表。</p>
+<p>第一步是构建页表查找系统。这是在 GLSL 中完成的：</p>
+<p>取 UV 坐标
+将它们拆分为页面对齐的地址，其余的
+计算 X 和 Y 维度的页面索引
+在计算索引处查找纹理（我们的页表）
+增加其余的价值
+uv 坐标
+显示 UV 坐标
+页面对齐 UV
+显示页面对齐的 UV 坐标
+计算可见性
+分页的另一个优点是能够在运行时加载/卸载部分内存。内核不会加载整个文件，而是只加载所需的位（页面），并且只在需要时获取新页面。</p>
+<p>这是使用页面错误完成的：</p>
+<p>用户尝试访问尚未加载的地址。
+CPU 故障，并向内核发送信号（页面错误）。
+内核确定是否允许此访问，并加载页面。
+一旦加载，内核就可以恢复用户程序。
+这种机制需要硬件支持：CPU 知道什么是页表，并且有这个中断系统。在 GLSL/OpenGL 中，我们没有这样的东西。那么当中断不存在时我们该怎么办？我们轮询！</p>
+<p>对于我们来说，这意味着运行初始渲染过程，但我们不是使用灯光和材质渲染最终输出，而是输出页面地址。（类似于上面看到的插图）。</p>
+<p>这是通过绑定一个特殊的帧缓冲区并进行渲染到纹理来实现的。一旦完成该过程，就可以读取输出纹理，然后我们就可以发现哪些页面是可见的。</p>
+<p>对于此渲染过程，所有材质都被一个简单的着色器替换：</p>
+<p>#version 420 core</p>
+<p>/* material definition <em>/
+uniform float textureid;
+/</em> Size of a page in pixels. <em>/
+uniform float page_size;
+/</em> Size of the pagetable, in pixels (aka how many entries do we have). <em>/
+uniform float pagetable_size;
+/</em> Size in pixels of the final texture to load. <em>/
+uniform float texture_size;
+/</em> Aspect ratio difference between this pass, and the final pass. */
+uniform float svt_to_final_ratio_w; // svt_size / final_size
+uniform float svt_to_final_ratio_h; // svt_size / final_size</p>
+<p>in vertex_data {
+vec2 uv;
+} fs_in;</p>
+<p>out vec4 result;</p>
+<p>/* Determines which mipmap level the texture should be visible at.</p>
+<ul>
+<li>
+<p>uv: uv coordinates to query.</p>
+</li>
+<li>
+<p>texture_size: size in pixels of the texture to display.
+*/
+float mipmap_level(vec2 uv, float texture_size)
+{
+vec2 dx = dFdx(uv * texture_size) * svt_to_final_ratio_w;
+vec2 dy = dFdy(uv * texture_size) * svt_to_final_ratio_h;</p>
+<p>float d = max(dot(dx, dx), dot(dy, dy));
+return 0.5f * log2(d);
+}</p>
+</li>
+</ul>
+<p>void main()
+{
+/* how many mipmap level we have for the page-table */
+float max_miplevel = log2(texture_size / page_size);</p>
+<pre><code>/* what mipmap level do we need */
+float mip = floor(mipmap_level(fs_in.uv, texture_size));
+
+/* clamp on the max we can store using the page-table */
+mip = clamp(mip, 0.f, max_miplevel);
+
+vec2 requested_pixel = floor(fs_in.uv * texture_size) / exp2(mip);
+vec2 requested_page = floor(requested_pixel / page_size);
+
+/* Move values back into a range supported by our framebuffer. */
+result.rg = requested_page / 255.f;
+result.b = mip / 255.f;
+
+/* I use the alpha channel to mark &quot;dirty&quot; pixels.
+ * On the CPU side, I first check the alpha value for &gt; 0.5,
+ * and if yes, consider this a valid page request.
+ * I could also use it to store a &quot;material&quot; ID and support
+ * multi-material single-pass SVT. */
+result.a = 1.f;
+</code></pre>
+<p>}
+一旦检索到页面请求列表，我就可以加载“主内存”中的纹理。</p>
+<p>主存储器是一个简单的二维纹理，页面分配现在很简单：第一个请求的页面获得第一个插槽，依此类推，直到内存满。</p>
+<p>主内存纹理
+“主记忆”纹理
+一旦分配了页面，我需要更新相应的页表条目以指向正确的物理地址。这是通过更新页表中的正确像素来完成的：</p>
+<p>R＆G通道存储物理地址。
+B 未使用。
+A 标记该条目为有效（已加载）或无效。
+分页表
+分页表纹理
+渲染过程
+最后一遍和经典一遍非常相似，只是我不是绑定一个漫反射纹理，而是绑定了两个纹理：分页表和内存。</p>
+<p>绑定 3D 模型
+绑定 GLSL 程序
+绑定页表和主内存纹理。
+在这个阶段，我可以显示一个太大而无法在 RAM 和 VRAM 中容纳的纹理。</p>
+<p>步骤 2：MipMapping
+如果你看一下前面的视频，你会注意到两个问题：</p>
+<p>屏幕边缘附近出现红线。
+缩小时页面加载增加。
+第一个问题是纹理加载不会阻止当前通道。这意味着我可能会请求一个页面，但在运行最后一个通道时它还没有准备好。我可以将其渲染为黑色，但想让它可见。</p>
+<p>第二个问题是因为我的虚拟页面大小和纹理页面大小之间有 1:1 的映射。缩小以显示整个平面需要加载整个纹理。纹理不适合我的 RAM。</p>
+<p>这两个问题的解决方案都是 mipmaps。</p>
+<p>mipmap 级别 0 的页面覆盖page_size像素。
+mipmap 级别 1 的页面覆盖page_size * 2像素
+…
+mipmap 级别 N 的页面覆盖整个纹理。
+现在，我可以默认加载 mipmap 级别 N，如果请求的页面不可用，我只需在 mip 级别中向上移动，直到找到有效的页面。</p>
+<p>添加 mipmap 还允许我实现更好的内存回收机制：
+我现在可以用上一级的一个页面替换 4 个页面。
+因此，如果我的内存不足，我可以降级某些区域，这样可以节省 75% 的内存。</p>
+<p>最后，MipMapping 降低了带宽要求：如果物体很远，为什么要以高分辨率加载纹理？低分辨率页面就足够了：</p>
+<p>更少的磁盘负载。
+更少的内存使用。
+更少的延迟（因为需要加载的页面更少）。
+具有 MipMapping 的物理地址
+使用 MipMapping 显示物理地址
+步骤 3：复合材料
+初始渲染具有 PBR 材质。此类材质不仅具有反照率贴图，还具有法线和粗糙度+金属贴图。要添加新纹理，有几种选择：</p>
+<p>新的内存纹理、新的页表纹理、新的通道。
+简单的
+需要额外通行证。这不行。</p>
+<p>相同的内存纹理，相同的页表纹理。
+每个页面实际上按顺序包含 N 个纹理。因此，当加载一个页面时，会查询并加载 N 个纹理。
+易于实现，但我必须加载 N 个纹理。</p>
+<p>相同的内存纹理，多个页表纹理。
+页表很小，16x16 或 32x32。开销不是很大。
+我可以卸载一些远处物体的通道（例如法线贴图）。
+缺点是我现在在着色器中有 N*2 个纹理采样：每个纹理一个，以及与其相关的页表一个。
+因为我喜欢最后一个选项的灵活性，所以我选择实现它。在最终版本中，每个对象都有 4 个纹理：</p>
+<p>内存（1 mip 级别）
+反照率分页表（N mip 级别）
+粗糙度/金属分页表（N mip 级别）
+正常分页表（N mip 级别）
+在下面的演示中，页面加载在主线程中完成，但每帧限制为 1 个页面，使加载过程非常直观。</p>
+<p>左下图显示的是主内存。
+其他图表显示了页表及其对应的 mip 级别。</p>
+<p>页面请求：子采样、随机和帧预算。
+对于每一帧，我都需要进行初始检查以检查纹理可见性。在每一帧之间在 CPU 上读取此帧缓冲区非常慢，对于 4K 输出来说，这非常昂贵。</p>
+<p>好消息是：在这种情况下，我不需要 4K 帧缓冲区！页面覆盖 N 个像素，因此我们只需减小帧缓冲区大小，并希望我们的页面仍会被请求！</p>
+<p>上面的演示使用的是 32x32 帧缓冲区。这非常小。如果操作不当，这将无法正常工作：某些页面会卡在 2 个渲染像素之间，并且永远不会加载。</p>
+<p>缺页
+8x8 帧缓冲区，无抖动。</p>
+<p>解决这个问题的方法是给初始传递添加一些抖动。页面请求视点不完全是相机的位置，而是相机的位置 + 一些随机噪声。</p>
+<p>这样，我们可以在不增加帧缓冲区大小的情况下增加覆盖范围。</p>
+<p>缺页</p>
+</div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/opengl/">OpenGL</a>
+			<a class="entry__tag btn" href="/tags/cg/">CG</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+<div class="related block">
+	<h3 class="related__title">Related</h3>
+	<ul class="related__list">
+		
+		<li class="related__item"><a class="related__link" href="/post/opengl/an_introduction_to_shader_derivative_functions/">An Introduction to shader derivative functions（翻译）</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/what_is_uv_density/">什么是UV density</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/opengl/water_reflective_glsl_1/">使用GLSL实现水面反射效果 1（翻译）</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/how_to_set_camera_for_isometric/">3转2时如何设置摄像机角度以实现isometric渲染效果</a></li>
+		
+		<li class="related__item"><a class="related__link" href="/post/cg/inside_hdr/">理解高动态范围光</a></li>
+		
+	</ul>
+</div>
+
+	
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2024 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>

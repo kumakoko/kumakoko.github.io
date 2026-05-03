@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>.NET | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content=".NET" />
+<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.xionggf.com/categories/.net/" />
+
+
+		<meta itemprop="name" content=".NET">
+<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="alternate" type="application/rss+xml" href="/categories/.net/index.xml" title="XGF">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-term">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/categories/">Categories</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">.NET</li>
+	</ol>
+</nav>
+		<div class="page block">
+			<h1 class="page__title">.NET</h1>
+			
+		</div>
+		<div class="cards">
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/understand_csharp_async_wait_3/">Understanding C# async / await 第3章</a></h1>
+	<div class="entry__content">Understanding C# async / await 第1章原文地址
+Understanding C# async / await 第2章原文地址
+Understanding C# async / await 第3章原文地址
+以下是基于你提供的内容的总结和解读，保留示例代码和关键细节：
+理解 C# 的 async / await (3)：运行时上下文 1. 概述 在前两篇文章中，我们探讨了 async 和 await 的编译过程和 Awaitable-Awaiter 模式。本文将深入探讨 await 在运行时的上下文处理机制，特别是如何通过 ExecutionContext 和 SynchronizationContext 解决跨线程问题。
+2. 跨线程问题 在 WPF 应用程序中，以下代码可以正常工作：
+this.Button.Click += async (sender, e) =&gt; { string html = await new WebClient().DownloadStringTaskAsync(&#34;https://weblogs.asp.net/dixin&#34;); this.TextBox.Text = html; }; 但如果将其改写为 Task.ContinueWith() 的回调形式：
+this.Button.Click += (sender, e) =&gt; { new WebClient().</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-11-21T19:08:30&#43;08:00">November 21, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/understand_csharp_async_wait_2/">Understanding C# async / await 第2章</a></h1>
+	<div class="entry__content">Understanding C# async / await 第1章原文地址
+Understanding C# async / await 第2章原文地址
+Understanding C# async / await 第3章原文地址
+理解 C# 的 async / await (2)：Awaitable-Awaiter 模式 1. 什么是 Awaitable？ 在 C# 中，任何具有 GetAwaiter() 方法的对象都是 awaitable 的。Task 是最常见的 awaitable 类型，但其他类型也可以实现这一模式。例如：
+Task&lt;int&gt; task = new Task&lt;int&gt;(() =&gt; 0); int result = await task.ConfigureAwait(false); // 返回 ConfiguredTaskAwaitable&lt;TResult&gt; ConfiguredTaskAwaitable&lt;TResult&gt; 是一个 awaitable 类型，但它并不是 Task。
+2. Awaitable-Awaiter 模式 通过观察不同的 awaitable / awaiter 类型，可以总结出以下规则：
+Awaitable 对象必须有一个 GetAwaiter() 方法（实例方法或扩展方法）。 Awaiter 对象必须满足以下条件： 实现 INotifyCompletion 或 ICriticalNotifyCompletion 接口。 有一个 IsCompleted 属性，返回布尔值。 有一个 GetResult() 方法，返回 void 或一个结果。 这种模式与 可迭代-迭代器模式（IEnumerable / IEnumerator）非常相似。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-11-21T18:08:30&#43;08:00">November 21, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/understand_csharp_async_wait_1/">Understanding C# async / await 第1章</a></h1>
+	<div class="entry__content">Understanding C# async / await 第1章原文地址
+Understanding C# async / await 第2章原文地址
+Understanding C# async / await 第3章原文地址
+以下是基于你提供的内容的总结和解读，保留示例代码和关键细节：
+理解 C# 的 async / await (1)：编译过程 1. 概述 C# 的 async 和 await 关键字为异步编程提供了极大的便利。本文将深入探讨这些语法糖背后的实际代码实现。
+2. 准备工作 首先，定义一些辅助方法：
+internal class HelperMethods { private static void IO() { using (WebClient client = new WebClient()) { Enumerable.Repeat(&#34;http://weblogs.asp.net/dixin&#34;, 10).Select(client.DownloadString).ToArray(); } } internal static int Method(int arg0, int arg1) { int result = arg0 + arg1; IO(); // 模拟长时间运行的 IO 操作 return result; } internal static Task&lt;int&gt; MethodTask(int arg0, int arg1) { Task&lt;int&gt; task = new Task&lt;int&gt;(() =&gt; Method(arg0, arg1)); task.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2020-11-21T17:08:30&#43;08:00">November 21, 2020</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/cs_attribute_note/">C#中的Attribute学习笔记</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+C#的Attribute的一些细节描述： 1 C#的attribute，通常翻译为“ 特性 ”。经常出现的英文单词则翻译为“ 属性 ” 2 C#的attribute可以视为是一种 附着物。就像牡蛎吸附在船底或礁石上一样。这些附着物的作用是为它们的附着体，追加上一些额外的信息。而这些信息保存在附着物的体内。对，也即是被编译器编译进 程序集（assembly） 的 元数据（Metadata） 里，在程序运行的时候，随时可以从元数据里提取出这些附加信息，来决策或影响程序的运行。 3 C#的attribute不是什么别的，其本质上就是一个类，而且这个类在使用上要遵循以下的一些规则： 3.1 不使用new操作符来产生实例，而是使用在方括号里调用构造函数的来产生实例。构造函数的参数是一定要写的，有几个就得写几个。且参数的顺序不能错 3.2 方括号必需紧挨着放置在被附着目标的前面。 3.3 因为方括号里空间有限，不能像使用new那样先构造对象后，再对对象的 属性（Property） 一一赋值。因此，对Attribute实例属性的赋值，也需写在构造函数的圆括号里。但对property的赋值，可有可无，这是因为编译器肯定对property设置一个默认值。对多个property的赋值先后顺序也没有关系。 能被Attribute所附着的目标种类 Attribute能附着的目标的种类在枚举类型AttributeTargets中有定义，代码如下：
+namespace System { [ComVisible(true)] [Flags] public enum AttributeTargets { Assembly = 1, Module = 2, Class = 4, Struct = 8, Enum = 16, Constructor = 32, Method = 64, Property = 128, Field = 256, Event = 512, Interface = 1024, Parameter = 2048, Delegate = 4096, ReturnValue = 8192, GenericParameter = 16384, All = 32767 } } 从上面的定义可以看到，如果有指定多个attribute所能附着的目标类型的话，在设置AttributeTragets类型值是用按位或操作符连起来就好，例如：AttributeTargets.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-11-26T18:08:30&#43;08:00">November 26, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/cs_object_copy_and_assign/">C#中的对象和拷贝</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+问题：在C#中，先创建类A的实例a并赋值其成员变量，再创建实例b，然后执行 b = a，是否能让b自动拥有和a相同的成员变量值。
+核心解答 首先直接给出结论：执行 b = a 并不会让b拥有a的成员变量副本，而是让b和a指向内存中的同一个对象。这不是“赋值成员变量”，而是“引用赋值”。
+1. 代码演示与解释 下面用一段完整的代码来展示这个过程：
+using System; // 定义类A public class A { // 成员变量 public int Number { get; set; } public string Text { get; set; } } class Program { static void Main() { // 1. 创建实例a并赋值成员变量 A a = new A(); a.Number = 10; a.Text = &#34;Hello&#34;; // 2. 创建实例b（此时b指向一个新的空对象） A b = new A(); // 3. 执行 b = a b = a; // 4.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-11-23T18:08:30&#43;08:00">November 23, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/delete_dictionary_elements/">正确地删除Dictionary中的元素</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+你想要在C#中实现这样的功能：给定一个目标值，检查Dictionary中是否存在该值，如果存在，就将所有包含这个值的键值对都从字典中移除。
+实现思路 要实现这个需求，需要注意一个关键问题：不能在遍历字典的同时直接修改字典（会抛出InvalidOperationException）。因此，正确的步骤是：
+先遍历字典，找出所有值等于目标值的键，存入一个临时集合（如List&lt;TKey&gt;）。 遍历这个临时集合，根据其中的键从字典中移除对应的键值对。 完整代码示例 以下是通用的泛型实现，适用于任意类型的Dictionary（只要值类型支持相等比较）：
+using System; using System.Collections.Generic; using System.Linq; class Program { static void Main(string[] args) { // 示例字典：键为int，值为string Dictionary&lt;int, string&gt; testDict = new Dictionary&lt;int, string&gt;() { { 1, &#34;苹果&#34; }, { 2, &#34;香蕉&#34; }, { 3, &#34;苹果&#34; }, { 4, &#34;橙子&#34; }, { 5, &#34;苹果&#34; } }; Console.WriteLine(&#34;移除前的字典：&#34;); PrintDictionary(testDict); // 要移除的目标值 string targetValue = &#34;苹果&#34;; // 调用方法移除所有值为&#34;苹果&#34;的键值对 RemoveAllEntriesByValue(testDict, targetValue); Console.WriteLine($&#34;\n移除值为\&#34;{targetValue}\&#34;的所有项后：&#34;); PrintDictionary(testDict); } /// &lt;summary&gt; /// 移除Dictionary中所有值等于目标值的键值对 /// &lt;/summary&gt; /// &lt;typeparam name=&#34;TKey&#34;&gt;字典键的类型&lt;/typeparam&gt; /// &lt;typeparam name=&#34;TValue&#34;&gt;字典值的类型&lt;/typeparam&gt; /// &lt;param name=&#34;dictionary&#34;&gt;要操作的字典&lt;/param&gt; /// &lt;param name=&#34;targetValue&#34;&gt;要移除的目标值&lt;/param&gt; public static void RemoveAllEntriesByValue&lt;TKey, TValue&gt;(Dictionary&lt;TKey, TValue&gt; dictionary, TValue targetValue) where TKey : notnull // 约束键不能为null（Dictionary的默认要求） { if (dictionary == null) { throw new ArgumentNullException(nameof(dictionary), &#34;字典不能为null&#34;); } // 第一步：找出所有值等于目标值的键（存入临时列表，避免遍历中修改字典） List&lt;TKey&gt; keysToRemove = dictionary .</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2019-11-22T18:08:30&#43;08:00">November 22, 2019</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/iterator_and_yield/">C#中的迭代器和yield</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+在.NET中通过使用接口IEnumerator和IEnumerable及其泛型等价物。来封装 迭代器模式 。所谓 迭代器模式 即是：允许你访问一个数据项序列，能依次遍历该序列中的每一项元素，而无需关心元素在序列内部的组织形式。
+1.非泛型版本的IEnumerator和IEnumerable接口 首先看IEnumerator接口的定义，代码如下：
+public interface IEnumerator { /* 获取集合中位于枚举数当前位置的元素。在下列任一情况下，不定义Current： 1 枚举器位于集合中第一个元素之前，紧跟在创建枚举器之后。 在读取Current的值之前， 必须调用MoveNext，以将枚举器前进到集合的第一个元素。 2 对MoveNext的最后一次调用返回了 false，指示集合的末尾。 3 由于对集合所做的更改（如添加、修改或删除元素），枚举器无效。 在调用 Current 之前，MoveNext返回相同的对象。 MoveNext将Current设置为下一个元素。 */ object Current { get; } /* 将枚举数推进到集合的下一个元素。 如果枚举数已成功地推进到下一个元素，则为true； 如果枚举数传递到集合的末尾，则为false。 在创建枚举器之后，或在调用Reset方法之后，枚举数将定位到集合的第一个元素之前， 对MoveNext方法的第一次调用将枚举器移动到集合的第一个元素上。 如果MoveNext越过集合的末尾，则枚举器将定位到集合中的最后一个元素之后，MoveNext返回false。 当枚举器位于此位置时，对MoveNext的后续调用也将返回false，直到调用Reset。 如果对集合所做的更改（如添加、修改或删除元素），则MoveNext的行为是不确定的。 */ bool MoveNext(); /* 将枚举数设置为其初始位置，该位置位于集合中第一个元素之前。 */ void Reset(); } 顾名思义，IEnumerator就是表征一个“ 迭代器 ”（又可称为 枚举器 ）应有的功能接口，该接口所函数的方法如上述代码注释中所描述，接下来看IEumerable接口，代码如下：
+public interface IEnumerable { IEnumerator GetEnumerator(); } IEnumerable用来表征“一个数据集合是 可迭代 的（ 可枚举 的）”，即是说该数据集合中的每个元素都是可以被一一迭代的。IEnumerable接口也很简单，只有一个方法，就是返回 能访问到该数据集合每个元素的迭代器 。</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2013-11-21T18:08:30&#43;08:00">November 21, 2013</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/cs_asynresult_interface_detail/">.NET Framework的IAsyncResult接口的细节</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+概述 IAsynResult接口用来表征一个异步操作的结果。它的定义声明如下：
+[System.Runtime.InteropServices.ComVisible(true)] public interface IAsyncResult { object AsyncState { get; } WaitHandle AsyncWaitHandle { get; } bool CompletedSynchronously { get; } bool IsCompleted { get; } } 有一些.NET Framework预定义的类是继承实现这个接口，如下：
+AsyncResult SecurityTokenProvider.SecurityTokenAsyncResult AsyncResult Task CommittableTransaction 示例程序 接下来的示例演示了如何使用了IAsyncResult接口中的AsyncWaitHandle属性，去获取到一个WaitHandle类型的值，以及如何使用一个delegate去等待一个异步调用。当异步调用完成后，WaitHandle类型的返回值将会被赋值上。这示例由两个类组成，一个是包含了异步调用函数的类；另一个类则是包含了调用异步函数的方法。
+using System; using System.Threading; namespace Examples.AdvancedProgramming.AsynchronousOperations { public class AsyncDemo { // 将要被异步执行的函数 public string TestMethod(int callDuration, out int threadId) { Console.WriteLine(&#34;Test method begins.&#34;); Thread.Sleep(callDuration); // 被异步执行的函数所在的线程休眠callDuration所指定的时间 threadId = Thread.CurrentThread.ManagedThreadId; // 拿到系统给本异步执行的函数分配的运行线程的id return String.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2013-10-21T18:08:30&#43;08:00">October 21, 2013</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+				<div class="card card--2col">
+					<article class="entry card__box block">
+	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/dotnet/begin_receive_and_end_receive/">NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解</a></h1>
+	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+分类 信息 类所属的空间: System.Net.Sockets 类所属于的程序集: System.dll, netstandard.dll, System.Net.Sockets.dll, System.Net.dll 使用BeginReceive和EndReceive的示例代码 using System; using System.Net; using System.Net.Sockets; using System.Threading; using System.Text; // State object for receiving data from remote device. public class StateObject { public Socket workSocket = null; // Socket连接的对象 public const int BufferSize = 256; // 客户端接受socket数据的缓冲区字节数大小 public byte[] buffer = new byte[BufferSize]; // 客户端接受socket数据的缓冲区 public StringBuilder sb = new StringBuilder();// 客户端接受数据字符串的容器 } public class AsynchronousClient { private const int port = 11000; // 端口号 // ManualResetEvent类详见 http://www.</div>
+	<div class="entry__meta meta mt tar">
+	<time class="entry__meta-published meta-published" datetime="2013-10-20T18:08:30&#43;08:00">October 20, 2013</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
+	</span>
+</div>
+	</div>
+</article>
+				</div>
+			
+		</div>
+	</main>
+	
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

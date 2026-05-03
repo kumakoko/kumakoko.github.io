@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>UnityEditor on XGF</title>
+    <link>http://www.xionggf.com/tags/unityeditor/</link>
+    <description>Recent content in UnityEditor on XGF</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 02 Jan 2020 15:40:26 +0800</lastBuildDate>
+    <atom:link href="http://www.xionggf.com/tags/unityeditor/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Unity3D的Model Import Settings window - Model tab</title>
+      <link>http://www.xionggf.com/post/unity3d/editor/model_import_setting_wnd_model_tab/</link>
+      <pubDate>Thu, 02 Jan 2020 15:40:26 +0800</pubDate>
+      <guid>http://www.xionggf.com/post/unity3d/editor/model_import_setting_wnd_model_tab/</guid>
+      <description>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com&#xA;1 Model tab 当选中模型文件时，Inspector窗口就会显现出Import Settings窗口，且定位到Model页。可以通过在此页中调整参数控制模型导入的细节。&#xA;Model页上的各种属性可以分为三个区，分别是：&#xA;分区 细节 (A) Scene 和关卡场景相关的，比如光源和摄像机的导入，还有scale factor的设置 (B) Meshes. 和网格导入相关的属性 (C) Geometry 和网格拓扑相关的户型，比如的顶点的纹理UV，法线等等 2 Scene分区的属性描述表格 属性 功能 Scale Factor 在导入的原始模型文件的比例值，不适合项目中的预期比例时，设置此值，可作为一个全局的对原始模型的缩放比例值。 Unity的物理系统，期望游戏世界中的1米，就对应于原始模型文件的1个单位。 Convert Units 启用此选项，可将导入的原始模型文件的比例值。转换为Unity的比例。导入BlendShapes时，启用此属性可允许Unity导入网格物体的混合形状。 Import BlendShapes Enable this property to allow Unity to import blend shapes with your Mesh. See Importing blend shapes below for details.Note: Importing blend shape normals requires smoothing groups in the FBX file Import Visibility 导入FBX设置，这些设置将会确定是否启用MeshRenderer组件，当启用时改mesh可见 Import Cameras 从.FBX文件中导入在这些文件中定义的camera Import Lights 从.</description>
+    </item>
+  </channel>
+</rss>

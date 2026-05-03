@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#1b1b1b">
+	<title>现代的OpenGL调试方式（翻译） | XGF</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="现代的OpenGL调试方式">
+		<meta property="og:title" content="现代的OpenGL调试方式（翻译）" />
+<meta property="og:description" content="现代的OpenGL调试方式" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://www.xionggf.com/post/opengl/modern_opengl_debugging/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2014-10-21T18:08:30+08:00" />
+<meta property="article:modified_time" content="2014-10-21T18:08:30+08:00" />
+
+
+		<meta itemprop="name" content="现代的OpenGL调试方式（翻译）">
+<meta itemprop="description" content="现代的OpenGL调试方式"><meta itemprop="datePublished" content="2014-10-21T18:08:30+08:00" />
+<meta itemprop="dateModified" content="2014-10-21T18:08:30+08:00" />
+<meta itemprop="wordCount" content="1273">
+<meta itemprop="keywords" content="OpenGL," />
+	<link rel="stylesheet" href="/css/bundle.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="stylesheet" href="/css/themes/dark-red.css">
+	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
+	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
+	<link rel="manifest" href="/manifest.json">
+</head>
+<body class="body kind-page">
+	<header class="header">
+	<a class="logo" href="/">XGF</a>
+	
+<nav class="main-nav main-nav--right" role="navigation">
+	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
+		<div class="main-nav__btn-box" tabindex="-1">
+			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
+				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
+				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
+			</svg>
+		</div>
+	</button>
+	<ul id="menu" class="main-nav__list">
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/kgl/">
+					
+					<span class="main-nav__text">KumaGL</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/about/">
+					
+					<span class="main-nav__text">关于本网站</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_demo/">
+					
+					<span class="main-nav__text">我的小作品</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/my_books/">
+					
+					<span class="main-nav__text">我的著作译作</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/resume/">
+					
+					<span class="main-nav__text">简历</span>
+					
+				</a>
+			</li>
+			<li class="main-nav__item">
+				<a class="main-nav__link" href="/post/mainsection/gems/">
+					
+					<span class="main-nav__text">网络上的奇珍异宝</span>
+					
+				</a>
+			</li>
+	</ul>
+</nav>
+</header>
+	<div class="primary">
+	
+	<main class="main">
+		
+<nav class="breadcrumb block" aria-label="breadcrumb">
+	<ol class="breadcrumb__list">
+		
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
+		</li>
+		<li class="breadcrumb__item">
+			<a class="breadcrumbs__link" href="/post/">Posts</a>
+		</li>
+		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">现代的OpenGL调试方式（翻译）</li>
+	</ol>
+</nav>
+		<div class="single block">
+			<article class="entry">
+	<div class="entry__meta meta mb">
+	<time class="entry__meta-published meta-published" datetime="2014-10-21T18:08:30&#43;08:00">October 21, 2014</time>
+<div class="entry__meta-categories meta-categories">
+	<span class="meta-categories__list">Categories:
+		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>
+	</span>
+</div>
+<div class="entry__meta-tags meta-tags">
+	<span class="meta-tags__list">Tags:
+		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>
+	</span>
+</div>
+	</div>
+				<h1 class="entry__title">现代的OpenGL调试方式（翻译）</h1>
+<details class="entry__toc toc" open>
+	<summary class="toc__title">Table of Contents</summary>
+	<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-debugging">1 Debugging</a></li>
+    <li><a href="#2-glgeterror">2 glGetError()</a></li>
+    <li><a href="#3-debug-output">3 Debug output</a></li>
+    <li><a href="#4-debug-output-in-glfw">4 Debug output in GLFW</a></li>
+  </ul>
+</nav>
+</details>
+				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="www.xionggf.com">www.xionggf.com</a></strong></p>
+<p>原文地址： <a href="http://www.learnopengl.com/#!In-Practice/Debugging">http://www.learnopengl.com/#!In-Practice/Debugging</a></p>
+<h2 id="1-debugging">1 Debugging</h2>
+<p>Graphics programming can be a lot of fun, but it can also be a large source of frustration whenever something isn&rsquo;t rendering right or perhaps not even rendering at all! Seeing as most of what we do involves manipulating pixels it can be difficult to figure out the cause of error whenever something doesn&rsquo;t work the way it&rsquo;s supposed to. Debugging these kind of errors is different than what you&rsquo;re used to when debugging errors on the CPU. We have no console to output text to, no breakpoints to set on our GLSL code and no way of easily checking the state of GPU execution.</p>
+<blockquote>
+<p>图形编程可以有很多乐趣，但当无法按正确意图渲染出东西来，甚至什么东西都渲染不出来的时候，也会带来很大的挫败感。想找出无法按我们意图操作像素值从而渲染出想要的结果的原因何在，是很困难的。与调试运行在CPU上的代码相比，调试这些运行在GPU的代码更为困难。我们无法在控制台上对这些GPU代码进行打印输出；无法再GLSL代码上下断点调试；无法很容易地检查GPU执行代码时的状态。</p>
+</blockquote>
+<p>In this tutorial we&rsquo;ll look into several techniques and tricks of debugging your OpenGL program. Debugging in OpenGL is not too difficult to do and getting a grasp of its techniques definitely pays out in the long run.</p>
+<blockquote>
+<p>在本教程中，我们将会学习到一些调试OpenGL程序代码的技巧和方法，之后你也将会看到调试OpenGL代码并不是想象中那么困难。从长远来看，也值得花时间去掌握这些调试技巧。</p>
+</blockquote>
+<h2 id="2-glgeterror">2 glGetError()</h2>
+<p>The moment you incorrectly use OpenGL (like configuring a buffer without first binding any) it will take notice and generate one or more user error flags behind the scenes. We can query these error flags using a function named glGetError that simply checks the error flag(s) set and returns an error value if OpenGL indeed got abused.</p>
+<blockquote>
+<p>当你没有正确使用OpenGL的API，比如在配置一个buffer之前没有先正确绑定它时。OpenGL将会在幕后生成一个或者多个“用户错误代码”，我们可以通过使用<code>glGetError</code>函数去查询这些错误代码。<code>glGetError</code>函数将会检查这些错误代码，并且在OpenGL系统确实被乱用的时候，会将这个错误代码返回给用户层。<code>glGetError</code>函数的声明原型如下：</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-CPP" data-lang="CPP"><span style="display:flex;"><span>GLenum <span style="color:#a6e22e">glGetError</span>();
+</span></span></code></pre></div><p>The moment glGetError is called it returns either an error flag or no error at all. The error codes that glGetError can return are listed below:</p>
+<blockquote>
+<p>当<code>glGetError</code>函数被调用的时候，它将会返回错误代码，或者不返回一个代表没有错误代码的<code>GL_NO_ERROR</code>的代码，返回的错误代码如下表所示：</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Flag</th>
+<th style="text-align:center">Code</th>
+<th style="text-align:center">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Flag</td>
+<td style="text-align:center">Code</td>
+<td style="text-align:center">Description</td>
+</tr>
+<tr>
+<td style="text-align:center">GL_NO_ERROR</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">No user error reported since last call to glGetError.</td>
+</tr>
+<tr>
+<td style="text-align:center">GL_INVALID_ENUM</td>
+<td style="text-align:center">1280</td>
+<td style="text-align:center">Set when an enumeration parameter is not legal.</td>
+</tr>
+<tr>
+<td style="text-align:center">GL_INVALID_VALUE</td>
+<td style="text-align:center">1281</td>
+<td style="text-align:center">Set when a value parameter is not legal.</td>
+</tr>
+<tr>
+<td style="text-align:center">GL_INVALID_OPERATION</td>
+<td style="text-align:center">1282</td>
+<td style="text-align:center">Set when the state for a command is not legal for its given parameters.</td>
+</tr>
+<tr>
+<td style="text-align:center">GL_STACK_OVERFLOW</td>
+<td style="text-align:center">1283</td>
+<td style="text-align:center">Set when a stack pushing operation causes a stack overflow.</td>
+</tr>
+<tr>
+<td style="text-align:center">GL_STACK_UNDERFLOW</td>
+<td style="text-align:center">1284</td>
+<td style="text-align:center">Set when a stack popping operation occurs while the stack is at its lowest point.</td>
+</tr>
+<tr>
+<td style="text-align:center">GL_OUT_OF_MEMORY</td>
+<td style="text-align:center">1285</td>
+<td style="text-align:center">Set when a memory allocation operation cannot allocate (enough) memory.</td>
+</tr>
+<tr>
+<td style="text-align:center">GL_INVALID_FRAMEBUFFER_OPERATION</td>
+<td style="text-align:center">1286</td>
+<td style="text-align:center">Set when reading or writing to a framebuffer that is not complete.</td>
+</tr>
+</tbody>
+</table>
+<p>Within OpenGL&rsquo;s function documentation you can always find the error codes a function generates the moment it is incorrectly used. For instance, if you take a look at the documentation of the glBindTexture function you can find all the user error codes it could generate under the Errors section</p>
+<blockquote>
+<p>在OpenGL的函数文档里面，你可以查到该OpenGL函数如果没有正确执行时，马上调用例如glGetError函数返回的错误代码将会返回的结果。例如，glBindTexture函数的描述文档中，你可以找到所有该函数调用发生错误时的错误代码。</p>
+</blockquote>
+<p>The moment an error flag is set, no other error flags will be reported. Furthermore, the moment glGetError is called it clears all error flags (or only one if on a distributed system, see note below). This means that if you call glGetError once at the end of each frame and it returns an error you can&rsquo;t conclude this was the only error and the source of the error could&rsquo;ve been anywhere in the frame</p>
+<blockquote>
+<p>在一个错误代码标志被设置的时候，其他的错误代码不会被报告出来。此外，当<code>glGetError</code>函数被调用的时候，该函数将会清空所有的错误标志（在某些发布平台上，或者仅仅清除一个错误标志）。这也意味着：在每一帧的最后调用一次<code>glGetError</code>函数的话。它返回的错误代码并不表示在本帧中其他的OpenGL函数调用没有导致错误代码。</p>
+</blockquote>
+<p>Note that when OpenGL runs distributely like frequently found on X11 systems, other user error codes can still be generated as long as they have different error codes. Calling glGetError then only resets one of the error code flags instead of all of them. Because of this it is recommended to call glGetError inside a loop.</p>
+<blockquote>
+<p>注意在比如像X11这样的发布平台上。当发生了多种错误时，其他的错误代码也会发生。调用一次glGetError函数则仅仅设置其中的一个错误标志位。所以在这种平台上建议在一个循环内多次调用glGetError函数。</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>glBindTexture(GL_TEXTURE_2D, tex);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> glGetError() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl; <span style="color:#75715e">// returns 0 (no error) 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>glTexImage2D(GL_TEXTURE_3D, <span style="color:#ae81ff">0</span>, GL_RGB, <span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">512</span>, <span style="color:#ae81ff">0</span>, GL_RGB, GL_UNSIGNED_BYTE, data);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> glGetError() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl; <span style="color:#75715e">// returns 1280 (invalid enum) 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>glGenTextures(<span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>, textures);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> glGetError() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl; <span style="color:#75715e">// returns 1281 (invalid value) 
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> glGetError() <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl; <span style="color:#75715e">// returns 0 (no error)
+</span></span></span></code></pre></div><p>The great thing about glGetError is that it makes it relatively easy to pinpoint where any error might be and to validate the proper use of OpenGL. Let&rsquo;s say you get a black screen and you have no idea what&rsquo;s causing it: is the framebuffer not properly set? Did I forget to bind a texture? By calling glGetError all over your codebase you can quickly catch the first place an OpenGL error starts showing up which means before that call something went wrong.</p>
+<blockquote>
+<p>使用<code>glGetError</code>函数最重要的事情是让“指出何处可能会发生错误，以及验证是否正确地使用OpenGL”变得更为容易些。比如在使用一个texture的时候，是否忘记了要先绑定它。在你所有的代码中调用<code>glGetError</code>的地方你能快速地获取到第一个发生错误的地方。</p>
+</blockquote>
+<p>By default glGetError only prints the error numbers which isn&rsquo;t easy to understand unless you memorize the error codes. It often makes sense to write a small helper function to easily print out the error strings together with where the error check function was called:</p>
+<blockquote>
+<p>缺省地，<code>glGetError</code>函数只是简单地返回错误代码，而没有文字描述，这让人不容易记住和理解错误代码的含义。所以一般地我们会写一些帮助函数，用来返回一个描述错误代码的文字字符串，如下：</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>GLenum <span style="color:#a6e22e">glCheckError_</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>file, <span style="color:#66d9ef">int</span> line)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    GLenum errorCode;    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> ((errorCode <span style="color:#f92672">=</span> glGetError()) <span style="color:#f92672">!=</span> GL_NO_ERROR) 
+</span></span><span style="display:flex;"><span>    {        
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>string error;    
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">switch</span> (errorCode)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> GL_INVALID_ENUM: error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INVALID_ENUM&#34;</span>; <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> GL_INVALID_VALUE: error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INVALID_VALUE&#34;</span>; <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> GL_INVALID_OPERATION: error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INVALID_OPERATION&#34;</span>; <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> GL_STACK_OVERFLOW: error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;STACK_OVERFLOW&#34;</span>; <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> GL_STACK_UNDERFLOW: error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;STACK_UNDERFLOW&#34;</span>; <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> GL_OUT_OF_MEMORY: error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;OUT_OF_MEMORY&#34;</span>; <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">case</span> GL_INVALID_FRAMEBUFFER_OPERATION: error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;INVALID_FRAMEBUFFER_OPERATION&#34;</span>; <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> error <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; | &#34;</span> <span style="color:#f92672">&lt;&lt;</span> file <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; (&#34;</span> <span style="color:#f92672">&lt;&lt;</span> line <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;)&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> errorCode;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#define glCheckError() glCheckError_(__FILE__, __LINE__) glBindBuffer(GL_VERTEX_ARRAY, vbo);glCheckError();
+</span></span></span></code></pre></div><p>This will give us the following output</p>
+<blockquote>
+<p>上述的代码将会得到如下输出</p>
+</blockquote>
+<p>One important thing left to mention is that GLEW has a long-existing bug where calling glewInit() always sets theGL_INVALID_ENUM error flag and thus the first glGetError will always return an error code which can throw you completely off guard. To fix this it&rsquo;s advised to simply call glGetError after glewInit to clear the flag:</p>
+<blockquote>
+<p>一个非常重要的事情必须被提及。GLEW库有一个长期存在的bug，在调用<code>glewInit</code>函数的地方，一直会把<code>GL_INVALID_ENUM </code>标志位给设置。因而，在第一次调用glGetError的时候会一直返回这个值。解决这个bug很简单，在<code>glewInit</code>函数调用后，马上调用一次<code>glGetError</code>函数，如下：</p>
+</blockquote>
+<pre tabindex="0"><code>glewInit();
+glGetError();
+glewInit();
+glGetError();
+</code></pre><p>glGetError doesn&rsquo;t help you too much as the information it returns is rather simple, but it does often help you catch typos or quickly pinpoint where in your code things went wrong; a simple but effective tool in your debugging toolkit.</p>
+<blockquote>
+<p><code>glGetError</code>函数只能简单地提供错误码。没法提供更多的帮助信息。但利用它可以快速地查询到代码哪里调用OpenGL函数发生了错误。这函数，简单，但是有效。</p>
+</blockquote>
+<h2 id="3-debug-output">3 Debug output</h2>
+<p>A less common, but more useful tool than glCheckError is an OpenGL extension called debug output that became part of core OpenGL since version 4.3. With the debug output extension OpenGL itself will directly send an error or warning message to the user with a lot more details compared to glCheckError. Not only does it provide more information, it can also help you catch errors exactly where they occur by intelligently using a debugger.</p>
+<blockquote>
+<p>一个没那么常用，但也很有效的工具函数是<code>glCheckError</code>。早期这个函数是作为一个OpenGL扩展的形式存在。从4.3版本开始，它变成了OpenGL的内核函数。通过使用这个函数。OpenGL可以直接发送一个带有详细信息的错误或者警告的描述。这个函数不仅仅只提供错误信息。它还可以帮你通过使用调试器，智能地捕获到哪个发生了错误。</p>
+</blockquote>
+<p>Debug output is core since OpenGL version 4.3, which means you&rsquo;ll find this functionality on any machine that runs OpenGL 4.3 or higher. If they&rsquo;re not available its functionality can be queried from the ARB_debug_output or AMD_debug_output extension. Note that OS X does not seem to support debug output functionality (as gathered online; I haven&rsquo;t tested it myself. Let me know if I&rsquo;m wrong).</p>
+<blockquote>
+<p>从4.3版本开始，Debug output将作为OpenGL的内核存在。也就是说只要你运行OpenGL4.3以上的版本你可以直接使用它。如果运行低版本的OpenGL的话。可以通过查询<code>ARB_debug_output</code>或者<code>AMD_debug_output</code>这两个OpenGL扩展达到这个功能。注意在OS X中貌似不支持这个函数。（从网上得知，未经证实）。</p>
+</blockquote>
+<p>In order to start using debug output we have to request a debug output context from OpenGL at our initialization process. This process varies based on whatever windowing system you use; here we will discuss setting it up on GLFW, but you can find info on other systems in the additional resources at the end.</p>
+<blockquote>
+<p>为了能够使用调试输出，我们需要从OpenGL处给初始化进程请求一个“调试输出上下文”。这将依赖于你所使用的窗口系统的版本是什么。在此我们讨论在GLFW中继续设置。其他的平台的话可以在本文的最后查阅相关资料</p>
+</blockquote>
+<h2 id="4-debug-output-in-glfw">4 Debug output in GLFW</h2>
+<p>Requesting a debug context in GLFW is surprisingly easy as all we have to do is pass a hint to GLFW that we&rsquo;d like to have a debug output context. We have to do this before we call glfwCreateWindow:</p>
+<blockquote>
+<p>在GLFW中请求一个调试输出上下文非常简单。只需要像GLFW提供一个hint值便能达到我们的目的。在调用<code>glfwCreateWindow</code>函数之前调用如下代码：</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+</span></span></code></pre></div><p>Once we initialize GLFW we should have a debug context if we&rsquo;re using OpenGL version 4.3 or higher, or else we have to take our chances and hope the system is still able to request a debug context. Otherwise we have to request debug output using its OpenGL extension(s).Using OpenGL in debug context can be significantly slower compared to a non-debug context so when working on optimizations or releasing your application you want to remove or comment GLFW&rsquo;s debug request hint.</p>
+<blockquote>
+<p>一旦我们初始化GLFW时决定使用调试输出上下文时我们就必须使用4.3或者更高的OpenGL版本。否则就只能使用OpenGL扩展。使用调试版本的OpenGL将会比非调试版本的要慢。所以当发布程序时最好移除对GLFW的调试输出上下文的支持。</p>
+</blockquote>
+<p>To check if we successfully initialized a debug context we can query OpenGL:</p>
+<blockquote>
+<p>为了检查是否成功初始化调试输出上下文，我们可以执行以下的代码：</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>GLint flags; 
+</span></span><span style="display:flex;"><span>glGetIntegerv(GL_CONTEXT_FLAGS, <span style="color:#f92672">&amp;</span>flags);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (flags <span style="color:#f92672">&amp;</span> GL_CONTEXT_FLAG_DEBUG_BIT)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// initialize debug output
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div></div>
+				
+				<footer class="entry__footer">
+					
+<div class="entry__tags">
+			<a class="entry__tag btn" href="/tags/opengl/">OpenGL</a>
+</div>
+					
+				</footer>
+				
+			</article>
+		</div>
+	</main>
+	
+<div class="authorbox block">
+	<div class="author">
+		<figure class="author__avatar">
+			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
+		</figure>
+		<div class="author__body">
+			<div class="author__name">
+				kumakoko
+			</div>
+			<div class="author__bio">pure coder</div>
+		</div>
+	</div>
+</div>
+	
+
+
+
+	
+<section class="comments block">
+	<div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "KK" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+	</div>
+	<footer class="footer">
+<div class="footer__social social">
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
+			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+		</a>
+		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
+			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
+		</a>
+</div>
+	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
+</footer>
+<script src="/js/menu.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
+
+<script src="/js/custom.js"></script>
+</body>
+</html>
