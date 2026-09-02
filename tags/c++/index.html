@@ -1,207 +1,391 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>C&#43;&#43; | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="C&#43;&#43;" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/tags/c&#43;&#43;/" />
-
-
-		<meta itemprop="name" content="C&#43;&#43;">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/tags/c++/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-term">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/tags/">Tags</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">C&#43;&#43;</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">C&#43;&#43;</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cpp/porting_to_64bit_platforms/">移植代码到64位平台</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-C和C++大量依赖于指针的使用，即包含内存地址的变量。尽管指针类型在概念上与整数类型不同，但其物理地址值 始终是一个整数 。开发人员在C/C ++中大量使用整数类型而不是指针类型，即使在编译器随附的系统头文件中也是如此。在过去的几十年中，大多数计算机处理器都使用32位内存地址，因此开发环境是 围绕地址长度为32位的假设 建立的。C/C++代码中存在着大量 指针和整数之间的隐式和显式转换 。使用指针，或union的重叠内存结构方式（overlapping memory structures），去访问变量，也是司空见惯。
-当然，32位架构有其局限性。具体来说，它们将计算机内存限制为4GB。应用程序需求不断增长，迫切需要迁移到更长的地址。经常使用的旧式类型带来了新的含义和价值。最具戏剧性，最明显的的变化，是从32位转向64位指针。
-不再适用相同的规则 基本类型的某些大小已更改。其中一些保持不变。但是，突然之间，在C和C++代码库中使用的许多隐式假设不再有效。在32位系统中编写和测试的代码在迁移到64位计算机时不再有效。
-幸运的是，已经识别并分类了代码可能易于从32位计算机迁移到64位计算机的大多数区域。一些编译器使用主动检查技术来捕获在迁移期间可能出现的漏洞。静态分析工具的供应商（包括Coverity和Klocwork）可以提供进一步帮助将代码从32位机器平稳迁移到64位机器的机制。尽管这些工具不能直接解决代码迁移问题，但它们提供了便利的可扩展性和API，可以创建与32位到64位迁移相关的自定义检查程序。增强这些工具可以进一步帮助发现并有效解决这些兼容性问题。
-本文的目的是帮助您使代码库与体系结构无关，因此可以在32位计算机或64位计算机上构建相同的代码库，并为每台计算机生成可行的代码。此外，如果32位程序通过二进制数据交换（通过文件或套接字）与64位程序进行通信，则有多种方法可以确保二进制结构不受两种体系结构类型之间的迁移的影响。
-本文包含详细的分析和建议，以解决与32位到64位迁移有关的众多问题。
-为了使您的程序与体系结构无关，有两个目标需要实现。 其中之一是内部一致性，即确保程序中使用的所有类型都是一致的，而不管代码是在32位还是64位计算机上编译的。 让我们看一下两种架构上基本类型的大小（请参见表1）。
-此处的显着区别是指针类型和long类型的大小变化。由于大小更改，某些基于隐式依赖关系构建的代码可能无法正确迁移。可能的问题主要与整数与整数之间，或者是整数和指针之间的数据交换有关。
-整数大小的差异 在32位系统上，int和long类型都是32位，这意味着程序员可以互换使用这两种类型。此外，C没有严格的输入规则，因此函数中的int参数可以传递long参数而不会出错。尽管这不是一个好的编码实践，但是此代码可能会在数年内完美运行。但是，在64位系统中，在某些编译器中，int和long具有不同的大小，并且代码在迁移后将无法正常工作。将long值分配给int变量可能会导致截断。以下代码在32位系统中可以正常工作，但在64位系统中则极有可能正常工作。
-int sum; long val1, val2; sum = val1 + val2; // possible truncation in 64-bit system 以下代码可能会在某些编译器中引起编译器警告，但是此代码（在32位模式下工作）可能将无法在64位模式下工作，因为堆栈上的值大小会发生变化。
-int add(int parm1, int parm2); // ..... long val1, val2; long sum = add(val1,val2); // mismatch of parm size on 64-bit machine 可能还会发生其他一些细微的事情，从而影响代码的完整性。例如，编译时函数sizeof()返回类型为size_t的结果，size_t类型的占据的字节大小，则取决于该程序中指针类型变量占据的字节数的大小。将此值分配给整数可能导致被截断。如下代码所示：
-int mySize = sizeof(MyStructure); // possible size truncation 另一个更细微的错误是位字段的符号扩展。 例如：</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2020-04-16T10:53:26&#43;08:00">April 16, 2020</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/c&#43;&#43;/" rel="category">C&#43;&#43;</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/c&#43;&#43;/" rel="tag">C&#43;&#43;</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cpp/cpp_rvalue_test/">C&#43;&#43;的右值和移动构造函数的测试程序说明</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-本文用以测试C++的右值，移动构造函数，以及标准库容器的emplace和push操作的区别。 测试环境是Visual C++ 14.0.25431.01 Update 3版本，未启用任何编译优化操作
-代码可以在github中获取。
-#include &lt;cstring&gt; #include &lt;cstdlib&gt; #include &lt;map&gt; #include &lt;vector&gt; #include &lt;cstdio&gt; class DemoClassA { public: DemoClassA() :num_(0), name_(nullptr) { std::printf(&#34;DemoClassA::DemoClassA()\n&#34;); } ~DemoClassA() { if (name_) { std::printf(&#34;DemoClassA::~DemoClassA(%d,%s)\n&#34;, num_, name_); delete[] name_; name_ = nullptr; } else { std::printf(&#34;DemoClassA::~DemoClassA()\n&#34;); } } DemoClassA(int num, const char* name) { num_ = num; auto len = std::strlen(name) + 1; name_ = new char[len]; memset(name_, 0, len); std::strcpy(name_, name); std::printf(&#34;DemoClassA::DemoClassA(%d,%s)\n&#34;, num_, name_); } DemoClassA(const DemoClassA&amp; rhs) { num_ = rhs.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2020-01-22T22:02:43&#43;08:00">January 22, 2020</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/c&#43;&#43;/" rel="category">C&#43;&#43;</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/c&#43;&#43;/" rel="tag">C&#43;&#43;</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cpp/special_using_of_cpp_macro/">C/C&#43;&#43;中macro的一些特殊使用</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-ISO C++ 推出之后，C/C++ 中宏（macro）的使用一直都备受争议，就好像当年保守诟病的goto语句一样。有所不同的是，现在的C/C++ 代码中使用goto语句的使用率是越来越少了。而macro仍然在C/C++ programming中占据一席之地——例如集赞誉之耀和诋毁之辱于一身的Microsoft Foudation Classes就把macro的强大功能发挥得淋漓尽致。套用“存在着就是合理”，macro的存在必定有其合理的因素。事实上，如果在programming的时候充分发挥macro的机制，就能写出一些巧妙精致而且设计合理的代码。我在工作中阅读了一个引擎的代码，引擎在某处就比较巧妙地利用了macro的功能。在此我将其整理出来，供大家学习交流。
-大家在进行C/C++ programming的时候，常常定义一些枚举类型的数据，例如：
-enum EMessage { MSG_OPEN, MSG_CLOSE, MSG_COPY, MSG_PASTE }; 在某些时候，比如在调试某段程序的时候，使用调试器捕获了某个枚举变量的值，这时候我们所能得到的是一些数值。例如当变量EMessage eMsg = MSG_OPEN的时候，我们能观察到eMsg = 0。但是单单一个“0”的话一下子让人难以明白它的含义，如果想在屏幕上也能打印出枚举的名称就更加不好办了。解决这个问题，方法之一，就是利用macro的强大灵活的机制。现在我们来一步一步地分析如何利用macro来解决上述的问题。
-想打印枚举的名称，你首先想到的肯定是：使用一个字典数据结构记录枚举变量和描述字符串的映射关系。例如：
-#include &lt;map&gt; using namespace std; map&lt;EMessage,const char*&gt; MsgDesc; //为了节省空间，不使用string存储描述信息 MsgDesc[MSG_OPEN] = &#34;MSG_OPEN&#34;; MsgDesc[MSG_CLOSE] = &#34;MSG_CLOSE&#34;; MsgDesc[MSG_COPY] = &#34;MSG_COPY&#34;; MsgDesc[MSG_PASTE] = &#34;MSG_PASTE&#34;; 使用字典数据结构很方便，但是如果枚举值很少的时候，使用一个map类型的对象来管理这些东西似乎有点暴殄天物（或许对于现在的硬件设备而言不算什么，但是如果性能有着严格要求的话。。。）。如果枚举值很多的话，每添加一个新的枚举量就要在枚举定义内写一次，在把枚举量描述添加进字典中又要写一次，尤为繁琐。 如果使用macro机制的话，可以通过预编译和macro机制一次性处理上述的问题。 例如：在文件msgdef.h中
-#ifndef _MSGDEF_H_ #define _MSGDEF_H_ #undef USEMACRO #if defined(INCLUDE_AS_ENUM) //判断预编译宏的设置情况，判断是转换成enum还是string #define MSG_MACRO(msg) msg, #elif defined(INCLUDE_AS_STRING) #define MSG_MACRO(msg) #msg, //不能遗忘“,”号 #else #error To use this include file, first define either INCLUDE_AS_ENUM or INCLUDE_AS_STRING #endif //有新定义的message 枚举值的话，就只是需要在此添加 MSG_MACRO(MSG_OPEN) MSG_MACRO(MSG_CLOSE) MSG_MACRO(MSG_COPY) MSG_MACRO(MSG_PASTE) #endif 而使用的时候，就要如此使用，例如在main.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2005-01-22T22:02:43&#43;08:00">January 22, 2005</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/c&#43;&#43;/" rel="category">C&#43;&#43;</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/c&#43;&#43;/" rel="tag">C&#43;&#43;</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>C++ | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/tags/c++/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="C++"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="C++"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2020-04-16T10:53:26+08:00"><meta itemprop=dateModified content="2020-04-16T10:53:26+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/tags/c++/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-term"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/tags/>Tags</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>C++</li></ol></nav><div class="page block"><h1 class=page__title>C++</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/cpp/porting_to_64bit_platforms/>移植代码到64位平台</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>C和C++大量依赖于指针的使用，即包含内存地址的变量。尽管指针类型在概念上与整数类型不同，但其物理地址值 <strong>始终是一个整数</strong> 。开发人员在C/C ++中大量使用整数类型而不是指针类型，即使在编译器随附的系统头文件中也是如此。在过去的几十年中，大多数计算机处理器都使用32位内存地址，因此开发环境是 <strong>围绕地址长度为32位的假设</strong> 建立的。C/C++代码中存在着大量 <strong>指针和整数之间的隐式和显式转换</strong> 。使用指针，或union的重叠内存结构方式（overlapping memory structures），去访问变量，也是司空见惯。</p><p>当然，32位架构有其局限性。具体来说，它们将计算机内存限制为4GB。应用程序需求不断增长，迫切需要迁移到更长的地址。经常使用的旧式类型带来了新的含义和价值。最具戏剧性，最明显的的变化，是从32位转向64位指针。</p><h2 id=不再适用相同的规则>不再适用相同的规则</h2><p>基本类型的某些大小已更改。其中一些保持不变。但是，突然之间，在C和C++代码库中使用的许多隐式假设不再有效。在32位系统中编写和测试的代码在迁移到64位计算机时不再有效。</p><p>幸运的是，已经识别并分类了代码可能易于从32位计算机迁移到64位计算机的大多数区域。一些编译器使用主动检查技术来捕获在迁移期间可能出现的漏洞。静态分析工具的供应商（包括Coverity和Klocwork）可以提供进一步帮助将代码从32位机器平稳迁移到64位机器的机制。尽管这些工具不能直接解决代码迁移问题，但它们提供了便利的可扩展性和API，可以创建与32位到64位迁移相关的自定义检查程序。增强这些工具可以进一步帮助发现并有效解决这些兼容性问题。</p><p>本文的目的是帮助您使代码库与体系结构无关，因此可以在32位计算机或64位计算机上构建相同的代码库，并为每台计算机生成可行的代码。此外，如果32位程序通过二进制数据交换（通过文件或套接字）与64位程序进行通信，则有多种方法可以确保二进制结构不受两种体系结构类型之间的迁移的影响。</p><p>本文包含详细的分析和建议，以解决与32位到64位迁移有关的众多问题。</p><p>为了使您的程序与体系结构无关，有两个目标需要实现。 其中之一是内部一致性，即确保程序中使用的所有类型都是一致的，而不管代码是在32位还是64位计算机上编译的。 让我们看一下两种架构上基本类型的大小（请参见表1）。</p><p><img src=/image/cpp/porting_to_64bit_platforms/t1.gif alt></p><p>此处的显着区别是指针类型和long类型的大小变化。由于大小更改，某些基于隐式依赖关系构建的代码可能无法正确迁移。可能的问题主要与整数与整数之间，或者是整数和指针之间的数据交换有关。</p><h2 id=整数大小的差异>整数大小的差异</h2><p>在32位系统上，int和long类型都是32位，这意味着程序员可以互换使用这两种类型。此外，C没有严格的输入规则，因此函数中的int参数可以传递long参数而不会出错。尽管这不是一个好的编码实践，但是此代码可能会在数年内完美运行。但是，在64位系统中，在某些编译器中，int和long具有不同的大小，并且代码在迁移后将无法正常工作。将long值分配给int变量可能会导致截断。以下代码在32位系统中可以正常工作，但在64位系统中则极有可能正常工作。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>int</span> sum<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>long</span> val1<span style=color:#1f2328>,</span> val2<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>sum <span style=color:#0550ae>=</span> val1 <span style=color:#0550ae>+</span> val2<span style=color:#1f2328>;</span>  <span style=color:#57606a>// possible truncation in 64-bit system
+</span></span></span></code></pre></div><p>以下代码可能会在某些编译器中引起编译器警告，但是此代码（在32位模式下工作）可能将无法在64位模式下工作，因为堆栈上的值大小会发生变化。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>int</span> <span style=color:#6639ba>add</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> parm1<span style=color:#1f2328>,</span> <span style=color:#cf222e>int</span> parm2<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// .....
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>long</span> val1<span style=color:#1f2328>,</span> val2<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>long</span> sum <span style=color:#0550ae>=</span> add<span style=color:#1f2328>(</span>val1<span style=color:#1f2328>,</span>val2<span style=color:#1f2328>);</span>    <span style=color:#57606a>// mismatch of parm size on 64-bit machine
+</span></span></span></code></pre></div><p>可能还会发生其他一些细微的事情，从而影响代码的完整性。例如，编译时函数<code>sizeof()</code>返回类型为<code>size_t</code>的结果，<code>size_t</code>类型的占据的字节大小，则取决于该程序中指针类型变量占据的字节数的大小。将此值分配给整数可能导致被截断。如下代码所示：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>int</span> mySize <span style=color:#0550ae>=</span> <span style=color:#cf222e>sizeof</span><span style=color:#1f2328>(</span>MyStructure<span style=color:#1f2328>);</span>  <span style=color:#57606a>// possible size truncation
+</span></span></span></code></pre></div><p>另一个更细微的错误是位字段的符号扩展。 例如：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>struct</span> <span style=color:#1f2328>Mask</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#cf222e>unsigned</span> <span style=color:#cf222e>int</span> <span style=color:#900;font-weight:700>flags</span><span style=color:#1f2328>:</span><span style=color:#0550ae>20</span><span style=color:#1f2328>,</span> <span style=color:#900;font-weight:700>width</span><span style=color:#1f2328>:</span><span style=color:#0550ae>12</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#cf222e>struct</span> <span style=color:#1f2328>Mask</span> myMask<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>myMask<span style=color:#1f2328>.</span>flags <span style=color:#0550ae>=</span> <span style=color:#0550ae>0x80000</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>unsigned</span> <span style=color:#cf222e>long</span> bigFlags <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>myMask<span style=color:#1f2328>.</span>flags <span style=color:#0550ae>&lt;&lt;</span> <span style=color:#0550ae>12</span><span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>在32位计算机上，无符号值0x80000在左移位后将变为0x80000000，在将其赋给无符号long后，它将产生相同的值0x80000000。因此，在64位计算机上，您希望将值0x80000000分配给一个无符号long，并将变为0x0000000080000000。但是，结果值为0xFFFFFFFF80000000。这是因为：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-04-16T10:53:26+08:00>April 16, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/c++/ rel=category>C++</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/c++/ rel=tag>C++</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/cpp/cpp_rvalue_test/>C++的右值和移动构造函数的测试程序说明</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>本文用以测试C++的<strong>右值</strong>，<strong>移动构造函数</strong>，以及<strong>标准库容器的emplace和push操作</strong>的区别。
+测试环境是<strong>Visual C++ 14.0.25431.01 Update 3</strong>版本，未启用任何编译优化操作</p><p>代码可以在<a href=https://github.com/kumakoko/cpp11exercise/blob/master/Cpp11Exercise/rvalue_test.cc>github</a>中获取。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;cstring&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;cstdlib&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;map&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;vector&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;cstdio&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>class</span> <span style=color:#1f2328>DemoClassA</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#1f2328>()</span> <span style=color:#0550ae>:</span>num_<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>),</span> name_<span style=color:#1f2328>(</span><span style=color:#cf222e>nullptr</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::DemoClassA()</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#0550ae>~</span>DemoClassA<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::~DemoClassA(%d,%s)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> num_<span style=color:#1f2328>,</span> name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>delete</span><span style=color:#1f2328>[]</span> name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::~DemoClassA()</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> num<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>name<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::DemoClassA(%d,%s)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> num_<span style=color:#1f2328>,</span> name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> DemoClassA<span style=color:#0550ae>&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::DemoClassA(const DemoClassA&amp; rhs)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#1f2328>(</span>DemoClassA<span style=color:#0550ae>&amp;&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        rhs<span style=color:#1f2328>.</span>num_ <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        rhs<span style=color:#1f2328>.</span>name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::DemoClassA(DemoClassA&amp;&amp; rhs)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#0550ae>&amp;</span> <span style=color:#cf222e>operator</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> DemoClassA<span style=color:#0550ae>&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>delete</span><span style=color:#1f2328>[]</span> name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::operator = (const DemoClassA&amp; rhs)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>*</span><span style=color:#cf222e>this</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#0550ae>&amp;</span> <span style=color:#cf222e>operator</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>DemoClassA<span style=color:#0550ae>&amp;&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>delete</span><span style=color:#1f2328>[]</span> name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        rhs<span style=color:#1f2328>.</span>num_ <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        rhs<span style=color:#1f2328>.</span>name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::operator = (DemoClassA&amp;&amp; rhs)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>*</span><span style=color:#cf222e>this</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>PrintInfo</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA: I am %s.My number is %d</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> name_<span style=color:#1f2328>,</span> num_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA: I am a dummy</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>ChangeNumber</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> new_num<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> new_num<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>private</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> num_ <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>class</span> <span style=color:#1f2328>DemoClassB</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    DemoClassB<span style=color:#1f2328>()</span> <span style=color:#0550ae>:</span>num_<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>),</span> name_<span style=color:#1f2328>(</span><span style=color:#cf222e>nullptr</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB::DemoClassB()</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#0550ae>~</span>DemoClassB<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB::~DemoClassB(%d,%s)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> num_<span style=color:#1f2328>,</span> name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>delete</span><span style=color:#1f2328>[]</span> name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB::~DemoClassB()</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassB<span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> num<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>name<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB::DemoClassB(%d,%s)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> num_<span style=color:#1f2328>,</span> name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassB<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> DemoClassB<span style=color:#0550ae>&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>         <span style=color:#0a3069>&#34;DemoClassB::DemoClassB(const DemoClassB&amp; rhs %d,%s)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> num_<span style=color:#1f2328>,</span> name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassB<span style=color:#0550ae>&amp;</span> <span style=color:#cf222e>operator</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> DemoClassB<span style=color:#0550ae>&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>delete</span><span style=color:#1f2328>[]</span> name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB::operator = (const DemoClassB&amp; rhs)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>*</span><span style=color:#cf222e>this</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>PrintInfo</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>                <span style=color:#0a3069>&#34;DemoClassB: I am %s.My number is %d</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> name_<span style=color:#1f2328>,</span> num_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB: I am a dummy</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>ChangeNumber</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> new_num<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> new_num<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>private</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span>     num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span>   name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>DemoClassA <span style=color:#6639ba>MakeDemoClassAInstance1</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> DemoClassA<span style=color:#1f2328>(</span>num<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>DemoClassA <span style=color:#6639ba>MakeDemoClassAInstance2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    DemoClassA a<span style=color:#1f2328>(</span>num<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>DemoClassB <span style=color:#6639ba>MakeDemoClassBInstance1</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 因为这里没有别的操作，只是一个简单的return，所以就算不开优化
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 这个MakeDemoClassBInstance1函数实质上是等同于不存在的，
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> DemoClassB<span style=color:#1f2328>(</span>num<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>DemoClassB <span style=color:#6639ba>MakeDemoClassBInstance2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 因为DemoClassB没有移动构造函数，所以返回b对象所对应的临时
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 对象时，会调用DemoClassB的拷贝构造函数生成这个临时对象
+</span></span></span><span style=display:flex><span>    DemoClassB b<span style=color:#1f2328>(</span>num<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> b<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>main</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>vector<span style=color:#0550ae>&lt;</span>DemoClassA<span style=color:#0550ae>&gt;</span> VecDemoClassA<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>vector<span style=color:#0550ae>&lt;</span>DemoClassB<span style=color:#0550ae>&gt;</span> VecDemoClassB<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    VecDemoClassA<span style=color:#1f2328>.</span>reserve<span style=color:#1f2328>(</span><span style=color:#0550ae>10</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassB<span style=color:#1f2328>.</span>reserve<span style=color:#1f2328>(</span><span style=color:#0550ae>10</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，调用MakeDemoClassAInstance1函数后，只发生了调用DemoClassA
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 构造函数这一次函数调用。所以哪怕没有开任何的优化开关，这个MakeDemoClassAInstance1
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 函数直接优化掉了
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassAInstance1 begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>auto</span> dca1 <span style=color:#0550ae>=</span> MakeDemoClassAInstance1<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;John&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassAInstance1 ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，调用MakeDemoClassAInstance2函数后，调用DemoClassA
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 构造函数1次，移动构造函数1次，析构函数一次，也就是说，如果类明确定了它的移动构造函数
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 则发生临时对象的生成的传递时，优先调用移动构造函数
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassAInstance2 begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>auto</span> dca2 <span style=color:#0550ae>=</span> MakeDemoClassAInstance2<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Bob&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassAInstance2 ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，调用MakeDemoClassBInstance1函数后，只发生了调用DemoClassB
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 构造函数这一次函数调用。所以哪怕没有开任何的优化开关，这个MakeDemoClassBInstance1
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 函数直接优化掉了
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassBInstance1 begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>auto</span> dcb1 <span style=color:#0550ae>=</span> MakeDemoClassBInstance1<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Lucy&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassBInstance1 ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，调用MakeDemoClassBInstance2函数后，调用DemoClassB
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 构造函数1次，拷贝构造函数1次，析构函数一次，也就是说，如果类没有明确定了它的移动构造
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 函数，则发生临时对象的生成的传递时，使用拷贝构造函数
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassBInstance2 begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>auto</span> dcb2 <span style=color:#0550ae>=</span> MakeDemoClassBInstance2<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Lily&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassBInstance2 ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，std::vector的push_back方法会拷贝一个副本到vector里面，因为
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 且“DemoClassA(4, &#34;Ken&#34;)”这样的语句生成了一个右值对象，且DemoClassA有移动构造函
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 数，所以是使用了移动构造函数，构造了一个对象副本放进vector里
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::push_back begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassA<span style=color:#1f2328>.</span>push_back<span style=color:#1f2328>(</span>DemoClassA<span style=color:#1f2328>(</span><span style=color:#0550ae>4</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Ken&#34;</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::push_back ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，如果先构造一个DemoClassA的实例对象dcb11，然后再调用std::vector的
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// push_back方法时，如果不使用std::move方法将dcb11转为右值的话，调用拷贝构造函数构造一个
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 副本，如使用std::move方法将dcb11转为右值，则调用移动构造函数构造副本放进vector
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 一般地，被std::move处理过的对象，它持有的变量被偷了，所以一般不要随便再继续使用它
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::push_back with move begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>auto</span> dcb11 <span style=color:#0550ae>=</span> DemoClassA<span style=color:#1f2328>(</span><span style=color:#0550ae>74</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Obama&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassA<span style=color:#1f2328>.</span>push_back<span style=color:#1f2328>(</span>dcb11<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassA<span style=color:#1f2328>.</span>push_back<span style=color:#1f2328>(</span>std<span style=color:#0550ae>::</span>move<span style=color:#1f2328>(</span>dcb11<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    dcb11<span style=color:#1f2328>.</span>PrintInfo<span style=color:#1f2328>();</span> <span style=color:#57606a>// dcb11的name_指向的资源已经被偷走了，name_已经被置为nullptr
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::push_back with move ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，std::vector的push_back方法会拷贝一个副本到vector里面，因为
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// DemoClassA只有拷贝构造函数，所以是使用了拷贝构造函数构造了一个对象副本放进vector里
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassB&gt;::push_back begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassB<span style=color:#1f2328>.</span>push_back<span style=color:#1f2328>(</span>DemoClassB<span style=color:#1f2328>(</span><span style=color:#0550ae>5</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;David&#34;</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassB&gt;::push_back ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，emplace_back会直接生成给一个临时对象push到vector里
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::emplace_back begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassA<span style=color:#1f2328>.</span>emplace_back<span style=color:#1f2328>(</span><span style=color:#0550ae>14</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Kate&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::emplace_back ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，emplace_back会直接生成给一个临时对象push到vector里
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassB&gt;::emplace_back begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassB<span style=color:#1f2328>.</span>emplace_back<span style=color:#1f2328>(</span><span style=color:#0550ae>24</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Fancy&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassB&gt;::emplace_back ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    system<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;PAUSE&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>程序的执行输出如下图：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-01-22T22:02:43+08:00>January 22, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/c++/ rel=category>C++</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/c++/ rel=tag>C++</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/cpp/special_using_of_cpp_macro/>C/C++中macro的一些特殊使用</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>ISO C++ 推出之后，C/C++ 中宏（macro）的使用一直都备受争议，就好像当年保守诟病的goto语句一样。有所不同的是，现在的C/C++ 代码中使用goto语句的使用率是越来越少了。而macro仍然在C/C++ programming中占据一席之地——例如集赞誉之耀和诋毁之辱于一身的Microsoft Foudation Classes就把macro的强大功能发挥得淋漓尽致。套用“存在着就是合理”，macro的存在必定有其合理的因素。事实上，如果在programming的时候充分发挥macro的机制，就能写出一些巧妙精致而且设计合理的代码。我在工作中阅读了一个引擎的代码，引擎在某处就比较巧妙地利用了macro的功能。在此我将其整理出来，供大家学习交流。</p><p>大家在进行C/C++ programming的时候，常常定义一些枚举类型的数据，例如：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>enum</span> <span style=color:#1f2328>EMessage</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>   MSG_OPEN<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>   MSG_CLOSE<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>   MSG_COPY<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>   MSG_PASTE
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><p>在某些时候，比如在调试某段程序的时候，使用调试器捕获了某个枚举变量的值，这时候我们所能得到的是一些数值。例如当变量<code>EMessage eMsg = MSG_OPEN</code>的时候，我们能观察到<code>eMsg = 0</code>。但是单单一个“0”的话一下子让人难以明白它的含义，如果想在屏幕上也能打印出枚举的名称就更加不好办了。解决这个问题，方法之一，就是利用macro的强大灵活的机制。现在我们来一步一步地分析如何利用macro来解决上述的问题。</p><p>想打印枚举的名称，你首先想到的肯定是：使用一个字典数据结构记录枚举变量和描述字符串的映射关系。例如：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;map&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#cf222e>namespace</span> std<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>map<span style=color:#0550ae>&lt;</span>EMessage<span style=color:#1f2328>,</span><span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*&gt;</span> MsgDesc<span style=color:#1f2328>;</span> <span style=color:#57606a>//为了节省空间，不使用string存储描述信息
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>MsgDesc<span style=color:#1f2328>[</span>MSG_OPEN<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;MSG_OPEN&#34;</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>MsgDesc<span style=color:#1f2328>[</span>MSG_CLOSE<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;MSG_CLOSE&#34;</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>MsgDesc<span style=color:#1f2328>[</span>MSG_COPY<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;MSG_COPY&#34;</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>MsgDesc<span style=color:#1f2328>[</span>MSG_PASTE<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;MSG_PASTE&#34;</span><span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>使用字典数据结构很方便，但是如果枚举值很少的时候，使用一个map类型的对象来管理这些东西似乎有点暴殄天物（或许对于现在的硬件设备而言不算什么，但是如果性能有着严格要求的话。。。）。如果枚举值很多的话，每添加一个新的枚举量就要在枚举定义内写一次，在把枚举量描述添加进字典中又要写一次，尤为繁琐。 如果使用macro机制的话，可以通过预编译和macro机制一次性处理上述的问题。 例如：在文件msgdef.h中</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#ifndef _MSGDEF_H_
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define _MSGDEF_H_
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#undef USEMACRO 
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#if defined(INCLUDE_AS_ENUM) </span><span style=color:#57606a>//判断预编译宏的设置情况，判断是转换成enum还是string
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define MSG_MACRO(msg)    msg,
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#elif defined(INCLUDE_AS_STRING)
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define MSG_MACRO(msg)  #msg,  </span><span style=color:#57606a>//不能遗忘“,”号
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#else
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#error To use this include file, first define either INCLUDE_AS_ENUM or INCLUDE_AS_STRING
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//有新定义的message 枚举值的话，就只是需要在此添加
+</span></span></span><span style=display:flex><span>MSG_MACRO<span style=color:#1f2328>(</span>MSG_OPEN<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>MSG_MACRO<span style=color:#1f2328>(</span>MSG_CLOSE<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>MSG_MACRO<span style=color:#1f2328>(</span>MSG_COPY<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>MSG_MACRO<span style=color:#1f2328>(</span>MSG_PASTE<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span></code></pre></div><p>而使用的时候，就要如此使用，例如在main.cpp中</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2005-01-22T22:02:43+08:00>January 22, 2005</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/c++/ rel=category>C++</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/c++/ rel=tag>C++</a></span></div></div></article></div></div></main></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

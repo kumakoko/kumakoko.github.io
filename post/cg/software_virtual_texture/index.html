@@ -1,289 +1,53 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Software Virtual Texture 学习笔记 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Software Virtual Textures 学习笔记">
-		<meta property="og:title" content="Software Virtual Texture 学习笔记" />
-<meta property="og:description" content="Software Virtual Textures 学习笔记" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/cg/software_virtual_texture/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2024-12-15T20:36:51+08:00" />
-<meta property="article:modified_time" content="2024-12-15T20:36:51+08:00" />
-
-
-		<meta itemprop="name" content="Software Virtual Texture 学习笔记">
-<meta itemprop="description" content="Software Virtual Textures 学习笔记"><meta itemprop="datePublished" content="2024-12-15T20:36:51+08:00" />
-<meta itemprop="dateModified" content="2024-12-15T20:36:51+08:00" />
-<meta itemprop="wordCount" content="145">
-<meta itemprop="keywords" content="OpenGL,CG," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Software Virtual Texture 学习笔记</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2024-12-15T20:36:51&#43;08:00">December 15, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>, 
-		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>, 
-		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">Software Virtual Texture 学习笔记</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-地址映射">1 地址映射</a>
-      <ul>
-        <li><a href="#11-四叉树映射">1.1 四叉树映射</a></li>
-        <li><a href="#12-单像素对应虚纹理的一个page的映射">1.2 单像素对应虚纹理的一个Page的映射</a></li>
-        <li><a href="#13-双纹理映射">1.3 双纹理映射</a></li>
-        <li><a href="#22-texture-filtering">2.2 Texture Filtering</a></li>
-        <li><a href="#23-feedback-rendering">2.3 Feedback Rendering</a></li>
-        <li><a href="#24-texture-poping">2.4 Texture Poping</a></li>
-        <li><a href="#25-存储和流式加载">2.5 存储和流式加载</a></li>
-        <li><a href="#26-pipeline">2.6 Pipeline</a></li>
-      </ul>
-    </li>
-    <li><a href="#参考资料">参考资料</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p>在MegaTexture的基础上，id Software进一步提出了Virtual Texture的概念，这个概念取自于Virtual Memory。与虚拟内存类似的是，一个很大的Texture将不会全部加载到内存中，而是根据实际需求将需要的部分加载；与虚拟内存不同的是，它不会阻塞执行，可以使用更高的Mipmap来暂时显示，它对基于block的压缩贴图有很好的支持。</p>
-<p>基本思路是：将纹理的Mipmap chain分割为相同大小的Tile或Page，这里的纹理是虚纹理，然后通过某种映射，映射到一张内存中存在的纹理，这里的纹理是物理纹理，在游戏视野发生变化的时候，一部分物理纹理会被替换出去，一部分物理纹理会被加载。</p>
-<p><img src="/image/cg/svt/virtual_texture_mipmap.png" alt="带有mimap的virtual texture示意图"></p>
-<p>这样的机制不仅仅减少了带宽消耗和内存（显存）消耗，也带来了其它好处。比如有利于合批，而不用因为使用不同的Texture而打断合批，这样可以根据需求来组织几何使得更利于Culling。当然合批的好处是states change变少，LightMap也可以预计算到一张大的Virtual Texture上用来合批。</p>
-<h2 id="1-地址映射">1 地址映射</h2>
-<p>地址映射在Virtual Texture中是一个很重要的环节，即是“如何将一个virtual texture上的texel，对应地映射到phyiscal texture上去”。同时还需要处理“假如高分辨率的page没有加载的话，如何获得已加载的相对应的低分辨率的page”</p>
-<h3 id="11-四叉树映射">1.1 四叉树映射</h3>
-<p>使用四叉树主要是为了和Mipmap对应，也就是每个低MIP的Map会对应有四个高MIP的Map，四叉树中只存储加载的Mipmap信息。这里的对应关系就是每个加载的Virtual Texture的Page对应一个四叉树的节点，具体的计算如下：</p>
-<p><img src="/image/cg/svt/quad_tree_of_sparse_texture_pyramid.png" alt=""></p>
-<p>这里存在每个四叉树的节点中的内容就是bias和scale，这样就可以将虚拟纹理的地址转换成物理纹理的地址。如果没有找到，也可以用父节点的地址来得到低分辨率。但是这里要找到对应的节点需要搜索这个四叉树，搜索的速度取决于树的高度，也就是Mipmap的层级，在差的低MIP的地址上效率会比较低。</p>
-<h3 id="12-单像素对应虚纹理的一个page的映射">1.2 单像素对应虚纹理的一个Page的映射</h3>
-<p>为了减少索引，首先容易想到的就是，为每个虚纹理的Page都存储一份信息，这样就能直接转换了。这个方案就是创建一个带Mipmap的Texture，一个Texel对应虚纹理的一个Page，Texel的内容就是四叉树映射里面的bias和scale。</p>
-<p>假如对应的MIP没有加载，存储的就是高MIP的转换信息，这样显然就提高了地址转换的效率。但是这会带来内存增加，因为我们需要每个虚纹理的Page都对应一个Texel。其中bias和scale都是二维的向量，即使设计虚纹理和物理纹理的比例一致，我们也需要至少scale、SBias、TBias三个量，而且这三个量的精度要求很高，至少需要16bit的浮点数精度。如果要达到这样的精度就需要F32*4的纹理格式，那么必然会产生一个巨大的映射纹理，因此需要减小映射纹理的大小。</p>
-<h3 id="13-双纹理映射">1.3 双纹理映射</h3>
-<p>这个方案仍然有一个对应每个虚纹理Page的Texture，但是不同的是，纹理的内容存储的是物理纹理Page的坐标，用这个坐标再去索引另外一张Texture。另外一张贴图的内容才是bias和scale，但不是每个虚拟纹理，而是每个物理纹理Page一个Texel。下图是虚拟纹理对应的Texture：</p>
-<p><img src="/image/cg/svt/virtual_texture.png" alt="带有mimap的virtual texture示意图"></p>
-<p>这样就减少了映射纹理的大小，但是同时多了一次纹理查询。</p>
-<h4 id="214-page和mip-level映射">2.1.4 Page和MIP level映射</h4>
-<p>总结上面两个基于映射纹理的方案，要么是纹理需要很大的存储，要么是需要多次查询。如果从映射纹理比较大的角度考虑优化，可以考虑适当减少每个像素的大小，这个方案就是从这个角度出发的。在这个方案中，仍然是每个虚拟纹理的Page对应一个texel，但是存储的内容是物理纹理Page的Offset和虚拟纹理所在的MIP level。</p>
-<p>这样存储的好处就是，Page Offset对精度的要求没有那么大，用32bit的Texture即可。当然也可以压缩到更小格式的纹理中，如RGB565。这种方案的使用最广泛，基本各家引擎的实现都使用了这种方案。</p>
-<h4 id="215-hashtable映射">2.1.5 HashTable映射</h4>
-<p>这是最直接的方法，好处是节省内存，查询速度快，但是当遇到没有加载的virtual Page的时候，需要多次查询。这个和四叉树还有一个问题，即如何设计一个GPU友好的数据结构。</p>
-<h3 id="22-texture-filtering">2.2 Texture Filtering</h3>
-<p>由于虚拟纹理并没有完整加载，所以各种采样过滤在Page的边界会有问题，我们需要自己设计解决这些问题的方法，适当的使用软实现的采样。</p>
-<h4 id="221-bi-linear-filtering">2.2.1 Bi-linear Filtering</h4>
-<p>这个解决方案比较简单，就是给Physical Page加上一个像素的border。</p>
-<h4 id="222-anisotropic-filtering">2.2.2 Anisotropic Filtering</h4>
-<p>Anisotropic Filtering可能需要更多的相邻像素，假如我们需要支持8倍的Anisotropic Filtering，那我们需要采样步长为4的相邻像素，也就是我们的border要增加到4个像素。增加4个像素的border会增加Physical Texture的大小，但是带来了一个好处，就是适配了block compression。</p>
-<p>具体实现可以分为软实现和硬实现，硬实现放到下文的Tri-linear说，这里说软实现。软实现其实就是在Shader中实现Anisotropic Filtering的算法，在决定采样的MIP level的时候，需要把虚纹理相对于物理纹理的比例考虑进去，剩下的就是正常的Anisotropic Filtering。</p>
-<h4 id="223-tri-linear-filtering">2.2.3 Tri-linear Filtering</h4>
-<p>Tri-linear Filtering的实现方案可以分为两种：一种是软实现，一种是硬实现。</p>
-<p>所谓的软实现与Anisotropic Filtering一样，在Shader中实现Tri-linear Filtering。也就是说，需要在Shader中计算MIP level，然后进行两次地址的转换，采样两个物理纹理的Page后进行插值。</p>
-<p>硬实现的方法是直接给物理纹理生成一个一层的Mipmap，然后利用硬件去直接采样。同样的，对于Anisotropic Filtering，也打开Anisotropic Filtering直接进行采样。这样的好处当然是由于硬件的加速，采样的效率会提升，但是这样同时会导致增加25%的纹理大小，而且由于Mipmap的边界会变成两个像素，对于block compression和超过4倍的Anisotropic Filtering来说，在遇到Page的边界时都会出现问题。</p>
-<h3 id="23-feedback-rendering">2.3 Feedback Rendering</h3>
-<p>在Virtual Texture中一个很重要的事情是要有一个可以决定加载哪些Page的策略，这个策略要有一个Feedback Rendering的过程。这个可以设计为一个单独的pass，或者在渲染Pre-Z Buffer，GBuffer的时候同时渲染。渲染生成的这张Texture里面存的就是虚纹理的Page坐标，MIP level和可能的虚纹理ID（用来应对多虚纹理的情况）。</p>
-<p>可以看到上图，由于Page的变化在屏幕空间是比较低的，所以Feedback的RenderTexture不需要全分辨率，低分辨率渲染就可以。对于半透明物体或者Alpha Test的物体，在Feedback Rendering的过程中只能当作是不透明物体来渲染，那样就会在屏幕像素上随机产生当前像素的可能结果。</p>
-<p>与之类似的，如果一个屏幕像素用到了两个Page，也会是随机出现一种在最后的结果RenderTexture上。这样虽然可以让所有需要的Page都加载，但是可能会遇到另外一个问题，即可能会发生这一帧加载的Page，下一帧的时候被卸载掉，然后再下一帧又要加载，这样会导致物理纹理一直在置换，即便屏幕像素并未改变，物理纹理的Page也无法稳定下来。</p>
-<p>为了解决这个问题，需要设计一个调色板，对于半透明物体，间隔出现全透明或者不透明；对于多Page的情况，则需要设计为间隔出现不同Page的结果，这样就能同时加载所有Page，并且保持稳定。但是，如果出现了多层半透明物体的叠加或者多个Page的情况，如何设计一个合理的调色板就变成了一个问题。这里可以考虑为每个像素匹配一个linked list，但需要额外的硬件支持：structured append and consume buffers。</p>
-<p>接着就是对这个Feedback的结果进行分析，分析需要将Feedback的结果读回CPU，这里可以使用Compute Shader解析这个结果，然后输出到一个更简单的buffer上去：</p>
-<p>这样可以使回读操作更快，处理Page更新也能更快。对于如何更新Page，也需要策略，我们需要尽量不阻塞执行，异步地加载Page，但是对于完全不存在任何一个MIP的Page，我们还是需要同步加载防止显示出错。在异步的过程中，我们要对需要加载Page设置优先级，比如需要加载的MIP level和已经存在的MIP level相差越大的优先级越高，被越多像素要求加载的Page的优先级越高，这里需要设计一个完整的加载策略。</p>
-<h3 id="24-texture-poping">2.4 Texture Poping</h3>
-<p>由于Page是异步加载的，所以会有延时，当加载的MIP比当前显示的相差很远时，我们渲染会使用新加载的更清晰的MIP，这样我们会看到非常明显的跳变。假如我们用了软实现的Tri-linear Filtering，那么当加载的MIP level跟当前显示的MIP level相差很大的时候，需要做一个delay，等待中间的MIP Page的加载，然后再去更新。对于没有Tri-linear Filtering的实现，就得逐渐更新Page，使得过度平滑。一个可能的方法是，Upsample低分辨率的MIP，直到高分辨率的MIP加载。但是，因为采样的位置其实发生了突变，仍然会出现跳变。</p>
-<p>上图可以看到，当分辨率增加2倍之后，结果会发生很大的不同。解决的方案是，先把Upsample的低分辨率Page加载到一个物理纹理的Page，当高分辨率的Page加载好了，插值过度物理纹理的Page，这样采样的位置没有发生改变，只是每个像素的颜色在渐变，就不会有跳变出现了。</p>
-<h3 id="25-存储和流式加载">2.5 存储和流式加载</h3>
-<p>这一部分本文会说的比较少，因为这一部分内容甚至比Virtual Texture本身还要繁杂，所以只提一些Virtual Texture比较特殊的部分。</p>
-<h4 id="251-存储和压缩">2.5.1 存储和压缩</h4>
-<p>对于存储和压缩，在光盘或者磁盘上存储的，需要选择一个适合的JPEG等的压缩方式。重点是当加载到内存之后，提交给GPU，根据之前的内容，需要用一个block compression来适配各种Filtering，也可以使用不同颜色空间来进行进一步压缩。</p>
-<h4 id="252-离线烘焙feedback-data">2.5.2 离线烘焙Feedback Data</h4>
-<p>就如同可见性烘培一样，对于Feedback Data是可以离线烘培的，《Titanfall 2》中实现了这个方案。</p>
-<h3 id="26-pipeline">2.6 Pipeline</h3>
-<p>总结一下Software Virtual Texture的流程：</p>
-<p>首先执行一个Feedback Rendering，或者从烘培好的Feedback Data中取出当前数据，然后分析需要加载的Page，尝试从内存中找到这个Page，如果没有，就从磁盘或者光盘中加载。然后申请一个新的物理纹理Page，在使用这个纹理之前，假如是之前用过的Page，我们需要先与GPU解绑。确定完之后，把这个Texture转换成一个GPU能用的压缩的Texture内容，并将这块Texture与GPU绑定。其中分析Feedback、Unmap、Transcode、Map过程是可以异步发生的，也就是需要一个Job System去驱动，他们的关系是生产者与消费者的关系。</p>
-<p>在Software Virtual Texture中提到的一些内容，在其它的实现中也是需要的，比如Feedback Rendering在Hardware Virtual Texture中需要使用，地址影射在Hardware Virtual Texture和Procedural Virtual Texture中都要用到，接下来描述方案的时候，我就不一一再去说，只提一下他们的方案名字。</p>
-<h2 id="参考资料">参考资料</h2>
-<p><a href="https://blog.uwa4d.com/archives/USparkle_VirtualTexture.html">浅谈Virtual Texture</a></p>
-<p><a href="SoftwareVirtualTextures%E7%BF%BB%E8%AF%91%E4%BB%A5%E5%8F%8A%E7%BB%93%E5%90%88doom2016%E7%9A%84%E5%88%86%E6%9E%90">SoftwareVirtualTextures翻译以及结合doom2016的分析</a></p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/opengl/">OpenGL</a>
-			<a class="entry__tag btn" href="/tags/cg/">CG</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/sparse_virtual_textures_study_note/">Sparse virtual textures 学习笔记</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/what_is_hbao/">HBAO</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/what_is_uv_density/">什么是UV density</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/how_to_use_hlsl_include_with_pragmas/">HLSL语言的编译指令#include_with_pragmas的具体用法</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/octahedron_mapping/">八面体（Octahedron）及其坐标映射</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Software Virtual Texture 学习笔记 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Software Virtual Textures 学习笔记"><meta property="og:url" content="http://www.xionggf.com/post/cg/software_virtual_texture/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Software Virtual Texture 学习笔记"><meta property="og:description" content="Software Virtual Textures 学习笔记"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2024-12-15T20:36:51+08:00"><meta property="article:modified_time" content="2024-12-15T20:36:51+08:00"><meta property="article:tag" content="OpenGL"><meta property="article:tag" content="CG"><meta itemprop=name content="Software Virtual Texture 学习笔记"><meta itemprop=description content="Software Virtual Textures 学习笔记"><meta itemprop=datePublished content="2024-12-15T20:36:51+08:00"><meta itemprop=dateModified content="2024-12-15T20:36:51+08:00"><meta itemprop=wordCount content="145"><meta itemprop=keywords content="CG"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Software Virtual Texture 学习笔记</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2024-12-15T20:36:51+08:00>December 15, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/opengl/ rel=category>OpenGL</a>,
+<a class=meta-categories__link href=/categories/cg/ rel=category>CG</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/opengl/ rel=tag>OpenGL</a>,
+<a class=meta-tags__link href=/tags/cg/ rel=tag>CG</a></span></div></div><h1 class=entry__title>Software Virtual Texture 学习笔记</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#1-地址映射>1 地址映射</a><ul><li><a href=#11-四叉树映射>1.1 四叉树映射</a></li><li><a href=#12-单像素对应虚纹理的一个page的映射>1.2 单像素对应虚纹理的一个Page的映射</a></li><li><a href=#13-双纹理映射>1.3 双纹理映射</a></li><li><a href=#22-texture-filtering>2.2 Texture Filtering</a></li><li><a href=#23-feedback-rendering>2.3 Feedback Rendering</a></li><li><a href=#24-texture-poping>2.4 Texture Poping</a></li><li><a href=#25-存储和流式加载>2.5 存储和流式加载</a></li><li><a href=#26-pipeline>2.6 Pipeline</a></li></ul></li><li><a href=#参考资料>参考资料</a></li></ul></nav></details><div class=entry__content><p>在MegaTexture的基础上，id Software进一步提出了Virtual Texture的概念，这个概念取自于Virtual Memory。与虚拟内存类似的是，一个很大的Texture将不会全部加载到内存中，而是根据实际需求将需要的部分加载；与虚拟内存不同的是，它不会阻塞执行，可以使用更高的Mipmap来暂时显示，它对基于block的压缩贴图有很好的支持。</p><p>基本思路是：将纹理的Mipmap chain分割为相同大小的Tile或Page，这里的纹理是虚纹理，然后通过某种映射，映射到一张内存中存在的纹理，这里的纹理是物理纹理，在游戏视野发生变化的时候，一部分物理纹理会被替换出去，一部分物理纹理会被加载。</p><p><img src=/image/cg/svt/virtual_texture_mipmap.png alt="带有mimap的virtual texture示意图"></p><p>这样的机制不仅仅减少了带宽消耗和内存（显存）消耗，也带来了其它好处。比如有利于合批，而不用因为使用不同的Texture而打断合批，这样可以根据需求来组织几何使得更利于Culling。当然合批的好处是states change变少，LightMap也可以预计算到一张大的Virtual Texture上用来合批。</p><h2 id=1-地址映射>1 地址映射</h2><p>地址映射在Virtual Texture中是一个很重要的环节，即是“如何将一个virtual texture上的texel，对应地映射到phyiscal texture上去”。同时还需要处理“假如高分辨率的page没有加载的话，如何获得已加载的相对应的低分辨率的page”</p><h3 id=11-四叉树映射>1.1 四叉树映射</h3><p>使用四叉树主要是为了和Mipmap对应，也就是每个低MIP的Map会对应有四个高MIP的Map，四叉树中只存储加载的Mipmap信息。这里的对应关系就是每个加载的Virtual Texture的Page对应一个四叉树的节点，具体的计算如下：</p><p><img src=/image/cg/svt/quad_tree_of_sparse_texture_pyramid.png alt></p><p>这里存在每个四叉树的节点中的内容就是bias和scale，这样就可以将虚拟纹理的地址转换成物理纹理的地址。如果没有找到，也可以用父节点的地址来得到低分辨率。但是这里要找到对应的节点需要搜索这个四叉树，搜索的速度取决于树的高度，也就是Mipmap的层级，在差的低MIP的地址上效率会比较低。</p><h3 id=12-单像素对应虚纹理的一个page的映射>1.2 单像素对应虚纹理的一个Page的映射</h3><p>为了减少索引，首先容易想到的就是，为每个虚纹理的Page都存储一份信息，这样就能直接转换了。这个方案就是创建一个带Mipmap的Texture，一个Texel对应虚纹理的一个Page，Texel的内容就是四叉树映射里面的bias和scale。</p><p>假如对应的MIP没有加载，存储的就是高MIP的转换信息，这样显然就提高了地址转换的效率。但是这会带来内存增加，因为我们需要每个虚纹理的Page都对应一个Texel。其中bias和scale都是二维的向量，即使设计虚纹理和物理纹理的比例一致，我们也需要至少scale、SBias、TBias三个量，而且这三个量的精度要求很高，至少需要16bit的浮点数精度。如果要达到这样的精度就需要F32*4的纹理格式，那么必然会产生一个巨大的映射纹理，因此需要减小映射纹理的大小。</p><h3 id=13-双纹理映射>1.3 双纹理映射</h3><p>这个方案仍然有一个对应每个虚纹理Page的Texture，但是不同的是，纹理的内容存储的是物理纹理Page的坐标，用这个坐标再去索引另外一张Texture。另外一张贴图的内容才是bias和scale，但不是每个虚拟纹理，而是每个物理纹理Page一个Texel。下图是虚拟纹理对应的Texture：</p><p><img src=/image/cg/svt/virtual_texture.png alt="带有mimap的virtual texture示意图"></p><p>这样就减少了映射纹理的大小，但是同时多了一次纹理查询。</p><h4 id=214-page和mip-level映射>2.1.4 Page和MIP level映射</h4><p>总结上面两个基于映射纹理的方案，要么是纹理需要很大的存储，要么是需要多次查询。如果从映射纹理比较大的角度考虑优化，可以考虑适当减少每个像素的大小，这个方案就是从这个角度出发的。在这个方案中，仍然是每个虚拟纹理的Page对应一个texel，但是存储的内容是物理纹理Page的Offset和虚拟纹理所在的MIP level。</p><p>这样存储的好处就是，Page Offset对精度的要求没有那么大，用32bit的Texture即可。当然也可以压缩到更小格式的纹理中，如RGB565。这种方案的使用最广泛，基本各家引擎的实现都使用了这种方案。</p><h4 id=215-hashtable映射>2.1.5 HashTable映射</h4><p>这是最直接的方法，好处是节省内存，查询速度快，但是当遇到没有加载的virtual Page的时候，需要多次查询。这个和四叉树还有一个问题，即如何设计一个GPU友好的数据结构。</p><h3 id=22-texture-filtering>2.2 Texture Filtering</h3><p>由于虚拟纹理并没有完整加载，所以各种采样过滤在Page的边界会有问题，我们需要自己设计解决这些问题的方法，适当的使用软实现的采样。</p><h4 id=221-bi-linear-filtering>2.2.1 Bi-linear Filtering</h4><p>这个解决方案比较简单，就是给Physical Page加上一个像素的border。</p><h4 id=222-anisotropic-filtering>2.2.2 Anisotropic Filtering</h4><p>Anisotropic Filtering可能需要更多的相邻像素，假如我们需要支持8倍的Anisotropic Filtering，那我们需要采样步长为4的相邻像素，也就是我们的border要增加到4个像素。增加4个像素的border会增加Physical Texture的大小，但是带来了一个好处，就是适配了block compression。</p><p>具体实现可以分为软实现和硬实现，硬实现放到下文的Tri-linear说，这里说软实现。软实现其实就是在Shader中实现Anisotropic Filtering的算法，在决定采样的MIP level的时候，需要把虚纹理相对于物理纹理的比例考虑进去，剩下的就是正常的Anisotropic Filtering。</p><h4 id=223-tri-linear-filtering>2.2.3 Tri-linear Filtering</h4><p>Tri-linear Filtering的实现方案可以分为两种：一种是软实现，一种是硬实现。</p><p>所谓的软实现与Anisotropic Filtering一样，在Shader中实现Tri-linear Filtering。也就是说，需要在Shader中计算MIP level，然后进行两次地址的转换，采样两个物理纹理的Page后进行插值。</p><p>硬实现的方法是直接给物理纹理生成一个一层的Mipmap，然后利用硬件去直接采样。同样的，对于Anisotropic Filtering，也打开Anisotropic Filtering直接进行采样。这样的好处当然是由于硬件的加速，采样的效率会提升，但是这样同时会导致增加25%的纹理大小，而且由于Mipmap的边界会变成两个像素，对于block compression和超过4倍的Anisotropic Filtering来说，在遇到Page的边界时都会出现问题。</p><h3 id=23-feedback-rendering>2.3 Feedback Rendering</h3><p>在Virtual Texture中一个很重要的事情是要有一个可以决定加载哪些Page的策略，这个策略要有一个Feedback Rendering的过程。这个可以设计为一个单独的pass，或者在渲染Pre-Z Buffer，GBuffer的时候同时渲染。渲染生成的这张Texture里面存的就是虚纹理的Page坐标，MIP level和可能的虚纹理ID（用来应对多虚纹理的情况）。</p><p>可以看到上图，由于Page的变化在屏幕空间是比较低的，所以Feedback的RenderTexture不需要全分辨率，低分辨率渲染就可以。对于半透明物体或者Alpha Test的物体，在Feedback Rendering的过程中只能当作是不透明物体来渲染，那样就会在屏幕像素上随机产生当前像素的可能结果。</p><p>与之类似的，如果一个屏幕像素用到了两个Page，也会是随机出现一种在最后的结果RenderTexture上。这样虽然可以让所有需要的Page都加载，但是可能会遇到另外一个问题，即可能会发生这一帧加载的Page，下一帧的时候被卸载掉，然后再下一帧又要加载，这样会导致物理纹理一直在置换，即便屏幕像素并未改变，物理纹理的Page也无法稳定下来。</p><p>为了解决这个问题，需要设计一个调色板，对于半透明物体，间隔出现全透明或者不透明；对于多Page的情况，则需要设计为间隔出现不同Page的结果，这样就能同时加载所有Page，并且保持稳定。但是，如果出现了多层半透明物体的叠加或者多个Page的情况，如何设计一个合理的调色板就变成了一个问题。这里可以考虑为每个像素匹配一个linked list，但需要额外的硬件支持：structured append and consume buffers。</p><p>接着就是对这个Feedback的结果进行分析，分析需要将Feedback的结果读回CPU，这里可以使用Compute Shader解析这个结果，然后输出到一个更简单的buffer上去：</p><p>这样可以使回读操作更快，处理Page更新也能更快。对于如何更新Page，也需要策略，我们需要尽量不阻塞执行，异步地加载Page，但是对于完全不存在任何一个MIP的Page，我们还是需要同步加载防止显示出错。在异步的过程中，我们要对需要加载Page设置优先级，比如需要加载的MIP level和已经存在的MIP level相差越大的优先级越高，被越多像素要求加载的Page的优先级越高，这里需要设计一个完整的加载策略。</p><h3 id=24-texture-poping>2.4 Texture Poping</h3><p>由于Page是异步加载的，所以会有延时，当加载的MIP比当前显示的相差很远时，我们渲染会使用新加载的更清晰的MIP，这样我们会看到非常明显的跳变。假如我们用了软实现的Tri-linear Filtering，那么当加载的MIP level跟当前显示的MIP level相差很大的时候，需要做一个delay，等待中间的MIP Page的加载，然后再去更新。对于没有Tri-linear Filtering的实现，就得逐渐更新Page，使得过度平滑。一个可能的方法是，Upsample低分辨率的MIP，直到高分辨率的MIP加载。但是，因为采样的位置其实发生了突变，仍然会出现跳变。</p><p>上图可以看到，当分辨率增加2倍之后，结果会发生很大的不同。解决的方案是，先把Upsample的低分辨率Page加载到一个物理纹理的Page，当高分辨率的Page加载好了，插值过度物理纹理的Page，这样采样的位置没有发生改变，只是每个像素的颜色在渐变，就不会有跳变出现了。</p><h3 id=25-存储和流式加载>2.5 存储和流式加载</h3><p>这一部分本文会说的比较少，因为这一部分内容甚至比Virtual Texture本身还要繁杂，所以只提一些Virtual Texture比较特殊的部分。</p><h4 id=251-存储和压缩>2.5.1 存储和压缩</h4><p>对于存储和压缩，在光盘或者磁盘上存储的，需要选择一个适合的JPEG等的压缩方式。重点是当加载到内存之后，提交给GPU，根据之前的内容，需要用一个block compression来适配各种Filtering，也可以使用不同颜色空间来进行进一步压缩。</p><h4 id=252-离线烘焙feedback-data>2.5.2 离线烘焙Feedback Data</h4><p>就如同可见性烘培一样，对于Feedback Data是可以离线烘培的，《Titanfall 2》中实现了这个方案。</p><h3 id=26-pipeline>2.6 Pipeline</h3><p>总结一下Software Virtual Texture的流程：</p><p>首先执行一个Feedback Rendering，或者从烘培好的Feedback Data中取出当前数据，然后分析需要加载的Page，尝试从内存中找到这个Page，如果没有，就从磁盘或者光盘中加载。然后申请一个新的物理纹理Page，在使用这个纹理之前，假如是之前用过的Page，我们需要先与GPU解绑。确定完之后，把这个Texture转换成一个GPU能用的压缩的Texture内容，并将这块Texture与GPU绑定。其中分析Feedback、Unmap、Transcode、Map过程是可以异步发生的，也就是需要一个Job System去驱动，他们的关系是生产者与消费者的关系。</p><p>在Software Virtual Texture中提到的一些内容，在其它的实现中也是需要的，比如Feedback Rendering在Hardware Virtual Texture中需要使用，地址影射在Hardware Virtual Texture和Procedural Virtual Texture中都要用到，接下来描述方案的时候，我就不一一再去说，只提一下他们的方案名字。</p><h2 id=参考资料>参考资料</h2><p><a href=https://blog.uwa4d.com/archives/USparkle_VirtualTexture.html>浅谈Virtual Texture</a></p><p><a href=SoftwareVirtualTextures%E7%BF%BB%E8%AF%91%E4%BB%A5%E5%8F%8A%E7%BB%93%E5%90%88doom2016%E7%9A%84%E5%88%86%E6%9E%90>SoftwareVirtualTextures翻译以及结合doom2016的分析</a></p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/opengl/>OpenGL</a>
+<a class="entry__tag btn" href=/tags/cg/>CG</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/cg/sparse_virtual_textures_study_note/>Sparse virtual textures 学习笔记</a></li><li class=related__item><a class=related__link href=/post/cg/what_is_hbao/>HBAO</a></li><li class=related__item><a class=related__link href=/post/cg/what_is_uv_density/>什么是UV density</a></li><li class=related__item><a class=related__link href=/post/cg/how_to_use_hlsl_include_with_pragmas/>HLSL语言的编译指令#include_with_pragmas的具体用法</a></li><li class=related__item><a class=related__link href=/post/cg/octahedron_mapping/>八面体（Octahedron）及其坐标映射</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

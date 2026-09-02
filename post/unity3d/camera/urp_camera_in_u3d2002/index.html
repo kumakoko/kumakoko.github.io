@@ -1,0 +1,212 @@
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Unity2022.3版本下URP下Camera组件的一些细节 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Unity2022.3版本下URP下Camera组件的一些细节"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/camera/urp_camera_in_u3d2002/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Unity2022.3版本下URP下Camera组件的一些细节"><meta property="og:description" content="Unity2022.3版本下URP下Camera组件的一些细节"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2026-01-15T19:21:39+08:00"><meta property="article:modified_time" content="2026-01-15T19:21:39+08:00"><meta property="article:tag" content="Unity3D"><meta property="article:tag" content="SRP"><meta itemprop=name content="Unity2022.3版本下URP下Camera组件的一些细节"><meta itemprop=description content="Unity2022.3版本下URP下Camera组件的一些细节"><meta itemprop=datePublished content="2026-01-15T19:21:39+08:00"><meta itemprop=dateModified content="2026-01-15T19:21:39+08:00"><meta itemprop=wordCount content="887"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Unity2022.3版本下URP下Camera组件的一些细节</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2026-01-15T19:21:39+08:00>January 15, 2026</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a></span></div></div><h1 class=entry__title>Unity2022.3版本下URP下Camera组件的一些细节</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=问题1>问题1</h1><blockquote><p>在Unity的URP管线中，Camera组件的指定clear模式的<strong>depth only</strong>选项，好像不存在了？还是说改到哪里去了？</p></blockquote><p>让我查一下官方资料确认 URP 中 Camera 清除模式的准确位置。</p><p>官方文档已确认关键信息。让我再核实一下脚本层面 URP 对 <code>clearFlags</code> 的处理，确保代码说法准确。</p><p>官方文档确认了核心结论。这是一个新旧选项的映射关系，我读一下可视化规范，用一个对照图把结论整理出来。</p><p>核对完毕，官方文档（URP Camera 组件参考 + 清除与渲染顺序文档）已经讲清楚了。结论先说：<strong>URP 里确实没有 &ldquo;Depth Only&rdquo; 这个选项了，但不是被删，而是被重构了</strong>——内置管线的 Clear Flags（Skybox/Solid Color/Depth Only/Don&rsquo;t Clear）四选一，在 URP 里拆成了"颜色缓冲"和"深度缓冲"两套逻辑，由相机的 <strong>Render Type（Base/Overlay）</strong> 决定。</p><p>我把映射关系画成一张对照图：</p><pre tabindex=0><code>&lt;html style=&#34;margin:0;padding:0;&#34;&gt;
+&lt;div style=&#34;background-color:transparent;box-sizing:border-box;font-family:&#39;Roboto&#39;,&#39;PingFang SC&#39;,&#39;Segoe UI&#39;,Arial,sans-serif;--accent:var(--m-02);color:#1A1B1C;&#34;&gt;
+  &lt;div style=&#34;width:100%;box-sizing:border-box;padding:4px 2px;&#34;&gt;
+
+    &lt;!-- 标题 --&gt;
+    &lt;div style=&#34;font-size:15px;font-weight:600;margin:0 0 4px 0;&#34;&gt;内置管线 Clear Flags → URP 的等价配置&lt;/div&gt;
+    &lt;div style=&#34;font-size:12px;color:#6B7280;margin:0 0 12px 0;&#34;&gt;依据：Unity URP 官方文档（Camera 组件参考 / Clearing &amp; Rendering Order）。Base 相机深度缓冲每帧固定清除，无需配置。&lt;/div&gt;
+
+    &lt;!-- 表头 --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;margin:0 0 6px 0;font-size:12px;color:#6B7280;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#F0F4FB;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:6px 10px;box-sizing:border-box;font-weight:600;color:#1A1B1C;&#34;&gt;旧：内置管线 Camera 的 Clear Flags&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#F0F4FB;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:6px 10px;box-sizing:border-box;font-weight:600;color:#1A1B1C;&#34;&gt;新：URP 中在哪里配置&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 行1 Skybox --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Skybox&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;清除为天空盒&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#9BBBF4;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Base 相机 · Environment → Background Type = Skybox&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;清除颜色缓冲为天空盒（仅 Base 相机显示此项）&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 行2 Solid Color --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Solid Color&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;清除为纯色&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#9BBBF4;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Base 相机 · Environment → Background Type = Solid Color&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;再选 Background 颜色（RGBA 设 0,0,0,0 可做透明背景）&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 行3 Depth Only --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#EEF7F3;border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Depth Only&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;只清深度、保留颜色（如武器叠加到场景上）&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#52C41A;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#EEF7F3;border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Overlay 相机（相机堆叠）· Rendering → Clear Depth 勾选&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;把相机加进 Base 的 Stack，Render Type 设 Overlay；勾上后只清深度、保留已有颜色——功能等价&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 行4 Don&#39;t Clear --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Don&#39;t Clear&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;什么缓冲区都不清&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#9BBBF4;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Base 相机 · Environment → Background Type = Uninitialized&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;不初始化颜色缓冲（近似替代；深度仍会清）。较新版本才有此选项&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 底部说明 --&gt;
+    &lt;div style=&#34;background:linear-gradient(135deg, rgba(163,213,232,0.18), rgba(163,213,232,0.30));border-radius:10px;padding:10px 12px;margin:10px 0 0 0;box-sizing:border-box;&#34;&gt;
+      &lt;div style=&#34;font-size:12.5px;line-height:1.6;&#34;&gt;
+        &lt;span style=&#34;font-weight:600;&#34;&gt;两个关键点：&lt;/span&gt;&lt;br/&gt;
+        1️⃣ 只有 &lt;span style=&#34;font-weight:600;&#34;&gt;Overlay 相机&lt;/span&gt; 才有“清深度、不清颜色”的行为（Clear Depth 勾选），这就是 Depth Only 的现代替代；&lt;br/&gt;
+        2️⃣ &lt;span style=&#34;font-weight:600;&#34;&gt;Base 相机&lt;/span&gt; 的深度缓冲每帧固定清除，你只能通过 Background Type 控制颜色缓冲。&lt;br/&gt;
+        ⚠️ 脚本里的 &lt;span style=&#34;font-family:monospace;background:rgba(0,0,0,0.06);padding:0 4px;border-radius:4px;&#34;&gt;camera.clearFlags = CameraClearFlags.Depth&lt;/span&gt; 是内置管线时代的旧 API，URP 中建议不要依赖。
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/html&gt;
+</code></pre><p><strong>补充说明（版本相关）</strong>：</p><ul><li><strong>你在 Inspector 里看到的残留 &ldquo;Clear Flags&rdquo;</strong>：部分 URP 版本（如团结引擎 / Unity 2022 时代的 URP）的相机面板上仍会显示一个 Clear Flags 下拉框，但里面只剩 &ldquo;Solid Color&rdquo; 等极少数选项——那是 URP 裁剪后留下的壳子，Depth Only 被拿掉了。</li><li><strong>Unity 2023 / URP 15 之后</strong>：面板结构进一步调整，Base 相机的清除入口统一在 <strong>Environment → Background Type</strong>（Skybox / Solid Color / Uninitialized），Overlay 相机的深度清除入口是 <strong>Rendering → Clear Depth</strong> 勾选框。</li></ul><p><strong>两个最常见的落地场景</strong>：</p><ol><li><strong>第一人称武器 / UI 叠加不嵌入场景</strong>（Depth Only 的经典用途）：主相机保持 Base，新建一个相机设 <strong>Render Type = Overlay</strong>，加到主相机的 <strong>Stack</strong> 列表里，勾上 <strong>Clear Depth</strong>。它会在保留场景颜色的基础上只重写深度、把武器画在最上层。</li><li><strong>渲染透明背景到 RenderTexture</strong>：Base 相机 <strong>Background Type = Solid Color</strong>，Background 颜色设 <code>RGBA(0,0,0,0)</code>，再确认相机没开会污染 Alpha 的 HDR/后处理即可——这也是官方推荐替代"透明 Depth Only 输出"的做法。</li></ol><h1 id=问题2>问题2</h1><blockquote><p>在unity2022中，如果保持FairyGUI的stage camera为Base的话，没有清空深度值的选项，会把游戏内容用solid clear给清理掉</p></blockquote><p>这是个真实存在的老坑，我查一下 FairyGUI 官方在 URP 下的推荐做法和 Unity 2022（URP 14）的实际处理逻辑，给你能落地的方案。</p><p>需要确认 URP 14（Unity 2022）的实际处理逻辑和 FairyGUI 官方推荐，我看一下官方文档和 URP 源码里相机 clear 的处理。</p><p>找到了关键证据——URP 源码里明确写着 <code>CameraClearFlags.DepthOnly</code> 不被支持、效果等同 <code>SolidColor</code>。我再核对一下 URP 源码原文，确保说法准确。</p><p>让我精确定位 URP 2022.3 源码里 <code>GetCameraClearFlag</code> 对 <code>DepthOnly</code> 的具体处理逻辑。</p><p>URP 2022.3 源码已经实锤了根因。我再验证一下 FairyGUI 实际的渲染钩子（确认 Overlay 相机能正常画 UI），同时按规范重读可视化 SKILL。</p><p>URP 2022.3 源码给出了决定性证据。你的观察完全正确，而且这不是 FairyGUI 的 bug，是 URP 自身的限制。我把根因和两个解决方案整理出来：</p><p><strong>根因（URP 2022 / URP 14 源码 <code>GetCameraClearFlag</code> 原文）</strong>：</p><pre tabindex=0><code>// Universal RP doesn&#39;t support CameraClearFlags.DepthOnly and CameraClearFlags.Nothing.
+// CameraClearFlags.DepthOnly has the same effect of CameraClearFlags.SolidColor
+</code></pre><p>FairyGUI 自动创建的 Stage Camera 是 <code>clearFlags = CameraClearFlags.Depth</code>（内置管线的"Depth Only"写法），但 <strong>URP 不认这个值，把它当成了 Solid Color</strong>，代码会走到 <code>return ClearFlag.All</code>（颜色+深度全清），于是用纯色把主相机画面刷掉。这也是为什么你在面板上找不到"只清深度"——URP 2022 的 Base 相机 Background Type 只有 Skybox / Solid Color，压根不提供 Depth Only / Don&rsquo;t Clear。</p><pre tabindex=0><code>&lt;html style=&#34;margin:0;padding:0;&#34;&gt;
+&lt;div style=&#34;background-color:transparent;box-sizing:border-box;font-family:&#39;Roboto&#39;,&#39;PingFang SC&#39;,&#39;Segoe UI&#39;,Arial,sans-serif;--accent:var(--m-02);color:#1A1B1C;&#34;&gt;
+  &lt;div style=&#34;width:100%;box-sizing:border-box;padding:4px 2px;&#34;&gt;
+
+    &lt;div style=&#34;font-size:15px;font-weight:600;margin:0 0 4px 0;&#34;&gt;Unity 2022 URP：FairyGUI Stage Camera 的修复方案&lt;/div&gt;
+    &lt;div style=&#34;font-size:12px;color:#6B7280;margin:0 0 12px 0;&#34;&gt;依据：URP 2022.3 源码 GetCameraClearFlag + FairyGUI StageCamera.cs。示意结构，非引擎截图。&lt;/div&gt;
+
+    &lt;!-- 根因映射 --&gt;
+    &lt;div style=&#34;background:#FFF7F0;border:1px solid rgba(234,102,104,0.35);border-radius:10px;padding:10px 12px;margin:0 0 10px 0;box-sizing:border-box;&#34;&gt;
+      &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;✗ 根因：clearFlags 在 URP 下的映射（URP 2022.3 源码）&lt;/div&gt;
+      &lt;div style=&#34;display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;font-size:12px;&#34;&gt;
+        &lt;div style=&#34;flex:1 1 170px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+          &lt;div style=&#34;font-weight:600;color:#C0392B;&#34;&gt;Depth（FairyGUI 默认）&lt;/div&gt;
+          &lt;div style=&#34;color:#6B7280;&#34;&gt;URP 不支持 → 等效 Solid Color → 颜色+深度全清&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div style=&#34;flex:1 1 170px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+          &lt;div style=&#34;font-weight:600;color:#C0392B;&#34;&gt;结果&lt;/div&gt;
+          &lt;div style=&#34;color:#6B7280;&#34;&gt;游戏画面被纯色刷掉，只剩 UI / 黑底&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 方案1 推荐 --&gt;
+    &lt;div style=&#34;border:1px solid rgba(82,196,26,0.4);background:#F6FBF8;border-radius:10px;padding:10px 12px;margin:0 0 8px 0;box-sizing:border-box;&#34;&gt;
+      &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;✓ 方案1（推荐，纯 Inspector 配置，无需脚本）：相机堆叠&lt;/div&gt;
+      &lt;div style=&#34;display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;&#34;&gt;
+        &lt;div style=&#34;flex:1 1 190px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+          &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;游戏主相机&lt;/div&gt;
+          &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Render Type = Base（保持）&lt;/div&gt;
+          &lt;div style=&#34;font-size:11px;color:#6B7280;margin-top:2px;&#34;&gt;渲染游戏场景；在 Stack 里添加 Stage Camera&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div style=&#34;flex:1 1 190px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+          &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;FairyGUI Stage Camera&lt;/div&gt;
+          &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Render Type = Overlay&lt;/div&gt;
+          &lt;div style=&#34;font-size:11px;color:#6B7280;margin-top:2px;&#34;&gt;Overlay 永远不清颜色 → 游戏画面保留&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div style=&#34;flex:1 1 190px;min-width:0;background:#EEF7F3;border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+          &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;关键开关&lt;/div&gt;
+          &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Clear Depth = ✔ 勾选&lt;/div&gt;
+          &lt;div style=&#34;font-size:11px;color:#6B7280;margin-top:2px;&#34;&gt;清深度、保留颜色 = 旧的 Depth Only 行为，UI 永远在最上层&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 方案2 备选 --&gt;
+    &lt;div style=&#34;border:1px solid rgba(155,187,244,0.5);background:#F4F7FD;border-radius:10px;padding:10px 12px;margin:0 0 6px 0;box-sizing:border-box;&#34;&gt;
+      &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;✓ 方案2（保持 Base，需一行脚本）：把 clearFlags 改成 Nothing&lt;/div&gt;
+      &lt;div style=&#34;font-size:12px;color:#4A5568;margin-top:4px;line-height:1.6;&#34;&gt;
+        URP 2022 源码里 &lt;span style=&#34;font-family:monospace;background:rgba(0,0,0,0.06);padding:0 4px;border-radius:4px;&#34;&gt;CameraClearFlags.Nothing&lt;/span&gt; 在非 MSAA 下返回
+        &lt;span style=&#34;font-family:monospace;background:rgba(0,0,0,0.06);padding:0 4px;border-radius:4px;&#34;&gt;ClearFlag.DepthStencil&lt;/span&gt;（只清深度、保留颜色）。FairyGUI 舞台相机
+        &lt;span style=&#34;font-family:monospace;background:rgba(0,0,0,0.06);padding:0 4px;border-radius:4px;&#34;&gt;allowMSAA=false&lt;/span&gt;，正好命中这个分支。
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 最终效果 --&gt;
+    &lt;div style=&#34;background:linear-gradient(135deg, rgba(163,213,232,0.22), rgba(163,213,232,0.34));border-radius:10px;padding:10px 12px;box-sizing:border-box;&#34;&gt;
+      &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;🖥 修复后：主相机先画游戏（Base）→ Stage Camera 只清深度叠 UI（Overlay）→ 最终 = 游戏画面 + UI&lt;/div&gt;
+      &lt;div style=&#34;font-size:12px;color:#4A5568;margin-top:2px;&#34;&gt;⚠️ Unity 6 / URP 17 另说：那版本 Overlay + 堆叠在 Render Graph 下有已知 bug（构建黑屏），Unity 2022 不受影响&lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/html&gt;
+</code></pre><p><strong>方案 2 的参考脚本</strong>（FairyGUI 舞台相机是动态创建的，用轮询补一次即可）：</p><pre tabindex=0><code>using UnityEngine;
+using FairyGUI;
+
+public class FairyGUICameraFix : MonoBehaviour
+{
+    void Update()
+    {
+        // StageCamera.main 在 FairyGUI 创建舞台相机后才会被赋值
+        if (StageCamera.main != null)
+        {
+            if (StageCamera.main.clearFlags != CameraClearFlags.Nothing)
+                StageCamera.main.clearFlags = CameraClearFlags.Nothing;
+            enabled = false; // 修一次即可
+        }
+    }
+}
+</code></pre><p><strong>几点补充</strong>：</p><ol><li><strong>为什么方案 1 更推荐</strong>：Camera Stacking 是 URP 官方的多相机合成方案，纯面板配置、无脚本、跨平台行为一致；Overlay 相机"不清颜色"是硬编码保证的，不怕 FairyGUI 动态重建相机后又被重置回 Depth。</li><li><strong>关于渲染顺序</strong>：走堆叠后，Stage Camera 的 <code>depth</code> 属性不再决定先后（堆叠顺序决定），不用担心被主相机盖住。</li><li><strong>FairyGUI 版本</strong>：确认你用的是较新的 FairyGUI 版本（内置 URP 兼容 UI shader）。如果 UI 在 URP 下显示异常，先排查 shader 再动相机。</li><li><strong>Unity 6 / URP 17 的区别</strong>（提醒）：那版 Render Graph 下 Overlay + 堆叠有 <code>Attachment samples</code> 的构建报错（GitHub issue #239），到时候要换思路；但 Unity 2022 用方案 1 没问题。</li></ol></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a>
+<a class="entry__tag btn" href=/tags/srp/>SRP</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/urp_doc/diff_between_urp_and_builtin/>URP和内建管线的一些编程上的差异</a></li><li class=related__item><a class=related__link href=/post/unity3d/urp_doc/srp_batcher/>Scriptable Render Pipeline (SRP) Batcher</a></li><li class=related__item><a class=related__link href=/post/unity3d/urp_doc/urp_shader_pass_tag/>URP Shader Pass Tag</a></li><li class=related__item><a class=related__link href=/post/unity3d/urp_doc/urp/>Universal Render Pipeline</a></li><li class=related__item><a class=related__link href=/post/unity3d/camera/universal_additional_camera_data_component/>UniversalAdditionalCameraData组件</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

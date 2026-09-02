@@ -1,625 +1,191 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Universal Render Pipeline | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Universal Render Pipeline of Unity3D">
-		<meta property="og:title" content="Universal Render Pipeline" />
-<meta property="og:description" content="Universal Render Pipeline of Unity3D" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/urp_doc/urp/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2020-01-15T19:21:39+08:00" />
-<meta property="article:modified_time" content="2020-01-15T19:21:39+08:00" />
-
-
-		<meta itemprop="name" content="Universal Render Pipeline">
-<meta itemprop="description" content="Universal Render Pipeline of Unity3D"><meta itemprop="datePublished" content="2020-01-15T19:21:39+08:00" />
-<meta itemprop="dateModified" content="2020-01-15T19:21:39+08:00" />
-<meta itemprop="wordCount" content="615">
-<meta itemprop="keywords" content="Unity3D,SRP," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Universal Render Pipeline</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2020-01-15T19:21:39&#43;08:00">January 15, 2020</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">Universal Render Pipeline</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#21-general">2.1 General</a></li>
-    <li><a href="#22-quality">2.2 Quality</a></li>
-    <li><a href="#23-lighting">2.3 Lighting</a></li>
-    <li><a href="#24-shadows">2.4 Shadows</a></li>
-    <li><a href="#25-post-processing">2.5 Post-processing</a></li>
-    <li><a href="#26-advanced">2.6 Advanced</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#31-camera-loop">3.1 Camera loop</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h1 id="1-urp的常见问题回答">1 URP的常见问题回答</h1>
-<ol>
-<li>URP和HDRP(High Definition Render Pipeline)不能混用。</li>
-<li>可以从内建render pipeline转到URP。可以用升级器(upgrade)升级内建shader到URP shader。如果自定义的shader的话，需要手动去upgrade。</li>
-<li>不能在运行期换pipeline asset。</li>
-<li>URP和HDRP之间不能换用。</li>
-<li>通过Package Manager获取URP的package</li>
-<li>在URP Asset的【Player Setting】界面上可以找到<strong>Dynamic Batching</strong>的checkbox</li>
-<li>选中材质球时，在<strong>Inspector</strong>面板中，找到<strong>Render Face</strong>选项，选择<strong>Both</strong>选项，即可开启<strong>Double Sided Global Illumination</strong>。</li>
-<li>URP适用于各种平台，包括PC和mobile</li>
-<li>在<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@7.1/manual/universalrp-builtin-feature-comparison.html">Built-in RP和URP功能对照表</a>中，标识为<code>Not Supported</code>的功能，表示没有且不会在后续版本中实现。</li>
-<li>如果在build URP工程时很慢，检查以下shader stripping是否设置对，要strip掉可以strip掉的shader。</li>
-<li>缺省地，URP是在linear space中工作，可以在Player Setting中将其设置为在gamma space中工作。</li>
-<li>通过创建ScriptableRendererFeature脚本，使用scriptable render pass可以扩展URP的功能。</li>
-</ol>
-<h1 id="2-urp-asset">2 URP Asset</h1>
-<p>URP版本：8.2.0
-<a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@8.2/manual/universalrp-asset.html">源网页</a></p>
-<p>要使用URP asset，需要创建一个URP asset，并在【Graphic settings】界面将其赋值使用。URP asset控制图形渲染的功能，设置图形渲染的质量等级。URP asset本身是一个<strong>scriptable object</strong>。它继承自<code>RenderPipelineAsset</code>类。在一个工程中可以使用多个URP asset，并且可以在它们之间切换使用，比如有个URP asset是启用了阴影，另一个URP asset关闭了阴影。</p>
-<p>URP有以下几大类的控制选项，如下：</p>
-<ul>
-<li>General</li>
-<li>Quality</li>
-<li>Lighting</li>
-<li>Shadows</li>
-<li>Post-processing</li>
-<li>Advanced</li>
-</ul>
-<p>下面的图显示了这几个控制选项的UI：</p>
-<p><img src="/image/u3d/u3d_srp/urp_doc/urp_asset_ui.jpg" alt=""></p>
-<h2 id="21-general">2.1 General</h2>
-<p>这是一些用于控制管道渲染框架的核心部分常规设置</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">属性名</th>
-<th style="text-align:left">描述</th>
-<th style="text-align:center">对应的编辑器变量名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Depth Texture</td>
-<td style="text-align:left">当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个深度纹理<code>_CameraDepthTexture</code>。缺省地URP将把这个深度纹理交给你场景中的所有的摄像机去使用之。</td>
-<td style="text-align:center">m_RequireDepthTextureProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Opaque Texture</td>
-<td style="text-align:left">当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个<strong>不透明的深度纹理</strong><code>_CameraOpaqueTexture</code>。缺省地，URP将这个深度纹理交给你场景中的所有的摄像机使用。这个深度纹理起的作用，就很类似于built-in render pipeline中的GrabPass。在URP渲染任意的透明状网格(transparent mesh)时，该纹理将会提供一个当前场景的一个<strong>快照</strong>(snapshot)</td>
-<td style="text-align:center">m_RequireOpaqueTextureProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Opaque Downsampling</td>
-<td style="text-align:left">设置<strong>Opaque Texture</strong>属性的降采样方式，有<strong>None(不采样)</strong>、<strong>2倍线性过滤(2x Bilinear)</strong>，、<strong>4倍线性过滤(4x Bilinear)</strong>，、<strong>4倍盒状过滤(4x Bilinear)</strong>，其中4倍盒状过滤产生一种轻柔羽化的效果</td>
-<td style="text-align:center">m_OpaqueDownsamplingProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Terrain Holes</td>
-<td style="text-align:left">禁用此项的话，在build包的时候，URP将会移出所有的Terrain hole shader变体，将会减少build包的时间</td>
-<td style="text-align:center">&ndash;</td>
-</tr>
-</tbody>
-</table>
-<h2 id="22-quality">2.2 Quality</h2>
-<p>Qulity项相关管的属性控制URP的渲染质量级别。通过控制这些属性，可以在低端硬件上提高性能，在高端硬件上提高图形质量。如果要为不同的硬件设置不同的设置，则可以在多个Universal Render Pipeline资源中配置这些设置，然后根据需要在这些设置中切换。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">属性名</th>
-<th style="text-align:left">描述</th>
-<th style="text-align:center">对应的编辑器变量名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">HDR</td>
-<td style="text-align:left">启用此选项后，默认情况下，场景中的每个摄像机都可以在HDR中进行渲染。如果定位的是低端硬件，则可以禁用此选项以跳过HDR计算并获得更好的性能。当在一个摄像机对象的inspector界面上，为这个摄像机对象关闭使用HDR。</td>
-<td style="text-align:center">m_HDR</td>
-</tr>
-<tr>
-<td style="text-align:center">MSAA</td>
-<td style="text-align:left">当开启此项，在渲染时，默认情况下对场景中的每个摄像机都使用<strong>多重采样反走样(Multi Sample Anti-aliasing)</strong>。这样可以使几何图形的边缘变柔和，因此不会出现锯齿或闪烁。在下拉菜单中，选择每个像素要使用多少个样本：2x，4x或8x。选择的样本越多，对象边缘越平滑。如果您想跳过MSAA计算，或者在2D游戏中不需要它们，请选择<strong>Disable</strong>。当在一个摄像机对象的inspector界面上，为这个摄像机对象关闭使用MSAA。</td>
-<td style="text-align:center">m_MSAA</td>
-</tr>
-<tr>
-<td style="text-align:center">Render Scale</td>
-<td style="text-align:left">此滑块缩放<strong>渲染目标分辨率(render target resolution)</strong>(而不是当前设备的分辨率)。如果出于性能原因要以较小的分辨率进行渲染，或者要放大渲染以提高质量，请使用此选项。这只会缩放游戏渲染。UI呈现保留为设备的原始分辨率。</td>
-<td style="text-align:center">m_RenderScale</td>
-</tr>
-</tbody>
-</table>
-<h2 id="23-lighting">2.3 Lighting</h2>
-<p>Lighting相关的属性这些设置会影响场景中的灯光。<strong>如果禁用其中一些设置，将会从Shader代码中删除相关的keyword。如果您确定某些keyword肯定不会在程序中使用上，则可以将其禁用以提高性能并减少构建时间</strong>。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">属性名</th>
-<th style="text-align:left">描述</th>
-<th style="text-align:center">对应的编辑器变量名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Main Light</td>
-<td style="text-align:left">这些设置会影响场景中的directional light。 您可以通过在Lighting的Inspector面板中将其分配为<strong>Sun Source</strong>来选择它。 如果您不指定太阳源，则URP会将场景中最亮的directional light光视为主光。您可以在<strong>Pixel Lighting</strong>和<strong>None</strong>这两个选项中进行选择。 如果您选择<strong>None</strong>，则即使您设置了光源，URP也不会用主光源参与渲染计算</td>
-<td style="text-align:center">m_MainLightRenderingModeProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Cast Shadows</td>
-<td style="text-align:left">当勾选此项时，Main Light将会在场景产生影子</td>
-<td style="text-align:center">m_MainLightShadowsSupportedProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Shadow Resolution</td>
-<td style="text-align:left">这可以控制主光源的阴影贴图纹理的大小。高分辨率可提供更清晰，更详细的阴影。 如果内存或渲染时间有问题，请尝试使用较低的分辨率。</td>
-<td style="text-align:center">m_MainLightShadowmapResolutionProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Additional Lights</td>
-<td style="text-align:left">在这里，您可以选择使用其他光源来补充您的main light。在<strong>Per Vertex</strong>，<strong>Per Pixel</strong>或<strong>Disabled</strong>之间进行选择</td>
-<td style="text-align:center">m_AdditionalLightsRenderingModeProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Per Object Limit</td>
-<td style="text-align:left">每一个game object中，可以被多少个additional light所照亮。此滑块用来设置这个个数</td>
-<td style="text-align:center">m_AdditionalLightsPerObjectLimitProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Cast Shadows</td>
-<td style="text-align:left">勾选此选项，可以控制additional lights是否能在场景中投下阴影。</td>
-<td style="text-align:center">m_AdditionalLightShadowsSupportedProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Shadow Resolution</td>
-<td style="text-align:left">附加光投射<strong>有向阴影</strong>的所使用的阴影贴图纹理的大小。这是一个纹理集，最多可容纳16个阴影贴图。高分辨率可提供更清晰，更详细的阴影。 如果内存或渲染时间有问题，请尝试使用较低的分辨率。</td>
-<td style="text-align:center">m_AdditionalLightShadowmapResolutionProp</td>
-</tr>
-</tbody>
-</table>
-<h2 id="24-shadows">2.4 Shadows</h2>
-<p>这些设置会影响阴影的外观和行为。它们还会影响性能，因此您可以在此处进行调整，以在视觉质量和阴影渲染速度之间取得最佳平衡。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">属性名</th>
-<th style="text-align:left">描述</th>
-<th style="text-align:center">对应的编辑器变量名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Distance</td>
-<td style="text-align:left">这个属性将指定一个值，当某个game object离摄像机的距离大于此值时，URP将不会渲染这个object的阴影</td>
-<td style="text-align:center">m_ShadowDistanceProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Cascades</td>
-<td style="text-align:left">选择阴影的 <strong>层叠(cascade)</strong> 数。大量的层叠为您提供了更接近相机的阴影。选项包括：<strong>None</strong>，<strong>Two</strong>，<strong>Four</strong>如果您遇到性能问题，请尝试减少级联数量。还可以在设置下方的部分中配置阴影的距离。距离相机越远，阴影变得越不细腻。</td>
-<td style="text-align:center">m_ShadowCascadesProp  m_ShadowCascade2SplitProp  m_ShadowCascade4SplitProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Soft Shadows</td>
-<td style="text-align:left">如果为<strong>main light</strong>或<strong>additional light</strong>启用了阴影，则可以启用这个Soft Shadows选项，以在阴影贴图上添加更平滑的过滤效果。这样可以使阴影上的边缘平滑。如果禁用此功能，则渲染速度会更快，但阴影边缘会更锐利(可能会像素化)。</td>
-<td style="text-align:center">m_SoftShadowsSupportedProp</td>
-</tr>
-</tbody>
-</table>
-<h2 id="25-post-processing">2.5 Post-processing</h2>
-<p>本部分允许您 <strong>微调(fine-tune)</strong> 全局后处理设置。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">属性名</th>
-<th style="text-align:left">描述</th>
-<th style="text-align:center">对应的编辑器变量名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Grading Mode</td>
-<td style="text-align:left">选择用于项目的<strong>颜色分级</strong>(color grading，通常是指对最终的画面进行颜色和亮度的改变或矫正)的模式。分为两种：•高动态范围(HDR)：类似于电影制作工作流程，此模式最适用于高精度分级。 Unity在<strong>色调映射(tone mapping)之前</strong>应用颜色分级。•低动态范围：此模式遵循更经典的工作流程。 在<strong>色调映射之后</strong>，Unity会应用有限范围的颜色分级。</td>
-<td style="text-align:center">m_ColorGradingMode</td>
-</tr>
-<tr>
-<td style="text-align:center">LUT Size</td>
-<td style="text-align:left">URP会使用 <strong>查找纹理(look-up texture,LUT)</strong> 来进行color grading。查找纹理可分为 <strong>内部(internal)</strong> 和 <strong>外部(external)</strong> 本属性项就是用来指定LUT的的大小。 较大的大小值可提供更高的精度，但可能会降低性能。增加内存的使用。在开始color grading之前就需要确定好尺寸。本选项的默认值为32，这是一个能在速度和质量之间的取得良好平衡的值。</td>
-<td style="text-align:center">m_ColorGradingLutSize</td>
-</tr>
-</tbody>
-</table>
-<h2 id="26-advanced">2.6 Advanced</h2>
-<p>本部分允许您微调较少更改的设置，这些设置会影响更深的渲染功能和Shader组合。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">属性名</th>
-<th style="text-align:left">描述</th>
-<th style="text-align:center">对应的编辑器变量名称</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">SRP Batcher</td>
-<td style="text-align:left">选中此框以启用SRP Batcher。如果您有许多使用不同的材质球，但是它们使用了相同的着色器，这将很有用。SRP Batcher是一个<strong>内部循环</strong>(inner loop)，可在不影响GPU性能的情况下加快CPU渲染速度。使用SRP Batcher时，它将在内部循环中替换SRP的渲染相关的代码。</td>
-<td style="text-align:center">m_SRPBatcher</td>
-</tr>
-<tr>
-<td style="text-align:center">Dynamic Batching</td>
-<td style="text-align:left">启用动态批处理，以使render pipeline自动批处理共享同一材质的小型动态对象。 这对于不支持GPU instancing的平台和图形API很有用。如果目标硬件确实支持GPU instancing，请禁用动态批处理。您可以在运行时更改此设置。</td>
-<td style="text-align:center">m_SupportsDynamicBatching</td>
-</tr>
-<tr>
-<td style="text-align:center">Mixed Lighting</td>
-<td style="text-align:left">启用<strong>混合灯光(Mixed Lighting)</strong>，启用本选项时，会告诉pipeline在创建游戏时，包含上mixed lighting相关的shader variants。</td>
-<td style="text-align:center">m_MixedLightingSupportedProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Debug Level</td>
-<td style="text-align:left">设置render pipeline生成的调试信息的等级，分为以下几种： <strong>Disabled</strong>: 不启用 <strong>Profiling</strong>: 让pipeline提供详细的调试信息，在FrameDebugger中可以看到。</td>
-<td style="text-align:center">m_DebugLevelProp</td>
-</tr>
-<tr>
-<td style="text-align:center">Shader Variant Log Level</td>
-<td style="text-align:left">当Unity在build完工程的时候，可以显示shader stripping和shader variants的相关信息。本属性就是控制这些信息的显示。属性值有三种：<strong>Disabled</strong>: Unity不显示任何的信息 <strong>Only Universal</strong>: 只显示和URP shader相关的信息 <strong>All</strong>: Unity显示所有的shader的信息</td>
-<td style="text-align:center">m_ShaderVariantLogLevel</td>
-</tr>
-</tbody>
-</table>
-<h1 id="3-rendering-in-the-universal-render-pipeline">3 Rendering in the Universal Render Pipeline</h1>
-<p>首先看一下在URP renderpipe中，如何渲染一帧的代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#75715e">/* 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    UniversalRenderPipeline类的成员函数Render
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    UniversalRenderPipeline类继承自UnityEngine.Rendering.RenderPipeline类，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    且UniversalRenderPipeline类是一个sealed类，所以它不能也不意图被继承派生
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    UniversalRenderPipeline.Render函数重载了基类的同名函数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    UniversalRenderPipeline类有一部分定义在UniversalRenderPipeline.cs文件中，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    这个文件（7.1.1版本），通过Package Manager下载之后，其目录在：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">    Library\PackageCache\com.unity.render-pipelines.universal@7.1.1\Runtime
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">protected</span> <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">void</span> Render(ScriptableRenderContext renderContext, Camera[] cameras)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// BeginFrameRendering是基类RenderPipeline的静态成员函数</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 在开始使用camera进行渲染时，执行相关的回调</span>
-</span></span><span style="display:flex;"><span>    BeginFrameRendering(renderContext, cameras);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 判断当前活跃的颜色空间，是否是线性颜色空间，如果是的话，光源也要使用线性亮度</span>
-</span></span><span style="display:flex;"><span>    GraphicsSettings.lightsUseLinearIntensity = 
-</span></span><span style="display:flex;"><span>        (QualitySettings.activeColorSpace == ColorSpace.Linear);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 是否使用SRP Batcher进行合批处理</span>
-</span></span><span style="display:flex;"><span>    GraphicsSettings.useScriptableRenderPipelineBatching = asset.useSRPBatcher;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 此方法是UniversalRenderPipeline类的提供的静态成员函数</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 顾名思义，就是用来设置每一帧用到的shader constants，此函数也在</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// UniversalRenderPipeline.cs文件中定义</span>
-</span></span><span style="display:flex;"><span>    SetupPerFrameShaderConstants();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// SortCameras也是UniversalRenderPipeline类的成员方法，定义在</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// UniversalRenderPipelineCore.cs文件中。这个方法是把传递进来的camera，</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 按其深度值进行排序，其深度值越大，离摄像机就越远，那就应该越早渲染，</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 所以要把它排在摄像机数组的前面。</span>
-</span></span><span style="display:flex;"><span>    SortCameras(cameras);
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 针对每一个camera，执行该camera应该要执行的rendering操作</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">foreach</span> (Camera camera <span style="color:#66d9ef">in</span> cameras)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// BeginCameraRendering是基类RenderPipeline的静态成员函数</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 在开始使用某一个camera进行渲染时，执行相关的回调</span>
-</span></span><span style="display:flex;"><span>        BeginCameraRendering(renderContext, camera);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#if</span> VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// It should be called before culling to prepare material.</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// When there isn&#39;t any VisualEffect component, this method has no effect.</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// visual effect graph相关的，网址如下：</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// https://docs.unity3d.com/Packages/com.unity.visualeffectgraph@7.1/manual/index.html</span>
-</span></span><span style="display:flex;"><span>        VFX.VFXManager.PrepareCamera(camera);
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 此方法是UniversalRenderPipeline类的提供的静态成员函数</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 使用某一个camera进行渲染</span>
-</span></span><span style="display:flex;"><span>        RenderSingleCamera(renderContext, camera);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// EndCameraRendering是基类RenderPipeline的静态成员函数</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 在开始使用某一个camera进行渲染时，执行相关的回调</span>
-</span></span><span style="display:flex;"><span>        EndCameraRendering(renderContext, camera);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// EndFrameRendering是基类RenderPipeline的静态成员函数</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 在开始使用camera进行渲染时，执行相关的回调</span>
-</span></span><span style="display:flex;"><span>    EndFrameRendering(renderContext, cameras);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SortCameras(Camera[] cameras)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    Array.Sort(cameras, (lhs, rhs) =&gt; (<span style="color:#66d9ef">int</span>)(lhs.depth - rhs.depth));
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> RenderSingleCamera(ScriptableRenderContext context, Camera camera)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 获取到和本摄像机有关的拣选相关的参数</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (!camera.TryGetCullingParameters(IsStereoEnabled(camera),
-</span></span><span style="display:flex;"><span>                                 <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">var</span> cullingParameters))
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">var</span> settings = asset;
-</span></span><span style="display:flex;"><span>    UniversalAdditionalCameraData additionalCameraData = <span style="color:#66d9ef">null</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (camera.cameraType == CameraType.Game || 
-</span></span><span style="display:flex;"><span>                     camera.cameraType == CameraType.VR)
-</span></span><span style="display:flex;"><span>        camera.gameObject.TryGetComponent(<span style="color:#66d9ef">out</span> additionalCameraData);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// InitializeCameraData函数是UniversalRenderPipeline类的静态成员函数。</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 根据传递进来的各种参数最后返回一个CameraData类型变量，这个就是当前</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 渲染使用的摄像机的各种数据</span>
-</span></span><span style="display:flex;"><span>    InitializeCameraData(settings, camera, additionalCameraData, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">var</span> cameraData);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// SetupPerCameraShaderConstants函数是UniversalRenderPipeline类的静态成员函数。</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 根据当前的camera的数据属性，设置逐帧的着色器常量</span>
-</span></span><span style="display:flex;"><span>    SetupPerCameraShaderConstants(cameraData);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    ScriptableRenderer renderer = (additionalCameraData != <span style="color:#66d9ef">null</span>) ? 
-</span></span><span style="display:flex;"><span>            additionalCameraData.scriptableRenderer : 
-</span></span><span style="display:flex;"><span>            settings.scriptableRenderer;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (renderer == <span style="color:#66d9ef">null</span>)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        Debug.LogWarning(<span style="color:#66d9ef">string</span>.Format(
-</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Trying to render {0} with an invalid renderer. Camera rendering will be skipped.&#34;</span>,
-</span></span><span style="display:flex;"><span>        camera.name));
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">string</span> tag = (asset.debugLevel &gt;= PipelineDebugLevel.Profiling)
-</span></span><span style="display:flex;"><span>                            ? camera.name: k_RenderCameraTag;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从command buffer 池中根据tag取得CommandBuffer对象</span>
-</span></span><span style="display:flex;"><span>    CommandBuffer cmd = CommandBufferPool.Get(tag);
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">using</span> (<span style="color:#66d9ef">new</span> ProfilingSample(cmd, tag))
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        renderer.Clear();
-</span></span><span style="display:flex;"><span>        renderer.SetupCullingParameters(
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">ref</span> cullingParameters, <span style="color:#66d9ef">ref</span> cameraData);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        context.ExecuteCommandBuffer(cmd);
-</span></span><span style="display:flex;"><span>        cmd.Clear();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#if</span> UNITY_EDITOR
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Emit scene view UI</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (cameraData.isSceneViewCamera)
-</span></span><span style="display:flex;"><span>            ScriptableRenderContext.EmitWorldGeometryForSceneView(camera);
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> cullResults = context.Cull(<span style="color:#66d9ef">ref</span> cullingParameters);
-</span></span><span style="display:flex;"><span>        InitializeRenderingData(settings, <span style="color:#66d9ef">ref</span> cameraData,
-</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">ref</span> cullResults, <span style="color:#66d9ef">out</span> <span style="color:#66d9ef">var</span> renderingData);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        renderer.Setup(context, <span style="color:#66d9ef">ref</span> renderingData);
-</span></span><span style="display:flex;"><span>        renderer.Execute(context, <span style="color:#66d9ef">ref</span> renderingData);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    context.ExecuteCommandBuffer(cmd);
-</span></span><span style="display:flex;"><span>    CommandBufferPool.Release(cmd);
-</span></span><span style="display:flex;"><span>    context.Submit();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>从上面的代码中可以看出：在一个 <strong>前向渲染器(forward renderer)</strong> 中。每渲染一帧的做法流程如下：</p>
-<p><img src="/image/u3d/u3d_srp/urp_doc/Rendering_Flowchart.png" alt=""></p>
-<p>当在【Graphics Settings】面板中指定选中了URP render pipeline的时候，Unity将会使用URP去渲染所有的摄像机所观察的东西，包括game窗口，scene窗口，反射探针，inspector面板上的预览窗口。</p>
-<h2 id="31-camera-loop">3.1 Camera loop</h2>
-<p>从上面的代码中可以看出，在一个 <strong>摄像机循环（camera loop）</strong> 内，执行以下三步的操作：</p>
-<ol>
-<li>拣选出你场景中需要渲染的objects。</li>
-<li>创建渲染器所需的数据。</li>
-<li>执行渲染操作，向framebuffer渲染出一个image。</li>
-</ol>
-<p>再进一步细化上面的三步为：</p>
-<ol>
-<li>配置用于确定拣选系统如何拣选灯光和阴影的参数。您可以使用自定义渲染器覆盖渲染管道的这一部分。</li>
-<li>使用上一步中的拣选选参数，计算可见的渲染器， <strong>阴影投射器（shadow caster）</strong> 和灯光的列表。 拣选参数和相机的 <strong>层距离（layer distances）</strong> 会影响拣选和渲染性能。</li>
-<li>根据拣选操作的输出（culling output），URP asset，摄像机的<strong>质量设置(quality settings)</strong>。以及当前运行的平台来捕获信息，以构建渲染数据（RenderingData类对象），然后那渲染数据通知到渲染器</li>
-<li>生成<strong>渲染通路列表(list of render pass)</strong>，并根据渲染数据将它们排队以执行。 您可以使用<strong>自定义渲染器，覆盖掉URP提供的render pipe中的这一部分</strong></li>
-<li>执行队列中的每个渲染通路。渲染器将Camera拍摄到的图像，输出到帧缓冲区。</li>
-</ol>
-<h1 id="参考链接">参考链接</h1>
-<ul>
-<li><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@7.1/manual/index.html">Unity官网对Universal Render Pipeline的介绍文档</a></li>
-<li><a href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@7.1/manual/shader-stripping.html">URP的shader stripping文档</a></li>
-<li><a href="https://catlikecoding.com/unity/tutorials/scriptable-render-pipeline/directional-shadows/">CatlikeCoding中关于在SRP中实现Directional Shadows的文档</a></li>
-<li><a href="http://www.rastertek.com/dx11tut48.html">RasterTek中关于使用DX11实现directional shadow map的文档</a></li>
-<li><a href="https://docs.unity3d.com/Manual/DirLightShadows.html">Unity3D中关于directional shadow的文档</a></li>
-<li><a href="https://blog.csdn.net/qq_18229381/article/details/79050727">unity屏幕后处理全家桶之color grading</a></li>
-</ul>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-			<a class="entry__tag btn" href="/tags/srp/">SRP</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/urp_doc/universal_additional_camera_data_component/">The Universal Additional Camera Data component</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/update_fixedupdate_lateupdate/">Update、FixedUpdate、LateUpdate函数，定时器和帧速率</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_component_construction_func/">继承自Monobehaviour的组件组件的构造函数</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/from_cs_to_quad/">从计算着色器到四边形【翻译】</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/cg_programming_unity_debugging_of_shaders/">在Unity3D中使用Visual Studio调试shader【翻译】</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Universal Render Pipeline | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Universal Render Pipeline of Unity3D"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/urp_doc/urp/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Universal Render Pipeline"><meta property="og:description" content="Universal Render Pipeline of Unity3D"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-01-15T19:21:39+08:00"><meta property="article:modified_time" content="2020-01-15T19:21:39+08:00"><meta property="article:tag" content="Unity3D"><meta property="article:tag" content="SRP"><meta itemprop=name content="Universal Render Pipeline"><meta itemprop=description content="Universal Render Pipeline of Unity3D"><meta itemprop=datePublished content="2020-01-15T19:21:39+08:00"><meta itemprop=dateModified content="2020-01-15T19:21:39+08:00"><meta itemprop=wordCount content="615"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Universal Render Pipeline</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2020-01-15T19:21:39+08:00>January 15, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a></span></div></div><h1 class=entry__title>Universal Render Pipeline</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#21-general>2.1 General</a></li><li><a href=#22-quality>2.2 Quality</a></li><li><a href=#23-lighting>2.3 Lighting</a></li><li><a href=#24-shadows>2.4 Shadows</a></li><li><a href=#25-post-processing>2.5 Post-processing</a></li><li><a href=#26-advanced>2.6 Advanced</a></li></ul><ul><li><a href=#31-camera-loop>3.1 Camera loop</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=1-urp的常见问题回答>1 URP的常见问题回答</h1><ol><li>URP和HDRP(High Definition Render Pipeline)不能混用。</li><li>可以从内建render pipeline转到URP。可以用升级器(upgrade)升级内建shader到URP shader。如果自定义的shader的话，需要手动去upgrade。</li><li>不能在运行期换pipeline asset。</li><li>URP和HDRP之间不能换用。</li><li>通过Package Manager获取URP的package</li><li>在URP Asset的【Player Setting】界面上可以找到<strong>Dynamic Batching</strong>的checkbox</li><li>选中材质球时，在<strong>Inspector</strong>面板中，找到<strong>Render Face</strong>选项，选择<strong>Both</strong>选项，即可开启<strong>Double Sided Global Illumination</strong>。</li><li>URP适用于各种平台，包括PC和mobile</li><li>在<a href=https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@7.1/manual/universalrp-builtin-feature-comparison.html>Built-in RP和URP功能对照表</a>中，标识为<code>Not Supported</code>的功能，表示没有且不会在后续版本中实现。</li><li>如果在build URP工程时很慢，检查以下shader stripping是否设置对，要strip掉可以strip掉的shader。</li><li>缺省地，URP是在linear space中工作，可以在Player Setting中将其设置为在gamma space中工作。</li><li>通过创建ScriptableRendererFeature脚本，使用scriptable render pass可以扩展URP的功能。</li></ol><h1 id=2-urp-asset>2 URP Asset</h1><p>URP版本：8.2.0
+<a href=https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@8.2/manual/universalrp-asset.html>源网页</a></p><p>要使用URP asset，需要创建一个URP asset，并在【Graphic settings】界面将其赋值使用。URP asset控制图形渲染的功能，设置图形渲染的质量等级。URP asset本身是一个<strong>scriptable object</strong>。它继承自<code>RenderPipelineAsset</code>类。在一个工程中可以使用多个URP asset，并且可以在它们之间切换使用，比如有个URP asset是启用了阴影，另一个URP asset关闭了阴影。</p><p>URP有以下几大类的控制选项，如下：</p><ul><li>General</li><li>Quality</li><li>Lighting</li><li>Shadows</li><li>Post-processing</li><li>Advanced</li></ul><p>下面的图显示了这几个控制选项的UI：</p><p><img src=/image/u3d/u3d_srp/urp_doc/urp_asset_ui.jpg alt></p><h2 id=21-general>2.1 General</h2><p>这是一些用于控制管道渲染框架的核心部分常规设置</p><table><thead><tr><th style=text-align:center>属性名</th><th style=text-align:left>描述</th><th style=text-align:center>对应的编辑器变量名称</th></tr></thead><tbody><tr><td style=text-align:center>Depth Texture</td><td style=text-align:left>当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个深度纹理<code>_CameraDepthTexture</code>。缺省地URP将把这个深度纹理交给你场景中的所有的摄像机去使用之。</td><td style=text-align:center>m_RequireDepthTextureProp</td></tr><tr><td style=text-align:center>Opaque Texture</td><td style=text-align:left>当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个<strong>不透明的深度纹理</strong><code>_CameraOpaqueTexture</code>。缺省地，URP将这个深度纹理交给你场景中的所有的摄像机使用。这个深度纹理起的作用，就很类似于built-in render pipeline中的GrabPass。在URP渲染任意的透明状网格(transparent mesh)时，该纹理将会提供一个当前场景的一个<strong>快照</strong>(snapshot)</td><td style=text-align:center>m_RequireOpaqueTextureProp</td></tr><tr><td style=text-align:center>Opaque Downsampling</td><td style=text-align:left>设置<strong>Opaque Texture</strong>属性的降采样方式，有<strong>None(不采样)</strong>、<strong>2倍线性过滤(2x Bilinear)</strong>，、<strong>4倍线性过滤(4x Bilinear)</strong>，、<strong>4倍盒状过滤(4x Bilinear)</strong>，其中4倍盒状过滤产生一种轻柔羽化的效果</td><td style=text-align:center>m_OpaqueDownsamplingProp</td></tr><tr><td style=text-align:center>Terrain Holes</td><td style=text-align:left>禁用此项的话，在build包的时候，URP将会移出所有的Terrain hole shader变体，将会减少build包的时间</td><td style=text-align:center>&ndash;</td></tr></tbody></table><h2 id=22-quality>2.2 Quality</h2><p>Qulity项相关管的属性控制URP的渲染质量级别。通过控制这些属性，可以在低端硬件上提高性能，在高端硬件上提高图形质量。如果要为不同的硬件设置不同的设置，则可以在多个Universal Render Pipeline资源中配置这些设置，然后根据需要在这些设置中切换。</p><table><thead><tr><th style=text-align:center>属性名</th><th style=text-align:left>描述</th><th style=text-align:center>对应的编辑器变量名称</th></tr></thead><tbody><tr><td style=text-align:center>HDR</td><td style=text-align:left>启用此选项后，默认情况下，场景中的每个摄像机都可以在HDR中进行渲染。如果定位的是低端硬件，则可以禁用此选项以跳过HDR计算并获得更好的性能。当在一个摄像机对象的inspector界面上，为这个摄像机对象关闭使用HDR。</td><td style=text-align:center>m_HDR</td></tr><tr><td style=text-align:center>MSAA</td><td style=text-align:left>当开启此项，在渲染时，默认情况下对场景中的每个摄像机都使用<strong>多重采样反走样(Multi Sample Anti-aliasing)</strong>。这样可以使几何图形的边缘变柔和，因此不会出现锯齿或闪烁。在下拉菜单中，选择每个像素要使用多少个样本：2x，4x或8x。选择的样本越多，对象边缘越平滑。如果您想跳过MSAA计算，或者在2D游戏中不需要它们，请选择<strong>Disable</strong>。当在一个摄像机对象的inspector界面上，为这个摄像机对象关闭使用MSAA。</td><td style=text-align:center>m_MSAA</td></tr><tr><td style=text-align:center>Render Scale</td><td style=text-align:left>此滑块缩放<strong>渲染目标分辨率(render target resolution)</strong>(而不是当前设备的分辨率)。如果出于性能原因要以较小的分辨率进行渲染，或者要放大渲染以提高质量，请使用此选项。这只会缩放游戏渲染。UI呈现保留为设备的原始分辨率。</td><td style=text-align:center>m_RenderScale</td></tr></tbody></table><h2 id=23-lighting>2.3 Lighting</h2><p>Lighting相关的属性这些设置会影响场景中的灯光。<strong>如果禁用其中一些设置，将会从Shader代码中删除相关的keyword。如果您确定某些keyword肯定不会在程序中使用上，则可以将其禁用以提高性能并减少构建时间</strong>。</p><table><thead><tr><th style=text-align:center>属性名</th><th style=text-align:left>描述</th><th style=text-align:center>对应的编辑器变量名称</th></tr></thead><tbody><tr><td style=text-align:center>Main Light</td><td style=text-align:left>这些设置会影响场景中的directional light。 您可以通过在Lighting的Inspector面板中将其分配为<strong>Sun Source</strong>来选择它。 如果您不指定太阳源，则URP会将场景中最亮的directional light光视为主光。您可以在<strong>Pixel Lighting</strong>和<strong>None</strong>这两个选项中进行选择。 如果您选择<strong>None</strong>，则即使您设置了光源，URP也不会用主光源参与渲染计算</td><td style=text-align:center>m_MainLightRenderingModeProp</td></tr><tr><td style=text-align:center>Cast Shadows</td><td style=text-align:left>当勾选此项时，Main Light将会在场景产生影子</td><td style=text-align:center>m_MainLightShadowsSupportedProp</td></tr><tr><td style=text-align:center>Shadow Resolution</td><td style=text-align:left>这可以控制主光源的阴影贴图纹理的大小。高分辨率可提供更清晰，更详细的阴影。 如果内存或渲染时间有问题，请尝试使用较低的分辨率。</td><td style=text-align:center>m_MainLightShadowmapResolutionProp</td></tr><tr><td style=text-align:center>Additional Lights</td><td style=text-align:left>在这里，您可以选择使用其他光源来补充您的main light。在<strong>Per Vertex</strong>，<strong>Per Pixel</strong>或<strong>Disabled</strong>之间进行选择</td><td style=text-align:center>m_AdditionalLightsRenderingModeProp</td></tr><tr><td style=text-align:center>Per Object Limit</td><td style=text-align:left>每一个game object中，可以被多少个additional light所照亮。此滑块用来设置这个个数</td><td style=text-align:center>m_AdditionalLightsPerObjectLimitProp</td></tr><tr><td style=text-align:center>Cast Shadows</td><td style=text-align:left>勾选此选项，可以控制additional lights是否能在场景中投下阴影。</td><td style=text-align:center>m_AdditionalLightShadowsSupportedProp</td></tr><tr><td style=text-align:center>Shadow Resolution</td><td style=text-align:left>附加光投射<strong>有向阴影</strong>的所使用的阴影贴图纹理的大小。这是一个纹理集，最多可容纳16个阴影贴图。高分辨率可提供更清晰，更详细的阴影。 如果内存或渲染时间有问题，请尝试使用较低的分辨率。</td><td style=text-align:center>m_AdditionalLightShadowmapResolutionProp</td></tr></tbody></table><h2 id=24-shadows>2.4 Shadows</h2><p>这些设置会影响阴影的外观和行为。它们还会影响性能，因此您可以在此处进行调整，以在视觉质量和阴影渲染速度之间取得最佳平衡。</p><table><thead><tr><th style=text-align:center>属性名</th><th style=text-align:left>描述</th><th style=text-align:center>对应的编辑器变量名称</th></tr></thead><tbody><tr><td style=text-align:center>Distance</td><td style=text-align:left>这个属性将指定一个值，当某个game object离摄像机的距离大于此值时，URP将不会渲染这个object的阴影</td><td style=text-align:center>m_ShadowDistanceProp</td></tr><tr><td style=text-align:center>Cascades</td><td style=text-align:left>选择阴影的 <strong>层叠(cascade)</strong> 数。大量的层叠为您提供了更接近相机的阴影。选项包括：<strong>None</strong>，<strong>Two</strong>，<strong>Four</strong>如果您遇到性能问题，请尝试减少级联数量。还可以在设置下方的部分中配置阴影的距离。距离相机越远，阴影变得越不细腻。</td><td style=text-align:center>m_ShadowCascadesProp m_ShadowCascade2SplitProp m_ShadowCascade4SplitProp</td></tr><tr><td style=text-align:center>Soft Shadows</td><td style=text-align:left>如果为<strong>main light</strong>或<strong>additional light</strong>启用了阴影，则可以启用这个Soft Shadows选项，以在阴影贴图上添加更平滑的过滤效果。这样可以使阴影上的边缘平滑。如果禁用此功能，则渲染速度会更快，但阴影边缘会更锐利(可能会像素化)。</td><td style=text-align:center>m_SoftShadowsSupportedProp</td></tr></tbody></table><h2 id=25-post-processing>2.5 Post-processing</h2><p>本部分允许您 <strong>微调(fine-tune)</strong> 全局后处理设置。</p><table><thead><tr><th style=text-align:center>属性名</th><th style=text-align:left>描述</th><th style=text-align:center>对应的编辑器变量名称</th></tr></thead><tbody><tr><td style=text-align:center>Grading Mode</td><td style=text-align:left>选择用于项目的<strong>颜色分级</strong>(color grading，通常是指对最终的画面进行颜色和亮度的改变或矫正)的模式。分为两种：•高动态范围(HDR)：类似于电影制作工作流程，此模式最适用于高精度分级。 Unity在<strong>色调映射(tone mapping)之前</strong>应用颜色分级。•低动态范围：此模式遵循更经典的工作流程。 在<strong>色调映射之后</strong>，Unity会应用有限范围的颜色分级。</td><td style=text-align:center>m_ColorGradingMode</td></tr><tr><td style=text-align:center>LUT Size</td><td style=text-align:left>URP会使用 <strong>查找纹理(look-up texture,LUT)</strong> 来进行color grading。查找纹理可分为 <strong>内部(internal)</strong> 和 <strong>外部(external)</strong> 本属性项就是用来指定LUT的的大小。 较大的大小值可提供更高的精度，但可能会降低性能。增加内存的使用。在开始color grading之前就需要确定好尺寸。本选项的默认值为32，这是一个能在速度和质量之间的取得良好平衡的值。</td><td style=text-align:center>m_ColorGradingLutSize</td></tr></tbody></table><h2 id=26-advanced>2.6 Advanced</h2><p>本部分允许您微调较少更改的设置，这些设置会影响更深的渲染功能和Shader组合。</p><table><thead><tr><th style=text-align:center>属性名</th><th style=text-align:left>描述</th><th style=text-align:center>对应的编辑器变量名称</th></tr></thead><tbody><tr><td style=text-align:center>SRP Batcher</td><td style=text-align:left>选中此框以启用SRP Batcher。如果您有许多使用不同的材质球，但是它们使用了相同的着色器，这将很有用。SRP Batcher是一个<strong>内部循环</strong>(inner loop)，可在不影响GPU性能的情况下加快CPU渲染速度。使用SRP Batcher时，它将在内部循环中替换SRP的渲染相关的代码。</td><td style=text-align:center>m_SRPBatcher</td></tr><tr><td style=text-align:center>Dynamic Batching</td><td style=text-align:left>启用动态批处理，以使render pipeline自动批处理共享同一材质的小型动态对象。 这对于不支持GPU instancing的平台和图形API很有用。如果目标硬件确实支持GPU instancing，请禁用动态批处理。您可以在运行时更改此设置。</td><td style=text-align:center>m_SupportsDynamicBatching</td></tr><tr><td style=text-align:center>Mixed Lighting</td><td style=text-align:left>启用<strong>混合灯光(Mixed Lighting)</strong>，启用本选项时，会告诉pipeline在创建游戏时，包含上mixed lighting相关的shader variants。</td><td style=text-align:center>m_MixedLightingSupportedProp</td></tr><tr><td style=text-align:center>Debug Level</td><td style=text-align:left>设置render pipeline生成的调试信息的等级，分为以下几种： <strong>Disabled</strong>: 不启用 <strong>Profiling</strong>: 让pipeline提供详细的调试信息，在FrameDebugger中可以看到。</td><td style=text-align:center>m_DebugLevelProp</td></tr><tr><td style=text-align:center>Shader Variant Log Level</td><td style=text-align:left>当Unity在build完工程的时候，可以显示shader stripping和shader variants的相关信息。本属性就是控制这些信息的显示。属性值有三种：<strong>Disabled</strong>: Unity不显示任何的信息 <strong>Only Universal</strong>: 只显示和URP shader相关的信息 <strong>All</strong>: Unity显示所有的shader的信息</td><td style=text-align:center>m_ShaderVariantLogLevel</td></tr></tbody></table><h1 id=3-rendering-in-the-universal-render-pipeline>3 Rendering in the Universal Render Pipeline</h1><p>首先看一下在URP renderpipe中，如何渲染一帧的代码：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>/* 
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    UniversalRenderPipeline类的成员函数Render
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    UniversalRenderPipeline类继承自UnityEngine.Rendering.RenderPipeline类，
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    且UniversalRenderPipeline类是一个sealed类，所以它不能也不意图被继承派生
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    UniversalRenderPipeline.Render函数重载了基类的同名函数
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    UniversalRenderPipeline类有一部分定义在UniversalRenderPipeline.cs文件中，
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    这个文件（7.1.1版本），通过Package Manager下载之后，其目录在：
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    Library\PackageCache\com.unity.render-pipelines.universal@7.1.1\Runtime
+</span></span></span><span style=display:flex><span><span style=color:#57606a>*/</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>protected</span> <span style=color:#cf222e>override</span> <span style=color:#cf222e>void</span> Render<span style=color:#1f2328>(</span>ScriptableRenderContext renderContext<span style=color:#1f2328>,</span> Camera<span style=color:#1f2328>[]</span> cameras<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// BeginFrameRendering是基类RenderPipeline的静态成员函数</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 在开始使用camera进行渲染时，执行相关的回调</span>
+</span></span><span style=display:flex><span>    BeginFrameRendering<span style=color:#1f2328>(</span>renderContext<span style=color:#1f2328>,</span> cameras<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 判断当前活跃的颜色空间，是否是线性颜色空间，如果是的话，光源也要使用线性亮度</span>
+</span></span><span style=display:flex><span>    GraphicsSettings<span style=color:#1f2328>.</span>lightsUseLinearIntensity <span style=color:#1f2328>=</span> 
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>(</span>QualitySettings<span style=color:#1f2328>.</span>activeColorSpace <span style=color:#1f2328>==</span> ColorSpace<span style=color:#1f2328>.</span>Linear<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 是否使用SRP Batcher进行合批处理</span>
+</span></span><span style=display:flex><span>    GraphicsSettings<span style=color:#1f2328>.</span>useScriptableRenderPipelineBatching <span style=color:#1f2328>=</span> asset<span style=color:#1f2328>.</span>useSRPBatcher<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 此方法是UniversalRenderPipeline类的提供的静态成员函数</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 顾名思义，就是用来设置每一帧用到的shader constants，此函数也在</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// UniversalRenderPipeline.cs文件中定义</span>
+</span></span><span style=display:flex><span>    SetupPerFrameShaderConstants<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// SortCameras也是UniversalRenderPipeline类的成员方法，定义在</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// UniversalRenderPipelineCore.cs文件中。这个方法是把传递进来的camera，</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 按其深度值进行排序，其深度值越大，离摄像机就越远，那就应该越早渲染，</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 所以要把它排在摄像机数组的前面。</span>
+</span></span><span style=display:flex><span>    SortCameras<span style=color:#1f2328>(</span>cameras<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 针对每一个camera，执行该camera应该要执行的rendering操作</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>foreach</span> <span style=color:#1f2328>(</span>Camera camera <span style=color:#cf222e>in</span> cameras<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// BeginCameraRendering是基类RenderPipeline的静态成员函数</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 在开始使用某一个camera进行渲染时，执行相关的回调</span>
+</span></span><span style=display:flex><span>        BeginCameraRendering<span style=color:#1f2328>(</span>renderContext<span style=color:#1f2328>,</span> camera<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#if</span> VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// It should be called before culling to prepare material.</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// When there isn&#39;t any VisualEffect component, this method has no effect.</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// visual effect graph相关的，网址如下：</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// https://docs.unity3d.com/Packages/com.unity.visualeffectgraph@7.1/manual/index.html</span>
+</span></span><span style=display:flex><span>        VFX<span style=color:#1f2328>.</span>VFXManager<span style=color:#1f2328>.</span>PrepareCamera<span style=color:#1f2328>(</span>camera<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 此方法是UniversalRenderPipeline类的提供的静态成员函数</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 使用某一个camera进行渲染</span>
+</span></span><span style=display:flex><span>        RenderSingleCamera<span style=color:#1f2328>(</span>renderContext<span style=color:#1f2328>,</span> camera<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// EndCameraRendering是基类RenderPipeline的静态成员函数</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 在开始使用某一个camera进行渲染时，执行相关的回调</span>
+</span></span><span style=display:flex><span>        EndCameraRendering<span style=color:#1f2328>(</span>renderContext<span style=color:#1f2328>,</span> camera<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// EndFrameRendering是基类RenderPipeline的静态成员函数</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 在开始使用camera进行渲染时，执行相关的回调</span>
+</span></span><span style=display:flex><span>    EndFrameRendering<span style=color:#1f2328>(</span>renderContext<span style=color:#1f2328>,</span> cameras<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> SortCameras<span style=color:#1f2328>(</span>Camera<span style=color:#1f2328>[]</span> cameras<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Array<span style=color:#1f2328>.</span>Sort<span style=color:#1f2328>(</span>cameras<span style=color:#1f2328>,</span> <span style=color:#1f2328>(</span>lhs<span style=color:#1f2328>,</span> rhs<span style=color:#1f2328>)</span> <span style=color:#1f2328>=&gt;</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span><span style=color:#1f2328>)(</span>lhs<span style=color:#1f2328>.</span>depth <span style=color:#1f2328>-</span> rhs<span style=color:#1f2328>.</span>depth<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> RenderSingleCamera<span style=color:#1f2328>(</span>ScriptableRenderContext context<span style=color:#1f2328>,</span> Camera camera<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 获取到和本摄像机有关的拣选相关的参数</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(!</span>camera<span style=color:#1f2328>.</span>TryGetCullingParameters<span style=color:#1f2328>(</span>IsStereoEnabled<span style=color:#1f2328>(</span>camera<span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>                                 <span style=color:#cf222e>out</span> <span style=color:#cf222e>var</span> cullingParameters<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> settings <span style=color:#1f2328>=</span> asset<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    UniversalAdditionalCameraData additionalCameraData <span style=color:#1f2328>=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>camera<span style=color:#1f2328>.</span>cameraType <span style=color:#1f2328>==</span> CameraType<span style=color:#1f2328>.</span>Game <span style=color:#1f2328>||</span> 
+</span></span><span style=display:flex><span>                     camera<span style=color:#1f2328>.</span>cameraType <span style=color:#1f2328>==</span> CameraType<span style=color:#1f2328>.</span>VR<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        camera<span style=color:#1f2328>.</span>gameObject<span style=color:#1f2328>.</span>TryGetComponent<span style=color:#1f2328>(</span><span style=color:#cf222e>out</span> additionalCameraData<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// InitializeCameraData函数是UniversalRenderPipeline类的静态成员函数。</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 根据传递进来的各种参数最后返回一个CameraData类型变量，这个就是当前</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 渲染使用的摄像机的各种数据</span>
+</span></span><span style=display:flex><span>    InitializeCameraData<span style=color:#1f2328>(</span>settings<span style=color:#1f2328>,</span> camera<span style=color:#1f2328>,</span> additionalCameraData<span style=color:#1f2328>,</span> <span style=color:#cf222e>out</span> <span style=color:#cf222e>var</span> cameraData<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// SetupPerCameraShaderConstants函数是UniversalRenderPipeline类的静态成员函数。</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 根据当前的camera的数据属性，设置逐帧的着色器常量</span>
+</span></span><span style=display:flex><span>    SetupPerCameraShaderConstants<span style=color:#1f2328>(</span>cameraData<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    ScriptableRenderer renderer <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>additionalCameraData <span style=color:#1f2328>!=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>?</span> 
+</span></span><span style=display:flex><span>            additionalCameraData<span style=color:#1f2328>.</span>scriptableRenderer <span style=color:#1f2328>:</span> 
+</span></span><span style=display:flex><span>            settings<span style=color:#1f2328>.</span>scriptableRenderer<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>renderer <span style=color:#1f2328>==</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>LogWarning<span style=color:#1f2328>(</span><span style=color:#cf222e>string</span><span style=color:#1f2328>.</span>Format<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>        <span style=color:#0a3069>&#34;Trying to render {0} with an invalid renderer. Camera rendering will be skipped.&#34;</span><span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>        camera<span style=color:#1f2328>.</span>name<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>string</span> tag <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>asset<span style=color:#1f2328>.</span>debugLevel <span style=color:#1f2328>&gt;=</span> PipelineDebugLevel<span style=color:#1f2328>.</span>Profiling<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                            <span style=color:#1f2328>?</span> camera<span style=color:#1f2328>.</span>name<span style=color:#1f2328>:</span> k_RenderCameraTag<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从command buffer 池中根据tag取得CommandBuffer对象</span>
+</span></span><span style=display:flex><span>    CommandBuffer cmd <span style=color:#1f2328>=</span> CommandBufferPool<span style=color:#1f2328>.</span>Get<span style=color:#1f2328>(</span>tag<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>using</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>new</span> ProfilingSample<span style=color:#1f2328>(</span>cmd<span style=color:#1f2328>,</span> tag<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        renderer<span style=color:#1f2328>.</span>Clear<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        renderer<span style=color:#1f2328>.</span>SetupCullingParameters<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>                    <span style=color:#cf222e>ref</span> cullingParameters<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> cameraData<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        context<span style=color:#1f2328>.</span>ExecuteCommandBuffer<span style=color:#1f2328>(</span>cmd<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        cmd<span style=color:#1f2328>.</span>Clear<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#if</span> UNITY_EDITOR
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Emit scene view UI</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>cameraData<span style=color:#1f2328>.</span>isSceneViewCamera<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            ScriptableRenderContext<span style=color:#1f2328>.</span>EmitWorldGeometryForSceneView<span style=color:#1f2328>(</span>camera<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>var</span> cullResults <span style=color:#1f2328>=</span> context<span style=color:#1f2328>.</span>Cull<span style=color:#1f2328>(</span><span style=color:#cf222e>ref</span> cullingParameters<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        InitializeRenderingData<span style=color:#1f2328>(</span>settings<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> cameraData<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                        <span style=color:#cf222e>ref</span> cullResults<span style=color:#1f2328>,</span> <span style=color:#cf222e>out</span> <span style=color:#cf222e>var</span> renderingData<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        renderer<span style=color:#1f2328>.</span>Setup<span style=color:#1f2328>(</span>context<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> renderingData<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        renderer<span style=color:#1f2328>.</span>Execute<span style=color:#1f2328>(</span>context<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> renderingData<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    context<span style=color:#1f2328>.</span>ExecuteCommandBuffer<span style=color:#1f2328>(</span>cmd<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    CommandBufferPool<span style=color:#1f2328>.</span>Release<span style=color:#1f2328>(</span>cmd<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    context<span style=color:#1f2328>.</span>Submit<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>从上面的代码中可以看出：在一个 <strong>前向渲染器(forward renderer)</strong> 中。每渲染一帧的做法流程如下：</p><p><img src=/image/u3d/u3d_srp/urp_doc/Rendering_Flowchart.png alt></p><p>当在【Graphics Settings】面板中指定选中了URP render pipeline的时候，Unity将会使用URP去渲染所有的摄像机所观察的东西，包括game窗口，scene窗口，反射探针，inspector面板上的预览窗口。</p><h2 id=31-camera-loop>3.1 Camera loop</h2><p>从上面的代码中可以看出，在一个 <strong>摄像机循环（camera loop）</strong> 内，执行以下三步的操作：</p><ol><li>拣选出你场景中需要渲染的objects。</li><li>创建渲染器所需的数据。</li><li>执行渲染操作，向framebuffer渲染出一个image。</li></ol><p>再进一步细化上面的三步为：</p><ol><li>配置用于确定拣选系统如何拣选灯光和阴影的参数。您可以使用自定义渲染器覆盖渲染管道的这一部分。</li><li>使用上一步中的拣选选参数，计算可见的渲染器， <strong>阴影投射器（shadow caster）</strong> 和灯光的列表。 拣选参数和相机的 <strong>层距离（layer distances）</strong> 会影响拣选和渲染性能。</li><li>根据拣选操作的输出（culling output），URP asset，摄像机的<strong>质量设置(quality settings)</strong>。以及当前运行的平台来捕获信息，以构建渲染数据（RenderingData类对象），然后那渲染数据通知到渲染器</li><li>生成<strong>渲染通路列表(list of render pass)</strong>，并根据渲染数据将它们排队以执行。 您可以使用<strong>自定义渲染器，覆盖掉URP提供的render pipe中的这一部分</strong></li><li>执行队列中的每个渲染通路。渲染器将Camera拍摄到的图像，输出到帧缓冲区。</li></ol><h1 id=参考链接>参考链接</h1><ul><li><a href=https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@7.1/manual/index.html>Unity官网对Universal Render Pipeline的介绍文档</a></li><li><a href=https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@7.1/manual/shader-stripping.html>URP的shader stripping文档</a></li><li><a href=https://catlikecoding.com/unity/tutorials/scriptable-render-pipeline/directional-shadows/>CatlikeCoding中关于在SRP中实现Directional Shadows的文档</a></li><li><a href=http://www.rastertek.com/dx11tut48.html>RasterTek中关于使用DX11实现directional shadow map的文档</a></li><li><a href=https://docs.unity3d.com/Manual/DirLightShadows.html>Unity3D中关于directional shadow的文档</a></li><li><a href=https://blog.csdn.net/qq_18229381/article/details/79050727>unity屏幕后处理全家桶之color grading</a></li></ul></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a>
+<a class="entry__tag btn" href=/tags/srp/>SRP</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/camera/universal_additional_camera_data_component/>UniversalAdditionalCameraData组件</a></li><li class=related__item><a class=related__link href=/post/unity3d/update_fixedupdate_lateupdate/>Update、FixedUpdate、LateUpdate函数，定时器和帧速率</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_component_construction_func/>继承自Monobehaviour的组件组件的构造函数</a></li><li class=related__item><a class=related__link href=/post/unity3d/from_cs_to_quad/>从计算着色器到四边形【翻译】</a></li><li class=related__item><a class=related__link href=/post/unity3d/cg_programming_unity_debugging_of_shaders/>在Unity3D中使用Visual Studio调试shader【翻译】</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

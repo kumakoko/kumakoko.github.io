@@ -1,717 +1,469 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>深度探索DxFramework 10-1 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="深度探索DxFramework">
-		<meta property="og:title" content="深度探索DxFramework 10-1" />
-<meta property="og:description" content="深度探索DxFramework" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_10_1/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2007-10-23T18:08:30+08:00" />
-<meta property="article:modified_time" content="2007-10-23T18:08:30+08:00" />
-
-
-		<meta itemprop="name" content="深度探索DxFramework 10-1">
-<meta itemprop="description" content="深度探索DxFramework"><meta itemprop="datePublished" content="2007-10-23T18:08:30+08:00" />
-<meta itemprop="dateModified" content="2007-10-23T18:08:30+08:00" />
-<meta itemprop="wordCount" content="1368">
-<meta itemprop="keywords" content="DxFramework," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">深度探索DxFramework 10-1</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2007-10-23T18:08:30&#43;08:00">October 23, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">深度探索DxFramework 10-1</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#1013d预备数学知识和相关代码的分析">10.1.3D预备数学知识和相关代码的分析</a></li>
-    <li><a href="#102-向量矩阵四元数">10.2 向量，矩阵，四元数</a></li>
-    <li><a href="#103-三维几何工具集">10.3 三维几何工具集</a>
-      <ul>
-        <li><a href="#1031-与三维空间的平面相关算法">10.3.1 与三维空间的平面相关算法</a></li>
-        <li><a href="#1032-计算三角形面积和凸多边形面积">10.3.2 计算三角形面积和凸多边形面积</a></li>
-        <li><a href="#1033-线段和面face相交检测">10.3.3 线段和面（face）相交检测</a></li>
-        <li><a href="#1034-分割三角形">10.3.4 分割三角形</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><hr>
-<p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h1 id="第10章-进入三维的世界-1">第10章 进入三维的世界 1</h1>
-<h2 id="1013d预备数学知识和相关代码的分析">10.1.3D预备数学知识和相关代码的分析</h2>
-<h2 id="102-向量矩阵四元数">10.2 向量，矩阵，四元数</h2>
-<h2 id="103-三维几何工具集">10.3 三维几何工具集</h2>
-<h3 id="1031-与三维空间的平面相关算法">10.3.1 与三维空间的平面相关算法</h3>
-<p>对于给定的3D点P0和法向量N，过点P0并且和N垂直的平面就可以定义为满足方程N.(P-P0) = 0的集合。（不明白这个定义怎么来的读者，可以回忆一下两向量点积的几何意义）。如下图，平面中任意点与P0的连线都与法线N是垂直的。</p>
-<p><img src="/image/inside_dxf/normal_plane.png" alt=""></p>
-<p>如果令法向量N为（A,B,C），点P0为（P0x,P0y,P0z）。则平面的方程为：</p>
-<p>$ Ax + By + Cz + D = 0 $ ( 此时 $ Ax + By +Cz + D = \overset{\rightharpoonup}{N}\cdot P $ ，$ D = -\overset{\rightharpoonup}{N}\cdot P $ )</p>
-<p>根据平面法线的指向，平面把它所处的空间划分成两个半空间，法线所指向的半空间称为正半空间，也可以称为正侧空间。另一半则称为负半空间，也称为负侧空间。判断某点和某平面的位置关系可以依照上面三个判断式，如下：</p>
-<table>
-<thead>
-<tr>
-<th>判断式</th>
-<th>位置关系</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ax+By+Cz+D=0</td>
-<td>点（x,y,z）在平面上</td>
-<td></td>
-</tr>
-<tr>
-<td>Ax+By+Cz+D&gt;0</td>
-<td>点（x,y,z）在正半空间</td>
-<td></td>
-</tr>
-<tr>
-<td>Ax+By+Cz+D&lt;0</td>
-<td>点（x,y,z）在负半空间</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>在此可以举一个例子来说明。如下图：</p>
-<p><img src="/image/inside_dxf/normal_plane_2.png" alt=""></p>
-<p>在图中，平面A由法线N(0,1,0)和点P0(0,5,0)定义。那么，定义式Ax+By+Cz+D=0的D为：
-D=－N.P0 = -(0<em>0+1</em>5+0*0) = -5</p>
-<p>P3的坐标为(6,5,2)，代入方程式Ax+By+Cz+D中，为：
-6<em>0+5</em>1+0*2-5=0</p>
-<p>所以P3在平面上。P1的坐标为(0,10,0)，代入方程式Ax+By+Cz+D中，为：
-0<em>0+10</em>1+0*0-5=5&gt;0</p>
-<p>所以P1在平面的正半空间。P2的坐标为(0,2,0)，代入方程式Ax+By+Cz+D中，为：
-0<em>0+2</em>1+0*0-5=-3&lt;0</p>
-<p>所以P1在平面的负半空间。tool3d.cpp文件中定义了点和平面的位置关系判断的两个函数，如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//检查某点p_Point是否在某平面p_Plane的正侧：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">positiveSide</span>(D3DXVECTOR3<span style="color:#f92672">*</span> p_Point, D3DXPLANE<span style="color:#f92672">*</span> p_Plane)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> p_Plane<span style="color:#f92672">-&gt;</span>a <span style="color:#f92672">*</span> p_Point<span style="color:#f92672">-&gt;</span>x <span style="color:#f92672">+</span>  p_Plane<span style="color:#f92672">-&gt;</span>b <span style="color:#f92672">*</span> p_Point<span style="color:#f92672">-&gt;</span>y <span style="color:#f92672">+</span> 
-</span></span><span style="display:flex;"><span>             p_Plane<span style="color:#f92672">-&gt;</span>c <span style="color:#f92672">*</span> p_Point<span style="color:#f92672">-&gt;</span>z <span style="color:#f92672">+</span> p_Plane<span style="color:#f92672">-&gt;</span>d <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//检查某点p_Point和某平面p_Plane的位置关系，1为正侧， 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//－1为负侧，0为点在平面上
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">whichSide</span>(D3DXVECTOR3<span style="color:#f92672">*</span> p_Point, D3DXPLANE<span style="color:#f92672">*</span> p_Plane) 
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> temp <span style="color:#f92672">=</span> p_Plane<span style="color:#f92672">-&gt;</span>a <span style="color:#f92672">*</span> p_Point<span style="color:#f92672">-&gt;</span>x <span style="color:#f92672">+</span> 
-</span></span><span style="display:flex;"><span>                 p_Plane<span style="color:#f92672">-&gt;</span>b <span style="color:#f92672">*</span> p_Point<span style="color:#f92672">-&gt;</span>y <span style="color:#f92672">+</span> 
-</span></span><span style="display:flex;"><span>                 p_Plane<span style="color:#f92672">-&gt;</span>c <span style="color:#f92672">*</span> p_Point<span style="color:#f92672">-&gt;</span>z <span style="color:#f92672">+</span> p_Plane<span style="color:#f92672">-&gt;</span>d;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (temp <span style="color:#f92672">&gt;</span> epsilon) 
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> (temp <span style="color:#f92672">&lt;</span> (<span style="color:#f92672">-</span>epsilon))
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>    } 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="1032-计算三角形面积和凸多边形面积">10.3.2 计算三角形面积和凸多边形面积</h3>
-<p>计算三角形的面积的方法有多种，最常用的就是把两个全等的三角形，组合成一个平行四边形，然后求出平行四边形的面积再除以2就可以了。当给定一个三角形的三个顶点坐标的时候，利用向量叉积的几何性质，就可以按照上述方法来求出三角形的面积。我们知道，两向量P×Q，有|P×Q| = |P|.|Q|.sinA,A是两向量的夹角。从几何意义上来说，两向量的叉积的模，就等于以这两向量的模的长度为不等边，组成的平行四边形的面积，如下图：</p>
-<p><img src="/image/inside_dxf/vector_cross_product.png" alt=""></p>
-<p>DXFrameWork提供了计算三角形面积的函数，如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>XFLOAT <span style="color:#a6e22e">triangleArea</span>(D3DXVECTOR3<span style="color:#f92672">*</span> p0, D3DXVECTOR3<span style="color:#f92672">*</span> p1, 
-</span></span><span style="display:flex;"><span>                    D3DXVECTOR3<span style="color:#f92672">*</span> p2)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    D3DXVECTOR3 v1 <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>p1) <span style="color:#f92672">-</span> (<span style="color:#f92672">*</span>p0);
-</span></span><span style="display:flex;"><span>    D3DXVECTOR3 v2 <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>p2) <span style="color:#f92672">-</span> (<span style="color:#f92672">*</span>p0);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">*</span> D3DXVec3Length(D3DXVec3Cross(<span style="color:#f92672">&amp;</span>v1, <span style="color:#f92672">&amp;</span>v1, <span style="color:#f92672">&amp;</span>v2));
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>知道了三角形的面积如何计算，接下来凸多边形的面积也好计算了。无非就是把凸多边形分解为若干个三角形，计算每个三角形的面积后累加即可。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//第一个参数是凸多边形的顶点列表，第二个参数numPoints是凸多边形的顶点数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>XFLOAT <span style="color:#a6e22e">convexPolygonArea</span>(D3DXVECTOR3<span style="color:#f92672">*</span> points, <span style="color:#66d9ef">int</span> numPoints) 
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
-</span></span><span style="display:flex;"><span>    XFLOAT sum <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//注意points[0]是该凸多边形分解而成的三角形的共用顶点
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>; i <span style="color:#f92672">&lt;</span> numPoints; i<span style="color:#f92672">++</span>)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        sum <span style="color:#f92672">+=</span> triangleArea(<span style="color:#f92672">&amp;</span>points[<span style="color:#ae81ff">0</span>],<span style="color:#f92672">&amp;</span>points[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>],<span style="color:#f92672">&amp;</span>points[i]);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sum;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>计算凸多边形的面积的示意图如下：</p>
-<p><img src="/image/inside_dxf/convex_polygon_area.png" alt=""></p>
-<h3 id="1033-线段和面face相交检测">10.3.3 线段和面（face）相交检测</h3>
-<p>检查某线段是否和某面（face，注意不是平面）相交的代码如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">checkEdgeIntersectsFace</span>( D3DXVECTOR3 p_Edge[<span style="color:#ae81ff">2</span>], D3DXVECTOR3<span style="color:#f92672">*</span> p_Face, <span style="color:#66d9ef">int</span> numVertices,  D3DXPLANE<span style="color:#f92672">*</span> p_Plane, D3DXVECTOR3<span style="color:#f92672">*</span> p_PointOnPlane)  {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//要进行相交判断的face，只能是三角形或者是四边形。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span>(numVertices <span style="color:#f92672">&gt;</span> MAX_VERTICES_FOR_EDGE_INTERSECT_CHECKING) 
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">throw</span> Error(_T(<span style="color:#e6db74">&#34;checkEdgeIntersectsFace : Number of</span>
-</span></span><span style="display:flex;"><span>                        vertices used in checking an edge 
-</span></span><span style="display:flex;"><span>                      intersects with a face is too many<span style="color:#e6db74">&#34;));</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> false;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 通过计算面积，判断要检查的face是不是一个一维的线段。如果是就返回false
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    XFLOAT area <span style="color:#f92672">=</span> convexPolygonArea(p_Face, numVertices);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((area <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.001</span>) <span style="color:#f92672">&amp;&amp;</span> (area <span style="color:#f92672">&gt;</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">0.001</span>))
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> false; 
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//如果线段的两个端点都在face所处平面的同一侧，则显然这个线段是不会和该face相交的
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> temp1, temp2;
-</span></span><span style="display:flex;"><span>    temp1 <span style="color:#f92672">=</span> positiveSide(<span style="color:#f92672">&amp;</span>p_Edge[<span style="color:#ae81ff">0</span>], p_Plane);
-</span></span><span style="display:flex;"><span>    temp2 <span style="color:#f92672">=</span> positiveSide(<span style="color:#f92672">&amp;</span>p_Edge[<span style="color:#ae81ff">1</span>], p_Plane);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (temp1 <span style="color:#f92672">==</span> temp2)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> false;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//再检查线段和face所在的平面是否相交，如果不相交，则线段肯定不和face相交
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (D3DXPlaneIntersectLine(p_PointOnPlane, p_Plane, <span style="color:#f92672">&amp;</span>p_Edge[<span style="color:#ae81ff">0</span>], <span style="color:#f92672">&amp;</span>p_Edge[<span style="color:#ae81ff">1</span>]) <span style="color:#f92672">==</span> NULL) 
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> false;
-</span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></div><p>如果计算到线段和face所在的平面相交，那么接下来就是要判断相交点是落在face的内侧还是外测了。在计算机图形学中，往往把三维对象通过降维处理，可以降低问题的复杂度。降维的方法是：通过去掉face的法线N的绝对值最大的分量所对应的坐标，就可以把问题降到二维空间来考虑。如下图所示，降维过程相当于把face投影到xy，xz或者是yz平面上。在此先假设被去掉的是z坐标，即投影到xy平面上。如下图投影多边形到XZ，YZ，XY平面上</p>
-<p><img src="/image/inside_dxf/projection.png" alt=""></p>
-<p>判断某点在不在多边形内，可以把问题转化为判断点在不在某三角形内。如上图，把多边形划分为若干个三角形。然后判断点是否在这些三角形内，只要判断到点在某一三角形内，就肯定这点在此多边形内。先考虑如何判断点是否在三角形内。上面已经把三角形投影到一个二维平面来进行考虑。假定投影在了xz平面上。对三角形的每条边进行下面的二维差运算，有：</p>
-<pre tabindex="0"><code>E = P1-P0
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>深度探索DxFramework 10-1 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="深度探索DxFramework"><meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_10_1/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="深度探索DxFramework 10-1"><meta property="og:description" content="深度探索DxFramework"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2007-10-23T18:08:30+08:00"><meta property="article:modified_time" content="2007-10-23T18:08:30+08:00"><meta property="article:tag" content="DxFramework"><meta itemprop=name content="深度探索DxFramework 10-1"><meta itemprop=description content="深度探索DxFramework"><meta itemprop=datePublished content="2007-10-23T18:08:30+08:00"><meta itemprop=dateModified content="2007-10-23T18:08:30+08:00"><meta itemprop=wordCount content="1368"><meta itemprop=keywords content="DxFramework"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>深度探索DxFramework 10-1</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2007-10-23T18:08:30+08:00>October 23, 2007</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/directx/ rel=category>DirectX</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/dxframework/ rel=tag>DxFramework</a></span></div></div><h1 class=entry__title>深度探索DxFramework 10-1</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#1013d预备数学知识和相关代码的分析>10.1.3D预备数学知识和相关代码的分析</a></li><li><a href=#102-向量矩阵四元数>10.2 向量，矩阵，四元数</a></li><li><a href=#103-三维几何工具集>10.3 三维几何工具集</a><ul><li><a href=#1031-与三维空间的平面相关算法>10.3.1 与三维空间的平面相关算法</a></li><li><a href=#1032-计算三角形面积和凸多边形面积>10.3.2 计算三角形面积和凸多边形面积</a></li><li><a href=#1033-线段和面face相交检测>10.3.3 线段和面（face）相交检测</a></li><li><a href=#1034-分割三角形>10.3.4 分割三角形</a></li></ul></li></ul></nav></details><div class=entry__content><hr><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=第10章-进入三维的世界-1>第10章 进入三维的世界 1</h1><h2 id=1013d预备数学知识和相关代码的分析>10.1.3D预备数学知识和相关代码的分析</h2><h2 id=102-向量矩阵四元数>10.2 向量，矩阵，四元数</h2><h2 id=103-三维几何工具集>10.3 三维几何工具集</h2><h3 id=1031-与三维空间的平面相关算法>10.3.1 与三维空间的平面相关算法</h3><p>对于给定的3D点P0和法向量N，过点P0并且和N垂直的平面就可以定义为满足方程N.(P-P0) = 0的集合。（不明白这个定义怎么来的读者，可以回忆一下两向量点积的几何意义）。如下图，平面中任意点与P0的连线都与法线N是垂直的。</p><p><img src=/image/inside_dxf/normal_plane.png alt></p><p>如果令法向量N为（A,B,C），点P0为（P0x,P0y,P0z）。则平面的方程为：</p><p>$ Ax + By + Cz + D = 0 $ ( 此时 $ Ax + By +Cz + D = \overset{\rightharpoonup}{N}\cdot P $ ，$ D = -\overset{\rightharpoonup}{N}\cdot P $ )</p><p>根据平面法线的指向，平面把它所处的空间划分成两个半空间，法线所指向的半空间称为正半空间，也可以称为正侧空间。另一半则称为负半空间，也称为负侧空间。判断某点和某平面的位置关系可以依照上面三个判断式，如下：</p><table><thead><tr><th>判断式</th><th>位置关系</th><th></th></tr></thead><tbody><tr><td>Ax+By+Cz+D=0</td><td>点（x,y,z）在平面上</td><td></td></tr><tr><td>Ax+By+Cz+D>0</td><td>点（x,y,z）在正半空间</td><td></td></tr><tr><td>Ax+By+Cz+D&lt;0</td><td>点（x,y,z）在负半空间</td><td></td></tr></tbody></table><p>在此可以举一个例子来说明。如下图：</p><p><img src=/image/inside_dxf/normal_plane_2.png alt></p><p>在图中，平面A由法线N(0,1,0)和点P0(0,5,0)定义。那么，定义式Ax+By+Cz+D=0的D为：
+D=－N.P0 = -(0<em>0+1</em>5+0*0) = -5</p><p>P3的坐标为(6,5,2)，代入方程式Ax+By+Cz+D中，为：
+6<em>0+5</em>1+0*2-5=0</p><p>所以P3在平面上。P1的坐标为(0,10,0)，代入方程式Ax+By+Cz+D中，为：
+0<em>0+10</em>1+0*0-5=5>0</p><p>所以P1在平面的正半空间。P2的坐标为(0,2,0)，代入方程式Ax+By+Cz+D中，为：
+0<em>0+2</em>1+0*0-5=-3&lt;0</p><p>所以P1在平面的负半空间。tool3d.cpp文件中定义了点和平面的位置关系判断的两个函数，如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>//检查某点p_Point是否在某平面p_Plane的正侧：
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>bool</span> <span style=color:#6639ba>positiveSide</span><span style=color:#1f2328>(</span>D3DXVECTOR3<span style=color:#0550ae>*</span> p_Point<span style=color:#1f2328>,</span> D3DXPLANE<span style=color:#0550ae>*</span> p_Plane<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> p_Plane<span style=color:#0550ae>-&gt;</span>a <span style=color:#0550ae>*</span> p_Point<span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>+</span>  p_Plane<span style=color:#0550ae>-&gt;</span>b <span style=color:#0550ae>*</span> p_Point<span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>+</span> 
+</span></span><span style=display:flex><span>             p_Plane<span style=color:#0550ae>-&gt;</span>c <span style=color:#0550ae>*</span> p_Point<span style=color:#0550ae>-&gt;</span>z <span style=color:#0550ae>+</span> p_Plane<span style=color:#0550ae>-&gt;</span>d <span style=color:#0550ae>&gt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//检查某点p_Point和某平面p_Plane的位置关系，1为正侧， 
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//－1为负侧，0为点在平面上
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>int</span> <span style=color:#6639ba>whichSide</span><span style=color:#1f2328>(</span>D3DXVECTOR3<span style=color:#0550ae>*</span> p_Point<span style=color:#1f2328>,</span> D3DXPLANE<span style=color:#0550ae>*</span> p_Plane<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> temp <span style=color:#0550ae>=</span> p_Plane<span style=color:#0550ae>-&gt;</span>a <span style=color:#0550ae>*</span> p_Point<span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>+</span> 
+</span></span><span style=display:flex><span>                 p_Plane<span style=color:#0550ae>-&gt;</span>b <span style=color:#0550ae>*</span> p_Point<span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>+</span> 
+</span></span><span style=display:flex><span>                 p_Plane<span style=color:#0550ae>-&gt;</span>c <span style=color:#0550ae>*</span> p_Point<span style=color:#0550ae>-&gt;</span>z <span style=color:#0550ae>+</span> p_Plane<span style=color:#0550ae>-&gt;</span>d<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>temp <span style=color:#0550ae>&gt;</span> epsilon<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span> <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>temp <span style=color:#0550ae>&lt;</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>-</span>epsilon<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>-</span><span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span> 
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=1032-计算三角形面积和凸多边形面积>10.3.2 计算三角形面积和凸多边形面积</h3><p>计算三角形的面积的方法有多种，最常用的就是把两个全等的三角形，组合成一个平行四边形，然后求出平行四边形的面积再除以2就可以了。当给定一个三角形的三个顶点坐标的时候，利用向量叉积的几何性质，就可以按照上述方法来求出三角形的面积。我们知道，两向量P×Q，有|P×Q| = |P|.|Q|.sinA,A是两向量的夹角。从几何意义上来说，两向量的叉积的模，就等于以这两向量的模的长度为不等边，组成的平行四边形的面积，如下图：</p><p><img src=/image/inside_dxf/vector_cross_product.png alt></p><p>DXFrameWork提供了计算三角形面积的函数，如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>XFLOAT <span style=color:#6639ba>triangleArea</span><span style=color:#1f2328>(</span>D3DXVECTOR3<span style=color:#0550ae>*</span> p0<span style=color:#1f2328>,</span> D3DXVECTOR3<span style=color:#0550ae>*</span> p1<span style=color:#1f2328>,</span> 
+</span></span><span style=display:flex><span>                    D3DXVECTOR3<span style=color:#0550ae>*</span> p2<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    D3DXVECTOR3 v1 <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>*</span>p1<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>*</span>p0<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    D3DXVECTOR3 v2 <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>*</span>p2<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>*</span>p0<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> <span style=color:#0550ae>0.5</span> <span style=color:#0550ae>*</span> D3DXVec3Length<span style=color:#1f2328>(</span>D3DXVec3Cross<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>v1<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>v1<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>v2<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>知道了三角形的面积如何计算，接下来凸多边形的面积也好计算了。无非就是把凸多边形分解为若干个三角形，计算每个三角形的面积后累加即可。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>//第一个参数是凸多边形的顶点列表，第二个参数numPoints是凸多边形的顶点数
+</span></span></span><span style=display:flex><span>XFLOAT <span style=color:#6639ba>convexPolygonArea</span><span style=color:#1f2328>(</span>D3DXVECTOR3<span style=color:#0550ae>*</span> points<span style=color:#1f2328>,</span> <span style=color:#cf222e>int</span> numPoints<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> i<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    XFLOAT sum <span style=color:#0550ae>=</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//注意points[0]是该凸多边形分解而成的三角形的共用顶点
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> numPoints<span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        sum <span style=color:#0550ae>+=</span> triangleArea<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>points<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>],</span><span style=color:#0550ae>&amp;</span>points<span style=color:#1f2328>[</span>i <span style=color:#0550ae>-</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>],</span><span style=color:#0550ae>&amp;</span>points<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> sum<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>计算凸多边形的面积的示意图如下：</p><p><img src=/image/inside_dxf/convex_polygon_area.png alt></p><h3 id=1033-线段和面face相交检测>10.3.3 线段和面（face）相交检测</h3><p>检查某线段是否和某面（face，注意不是平面）相交的代码如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>bool</span> <span style=color:#6639ba>checkEdgeIntersectsFace</span><span style=color:#1f2328>(</span> D3DXVECTOR3 p_Edge<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>],</span> D3DXVECTOR3<span style=color:#0550ae>*</span> p_Face<span style=color:#1f2328>,</span> <span style=color:#cf222e>int</span> numVertices<span style=color:#1f2328>,</span>  D3DXPLANE<span style=color:#0550ae>*</span> p_Plane<span style=color:#1f2328>,</span> D3DXVECTOR3<span style=color:#0550ae>*</span> p_PointOnPlane<span style=color:#1f2328>)</span>  <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//要进行相交判断的face，只能是三角形或者是四边形。
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span>numVertices <span style=color:#0550ae>&gt;</span> MAX_VERTICES_FOR_EDGE_INTERSECT_CHECKING<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>throw</span> Error<span style=color:#1f2328>(</span>_T<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;checkEdgeIntersectsFace : Number of</span>
+</span></span><span style=display:flex><span>                        vertices used in checking an edge 
+</span></span><span style=display:flex><span>                      intersects with a face is too many<span style=color:#0a3069>&#34;));</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#6639ba>false</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 通过计算面积，判断要检查的face是不是一个一维的线段。如果是就返回false
+</span></span></span><span style=display:flex><span>    XFLOAT area <span style=color:#0550ae>=</span> convexPolygonArea<span style=color:#1f2328>(</span>p_Face<span style=color:#1f2328>,</span> numVertices<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>((</span>area <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>0.001</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>&amp;&amp;</span> <span style=color:#1f2328>(</span>area <span style=color:#0550ae>&gt;</span> <span style=color:#0550ae>-</span><span style=color:#0550ae>0.001</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#6639ba>false</span><span style=color:#1f2328>;</span> 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//如果线段的两个端点都在face所处平面的同一侧，则显然这个线段是不会和该face相交的
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>bool</span> temp1<span style=color:#1f2328>,</span> temp2<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    temp1 <span style=color:#0550ae>=</span> positiveSide<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>p_Edge<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>],</span> p_Plane<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    temp2 <span style=color:#0550ae>=</span> positiveSide<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>p_Edge<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>],</span> p_Plane<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>temp1 <span style=color:#0550ae>==</span> temp2<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#6639ba>false</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//再检查线段和face所在的平面是否相交，如果不相交，则线段肯定不和face相交
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>D3DXPlaneIntersectLine<span style=color:#1f2328>(</span>p_PointOnPlane<span style=color:#1f2328>,</span> p_Plane<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>p_Edge<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>],</span> <span style=color:#0550ae>&amp;</span>p_Edge<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>])</span> <span style=color:#0550ae>==</span> <span style=color:#6639ba>NULL</span><span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#6639ba>false</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>如果计算到线段和face所在的平面相交，那么接下来就是要判断相交点是落在face的内侧还是外测了。在计算机图形学中，往往把三维对象通过降维处理，可以降低问题的复杂度。降维的方法是：通过去掉face的法线N的绝对值最大的分量所对应的坐标，就可以把问题降到二维空间来考虑。如下图所示，降维过程相当于把face投影到xy，xz或者是yz平面上。在此先假设被去掉的是z坐标，即投影到xy平面上。如下图投影多边形到XZ，YZ，XY平面上</p><p><img src=/image/inside_dxf/projection.png alt></p><p>判断某点在不在多边形内，可以把问题转化为判断点在不在某三角形内。如上图，把多边形划分为若干个三角形。然后判断点是否在这些三角形内，只要判断到点在某一三角形内，就肯定这点在此多边形内。先考虑如何判断点是否在三角形内。上面已经把三角形投影到一个二维平面来进行考虑。假定投影在了xz平面上。对三角形的每条边进行下面的二维差运算，有：</p><pre tabindex=0><code>E = P1-P0
 F=P2-P0
 G=P-P0
-</code></pre><p>从本质上说，这样做的意义上移动坐标系，使得顶点P0位于原点位置。或者可以认为是以P0为原点。如下图所示。</p>
-<p><img src="img/projection_2.png" alt=""></p>
-<p>在上面的式子中，向量E所代表的边有内侧和外测之分，将边向量旋转90°（顺时针或者逆时针旋转都可以），便可以构造出该边的法向量，而又因为点F一定是在边的正侧，所以点积Ne.F的符号就是边OE的任一内侧点的符号。因此，如果P点位于该边的内侧的话，那么就必须要满足：</p>
-<pre tabindex="0"><code>(Ne.F)(Ne.G)=(Ne.(P2-P0))(Ne.(P-P0))≥0
-</code></pre><p>对于任何的点，如果它都位于三角形的三条边的内侧，那么它就在三角形内。从上面的图可以看出，线段P2-P0和法线Ne的点积是大于0（观察其夹角便可知道，其夹角绝对值小于90°），那么线段P-P0和法线Ne的点积也应大于0，即Ne.(P-P0)&gt;0。假定是投影到XY平面上，而Ne又等于P1-P0乘以一个绕Z轴90°的旋转矩阵。令Ne为（NeX,NeY），P0为（x0,y0），P1为（x1,y1），P2为（x2,y2）,P为（x,y）则有：</p>
-<pre tabindex="0"><code>NeX = (x1-x0)*cos90°+(y1-y0)*sin90°
+</code></pre><p>从本质上说，这样做的意义上移动坐标系，使得顶点P0位于原点位置。或者可以认为是以P0为原点。如下图所示。</p><p><img src=img/projection_2.png alt></p><p>在上面的式子中，向量E所代表的边有内侧和外测之分，将边向量旋转90°（顺时针或者逆时针旋转都可以），便可以构造出该边的法向量，而又因为点F一定是在边的正侧，所以点积Ne.F的符号就是边OE的任一内侧点的符号。因此，如果P点位于该边的内侧的话，那么就必须要满足：</p><pre tabindex=0><code>(Ne.F)(Ne.G)=(Ne.(P2-P0))(Ne.(P-P0))≥0
+</code></pre><p>对于任何的点，如果它都位于三角形的三条边的内侧，那么它就在三角形内。从上面的图可以看出，线段P2-P0和法线Ne的点积是大于0（观察其夹角便可知道，其夹角绝对值小于90°），那么线段P-P0和法线Ne的点积也应大于0，即Ne.(P-P0)>0。假定是投影到XY平面上，而Ne又等于P1-P0乘以一个绕Z轴90°的旋转矩阵。令Ne为（NeX,NeY），P0为（x0,y0），P1为（x1,y1），P2为（x2,y2）,P为（x,y）则有：</p><pre tabindex=0><code>NeX = (x1-x0)*cos90°+(y1-y0)*sin90°
 NeY = -(x1-x0)*sin90°+(y1-y0)*cos90°
-</code></pre><p>所以NeX=(y1-y0)，NeY=-(x1-x0),求P2在P0P1的那一侧，就求P0P2与法线的夹角值就可以了：当：</p>
-<pre tabindex="0"><code>Ne.(P2-P0)=NeX*(x2-x1)+NeY*(y2-y1)=(y1-y0)*(x2-x1)+(-(x1-x0)*(y2-y1))&gt;0
+</code></pre><p>所以NeX=(y1-y0)，NeY=-(x1-x0),求P2在P0P1的那一侧，就求P0P2与法线的夹角值就可以了：当：</p><pre tabindex=0><code>Ne.(P2-P0)=NeX*(x2-x1)+NeY*(y2-y1)=(y1-y0)*(x2-x1)+(-(x1-x0)*(y2-y1))&gt;0
 </code></pre><p>就表示p2是在边e的正侧。
-而Ne.(P2-P0)=NeX*(x2-x1)+NeY*(y2-y1)经过整理后，实质上就是下面行列式的值，如下：</p>
-<pre tabindex="0"><code>|x0 y0 1|
+而Ne.(P2-P0)=NeX*(x2-x1)+NeY*(y2-y1)经过整理后，实质上就是下面行列式的值，如下：</p><pre tabindex=0><code>|x0 y0 1|
 |x1 y1 1|
 |x2 y2 1|
-</code></pre><p>所以判断点P是否在边e的内侧，就是把上面行列式中点P2的分量代替为点P的分量，只需要计算行列式的值是否大于0便可。大于0，在e的正侧，小于0在e的负侧。下面接着的代码就是根据这个原理实现。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#75715e">//接上段代码，    checkEdgeIntersectsFace函数，tools3d.cpp
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">float</span> absa <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)fabs(p_Plane<span style="color:#f92672">-&gt;</span>a); 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> absb <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)fabs(p_Plane<span style="color:#f92672">-&gt;</span>b); 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> absc <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)fabs(p_Plane<span style="color:#f92672">-&gt;</span>c);
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> D3DXVECTOR2 
-</span></span><span style="display:flex;"><span>        face2D[MAX_VERTICES_FOR_EDGE_INTERSECT_CHECKING];
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    D3DXVECTOR2 point2D;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> i;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//下面的几个if-else判断式，就是根据法线的分量大小，把三角形投影到适当的平面上去。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> ((absa <span style="color:#f92672">&gt;=</span> absb) <span style="color:#f92672">&amp;&amp;</span> (absa <span style="color:#f92672">&gt;=</span> absc)) 
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> numVertices; i<span style="color:#f92672">++</span>)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            face2D[i].x <span style="color:#f92672">=</span> p_Face[i].y;
-</span></span><span style="display:flex;"><span>            face2D[i].y <span style="color:#f92672">=</span> p_Face[i].z;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        point2D.x <span style="color:#f92672">=</span> p_PointOnPlane<span style="color:#f92672">-&gt;</span>y;
-</span></span><span style="display:flex;"><span>        point2D.y <span style="color:#f92672">=</span> p_PointOnPlane<span style="color:#f92672">-&gt;</span>z;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> ((absb <span style="color:#f92672">&gt;=</span> absa) <span style="color:#f92672">&amp;&amp;</span> (absb <span style="color:#f92672">&gt;=</span> absc)) 
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> numVertices; i<span style="color:#f92672">++</span>)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            face2D[i].x <span style="color:#f92672">=</span> p_Face[i].x;
-</span></span><span style="display:flex;"><span>            face2D[i].y <span style="color:#f92672">=</span> p_Face[i].z;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        point2D.x <span style="color:#f92672">=</span> p_PointOnPlane<span style="color:#f92672">-&gt;</span>x;
-</span></span><span style="display:flex;"><span>        point2D.y <span style="color:#f92672">=</span> p_PointOnPlane<span style="color:#f92672">-&gt;</span>z;
-</span></span><span style="display:flex;"><span>    } 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> 
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> numVertices; i<span style="color:#f92672">++</span>)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            face2D[i].x <span style="color:#f92672">=</span> p_Face[i].x;
-</span></span><span style="display:flex;"><span>            face2D[i].y <span style="color:#f92672">=</span> p_Face[i].y;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        point2D.x <span style="color:#f92672">=</span> p_PointOnPlane<span style="color:#f92672">-&gt;</span>x;
-</span></span><span style="display:flex;"><span>        point2D.y <span style="color:#f92672">=</span> p_PointOnPlane<span style="color:#f92672">-&gt;</span>y;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//p0,p1是多边形的线段的两端点，p2是想要检查的点。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> val;
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//这里就是检查(Ne.F)(Ne.G)的结果值    
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    val<span style="color:#f92672">=</span>(face2D[<span style="color:#ae81ff">0</span>].x <span style="color:#f92672">*</span> face2D[<span style="color:#ae81ff">1</span>].y <span style="color:#f92672">+</span> face2D[<span style="color:#ae81ff">0</span>].y <span style="color:#f92672">*</span> point2D.x 
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">+</span> face2D[<span style="color:#ae81ff">1</span>].x <span style="color:#f92672">*</span> point2D.y  ) <span style="color:#f92672">-</span>(point2D.x <span style="color:#f92672">*</span> 
-</span></span><span style="display:flex;"><span>         face2D[<span style="color:#ae81ff">1</span>].y <span style="color:#f92672">+</span> point2D.y <span style="color:#f92672">*</span> face2D[<span style="color:#ae81ff">0</span>].x <span style="color:#f92672">+</span> 
-</span></span><span style="display:flex;"><span>         face2D[<span style="color:#ae81ff">1</span>].x <span style="color:#f92672">*</span> face2D[<span style="color:#ae81ff">0</span>].y);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> cc <span style="color:#f92672">=</span> val <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> cctemp;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (fabs(val) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.0001f</span>)
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">return</span> true; <span style="color:#75715e">//在边上
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//逐个边检查。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;</span> numVertices; i<span style="color:#f92672">++</span>)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>         val <span style="color:#f92672">=</span> (face2D[i].x <span style="color:#f92672">*</span> face2D[(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> numVertices].y 
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">+</span> face2D[i].y <span style="color:#f92672">*</span> point2D.x <span style="color:#f92672">+</span> face2D[(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> 
-</span></span><span style="display:flex;"><span>                numVertices].x <span style="color:#f92672">*</span> point2D.y) <span style="color:#f92672">-</span>
-</span></span><span style="display:flex;"><span>              (point2D.x <span style="color:#f92672">*</span> face2D[(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> numVertices].y <span style="color:#f92672">+</span> 
-</span></span><span style="display:flex;"><span>              point2D.y <span style="color:#f92672">*</span> face2D[i].x <span style="color:#f92672">+</span> face2D[(i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span>
-</span></span><span style="display:flex;"><span>              numVertices].x <span style="color:#f92672">*</span> face2D[i].y);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>           <span style="color:#66d9ef">if</span> (fabs(val) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.0001f</span>) <span style="color:#66d9ef">return</span> true; <span style="color:#75715e">//在边上
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>         cctemp <span style="color:#f92672">=</span> val <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">if</span> ((cctemp <span style="color:#f92672">!=</span> cc))
-</span></span><span style="display:flex;"><span>         {
-</span></span><span style="display:flex;"><span>             <span style="color:#66d9ef">return</span> false;
-</span></span><span style="display:flex;"><span>         }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> true; }
-</span></span></code></pre></div><h3 id="1034-分割三角形">10.3.4 分割三角形</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">splitTriangle</span>(D3DXPLANE<span style="color:#f92672">*</span> p_Plane, D3DXVECTOR3<span style="color:#f92672">*</span> p0, 
-</span></span><span style="display:flex;"><span>                           D3DXVECTOR3<span style="color:#f92672">*</span> p1, D3DXVECTOR3<span style="color:#f92672">*</span> p2, 
-</span></span><span style="display:flex;"><span>                           <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">short</span><span style="color:#f92672">*</span> positiveIndices, 
-</span></span><span style="display:flex;"><span>                           DWORD<span style="color:#f92672">*</span> p_NumPositiveIndices, 
-</span></span><span style="display:flex;"><span>                           <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">short</span><span style="color:#f92672">*</span> negativeIndices, 
-</span></span><span style="display:flex;"><span>                          DWORD<span style="color:#f92672">*</span> p_NumNegativeIndices)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//检查三角形的三个角顶点在分割平面的哪一则？正？负？面上？
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> sides[<span style="color:#ae81ff">3</span>];  <span style="color:#75715e">//存储顶点与分割平面的位置信息
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span> numzero <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, i;<span style="color:#75715e">//三角形角顶点在分割平面上的个数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    sides[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> whichSide(p0, p_Plane);
-</span></span><span style="display:flex;"><span>    sides[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> whichSide(p1, p_Plane);
-</span></span><span style="display:flex;"><span>    sides[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> whichSide(p2, p_Plane);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (sides[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) numzero<span style="color:#f92672">++</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (sides[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) numzero<span style="color:#f92672">++</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (sides[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) numzero<span style="color:#f92672">++</span>;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//如果没有角顶点在分割平面上
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (numzero <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) 
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//检查有多少个角顶点在分割平面的正侧
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> numPositive <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (sides[i] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>                numPositive<span style="color:#f92672">++</span>;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//根据角顶点在分割平面的正侧的个数，分四种情况考虑。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">//情况1：没有一个角顶点在分割平面上，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (numPositive <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) 
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>              <span style="color:#75715e">//没有一个角顶点在分割平面的正侧，那么所有的角顶点都在
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>              <span style="color:#75715e">//分割平面的负侧
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>              <span style="color:#75715e">//在分割平面的正侧的角顶点数为0
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>             <span style="color:#75715e">//在分割平面的负侧的角顶点数为3
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//记录下在分割平面负侧的角顶点编号
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            negativeIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span></code></pre></div><p><img src="/image/inside_dxf/split_triangle.png" alt=""></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>        <span style="color:#75715e">//有一个顶点在分割平面的正侧 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (numPositive <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 找到哪个角顶点在分割平面的正侧
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">int</span> index;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (sides[i] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>                    index <span style="color:#f92672">=</span> i;
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//原三角形在正侧部分被分割成1一个三角形，所以顶点数为3
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">//在负侧部分被分割成2个三角形，所以顶点数为6
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> index;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> index;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> index;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        }
-</span></span></code></pre></div><p><img src="/image/inside_dxf/split_triangle_2.png" alt=""></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (numPositive <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 1 point is on negative side
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// Find which one is it
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">int</span> index;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (sides[i] <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>                    index <span style="color:#f92672">=</span> i;
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Two triangles on positive side
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// One triangles on negative side
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> index;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> index;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> index;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (numPositive <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Alll points are on positive side
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>        } 
-</span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></div><p><img src="/image/inside_dxf/split_triangle_3.png" alt=""></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>     <span style="color:#75715e">//如果有一个角顶点在分割平面上
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (numzero <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//One point is on the plane
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">//Can either be 1. On one side of the plane 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">//                2. On two side of the plane
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">int</span> sum <span style="color:#f92672">=</span> sides[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> sides[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> sides[<span style="color:#ae81ff">2</span>];
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//-1+1+0=0，一个顶点在分割面正侧，另一个在负侧，一个在面上
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (sum <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//On two side of the plane
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">int</span> index;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// Find which one is on the plane
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>) {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (sides[i] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
-</span></span><span style="display:flex;"><span>                    index <span style="color:#f92672">=</span> i;
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//分别找到在正侧和在负测的顶点的索引
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> (sides[(index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Positive
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                positiveIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> index;
-</span></span><span style="display:flex;"><span>                positiveIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>                positiveIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                negativeIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>                negativeIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>                negativeIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> index;
-</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Negative
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                positiveIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>                positiveIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>                positiveIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> index;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                negativeIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> index;
-</span></span><span style="display:flex;"><span>                negativeIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>                negativeIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span> <span style="color:#f92672">+</span> (index <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">%</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        } 
-</span></span></code></pre></div><p><img src="/image/inside_dxf/split_triangle_4.png" alt=""></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//On one side of the plane
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>)    {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (sides[i] <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>                }
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (sides[i] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">//The triangle is on positive sides
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                positiveIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>                positiveIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>                positiveIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">//The triangle is on negative side
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                negativeIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>                negativeIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>                negativeIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span></code></pre></div><p><img src="/image/inside_dxf/split_triangle_5.png" alt=""></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (numzero <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//Two points are on the plane
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// See which one is not 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">3</span>; i<span style="color:#f92672">++</span>)    {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (sides[i] <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (sides[i] <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//The triangle is on positive side
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//The triangle is on negative side
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    } 
-</span></span></code></pre></div><p>最后一种情况，当被分割的三角形的三个角顶点都在分割平面上，就要检查三角形的法线和分割平面的法线是否同向。同向则表示三角形被分割成一个，在分割平面的正侧；反向则表示三角形也被分割成一个，在分割平面的负侧。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">else</span>     
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>        D3DXVECTOR3 v01, v02, normal;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//利用向量叉积的几何性质，根据三角形的两条边求此三角形的法线。要注意方向
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        v01 <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>p1) <span style="color:#f92672">-</span> (<span style="color:#f92672">*</span>p0);
-</span></span><span style="display:flex;"><span>        v02 <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>p2) <span style="color:#f92672">-</span> (<span style="color:#f92672">*</span>p0);
-</span></span><span style="display:flex;"><span>        D3DXVec3Cross(<span style="color:#f92672">&amp;</span>normal, <span style="color:#f92672">&amp;</span>v01, <span style="color:#f92672">&amp;</span>v02);
-</span></span><span style="display:flex;"><span>        D3DXVec3Normalize(<span style="color:#f92672">&amp;</span>normal, <span style="color:#f92672">&amp;</span>normal);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//用D3DX库函数计算到平面的的法线。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        D3DXPLANE plane <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>p_Plane;
-</span></span><span style="display:flex;"><span>        D3DXPlaneNormalize(<span style="color:#f92672">&amp;</span>plane, <span style="color:#f92672">&amp;</span>plane);
-</span></span><span style="display:flex;"><span>        D3DXVECTOR3 planeNormal <span style="color:#f92672">=</span>  D3DXVECTOR3(plane.a, plane.b, plane.c);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//观察两法线的差
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        D3DXVECTOR3 temp <span style="color:#f92672">=</span> planeNormal <span style="color:#f92672">-</span> normal;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">//如果两法线的差的模很小很小，接近于0，就可以认为这三角形的
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">//法线和分割平面的法线是同向。三角形被分在分割平面的正侧，否则
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">//就分在的负测
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> (D3DXVec3Length(<span style="color:#f92672">&amp;</span>temp) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0.01f</span>) {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 在正侧
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>            positiveIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 在负测
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#f92672">*</span>p_NumPositiveIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>            <span style="color:#f92672">*</span>p_NumNegativeIndices <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>            negativeIndices[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/dxframework/">DxFramework</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_9_1/">深度探索DxFramework 9-1</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_8_2/">深度探索DxFramework 8-2</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_8_1/">深度探索DxFramework 8-1</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_7_1/">深度探索DxFramework 7-1</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_6_1/">深度探索DxFramework 6-1</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+</code></pre><p>所以判断点P是否在边e的内侧，就是把上面行列式中点P2的分量代替为点P的分量，只需要计算行列式的值是否大于0便可。大于0，在e的正侧，小于0在e的负侧。下面接着的代码就是根据这个原理实现。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>    <span style=color:#57606a>//接上段代码，    checkEdgeIntersectsFace函数，tools3d.cpp
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> absa <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)</span>fabs<span style=color:#1f2328>(</span>p_Plane<span style=color:#0550ae>-&gt;</span>a<span style=color:#1f2328>);</span> 
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> absb <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)</span>fabs<span style=color:#1f2328>(</span>p_Plane<span style=color:#0550ae>-&gt;</span>b<span style=color:#1f2328>);</span> 
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> absc <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)</span>fabs<span style=color:#1f2328>(</span>p_Plane<span style=color:#0550ae>-&gt;</span>c<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>static</span> D3DXVECTOR2 
+</span></span><span style=display:flex><span>        face2D<span style=color:#1f2328>[</span>MAX_VERTICES_FOR_EDGE_INTERSECT_CHECKING<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    D3DXVECTOR2 point2D<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> i<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//下面的几个if-else判断式，就是根据法线的分量大小，把三角形投影到适当的平面上去。
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>((</span>absa <span style=color:#0550ae>&gt;=</span> absb<span style=color:#1f2328>)</span> <span style=color:#0550ae>&amp;&amp;</span> <span style=color:#1f2328>(</span>absa <span style=color:#0550ae>&gt;=</span> absc<span style=color:#1f2328>))</span> 
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> numVertices<span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            face2D<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>x <span style=color:#0550ae>=</span> p_Face<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            face2D<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>y <span style=color:#0550ae>=</span> p_Face<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>z<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        point2D<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> p_PointOnPlane<span style=color:#0550ae>-&gt;</span>y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        point2D<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> p_PointOnPlane<span style=color:#0550ae>-&gt;</span>z<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span> <span style=color:#6639ba>if</span> <span style=color:#1f2328>((</span>absb <span style=color:#0550ae>&gt;=</span> absa<span style=color:#1f2328>)</span> <span style=color:#0550ae>&amp;&amp;</span> <span style=color:#1f2328>(</span>absb <span style=color:#0550ae>&gt;=</span> absc<span style=color:#1f2328>))</span> 
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> numVertices<span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            face2D<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>x <span style=color:#0550ae>=</span> p_Face<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>x<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            face2D<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>y <span style=color:#0550ae>=</span> p_Face<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>z<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        point2D<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> p_PointOnPlane<span style=color:#0550ae>-&gt;</span>x<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        point2D<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> p_PointOnPlane<span style=color:#0550ae>-&gt;</span>z<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span> 
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span> 
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> numVertices<span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            face2D<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>x <span style=color:#0550ae>=</span> p_Face<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>x<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            face2D<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>y <span style=color:#0550ae>=</span> p_Face<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        point2D<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> p_PointOnPlane<span style=color:#0550ae>-&gt;</span>x<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        point2D<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> p_PointOnPlane<span style=color:#0550ae>-&gt;</span>y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//p0,p1是多边形的线段的两端点，p2是想要检查的点。
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> val<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//这里就是检查(Ne.F)(Ne.G)的结果值    
+</span></span></span><span style=display:flex><span>    val<span style=color:#0550ae>=</span><span style=color:#1f2328>(</span>face2D<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>].</span>x <span style=color:#0550ae>*</span> face2D<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>].</span>y <span style=color:#0550ae>+</span> face2D<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>].</span>y <span style=color:#0550ae>*</span> point2D<span style=color:#1f2328>.</span>x 
+</span></span><span style=display:flex><span>         <span style=color:#0550ae>+</span> face2D<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>].</span>x <span style=color:#0550ae>*</span> point2D<span style=color:#1f2328>.</span>y  <span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span><span style=color:#1f2328>(</span>point2D<span style=color:#1f2328>.</span>x <span style=color:#0550ae>*</span> 
+</span></span><span style=display:flex><span>         face2D<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>].</span>y <span style=color:#0550ae>+</span> point2D<span style=color:#1f2328>.</span>y <span style=color:#0550ae>*</span> face2D<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>].</span>x <span style=color:#0550ae>+</span> 
+</span></span><span style=display:flex><span>         face2D<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>].</span>x <span style=color:#0550ae>*</span> face2D<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>].</span>y<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>bool</span> cc <span style=color:#0550ae>=</span> val <span style=color:#0550ae>&gt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>bool</span> cctemp<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>fabs<span style=color:#1f2328>(</span>val<span style=color:#1f2328>)</span> <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>0.0001f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>     <span style=color:#cf222e>return</span> <span style=color:#6639ba>true</span><span style=color:#1f2328>;</span> <span style=color:#57606a>//在边上
+</span></span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//逐个边检查。
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> numVertices<span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>         val <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>face2D<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>x <span style=color:#0550ae>*</span> face2D<span style=color:#1f2328>[(</span>i <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> numVertices<span style=color:#1f2328>].</span>y 
+</span></span><span style=display:flex><span>                <span style=color:#0550ae>+</span> face2D<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>y <span style=color:#0550ae>*</span> point2D<span style=color:#1f2328>.</span>x <span style=color:#0550ae>+</span> face2D<span style=color:#1f2328>[(</span>i <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> 
+</span></span><span style=display:flex><span>                numVertices<span style=color:#1f2328>].</span>x <span style=color:#0550ae>*</span> point2D<span style=color:#1f2328>.</span>y<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span>
+</span></span><span style=display:flex><span>              <span style=color:#1f2328>(</span>point2D<span style=color:#1f2328>.</span>x <span style=color:#0550ae>*</span> face2D<span style=color:#1f2328>[(</span>i <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> numVertices<span style=color:#1f2328>].</span>y <span style=color:#0550ae>+</span> 
+</span></span><span style=display:flex><span>              point2D<span style=color:#1f2328>.</span>y <span style=color:#0550ae>*</span> face2D<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>x <span style=color:#0550ae>+</span> face2D<span style=color:#1f2328>[(</span>i <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span>
+</span></span><span style=display:flex><span>              numVertices<span style=color:#1f2328>].</span>x <span style=color:#0550ae>*</span> face2D<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>y<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>           <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>fabs<span style=color:#1f2328>(</span>val<span style=color:#1f2328>)</span> <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>0.0001f</span><span style=color:#1f2328>)</span> <span style=color:#cf222e>return</span> <span style=color:#6639ba>true</span><span style=color:#1f2328>;</span> <span style=color:#57606a>//在边上
+</span></span></span><span style=display:flex><span>         cctemp <span style=color:#0550ae>=</span> val <span style=color:#0550ae>&gt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>         <span style=color:#cf222e>if</span> <span style=color:#1f2328>((</span>cctemp <span style=color:#0550ae>!=</span> cc<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>         <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>             <span style=color:#cf222e>return</span> <span style=color:#6639ba>false</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>         <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> <span style=color:#6639ba>true</span><span style=color:#1f2328>;</span> <span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=1034-分割三角形>10.3.4 分割三角形</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>splitTriangle</span><span style=color:#1f2328>(</span>D3DXPLANE<span style=color:#0550ae>*</span> p_Plane<span style=color:#1f2328>,</span> D3DXVECTOR3<span style=color:#0550ae>*</span> p0<span style=color:#1f2328>,</span> 
+</span></span><span style=display:flex><span>                           D3DXVECTOR3<span style=color:#0550ae>*</span> p1<span style=color:#1f2328>,</span> D3DXVECTOR3<span style=color:#0550ae>*</span> p2<span style=color:#1f2328>,</span> 
+</span></span><span style=display:flex><span>                           <span style=color:#cf222e>unsigned</span> <span style=color:#cf222e>short</span><span style=color:#0550ae>*</span> positiveIndices<span style=color:#1f2328>,</span> 
+</span></span><span style=display:flex><span>                           DWORD<span style=color:#0550ae>*</span> p_NumPositiveIndices<span style=color:#1f2328>,</span> 
+</span></span><span style=display:flex><span>                           <span style=color:#cf222e>unsigned</span> <span style=color:#cf222e>short</span><span style=color:#0550ae>*</span> negativeIndices<span style=color:#1f2328>,</span> 
+</span></span><span style=display:flex><span>                          DWORD<span style=color:#0550ae>*</span> p_NumNegativeIndices<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//检查三角形的三个角顶点在分割平面的哪一则？正？负？面上？
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> sides<span style=color:#1f2328>[</span><span style=color:#0550ae>3</span><span style=color:#1f2328>];</span>  <span style=color:#57606a>//存储顶点与分割平面的位置信息
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> numzero <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> i<span style=color:#1f2328>;</span><span style=color:#57606a>//三角形角顶点在分割平面上的个数
+</span></span></span><span style=display:flex><span>    sides<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> whichSide<span style=color:#1f2328>(</span>p0<span style=color:#1f2328>,</span> p_Plane<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    sides<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> whichSide<span style=color:#1f2328>(</span>p1<span style=color:#1f2328>,</span> p_Plane<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    sides<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> whichSide<span style=color:#1f2328>(</span>p2<span style=color:#1f2328>,</span> p_Plane<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> numzero<span style=color:#0550ae>++</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> numzero<span style=color:#0550ae>++</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> numzero<span style=color:#0550ae>++</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//如果没有角顶点在分割平面上
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>numzero <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>//检查有多少个角顶点在分割平面的正侧
+</span></span></span><span style=display:flex><span>        <span style=color:#cf222e>int</span> numPositive <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                numPositive<span style=color:#0550ae>++</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>//根据角顶点在分割平面的正侧的个数，分四种情况考虑。
+</span></span></span><span style=display:flex><span>        <span style=color:#57606a>//情况1：没有一个角顶点在分割平面上，
+</span></span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>numPositive <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>              <span style=color:#57606a>//没有一个角顶点在分割平面的正侧，那么所有的角顶点都在
+</span></span></span><span style=display:flex><span>              <span style=color:#57606a>//分割平面的负侧
+</span></span></span><span style=display:flex><span>              <span style=color:#57606a>//在分割平面的正侧的角顶点数为0
+</span></span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>             <span style=color:#57606a>//在分割平面的负侧的角顶点数为3
+</span></span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>//记录下在分割平面负侧的角顶点编号
+</span></span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p><img src=/image/inside_dxf/split_triangle.png alt></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>        <span style=color:#57606a>//有一个顶点在分割平面的正侧 
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>else</span> <span style=color:#6639ba>if</span> <span style=color:#1f2328>(</span>numPositive <span style=color:#0550ae>==</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 找到哪个角顶点在分割平面的正侧
+</span></span></span><span style=display:flex><span>            <span style=color:#cf222e>int</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                    index <span style=color:#0550ae>=</span> i<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#57606a>//原三角形在正侧部分被分割成1一个三角形，所以顶点数为3
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>//在负侧部分被分割成2个三角形，所以顶点数为6
+</span></span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>6</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>3</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>4</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>5</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p><img src=/image/inside_dxf/split_triangle_2.png alt></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>  <span style=color:#cf222e>else</span> <span style=color:#6639ba>if</span> <span style=color:#1f2328>(</span>numPositive <span style=color:#0550ae>==</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 1 point is on negative side
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>// Find which one is it
+</span></span></span><span style=display:flex><span>            <span style=color:#cf222e>int</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>-</span><span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                    index <span style=color:#0550ae>=</span> i<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Two triangles on positive side
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>// One triangles on negative side
+</span></span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>6</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>3</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>4</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>5</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#6639ba>if</span> <span style=color:#1f2328>(</span>numPositive <span style=color:#0550ae>==</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Alll points are on positive side
+</span></span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span> 
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p><img src=/image/inside_dxf/split_triangle_3.png alt></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>     <span style=color:#57606a>//如果有一个角顶点在分割平面上
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>else</span> <span style=color:#6639ba>if</span> <span style=color:#1f2328>(</span>numzero <span style=color:#0550ae>==</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>//One point is on the plane
+</span></span></span><span style=display:flex><span>        <span style=color:#57606a>//Can either be 1. On one side of the plane 
+</span></span></span><span style=display:flex><span>        <span style=color:#57606a>//                2. On two side of the plane
+</span></span></span><span style=display:flex><span>        <span style=color:#cf222e>int</span> sum <span style=color:#0550ae>=</span> sides<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>+</span> sides<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>+</span> sides<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>//-1+1+0=0，一个顶点在分割面正侧，另一个在负侧，一个在面上
+</span></span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sum <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>//On two side of the plane
+</span></span></span><span style=display:flex><span>            <span style=color:#cf222e>int</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Find which one is on the plane
+</span></span></span><span style=display:flex><span>            <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                    index <span style=color:#0550ae>=</span> i<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                    <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#57606a>//分别找到在正侧和在负测的顶点的索引
+</span></span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Positive
+</span></span></span><span style=display:flex><span>                <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Negative
+</span></span></span><span style=display:flex><span>                <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> index<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span> <span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span>index <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>%</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span> 
+</span></span></code></pre></div><p><img src=/image/inside_dxf/split_triangle_4.png alt></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>else</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>//On one side of the plane
+</span></span></span><span style=display:flex><span>            <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>!=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                    <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#57606a>//The triangle is on positive sides
+</span></span></span><span style=display:flex><span>                <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#57606a>//The triangle is on negative side
+</span></span></span><span style=display:flex><span>                <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p><img src=/image/inside_dxf/split_triangle_5.png alt></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>else</span> <span style=color:#6639ba>if</span> <span style=color:#1f2328>(</span>numzero <span style=color:#0550ae>==</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>//Two points are on the plane
+</span></span></span><span style=display:flex><span>        <span style=color:#57606a>// See which one is not 
+</span></span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>!=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>sides<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>//The triangle is on positive side
+</span></span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>//The triangle is on negative side
+</span></span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span> 
+</span></span></code></pre></div><p>最后一种情况，当被分割的三角形的三个角顶点都在分割平面上，就要检查三角形的法线和分割平面的法线是否同向。同向则表示三角形被分割成一个，在分割平面的正侧；反向则表示三角形也被分割成一个，在分割平面的负侧。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>else</span>     
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        D3DXVECTOR3 v01<span style=color:#1f2328>,</span> v02<span style=color:#1f2328>,</span> normal<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>//利用向量叉积的几何性质，根据三角形的两条边求此三角形的法线。要注意方向
+</span></span></span><span style=display:flex><span>        v01 <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>*</span>p1<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>*</span>p0<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        v02 <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>*</span>p2<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>*</span>p0<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        D3DXVec3Cross<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>normal<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>v01<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>v02<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        D3DXVec3Normalize<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>normal<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>normal<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>//用D3DX库函数计算到平面的的法线。
+</span></span></span><span style=display:flex><span>        D3DXPLANE plane <span style=color:#0550ae>=</span> <span style=color:#0550ae>*</span>p_Plane<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        D3DXPlaneNormalize<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>plane<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>plane<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        D3DXVECTOR3 planeNormal <span style=color:#0550ae>=</span>  D3DXVECTOR3<span style=color:#1f2328>(</span>plane<span style=color:#1f2328>.</span>a<span style=color:#1f2328>,</span> plane<span style=color:#1f2328>.</span>b<span style=color:#1f2328>,</span> plane<span style=color:#1f2328>.</span>c<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>//观察两法线的差
+</span></span></span><span style=display:flex><span>        D3DXVECTOR3 temp <span style=color:#0550ae>=</span> planeNormal <span style=color:#0550ae>-</span> normal<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>//如果两法线的差的模很小很小，接近于0，就可以认为这三角形的
+</span></span></span><span style=display:flex><span>        <span style=color:#57606a>//法线和分割平面的法线是同向。三角形被分在分割平面的正侧，否则
+</span></span></span><span style=display:flex><span>        <span style=color:#57606a>//就分在的负测
+</span></span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>D3DXVec3Length<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>temp<span style=color:#1f2328>)</span> <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>0.01f</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 在正侧
+</span></span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            positiveIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 在负测
+</span></span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumPositiveIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#0550ae>*</span>p_NumNegativeIndices <span style=color:#0550ae>=</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            negativeIndices<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/dxframework/>DxFramework</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_9_1/>深度探索DxFramework 9-1</a></li><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_8_2/>深度探索DxFramework 8-2</a></li><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_8_1/>深度探索DxFramework 8-1</a></li><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_7_1/>深度探索DxFramework 7-1</a></li><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_6_1/>深度探索DxFramework 6-1</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

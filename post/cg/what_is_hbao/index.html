@@ -1,365 +1,61 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>HBAO | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="UV density">
-		<meta property="og:title" content="HBAO" />
-<meta property="og:description" content="UV density" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/cg/what_is_hbao/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2024-12-08T14:59:52+08:00" />
-<meta property="article:modified_time" content="2024-12-08T14:59:52+08:00" />
-
-
-		<meta itemprop="name" content="HBAO">
-<meta itemprop="description" content="UV density"><meta itemprop="datePublished" content="2024-12-08T14:59:52+08:00" />
-<meta itemprop="dateModified" content="2024-12-08T14:59:52+08:00" />
-<meta itemprop="wordCount" content="204">
-<meta itemprop="keywords" content="CG," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">HBAO</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2024-12-08T14:59:52&#43;08:00">December 08, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">HBAO</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-环境光遮蔽ao简介"><strong>1. 环境光遮蔽（AO）简介</strong></a></li>
-    <li><a href="#2-hbao-的工作原理"><strong>2. HBAO 的工作原理</strong></a>
-      <ul>
-        <li><a href="#21-采样周围几何体"><strong>2.1 采样周围几何体</strong></a></li>
-        <li><a href="#22-计算水平角"><strong>2.2 计算水平角</strong></a></li>
-        <li><a href="#23-计算遮蔽强度"><strong>2.3 计算遮蔽强度</strong></a></li>
-        <li><a href="#24-应用遮蔽效果"><strong>2.4 应用遮蔽效果</strong></a></li>
-      </ul>
-    </li>
-    <li><a href="#3-hbao-的优势"><strong>3. HBAO 的优势</strong></a></li>
-    <li><a href="#4-hbao-的局限性"><strong>4. HBAO 的局限性</strong></a></li>
-    <li><a href="#5-hbao-的应用场景"><strong>5. HBAO 的应用场景</strong></a></li>
-    <li><a href="#6-在-unity-中使用-hbao"><strong>6. 在 Unity 中使用 HBAO</strong></a>
-      <ul>
-        <li><a href="#61-使用插件"><strong>6.1 使用插件</strong></a></li>
-        <li><a href="#62-自定义-shader"><strong>6.2 自定义 Shader</strong></a></li>
-      </ul>
-    </li>
-    <li><a href="#7-总结"><strong>7. 总结</strong></a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<p><strong>HBAO（Horizon-Based Ambient Occlusion，基于水平的环境光遮蔽）</strong> 是一种用于实时渲染的环境光遮蔽（Ambient Occlusion, AO）技术。它的目的是模拟物体表面因周围几何体的遮挡而产生的阴影效果，从而增强场景的深度感和真实感。</p>
-<hr>
-<h2 id="1-环境光遮蔽ao简介"><strong>1. 环境光遮蔽（AO）简介</strong></h2>
-<p>环境光遮蔽是一种全局光照技术，用于模拟物体表面因周围几何体的遮挡而产生的阴影效果。它可以增强场景的深度感和真实感，尤其是在角落、缝隙和物体接触处。</p>
-<p>常见的 AO 技术包括：</p>
-<ul>
-<li><strong>SSAO（Screen Space Ambient Occlusion，屏幕空间环境光遮蔽）</strong>：基于屏幕空间信息计算 AO。</li>
-<li><strong>HBAO（Horizon-Based Ambient Occlusion，基于水平的环境光遮蔽）</strong>：改进的 AO 技术，基于水平角计算遮蔽。</li>
-<li><strong>GTAO（Ground Truth Ambient Occlusion，真实环境光遮蔽）</strong>：更精确的 AO 技术，基于物理模拟。</li>
-</ul>
-<hr>
-<h2 id="2-hbao-的工作原理"><strong>2. HBAO 的工作原理</strong></h2>
-<p>HBAO 的核心思想是通过计算每个像素周围几何体的水平角（Horizon Angle）来确定遮蔽程度。具体步骤如下：</p>
-<h3 id="21-采样周围几何体"><strong>2.1 采样周围几何体</strong></h3>
-<ul>
-<li>对于每个像素，在其法线方向的半球范围内采样周围的几何体。</li>
-<li>采样点的深度值用于计算遮蔽。</li>
-</ul>
-<h3 id="22-计算水平角"><strong>2.2 计算水平角</strong></h3>
-<ul>
-<li>对于每个采样方向，计算几何体的水平角（Horizon Angle）。</li>
-<li>水平角表示几何体在某个方向上的最大遮挡角度。</li>
-</ul>
-<h3 id="23-计算遮蔽强度"><strong>2.3 计算遮蔽强度</strong></h3>
-<ul>
-<li>根据水平角和采样方向，计算当前像素的遮蔽强度。</li>
-<li>遮蔽强度越大，表示该像素被周围几何体遮挡得越多。</li>
-</ul>
-<h3 id="24-应用遮蔽效果"><strong>2.4 应用遮蔽效果</strong></h3>
-<ul>
-<li>将计算出的遮蔽强度应用到像素的颜色值上，生成 AO 效果。</li>
-</ul>
-<hr>
-<h2 id="3-hbao-的优势"><strong>3. HBAO 的优势</strong></h2>
-<ol>
-<li>
-<p><strong>高质量 AO 效果</strong>：</p>
-<ul>
-<li>HBAO 能够生成更真实、更平滑的 AO 效果，尤其是在复杂几何体周围。</li>
-</ul>
-</li>
-<li>
-<p><strong>性能优化</strong>：</p>
-<ul>
-<li>相比传统的 SSAO，HBAO 通过优化采样和计算方式，减少了性能开销。</li>
-</ul>
-</li>
-<li>
-<p><strong>可配置性强</strong>：</p>
-<ul>
-<li>HBAO 提供了多种参数（如采样半径、遮蔽强度等），可以根据需求调整 AO 效果。</li>
-</ul>
-</li>
-<li>
-<p><strong>兼容性</strong>：</p>
-<ul>
-<li>HBAO 支持多种平台（如 PC、主机），并且可以与其他渲染技术（如 HDR、PBR）结合使用。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="4-hbao-的局限性"><strong>4. HBAO 的局限性</strong></h2>
-<ol>
-<li>
-<p><strong>性能开销</strong>：</p>
-<ul>
-<li>虽然 HBAO 比 SSAO 更高效，但在高分辨率或复杂场景中仍可能产生较大的性能开销。</li>
-</ul>
-</li>
-<li>
-<p><strong>屏幕空间限制</strong>：</p>
-<ul>
-<li>与 SSAO 类似，HBAO 依赖于屏幕空间信息，因此无法处理屏幕外的几何体。</li>
-</ul>
-</li>
-<li>
-<p><strong>参数调整复杂</strong>：</p>
-<ul>
-<li>HBAO 的效果依赖于参数设置，不合理的参数可能导致 AO 效果不理想。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="5-hbao-的应用场景"><strong>5. HBAO 的应用场景</strong></h2>
-<p>HBAO 广泛应用于实时渲染中，尤其是在需要高质量 AO 效果的场景中，例如：</p>
-<ul>
-<li><strong>游戏</strong>：增强场景的深度感和真实感。</li>
-<li><strong>虚拟现实（VR）</strong>：提高沉浸感。</li>
-<li><strong>建筑可视化</strong>：增强细节表现。</li>
-</ul>
-<hr>
-<h2 id="6-在-unity-中使用-hbao"><strong>6. 在 Unity 中使用 HBAO</strong></h2>
-<p>Unity 支持通过插件或自定义 Shader 实现 HBAO。以下是基本步骤：</p>
-<h3 id="61-使用插件"><strong>6.1 使用插件</strong></h3>
-<ul>
-<li><strong>NVIDIA HBAO+</strong>：NVIDIA 提供了 HBAO+ 插件，支持 Unity 集成。
-<ul>
-<li>下载并导入 HBAO+ 插件。</li>
-<li>在摄像机或后处理效果中启用 HBAO+。</li>
-</ul>
-</li>
-</ul>
-<h3 id="62-自定义-shader"><strong>6.2 自定义 Shader</strong></h3>
-<ul>
-<li>编写自定义 Shader 实现 HBAO。</li>
-<li>在 Shader 中实现采样、水平角计算和遮蔽强度计算。</li>
-</ul>
-<h4 id="示例代码伪代码">示例代码（伪代码）：</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#66d9ef">float</span> ComputeHBAO(<span style="color:#66d9ef">float3</span> position, <span style="color:#66d9ef">float3</span> normal)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> occlusion <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> numSamples; i<span style="color:#f92672">++</span>)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float3</span> sampleDir <span style="color:#f92672">=</span> GetSampleDirection(i);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float</span> horizonAngle <span style="color:#f92672">=</span> ComputeHorizonAngle(position, sampleDir);
-</span></span><span style="display:flex;"><span>        occlusion <span style="color:#f92672">+=</span> ComputeOcclusion(horizonAngle, normal, sampleDir);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> occlusion <span style="color:#f92672">/</span> numSamples;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
-<h2 id="7-总结"><strong>7. 总结</strong></h2>
-<ul>
-<li><strong>HBAO</strong> 是一种基于水平角的环境光遮蔽技术，能够生成高质量、真实的 AO 效果。</li>
-<li>它通过采样周围几何体并计算水平角来确定遮蔽强度，适用于实时渲染场景。</li>
-<li>在 Unity 中，可以通过插件（如 NVIDIA HBAO+）或自定义 Shader 实现 HBAO。</li>
-<li>HBAO 广泛应用于游戏、虚拟现实和建筑可视化等领域，能够显著提升场景的真实感和深度感。</li>
-</ul>
-<p>如果你需要在 Unity 中实现高质量的 AO 效果，HBAO 是一个值得考虑的选择。</p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/cg/">CG</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/what_is_uv_density/">什么是UV density</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/how_to_use_hlsl_include_with_pragmas/">HLSL语言的编译指令#include_with_pragmas的具体用法</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/octahedron_mapping/">八面体（Octahedron）及其坐标映射</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/hlsl_float_to_int/">在HLSL中对浮点数和整数之间进行转换</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/how_to_set_camera_for_isometric/">3转2时如何设置摄像机角度以实现isometric渲染效果</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>HBAO | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="UV density"><meta property="og:url" content="http://www.xionggf.com/post/cg/what_is_hbao/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="HBAO"><meta property="og:description" content="UV density"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2024-12-08T14:59:52+08:00"><meta property="article:modified_time" content="2024-12-08T14:59:52+08:00"><meta property="article:tag" content="CG"><meta itemprop=name content="HBAO"><meta itemprop=description content="UV density"><meta itemprop=datePublished content="2024-12-08T14:59:52+08:00"><meta itemprop=dateModified content="2024-12-08T14:59:52+08:00"><meta itemprop=wordCount content="204"><meta itemprop=keywords content="CG"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>HBAO</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2024-12-08T14:59:52+08:00>December 08, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/cg/ rel=category>CG</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/cg/ rel=tag>CG</a></span></div></div><h1 class=entry__title>HBAO</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#1-环境光遮蔽ao简介><strong>1. 环境光遮蔽（AO）简介</strong></a></li><li><a href=#2-hbao-的工作原理><strong>2. HBAO 的工作原理</strong></a><ul><li><a href=#21-采样周围几何体><strong>2.1 采样周围几何体</strong></a></li><li><a href=#22-计算水平角><strong>2.2 计算水平角</strong></a></li><li><a href=#23-计算遮蔽强度><strong>2.3 计算遮蔽强度</strong></a></li><li><a href=#24-应用遮蔽效果><strong>2.4 应用遮蔽效果</strong></a></li></ul></li><li><a href=#3-hbao-的优势><strong>3. HBAO 的优势</strong></a></li><li><a href=#4-hbao-的局限性><strong>4. HBAO 的局限性</strong></a></li><li><a href=#5-hbao-的应用场景><strong>5. HBAO 的应用场景</strong></a></li><li><a href=#6-在-unity-中使用-hbao><strong>6. 在 Unity 中使用 HBAO</strong></a><ul><li><a href=#61-使用插件><strong>6.1 使用插件</strong></a></li><li><a href=#62-自定义-shader><strong>6.2 自定义 Shader</strong></a></li></ul></li><li><a href=#7-总结><strong>7. 总结</strong></a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><strong>HBAO（Horizon-Based Ambient Occlusion，基于水平的环境光遮蔽）</strong> 是一种用于实时渲染的环境光遮蔽（Ambient Occlusion, AO）技术。它的目的是模拟物体表面因周围几何体的遮挡而产生的阴影效果，从而增强场景的深度感和真实感。</p><hr><h2 id=1-环境光遮蔽ao简介><strong>1. 环境光遮蔽（AO）简介</strong></h2><p>环境光遮蔽是一种全局光照技术，用于模拟物体表面因周围几何体的遮挡而产生的阴影效果。它可以增强场景的深度感和真实感，尤其是在角落、缝隙和物体接触处。</p><p>常见的 AO 技术包括：</p><ul><li><strong>SSAO（Screen Space Ambient Occlusion，屏幕空间环境光遮蔽）</strong>：基于屏幕空间信息计算 AO。</li><li><strong>HBAO（Horizon-Based Ambient Occlusion，基于水平的环境光遮蔽）</strong>：改进的 AO 技术，基于水平角计算遮蔽。</li><li><strong>GTAO（Ground Truth Ambient Occlusion，真实环境光遮蔽）</strong>：更精确的 AO 技术，基于物理模拟。</li></ul><hr><h2 id=2-hbao-的工作原理><strong>2. HBAO 的工作原理</strong></h2><p>HBAO 的核心思想是通过计算每个像素周围几何体的水平角（Horizon Angle）来确定遮蔽程度。具体步骤如下：</p><h3 id=21-采样周围几何体><strong>2.1 采样周围几何体</strong></h3><ul><li>对于每个像素，在其法线方向的半球范围内采样周围的几何体。</li><li>采样点的深度值用于计算遮蔽。</li></ul><h3 id=22-计算水平角><strong>2.2 计算水平角</strong></h3><ul><li>对于每个采样方向，计算几何体的水平角（Horizon Angle）。</li><li>水平角表示几何体在某个方向上的最大遮挡角度。</li></ul><h3 id=23-计算遮蔽强度><strong>2.3 计算遮蔽强度</strong></h3><ul><li>根据水平角和采样方向，计算当前像素的遮蔽强度。</li><li>遮蔽强度越大，表示该像素被周围几何体遮挡得越多。</li></ul><h3 id=24-应用遮蔽效果><strong>2.4 应用遮蔽效果</strong></h3><ul><li>将计算出的遮蔽强度应用到像素的颜色值上，生成 AO 效果。</li></ul><hr><h2 id=3-hbao-的优势><strong>3. HBAO 的优势</strong></h2><ol><li><p><strong>高质量 AO 效果</strong>：</p><ul><li>HBAO 能够生成更真实、更平滑的 AO 效果，尤其是在复杂几何体周围。</li></ul></li><li><p><strong>性能优化</strong>：</p><ul><li>相比传统的 SSAO，HBAO 通过优化采样和计算方式，减少了性能开销。</li></ul></li><li><p><strong>可配置性强</strong>：</p><ul><li>HBAO 提供了多种参数（如采样半径、遮蔽强度等），可以根据需求调整 AO 效果。</li></ul></li><li><p><strong>兼容性</strong>：</p><ul><li>HBAO 支持多种平台（如 PC、主机），并且可以与其他渲染技术（如 HDR、PBR）结合使用。</li></ul></li></ol><hr><h2 id=4-hbao-的局限性><strong>4. HBAO 的局限性</strong></h2><ol><li><p><strong>性能开销</strong>：</p><ul><li>虽然 HBAO 比 SSAO 更高效，但在高分辨率或复杂场景中仍可能产生较大的性能开销。</li></ul></li><li><p><strong>屏幕空间限制</strong>：</p><ul><li>与 SSAO 类似，HBAO 依赖于屏幕空间信息，因此无法处理屏幕外的几何体。</li></ul></li><li><p><strong>参数调整复杂</strong>：</p><ul><li>HBAO 的效果依赖于参数设置，不合理的参数可能导致 AO 效果不理想。</li></ul></li></ol><hr><h2 id=5-hbao-的应用场景><strong>5. HBAO 的应用场景</strong></h2><p>HBAO 广泛应用于实时渲染中，尤其是在需要高质量 AO 效果的场景中，例如：</p><ul><li><strong>游戏</strong>：增强场景的深度感和真实感。</li><li><strong>虚拟现实（VR）</strong>：提高沉浸感。</li><li><strong>建筑可视化</strong>：增强细节表现。</li></ul><hr><h2 id=6-在-unity-中使用-hbao><strong>6. 在 Unity 中使用 HBAO</strong></h2><p>Unity 支持通过插件或自定义 Shader 实现 HBAO。以下是基本步骤：</p><h3 id=61-使用插件><strong>6.1 使用插件</strong></h3><ul><li><strong>NVIDIA HBAO+</strong>：NVIDIA 提供了 HBAO+ 插件，支持 Unity 集成。<ul><li>下载并导入 HBAO+ 插件。</li><li>在摄像机或后处理效果中启用 HBAO+。</li></ul></li></ul><h3 id=62-自定义-shader><strong>6.2 自定义 Shader</strong></h3><ul><li>编写自定义 Shader 实现 HBAO。</li><li>在 Shader 中实现采样、水平角计算和遮蔽强度计算。</li></ul><h4 id=示例代码伪代码>示例代码（伪代码）：</h4><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>float</span> ComputeHBAO<span style=color:#1f2328>(</span><span style=color:#cf222e>float3</span> position<span style=color:#1f2328>,</span> <span style=color:#cf222e>float3</span> normal<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> occlusion <span style=color:#0550ae>=</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> numSamples<span style=color:#1f2328>;</span> i<span style=color:#0550ae>++</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float3</span> sampleDir <span style=color:#0550ae>=</span> GetSampleDirection<span style=color:#1f2328>(</span>i<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> horizonAngle <span style=color:#0550ae>=</span> ComputeHorizonAngle<span style=color:#1f2328>(</span>position<span style=color:#1f2328>,</span> sampleDir<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        occlusion <span style=color:#0550ae>+=</span> ComputeOcclusion<span style=color:#1f2328>(</span>horizonAngle<span style=color:#1f2328>,</span> normal<span style=color:#1f2328>,</span> sampleDir<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> occlusion <span style=color:#0550ae>/</span> numSamples<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><hr><h2 id=7-总结><strong>7. 总结</strong></h2><ul><li><strong>HBAO</strong> 是一种基于水平角的环境光遮蔽技术，能够生成高质量、真实的 AO 效果。</li><li>它通过采样周围几何体并计算水平角来确定遮蔽强度，适用于实时渲染场景。</li><li>在 Unity 中，可以通过插件（如 NVIDIA HBAO+）或自定义 Shader 实现 HBAO。</li><li>HBAO 广泛应用于游戏、虚拟现实和建筑可视化等领域，能够显著提升场景的真实感和深度感。</li></ul><p>如果你需要在 Unity 中实现高质量的 AO 效果，HBAO 是一个值得考虑的选择。</p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/cg/>CG</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/cg/what_is_uv_density/>什么是UV density</a></li><li class=related__item><a class=related__link href=/post/cg/how_to_use_hlsl_include_with_pragmas/>HLSL语言的编译指令#include_with_pragmas的具体用法</a></li><li class=related__item><a class=related__link href=/post/cg/octahedron_mapping/>八面体（Octahedron）及其坐标映射</a></li><li class=related__item><a class=related__link href=/post/cg/hlsl_float_to_int/>在HLSL中对浮点数和整数之间进行转换</a></li><li class=related__item><a class=related__link href=/post/cg/how_to_set_camera_for_isometric/>3转2时如何设置摄像机角度以实现isometric渲染效果</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

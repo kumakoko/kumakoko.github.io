@@ -1,370 +1,53 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Unity3D出iOS的包操作指南 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Unity3D出iOS的包操作指南">
-		<meta property="og:title" content="Unity3D出iOS的包操作指南" />
-<meta property="og:description" content="Unity3D出iOS的包操作指南" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/mac_ios/u3d_ios_build_pack/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2019-12-31T11:52:43+08:00" />
-<meta property="article:modified_time" content="2019-12-31T11:52:43+08:00" />
-
-
-		<meta itemprop="name" content="Unity3D出iOS的包操作指南">
-<meta itemprop="description" content="Unity3D出iOS的包操作指南"><meta itemprop="datePublished" content="2019-12-31T11:52:43+08:00" />
-<meta itemprop="dateModified" content="2019-12-31T11:52:43+08:00" />
-<meta itemprop="wordCount" content="208">
-<meta itemprop="keywords" content="iOS," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity3D出iOS的包操作指南</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2019-12-31T11:52:43&#43;08:00">December 31, 2019</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/ios/" rel="category">iOS</a>, 
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/ios/" rel="tag">iOS</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">Unity3D出iOS的包操作指南</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-切换平台到ios下">1 切换平台到iOS下</a></li>
-    <li><a href="#2-配置unity项目playersetting">2 配置Unity项目PlayerSetting</a></li>
-    <li><a href="#3-构建开发版的包">3 构建开发版的包</a></li>
-    <li><a href="#4-构建ios应用的各种证书及申请管理方式">4 构建iOS应用的各种证书及申请管理方式</a></li>
-    <li><a href="#5-申请应用的app-id">5 申请应用的App ID</a></li>
-    <li><a href="#参考网页">参考网页</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h2 id="1-切换平台到ios下">1 切换平台到iOS下</h2>
-<p>打开 <strong>【Unity|File|Build Setting】</strong> 菜单,选择iOS平台，然后点击左下角的 <strong>Switch Platform</strong> 切换到iOS平台，右边选择 <strong>Release</strong>。确保项目能在iOS平台上正确运行了再下一步打包。</p>
-<h2 id="2-配置unity项目playersetting">2 配置Unity项目PlayerSetting</h2>
-<p>界面上各个选项如下表所示：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">选项</th>
-<th style="text-align:left">细节</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Company Name</td>
-<td style="text-align:left">公司名，与下面的Bundle Identifier对应</td>
-</tr>
-<tr>
-<td style="text-align:left">Product Name</td>
-<td style="text-align:left">项目名，也是与下面的Bundle Identifier对应</td>
-</tr>
-<tr>
-<td style="text-align:left">Bundle Identifier</td>
-<td style="text-align:left">com.CompanyName.ProductName,这个在打包成xCode工程之后，需要和在苹果开发者网站上的app IDs一致，不然会报错：项目Identifier与开发者账号申请的证书的Identifier不同。</td>
-</tr>
-<tr>
-<td style="text-align:left">Scripting Backend</td>
-<td style="text-align:left">选择IL2CPP，支持64位。</td>
-</tr>
-<tr>
-<td style="text-align:left">Api Compatibility Level</td>
-<td style="text-align:left">如果项目中使用到了文件的操作，要选择“.NET 2.0”</td>
-</tr>
-<tr>
-<td style="text-align:left">Target Device</td>
-<td style="text-align:left">项目要运行的平台，有哪个就选哪个，不过到时候审核的时候也是要iPhone和iPad分开审核。</td>
-</tr>
-<tr>
-<td style="text-align:left">Target SDK</td>
-<td style="text-align:left">这个选择DeviceSDK，选用设备的SDK就行了。</td>
-</tr>
-<tr>
-<td style="text-align:left">Target minimum iOS Version</td>
-<td style="text-align:left">限制最低可运行iOS版本，这个在xCode中也可以更细致调整。</td>
-</tr>
-</tbody>
-</table>
-<p>PlayerSetting界面如下图所示：</p>
-<p><img src="/image/u3d_build_ios_pack/config01.png" alt=""> <img src="/image/u3d_build_ios_pack/config02.png" alt=""></p>
-<p>到这里，就可以打包了，点击 <strong>【File|Build And Run】</strong> 菜单，会弹出要保存的项目文件地址，Unity3D会把工程导出成一个可以给xcode使用的工程。</p>
-<h2 id="3-构建开发版的包">3 构建开发版的包</h2>
-<p>首先在xcode的 <strong>Account</strong> 里面添加苹果开发者账号。从 <strong>xcode 7</strong> 开始,在开发阶段，如果只需要进行真机调试而不要求发布到AppStore上的话，可以使用一个普通的苹果用户ID作为真机调试账号。方法如下：</p>
-<p>第1步：首先点击菜单 <strong>【Xcode|Preferences&hellip;】</strong> ,</p>
-<p><img src="/image/u3d_build_ios_pack/add_account_01.png" alt=""></p>
-<p>第2步：然后点击 <strong>【Accounts】</strong> 切换到如图所示界面，然后点击左下角的 <strong>“+”</strong> 号，会弹出一个填写对话框，在此对话框中添加你的苹果用户ID，密码等等，信息，最后点击 <strong>【Sign in】</strong> 按钮</p>
-<p><img src="/image/u3d_build_ios_pack/add_account_02.png" alt=""></p>
-<p>第3步：添加账户成功后，在图3.1中左边的 <strong>【Apple IDs】】</strong> 列表选项，选中填写的账户时，在图3.1中右边的区域，将会出现这个账户的详细信息。付费开发者账户显示的是 <strong>【&ldquo;Agent&rdquo;】</strong> （Xcode 7 、8 都是），未交费显示的是 <strong>【“Free”】</strong> （Xcode 7，Xcode 8 显示&quot;User&quot;或别的），如图1.3.3所示。双击 <strong>【Pesonal Team】】</strong> 后进入下一个界面。</p>
-<p><img src="/image/u3d_build_ios_pack/add_account_03.png" alt=""></p>
-<p>第4步：点击图3.4中的箭头所指的 <strong>【Create】</strong> 按钮，创建iOS Development，创建成功后会在下半部分的 <strong>【Provisioning Profiles】</strong> 添加上生成的profiles，最后点击 <strong>【Done】</strong> 按钮；</p>
-<p><img src="/image/u3d_build_ios_pack/add_account_04.png" alt=""></p>
-<p>第5步：接下来就在工程中使用这些生成的profile。如图3.5所示，选中工程的project文件，定位到 <strong>【TARGETS-&gt; General-&gt;Signing-&gt;team】</strong> 编辑框，Identity在打开Unity导出的项目时已经有默认生成。要改的是就是里面的Team，选择刚刚在Account里面添加的苹果账号，勾选上面的 <strong>【Create】Automatically manage signing</strong> ，XCode8以上支持自动配置，根据iPhone和iPad不同，可分别设置。</p>
-<p><img src="/image/u3d_build_ios_pack/add_account_05_1.png" alt=""> <img src="/image/u3d_build_ios_pack/add_account_05_2.png" alt=""></p>
-<p>第6步：接下来可以连接真机进行打包并调试了，连上电脑和ios设备之后，将Generic iOS Device换到你的测试设备，然后点击运行按钮即可。如图3.6所示。等待打包，期间手机屏幕不要锁上，不然会卡在最后。如果是该设备是第一次真机测试的话，会弹出如下证书和开发者未被信任的对话框。</p>
-<p><img src="/image/u3d_build_ios_pack/add_account_06_1.png" alt=""> <img src="/image/u3d_build_ios_pack/add_account_06_2.png" alt=""></p>
-<p>解决方式是：在中点击 <strong>设置(Settings)</strong> &mdash;&gt; <strong>通用（General）</strong> &mdash;&gt; <strong>设备管理（Device Management）</strong> &mdash;&gt;  **点击对应的apple id ** &mdash;&gt; <strong>信任（Trust）</strong></p>
-<h2 id="4-构建ios应用的各种证书及申请管理方式">4 构建iOS应用的各种证书及申请管理方式</h2>
-<p>构建iOS应用需要用到以下的一些证书，其分类如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">证书类型</th>
-<th style="text-align:left">证书描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">开发者证书</td>
-<td style="text-align:left">（分为 <strong>开发(iOS development)</strong> 和 <strong>发布(iOS Distribution)</strong> 两种，这个是最基础的，不论是真机调试，还是上传到appstore都是需要的，是一个基证书，用来证明自己开发者身份</td>
-</tr>
-<tr>
-<td style="text-align:center">AppID</td>
-<td style="text-align:left">这是每一个应用的独立标识，在设置项中可以配置该应用的权限，比如是否用到了 <strong>PassBook</strong> , <strong>GameCenter</strong> ,以及更常见的push服务，如果选中了推送服务，那么就可以创建 <strong>推送证书</strong> ，所以，在所有和推送相关的配置中，首先要做的就是先开通支持推送服务的AppID</td>
-</tr>
-<tr>
-<td style="text-align:center">推送证书</td>
-<td style="text-align:left">（也分为开发 <strong>（APNs Development ios）</strong> 和 <strong>发布（APNs Distribution ios）</strong> 两种，该证书在AppID配置中创建生成，和开发者证书一样，安装到开发电脑上</td>
-</tr>
-<tr>
-<td style="text-align:center">Provisioning Profiles</td>
-<td style="text-align:left">该文件将 <strong>AppID</strong> , <strong>开发者证书</strong> ， <strong>硬件Device</strong> 绑定到一块儿，在 <strong>开发者中心</strong> 配置好后可以添加到Xcode上，也可以直接在Xcode上连接开发者中心生成，真机调试时需要在Provisioning Profiles文件中添加真机的 <strong>UDID</strong> ；</td>
-</tr>
-</tbody>
-</table>
-<p>平常制作流程一般都是按以下序列进行：</p>
-<ol>
-<li>先利用开发者帐号登陆开发者中心，创建开发者证书，AppID</li>
-<li>在AppID中开通推送服务</li>
-<li>在开通推送服务的选项下面创建推送证书</li>
-<li>在 <strong>Provisioning Profiles</strong> 文件中绑定所有的证书id,添加调试真机</li>
-</ol>
-<h2 id="5-申请应用的app-id">5 申请应用的App ID</h2>
-<ol>
-<li>打开苹果开发者官网，点击 <strong>“Account”</strong> 登录会员中心。</li>
-<li>填写信息创建App ID</li>
-</ol>
-<p><img src="/image/u3d_build_ios_pack/certificates_01.jpg%22" alt="">
-图3.6 本图取自https://blog.csdn.net/qq_28996151/article/details/48318517</p>
-<p><img src="/image/u3d_build_ios_pack/certificates_appid.jpg%22" alt="">
-图3.6 本图取自https://blog.csdn.net/qq_28996151/article/details/48318517</p>
-<h2 id="参考网页">参考网页</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center"></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center"><a href="use_vscode_in_mac.html">在Mac中如何安装VScode并作为Unity3D开发IDE</a></td>
-<td style="text-align:center"><a href="macos_operation_cookbook.html">Mac操作拾遗</a></td>
-<td style="text-align:center"><a href="high_ver_sdk_for_low_ver_xcode.html">在低版本中的XCode中使用高版本的iOS SDK</a></td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center"><a href="https://blog.csdn.net/xiangzhihong8/article/details/78360091?tdsourcetag=s_pcqq_aiomsg">解决低版本Xcode不支持高版本iOS真机调试的问题</a></td>
-<td style="text-align:center"><a href="https://github.com/xushuduo">Github上的iOS image下载地址</a></td>
-<td style="text-align:center"><a href="http://www.cnblogs.com/sk-fengzi/p/5670087.html">最新的iOS申请证书与发布流程</a></td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center"><a href="http://blog.csdn.net/zzy_genesis/article/details/70209404">最新Unity打包ios包发布至App Store上架流程</a></td>
-<td style="text-align:center"><a href="http://blog.csdn.net/qq_28996151/article/details/48318517">开发证书和发布证书的区别以及更换方式（plist文件没有找到）</a></td>
-<td style="text-align:center"><a href="http://blog.csdn.net/holydancer/article/details/9219333">苹果所有常用证书，appID,Provisioning Profiles配置说明及制作图文教程</a></td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center"><a href="http://www.xuanyusong.com/archives/2734">Unity3D研究院之IOS全自动打包生成ipa</a></td>
-<td style="text-align:center"><a href="https://blog.csdn.net/visionTw/article/details/79618053">https://blog.csdn.net/visionTw/article/details/79618053 </a></td>
-<td style="text-align:center"><a href="https://blog.csdn.net/visionTw/article/details/79618053">Unity3D打包生成xcode工程以及xcode工程真机调试</a></td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center"><a href="https://blog.csdn.net/zzy_genesis/article/details/70209404">2017最新Unity打包ios包发布至App Store上架流程</a></td>
-<td style="text-align:center"><a href="https://blog.csdn.net/qq_28996151/article/details/48318517">iOS 开发者开发证书和发布证书的区别以及更换的方法</a></td>
-<td style="text-align:center"> </td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/ios/">iOS</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/mac_ios/use_vscode_in_mac/">在Mac中如何安装VScode并作为Unity3D开发IDE</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/mac_ios/high_ver_sdk_for_low_ver_xcode/">在低版本中的XCode中使用高版本的iOS SDK</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Unity3D出iOS的包操作指南 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Unity3D出iOS的包操作指南"><meta property="og:url" content="http://www.xionggf.com/post/mac_ios/u3d_ios_build_pack/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Unity3D出iOS的包操作指南"><meta property="og:description" content="Unity3D出iOS的包操作指南"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2019-12-31T11:52:43+08:00"><meta property="article:modified_time" content="2019-12-31T11:52:43+08:00"><meta property="article:tag" content="IOS"><meta itemprop=name content="Unity3D出iOS的包操作指南"><meta itemprop=description content="Unity3D出iOS的包操作指南"><meta itemprop=datePublished content="2019-12-31T11:52:43+08:00"><meta itemprop=dateModified content="2019-12-31T11:52:43+08:00"><meta itemprop=wordCount content="208"><meta itemprop=keywords content="iOS"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Unity3D出iOS的包操作指南</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2019-12-31T11:52:43+08:00>December 31, 2019</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/ios/ rel=category>iOS</a>,
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/ios/ rel=tag>iOS</a></span></div></div><h1 class=entry__title>Unity3D出iOS的包操作指南</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#1-切换平台到ios下>1 切换平台到iOS下</a></li><li><a href=#2-配置unity项目playersetting>2 配置Unity项目PlayerSetting</a></li><li><a href=#3-构建开发版的包>3 构建开发版的包</a></li><li><a href=#4-构建ios应用的各种证书及申请管理方式>4 构建iOS应用的各种证书及申请管理方式</a></li><li><a href=#5-申请应用的app-id>5 申请应用的App ID</a></li><li><a href=#参考网页>参考网页</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=1-切换平台到ios下>1 切换平台到iOS下</h2><p>打开 <strong>【Unity|File|Build Setting】</strong> 菜单,选择iOS平台，然后点击左下角的 <strong>Switch Platform</strong> 切换到iOS平台，右边选择 <strong>Release</strong>。确保项目能在iOS平台上正确运行了再下一步打包。</p><h2 id=2-配置unity项目playersetting>2 配置Unity项目PlayerSetting</h2><p>界面上各个选项如下表所示：</p><table><thead><tr><th style=text-align:left>选项</th><th style=text-align:left>细节</th></tr></thead><tbody><tr><td style=text-align:left>Company Name</td><td style=text-align:left>公司名，与下面的Bundle Identifier对应</td></tr><tr><td style=text-align:left>Product Name</td><td style=text-align:left>项目名，也是与下面的Bundle Identifier对应</td></tr><tr><td style=text-align:left>Bundle Identifier</td><td style=text-align:left>com.CompanyName.ProductName,这个在打包成xCode工程之后，需要和在苹果开发者网站上的app IDs一致，不然会报错：项目Identifier与开发者账号申请的证书的Identifier不同。</td></tr><tr><td style=text-align:left>Scripting Backend</td><td style=text-align:left>选择IL2CPP，支持64位。</td></tr><tr><td style=text-align:left>Api Compatibility Level</td><td style=text-align:left>如果项目中使用到了文件的操作，要选择“.NET 2.0”</td></tr><tr><td style=text-align:left>Target Device</td><td style=text-align:left>项目要运行的平台，有哪个就选哪个，不过到时候审核的时候也是要iPhone和iPad分开审核。</td></tr><tr><td style=text-align:left>Target SDK</td><td style=text-align:left>这个选择DeviceSDK，选用设备的SDK就行了。</td></tr><tr><td style=text-align:left>Target minimum iOS Version</td><td style=text-align:left>限制最低可运行iOS版本，这个在xCode中也可以更细致调整。</td></tr></tbody></table><p>PlayerSetting界面如下图所示：</p><p><img src=/image/u3d_build_ios_pack/config01.png alt> <img src=/image/u3d_build_ios_pack/config02.png alt></p><p>到这里，就可以打包了，点击 <strong>【File|Build And Run】</strong> 菜单，会弹出要保存的项目文件地址，Unity3D会把工程导出成一个可以给xcode使用的工程。</p><h2 id=3-构建开发版的包>3 构建开发版的包</h2><p>首先在xcode的 <strong>Account</strong> 里面添加苹果开发者账号。从 <strong>xcode 7</strong> 开始,在开发阶段，如果只需要进行真机调试而不要求发布到AppStore上的话，可以使用一个普通的苹果用户ID作为真机调试账号。方法如下：</p><p>第1步：首先点击菜单 <strong>【Xcode|Preferences&mldr;】</strong> ,</p><p><img src=/image/u3d_build_ios_pack/add_account_01.png alt></p><p>第2步：然后点击 <strong>【Accounts】</strong> 切换到如图所示界面，然后点击左下角的 <strong>“+”</strong> 号，会弹出一个填写对话框，在此对话框中添加你的苹果用户ID，密码等等，信息，最后点击 <strong>【Sign in】</strong> 按钮</p><p><img src=/image/u3d_build_ios_pack/add_account_02.png alt></p><p>第3步：添加账户成功后，在图3.1中左边的 <strong>【Apple IDs】】</strong> 列表选项，选中填写的账户时，在图3.1中右边的区域，将会出现这个账户的详细信息。付费开发者账户显示的是 <strong>【&ldquo;Agent&rdquo;】</strong> （Xcode 7 、8 都是），未交费显示的是 <strong>【“Free”】</strong> （Xcode 7，Xcode 8 显示"User"或别的），如图1.3.3所示。双击 <strong>【Pesonal Team】】</strong> 后进入下一个界面。</p><p><img src=/image/u3d_build_ios_pack/add_account_03.png alt></p><p>第4步：点击图3.4中的箭头所指的 <strong>【Create】</strong> 按钮，创建iOS Development，创建成功后会在下半部分的 <strong>【Provisioning Profiles】</strong> 添加上生成的profiles，最后点击 <strong>【Done】</strong> 按钮；</p><p><img src=/image/u3d_build_ios_pack/add_account_04.png alt></p><p>第5步：接下来就在工程中使用这些生成的profile。如图3.5所示，选中工程的project文件，定位到 <strong>【TARGETS-> General->Signing->team】</strong> 编辑框，Identity在打开Unity导出的项目时已经有默认生成。要改的是就是里面的Team，选择刚刚在Account里面添加的苹果账号，勾选上面的 <strong>【Create】Automatically manage signing</strong> ，XCode8以上支持自动配置，根据iPhone和iPad不同，可分别设置。</p><p><img src=/image/u3d_build_ios_pack/add_account_05_1.png alt> <img src=/image/u3d_build_ios_pack/add_account_05_2.png alt></p><p>第6步：接下来可以连接真机进行打包并调试了，连上电脑和ios设备之后，将Generic iOS Device换到你的测试设备，然后点击运行按钮即可。如图3.6所示。等待打包，期间手机屏幕不要锁上，不然会卡在最后。如果是该设备是第一次真机测试的话，会弹出如下证书和开发者未被信任的对话框。</p><p><img src=/image/u3d_build_ios_pack/add_account_06_1.png alt> <img src=/image/u3d_build_ios_pack/add_account_06_2.png alt></p><p>解决方式是：在中点击 <strong>设置(Settings)</strong> &mdash;> <strong>通用（General）</strong> &mdash;> <strong>设备管理（Device Management）</strong> &mdash;> **点击对应的apple id ** &mdash;> <strong>信任（Trust）</strong></p><h2 id=4-构建ios应用的各种证书及申请管理方式>4 构建iOS应用的各种证书及申请管理方式</h2><p>构建iOS应用需要用到以下的一些证书，其分类如下：</p><table><thead><tr><th style=text-align:center>证书类型</th><th style=text-align:left>证书描述</th></tr></thead><tbody><tr><td style=text-align:center>开发者证书</td><td style=text-align:left>（分为 <strong>开发(iOS development)</strong> 和 <strong>发布(iOS Distribution)</strong> 两种，这个是最基础的，不论是真机调试，还是上传到appstore都是需要的，是一个基证书，用来证明自己开发者身份</td></tr><tr><td style=text-align:center>AppID</td><td style=text-align:left>这是每一个应用的独立标识，在设置项中可以配置该应用的权限，比如是否用到了 <strong>PassBook</strong> , <strong>GameCenter</strong> ,以及更常见的push服务，如果选中了推送服务，那么就可以创建 <strong>推送证书</strong> ，所以，在所有和推送相关的配置中，首先要做的就是先开通支持推送服务的AppID</td></tr><tr><td style=text-align:center>推送证书</td><td style=text-align:left>（也分为开发 <strong>（APNs Development ios）</strong> 和 <strong>发布（APNs Distribution ios）</strong> 两种，该证书在AppID配置中创建生成，和开发者证书一样，安装到开发电脑上</td></tr><tr><td style=text-align:center>Provisioning Profiles</td><td style=text-align:left>该文件将 <strong>AppID</strong> , <strong>开发者证书</strong> ， <strong>硬件Device</strong> 绑定到一块儿，在 <strong>开发者中心</strong> 配置好后可以添加到Xcode上，也可以直接在Xcode上连接开发者中心生成，真机调试时需要在Provisioning Profiles文件中添加真机的 <strong>UDID</strong> ；</td></tr></tbody></table><p>平常制作流程一般都是按以下序列进行：</p><ol><li>先利用开发者帐号登陆开发者中心，创建开发者证书，AppID</li><li>在AppID中开通推送服务</li><li>在开通推送服务的选项下面创建推送证书</li><li>在 <strong>Provisioning Profiles</strong> 文件中绑定所有的证书id,添加调试真机</li></ol><h2 id=5-申请应用的app-id>5 申请应用的App ID</h2><ol><li>打开苹果开发者官网，点击 <strong>“Account”</strong> 登录会员中心。</li><li>填写信息创建App ID</li></ol><p><img src=/image/u3d_build_ios_pack/certificates_01.jpg%22 alt>
+图3.6 本图取自https://blog.csdn.net/qq_28996151/article/details/48318517</p><p><img src=/image/u3d_build_ios_pack/certificates_appid.jpg%22 alt>
+图3.6 本图取自https://blog.csdn.net/qq_28996151/article/details/48318517</p><h2 id=参考网页>参考网页</h2><table><thead><tr><th style=text-align:center></th><th style=text-align:center></th><th></th><th></th></tr></thead><tbody><tr><td style=text-align:center><a href=use_vscode_in_mac.html>在Mac中如何安装VScode并作为Unity3D开发IDE</a></td><td style=text-align:center><a href=macos_operation_cookbook.html>Mac操作拾遗</a></td><td style=text-align:center><a href=high_ver_sdk_for_low_ver_xcode.html>在低版本中的XCode中使用高版本的iOS SDK</a></td><td></td></tr><tr><td style=text-align:center><a href="https://blog.csdn.net/xiangzhihong8/article/details/78360091?tdsourcetag=s_pcqq_aiomsg">解决低版本Xcode不支持高版本iOS真机调试的问题</a></td><td style=text-align:center><a href=https://github.com/xushuduo>Github上的iOS image下载地址</a></td><td style=text-align:center><a href=http://www.cnblogs.com/sk-fengzi/p/5670087.html>最新的iOS申请证书与发布流程</a></td><td></td></tr><tr><td style=text-align:center><a href=http://blog.csdn.net/zzy_genesis/article/details/70209404>最新Unity打包ios包发布至App Store上架流程</a></td><td style=text-align:center><a href=http://blog.csdn.net/qq_28996151/article/details/48318517>开发证书和发布证书的区别以及更换方式（plist文件没有找到）</a></td><td style=text-align:center><a href=http://blog.csdn.net/holydancer/article/details/9219333>苹果所有常用证书，appID,Provisioning Profiles配置说明及制作图文教程</a></td><td></td></tr><tr><td style=text-align:center><a href=http://www.xuanyusong.com/archives/2734>Unity3D研究院之IOS全自动打包生成ipa</a></td><td style=text-align:center><a href=https://blog.csdn.net/visionTw/article/details/79618053>https://blog.csdn.net/visionTw/article/details/79618053</a></td><td style=text-align:center><a href=https://blog.csdn.net/visionTw/article/details/79618053>Unity3D打包生成xcode工程以及xcode工程真机调试</a></td><td></td></tr><tr><td style=text-align:center><a href=https://blog.csdn.net/zzy_genesis/article/details/70209404>2017最新Unity打包ios包发布至App Store上架流程</a></td><td style=text-align:center><a href=https://blog.csdn.net/qq_28996151/article/details/48318517>iOS 开发者开发证书和发布证书的区别以及更换的方法</a></td><td style=text-align:center> </td><td></td></tr></tbody></table></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/ios/>IOS</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/mac_ios/use_vscode_in_mac/>在Mac中如何安装VScode并作为Unity3D开发IDE</a></li><li class=related__item><a class=related__link href=/post/mac_ios/high_ver_sdk_for_low_ver_xcode/>在低版本中的XCode中使用高版本的iOS SDK</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

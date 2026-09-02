@@ -1,465 +1,265 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>层次化Z缓冲区拣选算法学习笔记 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Hierarchical z-buffer culling">
-		<meta property="og:title" content="层次化Z缓冲区拣选算法学习笔记" />
-<meta property="og:description" content="Hierarchical z-buffer culling" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/cg/hierarchical_z_buffer_occlusion_culling/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2024-12-25T20:36:51+08:00" />
-<meta property="article:modified_time" content="2024-12-25T20:36:51+08:00" />
-
-
-		<meta itemprop="name" content="层次化Z缓冲区拣选算法学习笔记">
-<meta itemprop="description" content="Hierarchical z-buffer culling"><meta itemprop="datePublished" content="2024-12-25T20:36:51+08:00" />
-<meta itemprop="dateModified" content="2024-12-25T20:36:51+08:00" />
-<meta itemprop="wordCount" content="2316">
-<meta itemprop="keywords" content="Hiz,Culling,CG," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">层次化Z缓冲区拣选算法学习笔记</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2024-12-25T20:36:51&#43;08:00">December 25, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/hiz/" rel="tag">Hiz</a>, 
-		<a class="meta-tags__link" href="/tags/culling/" rel="tag">Culling</a>, 
-		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">层次化Z缓冲区拣选算法学习笔记</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-nick-darnell的hiz算法总结和分析笔记">1 Nick Darnell的Hiz算法总结和分析笔记</a>
-      <ul>
-        <li><a href="#11-层次化z缓冲区hierarchical-z-bufferhiz剔除步骤">1.1 层次化Z缓冲区（Hierarchical Z-buffer,HiZ）剔除步骤</a></li>
-        <li><a href="#12-对分层z缓冲区进行降采样的hlsl代码">1.2 对分层Z缓冲区进行降采样的HLSL代码</a></li>
-        <li><a href="#13-层次化z缓冲区的剔除核心算法">1.3 层次化Z缓冲区的剔除核心算法</a></li>
-        <li><a href="#14-hierarchical-z-buffer-occlusion-culling---shadows">1.4 Hierarchical Z-Buffer Occlusion Culling - Shadows</a></li>
-      </ul>
-    </li>
-    <li><a href="#2-mike-turizin的hierarchical-depth-buffer读书笔记">2 Mike Turizin的《Hierarchical Depth Buffer》读书笔记</a>
-      <ul>
-        <li><a href="#21-概述">2.1 概述</a></li>
-        <li><a href="#22-介绍">2.2 介绍</a></li>
-        <li><a href="#23-技术-1生成完整的-mip-链">2.3 技术 1：生成完整的 Mip 链</a></li>
-      </ul>
-    </li>
-  </ul>
-
-  <ul>
-    <li><a href="#参考资料">参考资料</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><h2 id="1-nick-darnell的hiz算法总结和分析笔记">1 Nick Darnell的Hiz算法总结和分析笔记</h2>
-<p>基于<strong>层次化Z缓冲区的遮挡拣选</strong>（<strong>Hierarchical Z-buffer occlusion culling</strong>）的实现方式有多种，其中有一种是基于论文<a href="http://developer.amd.com/documentation/presentations/legacy/Chapter03-SBOT-March_of_The_Froblins.pdf">Real-Time Rendering (Section 3.3.3)</a>。</p>
-<h3 id="11-层次化z缓冲区hierarchical-z-bufferhiz剔除步骤">1.1 层次化Z缓冲区（Hierarchical Z-buffer,HiZ）剔除步骤</h3>
-<ol>
-<li>让美术准备好用来遮挡住其他物体的<strong>遮挡体</strong>（<strong>occlusion geometry</strong>）</li>
-<li>CPU端：获取到所有的遮挡体，且将在视截体之外的给剔除掉</li>
-<li>GPU端：把上一步剔除剩下的遮挡体，将其深度值渲染到深度缓冲区D-RT0</li>
-<li>GPU端：对D-RT0进行采样，并填充整个mipchain</li>
-<li>CPU端：对当前场景中的所有可见物体，获取到其物体的包围球</li>
-<li>GPU端：把上一步获取到的物体包围球，计算该包围球对应的屏幕空间宽度，然后使用该宽度计算 mip 级别，从步骤 4 中生成HiZ 贴图中进行采样</li>
-<li>CPU端：读回计算着色器的缓冲区输出</li>
-</ol>
-<h3 id="12-对分层z缓冲区进行降采样的hlsl代码">1.2 对分层Z缓冲区进行降采样的HLSL代码</h3>
-<p>上述步骤中的第4步用到的降采样的方式如下：</p>
-<blockquote>
-<p>取当前的，右边一个、下方一个和右下方一个像素进行比较，取其值最大者，作为降采样像素中的新深度值。下面两个图是降采样前后版本的示例，黑色表示较近的深度，像素越白，深度值越远/越高。</p>
-</blockquote>
-<p><img src="https://res.cloudinary.com/dirrplkr6/image/upload/v1427406831/hiz_before_ds_g8yhb1.png" alt="降采样之前"></p>
-<p><img src="https://res.cloudinary.com/dirrplkr6/image/upload/v1427406831/hiz_after_ds_xbliml.png" alt="降采样之后"></p>
-<p>降采样HLSL代码如下所示</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#66d9ef">float4</span> vTexels;
-</span></span><span style="display:flex;"><span>vTexels.x <span style="color:#f92672">=</span> LastMip.Load( nCoords );
-</span></span><span style="display:flex;"><span>vTexels.y <span style="color:#f92672">=</span> LastMip.Load( nCoords, <span style="color:#66d9ef">uint2</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>) );
-</span></span><span style="display:flex;"><span>vTexels.z <span style="color:#f92672">=</span> LastMip.Load( nCoords, <span style="color:#66d9ef">uint2</span>(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>) );
-</span></span><span style="display:flex;"><span>vTexels.w <span style="color:#f92672">=</span> LastMip.Load( nCoords, <span style="color:#66d9ef">uint2</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>) ); 
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">float</span> fMaxDepth <span style="color:#f92672">=</span> max( max( vTexels.x, vTexels.y ), max( vTexels.z, vTexels.w ) );
-</span></span></code></pre></div><h3 id="13-层次化z缓冲区的剔除核心算法">1.3 层次化Z缓冲区的剔除核心算法</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>cbuffer CB
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    matrix View;
-</span></span><span style="display:flex;"><span>    matrix Projection;
-</span></span><span style="display:flex;"><span>    matrix ViewProjection;
-</span></span><span style="display:flex;"><span>    float4 FrustumPlanes[<span style="color:#ae81ff">6</span>];  <span style="color:#75715e">// 视截体的6个面，基于世界坐标，每个面的法线朝外
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    float2 ViewportSize;    <span style="color:#75715e">// 视口的高和宽，基于像素
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    float2 PADDING;
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// GPU只读的缓冲区，因为声明了使用t0着色器，故而每一个点是一个float4
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// float4的xyz分量记录了包围球的球心坐标，w分量记录了球的半径。基于
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// 世界坐标系
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>StructuredBuffer Buffer0		: <span style="color:#66d9ef">register</span>(t0);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Is Visible 1 (Visible) 0 (Culled)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// GPU可读写的缓冲区，每一个点是一个uint，值为1时该点可视，0时该点不可视
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>RWStructuredBuffer BufferOut	: <span style="color:#66d9ef">register</span>(u0);
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>Texture2D HizMap				: <span style="color:#66d9ef">register</span>(t1);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>SamplerState HizMapSampler		: <span style="color:#66d9ef">register</span>(s0);
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 计算给定的点vPoint到平面方程的距离
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// vPlane: 四个xyzw分量，分别包含了平面方程的四个系数abcd: ax + by + cz = d
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// vPoint: Point to be tested against the plane.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">float</span> <span style="color:#a6e22e">DistanceToPlane</span>( float4 vPlane, float3 vPoint )
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> dot(float4(vPoint, <span style="color:#ae81ff">1</span>), vPlane);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Frustum cullling on a sphere. Returns &gt; 0 if visible, &lt;= 0 otherwise
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">float</span> <span style="color:#a6e22e">CullSphere</span>( float4 vPlanes[<span style="color:#ae81ff">6</span>], float3 vCenter, <span style="color:#66d9ef">float</span> fRadius )
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// 取出包围球球心vCenter到视截体01平面，即上下平面的距离值的小值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 取出包围球球心vCenter到视截体23平面，即左右平面的距离值的小值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 取出包围球球心vCenter到视截体45平面，即前后平面的距离值的小值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#75715e">// 然后三个最小值中的最小值，和包围球的半径相加，大于0者表示球在视截体内，可视，小于等于0者表示在外，不可视
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   <span style="color:#66d9ef">float</span> dist01 <span style="color:#f92672">=</span> min(DistanceToPlane(vPlanes[<span style="color:#ae81ff">0</span>], vCenter), DistanceToPlane(vPlanes[<span style="color:#ae81ff">1</span>], vCenter));
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">float</span> dist23 <span style="color:#f92672">=</span> min(DistanceToPlane(vPlanes[<span style="color:#ae81ff">2</span>], vCenter), DistanceToPlane(vPlanes[<span style="color:#ae81ff">3</span>], vCenter));
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">float</span> dist45 <span style="color:#f92672">=</span> min(DistanceToPlane(vPlanes[<span style="color:#ae81ff">4</span>], vCenter), DistanceToPlane(vPlanes[<span style="color:#ae81ff">5</span>], vCenter));
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">return</span> min(min(dist01, dist23), dist45) <span style="color:#f92672">+</span> fRadius;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// SV_GroupID:	表示当前工作组在整个调度网格中的ID
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//				该ID唯一标识调度网格中的每个工作组。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//				用于在全局范围上确定工作组的唯一位置，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//				例如在调度多个工作组时， SV_GroupID可以帮助定位某个工作组的全局位置。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>[numthreads(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)]
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> CSMain(uint3 GroupId			: SV_GroupID,
-</span></span><span style="display:flex;"><span>			uint3 DispatchThreadId	: SV_DispatchThreadID,
-</span></span><span style="display:flex;"><span>			uint GroupIndex			: SV_GroupIndex)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Calculate the actual index this thread in this group will be reading from.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// SV_DispatchThreadID语意，表示当前线程在所属的工作组内的局部ID
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 如果在C#层，Dispatch(kernelIndex, 10, 10, 1) 被调用，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 并且在计算着色器中定义了numthreads(8, 8, 1)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 那么 SV_DispatchThreadID 将会表示 从0到79的X和Y维度上所有线程的全局ID。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> DispatchThreadId.x;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 取到第index个物体包围球的球心和半径Bounding sphere center (XYZ) and radius (W), world space
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	float4 Bounds <span style="color:#f92672">=</span> Buffer0[index];
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 拣选出在视野之内的包围球
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">float</span> fVisible <span style="color:#f92672">=</span> CullSphere(FrustumPlanes, Bounds.xyz, Bounds.w);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (fVisible <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>	{
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 拿到摄像机的坐标，算出摄像机到球心的距离
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float3 viewEye <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>View._m03_m13_m23;
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">float</span> CameraSphereDistance <span style="color:#f92672">=</span> distance( viewEye, Bounds.xyz );
-</span></span><span style="display:flex;"><span>		float3 viewEyeSphereDirection <span style="color:#f92672">=</span> viewEye <span style="color:#f92672">-</span> Bounds.xyz;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		float3 viewUp <span style="color:#f92672">=</span> View._m01_m11_m21;
-</span></span><span style="display:flex;"><span>		float3 viewDirection <span style="color:#f92672">=</span> View._m02_m12_m22;
-</span></span><span style="display:flex;"><span>		float3 viewRight <span style="color:#f92672">=</span> normalize(cross(viewEyeSphereDirection, viewUp));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Help handle perspective distortion.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// http://article.gmane.org/gmane.games.devel.algorithms/21697/
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">float</span> fRadius <span style="color:#f92672">=</span> CameraSphereDistance <span style="color:#f92672">*</span> tan(asin(Bounds.w <span style="color:#f92672">/</span> CameraSphereDistance));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Compute the offsets for the points around the sphere
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float3 vUpRadius <span style="color:#f92672">=</span> viewUp <span style="color:#f92672">*</span> fRadius;
-</span></span><span style="display:flex;"><span>		float3 vRightRadius <span style="color:#f92672">=</span> viewRight <span style="color:#f92672">*</span> fRadius;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Generate the 4 corners of the sphere in world space.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 算出包围球的外接包围盒的四个顶点
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float4 vCorner0WS <span style="color:#f92672">=</span> float4( Bounds.xyz <span style="color:#f92672">+</span> vUpRadius <span style="color:#f92672">-</span> vRightRadius, <span style="color:#ae81ff">1</span> ); <span style="color:#75715e">// Top-Left
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float4 vCorner1WS <span style="color:#f92672">=</span> float4( Bounds.xyz <span style="color:#f92672">+</span> vUpRadius <span style="color:#f92672">+</span> vRightRadius, <span style="color:#ae81ff">1</span> ); <span style="color:#75715e">// Top-Right
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float4 vCorner2WS <span style="color:#f92672">=</span> float4( Bounds.xyz <span style="color:#f92672">-</span> vUpRadius <span style="color:#f92672">-</span> vRightRadius, <span style="color:#ae81ff">1</span> ); <span style="color:#75715e">// Bottom-Left
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float4 vCorner3WS <span style="color:#f92672">=</span> float4( Bounds.xyz <span style="color:#f92672">-</span> vUpRadius <span style="color:#f92672">+</span> vRightRadius, <span style="color:#ae81ff">1</span> ); <span style="color:#75715e">// Bottom-Right
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Project the 4 corners of the sphere into clip space
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 变换4个角的坐标，从世界坐标变换到裁剪坐标
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float4 vCorner0CS <span style="color:#f92672">=</span> mul(ViewProjection, vCorner0WS);
-</span></span><span style="display:flex;"><span>		float4 vCorner1CS <span style="color:#f92672">=</span> mul(ViewProjection, vCorner1WS);
-</span></span><span style="display:flex;"><span>		float4 vCorner2CS <span style="color:#f92672">=</span> mul(ViewProjection, vCorner2WS);
-</span></span><span style="display:flex;"><span>		float4 vCorner3CS <span style="color:#f92672">=</span> mul(ViewProjection, vCorner3WS);
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Convert the corner points from clip space to normalized device coordinates
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 再把四个角的坐标从裁剪空间变换到NDC
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float2 vCorner0NDC <span style="color:#f92672">=</span> vCorner0CS.xy <span style="color:#f92672">/</span> vCorner0CS.w;
-</span></span><span style="display:flex;"><span>		float2 vCorner1NDC <span style="color:#f92672">=</span> vCorner1CS.xy <span style="color:#f92672">/</span> vCorner1CS.w;
-</span></span><span style="display:flex;"><span>		float2 vCorner2NDC <span style="color:#f92672">=</span> vCorner2CS.xy <span style="color:#f92672">/</span> vCorner2CS.w;
-</span></span><span style="display:flex;"><span>		float2 vCorner3NDC <span style="color:#f92672">=</span> vCorner3CS.xy <span style="color:#f92672">/</span> vCorner3CS.w;
-</span></span><span style="display:flex;"><span>		vCorner0NDC <span style="color:#f92672">=</span> float2( <span style="color:#ae81ff">0.5</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span> ) <span style="color:#f92672">*</span> vCorner0NDC <span style="color:#f92672">+</span> float2( <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span> );
-</span></span><span style="display:flex;"><span>		vCorner1NDC <span style="color:#f92672">=</span> float2( <span style="color:#ae81ff">0.5</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span> ) <span style="color:#f92672">*</span> vCorner1NDC <span style="color:#f92672">+</span> float2( <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span> );
-</span></span><span style="display:flex;"><span>		vCorner2NDC <span style="color:#f92672">=</span> float2( <span style="color:#ae81ff">0.5</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span> ) <span style="color:#f92672">*</span> vCorner2NDC <span style="color:#f92672">+</span> float2( <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span> );
-</span></span><span style="display:flex;"><span>		vCorner3NDC <span style="color:#f92672">=</span> float2( <span style="color:#ae81ff">0.5</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">0.5</span> ) <span style="color:#f92672">*</span> vCorner3NDC <span style="color:#f92672">+</span> float2( <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span> );
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// In order to have the sphere covering at most 4 texels, we need to use
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// the entire width of the rectangle, instead of only the radius of the rectangle,
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// which was the original implementation in the ATI paper, it had some edge case
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// failures I observed from being overly conservative.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 为了让球体覆盖最多 4 个纹素，我们需要使用矩形的整个宽度，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 而不是仅使用矩形的半径，这是 ATI 论文中的原始实现，我观
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 察到它由于过于保守而导致了一些边缘情况失败。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">float</span> fSphereWidthNDC <span style="color:#f92672">=</span> distance( vCorner0NDC, vCorner1NDC );
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Compute the center of the bounding sphere in screen space
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 在屏幕空间中计算出包围球球心
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float3 Cv <span style="color:#f92672">=</span> mul( View, float4( Bounds.xyz, <span style="color:#ae81ff">1</span> ) ).xyz;
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// compute nearest point to camera on sphere, and project it
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 计算球体上距离相机最近的点，并将其投影
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float3 Pv <span style="color:#f92672">=</span> Cv <span style="color:#f92672">-</span> normalize( Cv ) <span style="color:#f92672">*</span> Bounds.w;
-</span></span><span style="display:flex;"><span>		float4 ClosestSpherePoint <span style="color:#f92672">=</span> mul( Projection, float4( Pv, <span style="color:#ae81ff">1</span> ) );
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Choose a MIP level in the HiZ map.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// The original assumed viewport width &gt; height, however I&#39;ve changed it
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// to determine the greater of the two.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">//在 HiZ 图中选择一个 MIP 级别。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 最初假设视口宽度 &gt; 高度，但我已将其更改为确定两者中较大的一个。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// This will result in a mip level where the object takes up at most
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 2x2 texels such that the 4 sampled points have depths to compare
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// against.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 这将导致 mip 级别，其中对象最多占用 2x2 个纹素，以便 4 个采样点具有可供比较的深度。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">float</span> W <span style="color:#f92672">=</span> fSphereWidthNDC <span style="color:#f92672">*</span> max(ViewportSize.x, ViewportSize.y);
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">float</span> fLOD <span style="color:#f92672">=</span> ceil(log2( W ));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// fetch depth samples at the corners of the square to compare against
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 采样
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		float4 vSamples;
-</span></span><span style="display:flex;"><span>		vSamples.x <span style="color:#f92672">=</span> HizMap.SampleLevel( HizMapSampler, vCorner0NDC, fLOD );
-</span></span><span style="display:flex;"><span>		vSamples.y <span style="color:#f92672">=</span> HizMap.SampleLevel( HizMapSampler, vCorner1NDC, fLOD );
-</span></span><span style="display:flex;"><span>		vSamples.z <span style="color:#f92672">=</span> HizMap.SampleLevel( HizMapSampler, vCorner2NDC, fLOD );
-</span></span><span style="display:flex;"><span>		vSamples.w <span style="color:#f92672">=</span> HizMap.SampleLevel( HizMapSampler, vCorner3NDC, fLOD );
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">float</span> fMaxSampledDepth <span style="color:#f92672">=</span> max( max( vSamples.x, vSamples.y ), max( vSamples.z, vSamples.w ) );
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">float</span> fSphereDepth <span style="color:#f92672">=</span> (ClosestSpherePoint.z <span style="color:#f92672">/</span> ClosestSpherePoint.w);
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// cull sphere if the depth is greater than the largest of our HiZ map values
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		BufferOut[index] <span style="color:#f92672">=</span> (fSphereDepth <span style="color:#f92672">&gt;</span> fMaxSampledDepth) <span style="color:#f92672">?</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>	{
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// The sphere is outside of the view frustum
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 		BufferOut[index] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="14-hierarchical-z-buffer-occlusion-culling---shadows">1.4 Hierarchical Z-Buffer Occlusion Culling - Shadows</h3>
-<p>Stephen Hill解释了如何使用分层Z缓冲区遮挡剔除算法从场景中剔除阴影。他们参考了论文<a href="http://gamma.cs.unc.edu/CCSV/ccsvEGSR04.pdf">CC Shadow Volumes</a>的一些思想，但解决方案更为简单。</p>
-<p>剔除掉阴影的方式和步骤如下：</p>
-<ol>
-<li>从玩家视角创建Hi-Z buffer，命名为<code>Player-HZB</code></li>
-<li>从产生阴影的透射光的视角创建Hi-Z buffer，命名为<code>Light-HZB</code></li>
-<li>使用<code>Light-HZB</code>剔除投射阴影的物体。如果物体被剔除，则将其标记为被剔除。</li>
-<li>如果对象未被剔除，需要计算其阴影体积范围的粗略近似值。可以将此体积视为包围盒 (A-D) 上的最小深度点和从这些点投射到<code>Light-HZB</code> (E-H) 上的最大采样深度（如下面的图1所示）。有了阴影的bouding volume，可以将该volume变换到玩家视角的观察空间，并根据<code>Player-HZB</code>对其进行测试（如下面的图2所示）。如果您看不到体积，表示该产生阴影的物体被剔除，否则将其视为可见。</li>
-</ol>
-<p><img src="https://res.cloudinary.com/dirrplkr6/image/upload/v1427406770/hiz_shadow_1_ayxsak.jpg" alt="图1"></p>
-<p><img src="https://res.cloudinary.com/dirrplkr6/image/upload/v1427406770/from_eye_weujba.png" alt="图2"></p>
-</br>
-<hr>
-</br>
-<h2 id="2-mike-turizin的hierarchical-depth-buffer读书笔记">2 Mike Turizin的《Hierarchical Depth Buffer》读书笔记</h2>
-<h3 id="21-概述">2.1 概述</h3>
-<p><strong>分层深度（Z）缓冲区</strong>（Hierarchical depth（Z） buffer）是一种<strong>多级深度 (Z) 缓冲区</strong>（multi-level depth (Z) buffer ），通常简称为<strong>Hi-Z</strong>。使用此技术可以加速深度值查询。与普通纹理 mipmap 一样，每个mipmap级别的尺寸，通常是<strong>全分辨率缓冲区尺寸的连续2次幂分数</strong>。接下来介绍了两种从全分辨率缓冲区生成分层深度缓冲区的技术：</p>
-<ol>
-<li>首先将展示如何为深度缓冲区生成完整的mipmap，以便即使深度缓冲区的高宽不是2的幂，也能在纹理坐标 (或 NDC) 空间中保持深度查询的准确性。</li>
-<li>其次对于只需要一个<strong>降采样级别</strong>（a single downsampled level）的情况，将展示如何使用调用单个计算着色器来生成此级别，该调用使用工作组共享内存中的原子操作。这会提速很多。</li>
-</ol>
-<h3 id="22-介绍">2.2 介绍</h3>
-<p>分层式深度缓冲区可以用在<strong>加速遮挡剔除</strong>（<strong>accelerate occlusion culling</strong>）、<strong>屏幕空间反射</strong>（<strong>screen-space reflections</strong>）、<strong>屏幕空间环境光遮蔽</strong>（<strong>screen-space ambient occlusion</strong>）、<strong>体积雾</strong>（ <strong>volumetric fog</strong>）等的实现。</p>
-<p>Hi-Z的总体思路是”通过从<strong>低分辨率</strong>缓冲区读取数据来加速深度查询“。这比从全分辨率的深度缓冲区读取数据更快，这是因为：</p>
-<ol>
-<li><strong>低分辨率</strong>（<strong>reduced-resolution</strong>）缓冲区中的单个纹素（或仅仅几个纹素），可代替全分辨率缓冲区的多个纹素。</li>
-<li>低分辨率的缓冲区可以足够小，以适合存放在快速缓存中，从而可以加快查找，特别是加快<strong>随机访问查找</strong>（<strong>random-access lookup</strong>）。</li>
-</ol>
-<p>一般地，在某一级别mipmap下的Hiz缓冲区中的某个纹素，存储的是<strong>它从上一个mipmap级别中归纳（subsume）出来的所有纹素的极大值或者极小值</strong>，或者两者都存储。而不是存储归纳出来的所有纹素的算术平均值。这是因为平均深度对于需要的查询类型基本无用。</p>
-<p>Hi-Z 缓冲区最常见的查询方式是<strong>提前退出</strong>（early out），即已知条件不满足的情况下，避免进一步处理。尤其是在全分辨率缓冲区中进行更精确的查找。如果深度缓冲区是一个非反向式（non-reversed）的深度缓冲区，即深度值越大，表示离当前摄像机越远，最远处为1。这样子可以快速确定屏幕空间位置是否确实被深度缓冲区遮挡——如果待判断的片元，其Z值大于Hi-Z中的纹素值，则表示该片元点落在HiZ遮挡之后，表示被遮挡了。</p>
-<h3 id="23-技术-1生成完整的-mip-链">2.3 技术 1：生成完整的 Mip 链</h3>
-<p>许多 Hi-Z 应用程序需要完整的深度缓冲区 mipmap 链。例如，Hi-Z 遮挡剔除的工作原理是：<strong>把物体的包围盒投影到屏幕空间，并使用投影的大小来选择合适的 mipmap 级别，这样子以便每个遮挡测试访问固定数量的纹素</strong>。</p>
-<p>从全分辨率深度缓冲区生成 mipmap链是很简单的：<strong>对于级别 N 中的每个纹素，获取先前生成的级别 N-1 中相应的 4 个纹素 的最大值或者最小值。连续执行此过程（每次将两个维度减半），直到生成最终的 1x1 mip 级别。</strong> 但是，对于非2的幂维度的深度缓冲区，情况要复杂得多。因为需要按屏幕分辨率的尺寸构建 Hi-Z缓冲区（屏幕分辨率的尺寸通常很少是 2 的幂），所以需要考虑上这种非2的幂的情况。</p>
-<p>首先确定深度缓冲区 mipmap 级别的每个纹素中的值应该表示什么。在此，假设mipmap中存储的是上一级的4个纹素的最小值。</p>
-<p>So when we get the value of a particular texel in mip level N, what does its value signify, precisely? It should be the min of all texels in the full-res depth buffer that occupy the same footprint in (normalized) texture coordinate space.
-那么，当我们在 mip 级别 N 中获取特定纹素的值时，它的值究竟意味着什么？它应该是 min 全分辨率深度缓冲区中所有纹素的，这些纹素在 （规范化） 纹理坐标空间中占用相同的占用空间。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">sampler2D</span> u_depthBuffer;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">int</span> u_previousLevel;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">ivec2</span> u_previousLevelDimensions;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> main() 
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// https://zhuanlan.zhihu.com/p/102068376</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gl_FragCoord 表示当前片元着色器处理的候选片元窗口相对坐标信息，</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 是一个 vec4 类型的变量 (x, y, z, 1/w)， 其中 x, y 是当前片元的窗口坐标，</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// OpenGL 默认以窗口左下角为原点， 在着色器中通过布局限定符可以重新设定原点，</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 比如窗口左上角为原点 origin_upper_left，窗口大小由 glViewport() 函数指定。</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// x, y 默认是像素中心而非整数，原点的窗口坐标值为 (0.5, 0.5), 小数部分恒为0.5，</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 当viewport 范围 为（0，0，800，600）时， x, y 的取值范围为</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//（0.5, 0.5, 799.5, 599.5), 当在着色器中布局限定符设置为 pixel_center_integer 时，</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// x, y 取值为整数。第三个分量 z 表示的是当前片元的深度信息，由 vertex shader 处理过后系统插值得到</span>
-</span></span><span style="display:flex;"><span>	
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">ivec2</span> thisLevelTexelCoord <span style="color:#f92672">=</span> <span style="color:#66d9ef">ivec2</span>(gl_FragCoord);
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">ivec2</span> previousLevelBaseTexelCoord <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> thisLevelTexelCoord;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 在GLSL环境要想精确地换取每个像素的值，这个时候就不能使用传统的 texture(sampler2d) ，</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 因为采样器sampler2d默认是float精度，而且texture采用函数会涉及归一化、过滤以及插值</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 等复杂操作，基本无法得到某一确切像素的值。texlFetch 是 OpenGL ES 3.0 引入的 API ，</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 它将纹理视为图像，可以精确访问像素的内容，我们可以类比通过索引来获取数组某个元素的值。</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// texelFetch 使用的是未归一化的坐标直接访问纹理中的纹素，不执行任何形式的过滤和插值操作，</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 坐标范围为实际载入纹理图像的宽和高。</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// https://blog.csdn.net/wyq1153/article/details/126191318</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">vec4</span> depthTexelValues;
-</span></span><span style="display:flex;"><span>	depthTexelValues.x <span style="color:#f92672">=</span> texelFetch(u_depthBuffer,
-</span></span><span style="display:flex;"><span>                                    previousLevelBaseTexelCoord,
-</span></span><span style="display:flex;"><span>                                    u_previousLevel).r;
-</span></span><span style="display:flex;"><span>	depthTexelValues.y <span style="color:#f92672">=</span> texelFetch(u_depthBuffer,
-</span></span><span style="display:flex;"><span>                                    previousLevelBaseTexelCoord <span style="color:#f92672">+</span> <span style="color:#66d9ef">ivec2</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>),
-</span></span><span style="display:flex;"><span>                                    u_previousLevel).r;
-</span></span><span style="display:flex;"><span>	depthTexelValues.z <span style="color:#f92672">=</span> texelFetch(u_depthBuffer,
-</span></span><span style="display:flex;"><span>                                    previousLevelBaseTexelCoord <span style="color:#f92672">+</span> <span style="color:#66d9ef">ivec2</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>),
-</span></span><span style="display:flex;"><span>                                    u_previousLevel).r;
-</span></span><span style="display:flex;"><span>	depthTexelValues.w <span style="color:#f92672">=</span> texelFetch(u_depthBuffer,
-</span></span><span style="display:flex;"><span>                                    previousLevelBaseTexelCoord <span style="color:#f92672">+</span> <span style="color:#66d9ef">ivec2</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>),
-</span></span><span style="display:flex;"><span>                                    u_previousLevel).r;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">float</span> minDepth <span style="color:#f92672">=</span> min(min(depthTexelValues.x, depthTexelValues.y),
-</span></span><span style="display:flex;"><span>                         min(depthTexelValues.z, depthTexelValues.w));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Incorporate additional texels if the previous level&#39;s width or height (or both)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// are odd. 判断上一级的mipmap的高宽是不是奇数值</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">bool</span> shouldIncludeExtraColumnFromPreviousLevel <span style="color:#f92672">=</span> ((u_previousLevelDimensions.x <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">bool</span> shouldIncludeExtraRowFromPreviousLevel <span style="color:#f92672">=</span> ((u_previousLevelDimensions.y <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>	
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 上一级的mipmap是奇数列</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (shouldIncludeExtraColumnFromPreviousLevel)
-</span></span><span style="display:flex;"><span>	{
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">vec2</span> extraColumnTexelValues;
-</span></span><span style="display:flex;"><span>		extraColumnTexelValues.x <span style="color:#f92672">=</span> texelFetch(u_depthBuffer,
-</span></span><span style="display:flex;"><span>                                              previousLevelBaseTexelCoord <span style="color:#f92672">+</span> <span style="color:#66d9ef">ivec2</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">0</span>),
-</span></span><span style="display:flex;"><span>                                              u_previousLevel).r;
-</span></span><span style="display:flex;"><span>		extraColumnTexelValues.y <span style="color:#f92672">=</span> texelFetch(u_depthBuffer,
-</span></span><span style="display:flex;"><span>                                              previousLevelBaseTexelCoord <span style="color:#f92672">+</span> <span style="color:#66d9ef">ivec2</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">1</span>),
-</span></span><span style="display:flex;"><span>                                              u_previousLevel).r;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// In the case where the width and height are both odd, need to include the</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// &#39;corner&#39; value as well.</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (shouldIncludeExtraRowFromPreviousLevel) 
-</span></span><span style="display:flex;"><span>		{
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">float</span> cornerTexelValue <span style="color:#f92672">=</span> texelFetch(u_depthBuffer,
-</span></span><span style="display:flex;"><span>                                                previousLevelBaseTexelCoord <span style="color:#f92672">+</span> <span style="color:#66d9ef">ivec2</span>(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>),
-</span></span><span style="display:flex;"><span>                                                u_previousLevel).r;
-</span></span><span style="display:flex;"><span>			minDepth <span style="color:#f92672">=</span> min(minDepth, cornerTexelValue);
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		minDepth <span style="color:#f92672">=</span> min(minDepth, min(extraColumnTexelValues.x, extraColumnTexelValues.y));
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (shouldIncludeExtraRowFromPreviousLevel) 
-</span></span><span style="display:flex;"><span>	{
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">vec2</span> extraRowTexelValues;
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		extraRowTexelValues.x <span style="color:#f92672">=</span> texelFetch(u_depthBuffer,
-</span></span><span style="display:flex;"><span>                                           previousLevelBaseTexelCoord <span style="color:#f92672">+</span> <span style="color:#66d9ef">ivec2</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span>),
-</span></span><span style="display:flex;"><span>                                           u_previousLevel).r;
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		extraRowTexelValues.y <span style="color:#f92672">=</span> texelFetch(u_depthBuffer,
-</span></span><span style="display:flex;"><span>                                           previousLevelBaseTexelCoord <span style="color:#f92672">+</span> <span style="color:#66d9ef">ivec2</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>),
-</span></span><span style="display:flex;"><span>                                           u_previousLevel).r;
-</span></span><span style="display:flex;"><span>		
-</span></span><span style="display:flex;"><span>		minDepth <span style="color:#f92672">=</span> min(minDepth, min(extraRowTexelValues.x, extraRowTexelValues.y));
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gl_FragDepth是一个float类型的变量，它表示对应像素的z值。这个z值是在纹理空间中的z值，也就是深度值。</span>
-</span></span><span style="display:flex;"><span>	gl_FragDepth <span style="color:#f92672">=</span> minDepth;
-</span></span><span style="display:flex;"><span>}
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>层次化Z缓冲区拣选算法学习笔记 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Hierarchical z-buffer culling"><meta property="og:url" content="http://www.xionggf.com/post/cg/hierarchical_z_buffer_occlusion_culling/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="层次化Z缓冲区拣选算法学习笔记"><meta property="og:description" content="Hierarchical z-buffer culling"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2024-12-25T20:36:51+08:00"><meta property="article:modified_time" content="2024-12-25T20:36:51+08:00"><meta property="article:tag" content="Hiz"><meta property="article:tag" content="Culling"><meta property="article:tag" content="CG"><meta itemprop=name content="层次化Z缓冲区拣选算法学习笔记"><meta itemprop=description content="Hierarchical z-buffer culling"><meta itemprop=datePublished content="2024-12-25T20:36:51+08:00"><meta itemprop=dateModified content="2024-12-25T20:36:51+08:00"><meta itemprop=wordCount content="2316"><meta itemprop=keywords content="CG"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>层次化Z缓冲区拣选算法学习笔记</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2024-12-25T20:36:51+08:00>December 25, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/cg/ rel=category>CG</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/hiz/ rel=tag>Hiz</a>,
+<a class=meta-tags__link href=/tags/culling/ rel=tag>Culling</a>,
+<a class=meta-tags__link href=/tags/cg/ rel=tag>CG</a></span></div></div><h1 class=entry__title>层次化Z缓冲区拣选算法学习笔记</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#1-nick-darnell的hiz算法总结和分析笔记>1 Nick Darnell的Hiz算法总结和分析笔记</a><ul><li><a href=#11-层次化z缓冲区hierarchical-z-bufferhiz剔除步骤>1.1 层次化Z缓冲区（Hierarchical Z-buffer,HiZ）剔除步骤</a></li><li><a href=#12-对分层z缓冲区进行降采样的hlsl代码>1.2 对分层Z缓冲区进行降采样的HLSL代码</a></li><li><a href=#13-层次化z缓冲区的剔除核心算法>1.3 层次化Z缓冲区的剔除核心算法</a></li><li><a href=#14-hierarchical-z-buffer-occlusion-culling---shadows>1.4 Hierarchical Z-Buffer Occlusion Culling - Shadows</a></li></ul></li><li><a href=#2-mike-turizin的hierarchical-depth-buffer读书笔记>2 Mike Turizin的《Hierarchical Depth Buffer》读书笔记</a><ul><li><a href=#21-概述>2.1 概述</a></li><li><a href=#22-介绍>2.2 介绍</a></li><li><a href=#23-技术-1生成完整的-mip-链>2.3 技术 1：生成完整的 Mip 链</a></li></ul></li></ul><ul><li><a href=#参考资料>参考资料</a></li></ul></nav></details><div class=entry__content><h2 id=1-nick-darnell的hiz算法总结和分析笔记>1 Nick Darnell的Hiz算法总结和分析笔记</h2><p>基于<strong>层次化Z缓冲区的遮挡拣选</strong>（<strong>Hierarchical Z-buffer occlusion culling</strong>）的实现方式有多种，其中有一种是基于论文<a href=http://developer.amd.com/documentation/presentations/legacy/Chapter03-SBOT-March_of_The_Froblins.pdf>Real-Time Rendering (Section 3.3.3)</a>。</p><h3 id=11-层次化z缓冲区hierarchical-z-bufferhiz剔除步骤>1.1 层次化Z缓冲区（Hierarchical Z-buffer,HiZ）剔除步骤</h3><ol><li>让美术准备好用来遮挡住其他物体的<strong>遮挡体</strong>（<strong>occlusion geometry</strong>）</li><li>CPU端：获取到所有的遮挡体，且将在视截体之外的给剔除掉</li><li>GPU端：把上一步剔除剩下的遮挡体，将其深度值渲染到深度缓冲区D-RT0</li><li>GPU端：对D-RT0进行采样，并填充整个mipchain</li><li>CPU端：对当前场景中的所有可见物体，获取到其物体的包围球</li><li>GPU端：把上一步获取到的物体包围球，计算该包围球对应的屏幕空间宽度，然后使用该宽度计算 mip 级别，从步骤 4 中生成HiZ 贴图中进行采样</li><li>CPU端：读回计算着色器的缓冲区输出</li></ol><h3 id=12-对分层z缓冲区进行降采样的hlsl代码>1.2 对分层Z缓冲区进行降采样的HLSL代码</h3><p>上述步骤中的第4步用到的降采样的方式如下：</p><blockquote><p>取当前的，右边一个、下方一个和右下方一个像素进行比较，取其值最大者，作为降采样像素中的新深度值。下面两个图是降采样前后版本的示例，黑色表示较近的深度，像素越白，深度值越远/越高。</p></blockquote><p><img src=https://res.cloudinary.com/dirrplkr6/image/upload/v1427406831/hiz_before_ds_g8yhb1.png alt=降采样之前></p><p><img src=https://res.cloudinary.com/dirrplkr6/image/upload/v1427406831/hiz_after_ds_xbliml.png alt=降采样之后></p><p>降采样HLSL代码如下所示</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>float4</span> vTexels<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>vTexels<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> LastMip<span style=color:#1f2328>.</span>Load<span style=color:#1f2328>(</span> nCoords <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>vTexels<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> LastMip<span style=color:#1f2328>.</span>Load<span style=color:#1f2328>(</span> nCoords<span style=color:#1f2328>,</span> <span style=color:#cf222e>uint2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>vTexels<span style=color:#1f2328>.</span>z <span style=color:#0550ae>=</span> LastMip<span style=color:#1f2328>.</span>Load<span style=color:#1f2328>(</span> nCoords<span style=color:#1f2328>,</span> <span style=color:#cf222e>uint2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span><span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>vTexels<span style=color:#1f2328>.</span>w <span style=color:#0550ae>=</span> LastMip<span style=color:#1f2328>.</span>Load<span style=color:#1f2328>(</span> nCoords<span style=color:#1f2328>,</span> <span style=color:#cf222e>uint2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span><span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>);</span> 
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> fMaxDepth <span style=color:#0550ae>=</span> <span style=color:#6639ba>max</span><span style=color:#1f2328>(</span> <span style=color:#6639ba>max</span><span style=color:#1f2328>(</span> vTexels<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> vTexels<span style=color:#1f2328>.</span>y <span style=color:#1f2328>),</span> <span style=color:#6639ba>max</span><span style=color:#1f2328>(</span> vTexels<span style=color:#1f2328>.</span>z<span style=color:#1f2328>,</span> vTexels<span style=color:#1f2328>.</span>w <span style=color:#1f2328>)</span> <span style=color:#1f2328>);</span>
+</span></span></code></pre></div><h3 id=13-层次化z缓冲区的剔除核心算法>1.3 层次化Z缓冲区的剔除核心算法</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>cbuffer CB
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    matrix View<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    matrix Projection<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    matrix ViewProjection<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    float4 FrustumPlanes<span style=color:#1f2328>[</span><span style=color:#0550ae>6</span><span style=color:#1f2328>];</span>  <span style=color:#57606a>// 视截体的6个面，基于世界坐标，每个面的法线朝外
+</span></span></span><span style=display:flex><span>    float2 ViewportSize<span style=color:#1f2328>;</span>    <span style=color:#57606a>// 视口的高和宽，基于像素
+</span></span></span><span style=display:flex><span>    float2 PADDING<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#57606a>// GPU只读的缓冲区，因为声明了使用t0着色器，故而每一个点是一个float4
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// float4的xyz分量记录了包围球的球心坐标，w分量记录了球的半径。基于
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// 世界坐标系
+</span></span></span><span style=display:flex><span>StructuredBuffer <span style=color:#900;font-weight:700>Buffer0</span>		<span style=color:#1f2328>:</span> <span style=color:#cf222e>register</span><span style=color:#1f2328>(</span>t0<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// Is Visible 1 (Visible) 0 (Culled)
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// GPU可读写的缓冲区，每一个点是一个uint，值为1时该点可视，0时该点不可视
+</span></span></span><span style=display:flex><span>RWStructuredBuffer <span style=color:#900;font-weight:700>BufferOut</span>	<span style=color:#1f2328>:</span> <span style=color:#cf222e>register</span><span style=color:#1f2328>(</span>u0<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>Texture2D <span style=color:#900;font-weight:700>HizMap</span>				<span style=color:#1f2328>:</span> <span style=color:#cf222e>register</span><span style=color:#1f2328>(</span>t1<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>SamplerState <span style=color:#900;font-weight:700>HizMapSampler</span>		<span style=color:#1f2328>:</span> <span style=color:#cf222e>register</span><span style=color:#1f2328>(</span>s0<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 计算给定的点vPoint到平面方程的距离
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// vPlane: 四个xyzw分量，分别包含了平面方程的四个系数abcd: ax + by + cz = d
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// vPoint: Point to be tested against the plane.
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>float</span> <span style=color:#6639ba>DistanceToPlane</span><span style=color:#1f2328>(</span> float4 vPlane<span style=color:#1f2328>,</span> float3 vPoint <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> dot<span style=color:#1f2328>(</span>float4<span style=color:#1f2328>(</span>vPoint<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>),</span> vPlane<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#57606a>// Frustum cullling on a sphere. Returns &gt; 0 if visible, &lt;= 0 otherwise
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>float</span> <span style=color:#6639ba>CullSphere</span><span style=color:#1f2328>(</span> float4 vPlanes<span style=color:#1f2328>[</span><span style=color:#0550ae>6</span><span style=color:#1f2328>],</span> float3 vCenter<span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span> fRadius <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>   <span style=color:#57606a>// 取出包围球球心vCenter到视截体01平面，即上下平面的距离值的小值
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>// 取出包围球球心vCenter到视截体23平面，即左右平面的距离值的小值
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>// 取出包围球球心vCenter到视截体45平面，即前后平面的距离值的小值
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>// 然后三个最小值中的最小值，和包围球的半径相加，大于0者表示球在视截体内，可视，小于等于0者表示在外，不可视
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>float</span> dist01 <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>DistanceToPlane<span style=color:#1f2328>(</span>vPlanes<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>],</span> vCenter<span style=color:#1f2328>),</span> DistanceToPlane<span style=color:#1f2328>(</span>vPlanes<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>],</span> vCenter<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>float</span> dist23 <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>DistanceToPlane<span style=color:#1f2328>(</span>vPlanes<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>],</span> vCenter<span style=color:#1f2328>),</span> DistanceToPlane<span style=color:#1f2328>(</span>vPlanes<span style=color:#1f2328>[</span><span style=color:#0550ae>3</span><span style=color:#1f2328>],</span> vCenter<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>float</span> dist45 <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>DistanceToPlane<span style=color:#1f2328>(</span>vPlanes<span style=color:#1f2328>[</span><span style=color:#0550ae>4</span><span style=color:#1f2328>],</span> vCenter<span style=color:#1f2328>),</span> DistanceToPlane<span style=color:#1f2328>(</span>vPlanes<span style=color:#1f2328>[</span><span style=color:#0550ae>5</span><span style=color:#1f2328>],</span> vCenter<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>return</span> min<span style=color:#1f2328>(</span>min<span style=color:#1f2328>(</span>dist01<span style=color:#1f2328>,</span> dist23<span style=color:#1f2328>),</span> dist45<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> fRadius<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// SV_GroupID:	表示当前工作组在整个调度网格中的ID
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//				该ID唯一标识调度网格中的每个工作组。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//				用于在全局范围上确定工作组的唯一位置，
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//				例如在调度多个工作组时， SV_GroupID可以帮助定位某个工作组的全局位置。
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>[</span>numthreads<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> CSMain<span style=color:#1f2328>(</span>uint3 <span style=color:#900;font-weight:700>GroupId</span>			<span style=color:#1f2328>:</span> SV_GroupID<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>			uint3 <span style=color:#900;font-weight:700>DispatchThreadId</span>	<span style=color:#1f2328>:</span> SV_DispatchThreadID<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>			uint <span style=color:#900;font-weight:700>GroupIndex</span>			<span style=color:#1f2328>:</span> SV_GroupIndex<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// Calculate the actual index this thread in this group will be reading from.
+</span></span></span><span style=display:flex><span>	<span style=color:#57606a>// SV_DispatchThreadID语意，表示当前线程在所属的工作组内的局部ID
+</span></span></span><span style=display:flex><span>	<span style=color:#57606a>// 如果在C#层，Dispatch(kernelIndex, 10, 10, 1) 被调用，
+</span></span></span><span style=display:flex><span>	<span style=color:#57606a>// 并且在计算着色器中定义了numthreads(8, 8, 1)
+</span></span></span><span style=display:flex><span>	<span style=color:#57606a>// 那么 SV_DispatchThreadID 将会表示 从0到79的X和Y维度上所有线程的全局ID。
+</span></span></span><span style=display:flex><span>	<span style=color:#cf222e>int</span> index <span style=color:#0550ae>=</span> DispatchThreadId<span style=color:#1f2328>.</span>x<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 取到第index个物体包围球的球心和半径Bounding sphere center (XYZ) and radius (W), world space
+</span></span></span><span style=display:flex><span>	float4 Bounds <span style=color:#0550ae>=</span> Buffer0<span style=color:#1f2328>[</span>index<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 拣选出在视野之内的包围球
+</span></span></span><span style=display:flex><span>	<span style=color:#cf222e>float</span> fVisible <span style=color:#0550ae>=</span> CullSphere<span style=color:#1f2328>(</span>FrustumPlanes<span style=color:#1f2328>,</span> Bounds<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>,</span> Bounds<span style=color:#1f2328>.</span>w<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>fVisible <span style=color:#0550ae>&gt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 拿到摄像机的坐标，算出摄像机到球心的距离
+</span></span></span><span style=display:flex><span>		float3 viewEye <span style=color:#0550ae>=</span> <span style=color:#0550ae>-</span>View<span style=color:#1f2328>.</span>_m03_m13_m23<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		<span style=color:#cf222e>float</span> CameraSphereDistance <span style=color:#0550ae>=</span> distance<span style=color:#1f2328>(</span> viewEye<span style=color:#1f2328>,</span> Bounds<span style=color:#1f2328>.</span>xyz <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		float3 viewEyeSphereDirection <span style=color:#0550ae>=</span> viewEye <span style=color:#0550ae>-</span> Bounds<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		float3 viewUp <span style=color:#0550ae>=</span> View<span style=color:#1f2328>.</span>_m01_m11_m21<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		float3 viewDirection <span style=color:#0550ae>=</span> View<span style=color:#1f2328>.</span>_m02_m12_m22<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		float3 viewRight <span style=color:#0550ae>=</span> normalize<span style=color:#1f2328>(</span>cross<span style=color:#1f2328>(</span>viewEyeSphereDirection<span style=color:#1f2328>,</span> viewUp<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// Help handle perspective distortion.
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// http://article.gmane.org/gmane.games.devel.algorithms/21697/
+</span></span></span><span style=display:flex><span>		<span style=color:#cf222e>float</span> fRadius <span style=color:#0550ae>=</span> CameraSphereDistance <span style=color:#0550ae>*</span> tan<span style=color:#1f2328>(</span>asin<span style=color:#1f2328>(</span>Bounds<span style=color:#1f2328>.</span>w <span style=color:#0550ae>/</span> CameraSphereDistance<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// Compute the offsets for the points around the sphere
+</span></span></span><span style=display:flex><span>		float3 vUpRadius <span style=color:#0550ae>=</span> viewUp <span style=color:#0550ae>*</span> fRadius<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		float3 vRightRadius <span style=color:#0550ae>=</span> viewRight <span style=color:#0550ae>*</span> fRadius<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// Generate the 4 corners of the sphere in world space.
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 算出包围球的外接包围盒的四个顶点
+</span></span></span><span style=display:flex><span>		float4 vCorner0WS <span style=color:#0550ae>=</span> float4<span style=color:#1f2328>(</span> Bounds<span style=color:#1f2328>.</span>xyz <span style=color:#0550ae>+</span> vUpRadius <span style=color:#0550ae>-</span> vRightRadius<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span> <span style=color:#1f2328>);</span> <span style=color:#57606a>// Top-Left
+</span></span></span><span style=display:flex><span>		float4 vCorner1WS <span style=color:#0550ae>=</span> float4<span style=color:#1f2328>(</span> Bounds<span style=color:#1f2328>.</span>xyz <span style=color:#0550ae>+</span> vUpRadius <span style=color:#0550ae>+</span> vRightRadius<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span> <span style=color:#1f2328>);</span> <span style=color:#57606a>// Top-Right
+</span></span></span><span style=display:flex><span>		float4 vCorner2WS <span style=color:#0550ae>=</span> float4<span style=color:#1f2328>(</span> Bounds<span style=color:#1f2328>.</span>xyz <span style=color:#0550ae>-</span> vUpRadius <span style=color:#0550ae>-</span> vRightRadius<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span> <span style=color:#1f2328>);</span> <span style=color:#57606a>// Bottom-Left
+</span></span></span><span style=display:flex><span>		float4 vCorner3WS <span style=color:#0550ae>=</span> float4<span style=color:#1f2328>(</span> Bounds<span style=color:#1f2328>.</span>xyz <span style=color:#0550ae>-</span> vUpRadius <span style=color:#0550ae>+</span> vRightRadius<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span> <span style=color:#1f2328>);</span> <span style=color:#57606a>// Bottom-Right
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// Project the 4 corners of the sphere into clip space
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 变换4个角的坐标，从世界坐标变换到裁剪坐标
+</span></span></span><span style=display:flex><span>		float4 vCorner0CS <span style=color:#0550ae>=</span> mul<span style=color:#1f2328>(</span>ViewProjection<span style=color:#1f2328>,</span> vCorner0WS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		float4 vCorner1CS <span style=color:#0550ae>=</span> mul<span style=color:#1f2328>(</span>ViewProjection<span style=color:#1f2328>,</span> vCorner1WS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		float4 vCorner2CS <span style=color:#0550ae>=</span> mul<span style=color:#1f2328>(</span>ViewProjection<span style=color:#1f2328>,</span> vCorner2WS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		float4 vCorner3CS <span style=color:#0550ae>=</span> mul<span style=color:#1f2328>(</span>ViewProjection<span style=color:#1f2328>,</span> vCorner3WS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// Convert the corner points from clip space to normalized device coordinates
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 再把四个角的坐标从裁剪空间变换到NDC
+</span></span></span><span style=display:flex><span>		float2 vCorner0NDC <span style=color:#0550ae>=</span> vCorner0CS<span style=color:#1f2328>.</span>xy <span style=color:#0550ae>/</span> vCorner0CS<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		float2 vCorner1NDC <span style=color:#0550ae>=</span> vCorner1CS<span style=color:#1f2328>.</span>xy <span style=color:#0550ae>/</span> vCorner1CS<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		float2 vCorner2NDC <span style=color:#0550ae>=</span> vCorner2CS<span style=color:#1f2328>.</span>xy <span style=color:#0550ae>/</span> vCorner2CS<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		float2 vCorner3NDC <span style=color:#0550ae>=</span> vCorner3CS<span style=color:#1f2328>.</span>xy <span style=color:#0550ae>/</span> vCorner3CS<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		vCorner0NDC <span style=color:#0550ae>=</span> float2<span style=color:#1f2328>(</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>-</span><span style=color:#0550ae>0.5</span> <span style=color:#1f2328>)</span> <span style=color:#0550ae>*</span> vCorner0NDC <span style=color:#0550ae>+</span> float2<span style=color:#1f2328>(</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.5</span> <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		vCorner1NDC <span style=color:#0550ae>=</span> float2<span style=color:#1f2328>(</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>-</span><span style=color:#0550ae>0.5</span> <span style=color:#1f2328>)</span> <span style=color:#0550ae>*</span> vCorner1NDC <span style=color:#0550ae>+</span> float2<span style=color:#1f2328>(</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.5</span> <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		vCorner2NDC <span style=color:#0550ae>=</span> float2<span style=color:#1f2328>(</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>-</span><span style=color:#0550ae>0.5</span> <span style=color:#1f2328>)</span> <span style=color:#0550ae>*</span> vCorner2NDC <span style=color:#0550ae>+</span> float2<span style=color:#1f2328>(</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.5</span> <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		vCorner3NDC <span style=color:#0550ae>=</span> float2<span style=color:#1f2328>(</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>-</span><span style=color:#0550ae>0.5</span> <span style=color:#1f2328>)</span> <span style=color:#0550ae>*</span> vCorner3NDC <span style=color:#0550ae>+</span> float2<span style=color:#1f2328>(</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.5</span> <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// In order to have the sphere covering at most 4 texels, we need to use
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// the entire width of the rectangle, instead of only the radius of the rectangle,
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// which was the original implementation in the ATI paper, it had some edge case
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// failures I observed from being overly conservative.
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 为了让球体覆盖最多 4 个纹素，我们需要使用矩形的整个宽度，
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 而不是仅使用矩形的半径，这是 ATI 论文中的原始实现，我观
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 察到它由于过于保守而导致了一些边缘情况失败。
+</span></span></span><span style=display:flex><span>		<span style=color:#cf222e>float</span> fSphereWidthNDC <span style=color:#0550ae>=</span> distance<span style=color:#1f2328>(</span> vCorner0NDC<span style=color:#1f2328>,</span> vCorner1NDC <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// Compute the center of the bounding sphere in screen space
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 在屏幕空间中计算出包围球球心
+</span></span></span><span style=display:flex><span>		float3 Cv <span style=color:#0550ae>=</span> mul<span style=color:#1f2328>(</span> View<span style=color:#1f2328>,</span> float4<span style=color:#1f2328>(</span> Bounds<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span> <span style=color:#1f2328>)</span> <span style=color:#1f2328>).</span>xyz<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// compute nearest point to camera on sphere, and project it
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 计算球体上距离相机最近的点，并将其投影
+</span></span></span><span style=display:flex><span>		float3 Pv <span style=color:#0550ae>=</span> Cv <span style=color:#0550ae>-</span> normalize<span style=color:#1f2328>(</span> Cv <span style=color:#1f2328>)</span> <span style=color:#0550ae>*</span> Bounds<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		float4 ClosestSpherePoint <span style=color:#0550ae>=</span> mul<span style=color:#1f2328>(</span> Projection<span style=color:#1f2328>,</span> float4<span style=color:#1f2328>(</span> Pv<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span> <span style=color:#1f2328>)</span> <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// Choose a MIP level in the HiZ map.
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// The original assumed viewport width &gt; height, however I&#39;ve changed it
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// to determine the greater of the two.
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>//在 HiZ 图中选择一个 MIP 级别。
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 最初假设视口宽度 &gt; 高度，但我已将其更改为确定两者中较大的一个。
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// This will result in a mip level where the object takes up at most
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 2x2 texels such that the 4 sampled points have depths to compare
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// against.
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 这将导致 mip 级别，其中对象最多占用 2x2 个纹素，以便 4 个采样点具有可供比较的深度。
+</span></span></span><span style=display:flex><span>		<span style=color:#cf222e>float</span> W <span style=color:#0550ae>=</span> fSphereWidthNDC <span style=color:#0550ae>*</span> max<span style=color:#1f2328>(</span>ViewportSize<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> ViewportSize<span style=color:#1f2328>.</span>y<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		<span style=color:#cf222e>float</span> fLOD <span style=color:#0550ae>=</span> ceil<span style=color:#1f2328>(</span>log2<span style=color:#1f2328>(</span> W <span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// fetch depth samples at the corners of the square to compare against
+</span></span></span><span style=display:flex><span>		<span style=color:#57606a>// 采样
+</span></span></span><span style=display:flex><span>		float4 vSamples<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		vSamples<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> HizMap<span style=color:#1f2328>.</span>SampleLevel<span style=color:#1f2328>(</span> HizMapSampler<span style=color:#1f2328>,</span> vCorner0NDC<span style=color:#1f2328>,</span> fLOD <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		vSamples<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> HizMap<span style=color:#1f2328>.</span>SampleLevel<span style=color:#1f2328>(</span> HizMapSampler<span style=color:#1f2328>,</span> vCorner1NDC<span style=color:#1f2328>,</span> fLOD <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		vSamples<span style=color:#1f2328>.</span>z <span style=color:#0550ae>=</span> HizMap<span style=color:#1f2328>.</span>SampleLevel<span style=color:#1f2328>(</span> HizMapSampler<span style=color:#1f2328>,</span> vCorner2NDC<span style=color:#1f2328>,</span> fLOD <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		vSamples<span style=color:#1f2328>.</span>w <span style=color:#0550ae>=</span> HizMap<span style=color:#1f2328>.</span>SampleLevel<span style=color:#1f2328>(</span> HizMapSampler<span style=color:#1f2328>,</span> vCorner3NDC<span style=color:#1f2328>,</span> fLOD <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#cf222e>float</span> fMaxSampledDepth <span style=color:#0550ae>=</span> max<span style=color:#1f2328>(</span> max<span style=color:#1f2328>(</span> vSamples<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> vSamples<span style=color:#1f2328>.</span>y <span style=color:#1f2328>),</span> max<span style=color:#1f2328>(</span> vSamples<span style=color:#1f2328>.</span>z<span style=color:#1f2328>,</span> vSamples<span style=color:#1f2328>.</span>w <span style=color:#1f2328>)</span> <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		<span style=color:#cf222e>float</span> fSphereDepth <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>ClosestSpherePoint<span style=color:#1f2328>.</span>z <span style=color:#0550ae>/</span> ClosestSpherePoint<span style=color:#1f2328>.</span>w<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// cull sphere if the depth is greater than the largest of our HiZ map values
+</span></span></span><span style=display:flex><span>		BufferOut<span style=color:#1f2328>[</span>index<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>fSphereDepth <span style=color:#0550ae>&gt;</span> fMaxSampledDepth<span style=color:#1f2328>)</span> <span style=color:#0550ae>?</span> <span style=color:#0550ae>0</span> <span style=color:#0550ae>:</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>	<span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// The sphere is outside of the view frustum
+</span></span></span><span style=display:flex><span> 		BufferOut<span style=color:#1f2328>[</span>index<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=14-hierarchical-z-buffer-occlusion-culling---shadows>1.4 Hierarchical Z-Buffer Occlusion Culling - Shadows</h3><p>Stephen Hill解释了如何使用分层Z缓冲区遮挡剔除算法从场景中剔除阴影。他们参考了论文<a href=http://gamma.cs.unc.edu/CCSV/ccsvEGSR04.pdf>CC Shadow Volumes</a>的一些思想，但解决方案更为简单。</p><p>剔除掉阴影的方式和步骤如下：</p><ol><li>从玩家视角创建Hi-Z buffer，命名为<code>Player-HZB</code></li><li>从产生阴影的透射光的视角创建Hi-Z buffer，命名为<code>Light-HZB</code></li><li>使用<code>Light-HZB</code>剔除投射阴影的物体。如果物体被剔除，则将其标记为被剔除。</li><li>如果对象未被剔除，需要计算其阴影体积范围的粗略近似值。可以将此体积视为包围盒 (A-D) 上的最小深度点和从这些点投射到<code>Light-HZB</code> (E-H) 上的最大采样深度（如下面的图1所示）。有了阴影的bouding volume，可以将该volume变换到玩家视角的观察空间，并根据<code>Player-HZB</code>对其进行测试（如下面的图2所示）。如果您看不到体积，表示该产生阴影的物体被剔除，否则将其视为可见。</li></ol><p><img src=https://res.cloudinary.com/dirrplkr6/image/upload/v1427406770/hiz_shadow_1_ayxsak.jpg alt=图1></p><p><img src=https://res.cloudinary.com/dirrplkr6/image/upload/v1427406770/from_eye_weujba.png alt=图2></p></br><hr></br><h2 id=2-mike-turizin的hierarchical-depth-buffer读书笔记>2 Mike Turizin的《Hierarchical Depth Buffer》读书笔记</h2><h3 id=21-概述>2.1 概述</h3><p><strong>分层深度（Z）缓冲区</strong>（Hierarchical depth（Z） buffer）是一种<strong>多级深度 (Z) 缓冲区</strong>（multi-level depth (Z) buffer ），通常简称为<strong>Hi-Z</strong>。使用此技术可以加速深度值查询。与普通纹理 mipmap 一样，每个mipmap级别的尺寸，通常是<strong>全分辨率缓冲区尺寸的连续2次幂分数</strong>。接下来介绍了两种从全分辨率缓冲区生成分层深度缓冲区的技术：</p><ol><li>首先将展示如何为深度缓冲区生成完整的mipmap，以便即使深度缓冲区的高宽不是2的幂，也能在纹理坐标 (或 NDC) 空间中保持深度查询的准确性。</li><li>其次对于只需要一个<strong>降采样级别</strong>（a single downsampled level）的情况，将展示如何使用调用单个计算着色器来生成此级别，该调用使用工作组共享内存中的原子操作。这会提速很多。</li></ol><h3 id=22-介绍>2.2 介绍</h3><p>分层式深度缓冲区可以用在<strong>加速遮挡剔除</strong>（<strong>accelerate occlusion culling</strong>）、<strong>屏幕空间反射</strong>（<strong>screen-space reflections</strong>）、<strong>屏幕空间环境光遮蔽</strong>（<strong>screen-space ambient occlusion</strong>）、<strong>体积雾</strong>（ <strong>volumetric fog</strong>）等的实现。</p><p>Hi-Z的总体思路是”通过从<strong>低分辨率</strong>缓冲区读取数据来加速深度查询“。这比从全分辨率的深度缓冲区读取数据更快，这是因为：</p><ol><li><strong>低分辨率</strong>（<strong>reduced-resolution</strong>）缓冲区中的单个纹素（或仅仅几个纹素），可代替全分辨率缓冲区的多个纹素。</li><li>低分辨率的缓冲区可以足够小，以适合存放在快速缓存中，从而可以加快查找，特别是加快<strong>随机访问查找</strong>（<strong>random-access lookup</strong>）。</li></ol><p>一般地，在某一级别mipmap下的Hiz缓冲区中的某个纹素，存储的是<strong>它从上一个mipmap级别中归纳（subsume）出来的所有纹素的极大值或者极小值</strong>，或者两者都存储。而不是存储归纳出来的所有纹素的算术平均值。这是因为平均深度对于需要的查询类型基本无用。</p><p>Hi-Z 缓冲区最常见的查询方式是<strong>提前退出</strong>（early out），即已知条件不满足的情况下，避免进一步处理。尤其是在全分辨率缓冲区中进行更精确的查找。如果深度缓冲区是一个非反向式（non-reversed）的深度缓冲区，即深度值越大，表示离当前摄像机越远，最远处为1。这样子可以快速确定屏幕空间位置是否确实被深度缓冲区遮挡——如果待判断的片元，其Z值大于Hi-Z中的纹素值，则表示该片元点落在HiZ遮挡之后，表示被遮挡了。</p><h3 id=23-技术-1生成完整的-mip-链>2.3 技术 1：生成完整的 Mip 链</h3><p>许多 Hi-Z 应用程序需要完整的深度缓冲区 mipmap 链。例如，Hi-Z 遮挡剔除的工作原理是：<strong>把物体的包围盒投影到屏幕空间，并使用投影的大小来选择合适的 mipmap 级别，这样子以便每个遮挡测试访问固定数量的纹素</strong>。</p><p>从全分辨率深度缓冲区生成 mipmap链是很简单的：<strong>对于级别 N 中的每个纹素，获取先前生成的级别 N-1 中相应的 4 个纹素 的最大值或者最小值。连续执行此过程（每次将两个维度减半），直到生成最终的 1x1 mip 级别。</strong> 但是，对于非2的幂维度的深度缓冲区，情况要复杂得多。因为需要按屏幕分辨率的尺寸构建 Hi-Z缓冲区（屏幕分辨率的尺寸通常很少是 2 的幂），所以需要考虑上这种非2的幂的情况。</p><p>首先确定深度缓冲区 mipmap 级别的每个纹素中的值应该表示什么。在此，假设mipmap中存储的是上一级的4个纹素的最小值。</p><p>So when we get the value of a particular texel in mip level N, what does its value signify, precisely? It should be the min of all texels in the full-res depth buffer that occupy the same footprint in (normalized) texture coordinate space.
+那么，当我们在 mip 级别 N 中获取特定纹素的值时，它的值究竟意味着什么？它应该是 min 全分辨率深度缓冲区中所有纹素的，这些纹素在 （规范化） 纹理坐标空间中占用相同的占用空间。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#cf222e>uniform</span> <span style=color:#cf222e>sampler2D</span> u_depthBuffer<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>uniform</span> <span style=color:#cf222e>int</span> u_previousLevel<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>uniform</span> <span style=color:#cf222e>ivec2</span> u_previousLevelDimensions<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> main<span style=color:#1f2328>()</span> 
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// https://zhuanlan.zhihu.com/p/102068376</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// gl_FragCoord 表示当前片元着色器处理的候选片元窗口相对坐标信息，</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 是一个 vec4 类型的变量 (x, y, z, 1/w)， 其中 x, y 是当前片元的窗口坐标，</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// OpenGL 默认以窗口左下角为原点， 在着色器中通过布局限定符可以重新设定原点，</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 比如窗口左上角为原点 origin_upper_left，窗口大小由 glViewport() 函数指定。</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// x, y 默认是像素中心而非整数，原点的窗口坐标值为 (0.5, 0.5), 小数部分恒为0.5，</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 当viewport 范围 为（0，0，800，600）时， x, y 的取值范围为</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>//（0.5, 0.5, 799.5, 599.5), 当在着色器中布局限定符设置为 pixel_center_integer 时，</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// x, y 取值为整数。第三个分量 z 表示的是当前片元的深度信息，由 vertex shader 处理过后系统插值得到</span>
+</span></span><span style=display:flex><span>	
+</span></span><span style=display:flex><span>	<span style=color:#cf222e>ivec2</span> thisLevelTexelCoord <span style=color:#0550ae>=</span> <span style=color:#cf222e>ivec2</span><span style=color:#1f2328>(</span>gl_FragCoord<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>	<span style=color:#cf222e>ivec2</span> previousLevelBaseTexelCoord <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span> <span style=color:#0550ae>*</span> thisLevelTexelCoord<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 在GLSL环境要想精确地换取每个像素的值，这个时候就不能使用传统的 texture(sampler2d) ，</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 因为采样器sampler2d默认是float精度，而且texture采用函数会涉及归一化、过滤以及插值</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 等复杂操作，基本无法得到某一确切像素的值。texlFetch 是 OpenGL ES 3.0 引入的 API ，</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 它将纹理视为图像，可以精确访问像素的内容，我们可以类比通过索引来获取数组某个元素的值。</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// texelFetch 使用的是未归一化的坐标直接访问纹理中的纹素，不执行任何形式的过滤和插值操作，</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 坐标范围为实际载入纹理图像的宽和高。</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// https://blog.csdn.net/wyq1153/article/details/126191318</span>
+</span></span><span style=display:flex><span>	<span style=color:#cf222e>vec4</span> depthTexelValues<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>	depthTexelValues<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> texelFetch<span style=color:#1f2328>(</span>u_depthBuffer<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                    previousLevelBaseTexelCoord<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                    u_previousLevel<span style=color:#1f2328>).</span>r<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>	depthTexelValues<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> texelFetch<span style=color:#1f2328>(</span>u_depthBuffer<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                    previousLevelBaseTexelCoord <span style=color:#0550ae>+</span> <span style=color:#cf222e>ivec2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>                                    u_previousLevel<span style=color:#1f2328>).</span>r<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>	depthTexelValues<span style=color:#1f2328>.</span>z <span style=color:#0550ae>=</span> texelFetch<span style=color:#1f2328>(</span>u_depthBuffer<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                    previousLevelBaseTexelCoord <span style=color:#0550ae>+</span> <span style=color:#cf222e>ivec2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>                                    u_previousLevel<span style=color:#1f2328>).</span>r<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>	depthTexelValues<span style=color:#1f2328>.</span>w <span style=color:#0550ae>=</span> texelFetch<span style=color:#1f2328>(</span>u_depthBuffer<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                    previousLevelBaseTexelCoord <span style=color:#0550ae>+</span> <span style=color:#cf222e>ivec2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>                                    u_previousLevel<span style=color:#1f2328>).</span>r<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#cf222e>float</span> minDepth <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>min<span style=color:#1f2328>(</span>depthTexelValues<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> depthTexelValues<span style=color:#1f2328>.</span>y<span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>                         min<span style=color:#1f2328>(</span>depthTexelValues<span style=color:#1f2328>.</span>z<span style=color:#1f2328>,</span> depthTexelValues<span style=color:#1f2328>.</span>w<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Incorporate additional texels if the previous level&#39;s width or height (or both)</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// are odd. 判断上一级的mipmap的高宽是不是奇数值</span>
+</span></span><span style=display:flex><span>	<span style=color:#cf222e>bool</span> shouldIncludeExtraColumnFromPreviousLevel <span style=color:#0550ae>=</span> <span style=color:#1f2328>((</span>u_previousLevelDimensions<span style=color:#1f2328>.</span>x <span style=color:#0550ae>&amp;</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>!=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>	<span style=color:#cf222e>bool</span> shouldIncludeExtraRowFromPreviousLevel <span style=color:#0550ae>=</span> <span style=color:#1f2328>((</span>u_previousLevelDimensions<span style=color:#1f2328>.</span>y <span style=color:#0550ae>&amp;</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>!=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>	
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 上一级的mipmap是奇数列</span>
+</span></span><span style=display:flex><span>	<span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>shouldIncludeExtraColumnFromPreviousLevel<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>		<span style=color:#cf222e>vec2</span> extraColumnTexelValues<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		extraColumnTexelValues<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> texelFetch<span style=color:#1f2328>(</span>u_depthBuffer<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                              previousLevelBaseTexelCoord <span style=color:#0550ae>+</span> <span style=color:#cf222e>ivec2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>2</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>                                              u_previousLevel<span style=color:#1f2328>).</span>r<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		extraColumnTexelValues<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> texelFetch<span style=color:#1f2328>(</span>u_depthBuffer<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                              previousLevelBaseTexelCoord <span style=color:#0550ae>+</span> <span style=color:#cf222e>ivec2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>2</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>                                              u_previousLevel<span style=color:#1f2328>).</span>r<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// In the case where the width and height are both odd, need to include the</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// &#39;corner&#39; value as well.</span>
+</span></span><span style=display:flex><span>		<span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>shouldIncludeExtraRowFromPreviousLevel<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>		<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>			<span style=color:#cf222e>float</span> cornerTexelValue <span style=color:#0550ae>=</span> texelFetch<span style=color:#1f2328>(</span>u_depthBuffer<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                                previousLevelBaseTexelCoord <span style=color:#0550ae>+</span> <span style=color:#cf222e>ivec2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>2</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>                                                u_previousLevel<span style=color:#1f2328>).</span>r<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>			minDepth <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>minDepth<span style=color:#1f2328>,</span> cornerTexelValue<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		minDepth <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>minDepth<span style=color:#1f2328>,</span> min<span style=color:#1f2328>(</span>extraColumnTexelValues<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> extraColumnTexelValues<span style=color:#1f2328>.</span>y<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>	<span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>shouldIncludeExtraRowFromPreviousLevel<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>		<span style=color:#cf222e>vec2</span> extraRowTexelValues<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		extraRowTexelValues<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> texelFetch<span style=color:#1f2328>(</span>u_depthBuffer<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                           previousLevelBaseTexelCoord <span style=color:#0550ae>+</span> <span style=color:#cf222e>ivec2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>                                           u_previousLevel<span style=color:#1f2328>).</span>r<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		extraRowTexelValues<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> texelFetch<span style=color:#1f2328>(</span>u_depthBuffer<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                           previousLevelBaseTexelCoord <span style=color:#0550ae>+</span> <span style=color:#cf222e>ivec2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>                                           u_previousLevel<span style=color:#1f2328>).</span>r<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		minDepth <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>minDepth<span style=color:#1f2328>,</span> min<span style=color:#1f2328>(</span>extraRowTexelValues<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> extraRowTexelValues<span style=color:#1f2328>.</span>y<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// gl_FragDepth是一个float类型的变量，它表示对应像素的z值。这个z值是在纹理空间中的z值，也就是深度值。</span>
+</span></span><span style=display:flex><span>	gl_FragDepth <span style=color:#0550ae>=</span> minDepth<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
 </span></span></code></pre></div><p>To put it another way, if a particular texture coordinate (in
 [
 0
@@ -479,10 +279,8 @@
 2
 [0,1]
 2
-） 映射 （使用最近邻筛选） 到全分辨率缓冲区中的特定纹素，则必须考虑该全分辨率纹素，以便在同一 min 纹理坐标也映射到的每个较高 mip 级别中为纹素计算。</p>
-<p>When this correspondence is guaranteed, we know that a lookup in the higher mip levels will never yield a depth value that is &gt; the value of the texel the same texture coordinate maps to in the full-res buffer (level 0). For a particular level N, this guarantee also holds true for all levels under that level (&lt; N).
-当保证这种对应关系时，我们知道在较高 mip 级别中查找永远不会产生深度值，该值&gt;全分辨率缓冲区 （级别 0） 中相同纹理坐标映射到的纹素的值。对于特定的级别 N，此保证也适用于该级别 （&lt; N） 下的所有级别。</p>
-<h1 id="heading">For even level dimensions (which for power-of-2-dimensioned full-res buffers will be the case for every level until a dimension becomes 1), this is easy. In the one-dimensional case, for a texel in level N with index
+） 映射 （使用最近邻筛选） 到全分辨率缓冲区中的特定纹素，则必须考虑该全分辨率纹素，以便在同一 min 纹理坐标也映射到的每个较高 mip 级别中为纹素计算。</p><p>When this correspondence is guaranteed, we know that a lookup in the higher mip levels will never yield a depth value that is > the value of the texel the same texture coordinate maps to in the full-res buffer (level 0). For a particular level N, this guarantee also holds true for all levels under that level (&lt; N).
+当保证这种对应关系时，我们知道在较高 mip 级别中查找永远不会产生深度值，该值>全分辨率缓冲区 （级别 0） 中相同纹理坐标映射到的纹素的值。对于特定的级别 N，此保证也适用于该级别 （&lt; N） 下的所有级别。</p><h1 id=heading>For even level dimensions (which for power-of-2-dimensioned full-res buffers will be the case for every level until a dimension becomes 1), this is easy. In the one-dimensional case, for a texel in level N with index
 i
 i, we need to consider the texels in level N-1 with indices
 2
@@ -497,8 +295,7 @@ D
 N
 [
 i
-]</h1>
-<h1 id="heading-1">min
+]</h1><h1 id=heading-1>min
 (
 D
 N
@@ -545,8 +342,7 @@ D
 N
 [
 i
-]</h1>
-<p>min
+]</h1><p>min
 (
 D
 N
@@ -577,11 +373,9 @@ N−1
 [2i],D
 N−1
 ​
-[2i+1]) .纹素之间有直接的 2 对 1 映射（因此纹理坐标足迹），因为每个级别的尺寸正好是前一个级别的一半。</p>
-<p>Example for even level dimensions: The 6 texels in this level reduce to 3 in the next level up. The texture coordinate footprints of the (3) higher-level texels each overlap exactly 2 texels from the lower level. (Circles are texel centers, and the boxes around them represent texture coordinate footprints when using nearest-neighbor filtering.)
+[2i+1]) .纹素之间有直接的 2 对 1 映射（因此纹理坐标足迹），因为每个级别的尺寸正好是前一个级别的一半。</p><p>Example for even level dimensions: The 6 texels in this level reduce to 3 in the next level up. The texture coordinate footprints of the (3) higher-level texels each overlap exactly 2 texels from the lower level. (Circles are texel centers, and the boxes around them represent texture coordinate footprints when using nearest-neighbor filtering.)
 Example for even level dimensions: The 6 texels in this level reduce to 3 in the next level up. The texture coordinate footprints of the (3) higher-level texels each overlap exactly 2 texels from the lower level. (Circles are texel centers, and the boxes around them represent texture coordinate footprints when using nearest-neighbor filtering.)
-偶数级尺寸示例：此级别中的 6 个纹素在下一个级别中减少到 3 个。（3） 个较高级别的纹素的纹理坐标足迹每个与较低级别正好重叠 2 个纹素。（圆圈是纹素中心，它们周围的框表示使用最近邻筛选时的纹理坐标足迹。</p>
-<h1 id="n">For odd level dimensions (of which there will be at least one for non-power-of-2 full-res dimensions), things are more complicated. For a level N-1 of odd dimension
+偶数级尺寸示例：此级别中的 6 个纹素在下一个级别中减少到 3 个。（3） 个较高级别的纹素的纹理坐标足迹每个与较低级别正好重叠 2 个纹素。（圆圈是纹素中心，它们周围的框表示使用最近邻筛选时的纹理坐标足迹。</p><h1 id=n>For odd level dimensions (of which there will be at least one for non-power-of-2 full-res dimensions), things are more complicated. For a level N-1 of odd dimension
 d
 i
 m
@@ -595,8 +389,7 @@ N−1
 d
 i
 m
-N</h1>
-<p>⌊
+N</h1><p>⌊
 d
 i
 m
@@ -612,8 +405,7 @@ N
 2
 dim
 N−1
-​</p>
-<h1 id="heading-2">​
+​</p><h1 id=heading-2>​
 ⌋, which is
 ≠
 d
@@ -624,12 +416,10 @@ N
 1
 2
 
-​</h1>
-<p>2
+​</h1><p>2
 dim
 N−1
-​</p>
-<h1 id="n-1">​
+​</p><h1 id=n-1>​
 .
 对于奇数级维度（其中至少有一个非 2 次方全分辨率维度），情况要复杂得多。对于奇数维度
 d
@@ -645,8 +435,7 @@ N−1
 d
 i
 m
-N</h1>
-<p>⌊
+N</h1><p>⌊
 d
 i
 m
@@ -662,8 +451,7 @@ N
 2
 dim
 N−1
-​</p>
-<h1 id="heading-3">​
+​</p><h1 id=heading-3>​
 ⌋ ，即
 ≠
 d
@@ -674,25 +462,19 @@ N
 1
 2
 
-​</h1>
-<p>2
+​</h1><p>2
 dim
 N−1
-​</p>
-<p>​
-。</p>
-<p>What this means is that there is no longer a straightforward 2-to-1 mapping of texels in level N-1 to level N. Instead, the texture-coordinate-space footprint of each texel in level N overlaps the footprint of 3 texels in level N-1.
-这意味着，从 N-1 级别到 N 级别中，纹素不再有简单的 2 对 1 映射。相反，级别 N 中每个纹素的纹理坐标空间占用空间与级别 N-1 中 3 个纹素的占用空间重叠。</p>
-<p>Example for odd level dimensions: The 7 texels in this level reduce to 3 in the next level up. The texture coordinate footprints of the (3) higher-level texels each overlap the footprints of 3 texels from the lower level.
+​</p><p>​
+。</p><p>What this means is that there is no longer a straightforward 2-to-1 mapping of texels in level N-1 to level N. Instead, the texture-coordinate-space footprint of each texel in level N overlaps the footprint of 3 texels in level N-1.
+这意味着，从 N-1 级别到 N 级别中，纹素不再有简单的 2 对 1 映射。相反，级别 N 中每个纹素的纹理坐标空间占用空间与级别 N-1 中 3 个纹素的占用空间重叠。</p><p>Example for odd level dimensions: The 7 texels in this level reduce to 3 in the next level up. The texture coordinate footprints of the (3) higher-level texels each overlap the footprints of 3 texels from the lower level.
 Example for odd level dimensions: The 7 texels in this level reduce to 3 in the next level up. The texture coordinate footprints of the (3) higher-level texels each overlap the footprints of 3 texels from the lower level.
-奇数级尺寸示例：此级别中的 7 个纹素在下一级别减少到 3 个。（3） 个较高级别纹素的纹理坐标足迹每个与来自较低级别的 3 个纹素的足迹重叠。</p>
-<h1 id="heading-4">Thus,
+奇数级尺寸示例：此级别中的 7 个纹素在下一级别减少到 3 个。（3） 个较高级别纹素的纹理坐标足迹每个与来自较低级别的 3 个纹素的足迹重叠。</p><h1 id=heading-4>Thus,
 D
 N
 [
 i
-]</h1>
-<h1 id="heading-5">min
+]</h1><h1 id=heading-5>min
 (
 D
 N
@@ -743,8 +525,7 @@ D
 N
 [
 i
-]</h1>
-<p>min
+]</h1><p>min
 (
 D
 N
@@ -789,105 +570,54 @@ N−1
 [2i+1],D
 N−1
 ​
-[2i+2]) .这意味着级别 N-1 中的相同纹素有时会影响级别 N 中 2 个纹素 min 的计算。这对于保持前面描述的对应关系是必要的。</p>
-<p>The above description was done in one dimension for simplicity. For two dimensions, if both dimensions of level N-1 are even, a 2x2 texel region in level N-1 maps to a single texel in level N. If one dimension is odd, then either a 2x3 or 3x2 region in level N-1 maps to a single texel in level N. If both dimensions are odd, then the “corner” texel shared by the row and column extensions must also be considered—so a 3x3 region in level N-1 maps to a single texel in level N.
-为简单起见，上述描述是在一个维度中完成的。对于两个维度，如果级别 N-1 的两个维度是偶数，则级别 N-1 中的 2x2 纹素区域将映射到级别 N 中的单个纹素。如果一个维度为奇数，则级别 N-1 中的 2x3 或 3x2 区域映射到级别 N 中的单个纹素。如果两个维度都是奇数，则还必须考虑行和列扩展共享的“角”纹素，因此 N-1 级中的 3x3 区域映射到 N 级中的单个纹素。</p>
-<h2 id="参考资料">参考资料</h2>
-<ul>
-<li><a href="https://www.nickdarnell.com/hierarchical-z-buffer-occlusion-culling/">Nick Darnell的层次化Z缓冲区遮挡剔除</a></li>
-<li><a href="https://miketuritzin.com/post/hierarchical-depth-buffers/">Hierarchical Depth Buffers</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/416731287">Hierarchical Z-Buffer Occlusion Culling到底该怎么做？</a></li>
-<li></li>
-</ul>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/hiz/">Hiz</a>
-			<a class="entry__tag btn" href="/tags/culling/">Culling</a>
-			<a class="entry__tag btn" href="/tags/cg/">CG</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/software_virtual_texture/">Software Virtual Texture 学习笔记</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/sparse_virtual_textures_study_note/">Sparse virtual textures 学习笔记</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/what_is_hbao/">HBAO</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/what_is_uv_density/">什么是UV density</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/how_to_use_hlsl_include_with_pragmas/">HLSL语言的编译指令#include_with_pragmas的具体用法</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+[2i+2]) .这意味着级别 N-1 中的相同纹素有时会影响级别 N 中 2 个纹素 min 的计算。这对于保持前面描述的对应关系是必要的。</p><p>The above description was done in one dimension for simplicity. For two dimensions, if both dimensions of level N-1 are even, a 2x2 texel region in level N-1 maps to a single texel in level N. If one dimension is odd, then either a 2x3 or 3x2 region in level N-1 maps to a single texel in level N. If both dimensions are odd, then the “corner” texel shared by the row and column extensions must also be considered—so a 3x3 region in level N-1 maps to a single texel in level N.
+为简单起见，上述描述是在一个维度中完成的。对于两个维度，如果级别 N-1 的两个维度是偶数，则级别 N-1 中的 2x2 纹素区域将映射到级别 N 中的单个纹素。如果一个维度为奇数，则级别 N-1 中的 2x3 或 3x2 区域映射到级别 N 中的单个纹素。如果两个维度都是奇数，则还必须考虑行和列扩展共享的“角”纹素，因此 N-1 级中的 3x3 区域映射到 N 级中的单个纹素。</p><h2 id=参考资料>参考资料</h2><ul><li><a href=https://www.nickdarnell.com/hierarchical-z-buffer-occlusion-culling/>Nick Darnell的层次化Z缓冲区遮挡剔除</a></li><li><a href=https://miketuritzin.com/post/hierarchical-depth-buffers/>Hierarchical Depth Buffers</a></li><li><a href=https://zhuanlan.zhihu.com/p/416731287>Hierarchical Z-Buffer Occlusion Culling到底该怎么做？</a></li><li></li></ul></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/hiz/>Hiz</a>
+<a class="entry__tag btn" href=/tags/culling/>Culling</a>
+<a class="entry__tag btn" href=/tags/cg/>CG</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/cg/software_virtual_texture/>Software Virtual Texture 学习笔记</a></li><li class=related__item><a class=related__link href=/post/cg/sparse_virtual_textures_study_note/>Sparse virtual textures 学习笔记</a></li><li class=related__item><a class=related__link href=/post/cg/what_is_hbao/>HBAO</a></li><li class=related__item><a class=related__link href=/post/cg/what_is_uv_density/>什么是UV density</a></li><li class=related__item><a class=related__link href=/post/cg/how_to_use_hlsl_include_with_pragmas/>HLSL语言的编译指令#include_with_pragmas的具体用法</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

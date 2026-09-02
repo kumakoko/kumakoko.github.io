@@ -1,327 +1,58 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Volumetric Clouds Write-up(翻译) | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Volumetric Clouds Write-up">
-		<meta property="og:title" content="Volumetric Clouds Write-up(翻译)" />
-<meta property="og:description" content="Volumetric Clouds Write-up" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/volumetric_clouds_write_up/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2022-11-11T20:20:49+08:00" />
-<meta property="article:modified_time" content="2022-11-11T20:20:49+08:00" />
-
-
-		<meta itemprop="name" content="Volumetric Clouds Write-up(翻译)">
-<meta itemprop="description" content="Volumetric Clouds Write-up"><meta itemprop="datePublished" content="2022-11-11T20:20:49+08:00" />
-<meta itemprop="dateModified" content="2022-11-11T20:20:49+08:00" />
-<meta itemprop="wordCount" content="1103">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Volumetric Clouds Write-up(翻译)</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2022-11-11T20:20:49&#43;08:00">November 11, 2022</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">Volumetric Clouds Write-up(翻译)</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents"></nav>
-</details>
-				<div class="entry__content"><p><a href="https://www.patreon.com/posts/volumetric-write-21646034">原文地址</a></p>
-<p>The basis of this effect is drawing a vertical stack of quads, each one showing a slice of the cloud. The cloud texture itself is just a world-mapped, top-down animated noise that is piped into opacity.</p>
-<blockquote>
-<p>这种效果的基础是绘制<strong>一组垂直堆叠的四边形</strong>（简称为：四边形堆栈，vertical stack of quads），每个四边形都显示一片云。 云纹理本身只是一个<strong>世界映射的</strong>(world-mapped)、<strong>自上而下的</strong>(top-down)的动画噪声，它通过渲染，管道传输到不透明度中。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/1.gif" alt=""></p>
-<p>To animate the noise, I use the same trick that I use in countless other shaders to create a natural looking motion that appears free of obvious repetition, which is to blend the noise with either a copy of itself with a different UV scale, or a different noise texture, and pan these two noise textures against each other in opposite directions, and then blend them together through multiplication or some other desired blend mode.</p>
-<blockquote>
-<p>为了使噪波动画化，我使用在无数其他着色器中相同的技巧来创建，使之看起来没有明显重复的自然运动，即将第一个噪声纹理，与具有不同 UV 值的同一纹理，或另一个不同的噪声纹理，并将这两个噪声纹理，在相反的方向上相互平移（pan），然后通过乘法或其他一些所需的混合模式，将它们混合在一起。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/1.jpg" alt=""></p>
-<p>This animated noise is useful is so many shader effects. For example, it&rsquo;s the basis of a nice fire effect, where instead of panning the two noise textures in opposite directions, you pan them both upwards but at different speeds and scales.</p>
-<blockquote>
-<p>这种动画噪声非常有用，因为它是很多着色器效果的实现基础。 例如，它是实现一个漂亮的火焰效果的基础，只是和云不同，它不是在相反的方向平移两个噪波纹理，而是向上以不同的速度和比例平移它们。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/2.gif" alt=""></p>
-<p>To pan a texture, you simple add Time to the UV coordinates in whichever axis you wish to pan. You just have to make sure you use a texture that is set to repeat wrapping and not clamped, and also one that tiles seamlessly with itself.</p>
-<blockquote>
-<p>要平移纹理，您只需利用shader的时间变量，添加到您希望平移的任何轴的 UV 坐标中。 但要确保纹理模式为<strong>重复包装</strong>（repeat wrapping）而不是<strong>夹持</strong>（clamped），以及与自身<strong>无缝拼接</strong>（tiles seamlessly）的纹理。</p>
-</blockquote>
-<p>Remapping this noise texture, and then raising it to a power, will give you control over the opacity cut-off and also the softness of the noise.</p>
-<blockquote>
-<p>重新映射此噪波纹理，然后将用幂运算将其值提高，您可以控制<strong>不透明度</strong>的裁剪值（opacity cut-off）以及噪波的柔和度。</p>
-</blockquote>
-<p>The quad stack itself can be modelled in advance, or generated at runtime with this script, via Graphics.DrawMesh().</p>
-<blockquote>
-<p>四边形堆栈本身可以预先建模，或者在运行时使用脚本通过 <code>Graphics.DrawMesh()</code> 生成。</p>
-</blockquote>
-<p>Generating it via script allows you to adjust the amount of layers for performance reasons, however it won&rsquo;t allow you to view the effect in Edit Mode, and I believe that it may not be appropriate for VR due to rendering only in one camera.</p>
-<blockquote>
-<p>通过脚本生成，它可以让您出于性能原因调整层数，但是它不允许您在编辑模式下查看效果，而且我认为它可能不适合 VR，因为它只在一台相机上渲染。</p>
-</blockquote>
-<p>To make complete the 3 dimensional shape of the clouds, round them off towards the top and bottom of the quad stack by darkening the noise the further away it is from the middle of the stack.</p>
-<blockquote>
-<p>为了完成云的三维形状，将它们向四边形堆栈的顶部四边形和底部四边形进行四舍五入，方法是在离堆栈中间越远的地方，使噪声变得越暗。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/2.jpg" alt=""></p>
-<p>To darken the opacity map further away from the middle of the quad stack, you can either bake in vertex colours and multiply by that, or calculate the y offset in shader.</p>
-<blockquote>
-<p>要使远离四边形堆栈中间的不透明度贴图变暗，您可以烘焙顶点颜色并乘以该颜色，或者在着色器中计算 y 偏移。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/3.jpg" alt=""></p>
-<p><img src="/image/u3d/volumetric_cloud_write_up/4.gif" alt=""></p>
-<p>This vertical falloff is also going to come in handy to give the clouds some basic ambient lighting, darkening them on the bottom and keeping them lighter on top. You can use this gradient to add in both the Ambient Sky Colour and Ambient Ground Colour, or set those colours yourself in shader. In real life, low clouds will often subtly pick up the colour of the ground on their bottom surface.</p>
-<blockquote>
-<p>这种<strong>垂直衰减</strong>（vertical falloff）也将派上用场，为云层提供一些基本的环境照明，使底部变暗并保持顶部较亮。 您可以使用此渐变添加环境天空颜色和环境地面颜色，或在着色器中自行设置这些颜色。 在现实生活中，低矮的云层通常会巧妙地吸收其底部表面的地面颜色。</p>
-</blockquote>
-<p>A subsurface scattering lighting pass is also a nice addition to the shader – since clouds let quite a lot of light through, when the sun is directly behind them you can often see it glowing through. The same Dot Product of the View Direction and negated Light Direction can be used here.</p>
-<blockquote>
-<p><strong>次表面散射</strong>（subsurface scattering ）光照也是着色器的一个很好的补充——因为云让大量的光通过，当太阳直接在它们后面时，你经常可以看到它发光。 此处可以使用视图方向和主平行光的反方向的点积。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/4.jpg" alt=""></p>
-<p>There&rsquo;s a lot of interesting tweaks you can make to the subsurface scattering contribution to create some nice effects. For example, if you constrict the final tapered noise slightly, and then subtract it from the SSS mask, it will only allow the light through around the outside of each cloud, and can create a pleasing rim-light effect.</p>
-<blockquote>
-<p>您可以对次表面散射贡献进行许多有趣的调整，以创建一些不错的效果。 例如，如果你稍微压缩最终的<strong>锥形噪点</strong>(tapered noise)，然后从 SSS 蒙版(SSS mask)中减去它，它只会让光线穿过每个云的外部，并且可以创建令人愉悦的边缘光效果。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/5.jpg" alt=""></p>
-<p>Adding in directional light is a bit tricky, since these clouds are just 2d textures and don&rsquo;t have normals that are usually required for calculating light. The best way that I&rsquo;ve found is to create a duplicate of the cloud noise, and offsetting it in the direction of the light, and then subtracting that offset noise from the original noise. This will leave a soft rim of noise facing towards the light direction, which we can use as a directional lighting mask.</p>
-<blockquote>
-<p>添加方向光有点棘手，因为这些云只是 2d 纹理，没有计算光照通常需要的法线。 我发现的最佳方法是创建云噪声的副本，并在光的方向上偏移它，然后从原始噪声中减去该偏移噪声。 这将留下一个朝向光线方向的柔和噪点边缘，我们可以将其用作定向照明蒙版。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/5.gif" alt=""></p>
-<p>To offset the noise texture, you need to transform the Light Direction into tangent space – this will give you a light direction vector that appropriately offsets the UVs of the texture. You may have to negate either the x or y axis, or both, depending on the orientation of the mesh. Offset this noise by an adjustable amount to get the best lighting effect, which will depend on the scale and detail of the noise texture.</p>
-<blockquote>
-<p>为了抵消噪声纹理，您需要将光照方向转换为切线空间——这将为您提供一个适当偏移纹理 UV 的光照方向向量。 您可能必须否定 x 轴或 y 轴，或两者都取反，具体取决于网格的方向。 以可调节的量偏移此噪波以获得最佳照明效果，这将取决于噪波纹理的比例和细节。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/6.jpg" alt=""></p>
-<p>You can use the fake lighting UV-offset (by tangent space light direction) trick with multiple lights. Multiply by Light Colour and Attenuation at the end, and pipe into a Custom Lighting input. It&rsquo;s a good way to fake lighting on smoke particles and other greyscale textures, especially if they&rsquo;re animated (via a flipbook, UV distortion, or noise overlays).</p>
-<blockquote>
-<p>您可以对多个灯光使用假照明 UV 偏移（通过切线空间光方向）技巧。 最后乘以 Light Color 和 Attenuation，并通过管道输入自定义照明输入。 这是在烟雾粒子和其他灰度纹理上伪造照明的好方法，特别是如果它们是动画的（通过翻书、UV 失真或噪声叠加）。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/7.jpg" alt=""></p>
-<p>Depending on your game lighting and performance concerns, it&rsquo;s possible to not calculate directional lighting at all, and still get very convincing clouds with just an Ambient and SSS contribution. The SSS in particular gives a pseudo-directional look to the lighting anyway.</p>
-<blockquote>
-<p>根据您的游戏光照和性能问题，有可能根本不计算定向光照，而仅使用 Ambient 和 SSS 贡献仍然可以获得非常令人信服的云。 无论如何，SSS 尤其为照明提供了伪定向外观。</p>
-</blockquote>
-<p>These clouds also can cast nice shadows on the underlying terrain, and with a volumetric lighting asset, can create very pretty sun rays. I&rsquo;m a big fan of HX Volumetric Lighting, but there are also several free Volumetric Light assets available that are also very good.</p>
-<blockquote>
-<p>这些云还可以在底层地形上投射出漂亮的阴影，并且使用体积光资产，可以创建非常漂亮的太阳光线。 我是 HX Volumetric Lighting 的忠实粉丝，但也有一些免费的 Volumetric Light 资源可用，它们也非常好。</p>
-</blockquote>
-<p>Finally, I like to use a Time-of-Day script to rotate the main direction Sun light over time, and also set the light, ambient and fog colours by a sampled gradient.</p>
-<blockquote>
-<p>最后，我喜欢使用 Time-of-Day 脚本随时间旋转主方向太阳光，并通过采样渐变设置光、环境和雾的颜色。</p>
-</blockquote>
-<p><img src="/image/u3d/volumetric_cloud_write_up/8.jpg" alt=""></p>
-<p>You can set an adjustable gradient in the inspector with:</p>
-<blockquote>
-<p>可以通过在inspector面板中设置一个可调整的渐变颜色来达到光，环境，雾的颜色变化</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> Gradient lightColourByTime;
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">[Range(0f, 1f)]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">float</span> timeOfDay
-</span></span></code></pre></div><p>and sample it with</p>
-<blockquote>
-<p>通过以下代码进行采样操作</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>Color lightColor = lightColourByTime.Evaluate(timeOfDay);
-</span></span></code></pre></div><p>And set it to your light colour. You can do the same to your ambient colours via</p>
-<blockquote>
-<p>除了自定义相关的天空环境光，地面环境光和雾颜色之外，可以直接使用RenderSettings中的对应选项：</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>RenderSettings.ambientSkyColor
-</span></span><span style="display:flex;"><span>RenderSettings.ambientGroundColor
-</span></span><span style="display:flex;"><span>RenderSettings.fogColor
-</span></span></code></pre></div><p>If you&rsquo;ve set your cloud shader up to use the Light Colour, and/or the global Ambient and Fog colours, you can get some very nice saturated sunrises and sunsets, and then fade to darker blues at night, depending on the art style of your game of course.</p>
-<blockquote>
-<p>如果您已将云着色器设置为使用 Light Colour 和/或全局 Ambient 和 Fog 颜色，您可以获得一些非常漂亮的饱和日出和日落，然后在晚上淡入深蓝色，具体取决于艺术风格 当然是你的游戏。</p>
-</blockquote>
-<p>I hope you&rsquo;ve gotten something out of the creation of these volumetric clouds. As always, if you have any questions, leave them in the comments, or hit me up on discord or twitter!</p>
-<blockquote>
-<p>我希望你已经从这些体积云的创建中得到了一些东西。 与往常一样，如果您有任何问题，请在评论中留言，或者在 discord 或 Twitter 上联系我</p>
-</blockquote>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/unity_texture_compression_detail/">Unity纹理压缩格式详解</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/uniyt3d_graphic_optimize_note/">Unity3D的图形渲染优化方法汇总</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/uniyt3d_asset_bundle_note/">Unity3D的assetbundle技术要点汇总</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/project_dir_and_architecture/">一个Unity工程目录架构组织图</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/inside_u3d_lighting_and_bake/">彻底弄懂Unity3D的光照模式，光照贴图和光探针（持续更新）</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Volumetric Clouds Write-up(翻译) | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Volumetric Clouds Write-up"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/volumetric_clouds_write_up/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Volumetric Clouds Write-up(翻译)"><meta property="og:description" content="Volumetric Clouds Write-up"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2022-11-11T20:20:49+08:00"><meta property="article:modified_time" content="2022-11-11T20:20:49+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="Volumetric Clouds Write-up(翻译)"><meta itemprop=description content="Volumetric Clouds Write-up"><meta itemprop=datePublished content="2022-11-11T20:20:49+08:00"><meta itemprop=dateModified content="2022-11-11T20:20:49+08:00"><meta itemprop=wordCount content="1103"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Volumetric Clouds Write-up(翻译)</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2022-11-11T20:20:49+08:00>November 11, 2022</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>Volumetric Clouds Write-up(翻译)</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents></nav></details><div class=entry__content><p><a href=https://www.patreon.com/posts/volumetric-write-21646034>原文地址</a></p><p>The basis of this effect is drawing a vertical stack of quads, each one showing a slice of the cloud. The cloud texture itself is just a world-mapped, top-down animated noise that is piped into opacity.</p><blockquote><p>这种效果的基础是绘制<strong>一组垂直堆叠的四边形</strong>（简称为：四边形堆栈，vertical stack of quads），每个四边形都显示一片云。 云纹理本身只是一个<strong>世界映射的</strong>(world-mapped)、<strong>自上而下的</strong>(top-down)的动画噪声，它通过渲染，管道传输到不透明度中。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/1.gif alt></p><p>To animate the noise, I use the same trick that I use in countless other shaders to create a natural looking motion that appears free of obvious repetition, which is to blend the noise with either a copy of itself with a different UV scale, or a different noise texture, and pan these two noise textures against each other in opposite directions, and then blend them together through multiplication or some other desired blend mode.</p><blockquote><p>为了使噪波动画化，我使用在无数其他着色器中相同的技巧来创建，使之看起来没有明显重复的自然运动，即将第一个噪声纹理，与具有不同 UV 值的同一纹理，或另一个不同的噪声纹理，并将这两个噪声纹理，在相反的方向上相互平移（pan），然后通过乘法或其他一些所需的混合模式，将它们混合在一起。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/1.jpg alt></p><p>This animated noise is useful is so many shader effects. For example, it&rsquo;s the basis of a nice fire effect, where instead of panning the two noise textures in opposite directions, you pan them both upwards but at different speeds and scales.</p><blockquote><p>这种动画噪声非常有用，因为它是很多着色器效果的实现基础。 例如，它是实现一个漂亮的火焰效果的基础，只是和云不同，它不是在相反的方向平移两个噪波纹理，而是向上以不同的速度和比例平移它们。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/2.gif alt></p><p>To pan a texture, you simple add Time to the UV coordinates in whichever axis you wish to pan. You just have to make sure you use a texture that is set to repeat wrapping and not clamped, and also one that tiles seamlessly with itself.</p><blockquote><p>要平移纹理，您只需利用shader的时间变量，添加到您希望平移的任何轴的 UV 坐标中。 但要确保纹理模式为<strong>重复包装</strong>（repeat wrapping）而不是<strong>夹持</strong>（clamped），以及与自身<strong>无缝拼接</strong>（tiles seamlessly）的纹理。</p></blockquote><p>Remapping this noise texture, and then raising it to a power, will give you control over the opacity cut-off and also the softness of the noise.</p><blockquote><p>重新映射此噪波纹理，然后将用幂运算将其值提高，您可以控制<strong>不透明度</strong>的裁剪值（opacity cut-off）以及噪波的柔和度。</p></blockquote><p>The quad stack itself can be modelled in advance, or generated at runtime with this script, via Graphics.DrawMesh().</p><blockquote><p>四边形堆栈本身可以预先建模，或者在运行时使用脚本通过 <code>Graphics.DrawMesh()</code> 生成。</p></blockquote><p>Generating it via script allows you to adjust the amount of layers for performance reasons, however it won&rsquo;t allow you to view the effect in Edit Mode, and I believe that it may not be appropriate for VR due to rendering only in one camera.</p><blockquote><p>通过脚本生成，它可以让您出于性能原因调整层数，但是它不允许您在编辑模式下查看效果，而且我认为它可能不适合 VR，因为它只在一台相机上渲染。</p></blockquote><p>To make complete the 3 dimensional shape of the clouds, round them off towards the top and bottom of the quad stack by darkening the noise the further away it is from the middle of the stack.</p><blockquote><p>为了完成云的三维形状，将它们向四边形堆栈的顶部四边形和底部四边形进行四舍五入，方法是在离堆栈中间越远的地方，使噪声变得越暗。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/2.jpg alt></p><p>To darken the opacity map further away from the middle of the quad stack, you can either bake in vertex colours and multiply by that, or calculate the y offset in shader.</p><blockquote><p>要使远离四边形堆栈中间的不透明度贴图变暗，您可以烘焙顶点颜色并乘以该颜色，或者在着色器中计算 y 偏移。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/3.jpg alt></p><p><img src=/image/u3d/volumetric_cloud_write_up/4.gif alt></p><p>This vertical falloff is also going to come in handy to give the clouds some basic ambient lighting, darkening them on the bottom and keeping them lighter on top. You can use this gradient to add in both the Ambient Sky Colour and Ambient Ground Colour, or set those colours yourself in shader. In real life, low clouds will often subtly pick up the colour of the ground on their bottom surface.</p><blockquote><p>这种<strong>垂直衰减</strong>（vertical falloff）也将派上用场，为云层提供一些基本的环境照明，使底部变暗并保持顶部较亮。 您可以使用此渐变添加环境天空颜色和环境地面颜色，或在着色器中自行设置这些颜色。 在现实生活中，低矮的云层通常会巧妙地吸收其底部表面的地面颜色。</p></blockquote><p>A subsurface scattering lighting pass is also a nice addition to the shader – since clouds let quite a lot of light through, when the sun is directly behind them you can often see it glowing through. The same Dot Product of the View Direction and negated Light Direction can be used here.</p><blockquote><p><strong>次表面散射</strong>（subsurface scattering ）光照也是着色器的一个很好的补充——因为云让大量的光通过，当太阳直接在它们后面时，你经常可以看到它发光。 此处可以使用视图方向和主平行光的反方向的点积。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/4.jpg alt></p><p>There&rsquo;s a lot of interesting tweaks you can make to the subsurface scattering contribution to create some nice effects. For example, if you constrict the final tapered noise slightly, and then subtract it from the SSS mask, it will only allow the light through around the outside of each cloud, and can create a pleasing rim-light effect.</p><blockquote><p>您可以对次表面散射贡献进行许多有趣的调整，以创建一些不错的效果。 例如，如果你稍微压缩最终的<strong>锥形噪点</strong>(tapered noise)，然后从 SSS 蒙版(SSS mask)中减去它，它只会让光线穿过每个云的外部，并且可以创建令人愉悦的边缘光效果。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/5.jpg alt></p><p>Adding in directional light is a bit tricky, since these clouds are just 2d textures and don&rsquo;t have normals that are usually required for calculating light. The best way that I&rsquo;ve found is to create a duplicate of the cloud noise, and offsetting it in the direction of the light, and then subtracting that offset noise from the original noise. This will leave a soft rim of noise facing towards the light direction, which we can use as a directional lighting mask.</p><blockquote><p>添加方向光有点棘手，因为这些云只是 2d 纹理，没有计算光照通常需要的法线。 我发现的最佳方法是创建云噪声的副本，并在光的方向上偏移它，然后从原始噪声中减去该偏移噪声。 这将留下一个朝向光线方向的柔和噪点边缘，我们可以将其用作定向照明蒙版。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/5.gif alt></p><p>To offset the noise texture, you need to transform the Light Direction into tangent space – this will give you a light direction vector that appropriately offsets the UVs of the texture. You may have to negate either the x or y axis, or both, depending on the orientation of the mesh. Offset this noise by an adjustable amount to get the best lighting effect, which will depend on the scale and detail of the noise texture.</p><blockquote><p>为了抵消噪声纹理，您需要将光照方向转换为切线空间——这将为您提供一个适当偏移纹理 UV 的光照方向向量。 您可能必须否定 x 轴或 y 轴，或两者都取反，具体取决于网格的方向。 以可调节的量偏移此噪波以获得最佳照明效果，这将取决于噪波纹理的比例和细节。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/6.jpg alt></p><p>You can use the fake lighting UV-offset (by tangent space light direction) trick with multiple lights. Multiply by Light Colour and Attenuation at the end, and pipe into a Custom Lighting input. It&rsquo;s a good way to fake lighting on smoke particles and other greyscale textures, especially if they&rsquo;re animated (via a flipbook, UV distortion, or noise overlays).</p><blockquote><p>您可以对多个灯光使用假照明 UV 偏移（通过切线空间光方向）技巧。 最后乘以 Light Color 和 Attenuation，并通过管道输入自定义照明输入。 这是在烟雾粒子和其他灰度纹理上伪造照明的好方法，特别是如果它们是动画的（通过翻书、UV 失真或噪声叠加）。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/7.jpg alt></p><p>Depending on your game lighting and performance concerns, it&rsquo;s possible to not calculate directional lighting at all, and still get very convincing clouds with just an Ambient and SSS contribution. The SSS in particular gives a pseudo-directional look to the lighting anyway.</p><blockquote><p>根据您的游戏光照和性能问题，有可能根本不计算定向光照，而仅使用 Ambient 和 SSS 贡献仍然可以获得非常令人信服的云。 无论如何，SSS 尤其为照明提供了伪定向外观。</p></blockquote><p>These clouds also can cast nice shadows on the underlying terrain, and with a volumetric lighting asset, can create very pretty sun rays. I&rsquo;m a big fan of HX Volumetric Lighting, but there are also several free Volumetric Light assets available that are also very good.</p><blockquote><p>这些云还可以在底层地形上投射出漂亮的阴影，并且使用体积光资产，可以创建非常漂亮的太阳光线。 我是 HX Volumetric Lighting 的忠实粉丝，但也有一些免费的 Volumetric Light 资源可用，它们也非常好。</p></blockquote><p>Finally, I like to use a Time-of-Day script to rotate the main direction Sun light over time, and also set the light, ambient and fog colours by a sampled gradient.</p><blockquote><p>最后，我喜欢使用 Time-of-Day 脚本随时间旋转主方向太阳光，并通过采样渐变设置光、环境和雾的颜色。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/8.jpg alt></p><p>You can set an adjustable gradient in the inspector with:</p><blockquote><p>可以通过在inspector面板中设置一个可调整的渐变颜色来达到光，环境，雾的颜色变化</p></blockquote><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>public</span> Gradient lightColourByTime<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>[Range(0f, 1f)]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>float</span> timeOfDay
+</span></span></code></pre></div><p>and sample it with</p><blockquote><p>通过以下代码进行采样操作</p></blockquote><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>Color lightColor <span style=color:#1f2328>=</span> lightColourByTime<span style=color:#1f2328>.</span>Evaluate<span style=color:#1f2328>(</span>timeOfDay<span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>And set it to your light colour. You can do the same to your ambient colours via</p><blockquote><p>除了自定义相关的天空环境光，地面环境光和雾颜色之外，可以直接使用RenderSettings中的对应选项：</p></blockquote><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>RenderSettings<span style=color:#1f2328>.</span>ambientSkyColor
+</span></span><span style=display:flex><span>RenderSettings<span style=color:#1f2328>.</span>ambientGroundColor
+</span></span><span style=display:flex><span>RenderSettings<span style=color:#1f2328>.</span>fogColor
+</span></span></code></pre></div><p>If you&rsquo;ve set your cloud shader up to use the Light Colour, and/or the global Ambient and Fog colours, you can get some very nice saturated sunrises and sunsets, and then fade to darker blues at night, depending on the art style of your game of course.</p><blockquote><p>如果您已将云着色器设置为使用 Light Colour 和/或全局 Ambient 和 Fog 颜色，您可以获得一些非常漂亮的饱和日出和日落，然后在晚上淡入深蓝色，具体取决于艺术风格 当然是你的游戏。</p></blockquote><p>I hope you&rsquo;ve gotten something out of the creation of these volumetric clouds. As always, if you have any questions, leave them in the comments, or hit me up on discord or twitter!</p><blockquote><p>我希望你已经从这些体积云的创建中得到了一些东西。 与往常一样，如果您有任何问题，请在评论中留言，或者在 discord 或 Twitter 上联系我</p></blockquote></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/unity_texture_compression_detail/>Unity纹理压缩格式详解</a></li><li class=related__item><a class=related__link href=/post/unity3d/uniyt3d_graphic_optimize_note/>Unity3D的图形渲染优化方法汇总</a></li><li class=related__item><a class=related__link href=/post/unity3d/uniyt3d_asset_bundle_note/>Unity3D的assetbundle技术要点汇总</a></li><li class=related__item><a class=related__link href=/post/unity3d/project_dir_and_architecture/>一个Unity工程目录架构组织图</a></li><li class=related__item><a class=related__link href=/post/unity3d/inside_u3d_lighting_and_bake/>彻底弄懂Unity3D的光照模式，光照贴图和光探针（持续更新）</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

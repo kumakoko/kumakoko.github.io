@@ -1,0 +1,434 @@
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>用UniTask包装异步回调函数以及UniTaskCompletionSource精讲 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="UniTask的Forget函数精讲"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/unitask/unitask_completion_source/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="用UniTask包装异步回调函数以及UniTaskCompletionSource精讲"><meta property="og:description" content="UniTask的Forget函数精讲"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2025-04-23T20:20:49+08:00"><meta property="article:modified_time" content="2025-04-23T20:20:49+08:00"><meta property="article:tag" content="Unity3D"><meta property="article:tag" content="UniTask"><meta itemprop=name content="用UniTask包装异步回调函数以及UniTaskCompletionSource精讲"><meta itemprop=description content="UniTask的Forget函数精讲"><meta itemprop=datePublished content="2025-04-23T20:20:49+08:00"><meta itemprop=dateModified content="2025-04-23T20:20:49+08:00"><meta itemprop=wordCount content="969"><meta itemprop=keywords content="Unity3D,UniTask"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>用UniTask包装异步回调函数以及UniTaskCompletionSource精讲</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2025-04-23T20:20:49+08:00>April 23, 2025</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/unitask/ rel=tag>UniTask</a></span></div></div><h1 class=entry__title>用UniTask包装异步回调函数以及UniTaskCompletionSource精讲</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#核心类unitaskcompletionsource>核心类：UniTaskCompletionSource</a></li><li><a href=#示例1无返回值回调成功失败回调>示例1：无返回值回调（成功/失败回调）</a><ul><li><a href=#包装成-unitask>包装成 UniTask</a></li><li><a href=#使用包装后的方法>使用包装后的方法</a></li></ul></li><li><a href=#示例2带返回结果的回调-unitask>示例2：带返回结果的回调 UniTask</a></li><li><a href=#示例3支持cancellationtoken取消非常重要unity场景>示例3：支持CancellationToken取消（非常重要Unity场景）</a></li><li><a href=#简化工具unitaskfromcallback>简化工具：UniTask.FromCallback</a></li><li><a href=#常见踩坑点>常见踩坑点</a></li><li><a href=#什么时候用这套模式>什么时候用这套模式</a></li></ul><ul><li><a href=#方式1推荐原生内置转换不要手写unitaskcompletionsource>方式1：推荐：原生内置转换（不要手写UniTaskCompletionSource）</a><ul><li><a href=#task--unitask>Task → UniTask</a></li><li><a href=#task--unitask-1>Task → UniTask</a></li></ul></li><li><a href=#方式2使用-unitaskcompletionsource-手动包装-task原理演示>方式2：使用 UniTaskCompletionSource 手动包装 Task（原理演示）</a><ul><li><a href=#示例1包装无返回值-task>示例1：包装无返回值 Task</a></li><li><a href=#示例2包装带返回值-task>示例2：包装带返回值 Task</a></li><li><a href=#调用>调用</a></li></ul></li><li><a href=#方式3带上-cancellationtoken-的手动包装>方式3：带上 CancellationToken 的手动包装</a></li><li><a href=#关键对比什么时候用-asunitask什么时候手动-tcs-包装-task>关键对比：什么时候用 AsUniTask，什么时候手动 TCS 包装 Task</a></li><li><a href=#容易踩的坑>容易踩的坑</a></li><li><a href=#补充反向unitask--net-task>补充反向：UniTask → .NET Task</a><ul><li><a href=#小结>小结</a></li></ul></li></ul><ul><li><a href=#模拟一个事件式异步类示例源>模拟一个事件式异步类（示例源）</a></li><li><a href=#使用-unitaskcompletionsource-包装事件>使用 UniTaskCompletionSource 包装事件</a><ul><li><a href=#使用包装后的方法-1>使用包装后的方法</a></li></ul></li><li><a href=#重点坑点解释>重点坑点解释</a></li><li><a href=#变体只靠单个完成事件需要自己判断成功失败标记>变体：只靠单个“完成事件”，需要自己判断成功失败标记</a></li><li><a href=#对比三种场景使用-unitaskcompletionsource>对比三种场景使用 UniTaskCompletionSource</a></li><li><a href=#补充unitask-有没有辅助工具简化事件包装>补充：UniTask 有没有辅助工具简化事件包装？</a></li><li><a href=#总结模板可以直接复制套用>总结模板（可以直接复制套用）</a></li></ul></nav></details><div class=entry__content><h1 id=unitask-包装回调式异步函数>UniTask 包装回调式异步函数</h1><p>很多老API、第三方SDK都是<strong>回调(callback)模式</strong>：调用一个方法，传进去OnSuccess、OnFail回调，函数直接返回void，不能await。
+UniTask提供 <code>UniTaskCompletionSource</code> 来把回调接口封装成可 <code>await</code> 的 <code>UniTask</code>，这是标准做法。</p><blockquote><p>命名空间：<code>using Cysharp.Threading.Tasks;</code></p></blockquote><h2 id=核心类unitaskcompletionsource>核心类：UniTaskCompletionSource<t></h2><ul><li><code>UniTaskCompletionSource&lt;T></code>：用来手动控制UniTask的完成/失败/取消</li><li><code>.Task</code> 属性：得到可供外部await的 <code>UniTask&lt;T></code></li><li>完成：<code>TrySetResult(T result)</code> → 任务成功结束，返回结果</li><li>失败：<code>TrySetException(Exception ex)</code> → 任务抛出异常</li><li>取消：<code>TrySetCanceled()</code> → 任务变成取消状态</li></ul><blockquote><p>⚠️注意：全部是<code>TrySetXXX</code>，代表只能设置一次，多次调用会忽略。</p></blockquote><hr><h2 id=示例1无返回值回调成功失败回调>示例1：无返回值回调（成功/失败回调）</h2><p>假设原有回调风格函数：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// 原始回调风格API，不是async，靠回调通知结果</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> OldAsyncMethod<span style=color:#1f2328>(</span>Action onSuccess<span style=color:#1f2328>,</span> Action<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> onError<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 模拟异步，比如网络请求、SDK加载</span>
+</span></span><span style=display:flex><span>    UnityEngine<span style=color:#1f2328>.</span>Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;开始执行旧版回调接口&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    UnityEngine<span style=color:#1f2328>.</span>Time<span style=color:#1f2328>.</span>time<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 模拟延迟后回调，真实场景是SDK内部触发</span>
+</span></span><span style=display:flex><span>    UniTask<span style=color:#1f2328>.</span>Delay<span style=color:#1f2328>(</span><span style=color:#0550ae>2000</span><span style=color:#1f2328>).</span>Forget<span style=color:#1f2328>(()</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>bool</span> ok <span style=color:#1f2328>=</span> <span style=color:#cf222e>true</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>ok<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            onSuccess<span style=color:#1f2328>?.</span>Invoke<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>            onError<span style=color:#1f2328>?.</span>Invoke<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;出错啦&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=包装成-unitask>包装成 UniTask</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// 把回调API封装成可await的UniTask</span>
+</span></span><span style=display:flex><span>UniTask WrapOldAsyncMethod<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 创建完成源</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> tcs <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> UniTaskCompletionSource<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 调用旧回调接口</span>
+</span></span><span style=display:flex><span>    OldAsyncMethod<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>        onSuccess<span style=color:#1f2328>:</span> <span style=color:#1f2328>()</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 成功，标记任务完成</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetResult<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>},</span>
+</span></span><span style=display:flex><span>        onError<span style=color:#1f2328>:</span> <span style=color:#1f2328>(</span>errMsg<span style=color:#1f2328>)</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 失败，抛出异常给await方捕获</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetException<span style=color:#1f2328>(</span><span style=color:#cf222e>new</span> System<span style=color:#1f2328>.</span>Exception<span style=color:#1f2328>(</span>errMsg<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 返回可供await的任务</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> tcs<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=使用包装后的方法>使用包装后的方法</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>async</span> UniTask Test<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>try</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>await</span> WrapOldAsyncMethod<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;执行成功&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>catch</span> <span style=color:#1f2328>(</span>System<span style=color:#1f2328>.</span>Exception e<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>LogError<span style=color:#1f2328>(</span><span style=color:#0a3069>$&#34;执行失败：{e.Message}&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><hr><h2 id=示例2带返回结果的回调-unitask>示例2：带返回结果的回调 UniTask<t></h2><p>原始回调，成功会返回数据：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// 旧API：成功回调带回string结果</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> OldGetData<span style=color:#1f2328>(</span>Action<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> onSuccess<span style=color:#1f2328>,</span> Action<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;</span> onError<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    UniTask<span style=color:#1f2328>.</span>Delay<span style=color:#1f2328>(</span><span style=color:#0550ae>1500</span><span style=color:#1f2328>).</span>Forget<span style=color:#1f2328>(()</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        onSuccess<span style=color:#1f2328>?.</span>Invoke<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;服务器返回的数据&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// onError?.Invoke(404);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>包装：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span>UniTask<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> WrapOldGetData<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> tcs <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> UniTaskCompletionSource<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    OldGetData<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>        onSuccess<span style=color:#1f2328>:</span> data <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetResult<span style=color:#1f2328>(</span>data<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>},</span>
+</span></span><span style=display:flex><span>        onError<span style=color:#1f2328>:</span> code <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetException<span style=color:#1f2328>(</span><span style=color:#cf222e>new</span> System<span style=color:#1f2328>.</span>Exception<span style=color:#1f2328>(</span><span style=color:#0a3069>$&#34;错误码：{code}&#34;</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> tcs<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>调用：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>async</span> UniTask Run<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>string</span> res <span style=color:#1f2328>=</span> <span style=color:#cf222e>await</span> WrapOldGetData<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span>res<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><hr><h2 id=示例3支持cancellationtoken取消非常重要unity场景>示例3：支持CancellationToken取消（非常重要Unity场景）</h2><p>Unity很多时候需要MonoBehaviour销毁时取消异步，<code>UniTaskCompletionSource</code>支持监听取消令牌。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span>UniTask<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> WrapOldGetDataWithCancel<span style=color:#1f2328>(</span>CancellationToken token<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> tcs <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> UniTaskCompletionSource<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 如果外部CancellationToken触发取消，把任务置为取消</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>token<span style=color:#1f2328>.</span>IsCancellationRequested<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        tcs<span style=color:#1f2328>.</span>TrySetCanceled<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> tcs<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 注册取消回调</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> registration <span style=color:#1f2328>=</span> token<span style=color:#1f2328>.</span>Register<span style=color:#1f2328>(()</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        tcs<span style=color:#1f2328>.</span>TrySetCanceled<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    OldGetData<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>        onSuccess<span style=color:#1f2328>:</span> data <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            registration<span style=color:#1f2328>.</span>Dispose<span style=color:#1f2328>();</span> <span style=color:#57606a>// 取消注册，防止内存泄漏</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetResult<span style=color:#1f2328>(</span>data<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>},</span>
+</span></span><span style=display:flex><span>        onError<span style=color:#1f2328>:</span> code <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            registration<span style=color:#1f2328>.</span>Dispose<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetException<span style=color:#1f2328>(</span><span style=color:#cf222e>new</span> System<span style=color:#1f2328>.</span>Exception<span style=color:#1f2328>(</span><span style=color:#0a3069>$&#34;错误码：{code}&#34;</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> tcs<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>调用时传入Mono的取消token（<code>this.GetCancellationTokenOnDestroy()</code>）：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// 在MonoBehaviour中调用</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>await</span> WrapOldGetDataWithCancel<span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#1f2328>.</span>GetCancellationTokenOnDestroy<span style=color:#1f2328>());</span>
+</span></span></code></pre></div><blockquote><p>当GameObject销毁，token取消，await处抛出<code>OperationCanceledException</code>。</p></blockquote><hr><h2 id=简化工具unitaskfromcallback>简化工具：UniTask.FromCallback</h2><p>UniTask还提供了 <code>UniTask.FromCallback</code> 辅助重载，不用手写完整<code>UniTaskCompletionSource</code>，适合简单回调。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// FromCallback 包装简单回调</span>
+</span></span><span style=display:flex><span>UniTask FromCallbackDemo<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> UniTask<span style=color:#1f2328>.</span>FromCallback<span style=color:#1f2328>&lt;</span>Action<span style=color:#1f2328>&gt;(</span>callback <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// callback就是onSuccess，把它传给旧接口</span>
+</span></span><span style=display:flex><span>        OldAsyncMethod<span style=color:#1f2328>(</span>callback<span style=color:#1f2328>,</span> err <span style=color:#1f2328>=&gt;</span> <span style=color:#1f2328>{</span> <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><blockquote><p>复杂多回调、带错误处理，<strong>还是优先用 UniTaskCompletionSource，可读性更好</strong>。</p></blockquote><hr><h2 id=常见踩坑点>常见踩坑点</h2><ol><li><strong>不要多次调用 TrySetResult / TrySetException</strong>，只会第一次生效。</li><li>回调可能被多次调用（有些SDKbug会多次回调），用TryXXX就安全，不会报错。</li><li>如果使用CancellationToken，一定要<code>Dispose</code>注册的registration，避免内存泄漏。</li><li>不要 <code>Forget()</code> 包装出来的任务，如果内部异常，依然会抛到控制台；需要异常捕获请在外层try‑catch。</li><li><code>UniTaskCompletionSource</code>不要保存为成员变量，一般是局部变量，每次调用新建实例。</li></ol><hr><h2 id=什么时候用这套模式>什么时候用这套模式</h2><ul><li>SDK、第三方库只提供回调，没有async/await版本</li><li>旧项目遗留的Action回调异步接口</li><li>自己封装一些IO、网络、加载逻辑，想要统一await写法</li></ul><blockquote><p>简单总结：
+<code>UniTaskCompletionSource</code> 就是一座桥：<strong>回调来了手动SetResult，外部就可以await这个Task</strong>。</p></blockquote><p>如果你需要，我可以写一个真实场景例子：比如把Unity的<code>WWW/UnityWebRequest</code>回调模式包装成UniTask。</p><h1 id=unitaskcompletionsource-包装-task-异步函数>UniTaskCompletionSource 包装 Task 异步函数</h1><blockquote><p>先说一个关键点：<strong>绝大多数情况，不需要用 <code>UniTaskCompletionSource</code> 去包装 <code>Task</code></strong>。
+UniTask 原生就提供 <code>UniTask.WaitForTask()</code> / <code>AsUniTask()</code> 扩展，可以直接把 .NET <code>Task</code> / <code>Task&lt;T></code> 转为 <code>UniTask</code>，这是最高效方式。</p></blockquote><p><code>UniTaskCompletionSource</code> 的定位是：<strong>给回调、事件驱动这种没有Task的场景手动构造任务</strong>；
+但你依然可以用它来包装 Task，用于理解原理，或者需要自定义拦截、捕获、转换完成逻辑的场景。</p><p>命名空间：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>Cysharp.Threading.Tasks</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>System.Threading.Tasks</span><span style=color:#1f2328>;</span>
+</span></span></code></pre></div><h2 id=方式1推荐原生内置转换不要手写unitaskcompletionsource>方式1：推荐：原生内置转换（不要手写UniTaskCompletionSource）</h2><h3 id=task--unitask>Task → UniTask</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// .NET Task</span>
+</span></span><span style=display:flex><span>Task DotNetTask<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> Task<span style=color:#1f2328>.</span>Delay<span style=color:#1f2328>(</span><span style=color:#0550ae>1000</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 直接转 UniTask</span>
+</span></span><span style=display:flex><span>UniTask ut <span style=color:#1f2328>=</span> DotNetTask<span style=color:#1f2328>().</span>AsUniTask<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>await</span> ut<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><h3 id=task--unitask-1>Task<t> → UniTask<t></h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span>Task<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> DotNetTaskT<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> Task<span style=color:#1f2328>.</span>FromResult<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;hello&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>UniTask<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> ut2 <span style=color:#1f2328>=</span> DotNetTaskT<span style=color:#1f2328>().</span>AsUniTask<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>string</span> res <span style=color:#1f2328>=</span> <span style=color:#cf222e>await</span> ut2<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><blockquote><p><code>AsUniTask()</code> 底层做了桥接，<strong>没有额外堆分配（大部分路径），性能远好于自己手写 UniTaskCompletionSource</strong>。</p></blockquote><hr><h2 id=方式2使用-unitaskcompletionsource-手动包装-task原理演示>方式2：使用 UniTaskCompletionSource 手动包装 Task（原理演示）</h2><blockquote><p>⚠️仅当你需要拦截任务完成、做额外逻辑时才这么写，普通转换不要这么写。</p></blockquote><p>原理：</p><ol><li>创建 <code>UniTaskCompletionSource&lt;T></code></li><li>给原始 .NET Task 注册 <code>ContinueWith</code> 回调</li><li>在回调里面：成功就 <code>TrySetResult</code>；异常就 <code>TrySetException</code>；取消就 <code>TrySetCanceled</code></li><li>返回 <code>tcs.Task</code></li></ol><h3 id=示例1包装无返回值-task>示例1：包装无返回值 Task</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// 原始 .NET Task 方法</span>
+</span></span><span style=display:flex><span>Task SomeDotNetTask<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> Task<span style=color:#1f2328>.</span>Delay<span style=color:#1f2328>(</span><span style=color:#0550ae>1200</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 使用 UniTaskCompletionSource 手动包装 Task</span>
+</span></span><span style=display:flex><span>UniTask WrapTaskByTcs<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> tcs <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> UniTaskCompletionSource<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Task task <span style=color:#1f2328>=</span> SomeDotNetTask<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    task<span style=color:#1f2328>.</span>ContinueWith<span style=color:#1f2328>(</span>t <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>IsCanceled<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetCanceled<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span> <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>Exception <span style=color:#1f2328>!=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// AggregateException 取出内部异常</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetException<span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>Exception<span style=color:#1f2328>.</span>InnerException<span style=color:#1f2328>!);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetResult<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>},</span> TaskScheduler<span style=color:#1f2328>.</span>Current<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> tcs<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 使用</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>async</span> UniTask Test<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>await</span> WrapTaskByTcs<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;done&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=示例2包装带返回值-task>示例2：包装带返回值 Task<t></h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span>Task<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;</span> SomeDotNetTaskWithResult<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> Task<span style=color:#1f2328>.</span>FromResult<span style=color:#1f2328>(</span><span style=color:#0550ae>666</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>UniTask<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;</span> WrapTaskTByTcs<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> tcs <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> UniTaskCompletionSource<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Task<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;</span> task <span style=color:#1f2328>=</span> SomeDotNetTaskWithResult<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    task<span style=color:#1f2328>.</span>ContinueWith<span style=color:#1f2328>(</span>t <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>IsCanceled<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetCanceled<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span> <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>Exception <span style=color:#1f2328>!=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetException<span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>Exception<span style=color:#1f2328>.</span>InnerException<span style=color:#1f2328>!);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetResult<span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>Result<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>},</span> TaskScheduler<span style=color:#1f2328>.</span>Current<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> tcs<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=调用>调用</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>int</span> val <span style=color:#1f2328>=</span> <span style=color:#cf222e>await</span> WrapTaskTByTcs<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span>val<span style=color:#1f2328>);</span>
+</span></span></code></pre></div><hr><h2 id=方式3带上-cancellationtoken-的手动包装>方式3：带上 CancellationToken 的手动包装</h2><p>如果需要支持取消令牌：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span>UniTask<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;</span> WrapTaskWithCancel<span style=color:#1f2328>(</span>CancellationToken token<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> tcs <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> UniTaskCompletionSource<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> netTask <span style=color:#1f2328>=</span> SomeDotNetTaskWithResult<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 外部取消触发</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> reg <span style=color:#1f2328>=</span> token<span style=color:#1f2328>.</span>Register<span style=color:#1f2328>(()</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        tcs<span style=color:#1f2328>.</span>TrySetCanceled<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    netTask<span style=color:#1f2328>.</span>ContinueWith<span style=color:#1f2328>(</span>t <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        reg<span style=color:#1f2328>.</span>Dispose<span style=color:#1f2328>();</span> <span style=color:#57606a>// 释放注册，防止泄漏</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>IsCanceled<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetCanceled<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span> <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>Exception <span style=color:#1f2328>!=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetException<span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>Exception<span style=color:#1f2328>.</span>InnerException<span style=color:#1f2328>!);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetResult<span style=color:#1f2328>(</span>t<span style=color:#1f2328>.</span>Result<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>},</span> TaskScheduler<span style=color:#1f2328>.</span>Current<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> tcs<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><hr><h2 id=关键对比什么时候用-asunitask什么时候手动-tcs-包装-task>关键对比：什么时候用 AsUniTask，什么时候手动 TCS 包装 Task</h2><table><thead><tr><th>场景</th><th>方案</th></tr></thead><tbody><tr><td>只是简单把 Task 转 UniTask，不需要额外逻辑</td><td>✅ <code>task.AsUniTask()</code>（官方推荐，性能最好）</td></tr><tr><td>需要在任务完成前后插入自定义逻辑、拦截异常、修改返回值</td><td>✅ 手动 <code>UniTaskCompletionSource</code> + ContinueWith</td></tr><tr><td>原始不是Task，是回调Action回调</td><td>✅ <code>UniTaskCompletionSource</code>（必须用这个）</td></tr></tbody></table><blockquote><p>❌不推荐：日常转换 Task 还手写 UniTaskCompletionSource，会引入额外对象分配，增加代码量，还容易漏处理异常、取消。</p></blockquote><h2 id=容易踩的坑>容易踩的坑</h2><ol><li><code>Task.Exception</code> 是 <code>AggregateException</code>，要取 <code>.InnerException</code>，不要直接把 AggregateException 塞给 <code>TrySetException</code>，否则 await 拿到的异常包装层级不对。</li><li>ContinueWith 的调度器：Unity 要注意线程，<code>.AsUniTask()</code> 会自动切回Unity主线程；手写 ContinueWith 如果不处理，回调可能跑在线程池，UniTaskCompletionSource本身是线程安全，但后续await恢复上下文要注意。</li><li><code>TrySetXXX</code> 系列方法只能生效一次，多次调用直接忽略，适合防止任务被多次完成。</li><li><strong>不要把 UniTaskCompletionSource 存为成员变量，每次调用都新建局部实例。</strong></li></ol><h2 id=补充反向unitask--net-task>补充反向：UniTask → .NET Task</h2><p>如果你需要把 UniTask 转成 .NET Task：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span>UniTask ut <span style=color:#1f2328>=</span> UniTask<span style=color:#1f2328>.</span>Delay<span style=color:#1f2328>(</span><span style=color:#0550ae>1000</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>Task netTask <span style=color:#1f2328>=</span> ut<span style=color:#1f2328>.</span>AsTask<span style=color:#1f2328>();</span>
+</span></span></code></pre></div><h3 id=小结>小结</h3><ol><li><strong>把 .NET Task 转为 UniTask，优先用扩展方法 <code>AsUniTask()</code>，不要自己写 UniTaskCompletionSource。</strong></li><li><code>UniTaskCompletionSource</code> 本质是手动“触发完成信号”，主要用于回调式API；包装Task属于附加用法，适合需要拦截处理的场景。</li><li>手写 ContinueWith 时注意处理 <code>AggregateException</code>、取消、释放CancellationToken注册，否则会内存泄漏、异常错乱。</li></ol><h1 id=unitaskcompletionsource-包装事件模式异步>UniTaskCompletionSource 包装事件模式异步</h1><blockquote><p>事件模式：经典的 .NET / Unity 异步模式，不是回调参数，是<strong>事件订阅</strong>。
+调用方法之后，去订阅某个事件（<code>OnCompleted</code>、<code>OnSuccess</code>、<code>OnError</code>），等事件触发代表异步结束。
+典型：Unity的WWW旧版、一些SDK：<code>xxx.Load(); xxx.OnFinish += OnFinishHandler;</code></p></blockquote><p>核心难点：</p><ol><li>订阅事件，任务完成后<strong>必须取消订阅</strong>，否则内存泄漏、多次触发会多次调用SetResult。</li><li>要处理成功事件、失败事件；还要处理CancellationToken取消。</li><li>事件可能触发多次，要用<code>TrySetXXX</code>安全方法。</li></ol><blockquote><p>命名空间</p></blockquote><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>Cysharp.Threading.Tasks</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>System</span><span style=color:#1f2328>;</span>
+</span></span></code></pre></div><h2 id=模拟一个事件式异步类示例源>模拟一个事件式异步类（示例源）</h2><p>这是真实业务里常见的事件驱动对象，没有Task，没有回调入参，靠事件通知结果：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>/// &lt;summary&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 模拟事件驱动的异步工具</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// &lt;/summary&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>EventAsyncLoader</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 事件：加载完成</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>event</span> Action<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> OnLoadSuccess<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 事件：加载失败</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>event</span> Action<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;</span> OnLoadFailed<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>void</span> StartLoad<span style=color:#1f2328>(</span><span style=color:#cf222e>string</span> url<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 模拟异步网络，延迟后触发事件</span>
+</span></span><span style=display:flex><span>        UniTask<span style=color:#1f2328>.</span>Delay<span style=color:#1f2328>(</span><span style=color:#0550ae>2000</span><span style=color:#1f2328>).</span>Forget<span style=color:#1f2328>(()</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 模拟成功</span>
+</span></span><span style=display:flex><span>            OnLoadSuccess<span style=color:#1f2328>?.</span>Invoke<span style=color:#1f2328>(</span><span style=color:#0a3069>$&#34;[{url}]加载完成数据&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 模拟失败：OnLoadFailed?.Invoke(500);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>使用原始事件写法（丑陋）：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>var</span> loader <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> EventAsyncLoader<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>loader<span style=color:#1f2328>.</span>OnLoadSuccess <span style=color:#1f2328>+=</span> data <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span>data<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>loader<span style=color:#1f2328>.</span>OnLoadFailed <span style=color:#1f2328>+=</span> code <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Debug<span style=color:#1f2328>.</span>LogError<span style=color:#1f2328>(</span>code<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>loader<span style=color:#1f2328>.</span>StartLoad<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;test&#34;</span><span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>我们目标：把它包装成 <code>UniTask&lt;string> LoadAsync(string url)</code>，直接 await。</p><h2 id=使用-unitaskcompletionsource-包装事件>使用 UniTaskCompletionSource 包装事件</h2><p>关键点：</p><ol><li>每次调用创建局部 <code>UniTaskCompletionSource&lt;string></code></li><li>订阅成功、失败事件；事件内部调用 <code>TrySetResult</code> / <code>TrySetException</code></li><li><strong>任务无论成功/失败/取消，都必须取消事件订阅，防止内存泄漏！</strong></li><li>如果外部传入CancellationToken，取消时要取消事件订阅 + <code>TrySetCanceled</code></li></ol><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>static</span> UniTask<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> LoadAsync<span style=color:#1f2328>(</span><span style=color:#cf222e>this</span> EventAsyncLoader loader<span style=color:#1f2328>,</span> <span style=color:#cf222e>string</span> url<span style=color:#1f2328>,</span> CancellationToken cancellationToken <span style=color:#1f2328>=</span> <span style=color:#cf222e>default</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> tcs <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> UniTaskCompletionSource<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 事件处理器，存局部变量，方便注销</span>
+</span></span><span style=display:flex><span>    Action<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> onSuccess <span style=color:#1f2328>=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    Action<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;</span> onFailed <span style=color:#1f2328>=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 取消令牌注册</span>
+</span></span><span style=display:flex><span>    CancellationTokenRegistration registration <span style=color:#1f2328>=</span> <span style=color:#cf222e>default</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 清理函数：解订阅、释放注册，无论成功/失败/取消都要执行</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> CleanUp<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        loader<span style=color:#1f2328>.</span>OnLoadSuccess <span style=color:#1f2328>-=</span> onSuccess<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        loader<span style=color:#1f2328>.</span>OnLoadFailed <span style=color:#1f2328>-=</span> onFailed<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        registration<span style=color:#1f2328>.</span>Dispose<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    onSuccess <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>result<span style=color:#1f2328>)</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        CleanUp<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        tcs<span style=color:#1f2328>.</span>TrySetResult<span style=color:#1f2328>(</span>result<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    onFailed <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>errorCode<span style=color:#1f2328>)</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        CleanUp<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        tcs<span style=color:#1f2328>.</span>TrySetException<span style=color:#1f2328>(</span><span style=color:#cf222e>new</span> Exception<span style=color:#1f2328>(</span><span style=color:#0a3069>$&#34;加载失败，错误码：{errorCode}&#34;</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 订阅事件</span>
+</span></span><span style=display:flex><span>    loader<span style=color:#1f2328>.</span>OnLoadSuccess <span style=color:#1f2328>+=</span> onSuccess<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    loader<span style=color:#1f2328>.</span>OnLoadFailed <span style=color:#1f2328>+=</span> onFailed<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 如果外部触发取消</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>cancellationToken<span style=color:#1f2328>.</span>CanBeCanceled<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        registration <span style=color:#1f2328>=</span> cancellationToken<span style=color:#1f2328>.</span>Register<span style=color:#1f2328>(()</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            CleanUp<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetCanceled<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 启动原始事件异步操作</span>
+</span></span><span style=display:flex><span>    loader<span style=color:#1f2328>.</span>StartLoad<span style=color:#1f2328>(</span>url<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> tcs<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=使用包装后的方法-1>使用包装后的方法</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>async</span> UniTask TestEventWrapper<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> loader <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> EventAsyncLoader<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>try</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// MonoBehaviour中可以传入 this.GetCancellationTokenOnDestroy()</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>string</span> data <span style=color:#1f2328>=</span> <span style=color:#cf222e>await</span> loader<span style=color:#1f2328>.</span>LoadAsync<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;http://xxx&#34;</span><span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#1f2328>.</span>GetCancellationTokenOnDestroy<span style=color:#1f2328>());</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>$&#34;获取结果：{data}&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>catch</span> <span style=color:#1f2328>(</span>OperationCanceledException<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;任务被取消&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>catch</span> <span style=color:#1f2328>(</span>Exception ex<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>LogError<span style=color:#1f2328>(</span>ex<span style=color:#1f2328>.</span>Message<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h2 id=重点坑点解释>重点坑点解释</h2><ol><li><strong>必须手动 <code>-=</code> 取消事件订阅</strong>
+事件订阅是强引用，如果不注销：即使任务结束，事件还持有handler，对象不会GC，造成内存泄漏。</li></ol><blockquote><p>回调模式不需要，事件模式这是头等大坑。</p></blockquote><ol start=2><li>用局部变量保存handler
+不能直接在<code>+=</code>写lambda，否则外面<code>-=</code>无法匹配同一个委托实例，无法注销。</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// ❌错误写法，无法 -= 取消订阅</span>
+</span></span><span style=display:flex><span>loader<span style=color:#1f2328>.</span>OnLoadSuccess <span style=color:#1f2328>+=</span> res <span style=color:#1f2328>=&gt;</span> <span style=color:#1f2328>{</span> <span style=color:#1f2328>};</span>
+</span></span></code></pre></div><ol start=3><li><p>使用<code>TrySetResult</code>，不要<code>SetResult</code>
+有些SDK/组件会重复触发事件，<code>TrySetXXX</code>只会第一次生效，不会抛异常。</p></li><li><p>CleanUp 统一释放
+成功、失败、取消三条路径都调用CleanUp，保证事件一定解订阅，CancellationTokenRegistration一定Dispose。</p></li></ol><h2 id=变体只靠单个完成事件需要自己判断成功失败标记>变体：只靠单个“完成事件”，需要自己判断成功失败标记</h2><p>有些组件只有一个<code>OnCompleted</code>事件，事件参数包含成功/失败状态：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// 假设事件</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>event</span> Action<span style=color:#1f2328>&lt;</span>LoadResult<span style=color:#1f2328>&gt;</span> OnCompleted<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>LoadResult</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>bool</span> isSuccess<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>string</span> data<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>int</span> errorCode<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>包装示例片段：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>var</span> tcs <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> UniTaskCompletionSource<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;();</span>
+</span></span><span style=display:flex><span>Action<span style=color:#1f2328>&lt;</span>LoadResult<span style=color:#1f2328>&gt;</span> onCompleted <span style=color:#1f2328>=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> CleanUp<span style=color:#1f2328>()</span> <span style=color:#1f2328>{</span> loader<span style=color:#1f2328>.</span>OnCompleted <span style=color:#1f2328>-=</span> onCompleted<span style=color:#1f2328>;</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>onCompleted <span style=color:#1f2328>=</span> res <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    CleanUp<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>res<span style=color:#1f2328>.</span>isSuccess<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        tcs<span style=color:#1f2328>.</span>TrySetResult<span style=color:#1f2328>(</span>res<span style=color:#1f2328>.</span>data<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        tcs<span style=color:#1f2328>.</span>TrySetException<span style=color:#1f2328>(</span><span style=color:#cf222e>new</span> Exception<span style=color:#1f2328>(</span><span style=color:#0a3069>$&#34;err:{res.errorCode}&#34;</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>loader<span style=color:#1f2328>.</span>OnCompleted <span style=color:#1f2328>+=</span> onCompleted<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>loader<span style=color:#1f2328>.</span>StartLoad<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>return</span> tcs<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><h2 id=对比三种场景使用-unitaskcompletionsource>对比三种场景使用 UniTaskCompletionSource</h2><table><thead><tr><th>异步模式</th><th>特征</th><th>UniTaskCompletionSource要点</th></tr></thead><tbody><tr><td>回调模式</td><td>调用函数时传入Action回调</td><td>回调内SetResult；不需要取消事件订阅</td></tr><tr><td>Task模式</td><td>返回Task对象</td><td><strong>优先用AsUniTask()，尽量不用TCS包装Task</strong></td></tr><tr><td>事件模式</td><td>调用方法，订阅对象的事件</td><td><strong>重点：保存委托、完成后必须-=取消订阅，防止内存泄漏</strong></td></tr></tbody></table><h2 id=补充unitask-有没有辅助工具简化事件包装>补充：UniTask 有没有辅助工具简化事件包装？</h2><p>UniTask没有像FromCallback专门封装事件的API。</p><blockquote><p>事件模式必须手写上面这套模板：保存委托、订阅、CleanUp解订阅。
+因为事件的注销逻辑是强业务相关，库无法封装。</p></blockquote><h2 id=总结模板可以直接复制套用>总结模板（可以直接复制套用）</h2><p>包装事件异步的标准模板步骤：</p><ol><li>新建局部 <code>UniTaskCompletionSource&lt;T></code></li><li>定义局部委托变量保存事件handler</li><li>写统一CleanUp函数：<strong>取消事件订阅 + Dispose CancellationTokenRegistration</strong></li><li>handler内部先调用CleanUp，再TrySetResult / TrySetException</li><li>CancellationToken.Register触发时调用CleanUp + TrySetCanceled</li><li>调用原始异步启动方法，返回<code>tcs.Task</code></li></ol><blockquote><p>最容易踩坑：忘记<code>-=</code>取消事件订阅，内存泄漏；lambda直接订阅导致无法取消。</p></blockquote><p>如果你需要，我可以写一个真实Unity例子：把<code>UnityWebRequest</code>的事件（<code>sendWebRequest</code> + <code>onComplete</code>事件）包装成UniTask。</p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a>
+<a class="entry__tag btn" href=/tags/unitask/>UniTask</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/unitask/unitask_forget/>UniTask的Forget函数精讲</a></li><li class=related__item><a class=related__link href=/post/unity3d/hlsl_sv_dispatch_thread_id_detail/>一篇文章说透计算着色器的SV_DispatchThreadID</a></li><li class=related__item><a class=related__link href=/post/unity3d/texture_streaming/>使用mipmap streaming来优化GPU的纹理内存</a></li><li class=related__item><a class=related__link href=/post/unity3d/reconstruct_world_position/>一段根据片元深度值重建对应的深度坐标值的代码及其解释</a></li><li class=related__item><a class=related__link href=/post/unity3d/surface_depth/>一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

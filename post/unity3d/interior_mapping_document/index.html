@@ -1,470 +1,285 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>伪内部空间映射的相关文档 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="伪内部空间映射，Fake Interior Mapping">
-		<meta property="og:title" content="伪内部空间映射的相关文档" />
-<meta property="og:description" content="伪内部空间映射，Fake Interior Mapping" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/interior_mapping_document/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2022-12-08T18:38:27+08:00" />
-<meta property="article:modified_time" content="2022-12-08T18:38:27+08:00" />
-
-
-		<meta itemprop="name" content="伪内部空间映射的相关文档">
-<meta itemprop="description" content="伪内部空间映射，Fake Interior Mapping"><meta itemprop="datePublished" content="2022-12-08T18:38:27+08:00" />
-<meta itemprop="dateModified" content="2022-12-08T18:38:27+08:00" />
-<meta itemprop="wordCount" content="898">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">伪内部空间映射的相关文档</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2022-12-08T18:38:27&#43;08:00">December 08, 2022</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">伪内部空间映射的相关文档</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h4 id="csdn上的参考网页">CSDN上的参考网页</h4>
-<p><a href="https://blog.csdn.net/weixin_42825810/article/details/123229929">Unity Shader Interior mapping 内部映射</a></p>
-<p>CSDN上的<a href="https://blog.csdn.net/weixin_43803133/article/details/117296825">案例学习——Interior Mapping 室内映射（假室内效果）</a></p>
-<p>CSDN上的<a href="https://blog.csdn.net/C4ieh/article/details/125382057?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-125382057-blog-117296825.pc_relevant_3mothn_strategy_recovery&amp;spm=1001.2101.3001.4242.2&amp;utm_relevant_index=4">UE5黑客帝国3d print假室内的一些使用记录</a></p>
-<p><a href="https://blog.csdn.net/weixin_33788424/article/details/112494892?spm=1001.2101.3001.6650.7&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-7-112494892-blog-123229929.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-7-112494892-blog-123229929.pc_relevant_landingrelevant&amp;utm_relevant_index=12">unity 跟随目标_使用Cubemap在Unity中制作虚拟室内效果</a></p>
-<h4 id="知乎上的参考网页">知乎上的参考网页</h4>
-<p><a href="https://zhuanlan.zhihu.com/p/376762518">案例学习——Interior Mapping 室内映射（假室内效果）</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/159439811">一种假室内(Fake Interior)效果的实现</a>，这种是带上了室内深度效果的，即每个室内的深度纵深是不一样的。</p>
-<h4 id="其他">其他</h4>
-<p>Joost van Dongen的论文《<a href="/files/papers/interior-mapping-a-new-techique-for-rendering-realistic-buildings.pdf">Interior Mapping A new techique for rendering realistic buildings</a>》</p>
-<p>下面的这份代码是《<a href="https://zhuanlan.zhihu.com/p/159439811">一种假室内(Fake Interior)效果的实现</a>》中提到的代码实现</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Shader <span style="color:#e6db74">&#34;Custom/FakeRoom&#34;</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    Properties
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        [NoScaleOffset]_WindowTex (<span style="color:#e6db74">&#34;Window Texture&#34;</span>, <span style="color:#ae81ff">2</span>D) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;black&#34;</span> {}
-</span></span><span style="display:flex;"><span>        _RoomTex (<span style="color:#e6db74">&#34;Room Texture&#34;</span>, CUBE) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>{}
-</span></span><span style="display:flex;"><span>        _RoomDepth (<span style="color:#e6db74">&#34;Room Depth&#34;</span>, Range(<span style="color:#ae81ff">0.01</span>, <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    SubShader
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        Tags { <span style="color:#e6db74">&#34;RenderType&#34;</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Opaque&#34;</span> }
-</span></span><span style="display:flex;"><span>        Cull Back
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        Pass
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            CGPROGRAM
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#pragma vertex vert
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">#pragma fragment frag
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;UnityCG.cginc&#34;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">#define FLT_EPS  5.960464478e-8  </span><span style="color:#75715e">// 2^-24, machine epsilon: 1 + EPS = 1 (half of the ULP for 1.0f)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">#define Max3(a, b, c) max(max(a, b), c)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">#define Min3(a, b, c) min(min(a, b), c)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">appdata</span>
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                float4 positionOS : POSITION;
-</span></span><span style="display:flex;"><span>                float2 uv : TEXCOORD0;
-</span></span><span style="display:flex;"><span>                float3 normal : NORMAL;
-</span></span><span style="display:flex;"><span>            };
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">v2f</span>
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                float2 uv : TEXCOORD0;
-</span></span><span style="display:flex;"><span>                float4 positionCS : SV_POSITION;
-</span></span><span style="display:flex;"><span>                float3 positionOS : TEXCOORD1;
-</span></span><span style="display:flex;"><span>                float3 viewDirOS : TEXCOORD2;
-</span></span><span style="display:flex;"><span>                float3 normalOS : TEXCOORD3;
-</span></span><span style="display:flex;"><span>            };
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            sampler2D _WindowTex;
-</span></span><span style="display:flex;"><span>            samplerCUBE _RoomTex;
-</span></span><span style="display:flex;"><span>            float4 _RoomTex_ST;
-</span></span><span style="display:flex;"><span>            fixed _RoomDepth;
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">bool</span> <span style="color:#a6e22e">IntersectRayAABB</span>(float3 rayOrigin, float3 rayDirection,
-</span></span><span style="display:flex;"><span>                                  float3 boxMin,    float3 boxMax,
-</span></span><span style="display:flex;"><span>                                  <span style="color:#66d9ef">float</span>  tMin,       <span style="color:#66d9ef">float</span> tMax,
-</span></span><span style="display:flex;"><span>                              out <span style="color:#66d9ef">float</span>  tEntr,  out <span style="color:#66d9ef">float</span> tExit)
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Could be precomputed. Clamp to avoid INF. clamp() is a single ALU on GCN.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#75715e">// rcp(FLT_EPS) = 16,777,216, which is large enough for our purposes,
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                <span style="color:#75715e">// yet doesn&#39;t cause a lot of numerical issues associated with FLT_MAX.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                float3 rayDirInv <span style="color:#f92672">=</span> clamp(rcp(rayDirection), <span style="color:#f92672">-</span>rcp(FLT_EPS), rcp(FLT_EPS));
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Perform ray-slab intersection (component-wise).
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                float3 t0 <span style="color:#f92672">=</span> boxMin <span style="color:#f92672">*</span> rayDirInv <span style="color:#f92672">-</span> (rayOrigin <span style="color:#f92672">*</span> rayDirInv);
-</span></span><span style="display:flex;"><span>                float3 t1 <span style="color:#f92672">=</span> boxMax <span style="color:#f92672">*</span> rayDirInv <span style="color:#f92672">-</span> (rayOrigin <span style="color:#f92672">*</span> rayDirInv);
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Find the closest/farthest distance (component-wise).
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                float3 tSlabEntr <span style="color:#f92672">=</span> min(t0, t1);
-</span></span><span style="display:flex;"><span>                float3 tSlabExit <span style="color:#f92672">=</span> max(t0, t1);
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Find the farthest entry and the nearest exit.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                tEntr <span style="color:#f92672">=</span> Max3(tSlabEntr.x, tSlabEntr.y, tSlabEntr.z);
-</span></span><span style="display:flex;"><span>                tExit <span style="color:#f92672">=</span> Min3(tSlabExit.x, tSlabExit.y, tSlabExit.z);
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// Clamp to the range.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                tEntr <span style="color:#f92672">=</span> max(tEntr, tMin);
-</span></span><span style="display:flex;"><span>                tExit <span style="color:#f92672">=</span> min(tExit, tMax);
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> tEntr <span style="color:#f92672">&lt;</span> tExit;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            v2f <span style="color:#a6e22e">vert</span> (appdata v)
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>                v2f o;
-</span></span><span style="display:flex;"><span>                o.positionCS <span style="color:#f92672">=</span> UnityObjectToClipPos(v.positionOS);
-</span></span><span style="display:flex;"><span>                o.uv <span style="color:#f92672">=</span> v.uv;
-</span></span><span style="display:flex;"><span>                o.positionOS <span style="color:#f92672">=</span> v.positionOS;
-</span></span><span style="display:flex;"><span>                o.viewDirOS <span style="color:#f92672">=</span> ObjSpaceViewDir(v.positionOS);
-</span></span><span style="display:flex;"><span>                o.normalOS <span style="color:#f92672">=</span> v.normal;
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> o;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            fixed4 <span style="color:#a6e22e">frag</span> (v2f i) <span style="color:#f92672">:</span> SV_Target
-</span></span><span style="display:flex;"><span>            {
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>                fixed4 windowColor <span style="color:#f92672">=</span> tex2D(_WindowTex, i.uv);
-</span></span><span style="display:flex;"><span>                float3 viewDirOS <span style="color:#f92672">=</span> normalize(i.viewDirOS);
-</span></span><span style="display:flex;"><span>                float3 normalOS <span style="color:#f92672">=</span> i.normalOS;
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">float</span> radius <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span>, posEntr, posExit;
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">float</span> bias <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> radius <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> _RoomDepth);
-</span></span><span style="display:flex;"><span>                
-</span></span><span style="display:flex;"><span>                float3 boxMin <span style="color:#f92672">=</span> (float3)(<span style="color:#f92672">-</span>radius) <span style="color:#f92672">+</span> lerp((float3)<span style="color:#ae81ff">0</span>, bias <span style="color:#f92672">*</span> normalOS, Max3(normalOS.x, normalOS.y, normalOS.z));
-</span></span><span style="display:flex;"><span>                float3 boxMax <span style="color:#f92672">=</span> (float3)(radius) <span style="color:#f92672">+</span> lerp(bias <span style="color:#f92672">*</span> normalOS, (float3)<span style="color:#ae81ff">0</span>, Max3(normalOS.x, normalOS.y, normalOS.z));
-</span></span><span style="display:flex;"><span>                
-</span></span><span style="display:flex;"><span>                IntersectRayAABB(i.positionOS, <span style="color:#f92672">-</span>viewDirOS, boxMin, boxMax, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, posEntr, posExit);
-</span></span><span style="display:flex;"><span>                float3 sampleDir <span style="color:#f92672">=</span> i.positionOS <span style="color:#f92672">-</span> posExit <span style="color:#f92672">*</span> viewDirOS;
-</span></span><span style="display:flex;"><span>                sampleDir <span style="color:#f92672">-=</span> bias <span style="color:#f92672">*</span> normalOS;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>                fixed4 col <span style="color:#f92672">=</span> texCUBElod(_RoomTex, float4(sampleDir, <span style="color:#ae81ff">0</span>));
-</span></span><span style="display:flex;"><span>                col.rgb <span style="color:#f92672">+=</span> windowColor.rgb <span style="color:#f92672">*</span> windowColor.a;
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> col;
-</span></span><span style="display:flex;"><span>            }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            ENDCG
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>下面这段代码则是《<a href="https://blog.csdn.net/weixin_43803133/article/details/117296825">案例学习——Interior Mapping 室内映射（假室内效果）</a>》中的“预投影2D贴图方法的实现”</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// Upgrade NOTE: replaced &#39;mul(UNITY_MATRIX_MVP,*)&#39; with &#39;UnityObjectToClipPos(*)&#39;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>Shader <span style="color:#e6db74">&#34;MyShaders/InteriorMapping_2D&#34;</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>	Properties
-</span></span><span style="display:flex;"><span>	{
-</span></span><span style="display:flex;"><span>		_RoomTex(<span style="color:#e6db74">&#34;Room Atlas RGB (A - back wall fraction)&#34;</span>, <span style="color:#ae81ff">2</span>D) <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;white&#34;</span> {}
-</span></span><span style="display:flex;"><span>		_Rooms(<span style="color:#e6db74">&#34;Room Atlas Rows&amp;Cols (XY)&#34;</span>, Vector) <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>		_RoomDepth(<span style="color:#e6db74">&#34;Room Depth&#34;</span>,range(<span style="color:#ae81ff">0.001</span>,<span style="color:#ae81ff">0.999</span>)) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>		SubShader
-</span></span><span style="display:flex;"><span>		{
-</span></span><span style="display:flex;"><span>			Tags { <span style="color:#e6db74">&#34;RenderType&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Opaque&#34;</span> }
-</span></span><span style="display:flex;"><span>			LOD <span style="color:#ae81ff">100</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>			Pass
-</span></span><span style="display:flex;"><span>			{
-</span></span><span style="display:flex;"><span>				CGPROGRAM
-</span></span><span style="display:flex;"><span>				<span style="color:#75715e">#pragma vertex vert
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#75715e">#pragma fragment frag
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>				<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;UnityCG.cginc&#34;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">appdata</span>
-</span></span><span style="display:flex;"><span>				{
-</span></span><span style="display:flex;"><span>					float4 vertex : POSITION;
-</span></span><span style="display:flex;"><span>					float2 uv : TEXCOORD0;
-</span></span><span style="display:flex;"><span>					float3 normal : NORMAL;
-</span></span><span style="display:flex;"><span>					float4 tangent : TANGENT;
-</span></span><span style="display:flex;"><span>				};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">v2f</span>
-</span></span><span style="display:flex;"><span>				{
-</span></span><span style="display:flex;"><span>					float4 pos : SV_POSITION;
-</span></span><span style="display:flex;"><span>					float2 uv : TEXCOORD0;
-</span></span><span style="display:flex;"><span>					float3 tangentViewDir : TEXCOORD1;
-</span></span><span style="display:flex;"><span>				};
-</span></span><span style="display:flex;"><span>				sampler2D _RoomTex;
-</span></span><span style="display:flex;"><span>				float4 _RoomTex_ST;
-</span></span><span style="display:flex;"><span>				float2 _Rooms;
-</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">float</span> _RoomDepth;
-</span></span><span style="display:flex;"><span>				v2f <span style="color:#a6e22e">vert</span>(appdata v)
-</span></span><span style="display:flex;"><span>				{
-</span></span><span style="display:flex;"><span>					v2f o;
-</span></span><span style="display:flex;"><span>					o.pos <span style="color:#f92672">=</span> UnityObjectToClipPos(v.vertex);
-</span></span><span style="display:flex;"><span>					o.uv <span style="color:#f92672">=</span> TRANSFORM_TEX(v.uv, _RoomTex);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// get tangent space camera vector
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					float4 objCam <span style="color:#f92672">=</span> mul(unity_WorldToObject, float4(_WorldSpaceCameraPos, <span style="color:#ae81ff">1.0</span>));
-</span></span><span style="display:flex;"><span>					float3 viewDir <span style="color:#f92672">=</span> v.vertex.xyz <span style="color:#f92672">-</span> objCam.xyz;
-</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">float</span> tangentSign <span style="color:#f92672">=</span> v.tangent.w <span style="color:#f92672">*</span> unity_WorldTransformParams.w;
-</span></span><span style="display:flex;"><span>					float3 bitangent <span style="color:#f92672">=</span> cross(v.normal.xyz, v.tangent.xyz) <span style="color:#f92672">*</span> tangentSign;
-</span></span><span style="display:flex;"><span>					o.tangentViewDir <span style="color:#f92672">=</span> float3(
-</span></span><span style="display:flex;"><span>						dot(viewDir, v.tangent.xyz),
-</span></span><span style="display:flex;"><span>						dot(viewDir, bitangent),
-</span></span><span style="display:flex;"><span>						dot(viewDir, v.normal)
-</span></span><span style="display:flex;"><span>						);
-</span></span><span style="display:flex;"><span>					o.tangentViewDir <span style="color:#f92672">*=</span> _RoomTex_ST.xyx;
-</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">return</span> o;
-</span></span><span style="display:flex;"><span>				}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// psuedo random
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				float2 <span style="color:#a6e22e">rand2</span>(<span style="color:#66d9ef">float</span> co) {
-</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">return</span> frac(sin(co <span style="color:#f92672">*</span> float2(<span style="color:#ae81ff">12.9898</span>,<span style="color:#ae81ff">78.233</span>)) <span style="color:#f92672">*</span> <span style="color:#ae81ff">43758.5453</span>);
-</span></span><span style="display:flex;"><span>				}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>				fixed4 <span style="color:#a6e22e">frag</span>(v2f i) <span style="color:#f92672">:</span> SV_Target
-</span></span><span style="display:flex;"><span>				{
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// room uvs
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					float2 roomUV <span style="color:#f92672">=</span> frac(i.uv);
-</span></span><span style="display:flex;"><span>					float2 roomIndexUV <span style="color:#f92672">=</span> floor(i.uv);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// randomize the room
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					float2 n <span style="color:#f92672">=</span> floor(rand2(roomIndexUV.x <span style="color:#f92672">+</span> roomIndexUV.y <span style="color:#f92672">*</span> (roomIndexUV.x <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">*</span> _Rooms.xy);
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">//float2 n = floor(_Rooms.xy);
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					roomIndexUV <span style="color:#f92672">+=</span> n;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// get room depth from room atlas alpha
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#75715e">// fixed farFrac = tex2D(_RoomTex, (roomIndexUV + 0.5) / _Rooms).a;
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// Specify depth manually
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					fixed farFrac <span style="color:#f92672">=</span> _RoomDepth;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">//remap [0,1] to [+inf,0]
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#75715e">//-&gt;if input _RoomDepth = 0    -&gt; depthScale = 0      (inf depth room)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#75715e">//-&gt;if input _RoomDepth = 0.5  -&gt; depthScale = 1
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#75715e">//-&gt;if input _RoomDepth = 1    -&gt; depthScale = +inf   (0 volume room)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#66d9ef">float</span> depthScale <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> (<span style="color:#ae81ff">1.0</span> <span style="color:#f92672">-</span> farFrac) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1.0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// raytrace box from view dir
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#75715e">// normalized box space&#39;s ray start pos is on trinagle surface, where z = -1
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					float3 pos <span style="color:#f92672">=</span> float3(roomUV <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// transform input ray dir from tangent space to normalized box space
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					i.tangentViewDir.z <span style="color:#f92672">*=</span> <span style="color:#f92672">-</span>depthScale;
-</span></span><span style="display:flex;"><span>					
-</span></span><span style="display:flex;"><span>                    <span style="color:#75715e">// 预先处理倒数  t=(1-p)/view=1/view-p/view
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					float3 id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> i.tangentViewDir;
-</span></span><span style="display:flex;"><span>					float3 k <span style="color:#f92672">=</span> abs(id) <span style="color:#f92672">-</span> pos <span style="color:#f92672">*</span> id;
-</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">float</span> kMin <span style="color:#f92672">=</span> min(min(k.x, k.y), k.z);
-</span></span><span style="display:flex;"><span>					pos <span style="color:#f92672">+=</span> kMin <span style="color:#f92672">*</span> i.tangentViewDir;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// remap from [-1,1] to [0,1] room depth
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#66d9ef">float</span> interp <span style="color:#f92672">=</span> pos.z <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// account for perspective in &#34;room&#34; textures
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#75715e">// assumes camera with an fov of 53.13 degrees (atan(0.5))
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#75715e">// visual result = transform nonlinear depth back to linear
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#66d9ef">float</span> realZ <span style="color:#f92672">=</span> saturate(interp) <span style="color:#f92672">/</span> depthScale <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>					interp <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">-</span> (<span style="color:#ae81ff">1.0</span> <span style="color:#f92672">/</span> realZ);
-</span></span><span style="display:flex;"><span>					interp <span style="color:#f92672">*=</span> depthScale <span style="color:#f92672">+</span> <span style="color:#ae81ff">1.0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// iterpolate from wall back to near wall
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					float2 interiorUV <span style="color:#f92672">=</span> pos.xy <span style="color:#f92672">*</span> lerp(<span style="color:#ae81ff">1.0</span>, farFrac, interp);
-</span></span><span style="display:flex;"><span>					
-</span></span><span style="display:flex;"><span>					interiorUV <span style="color:#f92672">=</span> interiorUV <span style="color:#f92672">*</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">0.5</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// sample room atlas texture
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					fixed4 room <span style="color:#f92672">=</span> tex2D(_RoomTex, (roomIndexUV <span style="color:#f92672">+</span> interiorUV.xy) <span style="color:#f92672">/</span> _Rooms);
-</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">return</span> room;
-</span></span><span style="display:flex;"><span>				}
-</span></span><span style="display:flex;"><span>			ENDCG
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	FallBack <span style="color:#e6db74">&#34;Diffuse&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/volumetric_clouds_write_up/">Volumetric Clouds Write-up(翻译)</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/unity_texture_compression_detail/">Unity纹理压缩格式详解</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/uniyt3d_graphic_optimize_note/">Unity3D的图形渲染优化方法汇总</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/uniyt3d_asset_bundle_note/">Unity3D的assetbundle技术要点汇总</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/project_dir_and_architecture/">一个Unity工程目录架构组织图</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>伪内部空间映射的相关文档 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="伪内部空间映射，Fake Interior Mapping"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/interior_mapping_document/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="伪内部空间映射的相关文档"><meta property="og:description" content="伪内部空间映射，Fake Interior Mapping"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2022-12-08T18:38:27+08:00"><meta property="article:modified_time" content="2022-12-08T18:38:27+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="伪内部空间映射的相关文档"><meta itemprop=description content="伪内部空间映射，Fake Interior Mapping"><meta itemprop=datePublished content="2022-12-08T18:38:27+08:00"><meta itemprop=dateModified content="2022-12-08T18:38:27+08:00"><meta itemprop=wordCount content="898"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>伪内部空间映射的相关文档</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2022-12-08T18:38:27+08:00>December 08, 2022</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>伪内部空间映射的相关文档</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><ul><li></li></ul></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h4 id=csdn上的参考网页>CSDN上的参考网页</h4><p><a href=https://blog.csdn.net/weixin_42825810/article/details/123229929>Unity Shader Interior mapping 内部映射</a></p><p>CSDN上的<a href=https://blog.csdn.net/weixin_43803133/article/details/117296825>案例学习——Interior Mapping 室内映射（假室内效果）</a></p><p>CSDN上的<a href="https://blog.csdn.net/C4ieh/article/details/125382057?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-125382057-blog-117296825.pc_relevant_3mothn_strategy_recovery&amp;spm=1001.2101.3001.4242.2&amp;utm_relevant_index=4">UE5黑客帝国3d print假室内的一些使用记录</a></p><p><a href="https://blog.csdn.net/weixin_33788424/article/details/112494892?spm=1001.2101.3001.6650.7&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-7-112494892-blog-123229929.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-7-112494892-blog-123229929.pc_relevant_landingrelevant&amp;utm_relevant_index=12">unity 跟随目标_使用Cubemap在Unity中制作虚拟室内效果</a></p><h4 id=知乎上的参考网页>知乎上的参考网页</h4><p><a href=https://zhuanlan.zhihu.com/p/376762518>案例学习——Interior Mapping 室内映射（假室内效果）</a></p><p><a href=https://zhuanlan.zhihu.com/p/159439811>一种假室内(Fake Interior)效果的实现</a>，这种是带上了室内深度效果的，即每个室内的深度纵深是不一样的。</p><h4 id=其他>其他</h4><p>Joost van Dongen的论文《<a href=/files/papers/interior-mapping-a-new-techique-for-rendering-realistic-buildings.pdf>Interior Mapping A new techique for rendering realistic buildings</a>》</p><p>下面的这份代码是《<a href=https://zhuanlan.zhihu.com/p/159439811>一种假室内(Fake Interior)效果的实现</a>》中提到的代码实现</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>Shader <span style=color:#0a3069>&#34;Custom/FakeRoom&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Properties
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>[</span>NoScaleOffset<span style=color:#1f2328>]</span>_WindowTex <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Window Texture&#34;</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>2</span>D<span style=color:#1f2328>)</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;black&#34;</span> <span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span>        _RoomTex <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Room Texture&#34;</span><span style=color:#1f2328>,</span> CUBE<span style=color:#1f2328>)</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;&#34;</span><span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span>        _RoomDepth <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Room Depth&#34;</span><span style=color:#1f2328>,</span> Range<span style=color:#1f2328>(</span><span style=color:#0550ae>0.01</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>))</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>1.0</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    SubShader
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Tags <span style=color:#1f2328>{</span> <span style=color:#0a3069>&#34;RenderType&#34;</span><span style=color:#0550ae>=</span><span style=color:#0a3069>&#34;Opaque&#34;</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        Cull Back
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        Pass
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            CGPROGRAM
+</span></span><span style=display:flex><span>            <span style=color:#57606a>#pragma vertex vert
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>#pragma fragment frag
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>#include</span> <span style=color:#57606a>&#34;UnityCG.cginc&#34;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>#define FLT_EPS  5.960464478e-8  </span><span style=color:#57606a>// 2^-24, machine epsilon: 1 + EPS = 1 (half of the ULP for 1.0f)
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>#define Max3(a, b, c) max(max(a, b), c)
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>#define Min3(a, b, c) min(min(a, b), c)
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>struct</span> <span style=color:#1f2328>appdata</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                float4 <span style=color:#900;font-weight:700>positionOS</span> <span style=color:#1f2328>:</span> POSITION<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float2 <span style=color:#900;font-weight:700>uv</span> <span style=color:#1f2328>:</span> TEXCOORD0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float3 <span style=color:#900;font-weight:700>normal</span> <span style=color:#1f2328>:</span> NORMAL<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>struct</span> <span style=color:#1f2328>v2f</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                float2 <span style=color:#900;font-weight:700>uv</span> <span style=color:#1f2328>:</span> TEXCOORD0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float4 <span style=color:#900;font-weight:700>positionCS</span> <span style=color:#1f2328>:</span> SV_POSITION<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float3 <span style=color:#900;font-weight:700>positionOS</span> <span style=color:#1f2328>:</span> TEXCOORD1<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float3 <span style=color:#900;font-weight:700>viewDirOS</span> <span style=color:#1f2328>:</span> TEXCOORD2<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float3 <span style=color:#900;font-weight:700>normalOS</span> <span style=color:#1f2328>:</span> TEXCOORD3<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            sampler2D _WindowTex<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            samplerCUBE _RoomTex<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            float4 _RoomTex_ST<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            fixed _RoomDepth<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>bool</span> <span style=color:#6639ba>IntersectRayAABB</span><span style=color:#1f2328>(</span>float3 rayOrigin<span style=color:#1f2328>,</span> float3 rayDirection<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                  float3 boxMin<span style=color:#1f2328>,</span>    float3 boxMax<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                  <span style=color:#cf222e>float</span>  tMin<span style=color:#1f2328>,</span>       <span style=color:#cf222e>float</span> tMax<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                              out <span style=color:#cf222e>float</span>  tEntr<span style=color:#1f2328>,</span>  out <span style=color:#cf222e>float</span> tExit<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Could be precomputed. Clamp to avoid INF. clamp() is a single ALU on GCN.
+</span></span></span><span style=display:flex><span>                <span style=color:#57606a>// rcp(FLT_EPS) = 16,777,216, which is large enough for our purposes,
+</span></span></span><span style=display:flex><span>                <span style=color:#57606a>// yet doesn&#39;t cause a lot of numerical issues associated with FLT_MAX.
+</span></span></span><span style=display:flex><span>                float3 rayDirInv <span style=color:#0550ae>=</span> clamp<span style=color:#1f2328>(</span>rcp<span style=color:#1f2328>(</span>rayDirection<span style=color:#1f2328>),</span> <span style=color:#0550ae>-</span>rcp<span style=color:#1f2328>(</span>FLT_EPS<span style=color:#1f2328>),</span> rcp<span style=color:#1f2328>(</span>FLT_EPS<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Perform ray-slab intersection (component-wise).
+</span></span></span><span style=display:flex><span>                float3 t0 <span style=color:#0550ae>=</span> boxMin <span style=color:#0550ae>*</span> rayDirInv <span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span>rayOrigin <span style=color:#0550ae>*</span> rayDirInv<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                float3 t1 <span style=color:#0550ae>=</span> boxMax <span style=color:#0550ae>*</span> rayDirInv <span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span>rayOrigin <span style=color:#0550ae>*</span> rayDirInv<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Find the closest/farthest distance (component-wise).
+</span></span></span><span style=display:flex><span>                float3 tSlabEntr <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>t0<span style=color:#1f2328>,</span> t1<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                float3 tSlabExit <span style=color:#0550ae>=</span> max<span style=color:#1f2328>(</span>t0<span style=color:#1f2328>,</span> t1<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Find the farthest entry and the nearest exit.
+</span></span></span><span style=display:flex><span>                tEntr <span style=color:#0550ae>=</span> Max3<span style=color:#1f2328>(</span>tSlabEntr<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> tSlabEntr<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> tSlabEntr<span style=color:#1f2328>.</span>z<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                tExit <span style=color:#0550ae>=</span> Min3<span style=color:#1f2328>(</span>tSlabExit<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> tSlabExit<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> tSlabExit<span style=color:#1f2328>.</span>z<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Clamp to the range.
+</span></span></span><span style=display:flex><span>                tEntr <span style=color:#0550ae>=</span> max<span style=color:#1f2328>(</span>tEntr<span style=color:#1f2328>,</span> tMin<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                tExit <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>tExit<span style=color:#1f2328>,</span> tMax<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> tEntr <span style=color:#0550ae>&lt;</span> tExit<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            v2f <span style=color:#6639ba>vert</span> <span style=color:#1f2328>(</span>appdata v<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                v2f o<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                o<span style=color:#1f2328>.</span>positionCS <span style=color:#0550ae>=</span> UnityObjectToClipPos<span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>positionOS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                o<span style=color:#1f2328>.</span>uv <span style=color:#0550ae>=</span> v<span style=color:#1f2328>.</span>uv<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                o<span style=color:#1f2328>.</span>positionOS <span style=color:#0550ae>=</span> v<span style=color:#1f2328>.</span>positionOS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                o<span style=color:#1f2328>.</span>viewDirOS <span style=color:#0550ae>=</span> ObjSpaceViewDir<span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>positionOS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                o<span style=color:#1f2328>.</span>normalOS <span style=color:#0550ae>=</span> v<span style=color:#1f2328>.</span>normal<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> o<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            fixed4 <span style=color:#6639ba>frag</span> <span style=color:#1f2328>(</span>v2f i<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> SV_Target
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                fixed4 windowColor <span style=color:#0550ae>=</span> tex2D<span style=color:#1f2328>(</span>_WindowTex<span style=color:#1f2328>,</span> i<span style=color:#1f2328>.</span>uv<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                float3 viewDirOS <span style=color:#0550ae>=</span> normalize<span style=color:#1f2328>(</span>i<span style=color:#1f2328>.</span>viewDirOS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                float3 normalOS <span style=color:#0550ae>=</span> i<span style=color:#1f2328>.</span>normalOS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>float</span> radius <span style=color:#0550ae>=</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> posEntr<span style=color:#1f2328>,</span> posExit<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>float</span> bias <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span> <span style=color:#0550ae>*</span> radius <span style=color:#0550ae>*</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1</span> <span style=color:#0550ae>-</span> _RoomDepth<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>                float3 boxMin <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>float3<span style=color:#1f2328>)(</span><span style=color:#0550ae>-</span>radius<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> lerp<span style=color:#1f2328>((</span>float3<span style=color:#1f2328>)</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> bias <span style=color:#0550ae>*</span> normalOS<span style=color:#1f2328>,</span> Max3<span style=color:#1f2328>(</span>normalOS<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> normalOS<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> normalOS<span style=color:#1f2328>.</span>z<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>                float3 boxMax <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>float3<span style=color:#1f2328>)(</span>radius<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> lerp<span style=color:#1f2328>(</span>bias <span style=color:#0550ae>*</span> normalOS<span style=color:#1f2328>,</span> <span style=color:#1f2328>(</span>float3<span style=color:#1f2328>)</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> Max3<span style=color:#1f2328>(</span>normalOS<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> normalOS<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> normalOS<span style=color:#1f2328>.</span>z<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>                IntersectRayAABB<span style=color:#1f2328>(</span>i<span style=color:#1f2328>.</span>positionOS<span style=color:#1f2328>,</span> <span style=color:#0550ae>-</span>viewDirOS<span style=color:#1f2328>,</span> boxMin<span style=color:#1f2328>,</span> boxMax<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>,</span> posEntr<span style=color:#1f2328>,</span> posExit<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                float3 sampleDir <span style=color:#0550ae>=</span> i<span style=color:#1f2328>.</span>positionOS <span style=color:#0550ae>-</span> posExit <span style=color:#0550ae>*</span> viewDirOS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                sampleDir <span style=color:#0550ae>-=</span> bias <span style=color:#0550ae>*</span> normalOS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                fixed4 col <span style=color:#0550ae>=</span> texCUBElod<span style=color:#1f2328>(</span>_RoomTex<span style=color:#1f2328>,</span> float4<span style=color:#1f2328>(</span>sampleDir<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>                col<span style=color:#1f2328>.</span>rgb <span style=color:#0550ae>+=</span> windowColor<span style=color:#1f2328>.</span>rgb <span style=color:#0550ae>*</span> windowColor<span style=color:#1f2328>.</span>a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> col<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            ENDCG
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>下面这段代码则是《<a href=https://blog.csdn.net/weixin_43803133/article/details/117296825>案例学习——Interior Mapping 室内映射（假室内效果）</a>》中的“预投影2D贴图方法的实现”</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>// Upgrade NOTE: replaced &#39;mul(UNITY_MATRIX_MVP,*)&#39; with &#39;UnityObjectToClipPos(*)&#39;
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Shader <span style=color:#0a3069>&#34;MyShaders/InteriorMapping_2D&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>	Properties
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>		_RoomTex<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Room Atlas RGB (A - back wall fraction)&#34;</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>2</span>D<span style=color:#1f2328>)</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;white&#34;</span> <span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span>		_Rooms<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Room Atlas Rows&amp;Cols (XY)&#34;</span><span style=color:#1f2328>,</span> Vector<span style=color:#1f2328>)</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>		_RoomDepth<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Room Depth&#34;</span><span style=color:#1f2328>,</span>range<span style=color:#1f2328>(</span><span style=color:#0550ae>0.001</span><span style=color:#1f2328>,</span><span style=color:#0550ae>0.999</span><span style=color:#1f2328>))</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0.5</span>
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>		SubShader
+</span></span><span style=display:flex><span>		<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>			Tags <span style=color:#1f2328>{</span> <span style=color:#0a3069>&#34;RenderType&#34;</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;Opaque&#34;</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>			LOD <span style=color:#0550ae>100</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>			Pass
+</span></span><span style=display:flex><span>			<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>				CGPROGRAM
+</span></span><span style=display:flex><span>				<span style=color:#57606a>#pragma vertex vert
+</span></span></span><span style=display:flex><span>				<span style=color:#57606a>#pragma fragment frag
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>				<span style=color:#57606a>#include</span> <span style=color:#57606a>&#34;UnityCG.cginc&#34;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>				<span style=color:#cf222e>struct</span> <span style=color:#1f2328>appdata</span>
+</span></span><span style=display:flex><span>				<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>					float4 <span style=color:#900;font-weight:700>vertex</span> <span style=color:#1f2328>:</span> POSITION<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					float2 <span style=color:#900;font-weight:700>uv</span> <span style=color:#1f2328>:</span> TEXCOORD0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					float3 <span style=color:#900;font-weight:700>normal</span> <span style=color:#1f2328>:</span> NORMAL<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					float4 <span style=color:#900;font-weight:700>tangent</span> <span style=color:#1f2328>:</span> TANGENT<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>				<span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>				<span style=color:#cf222e>struct</span> <span style=color:#1f2328>v2f</span>
+</span></span><span style=display:flex><span>				<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>					float4 <span style=color:#900;font-weight:700>pos</span> <span style=color:#1f2328>:</span> SV_POSITION<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					float2 <span style=color:#900;font-weight:700>uv</span> <span style=color:#1f2328>:</span> TEXCOORD0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					float3 <span style=color:#900;font-weight:700>tangentViewDir</span> <span style=color:#1f2328>:</span> TEXCOORD1<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>				<span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>				sampler2D _RoomTex<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>				float4 _RoomTex_ST<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>				float2 _Rooms<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>				<span style=color:#cf222e>float</span> _RoomDepth<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>				v2f <span style=color:#6639ba>vert</span><span style=color:#1f2328>(</span>appdata v<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>				<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>					v2f o<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					o<span style=color:#1f2328>.</span>pos <span style=color:#0550ae>=</span> UnityObjectToClipPos<span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>vertex<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>					o<span style=color:#1f2328>.</span>uv <span style=color:#0550ae>=</span> TRANSFORM_TEX<span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>uv<span style=color:#1f2328>,</span> _RoomTex<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// get tangent space camera vector
+</span></span></span><span style=display:flex><span>					float4 objCam <span style=color:#0550ae>=</span> mul<span style=color:#1f2328>(</span>unity_WorldToObject<span style=color:#1f2328>,</span> float4<span style=color:#1f2328>(</span>_WorldSpaceCameraPos<span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>					float3 viewDir <span style=color:#0550ae>=</span> v<span style=color:#1f2328>.</span>vertex<span style=color:#1f2328>.</span>xyz <span style=color:#0550ae>-</span> objCam<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					<span style=color:#cf222e>float</span> tangentSign <span style=color:#0550ae>=</span> v<span style=color:#1f2328>.</span>tangent<span style=color:#1f2328>.</span>w <span style=color:#0550ae>*</span> unity_WorldTransformParams<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					float3 bitangent <span style=color:#0550ae>=</span> cross<span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>normal<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>,</span> v<span style=color:#1f2328>.</span>tangent<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>)</span> <span style=color:#0550ae>*</span> tangentSign<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					o<span style=color:#1f2328>.</span>tangentViewDir <span style=color:#0550ae>=</span> float3<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>						dot<span style=color:#1f2328>(</span>viewDir<span style=color:#1f2328>,</span> v<span style=color:#1f2328>.</span>tangent<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>						dot<span style=color:#1f2328>(</span>viewDir<span style=color:#1f2328>,</span> bitangent<span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>						dot<span style=color:#1f2328>(</span>viewDir<span style=color:#1f2328>,</span> v<span style=color:#1f2328>.</span>normal<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>						<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>					o<span style=color:#1f2328>.</span>tangentViewDir <span style=color:#0550ae>*=</span> _RoomTex_ST<span style=color:#1f2328>.</span>xyx<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					<span style=color:#cf222e>return</span> o<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>				<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>				<span style=color:#57606a>// psuedo random
+</span></span></span><span style=display:flex><span>				float2 <span style=color:#6639ba>rand2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>float</span> co<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>					<span style=color:#cf222e>return</span> frac<span style=color:#1f2328>(</span>sin<span style=color:#1f2328>(</span>co <span style=color:#0550ae>*</span> float2<span style=color:#1f2328>(</span><span style=color:#0550ae>12.9898</span><span style=color:#1f2328>,</span><span style=color:#0550ae>78.233</span><span style=color:#1f2328>))</span> <span style=color:#0550ae>*</span> <span style=color:#0550ae>43758.5453</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>				<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>				fixed4 <span style=color:#6639ba>frag</span><span style=color:#1f2328>(</span>v2f i<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> SV_Target
+</span></span><span style=display:flex><span>				<span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// room uvs
+</span></span></span><span style=display:flex><span>					float2 roomUV <span style=color:#0550ae>=</span> frac<span style=color:#1f2328>(</span>i<span style=color:#1f2328>.</span>uv<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>					float2 roomIndexUV <span style=color:#0550ae>=</span> floor<span style=color:#1f2328>(</span>i<span style=color:#1f2328>.</span>uv<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// randomize the room
+</span></span></span><span style=display:flex><span>					float2 n <span style=color:#0550ae>=</span> floor<span style=color:#1f2328>(</span>rand2<span style=color:#1f2328>(</span>roomIndexUV<span style=color:#1f2328>.</span>x <span style=color:#0550ae>+</span> roomIndexUV<span style=color:#1f2328>.</span>y <span style=color:#0550ae>*</span> <span style=color:#1f2328>(</span>roomIndexUV<span style=color:#1f2328>.</span>x <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>))</span> <span style=color:#0550ae>*</span> _Rooms<span style=color:#1f2328>.</span>xy<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>//float2 n = floor(_Rooms.xy);
+</span></span></span><span style=display:flex><span>					roomIndexUV <span style=color:#0550ae>+=</span> n<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// get room depth from room atlas alpha
+</span></span></span><span style=display:flex><span>					<span style=color:#57606a>// fixed farFrac = tex2D(_RoomTex, (roomIndexUV + 0.5) / _Rooms).a;
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// Specify depth manually
+</span></span></span><span style=display:flex><span>					fixed farFrac <span style=color:#0550ae>=</span> _RoomDepth<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>//remap [0,1] to [+inf,0]
+</span></span></span><span style=display:flex><span>					<span style=color:#57606a>//-&gt;if input _RoomDepth = 0    -&gt; depthScale = 0      (inf depth room)
+</span></span></span><span style=display:flex><span>					<span style=color:#57606a>//-&gt;if input _RoomDepth = 0.5  -&gt; depthScale = 1
+</span></span></span><span style=display:flex><span>					<span style=color:#57606a>//-&gt;if input _RoomDepth = 1    -&gt; depthScale = +inf   (0 volume room)
+</span></span></span><span style=display:flex><span>					<span style=color:#cf222e>float</span> depthScale <span style=color:#0550ae>=</span> <span style=color:#0550ae>1.0</span> <span style=color:#0550ae>/</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1.0</span> <span style=color:#0550ae>-</span> farFrac<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// raytrace box from view dir
+</span></span></span><span style=display:flex><span>					<span style=color:#57606a>// normalized box space&#39;s ray start pos is on trinagle surface, where z = -1
+</span></span></span><span style=display:flex><span>					float3 pos <span style=color:#0550ae>=</span> float3<span style=color:#1f2328>(</span>roomUV <span style=color:#0550ae>*</span> <span style=color:#0550ae>2</span> <span style=color:#0550ae>-</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>-</span><span style=color:#0550ae>1</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// transform input ray dir from tangent space to normalized box space
+</span></span></span><span style=display:flex><span>					i<span style=color:#1f2328>.</span>tangentViewDir<span style=color:#1f2328>.</span>z <span style=color:#0550ae>*=</span> <span style=color:#0550ae>-</span>depthScale<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					
+</span></span><span style=display:flex><span>                    <span style=color:#57606a>// 预先处理倒数  t=(1-p)/view=1/view-p/view
+</span></span></span><span style=display:flex><span>					float3 id <span style=color:#0550ae>=</span> <span style=color:#0550ae>1.0</span> <span style=color:#0550ae>/</span> i<span style=color:#1f2328>.</span>tangentViewDir<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					float3 k <span style=color:#0550ae>=</span> abs<span style=color:#1f2328>(</span>id<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> pos <span style=color:#0550ae>*</span> id<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					<span style=color:#cf222e>float</span> kMin <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>min<span style=color:#1f2328>(</span>k<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> k<span style=color:#1f2328>.</span>y<span style=color:#1f2328>),</span> k<span style=color:#1f2328>.</span>z<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>					pos <span style=color:#0550ae>+=</span> kMin <span style=color:#0550ae>*</span> i<span style=color:#1f2328>.</span>tangentViewDir<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// remap from [-1,1] to [0,1] room depth
+</span></span></span><span style=display:flex><span>					<span style=color:#cf222e>float</span> interp <span style=color:#0550ae>=</span> pos<span style=color:#1f2328>.</span>z <span style=color:#0550ae>*</span> <span style=color:#0550ae>0.5</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// account for perspective in &#34;room&#34; textures
+</span></span></span><span style=display:flex><span>					<span style=color:#57606a>// assumes camera with an fov of 53.13 degrees (atan(0.5))
+</span></span></span><span style=display:flex><span>					<span style=color:#57606a>// visual result = transform nonlinear depth back to linear
+</span></span></span><span style=display:flex><span>					<span style=color:#cf222e>float</span> realZ <span style=color:#0550ae>=</span> saturate<span style=color:#1f2328>(</span>interp<span style=color:#1f2328>)</span> <span style=color:#0550ae>/</span> depthScale <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>					interp <span style=color:#0550ae>=</span> <span style=color:#0550ae>1.0</span> <span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1.0</span> <span style=color:#0550ae>/</span> realZ<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>					interp <span style=color:#0550ae>*=</span> depthScale <span style=color:#0550ae>+</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// iterpolate from wall back to near wall
+</span></span></span><span style=display:flex><span>					float2 interiorUV <span style=color:#0550ae>=</span> pos<span style=color:#1f2328>.</span>xy <span style=color:#0550ae>*</span> lerp<span style=color:#1f2328>(</span><span style=color:#0550ae>1.0</span><span style=color:#1f2328>,</span> farFrac<span style=color:#1f2328>,</span> interp<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>					
+</span></span><span style=display:flex><span>					interiorUV <span style=color:#0550ae>=</span> interiorUV <span style=color:#0550ae>*</span> <span style=color:#0550ae>0.5</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>					<span style=color:#57606a>// sample room atlas texture
+</span></span></span><span style=display:flex><span>					fixed4 room <span style=color:#0550ae>=</span> tex2D<span style=color:#1f2328>(</span>_RoomTex<span style=color:#1f2328>,</span> <span style=color:#1f2328>(</span>roomIndexUV <span style=color:#0550ae>+</span> interiorUV<span style=color:#1f2328>.</span>xy<span style=color:#1f2328>)</span> <span style=color:#0550ae>/</span> _Rooms<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>					<span style=color:#cf222e>return</span> room<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>				<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>			ENDCG
+</span></span><span style=display:flex><span>		<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>	<span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>	FallBack <span style=color:#0a3069>&#34;Diffuse&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/volumetric_clouds_write_up/>Volumetric Clouds Write-up(翻译)</a></li><li class=related__item><a class=related__link href=/post/unity3d/unity_texture_compression_detail/>Unity纹理压缩格式详解</a></li><li class=related__item><a class=related__link href=/post/unity3d/uniyt3d_graphic_optimize_note/>Unity3D的图形渲染优化方法汇总</a></li><li class=related__item><a class=related__link href=/post/unity3d/uniyt3d_asset_bundle_note/>Unity3D的assetbundle技术要点汇总</a></li><li class=related__item><a class=related__link href=/post/unity3d/project_dir_and_architecture/>一个Unity工程目录架构组织图</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

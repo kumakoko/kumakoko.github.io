@@ -1,163 +1,33 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title> | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="" />
-<meta property="og:description" content="#在Unity3D shader中使用光照贴图数据【翻译】 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>| XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/post/unity3d/using_lightmap_data_in_shaders/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="XGF"><meta property="og:description" content='#在Unity3D shader中使用光照贴图数据【翻译】 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
 原文地址
 在Unity3D中创建一个用来接收光照图数据的shader要比你所想象的要难，这个shader的代码在这里。下面是做这个工作时的要特别注意的三个小贴士：
 ##1 surface shader是无效（不能用来接收光照图数据）的
 要接收光照图数据，首先要确定的是不能使用U3D独有的表面着色器，而是要直接用Cg代码写顶点和片元着色器。即使U3D的ShaderLab语言看起来和标准的Cg语言语法不大一样，但它还是能正常工作。这是因为在U3D里面，surface shader最终还是会展开成Cg代码编写的顶点和片元着色器。而当这些ShaderLab代码被展开的时候，一些必要的光照图变量便不易察觉地自动地“为你而设置了”。因为这个原因，当你试图去访问这些这些变量时，尤其是在代码展开阶段(expansion step)，你会得到一个“未定义这些变量”的编译错误。当最后的编译shader代码的时候，你会得到一个“重复定义这些变量”的错误。
 ##2 U3D的内置变量unity_LightmapST是一个不合法的变量名字
 另一个细节则是你必须使用正确的变量。这些变量是U3D引擎用来传递光照贴图数据的。它们是：
-sampler2D unity_Lightmap; float4 unity_LightmapST; 第二个变量用来管理光照贴图图集数据（lightmaps atlas data）。它的名字很重要，原因是它的命名规则是不正确的！（译注：Unity3D的bug？）在一般情况下，带有_ST后缀名的变量，将会由Unity根据该变量所绑定的shader property的图集，自动地传递赋值（populate）过去。现在这个变量漏了下划线了，因为一个非常有用的用来进行变换操作的宏，导致这个遗漏成了一个大问题。该宏是在UntiyCG.cginc文件中定义的TRANSFORM_TEX。代码如下：
-#define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy &#43; name##_ST.zw) 如代码所示，在这个宏里面，变量名是需要加下划线的，所以必须仿照这个宏的定义，去手写一遍，代码如下：
-o.uv1 = i.texcoord1.xy * unity_LightmapST.xy &#43; unity_LightmapST.zw; UnityCG.cginc文件包含了大量的便于开发的函数，完成这个工作需要用到里面的函数，所以需要在代码中包含这个文件，如下：
-#include &#34;UnityCG.cginc&#34; ##3 使用Unity3D提供的光照图解码函数
+sampler2D unity_Lightmap;float4 unity_LightmapST; 第二个变量用来管理光照贴图图集数据（lightmaps atlas data）。它的名字很重要，原因是它的命名规则是不正确的！（译注：Unity3D的bug？）在一般情况下，带有_ST后缀名的变量，将会由Unity根据该变量所绑定的shader property的图集，自动地传递赋值（populate）过去。现在这个变量漏了下划线了，因为一个非常有用的用来进行变换操作的宏，导致这个遗漏成了一个大问题。该宏是在UntiyCG.cginc文件中定义的TRANSFORM_TEX。代码如下：
+#define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy + name##_ST.zw) 如代码所示，在这个宏里面，变量名是需要加下划线的，所以必须仿照这个宏的定义，去手写一遍，代码如下：
+o.uv1 = i.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw; UnityCG.cginc文件包含了大量的便于开发的函数，完成这个工作需要用到里面的函数，所以需要在代码中包含这个文件，如下：
+#include "UnityCG.cginc" ##3 使用Unity3D提供的光照图解码函数
 最后一个重要的步骤便是对光照贴图数据进行正确的解码。在不同的平台上解码方式有所不同，但U3D已经在UnityCG.cginc文件中提供了DecodeLightmap函数完成这功能，代码如下：
-// Decodes lightmaps: // doubleLDR encoded on GLES // RGBM encoded with range [0;8] on other platforms using surface shaders inline fixed3 DecodeLightmap(fixed4 color) { #if defined(SHADER_API_GLES) &amp;&amp; defined(SHADER_API_MOBILE) return 2." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/using_lightmap_data_in_shaders/" /><meta property="article:section" content="post" />
-
-
-
-
-		<meta itemprop="name" content="">
-<meta itemprop="description" content="#在Unity3D shader中使用光照贴图数据【翻译】 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
+// Decodes lightmaps:// doubleLDR encoded on GLES// RGBM encoded with range [0;8] on other platforms using surface shadersinline fixed3 DecodeLightmap(fixed4 color){#if defined(SHADER_API_GLES) && defined(SHADER_API_MOBILE)return 2.0 * color.rgb;#elsereturn (8.0 * color.a) * color.rgb;#endif} 这个函数将在片元着色器中，对传递进来的光照贴图颜色数据，即参数color，依据不同的目标平台，进行转换，并且输出一个带有四个分量的颜色值。'><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta itemprop=name content="XGF"><meta itemprop=description content='#在Unity3D shader中使用光照贴图数据【翻译】 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
 原文地址
 在Unity3D中创建一个用来接收光照图数据的shader要比你所想象的要难，这个shader的代码在这里。下面是做这个工作时的要特别注意的三个小贴士：
 ##1 surface shader是无效（不能用来接收光照图数据）的
 要接收光照图数据，首先要确定的是不能使用U3D独有的表面着色器，而是要直接用Cg代码写顶点和片元着色器。即使U3D的ShaderLab语言看起来和标准的Cg语言语法不大一样，但它还是能正常工作。这是因为在U3D里面，surface shader最终还是会展开成Cg代码编写的顶点和片元着色器。而当这些ShaderLab代码被展开的时候，一些必要的光照图变量便不易察觉地自动地“为你而设置了”。因为这个原因，当你试图去访问这些这些变量时，尤其是在代码展开阶段(expansion step)，你会得到一个“未定义这些变量”的编译错误。当最后的编译shader代码的时候，你会得到一个“重复定义这些变量”的错误。
 ##2 U3D的内置变量unity_LightmapST是一个不合法的变量名字
 另一个细节则是你必须使用正确的变量。这些变量是U3D引擎用来传递光照贴图数据的。它们是：
-sampler2D unity_Lightmap; float4 unity_LightmapST; 第二个变量用来管理光照贴图图集数据（lightmaps atlas data）。它的名字很重要，原因是它的命名规则是不正确的！（译注：Unity3D的bug？）在一般情况下，带有_ST后缀名的变量，将会由Unity根据该变量所绑定的shader property的图集，自动地传递赋值（populate）过去。现在这个变量漏了下划线了，因为一个非常有用的用来进行变换操作的宏，导致这个遗漏成了一个大问题。该宏是在UntiyCG.cginc文件中定义的TRANSFORM_TEX。代码如下：
-#define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy &#43; name##_ST.zw) 如代码所示，在这个宏里面，变量名是需要加下划线的，所以必须仿照这个宏的定义，去手写一遍，代码如下：
-o.uv1 = i.texcoord1.xy * unity_LightmapST.xy &#43; unity_LightmapST.zw; UnityCG.cginc文件包含了大量的便于开发的函数，完成这个工作需要用到里面的函数，所以需要在代码中包含这个文件，如下：
-#include &#34;UnityCG.cginc&#34; ##3 使用Unity3D提供的光照图解码函数
+sampler2D unity_Lightmap;float4 unity_LightmapST; 第二个变量用来管理光照贴图图集数据（lightmaps atlas data）。它的名字很重要，原因是它的命名规则是不正确的！（译注：Unity3D的bug？）在一般情况下，带有_ST后缀名的变量，将会由Unity根据该变量所绑定的shader property的图集，自动地传递赋值（populate）过去。现在这个变量漏了下划线了，因为一个非常有用的用来进行变换操作的宏，导致这个遗漏成了一个大问题。该宏是在UntiyCG.cginc文件中定义的TRANSFORM_TEX。代码如下：
+#define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy + name##_ST.zw) 如代码所示，在这个宏里面，变量名是需要加下划线的，所以必须仿照这个宏的定义，去手写一遍，代码如下：
+o.uv1 = i.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw; UnityCG.cginc文件包含了大量的便于开发的函数，完成这个工作需要用到里面的函数，所以需要在代码中包含这个文件，如下：
+#include "UnityCG.cginc" ##3 使用Unity3D提供的光照图解码函数
 最后一个重要的步骤便是对光照贴图数据进行正确的解码。在不同的平台上解码方式有所不同，但U3D已经在UnityCG.cginc文件中提供了DecodeLightmap函数完成这功能，代码如下：
-// Decodes lightmaps: // doubleLDR encoded on GLES // RGBM encoded with range [0;8] on other platforms using surface shaders inline fixed3 DecodeLightmap(fixed4 color) { #if defined(SHADER_API_GLES) &amp;&amp; defined(SHADER_API_MOBILE) return 2.">
-
-<meta itemprop="wordCount" content="87">
-<meta itemprop="keywords" content="" />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">...</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	</div>
-				<h1 class="entry__title"></h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#在unity3d-shader中使用光照贴图数据翻译">#在Unity3D shader中使用光照贴图数据【翻译】</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><h2 id="在unity3d-shader中使用光照贴图数据翻译">#在Unity3D shader中使用光照贴图数据【翻译】</h2>
-<p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="www.xionggf.com">www.xionggf.com</a></strong></p>
-<p><a href="http://barkingmousestudio.com/articles/unity-lightmaps/">原文地址</a></p>
-<p>在Unity3D中创建一个用来接收光照图数据的shader要比你所想象的要难，这个shader的代码在<a href="https://gist.github.com/jimfleming/5937437">这里</a>。下面是做这个工作时的要特别注意的三个小贴士：</p>
-<p>##1 surface shader是无效（不能用来接收光照图数据）的</p>
-<p>要接收光照图数据，首先要确定的是不能使用U3D独有的表面着色器，而是要直接用Cg代码写顶点和片元着色器。即使U3D的ShaderLab语言看起来和标准的Cg语言语法不大一样，但它还是能正常工作。这是因为在U3D里面，surface shader最终还是会展开成Cg代码编写的顶点和片元着色器。而当这些ShaderLab代码被展开的时候，一些必要的光照图变量便不易察觉地自动地“为你而设置了”。因为这个原因，当你试图去访问这些这些变量时，尤其是在代码展开阶段(expansion step)，你会得到一个“未定义这些变量”的编译错误。当最后的编译shader代码的时候，你会得到一个“重复定义这些变量”的错误。</p>
-<p>##2 U3D的内置变量unity_LightmapST是一个不合法的变量名字</p>
-<p>另一个细节则是你必须使用正确的变量。这些变量是U3D引擎用来传递光照贴图数据的。它们是：</p>
-<pre tabindex="0"><code class="language-cg" data-lang="cg">sampler2D unity_Lightmap;
+// Decodes lightmaps:// doubleLDR encoded on GLES// RGBM encoded with range [0;8] on other platforms using surface shadersinline fixed3 DecodeLightmap(fixed4 color){#if defined(SHADER_API_GLES) && defined(SHADER_API_MOBILE)return 2.0 * color.rgb;#elsereturn (8.0 * color.a) * color.rgb;#endif} 这个函数将在片元着色器中，对传递进来的光照贴图颜色数据，即参数color，依据不同的目标平台，进行转换，并且输出一个带有四个分量的颜色值。'><meta itemprop=wordCount content="87"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>...</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"></div><h1 class=entry__title></h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#在unity3d-shader中使用光照贴图数据翻译>#在Unity3D shader中使用光照贴图数据【翻译】</a></li></ul></nav></details><div class=entry__content><h2 id=在unity3d-shader中使用光照贴图数据翻译>#在Unity3D shader中使用光照贴图数据【翻译】</h2><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a></strong></p><p><a href=http://barkingmousestudio.com/articles/unity-lightmaps/>原文地址</a></p><p>在Unity3D中创建一个用来接收光照图数据的shader要比你所想象的要难，这个shader的代码在<a href=https://gist.github.com/jimfleming/5937437>这里</a>。下面是做这个工作时的要特别注意的三个小贴士：</p><p>##1 surface shader是无效（不能用来接收光照图数据）的</p><p>要接收光照图数据，首先要确定的是不能使用U3D独有的表面着色器，而是要直接用Cg代码写顶点和片元着色器。即使U3D的ShaderLab语言看起来和标准的Cg语言语法不大一样，但它还是能正常工作。这是因为在U3D里面，surface shader最终还是会展开成Cg代码编写的顶点和片元着色器。而当这些ShaderLab代码被展开的时候，一些必要的光照图变量便不易察觉地自动地“为你而设置了”。因为这个原因，当你试图去访问这些这些变量时，尤其是在代码展开阶段(expansion step)，你会得到一个“未定义这些变量”的编译错误。当最后的编译shader代码的时候，你会得到一个“重复定义这些变量”的错误。</p><p>##2 U3D的内置变量unity_LightmapST是一个不合法的变量名字</p><p>另一个细节则是你必须使用正确的变量。这些变量是U3D引擎用来传递光照贴图数据的。它们是：</p><pre tabindex=0><code class=language-cg data-lang=cg>sampler2D unity_Lightmap;
 float4 unity_LightmapST;
-</code></pre><p>第二个变量用来管理光照贴图图集数据（lightmaps atlas data）。它的名字很重要，原因是它的命名规则是不正确的！（译注：Unity3D的bug？）在一般情况下，带有_ST后缀名的变量，将会由Unity根据该变量所绑定的shader property的图集，自动地传递赋值（populate）过去。现在这个变量漏了下划线了，因为一个非常有用的用来进行变换操作的宏，导致这个遗漏成了一个大问题。该宏是在UntiyCG.cginc文件中定义的TRANSFORM_TEX。代码如下：</p>
-<pre tabindex="0"><code class="language-cg" data-lang="cg">#define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy + name##_ST.zw)
-</code></pre><p>如代码所示，在这个宏里面，变量名是需要加下划线的，所以必须仿照这个宏的定义，去手写一遍，代码如下：</p>
-<pre tabindex="0"><code class="language-cg" data-lang="cg">o.uv1 = i.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw;
-</code></pre><p>UnityCG.cginc文件包含了大量的便于开发的函数，完成这个工作需要用到里面的函数，所以需要在代码中包含这个文件，如下：</p>
-<pre tabindex="0"><code class="language-cg" data-lang="cg">#include &#34;UnityCG.cginc&#34;
-</code></pre><p>##3 使用Unity3D提供的光照图解码函数</p>
-<p>最后一个重要的步骤便是对光照贴图数据进行正确的解码。在不同的平台上解码方式有所不同，但U3D已经在UnityCG.cginc文件中提供了DecodeLightmap函数完成这功能，代码如下：</p>
-<pre tabindex="0"><code class="language-cg" data-lang="cg">// Decodes lightmaps:
+</code></pre><p>第二个变量用来管理光照贴图图集数据（lightmaps atlas data）。它的名字很重要，原因是它的命名规则是不正确的！（译注：Unity3D的bug？）在一般情况下，带有_ST后缀名的变量，将会由Unity根据该变量所绑定的shader property的图集，自动地传递赋值（populate）过去。现在这个变量漏了下划线了，因为一个非常有用的用来进行变换操作的宏，导致这个遗漏成了一个大问题。该宏是在UntiyCG.cginc文件中定义的TRANSFORM_TEX。代码如下：</p><pre tabindex=0><code class=language-cg data-lang=cg>#define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy + name##_ST.zw)
+</code></pre><p>如代码所示，在这个宏里面，变量名是需要加下划线的，所以必须仿照这个宏的定义，去手写一遍，代码如下：</p><pre tabindex=0><code class=language-cg data-lang=cg>o.uv1 = i.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+</code></pre><p>UnityCG.cginc文件包含了大量的便于开发的函数，完成这个工作需要用到里面的函数，所以需要在代码中包含这个文件，如下：</p><pre tabindex=0><code class=language-cg data-lang=cg>#include &#34;UnityCG.cginc&#34;
+</code></pre><p>##3 使用Unity3D提供的光照图解码函数</p><p>最后一个重要的步骤便是对光照贴图数据进行正确的解码。在不同的平台上解码方式有所不同，但U3D已经在UnityCG.cginc文件中提供了DecodeLightmap函数完成这功能，代码如下：</p><pre tabindex=0><code class=language-cg data-lang=cg>// Decodes lightmaps:
 // doubleLDR encoded on GLES
 // RGBM encoded with range [0;8] on other platforms using surface shaders
 inline fixed3 DecodeLightmap(fixed4 color)
@@ -168,70 +38,51 @@ inline fixed3 DecodeLightmap(fixed4 color)
     return (8.0 * color.a) * color.rgb;
 #endif
 }
-</code></pre><p>这个函数将在片元着色器中，对传递进来的光照贴图颜色数据，即参数color，依据不同的目标平台，进行转换，并且输出一个带有四个分量的颜色值。</p>
-<p><a href="http://www.xionggf.com">返回首页</a></p>
-</div>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+</code></pre><p>这个函数将在片元着色器中，对传递进来的光照贴图颜色数据，即参数color，依据不同的目标平台，进行转换，并且输出一个带有四个分量的颜色值。</p><p><a href=http://www.xionggf.com>返回首页</a></p></div></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

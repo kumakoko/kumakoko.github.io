@@ -1,459 +1,266 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>深度探索DxFramework 8-2 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="深度探索DxFramework">
-		<meta property="og:title" content="深度探索DxFramework 8-2" />
-<meta property="og:description" content="深度探索DxFramework" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_8_2/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2007-10-20T18:08:30+08:00" />
-<meta property="article:modified_time" content="2007-10-20T18:08:30+08:00" />
-
-
-		<meta itemprop="name" content="深度探索DxFramework 8-2">
-<meta itemprop="description" content="深度探索DxFramework"><meta itemprop="datePublished" content="2007-10-20T18:08:30+08:00" />
-<meta itemprop="dateModified" content="2007-10-20T18:08:30+08:00" />
-<meta itemprop="wordCount" content="524">
-<meta itemprop="keywords" content="DxFramework," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">深度探索DxFramework 8-2</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2007-10-20T18:08:30&#43;08:00">October 20, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">深度探索DxFramework 8-2</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#82-demo的游戏角色">8.2 Demo的游戏角色</a>
-      <ul>
-        <li><a href="#821-游戏角色role的概念">8.2.1 游戏角色（role）的概念</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h1 id="第8章-world-map的剖析-2">第8章 World Map的剖析 2</h1>
-<h2 id="82-demo的游戏角色">8.2 Demo的游戏角色</h2>
-<h3 id="821-游戏角色role的概念">8.2.1 游戏角色（role）的概念</h3>
-<p>world map demo用C_MapPC类描述了游戏主角player。而C_MapPC又继承自C_MapObject。追本溯源，就必须先要分析和理解C_MapPC类的实现。前面提过，C_MapObject继承自C_GameObject2D。是作为任何一种在游戏场景地图上的游戏对象（game object）的基类。比如主角，敌人，各种宝物等等。在这个demo中。这些“地图上的游戏对象”有什么共同的属性？答案就在C_MapObejct类的成员变量中：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">C_MapObject</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> C_GameObject2D 
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">protected</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    DIR_TYPE  face;               <span style="color:#75715e">//角色的朝向，东，南，西，北
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span>            moveX;           <span style="color:#75715e">//每次角色移动距离的
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span>            moveY;           <span style="color:#75715e">//大小，以像素为单位
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span>            stepSize;         <span style="color:#75715e">//moveX/moveY变量的修正值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span>            xPos, yPos;     <span style="color:#75715e">//角色在世界中的坐标 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span>            xModifier,      <span style="color:#75715e">//用在包围盒计算的修正值，将会在
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span>            yModifier;      <span style="color:#75715e">//CheckWalkOn成员函数中使用 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">int</span>            animFrame;    <span style="color:#75715e">//当前播放的动画帧
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    C_Sprite<span style="color:#f92672">*</span>  p_MapSprite   <span style="color:#75715e">// sprite on map
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
-</span></span></code></pre></div><p>DIR_TYPE类型的face成员变量很好理解，在大部分2D游戏中，主角，或者是NPC。都有着四个或者更多的朝向。如果是静止的物品，比如说是一个不会动的道具，那么它的朝向就只有一个。对应地，每一个朝向也对应着一系列的动画帧，如图：</p>
-<p>int类型的成员变量moveX，moveY也容易理解，当游戏对象在世界中移动时，每一帧都产生了位移。world map demo是基于二维空间的，所以必须使用两个变量来分别描述游戏对象沿着X轴和Y轴产生的位移。游戏对象既然生存在“游戏世界”中，所以就需要两个成员变量xPos，yPos来描述它在世界中的位置，以便进行绘制和其他相关的操作。作为一个2D游戏对象，要能渲染出来，就肯定少不了需要一个C_Sprite实例来作为它的成员。如果这个2D游戏对象还有动画效果的话，就应还需要一个变量来维护当前正绘制的动画帧。C_Sprite类型的对象指针p_MapSprite和int类型成员变animFrame正是满足所需。另外的几个修正值变量：stepSize，xModifier，yModifer将会在后面代码分析中详细描述它们的含义和作用。</p>
-<p>在world map demo中，游戏对象有几个重要的行为。它们是：</p>
-<ol>
-<li>游戏对象和场景间的碰撞检测。即是说某个游戏对象，比如主角，能否通过某一个格子而向前移动。</li>
-<li>游戏对象沿着某个方向移动。</li>
-<li>游戏对象在游戏场景地图中绘制。</li>
-<li>游戏对象在小地图中绘制。</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//负责移动map object在地图上移动的函数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> C_MapObject<span style="color:#f92672">::</span>Move(DIR_TYPE direction) 
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (direction <span style="color:#f92672">==</span> DIR_NORTH) {
-</span></span><span style="display:flex;"><span>        moveY <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>stepSize;
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (direction <span style="color:#f92672">==</span> DIR_SOUTH) {
-</span></span><span style="display:flex;"><span>        moveY <span style="color:#f92672">=</span> stepSize;
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (direction <span style="color:#f92672">==</span> DIR_EAST) {
-</span></span><span style="display:flex;"><span>        moveX <span style="color:#f92672">=</span> stepSize;
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> { <span style="color:#75715e">//(direction == DIR_WEST) 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        moveX <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>stepSize;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    face <span style="color:#f92672">=</span> direction;
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">++</span>animFrame;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>上面的函数很好理解，stepSize成员变量的作用在此也很明白了。就是根据不同的移动方向，设定沿X轴，Y轴移动的位移量。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//这个函数负责在小地图中绘制缩小了的map object，参数miniMapLeft，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//miniMapTop分别小地图左上角的屏幕坐标X，Y值。miniMapScale就是map
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//object的放缩比例
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> C_MapObject<span style="color:#f92672">::</span>RenderMini2D(<span style="color:#66d9ef">float</span> miniMapLeft, 
-</span></span><span style="display:flex;"><span>                        <span style="color:#66d9ef">float</span> miniMapTop, <span style="color:#66d9ef">float</span> miniMapScale)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//计算缩小后的map object在小地图的屏幕坐标
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">float</span> xCoord <span style="color:#f92672">=</span> miniMapLeft <span style="color:#f92672">+</span> xPos<span style="color:#f92672">*</span>miniMapScale; 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> yCoord <span style="color:#f92672">=</span> miniMapTop <span style="color:#f92672">+</span> yPos<span style="color:#f92672">*</span>miniMapScale;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    p_MapSprite<span style="color:#f92672">-&gt;</span>Render2D(D3DXVECTOR2(xCoord, yCoord), 
-</span></span><span style="display:flex;"><span>                         D3DXVECTOR2(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>), <span style="color:#ae81ff">0</span>, 
-</span></span><span style="display:flex;"><span>                    D3DXVECTOR2(miniMapScale,miniMapScale));
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//计算两个游戏对象可能的要移动到的瓷砖。检查此两个瓷砖，看它是不是障碍
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//物，如果不是的话返回TRUE，表示可以通过
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>BOOL C_MapObject<span style="color:#f92672">::</span>CheckWalkOn(DIR_TYPE direction)
-</span></span><span style="display:flex;"><span>{    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> NTile <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, STile <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, WTile <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, ETile <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">switch</span>(direction) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> DIR_NORTH: <span style="color:#75715e">//向北走
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// xPos是map object包围盒矩形左上角的顶点,
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 计算出相对于map object目前所在的瓷砖位置西北边
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 的瓷砖索引
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            WTile <span style="color:#f92672">=</span> (xPos<span style="color:#f92672">+</span>xModifier)<span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 计算出相对于map object目前所在的瓷砖位置东北边的
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 瓷砖索引
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            ETile <span style="color:#f92672">=</span> (xPos<span style="color:#f92672">+</span>(<span style="color:#66d9ef">int</span>)width<span style="color:#f92672">-</span>xModifier)<span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//北边的，因为要向北边移动，Y坐标变小，所以要减去移动
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">//的距离stepSize
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            NTile <span style="color:#f92672">=</span> (yPos<span style="color:#f92672">+</span>yModifier<span style="color:#f92672">-</span>stepSize)<span style="color:#f92672">/</span>tileSize;    
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//检查东北边和西北边的瓷砖是否能通行，只要有一个不能
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">//通行，map object便不能向北边移动
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>Map[NTile][WTile].walkOn <span style="color:#f92672">||</span> 
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">!</span>Map[NTile][ETile].walkOn)
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> FALSE;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> DIR_SOUTH:
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 计算出相对于map object目前所在的瓷砖位置西南边
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#75715e">// 和东南边的瓷砖索引
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            WTile <span style="color:#f92672">=</span> (xPos<span style="color:#f92672">+</span>xModifier)<span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>            ETile <span style="color:#f92672">=</span> (xPos<span style="color:#f92672">+</span>(<span style="color:#66d9ef">int</span>)width<span style="color:#f92672">-</span>xModifier)<span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>            STile <span style="color:#f92672">=</span> (yPos<span style="color:#f92672">+</span>(<span style="color:#66d9ef">int</span>)height<span style="color:#f92672">-</span>yModifier<span style="color:#f92672">+</span>stepSize)
-</span></span><span style="display:flex;"><span>                     <span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">//检查能否通行
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>Map[STile][WTile].walkOn <span style="color:#f92672">||</span> 
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">!</span>Map[STile][ETile].walkOn)
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> FALSE;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> DIR_EAST: <span style="color:#75715e">//原理同上
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            NTile <span style="color:#f92672">=</span> (yPos<span style="color:#f92672">+</span>yModifier)<span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>            STile <span style="color:#f92672">=</span> (yPos<span style="color:#f92672">+</span>(<span style="color:#66d9ef">int</span>)height<span style="color:#f92672">-</span>yModifier)<span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>            ETile <span style="color:#f92672">=</span> (xPos<span style="color:#f92672">+</span>(<span style="color:#66d9ef">int</span>)width<span style="color:#f92672">-</span>xModifier<span style="color:#f92672">+</span>stepSize)
-</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>Map[NTile][ETile].walkOn <span style="color:#f92672">||</span> 
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">!</span>Map[STile][ETile].walkOn)
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> FALSE;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">case</span> DIR_WEST:
-</span></span><span style="display:flex;"><span>            NTile <span style="color:#f92672">=</span> (yPos<span style="color:#f92672">+</span>yModifier)<span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>            STile <span style="color:#f92672">=</span> (yPos<span style="color:#f92672">+</span>(<span style="color:#66d9ef">int</span>)height<span style="color:#f92672">-</span>yModifier)<span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>            WTile <span style="color:#f92672">=</span> (xPos<span style="color:#f92672">+</span>xModifier<span style="color:#f92672">-</span>stepSize)<span style="color:#f92672">/</span>tileSize;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>Map[NTile][WTile].walkOn <span style="color:#f92672">||</span> 
-</span></span><span style="display:flex;"><span>                <span style="color:#f92672">!</span>Map[STile][WTile].walkOn)
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> FALSE;
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>;
-</span></span><span style="display:flex;"><span>    };
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> TRUE;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>至于map object的在游戏场景地图中绘制行为，C_MapObject类的基类C_GameObject2D已经留下虚函数Render2D()作为渲染绘制接口。C_MapObject类没有改写此函数，这是合理的，因为每一个不同的map object将会有不同的渲染表现方式。把具体的渲染实现交给每个具体的map object实现类中来实现，更为妥当。</p>
-<p>在world map demo中，map object只有一种具体实现，便是我们要分析的C_MapPC类，C_MapPC的对象实例就是demo中的主角player。除去C_GameObject2D类和C_MapObject所具有的行为之外，C_MapPC还有它特定的行为，比如根据它的世界坐标，计算成屏幕坐标。世界坐标和屏幕坐标的对应关系在上面已经介绍过了，对此遗忘了的读者可以看上面的介绍和示意图。根据世界坐标计算出主角的屏幕坐标，目的是为了渲染出主角。所以在分析如何把主角player的世界坐标转换成屏幕坐标之前。我们再来仔细观察一下主角player在屏幕中是如何渲染的：</p>
-<p>主角player在移动的时候，是把它定位在场景的中间，移动地图，直到主角player走到当前场景地图的边界区域。如果主角player在场景的边界区域，从屏幕中间移动到屏幕边缘的时候，场景将不移动。知道了主角player是怎样渲染后，一切就很明了了。void C_MapPC::WorldPosToTrans()函数其实就是按上面的主角渲染方法来实现的。如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_MapPC<span style="color:#f92672">::</span>WorldPosToTrans()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    D3DXVECTOR2 tempTrans;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 把主角player定位在游戏地图窗口的中间。tempTrans保存的是主角
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// player的包围盒矩形的左上角屏幕坐标
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    tempTrans.x <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)(mapViewWidth<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> tileSize<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>);
-</span></span><span style="display:flex;"><span>    tempTrans.y <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)(mapViewHeight<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> tileSize<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果主角player的世界坐标X值已经小于地图宽度的一半，这表示，主
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 角已经处在了本地图的场景的西部，这时候地图已经不能卷动了，只能移
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 动主角player而场景地图静止。这个时候的主角player的屏幕坐标值X
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 值就等于它的世界坐标值X值。因为此时的世界坐标和屏幕坐标的Y轴重
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 合了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (xPos <span style="color:#f92672">&lt;</span> (mapViewWidth<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> tileSize<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>))
-</span></span><span style="display:flex;"><span>        tempTrans.x <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)xPos;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果主角player的世界坐标Y值已经小于地图高度的一半，这表示，主
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 角已经处在了本地图的场景的北部，这时候地图已经不能卷动了，只能移
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 动主角player而场景地图静止。这个时候的主角player的屏幕坐标值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Y值就等于它的世界坐标值Y值。因为此时的世界坐标和屏幕坐标的X轴
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 重合了。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (yPos <span style="color:#f92672">&lt;</span> (mapViewHeight<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">-</span> tileSize<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>))
-</span></span><span style="display:flex;"><span>        tempTrans.y <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)yPos;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// mapX,mapY分别是本地图当前的纵向和横向瓷砖数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// mapX*tileSize表示本地图X轴方向的长度，单位为像素
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// mapY*tileSize表示本地图Y轴方向的长度，单位为像素
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 如果主角player的世界坐标X值已经大于地图宽度的一半，这表示，主
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 角已经处在了本地图的场景的东部，这时候地图已经不能卷动了，只能移
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 动主角player而场景地图静止。这表示当前地图的最东端X值和屏幕
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 坐标的最大X值已经重合
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (xPos <span style="color:#f92672">&gt;=</span> (mapX<span style="color:#f92672">*</span>tileSize)<span style="color:#f92672">-</span>
-</span></span><span style="display:flex;"><span>                (mapViewWidth<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> tileSize<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>))    
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        tempTrans.x <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)(mapViewWidth <span style="color:#f92672">-</span> 
-</span></span><span style="display:flex;"><span>                             ((mapX<span style="color:#f92672">*</span>tileSize) <span style="color:#f92672">-</span> xPos));
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 如果主角player的世界坐标Y值已经大于地图高度的一半，这表示，主
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 角已经处在了本地图的场景的东部，这时候地图已经不能卷动了，只能
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 移动主角player而场景地图静止。这表示当前地图的最南端Y值和屏
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 幕坐标的最大Y值已经重合
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (yPos <span style="color:#f92672">&gt;=</span>(mapY<span style="color:#f92672">*</span>tileSize)<span style="color:#f92672">-</span>
-</span></span><span style="display:flex;"><span>                (mapViewHeight<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span> <span style="color:#f92672">+</span> tileSize<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>))
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        tempTrans.y <span style="color:#f92672">=</span> (<span style="color:#66d9ef">float</span>)(mapViewHeight <span style="color:#f92672">-</span>
-</span></span><span style="display:flex;"><span>                             ((mapY<span style="color:#f92672">*</span>tileSize) <span style="color:#f92672">-</span> yPos));
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    SetTranslation(tempTrans);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>至此，主角player的根据世界坐标计算出屏幕坐标的方法已经分析完毕，主角player可以着手进行渲染了。渲染的代码非常之简单，就是对C_Sprite::Render2D函数的调用而已，代码如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_MapPC<span style="color:#f92672">::</span>Render2D()
-</span></span><span style="display:flex;"><span>{ 
-</span></span><span style="display:flex;"><span>    p_MapSprite<span style="color:#f92672">-&gt;</span>Render2D(GetTranslation());
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>每一帧要更新player的状态，更新状态的接口是void C_MapPC::Update()函数。此函数是一个虚函数，在C_GameObject2D类中声明。继承自C_GameObject2D类的各子类可以依据它本身的更新状态行为改写此函数。C_MapPC::Update()函数主要功能是：响应外设输入，进行主角player移动方向的判断；更新主角player的世界坐标；根据世界坐标计算出主角的渲染坐标。更新主角player的当前渲染帧。代码如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> C_MapPC<span style="color:#f92672">::</span>Update() 
-</span></span><span style="display:flex;"><span>{    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>((gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_UP) <span style="color:#f92672">==</span> BUTTON_DOWN) 
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&amp;&amp;</span> CheckWalkOn(DIR_NORTH))
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        Move(DIR_NORTH);
-</span></span><span style="display:flex;"><span>    } 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span>((gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_DOWN) 
-</span></span><span style="display:flex;"><span>             <span style="color:#f92672">==</span> BUTTON_DOWN) <span style="color:#f92672">&amp;&amp;</span> CheckWalkOn(DIR_SOUTH))
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        Move(DIR_SOUTH);
-</span></span><span style="display:flex;"><span>    } 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>        moveY <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_RIGHT)
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">==</span> BUTTON_DOWN) <span style="color:#f92672">&amp;&amp;</span> CheckWalkOn(DIR_EAST))
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        Move(DIR_EAST);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> ((gp_Controller<span style="color:#f92672">-&gt;</span>GetKeyState(DIK_LEFT) 
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">==</span> BUTTON_DOWN) <span style="color:#f92672">&amp;&amp;</span> CheckWalkOn(DIR_WEST))
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        Move(DIR_WEST);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>        moveX <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//每间隔20毫秒更新一次主角player的世界坐标
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (gp_Timer<span style="color:#f92672">-&gt;</span>TimeMod(<span style="color:#ae81ff">.02</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) 
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        xPos <span style="color:#f92672">+=</span> moveX;
-</span></span><span style="display:flex;"><span>        yPos <span style="color:#f92672">+=</span> moveY;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 根据世界坐标计算出player的屏幕坐标
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    WorldPosToTrans();
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 改变方向了，当前显示帧的帧数也要改变
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (face <span style="color:#f92672">==</span> DIR_NORTH <span style="color:#f92672">&amp;&amp;</span> 
-</span></span><span style="display:flex;"><span>        (animFrame <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">6</span> <span style="color:#f92672">||</span> animFrame <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">11</span>))
-</span></span><span style="display:flex;"><span>        animFrame <span style="color:#f92672">=</span> <span style="color:#ae81ff">6</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (face <span style="color:#f92672">==</span> DIR_SOUTH <span style="color:#f92672">&amp;&amp;</span> (animFrame <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">5</span>))
-</span></span><span style="display:flex;"><span>        animFrame <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (face <span style="color:#f92672">==</span> DIR_EAST  <span style="color:#f92672">&amp;&amp;</span> 
-</span></span><span style="display:flex;"><span>        (animFrame <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">18</span> <span style="color:#f92672">||</span> animFrame <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">23</span>))
-</span></span><span style="display:flex;"><span>        animFrame <span style="color:#f92672">=</span> <span style="color:#ae81ff">18</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (face <span style="color:#f92672">==</span> DIR_WEST  <span style="color:#f92672">&amp;&amp;</span> 
-</span></span><span style="display:flex;"><span>        (animFrame <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">12</span> <span style="color:#f92672">||</span> animFrame <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">17</span>))
-</span></span><span style="display:flex;"><span>        animFrame <span style="color:#f92672">=</span> <span style="color:#ae81ff">12</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    p_MapSprite<span style="color:#f92672">-&gt;</span>SetAnimation(animFrame);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>到现在为止，demo的主要功能模块的实现原理都分析完毕了，一切都昭然若揭。万流归海。</p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/dxframework/">DxFramework</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_8_1/">深度探索DxFramework 8-1</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_7_1/">深度探索DxFramework 7-1</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_6_1/">深度探索DxFramework 6-1</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_5_1/">深度探索DxFramework 5-1</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_4_1/">深度探索DxFramework 4-1</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>深度探索DxFramework 8-2 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="深度探索DxFramework"><meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_8_2/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="深度探索DxFramework 8-2"><meta property="og:description" content="深度探索DxFramework"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2007-10-20T18:08:30+08:00"><meta property="article:modified_time" content="2007-10-20T18:08:30+08:00"><meta property="article:tag" content="DxFramework"><meta itemprop=name content="深度探索DxFramework 8-2"><meta itemprop=description content="深度探索DxFramework"><meta itemprop=datePublished content="2007-10-20T18:08:30+08:00"><meta itemprop=dateModified content="2007-10-20T18:08:30+08:00"><meta itemprop=wordCount content="524"><meta itemprop=keywords content="DxFramework"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>深度探索DxFramework 8-2</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2007-10-20T18:08:30+08:00>October 20, 2007</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/directx/ rel=category>DirectX</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/dxframework/ rel=tag>DxFramework</a></span></div></div><h1 class=entry__title>深度探索DxFramework 8-2</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#82-demo的游戏角色>8.2 Demo的游戏角色</a><ul><li><a href=#821-游戏角色role的概念>8.2.1 游戏角色（role）的概念</a></li></ul></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=第8章-world-map的剖析-2>第8章 World Map的剖析 2</h1><h2 id=82-demo的游戏角色>8.2 Demo的游戏角色</h2><h3 id=821-游戏角色role的概念>8.2.1 游戏角色（role）的概念</h3><p>world map demo用C_MapPC类描述了游戏主角player。而C_MapPC又继承自C_MapObject。追本溯源，就必须先要分析和理解C_MapPC类的实现。前面提过，C_MapObject继承自C_GameObject2D。是作为任何一种在游戏场景地图上的游戏对象（game object）的基类。比如主角，敌人，各种宝物等等。在这个demo中。这些“地图上的游戏对象”有什么共同的属性？答案就在C_MapObejct类的成员变量中：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>class</span> <span style=color:#1f2328>C_MapObject</span> <span style=color:#0550ae>:</span> <span style=color:#cf222e>public</span> C_GameObject2D 
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>protected</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    DIR_TYPE  face<span style=color:#1f2328>;</span>               <span style=color:#57606a>//角色的朝向，东，南，西，北
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span>            moveX<span style=color:#1f2328>;</span>           <span style=color:#57606a>//每次角色移动距离的
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span>            moveY<span style=color:#1f2328>;</span>           <span style=color:#57606a>//大小，以像素为单位
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span>            stepSize<span style=color:#1f2328>;</span>         <span style=color:#57606a>//moveX/moveY变量的修正值
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span>            xPos<span style=color:#1f2328>,</span> yPos<span style=color:#1f2328>;</span>     <span style=color:#57606a>//角色在世界中的坐标 
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span>            xModifier<span style=color:#1f2328>,</span>      <span style=color:#57606a>//用在包围盒计算的修正值，将会在
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span>            yModifier<span style=color:#1f2328>;</span>      <span style=color:#57606a>//CheckWalkOn成员函数中使用 
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span>            animFrame<span style=color:#1f2328>;</span>    <span style=color:#57606a>//当前播放的动画帧
+</span></span></span><span style=display:flex><span>    C_Sprite<span style=color:#0550ae>*</span>  p_MapSprite   <span style=color:#57606a>// sprite on map
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><p>DIR_TYPE类型的face成员变量很好理解，在大部分2D游戏中，主角，或者是NPC。都有着四个或者更多的朝向。如果是静止的物品，比如说是一个不会动的道具，那么它的朝向就只有一个。对应地，每一个朝向也对应着一系列的动画帧，如图：</p><p>int类型的成员变量moveX，moveY也容易理解，当游戏对象在世界中移动时，每一帧都产生了位移。world map demo是基于二维空间的，所以必须使用两个变量来分别描述游戏对象沿着X轴和Y轴产生的位移。游戏对象既然生存在“游戏世界”中，所以就需要两个成员变量xPos，yPos来描述它在世界中的位置，以便进行绘制和其他相关的操作。作为一个2D游戏对象，要能渲染出来，就肯定少不了需要一个C_Sprite实例来作为它的成员。如果这个2D游戏对象还有动画效果的话，就应还需要一个变量来维护当前正绘制的动画帧。C_Sprite类型的对象指针p_MapSprite和int类型成员变animFrame正是满足所需。另外的几个修正值变量：stepSize，xModifier，yModifer将会在后面代码分析中详细描述它们的含义和作用。</p><p>在world map demo中，游戏对象有几个重要的行为。它们是：</p><ol><li>游戏对象和场景间的碰撞检测。即是说某个游戏对象，比如主角，能否通过某一个格子而向前移动。</li><li>游戏对象沿着某个方向移动。</li><li>游戏对象在游戏场景地图中绘制。</li><li>游戏对象在小地图中绘制。</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>//负责移动map object在地图上移动的函数
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>void</span> C_MapObject<span style=color:#0550ae>::</span>Move<span style=color:#1f2328>(</span>DIR_TYPE direction<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>direction <span style=color:#0550ae>==</span> DIR_NORTH<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        moveY <span style=color:#0550ae>=</span> <span style=color:#0550ae>-</span>stepSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#6639ba>if</span> <span style=color:#1f2328>(</span>direction <span style=color:#0550ae>==</span> DIR_SOUTH<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        moveY <span style=color:#0550ae>=</span> stepSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#6639ba>if</span> <span style=color:#1f2328>(</span>direction <span style=color:#0550ae>==</span> DIR_EAST<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        moveX <span style=color:#0550ae>=</span> stepSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#1f2328>{</span> <span style=color:#57606a>//(direction == DIR_WEST) 
+</span></span></span><span style=display:flex><span>        moveX <span style=color:#0550ae>=</span> <span style=color:#0550ae>-</span>stepSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    face <span style=color:#0550ae>=</span> direction<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#0550ae>++</span>animFrame<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>上面的函数很好理解，stepSize成员变量的作用在此也很明白了。就是根据不同的移动方向，设定沿X轴，Y轴移动的位移量。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>//这个函数负责在小地图中绘制缩小了的map object，参数miniMapLeft，
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//miniMapTop分别小地图左上角的屏幕坐标X，Y值。miniMapScale就是map
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//object的放缩比例
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>void</span> C_MapObject<span style=color:#0550ae>::</span>RenderMini2D<span style=color:#1f2328>(</span><span style=color:#cf222e>float</span> miniMapLeft<span style=color:#1f2328>,</span> 
+</span></span><span style=display:flex><span>                        <span style=color:#cf222e>float</span> miniMapTop<span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span> miniMapScale<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//计算缩小后的map object在小地图的屏幕坐标
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> xCoord <span style=color:#0550ae>=</span> miniMapLeft <span style=color:#0550ae>+</span> xPos<span style=color:#0550ae>*</span>miniMapScale<span style=color:#1f2328>;</span> 
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> yCoord <span style=color:#0550ae>=</span> miniMapTop <span style=color:#0550ae>+</span> yPos<span style=color:#0550ae>*</span>miniMapScale<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    p_MapSprite<span style=color:#0550ae>-&gt;</span>Render2D<span style=color:#1f2328>(</span>D3DXVECTOR2<span style=color:#1f2328>(</span>xCoord<span style=color:#1f2328>,</span> yCoord<span style=color:#1f2328>),</span> 
+</span></span><span style=display:flex><span>                         D3DXVECTOR2<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>),</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> 
+</span></span><span style=display:flex><span>                    D3DXVECTOR2<span style=color:#1f2328>(</span>miniMapScale<span style=color:#1f2328>,</span>miniMapScale<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//计算两个游戏对象可能的要移动到的瓷砖。检查此两个瓷砖，看它是不是障碍
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//物，如果不是的话返回TRUE，表示可以通过
+</span></span></span><span style=display:flex><span>BOOL C_MapObject<span style=color:#0550ae>::</span>CheckWalkOn<span style=color:#1f2328>(</span>DIR_TYPE direction<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>    
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> NTile <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> STile <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> WTile <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> ETile <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>switch</span><span style=color:#1f2328>(</span>direction<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>case</span> <span style=color:#900;font-weight:700>DIR_NORTH</span><span style=color:#1f2328>:</span> <span style=color:#57606a>//向北走
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>// xPos是map object包围盒矩形左上角的顶点,
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>// 计算出相对于map object目前所在的瓷砖位置西北边
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>// 的瓷砖索引
+</span></span></span><span style=display:flex><span>            WTile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>xPos<span style=color:#0550ae>+</span>xModifier<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 计算出相对于map object目前所在的瓷砖位置东北边的
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>// 瓷砖索引
+</span></span></span><span style=display:flex><span>            ETile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>xPos<span style=color:#0550ae>+</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span><span style=color:#1f2328>)</span>width<span style=color:#0550ae>-</span>xModifier<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>//北边的，因为要向北边移动，Y坐标变小，所以要减去移动
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>//的距离stepSize
+</span></span></span><span style=display:flex><span>            NTile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>yPos<span style=color:#0550ae>+</span>yModifier<span style=color:#0550ae>-</span>stepSize<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>    
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#57606a>//检查东北边和西北边的瓷砖是否能通行，只要有一个不能
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>//通行，map object便不能向北边移动
+</span></span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>!</span>Map<span style=color:#1f2328>[</span>NTile<span style=color:#1f2328>][</span>WTile<span style=color:#1f2328>].</span>walkOn <span style=color:#0550ae>||</span> 
+</span></span><span style=display:flex><span>                <span style=color:#0550ae>!</span>Map<span style=color:#1f2328>[</span>NTile<span style=color:#1f2328>][</span>ETile<span style=color:#1f2328>].</span>walkOn<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> FALSE<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>case</span> <span style=color:#900;font-weight:700>DIR_SOUTH</span><span style=color:#1f2328>:</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 计算出相对于map object目前所在的瓷砖位置西南边
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>// 和东南边的瓷砖索引
+</span></span></span><span style=display:flex><span>            WTile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>xPos<span style=color:#0550ae>+</span>xModifier<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            ETile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>xPos<span style=color:#0550ae>+</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span><span style=color:#1f2328>)</span>width<span style=color:#0550ae>-</span>xModifier<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            STile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>yPos<span style=color:#0550ae>+</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span><span style=color:#1f2328>)</span>height<span style=color:#0550ae>-</span>yModifier<span style=color:#0550ae>+</span>stepSize<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                     <span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#57606a>//检查能否通行
+</span></span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>!</span>Map<span style=color:#1f2328>[</span>STile<span style=color:#1f2328>][</span>WTile<span style=color:#1f2328>].</span>walkOn <span style=color:#0550ae>||</span> 
+</span></span><span style=display:flex><span>                <span style=color:#0550ae>!</span>Map<span style=color:#1f2328>[</span>STile<span style=color:#1f2328>][</span>ETile<span style=color:#1f2328>].</span>walkOn<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> FALSE<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>case</span> <span style=color:#900;font-weight:700>DIR_EAST</span><span style=color:#1f2328>:</span> <span style=color:#57606a>//原理同上
+</span></span></span><span style=display:flex><span>            NTile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>yPos<span style=color:#0550ae>+</span>yModifier<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            STile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>yPos<span style=color:#0550ae>+</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span><span style=color:#1f2328>)</span>height<span style=color:#0550ae>-</span>yModifier<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            ETile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>xPos<span style=color:#0550ae>+</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span><span style=color:#1f2328>)</span>width<span style=color:#0550ae>-</span>xModifier<span style=color:#0550ae>+</span>stepSize<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                    <span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>!</span>Map<span style=color:#1f2328>[</span>NTile<span style=color:#1f2328>][</span>ETile<span style=color:#1f2328>].</span>walkOn <span style=color:#0550ae>||</span> 
+</span></span><span style=display:flex><span>                <span style=color:#0550ae>!</span>Map<span style=color:#1f2328>[</span>STile<span style=color:#1f2328>][</span>ETile<span style=color:#1f2328>].</span>walkOn<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> FALSE<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>case</span> <span style=color:#900;font-weight:700>DIR_WEST</span><span style=color:#1f2328>:</span>
+</span></span><span style=display:flex><span>            NTile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>yPos<span style=color:#0550ae>+</span>yModifier<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            STile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>yPos<span style=color:#0550ae>+</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span><span style=color:#1f2328>)</span>height<span style=color:#0550ae>-</span>yModifier<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            WTile <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>xPos<span style=color:#0550ae>+</span>xModifier<span style=color:#0550ae>-</span>stepSize<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span>tileSize<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>!</span>Map<span style=color:#1f2328>[</span>NTile<span style=color:#1f2328>][</span>WTile<span style=color:#1f2328>].</span>walkOn <span style=color:#0550ae>||</span> 
+</span></span><span style=display:flex><span>                <span style=color:#0550ae>!</span>Map<span style=color:#1f2328>[</span>STile<span style=color:#1f2328>][</span>WTile<span style=color:#1f2328>].</span>walkOn<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> FALSE<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> TRUE<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>至于map object的在游戏场景地图中绘制行为，C_MapObject类的基类C_GameObject2D已经留下虚函数Render2D()作为渲染绘制接口。C_MapObject类没有改写此函数，这是合理的，因为每一个不同的map object将会有不同的渲染表现方式。把具体的渲染实现交给每个具体的map object实现类中来实现，更为妥当。</p><p>在world map demo中，map object只有一种具体实现，便是我们要分析的C_MapPC类，C_MapPC的对象实例就是demo中的主角player。除去C_GameObject2D类和C_MapObject所具有的行为之外，C_MapPC还有它特定的行为，比如根据它的世界坐标，计算成屏幕坐标。世界坐标和屏幕坐标的对应关系在上面已经介绍过了，对此遗忘了的读者可以看上面的介绍和示意图。根据世界坐标计算出主角的屏幕坐标，目的是为了渲染出主角。所以在分析如何把主角player的世界坐标转换成屏幕坐标之前。我们再来仔细观察一下主角player在屏幕中是如何渲染的：</p><p>主角player在移动的时候，是把它定位在场景的中间，移动地图，直到主角player走到当前场景地图的边界区域。如果主角player在场景的边界区域，从屏幕中间移动到屏幕边缘的时候，场景将不移动。知道了主角player是怎样渲染后，一切就很明了了。void C_MapPC::WorldPosToTrans()函数其实就是按上面的主角渲染方法来实现的。如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> C_MapPC<span style=color:#0550ae>::</span>WorldPosToTrans<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    D3DXVECTOR2 tempTrans<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 把主角player定位在游戏地图窗口的中间。tempTrans保存的是主角
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// player的包围盒矩形的左上角屏幕坐标
+</span></span></span><span style=display:flex><span>    tempTrans<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)(</span>mapViewWidth<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span> <span style=color:#0550ae>-</span> tileSize<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    tempTrans<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)(</span>mapViewHeight<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span> <span style=color:#0550ae>-</span> tileSize<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 如果主角player的世界坐标X值已经小于地图宽度的一半，这表示，主
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 角已经处在了本地图的场景的西部，这时候地图已经不能卷动了，只能移
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 动主角player而场景地图静止。这个时候的主角player的屏幕坐标值X
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 值就等于它的世界坐标值X值。因为此时的世界坐标和屏幕坐标的Y轴重
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 合了
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>xPos <span style=color:#0550ae>&lt;</span> <span style=color:#1f2328>(</span>mapViewWidth<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span> <span style=color:#0550ae>-</span> tileSize<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        tempTrans<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)</span>xPos<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 如果主角player的世界坐标Y值已经小于地图高度的一半，这表示，主
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 角已经处在了本地图的场景的北部，这时候地图已经不能卷动了，只能移
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 动主角player而场景地图静止。这个时候的主角player的屏幕坐标值
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// Y值就等于它的世界坐标值Y值。因为此时的世界坐标和屏幕坐标的X轴
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 重合了。
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>yPos <span style=color:#0550ae>&lt;</span> <span style=color:#1f2328>(</span>mapViewHeight<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span> <span style=color:#0550ae>-</span> tileSize<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        tempTrans<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)</span>yPos<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// mapX,mapY分别是本地图当前的纵向和横向瓷砖数
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// mapX*tileSize表示本地图X轴方向的长度，单位为像素
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// mapY*tileSize表示本地图Y轴方向的长度，单位为像素
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 如果主角player的世界坐标X值已经大于地图宽度的一半，这表示，主
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 角已经处在了本地图的场景的东部，这时候地图已经不能卷动了，只能移
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 动主角player而场景地图静止。这表示当前地图的最东端X值和屏幕
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 坐标的最大X值已经重合
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>xPos <span style=color:#0550ae>&gt;=</span> <span style=color:#1f2328>(</span>mapX<span style=color:#0550ae>*</span>tileSize<span style=color:#1f2328>)</span><span style=color:#0550ae>-</span>
+</span></span><span style=display:flex><span>                <span style=color:#1f2328>(</span>mapViewWidth<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span> <span style=color:#0550ae>+</span> tileSize<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span><span style=color:#1f2328>))</span>    
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        tempTrans<span style=color:#1f2328>.</span>x <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)(</span>mapViewWidth <span style=color:#0550ae>-</span> 
+</span></span><span style=display:flex><span>                             <span style=color:#1f2328>((</span>mapX<span style=color:#0550ae>*</span>tileSize<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> xPos<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 如果主角player的世界坐标Y值已经大于地图高度的一半，这表示，主
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 角已经处在了本地图的场景的东部，这时候地图已经不能卷动了，只能
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 移动主角player而场景地图静止。这表示当前地图的最南端Y值和屏
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 幕坐标的最大Y值已经重合
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>yPos <span style=color:#0550ae>&gt;=</span><span style=color:#1f2328>(</span>mapY<span style=color:#0550ae>*</span>tileSize<span style=color:#1f2328>)</span><span style=color:#0550ae>-</span>
+</span></span><span style=display:flex><span>                <span style=color:#1f2328>(</span>mapViewHeight<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span> <span style=color:#0550ae>+</span> tileSize<span style=color:#0550ae>/</span><span style=color:#0550ae>2</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        tempTrans<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)(</span>mapViewHeight <span style=color:#0550ae>-</span>
+</span></span><span style=display:flex><span>                             <span style=color:#1f2328>((</span>mapY<span style=color:#0550ae>*</span>tileSize<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> yPos<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    SetTranslation<span style=color:#1f2328>(</span>tempTrans<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>至此，主角player的根据世界坐标计算出屏幕坐标的方法已经分析完毕，主角player可以着手进行渲染了。渲染的代码非常之简单，就是对C_Sprite::Render2D函数的调用而已，代码如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> C_MapPC<span style=color:#0550ae>::</span>Render2D<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span> 
+</span></span><span style=display:flex><span>    p_MapSprite<span style=color:#0550ae>-&gt;</span>Render2D<span style=color:#1f2328>(</span>GetTranslation<span style=color:#1f2328>());</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>每一帧要更新player的状态，更新状态的接口是void C_MapPC::Update()函数。此函数是一个虚函数，在C_GameObject2D类中声明。继承自C_GameObject2D类的各子类可以依据它本身的更新状态行为改写此函数。C_MapPC::Update()函数主要功能是：响应外设输入，进行主角player移动方向的判断；更新主角player的世界坐标；根据世界坐标计算出主角的渲染坐标。更新主角player的当前渲染帧。代码如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> C_MapPC<span style=color:#0550ae>::</span>Update<span style=color:#1f2328>()</span> 
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>    
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>((</span>gp_Controller<span style=color:#0550ae>-&gt;</span>GetKeyState<span style=color:#1f2328>(</span>DIK_UP<span style=color:#1f2328>)</span> <span style=color:#0550ae>==</span> BUTTON_DOWN<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>        <span style=color:#0550ae>&amp;&amp;</span> CheckWalkOn<span style=color:#1f2328>(</span>DIR_NORTH<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Move<span style=color:#1f2328>(</span>DIR_NORTH<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span> 
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span> <span style=color:#6639ba>if</span><span style=color:#1f2328>((</span>gp_Controller<span style=color:#0550ae>-&gt;</span>GetKeyState<span style=color:#1f2328>(</span>DIK_DOWN<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>             <span style=color:#0550ae>==</span> BUTTON_DOWN<span style=color:#1f2328>)</span> <span style=color:#0550ae>&amp;&amp;</span> CheckWalkOn<span style=color:#1f2328>(</span>DIR_SOUTH<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Move<span style=color:#1f2328>(</span>DIR_SOUTH<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span> 
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        moveY <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>((</span>gp_Controller<span style=color:#0550ae>-&gt;</span>GetKeyState<span style=color:#1f2328>(</span>DIK_RIGHT<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>         <span style=color:#0550ae>==</span> BUTTON_DOWN<span style=color:#1f2328>)</span> <span style=color:#0550ae>&amp;&amp;</span> CheckWalkOn<span style=color:#1f2328>(</span>DIR_EAST<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Move<span style=color:#1f2328>(</span>DIR_EAST<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span> <span style=color:#6639ba>if</span> <span style=color:#1f2328>((</span>gp_Controller<span style=color:#0550ae>-&gt;</span>GetKeyState<span style=color:#1f2328>(</span>DIK_LEFT<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>         <span style=color:#0550ae>==</span> BUTTON_DOWN<span style=color:#1f2328>)</span> <span style=color:#0550ae>&amp;&amp;</span> CheckWalkOn<span style=color:#1f2328>(</span>DIR_WEST<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Move<span style=color:#1f2328>(</span>DIR_WEST<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        moveX <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//每间隔20毫秒更新一次主角player的世界坐标
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>gp_Timer<span style=color:#0550ae>-&gt;</span>TimeMod<span style=color:#1f2328>(</span><span style=color:#0550ae>.02</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        xPos <span style=color:#0550ae>+=</span> moveX<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        yPos <span style=color:#0550ae>+=</span> moveY<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 根据世界坐标计算出player的屏幕坐标
+</span></span></span><span style=display:flex><span>    WorldPosToTrans<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 改变方向了，当前显示帧的帧数也要改变
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>face <span style=color:#0550ae>==</span> DIR_NORTH <span style=color:#0550ae>&amp;&amp;</span> 
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>(</span>animFrame <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>6</span> <span style=color:#0550ae>||</span> animFrame <span style=color:#0550ae>&gt;</span> <span style=color:#0550ae>11</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        animFrame <span style=color:#0550ae>=</span> <span style=color:#0550ae>6</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>face <span style=color:#0550ae>==</span> DIR_SOUTH <span style=color:#0550ae>&amp;&amp;</span> <span style=color:#1f2328>(</span>animFrame <span style=color:#0550ae>&gt;</span> <span style=color:#0550ae>5</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        animFrame <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>face <span style=color:#0550ae>==</span> DIR_EAST  <span style=color:#0550ae>&amp;&amp;</span> 
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>(</span>animFrame <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>18</span> <span style=color:#0550ae>||</span> animFrame <span style=color:#0550ae>&gt;</span> <span style=color:#0550ae>23</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        animFrame <span style=color:#0550ae>=</span> <span style=color:#0550ae>18</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>face <span style=color:#0550ae>==</span> DIR_WEST  <span style=color:#0550ae>&amp;&amp;</span> 
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>(</span>animFrame <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>12</span> <span style=color:#0550ae>||</span> animFrame <span style=color:#0550ae>&gt;</span> <span style=color:#0550ae>17</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        animFrame <span style=color:#0550ae>=</span> <span style=color:#0550ae>12</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    p_MapSprite<span style=color:#0550ae>-&gt;</span>SetAnimation<span style=color:#1f2328>(</span>animFrame<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>到现在为止，demo的主要功能模块的实现原理都分析完毕了，一切都昭然若揭。万流归海。</p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/dxframework/>DxFramework</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_8_1/>深度探索DxFramework 8-1</a></li><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_7_1/>深度探索DxFramework 7-1</a></li><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_6_1/>深度探索DxFramework 6-1</a></li><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_5_1/>深度探索DxFramework 5-1</a></li><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_4_1/>深度探索DxFramework 4-1</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

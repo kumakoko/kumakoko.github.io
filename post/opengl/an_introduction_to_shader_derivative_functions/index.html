@@ -1,492 +1,142 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>An Introduction to shader derivative functions（翻译） | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="An Introduction to shader derivative functions">
-		<meta property="og:title" content="An Introduction to shader derivative functions（翻译）" />
-<meta property="og:description" content="An Introduction to shader derivative functions" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/opengl/an_introduction_to_shader_derivative_functions/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2020-03-04T20:36:51+08:00" />
-<meta property="article:modified_time" content="2020-03-04T20:36:51+08:00" />
-
-
-		<meta itemprop="name" content="An Introduction to shader derivative functions（翻译）">
-<meta itemprop="description" content="An Introduction to shader derivative functions"><meta itemprop="datePublished" content="2020-03-04T20:36:51+08:00" />
-<meta itemprop="dateModified" content="2020-03-04T20:36:51+08:00" />
-<meta itemprop="wordCount" content="1858">
-<meta itemprop="keywords" content="OpenGL,Shader," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">An Introduction to shader derivative functions（翻译）</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2020-03-04T20:36:51&#43;08:00">March 04, 2020</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">Shader</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">An Introduction to shader derivative functions（翻译）</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#文档内容总结">文档内容总结</a>
-      <ul>
-        <li><a href="#1-shader-derivative-functions-简介">1. <strong>Shader Derivative Functions 简介</strong></a></li>
-        <li><a href="#2-导数计算">2. <strong>导数计算</strong></a></li>
-        <li><a href="#3-导数与-mipmaps">3. <strong>导数与 Mipmaps</strong></a></li>
-        <li><a href="#4-面法线计算flat-shader">4. <strong>面法线计算（Flat Shader）</strong></a></li>
-        <li><a href="#5-导数与分支">5. <strong>导数与分支</strong></a></li>
-        <li><a href="#6-导数块对齐的揭示">6. <strong>导数块对齐的揭示</strong></a></li>
-        <li><a href="#7-参考文献">7. <strong>参考文献</strong></a></li>
-        <li><a href="#8-源代码示例">8. <strong>源代码示例</strong></a></li>
-        <li><a href="#9-图片链接">9. <strong>图片链接</strong></a></li>
-      </ul>
-    </li>
-    <li><a href="#原文对译内容">原文对译内容</a>
-      <ul>
-        <li><a href="#derivatives-computation">Derivatives computation</a></li>
-        <li><a href="#derivatives-and-mipmaps">Derivatives and mipmaps</a></li>
-        <li><a href="#face-normal-computation-flat-shader">Face normal computation (flat shader)</a></li>
-        <li><a href="#derivatives-and-branches">Derivatives and branches</a></li>
-        <li><a href="#revealing-the-block-aligning-of-derivatives">Revealing the block aligning of derivatives</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="www.xionggf.com">www.xionggf.com</a></strong></p>
-<p><a href="http://www.aclockworkberry.com/shader-derivative-functions/#footnote_3_1104">原文地址</a></p>
-<h2 id="文档内容总结">文档内容总结</h2>
-<h3 id="1-shader-derivative-functions-简介">1. <strong>Shader Derivative Functions 简介</strong></h3>
-<ul>
-<li><strong>Shader Derivative Functions</strong> 是片段着色器中的指令，用于计算任何值相对于屏幕空间坐标的变化率。</li>
-<li>在 HLSL 中，这些函数称为 <code>ddx</code> 和 <code>ddy</code>，在 GLSL 中称为 <code>dFdx</code> 和 <code>dFdy</code>。</li>
-<li>这些函数在三角形光栅化过程中，通过计算 2x2 像素块中像素值之间的差异来求导数。</li>
-</ul>
-<h3 id="2-导数计算">2. <strong>导数计算</strong></h3>
-<ul>
-<li>GPU 在光栅化时，会同时运行多个片段着色器实例，并将它们组织成 2x2 像素块。</li>
-<li><code>dFdx</code> 计算块中左右像素值的差异，<code>dFdy</code> 计算上下像素值的差异。</li>
-<li>导数可以用于片段着色器中的任何变量，对于向量和矩阵类型，导数按元素计算。</li>
-</ul>
-<h3 id="3-导数与-mipmaps">3. <strong>导数与 Mipmaps</strong></h3>
-<ul>
-<li><strong>Mipmaps</strong> 是通过将纹理过滤成更小尺寸的预计算图像序列，用于避免纹理缩小时的锯齿问题。</li>
-<li>导数在纹理采样时用于选择最佳的 mipmap 级别，纹理坐标相对于屏幕坐标的变化率越大，选择的 mipmap 级别越高。</li>
-</ul>
-<h3 id="4-面法线计算flat-shader">4. <strong>面法线计算（Flat Shader）</strong></h3>
-<ul>
-<li>导数可以用于在片段着色器中计算当前三角形的面法线。</li>
-<li>当前片段的世界坐标的水平和垂直导数是位于三角形表面的两个向量，它们的叉积是垂直于表面的向量，其范数为三角形的法线向量。</li>
-<li>GLSL 代码示例：
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span>normalize(cross(dFdx(pos), dFdy(pos)));
-</span></span></code></pre></div></li>
-</ul>
-<h3 id="5-导数与分支">5. <strong>导数与分支</strong></h3>
-<ul>
-<li>导数计算基于 GPU 硬件上多个着色器实例的并行执行。</li>
-<li>在条件分支的情况下，如果核心中的线程没有全部执行相同的分支，则会出现代码执行的分歧，导致导数操作未定义。</li>
-<li>为了避免这个问题，着色器编译器可能会展平分支或将纹理读取移到分支控制流之外。</li>
-</ul>
-<h3 id="6-导数块对齐的揭示">6. <strong>导数块对齐的揭示</strong></h3>
-<ul>
-<li>通过一个简单的实验揭示了着色器导数的内部块对齐。</li>
-<li>实验通过计算步进函数的导数，展示了当步进过渡发生在 2x2 像素块的中间或两个相邻块之间时，导数的不同结果。</li>
-</ul>
-<h3 id="7-参考文献">7. <strong>参考文献</strong></h3>
-<ul>
-<li><a href="http://www.cs.cmu.edu/~kayvonf/misc/notes.pdf">How a GPU works - Kayvon Fatahalian</a></li>
-<li><a href="https://www.pearson.com/us/higher-education/program/Hughes-Computer-Graphics-Principles-and-Practice-3rd-Edition/PGM228122.html">Computer Graphics: Principles and Practice - Chapter 38. Modern Graphics Hardware</a></li>
-<li><a href="https://www.realtimerendering.com/">Real Time Rendering - Chapter 18. Graphics Hardware</a></li>
-</ul>
-<h3 id="8-源代码示例">8. <strong>源代码示例</strong></h3>
-<ul>
-<li><strong>Flat Shader Example</strong>:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span>normalize(cross(dFdx(pos), dFdy(pos)));
-</span></span></code></pre></div></li>
-<li><strong>HLSL Branching Experiment</strong>:
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span>[<span style="color:#a6e22e">branch</span>] <span style="color:#66d9ef">if</span> (condition) {
-</span></span><span style="display:flex;"><span>    tmp <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>;
-</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>    tmp <span style="color:#f92672">=</span> <span style="color:#ae81ff">20000</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></li>
-</ul>
-<h3 id="9-图片链接">9. <strong>图片链接</strong></h3>
-<ul>
-<li><a href="http://www.aclockworkberry.com/shader-derivative-functions/">Shader Derivatives</a></li>
-<li><a href="http://www.cs.cmu.edu/~kayvonf/misc/notes.pdf">GPU Branching - Kayvon Fatahalian</a></li>
-</ul>
-<h2 id="原文对译内容">原文对译内容</h2>
-<p>Partial difference derivative functions (<code>ddx</code> and <code>ddy</code> in HLSL[a], <code>dFdx</code> and <code>dFdy</code> in GLSL[b]) (in the rest of this article I will use both terms according to the code examples I will provide) are fragment shader instructions wich can be used to compute the rate of variation of any value with respect to the screen-space coordinates.</p>
-<blockquote>
-<p>偏导数函数（在HLSL中为<code>ddx</code>和<code>ddy</code>，GLSL中为<code>dFdx</code>和<code>dFdy</code>）。在本文的其余部分中，我将根据我将提供的代码示例使用这两个术语）都是可以使用的片元着色器指令，可用于计算任何数值相对于 <strong>屏幕空间坐标</strong> 的变化率。</p>
-</blockquote>
-<h3 id="derivatives-computation">Derivatives computation</h3>
-<p>During triangles rasterization, GPUs run many instances of a fragment  shader at a time organizing them in blocks of 2×2 pixels. Derivatives are calculated by taking differences between the pixel values in a block; <code>dFdx</code> subtracts the values of the pixels on the left side of the block from the values on the right side, and <code>dFdy</code> subtracts the values of the bottom pixels from the top ones. See the image below where the grid represents the rendered screen pixels and <code>dFdx</code>, <code>dFdy</code> expressions are provided for the generic value p evaluated by the fragment shader instance at (x, y) screen coordinates and belonging to the 2×2 block highlighted in red.</p>
-<blockquote>
-<p>在对三角形进行光栅化期间，GPU一次针对2x2个像素执行片元着色器。通过获取着2x2个像素块中像素值之间的差异，来计算导数：<code>dFdx</code>从右侧的值中减去块左侧的像素值，而<code>dFdy</code>从顶部的像素中减去底部像素的值。请参见下图，其中的网格表示渲染的屏幕像素，并且<code>dFdx</code>，<code>dFdy</code>函数在片元着色器中，对在（x，y）屏幕坐标处的片元，根据函数p(x,y)，求解了此片元的导数值，该值对应于红色突出显示的2×2块。</p>
-</blockquote>
-<p><img src="/image/opengl/an_introduction_to_shader_derivative_functions/Shader-Derivatives-1-615x397.png" alt=""></p>
-<p>Derivatives can be evaluated for every variable in a fragment shader. For vector and matrix types, derivatives are computed element-wise.</p>
-<blockquote>
-<p>可以为片元着色器中的每个变量求导数。对于矢量和矩阵类型，导数是逐元素计算的。</p>
-</blockquote>
-<p>Derivatives functions are fundamental for texture mipmaps implementation and are very useful in a series of algorithms and effects, in particular when there is some kind of dependence on screen space coordinates (for example when rendering wireframe edges with uniform screen pixel thickness).</p>
-<blockquote>
-<p>导数函数是纹理mipmap实施的基础，并且在一系列算法和效果中非常有用，尤其是在某种程度上依赖于屏幕空间坐标时（例如，以均匀的屏幕像素厚度渲染线框边缘时）。</p>
-</blockquote>
-<h3 id="derivatives-and-mipmaps">Derivatives and mipmaps</h3>
-<p><img src="/image/opengl/an_introduction_to_shader_derivative_functions/mipmap-300x200.png" alt=""></p>
-<p>Mipmaps are pre-computed sequences of images obtained by filtering down a texture into smaller sizes (each mipmap level is two times smaller than the previous). They are used to avoid aliasing artifacts when minifying a texture.</p>
-<blockquote>
-<p>Mipmap是通过将纹理过滤成更小的尺寸（每个mipmap级别比前一个小两倍）而获得的预先计算的图像序列。 它们用于在最小化纹理时避免 <strong>反褶假影（aliasing artifacts）</strong> 。</p>
-</blockquote>
-<p>Mipmapping is also important for texture cache coherence, since it enforces a near-one texel to pixel ratio: when traversing a triangle, each new pixel represents a step in texture space of one texel at most. Mipmapping is one of the few cases in rendering where a technique
-improves both visuals and performance.</p>
-<blockquote>
-<p>Mipmapping对于纹理缓存的一致性也很重要，因为它强制实现接近1的像素与像素的比率：遍历三角形时，每个新像素最多代表一个纹素在纹理空间中的步进。Mipmapping是为数不多的能同时改善视觉效果和性能的渲染技术的一种。</p>
-</blockquote>
-<p>Derivatives are used during texture sampling to select the best mipmap level. The rate of variation of the texture coordinates with respect to the screen coordinates is used to choose a mipmap; the larger the derivatives, the greater the mipmap level (and the lesser the mipmap size).</p>
-<blockquote>
-<p>在纹理采样期间使用导数来选择最佳的Mipmap级别。根据 <strong>纹理坐标相对于屏幕坐标的变化率</strong> 来选择mipmap。 <strong>导数越大，mipmap级别越大（并且mipmap大小越小）</strong> 。</p>
-</blockquote>
-<h3 id="face-normal-computation-flat-shader">Face normal computation (flat shader)</h3>
-<p>Derivatives can be used to compute the current triangle’s face normal in a fragment shader. The horizontal and vertical derivatives of the current fragment’s world-position are two vectors laying in the triangle’s surface. Their cross product is a vector orthogonal to the surface and its norm is the triangle’s normal vector (see the 3d model below). Particular attention must be paid to the ordering of the cross product: being the OpenGL coordinate system left-handed (at least when working in window space which is the context where the fragment shader works) and being the horizontal derivative vector always oriented right and the vertical down, the ordering of the cross product to obtain a normal vector oriented toward the camera is horizontal x vertical (more about cross products and basis orientations in this article). The interactive model below shows the link between screen pixels and fragmets over a triangle surface being rasterized, the derivative vectors on the surface (in red and green), and the normal vector (in blue) obtained by the cross product of the twos.</p>
-<blockquote>
-<p>导数可用于在片元着色器中计算当前三角形的面法线。当前片元的在世界坐标系位置点所对应的水平方向偏导数和垂直方向偏导数，是放置在三角形表面中的两个向量。它们的叉积是正交于曲面的向量，其 <strong>单位化值（norm）</strong> 是三角形的法线向量（请参见下面的3d模型）。必须特别注意叉积计算时所遵循的顺序法则：如果在OpenGL环境下，用左手法则。通过叉积计算，获得朝向相机的法向矢量。这叉积的顺序为 <strong>水平向量 x 垂直向量</strong> （本文中有关叉积和基本方向的更多信息）。下面的交互式模型显示了在光栅化的三角形表面上的屏幕像素和片元之间的关联，该表面上的导数矢量（红色和绿色）以及通过两者的叉积获得的法线矢量（蓝色）。</p>
-</blockquote>
-<p><img src="/image/opengl/an_introduction_to_shader_derivative_functions/cross.png" alt=""></p>
-<p>Here is a GLSL code line to compute a flat normal given the fragment position pos in camera space:</p>
-<blockquote>
-<p>下面是一条GLSL代码行，给定相机空间中的片段位置pos，用于计算平面法线</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span>normalize( cross(dFdx(pos), dFdy(pos)) );
-</span></span></code></pre></div><p>And below there is a complete pocket.gl demo with a vertex and fragment shader at work on an Utah Teapot. You can toggle the flat shader using the Flat shaded checkbox.</p>
-<blockquote>
-<p>下面是一个完整的演示，其中包含用来渲染一个 <strong>犹他茶壶</strong> 顶点着色器和片元着色器。您可以使用“flat shader”复选框在 <strong>平面着色器</strong> 和 <strong>平滑着色器</strong> 模式之间切换。</p>
-</blockquote>
-<p>下面两图分别是smooth模式和flat模式的渲染效果：</p>
-<p><img src="/image/opengl/an_introduction_to_shader_derivative_functions/smooth_shader.png" alt="">
-<img src="/image/opengl/an_introduction_to_shader_derivative_functions/flat_shader.png" alt=""></p>
-<p>下面的是顶点着色器</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">varying</span> <span style="color:#66d9ef">vec3</span> normalInterp;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">varying</span> <span style="color:#66d9ef">vec3</span> pos;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> main(){
-</span></span><span style="display:flex;"><span>    gl_Position <span style="color:#f92672">=</span> projectionMatrix <span style="color:#f92672">*</span> modelViewMatrix <span style="color:#f92672">*</span> <span style="color:#66d9ef">vec4</span>(position, <span style="color:#ae81ff">1.0</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">vec4</span> pos4 <span style="color:#f92672">=</span> modelViewMatrix <span style="color:#f92672">*</span> <span style="color:#66d9ef">vec4</span>(position, <span style="color:#ae81ff">1.0</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    normalInterp <span style="color:#f92672">=</span> normalMatrix <span style="color:#f92672">*</span> normal;
-</span></span><span style="display:flex;"><span>    pos <span style="color:#f92672">=</span> <span style="color:#66d9ef">vec3</span>(pos4) <span style="color:#f92672">/</span> pos4.w;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>下面的是片元着色器</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">precision</span> <span style="color:#66d9ef">mediump</span> <span style="color:#66d9ef">float</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">varying</span> <span style="color:#66d9ef">vec3</span> pos;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">varying</span> <span style="color:#66d9ef">vec3</span> normalInterp;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">float</span> bFlat; <span style="color:#75715e">// 用来切换flat shader和smooth shader模式的变量</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">vec3</span> lightPos     <span style="color:#f92672">=</span> <span style="color:#66d9ef">vec3</span>(<span style="color:#ae81ff">200</span>,<span style="color:#ae81ff">60</span>,<span style="color:#ae81ff">100</span>);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">vec3</span> ambientColor <span style="color:#f92672">=</span> <span style="color:#66d9ef">vec3</span>(<span style="color:#ae81ff">0.2</span>, <span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.0</span>);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">vec3</span> diffuseColor <span style="color:#f92672">=</span> <span style="color:#66d9ef">vec3</span>(<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">0.0</span>);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">vec3</span> specColor    <span style="color:#f92672">=</span> <span style="color:#66d9ef">vec3</span>(<span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">1.0</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> main() {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">vec3</span> normal <span style="color:#f92672">=</span> mix(normalize(normalInterp), 
-</span></span><span style="display:flex;"><span>        normalize(cross(dFdx(pos), dFdy(pos))), bFlat);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">vec3</span> lightDir <span style="color:#f92672">=</span> normalize(lightPos <span style="color:#f92672">-</span> pos);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> lambertian <span style="color:#f92672">=</span> max(dot(lightDir,normal), <span style="color:#ae81ff">0.0</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> specular <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(lambertian <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0.0</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">vec3</span> viewDir <span style="color:#f92672">=</span> normalize(<span style="color:#f92672">-</span>pos);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">vec3</span> halfDir <span style="color:#f92672">=</span> normalize(lightDir <span style="color:#f92672">+</span> viewDir);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float</span> specAngle <span style="color:#f92672">=</span> max(dot(halfDir, normal), <span style="color:#ae81ff">0.0</span>);
-</span></span><span style="display:flex;"><span>        specular <span style="color:#f92672">=</span> pow(specAngle, <span style="color:#ae81ff">16.0</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    gl_FragColor <span style="color:#f92672">=</span> <span style="color:#66d9ef">vec4</span>(ambientColor <span style="color:#f92672">+</span> 
-</span></span><span style="display:flex;"><span>    lambertian <span style="color:#f92672">*</span> diffuseColor <span style="color:#f92672">+</span> specular <span style="color:#f92672">*</span> specColor, <span style="color:#ae81ff">1.0</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="derivatives-and-branches">Derivatives and branches</h3>
-<p>Derivatives computation is based on the parallel execution on the GPU’s hardware of multiple instances of a shader. Scalar operations are executed with a SIMD (Single Instruction Multiple Data) architecture on registers containing a vector of 4 values for a block of 2×2 pixels. This means that at every step of execution, the shader instances belonging to each 2×2 block are synchronized making derivative computation fast and easy to implement in hardware, being a simple subtraction of values contained in the same register.</p>
-<blockquote>
-<p>导数计算基于在GPU硬件上的并行执行多个着色器程序实例。 标量操作使用SIMD（单指令多数据）架构，在包含2×2像素块共4个值向量的寄存器上执行。 这意味着在执行的每个步骤中，属于每个2×2块的着色器实例都是同步的，从而使派生计算快速且易于在硬件中实现，只需对包含在同一寄存器中的值进行简单的减法即可。</p>
-</blockquote>
-<p>But what happens in the case of a conditional branch? In this case, if not all of the threads in a core take the same branch, there is a divergence in the code execution. In the image below an example of divergence is shown: a conditional branch execution in a GPU core with 8 shader instances. Three instances take the first branch (yellow). During the yellow branch execution the other 5 instances are inactive (an execution bitmask is used to activate/deactivate execution). After the yellow branch, the execution mask is inverted and the blue branch is executed by the remaining 5 instances.</p>
-<blockquote>
-<p>但是在条件分支的情况下会发生什么呢？在这种情况下，如果不是内核中的所有线程都采用相同的分支，则代码执行会有分歧。在下面的图像中显示了一个 <strong>差异(divergence)</strong> 示例：具有8个着色器实例的GPU内核中的条件分支执行。三个实例采用第一个分支（黄色）。在执行黄色分支期间，其他5个实例处于非活动状态（执行位掩码用于激活/取消激活执行）。 在黄色分支之后，执行掩码将反转，剩余的5个实例将执行蓝色分支。</p>
-</blockquote>
-<p><img src="/image/opengl/an_introduction_to_shader_derivative_functions/GPU-branching-615x367.png" alt=""></p>
-<p>In addition to the efficiency and performance loss of the branch, the divergence is breaking the synchronization between the pixels in a block making derivatives operations undefined. This is a problem for texture sampling which needs derivatives for mipmap level selection, anisotropic filtering, etc. When facing such a problem, a shader compiler could flatten the branch (thus avoiding it) or try to rearrange the code moving texture reads outside of the branch control flow. This problem can be avoided by using explicit derivatives or mipmap level when sampling a texture.</p>
-<blockquote>
-<p>除了分支的效率和性能损失外，差异还破坏了一个块中像素之间的同步，从而导致派生运算不确定。 这是纹理采样的一个问题，需要用于mipmap级别选择， <strong>各向异性过滤（anisotropic filtering）</strong> 等的导数。 遇到此类问题时，着色器编译器可能会使分支 <strong>变平(flatten)</strong> （因此避免了使用分支），或者尝试将代码移动纹理读取的代码重新排列在分支控制流之外。 采样纹理时，可以通过使用显式导数或mipmap级别来避免此问题。</p>
-</blockquote>
-<p>Below you can see a HLSL branching experiment written in UE4 using a custom expression node.</p>
-<blockquote>
-<p>在下面，您可以看到使用自定义表达式节点以UE4编写的HLSL分支实验。</p>
-</blockquote>
-<p><img src="/image/opengl/an_introduction_to_shader_derivative_functions/UE4-branch-1-615x308.png" alt=""></p>
-<p>Here is the shader code I’m using in the previous example:</p>
-<p>这是我在上一个示例中使用的着色器代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">float</span> tmp <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>;
-</span></span><span style="display:flex;"><span>float3 color;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>[branch]
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>(xpos <span style="color:#f92672">&gt;</span> side)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    tmp <span style="color:#f92672">=</span> xpos <span style="color:#f92672">*</span> xpos;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> dx <span style="color:#f92672">=</span> ddx(tmp);
-</span></span><span style="display:flex;"><span>    color <span style="color:#f92672">=</span> float3(dx, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    tmp <span style="color:#f92672">=</span> xpos <span style="color:#f92672">*</span> xpos;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> dx <span style="color:#f92672">=</span> ddx(tmp);
-</span></span><span style="display:flex;"><span>    color <span style="color:#f92672">=</span> float3(<span style="color:#ae81ff">0</span>, dx, <span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> color <span style="color:#f92672">*</span> <span style="color:#ae81ff">100</span>;
-</span></span></code></pre></div><p>The purpose of this experiment is to see what happens when derivatives are used inside a divergent block. Suppose that the code above be executed on a GPU core. When a subset of the pixels in a block enters the first branch, the value of tmp for the inactive pixels waiting for the second branch execution should be still 10000. So the ddx function should give a spike for some pixels on divergent blocks. Note the [branch] attribute before the if to force branching using control flow instructions.</p>
-<blockquote>
-<p>该实验的目的是查看在 <strong>离散块（divergent block）</strong> 中使用导数时会发生什么。 假设以上代码在GPU内核上执行。当块中像素的子集进入第一分支时，等待第二个分支执行的非活动像素的tmp值仍应为10000。因此<code>ddx</code>函数应为发散块上的某些像素提供尖峰。 注意，如果要使用控制流指令强制分支，请注意<code>[branch]</code>属性。</p>
-</blockquote>
-<p>As you can see in the picture above, the compiler gives the following error for that piece of code: “cannot have divergent gradient operations inside flow control“, but when the [branch] attribute is removed, the code compiles fine but no spikes are visible during rendering, meaning that the branch has been flattened.</p>
-<p>如您在上图中所看到的，编译器对该代码段给出了以下错误：“在流控制内不能有不同的梯度运算”，但是当删除[branch]属性时，代码可以正常编译，但不会出现尖峰。在渲染过程中可见，表示分支已被展平。</p>
-<h3 id="revealing-the-block-aligning-of-derivatives">Revealing the block aligning of derivatives</h3>
-<p>Here is a simple experiment that reveals the inner block alignment of shader derivatives. Look at the following pocket.gl sandbox.</p>
-<blockquote>
-<p>这是一个简单的实验，揭示了着色器导数的内部块对齐。下面是着色器代码：</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-glsl" data-lang="glsl"><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">vec2</span> resolution;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">float</span> odd_step;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uniform</span> <span style="color:#66d9ef">float</span> show_derivative;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> main() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// center_x is at center x snapped to the nearest even position</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> center_x <span style="color:#f92672">=</span> floor(resolution.x <span style="color:#f92672">/</span> <span style="color:#ae81ff">4.0</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">2.0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// snap center_x to an odd number if odd_step is 1</span>
-</span></span><span style="display:flex;"><span>    center_x <span style="color:#f92672">+=</span> odd_step;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Step function is 0 when p.x &lt; step_pos, 1 when p.x &gt;= step_pos</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> step <span style="color:#f92672">=</span> ceil(clamp((gl_FragCoord.x <span style="color:#f92672">-</span> center_x) <span style="color:#f92672">/</span> resolution.x, <span style="color:#ae81ff">0.0</span>, <span style="color:#ae81ff">1.0</span>));
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// The alpha variable is used to select one of two colors</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> alpha <span style="color:#f92672">=</span> show_derivative <span style="color:#f92672">==</span> <span style="color:#ae81ff">1.0</span> <span style="color:#f92672">?</span> dFdx(step) <span style="color:#f92672">:</span> step;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">vec3</span> color <span style="color:#f92672">=</span> mix(<span style="color:#66d9ef">vec3</span>(<span style="color:#ae81ff">0.96</span>, <span style="color:#ae81ff">0.96</span>, <span style="color:#ae81ff">0.68</span>), <span style="color:#66d9ef">vec3</span>(<span style="color:#ae81ff">0.68</span>, <span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">0.1</span>), alpha);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    gl_FragColor <span style="color:#f92672">=</span> <span style="color:#66d9ef">vec4</span>(color, <span style="color:#ae81ff">1.0</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>The above shader implements a step function over the x axis. We want to compute its derivative. The derivative of a step function would be a Dirac delta function in the continuous domain, but in the shader’s discrete domain the delta function will be equal to 1 when the step jumps from 0 to 1, and 0 elsewhere. Select the Show Derivative checkbox and toggle the Step on odd pix checkbox to snap the Step position to an even (unchecked) or an odd (checked) pixel at the center of the viewport; you’ll see how dFdx(step) changes when moving the transition point from an even to an odd pixel.</p>
-<blockquote>
-<p>上面的着色器在x轴上实现了步进功能。我们要计算其导数。阶跃函数的导数在连续域中是Dirac增量函数，但是在着色器的离散域中，当阶跃从0跳到1时，<code>delta</code>函数将等于1，而在其他地方则为0。选中“显示微分”复选框，并选中“在奇数像素上移动”复选框，以将“位置”捕捉到视口中心的偶数（未选中）或奇数（选中）像素；您会看到将过渡点从偶数像素更改为奇数像素时<code>dFdx</code>（步进）的变化。</p>
-</blockquote>
-<p>Because the derivative computation is performed over blocks of 2×2 pixels, we should expect two different results depending on where the step transition occurs:</p>
-<blockquote>
-<p>由于微分计算是在2×2像素的块上执行的，因此根据阶跃转换发生的位置，我们应该期望得到两个不同的结果：</p>
-</blockquote>
-<ul>
-<li>Case 1. If the step transition falls in the middle of a 2×2 block of pixels, we’ll see a vertical line with 2 pixel thickness (the derivative is equal to 1 for each pixel in the 2×2 block, hence the 2 pixel thickness). This happens when the step falls on an odd pixel.</li>
-<li>Case 2. The step transition falls in the middle of two neighbouring 2×2 blocks of pixels. In this case we won’t see any vertical line because both the blocks will compute a derivative equal to 0. This happens when the step falls on an even pixel.</li>
-</ul>
-<blockquote>
-<ul>
-<li>情况1：如果阶跃过渡位于2×2像素块的中间，我们将看到一条垂直线，具有2个像素的厚度（对于2×2块中的每个像素，导数等于1，因此2像素厚度）当台阶落在奇数像素上时会发生这种情况。</li>
-<li>情况2：阶跃过渡落在两个相邻的2×2像素块的中间。在这种情况下，我们看不到任何垂直线，因为两个块都将计算出等于0的导数。这种情况发生在台阶落在偶数像素上时。</li>
-</ul>
-</blockquote>
-<p>As an exercise, try to modify the shader code of the above sandbox in order to show an horizontal step function and an horizontal derivative line.</p>
-<blockquote>
-<p>作为练习，请尝试修改上述沙箱的着色器代码，以显示水平阶跃函数和水平导数线。</p>
-</blockquote>
-<p>These aliasing artifacts are caused by the subsampling due to the hardware per-block computation of derivatives; horizontal derivatives have full vertical and half horizontal resolution, vertical derivatives have full horizontal and half vertical resolution.</p>
-<blockquote>
-<p>这些 <strong>反褶假影</strong> 是由于硬件的每块计算导数而导致的二次采样引起的。水平导数具有全垂直和一半水平分辨率，垂直导数具有全水平和一半垂直分辨率。</p>
-</blockquote>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/opengl/">OpenGL</a>
-			<a class="entry__tag btn" href="/tags/shader/">Shader</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/opengl/modern_opengl_debugging/">现代的OpenGL调试方式（翻译）</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/sv_position_and_position/">着色器语言的语义SV_POSITION和POSITION之辨析</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/my_books/u3d_shader_annotation/">《Unity3D内建着色器源码剖析》</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>An Introduction to shader derivative functions（翻译） | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="An Introduction to shader derivative functions"><meta property="og:url" content="http://www.xionggf.com/post/opengl/an_introduction_to_shader_derivative_functions/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="An Introduction to shader derivative functions（翻译）"><meta property="og:description" content="An Introduction to shader derivative functions"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-03-04T20:36:51+08:00"><meta property="article:modified_time" content="2020-03-04T20:36:51+08:00"><meta property="article:tag" content="OpenGL"><meta property="article:tag" content="Shader"><meta itemprop=name content="An Introduction to shader derivative functions（翻译）"><meta itemprop=description content="An Introduction to shader derivative functions"><meta itemprop=datePublished content="2020-03-04T20:36:51+08:00"><meta itemprop=dateModified content="2020-03-04T20:36:51+08:00"><meta itemprop=wordCount content="1858"><meta itemprop=keywords content="OpenGL,Shader,derivative"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>An Introduction to shader derivative functions（翻译）</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2020-03-04T20:36:51+08:00>March 04, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/opengl/ rel=category>OpenGL</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/opengl/ rel=tag>OpenGL</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>Shader</a></span></div></div><h1 class=entry__title>An Introduction to shader derivative functions（翻译）</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#文档内容总结>文档内容总结</a><ul><li><a href=#1-shader-derivative-functions-简介>1. <strong>Shader Derivative Functions 简介</strong></a></li><li><a href=#2-导数计算>2. <strong>导数计算</strong></a></li><li><a href=#3-导数与-mipmaps>3. <strong>导数与 Mipmaps</strong></a></li><li><a href=#4-面法线计算flat-shader>4. <strong>面法线计算（Flat Shader）</strong></a></li><li><a href=#5-导数与分支>5. <strong>导数与分支</strong></a></li><li><a href=#6-导数块对齐的揭示>6. <strong>导数块对齐的揭示</strong></a></li><li><a href=#7-参考文献>7. <strong>参考文献</strong></a></li><li><a href=#8-源代码示例>8. <strong>源代码示例</strong></a></li><li><a href=#9-图片链接>9. <strong>图片链接</strong></a></li></ul></li><li><a href=#原文对译内容>原文对译内容</a><ul><li><a href=#derivatives-computation>Derivatives computation</a></li><li><a href=#derivatives-and-mipmaps>Derivatives and mipmaps</a></li><li><a href=#face-normal-computation-flat-shader>Face normal computation (flat shader)</a></li><li><a href=#derivatives-and-branches>Derivatives and branches</a></li><li><a href=#revealing-the-block-aligning-of-derivatives>Revealing the block aligning of derivatives</a></li></ul></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a></strong></p><p><a href=http://www.aclockworkberry.com/shader-derivative-functions/#footnote_3_1104>原文地址</a></p><h2 id=文档内容总结>文档内容总结</h2><h3 id=1-shader-derivative-functions-简介>1. <strong>Shader Derivative Functions 简介</strong></h3><ul><li><strong>Shader Derivative Functions</strong> 是片段着色器中的指令，用于计算任何值相对于屏幕空间坐标的变化率。</li><li>在 HLSL 中，这些函数称为 <code>ddx</code> 和 <code>ddy</code>，在 GLSL 中称为 <code>dFdx</code> 和 <code>dFdy</code>。</li><li>这些函数在三角形光栅化过程中，通过计算 2x2 像素块中像素值之间的差异来求导数。</li></ul><h3 id=2-导数计算>2. <strong>导数计算</strong></h3><ul><li>GPU 在光栅化时，会同时运行多个片段着色器实例，并将它们组织成 2x2 像素块。</li><li><code>dFdx</code> 计算块中左右像素值的差异，<code>dFdy</code> 计算上下像素值的差异。</li><li>导数可以用于片段着色器中的任何变量，对于向量和矩阵类型，导数按元素计算。</li></ul><h3 id=3-导数与-mipmaps>3. <strong>导数与 Mipmaps</strong></h3><ul><li><strong>Mipmaps</strong> 是通过将纹理过滤成更小尺寸的预计算图像序列，用于避免纹理缩小时的锯齿问题。</li><li>导数在纹理采样时用于选择最佳的 mipmap 级别，纹理坐标相对于屏幕坐标的变化率越大，选择的 mipmap 级别越高。</li></ul><h3 id=4-面法线计算flat-shader>4. <strong>面法线计算（Flat Shader）</strong></h3><ul><li>导数可以用于在片段着色器中计算当前三角形的面法线。</li><li>当前片段的世界坐标的水平和垂直导数是位于三角形表面的两个向量，它们的叉积是垂直于表面的向量，其范数为三角形的法线向量。</li><li>GLSL 代码示例：<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span>normalize<span style=color:#1f2328>(</span>cross<span style=color:#1f2328>(</span>dFdx<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>),</span> dFdy<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>)));</span>
+</span></span></code></pre></div></li></ul><h3 id=5-导数与分支>5. <strong>导数与分支</strong></h3><ul><li>导数计算基于 GPU 硬件上多个着色器实例的并行执行。</li><li>在条件分支的情况下，如果核心中的线程没有全部执行相同的分支，则会出现代码执行的分歧，导致导数操作未定义。</li><li>为了避免这个问题，着色器编译器可能会展平分支或将纹理读取移到分支控制流之外。</li></ul><h3 id=6-导数块对齐的揭示>6. <strong>导数块对齐的揭示</strong></h3><ul><li>通过一个简单的实验揭示了着色器导数的内部块对齐。</li><li>实验通过计算步进函数的导数，展示了当步进过渡发生在 2x2 像素块的中间或两个相邻块之间时，导数的不同结果。</li></ul><h3 id=7-参考文献>7. <strong>参考文献</strong></h3><ul><li><a href=http://www.cs.cmu.edu/~kayvonf/misc/notes.pdf>How a GPU works - Kayvon Fatahalian</a></li><li><a href=https://www.pearson.com/us/higher-education/program/Hughes-Computer-Graphics-Principles-and-Practice-3rd-Edition/PGM228122.html>Computer Graphics: Principles and Practice - Chapter 38. Modern Graphics Hardware</a></li><li><a href=https://www.realtimerendering.com/>Real Time Rendering - Chapter 18. Graphics Hardware</a></li></ul><h3 id=8-源代码示例>8. <strong>源代码示例</strong></h3><ul><li><strong>Flat Shader Example</strong>:<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span>normalize<span style=color:#1f2328>(</span>cross<span style=color:#1f2328>(</span>dFdx<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>),</span> dFdy<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>)));</span>
+</span></span></code></pre></div></li><li><strong>HLSL Branching Experiment</strong>:<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#1f2328>[</span><span style=color:#0550ae>branch</span><span style=color:#1f2328>]</span> <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>condition<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    tmp <span style=color:#0550ae>=</span> <span style=color:#0550ae>10000</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    tmp <span style=color:#0550ae>=</span> <span style=color:#0550ae>20000</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></li></ul><h3 id=9-图片链接>9. <strong>图片链接</strong></h3><ul><li><a href=http://www.aclockworkberry.com/shader-derivative-functions/>Shader Derivatives</a></li><li><a href=http://www.cs.cmu.edu/~kayvonf/misc/notes.pdf>GPU Branching - Kayvon Fatahalian</a></li></ul><h2 id=原文对译内容>原文对译内容</h2><p>Partial difference derivative functions (<code>ddx</code> and <code>ddy</code> in HLSL[a], <code>dFdx</code> and <code>dFdy</code> in GLSL[b]) (in the rest of this article I will use both terms according to the code examples I will provide) are fragment shader instructions wich can be used to compute the rate of variation of any value with respect to the screen-space coordinates.</p><blockquote><p>偏导数函数（在HLSL中为<code>ddx</code>和<code>ddy</code>，GLSL中为<code>dFdx</code>和<code>dFdy</code>）。在本文的其余部分中，我将根据我将提供的代码示例使用这两个术语）都是可以使用的片元着色器指令，可用于计算任何数值相对于 <strong>屏幕空间坐标</strong> 的变化率。</p></blockquote><h3 id=derivatives-computation>Derivatives computation</h3><p>During triangles rasterization, GPUs run many instances of a fragment shader at a time organizing them in blocks of 2×2 pixels. Derivatives are calculated by taking differences between the pixel values in a block; <code>dFdx</code> subtracts the values of the pixels on the left side of the block from the values on the right side, and <code>dFdy</code> subtracts the values of the bottom pixels from the top ones. See the image below where the grid represents the rendered screen pixels and <code>dFdx</code>, <code>dFdy</code> expressions are provided for the generic value p evaluated by the fragment shader instance at (x, y) screen coordinates and belonging to the 2×2 block highlighted in red.</p><blockquote><p>在对三角形进行光栅化期间，GPU一次针对2x2个像素执行片元着色器。通过获取着2x2个像素块中像素值之间的差异，来计算导数：<code>dFdx</code>从右侧的值中减去块左侧的像素值，而<code>dFdy</code>从顶部的像素中减去底部像素的值。请参见下图，其中的网格表示渲染的屏幕像素，并且<code>dFdx</code>，<code>dFdy</code>函数在片元着色器中，对在（x，y）屏幕坐标处的片元，根据函数p(x,y)，求解了此片元的导数值，该值对应于红色突出显示的2×2块。</p></blockquote><p><img src=/image/opengl/an_introduction_to_shader_derivative_functions/Shader-Derivatives-1-615x397.png alt></p><p>Derivatives can be evaluated for every variable in a fragment shader. For vector and matrix types, derivatives are computed element-wise.</p><blockquote><p>可以为片元着色器中的每个变量求导数。对于矢量和矩阵类型，导数是逐元素计算的。</p></blockquote><p>Derivatives functions are fundamental for texture mipmaps implementation and are very useful in a series of algorithms and effects, in particular when there is some kind of dependence on screen space coordinates (for example when rendering wireframe edges with uniform screen pixel thickness).</p><blockquote><p>导数函数是纹理mipmap实施的基础，并且在一系列算法和效果中非常有用，尤其是在某种程度上依赖于屏幕空间坐标时（例如，以均匀的屏幕像素厚度渲染线框边缘时）。</p></blockquote><h3 id=derivatives-and-mipmaps>Derivatives and mipmaps</h3><p><img src=/image/opengl/an_introduction_to_shader_derivative_functions/mipmap-300x200.png alt></p><p>Mipmaps are pre-computed sequences of images obtained by filtering down a texture into smaller sizes (each mipmap level is two times smaller than the previous). They are used to avoid aliasing artifacts when minifying a texture.</p><blockquote><p>Mipmap是通过将纹理过滤成更小的尺寸（每个mipmap级别比前一个小两倍）而获得的预先计算的图像序列。 它们用于在最小化纹理时避免 <strong>反褶假影（aliasing artifacts）</strong> 。</p></blockquote><p>Mipmapping is also important for texture cache coherence, since it enforces a near-one texel to pixel ratio: when traversing a triangle, each new pixel represents a step in texture space of one texel at most. Mipmapping is one of the few cases in rendering where a technique
+improves both visuals and performance.</p><blockquote><p>Mipmapping对于纹理缓存的一致性也很重要，因为它强制实现接近1的像素与像素的比率：遍历三角形时，每个新像素最多代表一个纹素在纹理空间中的步进。Mipmapping是为数不多的能同时改善视觉效果和性能的渲染技术的一种。</p></blockquote><p>Derivatives are used during texture sampling to select the best mipmap level. The rate of variation of the texture coordinates with respect to the screen coordinates is used to choose a mipmap; the larger the derivatives, the greater the mipmap level (and the lesser the mipmap size).</p><blockquote><p>在纹理采样期间使用导数来选择最佳的Mipmap级别。根据 <strong>纹理坐标相对于屏幕坐标的变化率</strong> 来选择mipmap。 <strong>导数越大，mipmap级别越大（并且mipmap大小越小）</strong> 。</p></blockquote><h3 id=face-normal-computation-flat-shader>Face normal computation (flat shader)</h3><p>Derivatives can be used to compute the current triangle’s face normal in a fragment shader. The horizontal and vertical derivatives of the current fragment’s world-position are two vectors laying in the triangle’s surface. Their cross product is a vector orthogonal to the surface and its norm is the triangle’s normal vector (see the 3d model below). Particular attention must be paid to the ordering of the cross product: being the OpenGL coordinate system left-handed (at least when working in window space which is the context where the fragment shader works) and being the horizontal derivative vector always oriented right and the vertical down, the ordering of the cross product to obtain a normal vector oriented toward the camera is horizontal x vertical (more about cross products and basis orientations in this article). The interactive model below shows the link between screen pixels and fragmets over a triangle surface being rasterized, the derivative vectors on the surface (in red and green), and the normal vector (in blue) obtained by the cross product of the twos.</p><blockquote><p>导数可用于在片元着色器中计算当前三角形的面法线。当前片元的在世界坐标系位置点所对应的水平方向偏导数和垂直方向偏导数，是放置在三角形表面中的两个向量。它们的叉积是正交于曲面的向量，其 <strong>单位化值（norm）</strong> 是三角形的法线向量（请参见下面的3d模型）。必须特别注意叉积计算时所遵循的顺序法则：如果在OpenGL环境下，用左手法则。通过叉积计算，获得朝向相机的法向矢量。这叉积的顺序为 <strong>水平向量 x 垂直向量</strong> （本文中有关叉积和基本方向的更多信息）。下面的交互式模型显示了在光栅化的三角形表面上的屏幕像素和片元之间的关联，该表面上的导数矢量（红色和绿色）以及通过两者的叉积获得的法线矢量（蓝色）。</p></blockquote><p><img src=/image/opengl/an_introduction_to_shader_derivative_functions/cross.png alt></p><p>Here is a GLSL code line to compute a flat normal given the fragment position pos in camera space:</p><blockquote><p>下面是一条GLSL代码行，给定相机空间中的片段位置pos，用于计算平面法线</p></blockquote><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span>normalize<span style=color:#1f2328>(</span> cross<span style=color:#1f2328>(</span>dFdx<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>),</span> dFdy<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>))</span> <span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>And below there is a complete pocket.gl demo with a vertex and fragment shader at work on an Utah Teapot. You can toggle the flat shader using the Flat shaded checkbox.</p><blockquote><p>下面是一个完整的演示，其中包含用来渲染一个 <strong>犹他茶壶</strong> 顶点着色器和片元着色器。您可以使用“flat shader”复选框在 <strong>平面着色器</strong> 和 <strong>平滑着色器</strong> 模式之间切换。</p></blockquote><p>下面两图分别是smooth模式和flat模式的渲染效果：</p><p><img src=/image/opengl/an_introduction_to_shader_derivative_functions/smooth_shader.png alt>
+<img src=/image/opengl/an_introduction_to_shader_derivative_functions/flat_shader.png alt></p><p>下面的是顶点着色器</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#cf222e>varying</span> <span style=color:#cf222e>vec3</span> normalInterp<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>varying</span> <span style=color:#cf222e>vec3</span> pos<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> main<span style=color:#1f2328>(){</span>
+</span></span><span style=display:flex><span>    gl_Position <span style=color:#0550ae>=</span> projectionMatrix <span style=color:#0550ae>*</span> modelViewMatrix <span style=color:#0550ae>*</span> <span style=color:#cf222e>vec4</span><span style=color:#1f2328>(</span>position<span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>vec4</span> pos4 <span style=color:#0550ae>=</span> modelViewMatrix <span style=color:#0550ae>*</span> <span style=color:#cf222e>vec4</span><span style=color:#1f2328>(</span>position<span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    normalInterp <span style=color:#0550ae>=</span> normalMatrix <span style=color:#0550ae>*</span> normal<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    pos <span style=color:#0550ae>=</span> <span style=color:#cf222e>vec3</span><span style=color:#1f2328>(</span>pos4<span style=color:#1f2328>)</span> <span style=color:#0550ae>/</span> pos4<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>下面的是片元着色器</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#cf222e>precision</span> <span style=color:#cf222e>mediump</span> <span style=color:#cf222e>float</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>varying</span> <span style=color:#cf222e>vec3</span> pos<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>varying</span> <span style=color:#cf222e>vec3</span> normalInterp<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>uniform</span> <span style=color:#cf222e>float</span> bFlat<span style=color:#1f2328>;</span> <span style=color:#57606a>// 用来切换flat shader和smooth shader模式的变量</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>const</span> <span style=color:#cf222e>vec3</span> lightPos     <span style=color:#0550ae>=</span> <span style=color:#cf222e>vec3</span><span style=color:#1f2328>(</span><span style=color:#0550ae>200</span><span style=color:#1f2328>,</span><span style=color:#0550ae>60</span><span style=color:#1f2328>,</span><span style=color:#0550ae>100</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>const</span> <span style=color:#cf222e>vec3</span> ambientColor <span style=color:#0550ae>=</span> <span style=color:#cf222e>vec3</span><span style=color:#1f2328>(</span><span style=color:#0550ae>0.2</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>const</span> <span style=color:#cf222e>vec3</span> diffuseColor <span style=color:#0550ae>=</span> <span style=color:#cf222e>vec3</span><span style=color:#1f2328>(</span><span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>const</span> <span style=color:#cf222e>vec3</span> specColor    <span style=color:#0550ae>=</span> <span style=color:#cf222e>vec3</span><span style=color:#1f2328>(</span><span style=color:#0550ae>1.0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> main<span style=color:#1f2328>()</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>vec3</span> normal <span style=color:#0550ae>=</span> mix<span style=color:#1f2328>(</span>normalize<span style=color:#1f2328>(</span>normalInterp<span style=color:#1f2328>),</span> 
+</span></span><span style=display:flex><span>        normalize<span style=color:#1f2328>(</span>cross<span style=color:#1f2328>(</span>dFdx<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>),</span> dFdy<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>))),</span> bFlat<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>vec3</span> lightDir <span style=color:#0550ae>=</span> normalize<span style=color:#1f2328>(</span>lightPos <span style=color:#0550ae>-</span> pos<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> lambertian <span style=color:#0550ae>=</span> max<span style=color:#1f2328>(</span>dot<span style=color:#1f2328>(</span>lightDir<span style=color:#1f2328>,</span>normal<span style=color:#1f2328>),</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> specular <span style=color:#0550ae>=</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span>lambertian <span style=color:#0550ae>&gt;</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>vec3</span> viewDir <span style=color:#0550ae>=</span> normalize<span style=color:#1f2328>(</span><span style=color:#0550ae>-</span>pos<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>vec3</span> halfDir <span style=color:#0550ae>=</span> normalize<span style=color:#1f2328>(</span>lightDir <span style=color:#0550ae>+</span> viewDir<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> specAngle <span style=color:#0550ae>=</span> max<span style=color:#1f2328>(</span>dot<span style=color:#1f2328>(</span>halfDir<span style=color:#1f2328>,</span> normal<span style=color:#1f2328>),</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        specular <span style=color:#0550ae>=</span> pow<span style=color:#1f2328>(</span>specAngle<span style=color:#1f2328>,</span> <span style=color:#0550ae>16.0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    gl_FragColor <span style=color:#0550ae>=</span> <span style=color:#cf222e>vec4</span><span style=color:#1f2328>(</span>ambientColor <span style=color:#0550ae>+</span> 
+</span></span><span style=display:flex><span>    lambertian <span style=color:#0550ae>*</span> diffuseColor <span style=color:#0550ae>+</span> specular <span style=color:#0550ae>*</span> specColor<span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=derivatives-and-branches>Derivatives and branches</h3><p>Derivatives computation is based on the parallel execution on the GPU’s hardware of multiple instances of a shader. Scalar operations are executed with a SIMD (Single Instruction Multiple Data) architecture on registers containing a vector of 4 values for a block of 2×2 pixels. This means that at every step of execution, the shader instances belonging to each 2×2 block are synchronized making derivative computation fast and easy to implement in hardware, being a simple subtraction of values contained in the same register.</p><blockquote><p>导数计算基于在GPU硬件上的并行执行多个着色器程序实例。 标量操作使用SIMD（单指令多数据）架构，在包含2×2像素块共4个值向量的寄存器上执行。 这意味着在执行的每个步骤中，属于每个2×2块的着色器实例都是同步的，从而使派生计算快速且易于在硬件中实现，只需对包含在同一寄存器中的值进行简单的减法即可。</p></blockquote><p>But what happens in the case of a conditional branch? In this case, if not all of the threads in a core take the same branch, there is a divergence in the code execution. In the image below an example of divergence is shown: a conditional branch execution in a GPU core with 8 shader instances. Three instances take the first branch (yellow). During the yellow branch execution the other 5 instances are inactive (an execution bitmask is used to activate/deactivate execution). After the yellow branch, the execution mask is inverted and the blue branch is executed by the remaining 5 instances.</p><blockquote><p>但是在条件分支的情况下会发生什么呢？在这种情况下，如果不是内核中的所有线程都采用相同的分支，则代码执行会有分歧。在下面的图像中显示了一个 <strong>差异(divergence)</strong> 示例：具有8个着色器实例的GPU内核中的条件分支执行。三个实例采用第一个分支（黄色）。在执行黄色分支期间，其他5个实例处于非活动状态（执行位掩码用于激活/取消激活执行）。 在黄色分支之后，执行掩码将反转，剩余的5个实例将执行蓝色分支。</p></blockquote><p><img src=/image/opengl/an_introduction_to_shader_derivative_functions/GPU-branching-615x367.png alt></p><p>In addition to the efficiency and performance loss of the branch, the divergence is breaking the synchronization between the pixels in a block making derivatives operations undefined. This is a problem for texture sampling which needs derivatives for mipmap level selection, anisotropic filtering, etc. When facing such a problem, a shader compiler could flatten the branch (thus avoiding it) or try to rearrange the code moving texture reads outside of the branch control flow. This problem can be avoided by using explicit derivatives or mipmap level when sampling a texture.</p><blockquote><p>除了分支的效率和性能损失外，差异还破坏了一个块中像素之间的同步，从而导致派生运算不确定。 这是纹理采样的一个问题，需要用于mipmap级别选择， <strong>各向异性过滤（anisotropic filtering）</strong> 等的导数。 遇到此类问题时，着色器编译器可能会使分支 <strong>变平(flatten)</strong> （因此避免了使用分支），或者尝试将代码移动纹理读取的代码重新排列在分支控制流之外。 采样纹理时，可以通过使用显式导数或mipmap级别来避免此问题。</p></blockquote><p>Below you can see a HLSL branching experiment written in UE4 using a custom expression node.</p><blockquote><p>在下面，您可以看到使用自定义表达式节点以UE4编写的HLSL分支实验。</p></blockquote><p><img src=/image/opengl/an_introduction_to_shader_derivative_functions/UE4-branch-1-615x308.png alt></p><p>Here is the shader code I’m using in the previous example:</p><p>这是我在上一个示例中使用的着色器代码：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#cf222e>float</span> tmp <span style=color:#0550ae>=</span> <span style=color:#0550ae>10000</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>float3 color<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>[</span>branch<span style=color:#1f2328>]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>if</span><span style=color:#1f2328>(</span>xpos <span style=color:#0550ae>&gt;</span> side<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    tmp <span style=color:#0550ae>=</span> xpos <span style=color:#0550ae>*</span> xpos<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> dx <span style=color:#0550ae>=</span> ddx<span style=color:#1f2328>(</span>tmp<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    color <span style=color:#0550ae>=</span> float3<span style=color:#1f2328>(</span>dx<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    tmp <span style=color:#0550ae>=</span> xpos <span style=color:#0550ae>*</span> xpos<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> dx <span style=color:#0550ae>=</span> ddx<span style=color:#1f2328>(</span>tmp<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    color <span style=color:#0550ae>=</span> float3<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> dx<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>return</span> color <span style=color:#0550ae>*</span> <span style=color:#0550ae>100</span><span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>The purpose of this experiment is to see what happens when derivatives are used inside a divergent block. Suppose that the code above be executed on a GPU core. When a subset of the pixels in a block enters the first branch, the value of tmp for the inactive pixels waiting for the second branch execution should be still 10000. So the ddx function should give a spike for some pixels on divergent blocks. Note the [branch] attribute before the if to force branching using control flow instructions.</p><blockquote><p>该实验的目的是查看在 <strong>离散块（divergent block）</strong> 中使用导数时会发生什么。 假设以上代码在GPU内核上执行。当块中像素的子集进入第一分支时，等待第二个分支执行的非活动像素的tmp值仍应为10000。因此<code>ddx</code>函数应为发散块上的某些像素提供尖峰。 注意，如果要使用控制流指令强制分支，请注意<code>[branch]</code>属性。</p></blockquote><p>As you can see in the picture above, the compiler gives the following error for that piece of code: “cannot have divergent gradient operations inside flow control“, but when the [branch] attribute is removed, the code compiles fine but no spikes are visible during rendering, meaning that the branch has been flattened.</p><p>如您在上图中所看到的，编译器对该代码段给出了以下错误：“在流控制内不能有不同的梯度运算”，但是当删除[branch]属性时，代码可以正常编译，但不会出现尖峰。在渲染过程中可见，表示分支已被展平。</p><h3 id=revealing-the-block-aligning-of-derivatives>Revealing the block aligning of derivatives</h3><p>Here is a simple experiment that reveals the inner block alignment of shader derivatives. Look at the following pocket.gl sandbox.</p><blockquote><p>这是一个简单的实验，揭示了着色器导数的内部块对齐。下面是着色器代码：</p></blockquote><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span><span style=color:#cf222e>uniform</span> <span style=color:#cf222e>vec2</span> resolution<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>uniform</span> <span style=color:#cf222e>float</span> odd_step<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>uniform</span> <span style=color:#cf222e>float</span> show_derivative<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> main<span style=color:#1f2328>()</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// center_x is at center x snapped to the nearest even position</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> center_x <span style=color:#0550ae>=</span> floor<span style=color:#1f2328>(</span>resolution<span style=color:#1f2328>.</span>x <span style=color:#0550ae>/</span> <span style=color:#0550ae>4.0</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>*</span> <span style=color:#0550ae>2.0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// snap center_x to an odd number if odd_step is 1</span>
+</span></span><span style=display:flex><span>    center_x <span style=color:#0550ae>+=</span> odd_step<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Step function is 0 when p.x &lt; step_pos, 1 when p.x &gt;= step_pos</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> step <span style=color:#0550ae>=</span> ceil<span style=color:#1f2328>(</span>clamp<span style=color:#1f2328>((</span>gl_FragCoord<span style=color:#1f2328>.</span>x <span style=color:#0550ae>-</span> center_x<span style=color:#1f2328>)</span> <span style=color:#0550ae>/</span> resolution<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> <span style=color:#0550ae>0.0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// The alpha variable is used to select one of two colors</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> alpha <span style=color:#0550ae>=</span> show_derivative <span style=color:#0550ae>==</span> <span style=color:#0550ae>1.0</span> <span style=color:#0550ae>?</span> dFdx<span style=color:#1f2328>(</span>step<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> step<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>vec3</span> color <span style=color:#0550ae>=</span> mix<span style=color:#1f2328>(</span><span style=color:#cf222e>vec3</span><span style=color:#1f2328>(</span><span style=color:#0550ae>0.96</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.96</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.68</span><span style=color:#1f2328>),</span> <span style=color:#cf222e>vec3</span><span style=color:#1f2328>(</span><span style=color:#0550ae>0.68</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.1</span><span style=color:#1f2328>),</span> alpha<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    gl_FragColor <span style=color:#0550ae>=</span> <span style=color:#cf222e>vec4</span><span style=color:#1f2328>(</span>color<span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>The above shader implements a step function over the x axis. We want to compute its derivative. The derivative of a step function would be a Dirac delta function in the continuous domain, but in the shader’s discrete domain the delta function will be equal to 1 when the step jumps from 0 to 1, and 0 elsewhere. Select the Show Derivative checkbox and toggle the Step on odd pix checkbox to snap the Step position to an even (unchecked) or an odd (checked) pixel at the center of the viewport; you’ll see how dFdx(step) changes when moving the transition point from an even to an odd pixel.</p><blockquote><p>上面的着色器在x轴上实现了步进功能。我们要计算其导数。阶跃函数的导数在连续域中是Dirac增量函数，但是在着色器的离散域中，当阶跃从0跳到1时，<code>delta</code>函数将等于1，而在其他地方则为0。选中“显示微分”复选框，并选中“在奇数像素上移动”复选框，以将“位置”捕捉到视口中心的偶数（未选中）或奇数（选中）像素；您会看到将过渡点从偶数像素更改为奇数像素时<code>dFdx</code>（步进）的变化。</p></blockquote><p>Because the derivative computation is performed over blocks of 2×2 pixels, we should expect two different results depending on where the step transition occurs:</p><blockquote><p>由于微分计算是在2×2像素的块上执行的，因此根据阶跃转换发生的位置，我们应该期望得到两个不同的结果：</p></blockquote><ul><li>Case 1. If the step transition falls in the middle of a 2×2 block of pixels, we’ll see a vertical line with 2 pixel thickness (the derivative is equal to 1 for each pixel in the 2×2 block, hence the 2 pixel thickness). This happens when the step falls on an odd pixel.</li><li>Case 2. The step transition falls in the middle of two neighbouring 2×2 blocks of pixels. In this case we won’t see any vertical line because both the blocks will compute a derivative equal to 0. This happens when the step falls on an even pixel.</li></ul><blockquote><ul><li>情况1：如果阶跃过渡位于2×2像素块的中间，我们将看到一条垂直线，具有2个像素的厚度（对于2×2块中的每个像素，导数等于1，因此2像素厚度）当台阶落在奇数像素上时会发生这种情况。</li><li>情况2：阶跃过渡落在两个相邻的2×2像素块的中间。在这种情况下，我们看不到任何垂直线，因为两个块都将计算出等于0的导数。这种情况发生在台阶落在偶数像素上时。</li></ul></blockquote><p>As an exercise, try to modify the shader code of the above sandbox in order to show an horizontal step function and an horizontal derivative line.</p><blockquote><p>作为练习，请尝试修改上述沙箱的着色器代码，以显示水平阶跃函数和水平导数线。</p></blockquote><p>These aliasing artifacts are caused by the subsampling due to the hardware per-block computation of derivatives; horizontal derivatives have full vertical and half horizontal resolution, vertical derivatives have full horizontal and half vertical resolution.</p><blockquote><p>这些 <strong>反褶假影</strong> 是由于硬件的每块计算导数而导致的二次采样引起的。水平导数具有全垂直和一半水平分辨率，垂直导数具有全水平和一半垂直分辨率。</p></blockquote></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/opengl/>OpenGL</a>
+<a class="entry__tag btn" href=/tags/shader/>Shader</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/opengl/modern_opengl_debugging/>现代的OpenGL调试方式（翻译）</a></li><li class=related__item><a class=related__link href=/post/cg/sv_position_and_position/>着色器语言的语义SV_POSITION和POSITION之辨析</a></li><li class=related__item><a class=related__link href=/post/my_books/u3d_shader_annotation/>《Unity3D内建着色器源码剖析》</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

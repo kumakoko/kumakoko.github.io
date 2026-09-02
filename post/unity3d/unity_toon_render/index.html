@@ -1,278 +1,81 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Unity卡通渲染知识点笔记（持续更新中） | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Unity卡通渲染知识点笔记">
-		<meta property="og:title" content="Unity卡通渲染知识点笔记（持续更新中）" />
-<meta property="og:description" content="Unity卡通渲染知识点笔记" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/unity_toon_render/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-10-08T18:38:27+08:00" />
-<meta property="article:modified_time" content="2021-10-08T18:38:27+08:00" />
-
-
-		<meta itemprop="name" content="Unity卡通渲染知识点笔记（持续更新中）">
-<meta itemprop="description" content="Unity卡通渲染知识点笔记"><meta itemprop="datePublished" content="2021-10-08T18:38:27+08:00" />
-<meta itemprop="dateModified" content="2021-10-08T18:38:27+08:00" />
-<meta itemprop="wordCount" content="154">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity卡通渲染知识点笔记（持续更新中）</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2021-10-08T18:38:27&#43;08:00">October 08, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">Unity卡通渲染知识点笔记（持续更新中）</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#描边">描边</a></li>
-    <li><a href="#描边的断裂问题">描边的断裂问题</a></li>
-    <li><a href="#参考网页">参考网页</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h2 id="描边">描边</h2>
-<p>描边有两种方法，一种是用两个pass，第一个pass绘制模型本身，第二个pass则是绘制边缘。这种技术的要点是在第一个pass使用cull back把背面拣选掉，第二个pass使用cull front
-把正面拣选掉，这时候就只剩下侧边的边缘线颜色。</p>
-<p>在第二个pass中，在绘制时，让模型顶点沿着法线方向向外移动一定的距离。这时候绘制出的一个纯色模型把原来的模型给包住。但如果是在世界空间中移动的话，当镜头拉远时，描边线会变得很细小。所以为了解决这个问题，一般将法线在裁剪空间中或者在NDC空间中做位移：</p>
-<p>在裁剪空间中做位移的操作如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// 这段代码是一段URP代码
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> Varyings <span style="color:#a6e22e">vert</span>(Attributes input) 
-</span></span><span style="display:flex;"><span>  {
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// scaledScreenParams 是用当前窗口的屏幕宽高像素值乘以渲染缩放系数renderScale的值。renderScale默认为1，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      float4 scaledScreenParams <span style="color:#f92672">=</span> GetScaledScreenParams();
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">float</span> aspect <span style="color:#f92672">=</span> abs(scaledScreenParams.x <span style="color:#f92672">/</span> scaledScreenParams.y);<span style="color:#75715e">//求得X因屏幕比例缩放的倍数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// 下面的计算是在裁剪空间中操作。当然也可以直接将法线转到NDC
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      Varyings output;
-</span></span><span style="display:flex;"><span>      VertexPositionInputs vertexInput <span style="color:#f92672">=</span> GetVertexPositionInputs(input.positionOS.xyz);
-</span></span><span style="display:flex;"><span>      VertexNormalInputs normalInput <span style="color:#f92672">=</span> GetVertexNormalInputs(input.normalOS);
-</span></span><span style="display:flex;"><span>      float3 normalCS <span style="color:#f92672">=</span> TransformWorldToHClipDir(normalInput.normalWS);<span style="color:#75715e">//法线转换到裁剪空间
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      float2 extendDis <span style="color:#f92672">=</span> normalize(normalCS.xy) <span style="color:#f92672">*</span>(_OutlineWidth<span style="color:#f92672">*</span><span style="color:#ae81ff">0.01</span>);<span style="color:#75715e">//根据法线和线宽计算偏移量
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      extendDis.x <span style="color:#f92672">/=</span> aspect ;<span style="color:#75715e">//由于屏幕比例可能不是1:1，所以偏移量会被拉伸显示，根据屏幕比例把x进行修正
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      output.positionCS <span style="color:#f92672">=</span> vertexInput.positionCS;
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 因为后续会转换成NDC坐标，会除w进行缩放，所以先乘一个w，那么该偏移的距离就不会在NDC下有变换
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      output.positionCS.xy <span style="color:#f92672">+=</span> extendDis <span style="color:#f92672">*</span> output.positionCS.w ; <span style="color:#75715e">// 要预先乘一个做透视除法的值
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#66d9ef">return</span> output;
-</span></span><span style="display:flex;"><span>  }
-</span></span></code></pre></div><p>在NDC空间做变换代码如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//　这是一段基于Unity内建管线的顶点着色器代码
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>v2f o;
-</span></span><span style="display:flex;"><span>UNITY_INITIALIZE_OUTPUT(v2f, o);
-</span></span><span style="display:flex;"><span>float4 pos <span style="color:#f92672">=</span> UnityObjectToClipPos(v.vertex);
-</span></span><span style="display:flex;"><span>float3 viewNormal <span style="color:#f92672">=</span> mul((float3x3)UNITY_MATRIX_IT_MV, v.normal.xyz);
-</span></span><span style="display:flex;"><span>float3 ndcNormal <span style="color:#f92672">=</span> normalize(TransformViewToProjection(viewNormal.xyz)) <span style="color:#f92672">*</span> pos.w;<span style="color:#75715e">//将法线变换到NDC空间
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>float4 nearUpperRight <span style="color:#f92672">=</span> mul(unity_CameraInvProjection, float4(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, UNITY_NEAR_CLIP_VALUE, _ProjectionParams.y));<span style="color:#75715e">//将近裁剪面右上角位置的顶点变换到观察空间
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">float</span> aspect <span style="color:#f92672">=</span> abs(nearUpperRight.y <span style="color:#f92672">/</span> nearUpperRight.x);<span style="color:#75715e">//求得屏幕宽高比
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>ndcNormal.x <span style="color:#f92672">*=</span> aspect;
-</span></span><span style="display:flex;"><span>pos.xy <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0.01</span> <span style="color:#f92672">*</span> _OutlineWidth <span style="color:#f92672">*</span> ndcNormal.xy;
-</span></span><span style="display:flex;"><span>o.pos <span style="color:#f92672">=</span> pos;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">return</span> o;
-</span></span></code></pre></div><h2 id="描边的断裂问题">描边的断裂问题</h2>
-<p><img src="https://pic3.zhimg.com/80/v2-9d0ea1e5b8924eb007001e7050244d26_720w.jpg" alt="enter description here"></p>
-<p>因为这个模型每个面的顶点的法线都垂直于这个平面。所以描边的外扩也是垂直于平面，当模型有转角的情况下，描边就会像这样裂开。要解决这个问题，需要对模型外扩使用的法线数据进行修改。这里需要将在相同位置顶点的法线数据，进行平均计算，将算出来的新法线写入模型切线数据中。然后使用这个切线数据进行法线外扩。至于为什么要写到切线数据里，这是因为只有法线和切线数据会随着骨骼动画而改变。所以如果渲染的是有骨骼动画的角色，写入切线数据里就不用做额外处理，计算上简单一些。如果碰到了角色使用法线贴图或者各项异性材质这种需要原始切线数据的情况，那么可以先把平均法线转换到切线空间，再保存到UV或者顶点颜色上。计算的时候，从切线空间把平均法线数据还原到世界空间，计算上会稍微麻烦一点。不过因为切线空间也是随骨骼动画改变的，所以这个方法的结果也是正确的。这里我写了一个编辑器工具，完成对mesh数据的添加。</p>
-<h2 id="参考网页">参考网页</h2>
-<p><a href="https://zhuanlan.zhihu.com/p/109101851">【01】从零开始的卡通渲染-描边篇</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/110025903">【02】从零开始的卡通渲染-着色篇1</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/111633226">【03】从零开始的卡通渲染-着色篇2</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/115238808">【04】从零开始的卡通渲染-PBR篇</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/361285222">卡通渲染之描边技术的实现（URP）</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/95986273">【02】卡通渲染基本光照模型的实现</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/374466780">卡通渲染小记一（原神篇）</a></p>
-<p><a href="https://users.cs.northwestern.edu/~ago820/thesis/node26.html">Tone-based Shading of Matte Objects</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/330599077">Unity卡通渲染总结 NPR Toon Shading</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/416577141">【Unity URP】卡通渲染中的刘海投影·改</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/415500177">URP管线-NPR非真实感卡通渲染Toon shader</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/86726394">卡通渲染技术总结</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/318769754">High-Quality Real-Time Outline Rendering 描边学习记录</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/352347502">程序干货：日式卡通渲染基础技术（上）</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/353809268">程序干货：日式卡通渲染基础技术（下）</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/362405680">实现Anisotropic Cel-shading Hair（URP）</a></p>
-<p><a href="https://www.zhihu.com/column/c_1360593598648479744">卡通渲染从0到0.5</a></p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/urp_doc/diff_between_urp_and_builtin/">URP和内建管线的一些编程上的差异</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/urp_doc/srp_batcher/">Scriptable Render Pipeline (SRP) Batcher</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/urp_doc/urp_shader_pass_tag/">URP Shader Pass Tag</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/build_xlua_for_android/">使用Android NDK编译xlua</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_srp_static_dynamic_batch_gpuinstance/">Unity3D的SRP,Static Batching、Dynamic Batching和GPU instancing</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Unity卡通渲染知识点笔记（持续更新中） | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Unity卡通渲染知识点笔记"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/unity_toon_render/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Unity卡通渲染知识点笔记（持续更新中）"><meta property="og:description" content="Unity卡通渲染知识点笔记"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-10-08T18:38:27+08:00"><meta property="article:modified_time" content="2021-10-08T18:38:27+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="Unity卡通渲染知识点笔记（持续更新中）"><meta itemprop=description content="Unity卡通渲染知识点笔记"><meta itemprop=datePublished content="2021-10-08T18:38:27+08:00"><meta itemprop=dateModified content="2021-10-08T18:38:27+08:00"><meta itemprop=wordCount content="154"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Unity卡通渲染知识点笔记（持续更新中）</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2021-10-08T18:38:27+08:00>October 08, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>Unity卡通渲染知识点笔记（持续更新中）</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#描边>描边</a></li><li><a href=#描边的断裂问题>描边的断裂问题</a></li><li><a href=#参考网页>参考网页</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=描边>描边</h2><p>描边有两种方法，一种是用两个pass，第一个pass绘制模型本身，第二个pass则是绘制边缘。这种技术的要点是在第一个pass使用cull back把背面拣选掉，第二个pass使用cull front
+把正面拣选掉，这时候就只剩下侧边的边缘线颜色。</p><p>在第二个pass中，在绘制时，让模型顶点沿着法线方向向外移动一定的距离。这时候绘制出的一个纯色模型把原来的模型给包住。但如果是在世界空间中移动的话，当镜头拉远时，描边线会变得很细小。所以为了解决这个问题，一般将法线在裁剪空间中或者在NDC空间中做位移：</p><p>在裁剪空间中做位移的操作如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>// 这段代码是一段URP代码
+</span></span></span><span style=display:flex><span> Varyings <span style=color:#6639ba>vert</span><span style=color:#1f2328>(</span>Attributes input<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>  <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>      <span style=color:#57606a>// scaledScreenParams 是用当前窗口的屏幕宽高像素值乘以渲染缩放系数renderScale的值。renderScale默认为1，
+</span></span></span><span style=display:flex><span>      float4 scaledScreenParams <span style=color:#0550ae>=</span> GetScaledScreenParams<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>      <span style=color:#cf222e>float</span> aspect <span style=color:#0550ae>=</span> abs<span style=color:#1f2328>(</span>scaledScreenParams<span style=color:#1f2328>.</span>x <span style=color:#0550ae>/</span> scaledScreenParams<span style=color:#1f2328>.</span>y<span style=color:#1f2328>);</span><span style=color:#57606a>//求得X因屏幕比例缩放的倍数
+</span></span></span><span style=display:flex><span>      <span style=color:#57606a>// 下面的计算是在裁剪空间中操作。当然也可以直接将法线转到NDC
+</span></span></span><span style=display:flex><span>      Varyings output<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>      VertexPositionInputs vertexInput <span style=color:#0550ae>=</span> GetVertexPositionInputs<span style=color:#1f2328>(</span>input<span style=color:#1f2328>.</span>positionOS<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>      VertexNormalInputs normalInput <span style=color:#0550ae>=</span> GetVertexNormalInputs<span style=color:#1f2328>(</span>input<span style=color:#1f2328>.</span>normalOS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>      float3 normalCS <span style=color:#0550ae>=</span> TransformWorldToHClipDir<span style=color:#1f2328>(</span>normalInput<span style=color:#1f2328>.</span>normalWS<span style=color:#1f2328>);</span><span style=color:#57606a>//法线转换到裁剪空间
+</span></span></span><span style=display:flex><span>      float2 extendDis <span style=color:#0550ae>=</span> normalize<span style=color:#1f2328>(</span>normalCS<span style=color:#1f2328>.</span>xy<span style=color:#1f2328>)</span> <span style=color:#0550ae>*</span><span style=color:#1f2328>(</span>_OutlineWidth<span style=color:#0550ae>*</span><span style=color:#0550ae>0.01</span><span style=color:#1f2328>);</span><span style=color:#57606a>//根据法线和线宽计算偏移量
+</span></span></span><span style=display:flex><span>      extendDis<span style=color:#1f2328>.</span>x <span style=color:#0550ae>/=</span> aspect <span style=color:#1f2328>;</span><span style=color:#57606a>//由于屏幕比例可能不是1:1，所以偏移量会被拉伸显示，根据屏幕比例把x进行修正
+</span></span></span><span style=display:flex><span>      output<span style=color:#1f2328>.</span>positionCS <span style=color:#0550ae>=</span> vertexInput<span style=color:#1f2328>.</span>positionCS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#57606a>// 因为后续会转换成NDC坐标，会除w进行缩放，所以先乘一个w，那么该偏移的距离就不会在NDC下有变换
+</span></span></span><span style=display:flex><span>      output<span style=color:#1f2328>.</span>positionCS<span style=color:#1f2328>.</span>xy <span style=color:#0550ae>+=</span> extendDis <span style=color:#0550ae>*</span> output<span style=color:#1f2328>.</span>positionCS<span style=color:#1f2328>.</span>w <span style=color:#1f2328>;</span> <span style=color:#57606a>// 要预先乘一个做透视除法的值
+</span></span></span><span style=display:flex><span>      <span style=color:#cf222e>return</span> output<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>在NDC空间做变换代码如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>//　这是一段基于Unity内建管线的顶点着色器代码
+</span></span></span><span style=display:flex><span>v2f o<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>UNITY_INITIALIZE_OUTPUT<span style=color:#1f2328>(</span>v2f<span style=color:#1f2328>,</span> o<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>float4 pos <span style=color:#0550ae>=</span> UnityObjectToClipPos<span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>vertex<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>float3 viewNormal <span style=color:#0550ae>=</span> mul<span style=color:#1f2328>((</span>float3x3<span style=color:#1f2328>)</span>UNITY_MATRIX_IT_MV<span style=color:#1f2328>,</span> v<span style=color:#1f2328>.</span>normal<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>float3 ndcNormal <span style=color:#0550ae>=</span> normalize<span style=color:#1f2328>(</span>TransformViewToProjection<span style=color:#1f2328>(</span>viewNormal<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>))</span> <span style=color:#0550ae>*</span> pos<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span><span style=color:#57606a>//将法线变换到NDC空间
+</span></span></span><span style=display:flex><span>float4 nearUpperRight <span style=color:#0550ae>=</span> mul<span style=color:#1f2328>(</span>unity_CameraInvProjection<span style=color:#1f2328>,</span> float4<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> UNITY_NEAR_CLIP_VALUE<span style=color:#1f2328>,</span> _ProjectionParams<span style=color:#1f2328>.</span>y<span style=color:#1f2328>));</span><span style=color:#57606a>//将近裁剪面右上角位置的顶点变换到观察空间
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>float</span> aspect <span style=color:#0550ae>=</span> abs<span style=color:#1f2328>(</span>nearUpperRight<span style=color:#1f2328>.</span>y <span style=color:#0550ae>/</span> nearUpperRight<span style=color:#1f2328>.</span>x<span style=color:#1f2328>);</span><span style=color:#57606a>//求得屏幕宽高比
+</span></span></span><span style=display:flex><span>ndcNormal<span style=color:#1f2328>.</span>x <span style=color:#0550ae>*=</span> aspect<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>pos<span style=color:#1f2328>.</span>xy <span style=color:#0550ae>+=</span> <span style=color:#0550ae>0.01</span> <span style=color:#0550ae>*</span> _OutlineWidth <span style=color:#0550ae>*</span> ndcNormal<span style=color:#1f2328>.</span>xy<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>o<span style=color:#1f2328>.</span>pos <span style=color:#0550ae>=</span> pos<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>return</span> o<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><h2 id=描边的断裂问题>描边的断裂问题</h2><p><img src=https://pic3.zhimg.com/80/v2-9d0ea1e5b8924eb007001e7050244d26_720w.jpg alt="enter description here"></p><p>因为这个模型每个面的顶点的法线都垂直于这个平面。所以描边的外扩也是垂直于平面，当模型有转角的情况下，描边就会像这样裂开。要解决这个问题，需要对模型外扩使用的法线数据进行修改。这里需要将在相同位置顶点的法线数据，进行平均计算，将算出来的新法线写入模型切线数据中。然后使用这个切线数据进行法线外扩。至于为什么要写到切线数据里，这是因为只有法线和切线数据会随着骨骼动画而改变。所以如果渲染的是有骨骼动画的角色，写入切线数据里就不用做额外处理，计算上简单一些。如果碰到了角色使用法线贴图或者各项异性材质这种需要原始切线数据的情况，那么可以先把平均法线转换到切线空间，再保存到UV或者顶点颜色上。计算的时候，从切线空间把平均法线数据还原到世界空间，计算上会稍微麻烦一点。不过因为切线空间也是随骨骼动画改变的，所以这个方法的结果也是正确的。这里我写了一个编辑器工具，完成对mesh数据的添加。</p><h2 id=参考网页>参考网页</h2><p><a href=https://zhuanlan.zhihu.com/p/109101851>【01】从零开始的卡通渲染-描边篇</a></p><p><a href=https://zhuanlan.zhihu.com/p/110025903>【02】从零开始的卡通渲染-着色篇1</a></p><p><a href=https://zhuanlan.zhihu.com/p/111633226>【03】从零开始的卡通渲染-着色篇2</a></p><p><a href=https://zhuanlan.zhihu.com/p/115238808>【04】从零开始的卡通渲染-PBR篇</a></p><p><a href=https://zhuanlan.zhihu.com/p/361285222>卡通渲染之描边技术的实现（URP）</a></p><p><a href=https://zhuanlan.zhihu.com/p/95986273>【02】卡通渲染基本光照模型的实现</a></p><p><a href=https://zhuanlan.zhihu.com/p/374466780>卡通渲染小记一（原神篇）</a></p><p><a href=https://users.cs.northwestern.edu/~ago820/thesis/node26.html>Tone-based Shading of Matte Objects</a></p><p><a href=https://zhuanlan.zhihu.com/p/330599077>Unity卡通渲染总结 NPR Toon Shading</a></p><p><a href=https://zhuanlan.zhihu.com/p/416577141>【Unity URP】卡通渲染中的刘海投影·改</a></p><p><a href=https://zhuanlan.zhihu.com/p/415500177>URP管线-NPR非真实感卡通渲染Toon shader</a></p><p><a href=https://zhuanlan.zhihu.com/p/86726394>卡通渲染技术总结</a></p><p><a href=https://zhuanlan.zhihu.com/p/318769754>High-Quality Real-Time Outline Rendering 描边学习记录</a></p><p><a href=https://zhuanlan.zhihu.com/p/352347502>程序干货：日式卡通渲染基础技术（上）</a></p><p><a href=https://zhuanlan.zhihu.com/p/353809268>程序干货：日式卡通渲染基础技术（下）</a></p><p><a href=https://zhuanlan.zhihu.com/p/362405680>实现Anisotropic Cel-shading Hair（URP）</a></p><p><a href=https://www.zhihu.com/column/c_1360593598648479744>卡通渲染从0到0.5</a></p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/urp_doc/diff_between_urp_and_builtin/>URP和内建管线的一些编程上的差异</a></li><li class=related__item><a class=related__link href=/post/unity3d/urp_doc/srp_batcher/>Scriptable Render Pipeline (SRP) Batcher</a></li><li class=related__item><a class=related__link href=/post/unity3d/urp_doc/urp_shader_pass_tag/>URP Shader Pass Tag</a></li><li class=related__item><a class=related__link href=/post/unity3d/build_xlua_for_android/>使用Android NDK编译xlua</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_srp_static_dynamic_batch_gpuinstance/>Unity3D的SRP,Static Batching、Dynamic Batching和GPU instancing</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

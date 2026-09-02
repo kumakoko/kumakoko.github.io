@@ -1,374 +1,45 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>高效地访问纹理数据 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="高效地访问纹理数据">
-		<meta property="og:title" content="高效地访问纹理数据" />
-<meta property="og:description" content="高效地访问纹理数据" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/accessing_texture_data_efficiently/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2023-11-22T20:20:49+08:00" />
-<meta property="article:modified_time" content="2023-11-22T20:20:49+08:00" />
-
-
-		<meta itemprop="name" content="高效地访问纹理数据">
-<meta itemprop="description" content="高效地访问纹理数据"><meta itemprop="datePublished" content="2023-11-22T20:20:49+08:00" />
-<meta itemprop="dateModified" content="2023-11-22T20:20:49+08:00" />
-<meta itemprop="wordCount" content="3353">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">高效地访问纹理数据</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2023-11-22T20:20:49&#43;08:00">November 22, 2023</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">高效地访问纹理数据</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#memory">Memory</a></li>
-    <li><a href="#processing">Processing</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="#simplecopy-example">SimpleCopy example</a>
-      <ul>
-        <li><a href="#results">Results</a></li>
-      </ul>
-    </li>
-    <li><a href="#plasmatexture-example">PlasmaTexture example</a>
-      <ul>
-        <li><a href="#results-1">Results</a></li>
-      </ul>
-    </li>
-    <li><a href="#transfergputexture-example">TransferGPUTexture example</a></li>
-    <li><a href="#pixel-data-api-recommendations">Pixel data API recommendations</a>
-      <ul>
-        <li><a href="#copytexture">CopyTexture</a></li>
-        <li><a href="#blit">Blit</a></li>
-        <li><a href="#getpixeldata-and-setpixeldata">GetPixelData and SetPixelData</a></li>
-      </ul>
-    </li>
-    <li><a href="#apply">Apply</a></li>
-    <li><a href="#requestintonativearray-and-requestintonativeslice">RequestIntoNativeArray and RequestIntoNativeSlice</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<p><a href="https://blog.unity.com/engine-platform/accessing-texture-data-efficiently">原文地址</a></p>
-<h1 id="working-with-pixel-data-in-unity">Working with pixel data in Unity</h1>
-<p>Pixel data describes the color of individual pixels in a texture. Unity provides methods that enable you to read from or write to pixel data with C# scripts.</p>
-<blockquote>
-<p>像素数据描述纹理中各个像素的颜色。Unity 提供了使用 C# 脚本读取或写入像素数据的方法。</p>
-</blockquote>
-<p>You might use these methods to duplicate or update a texture (for example, adding a detail to a player’s profile picture), or use the texture’s data in a particular way, like reading a texture that represents a world map to determine where to place an object.</p>
-<blockquote>
-<p>可以使用这些方法来复制或更新纹理（例如，向玩家的个人资料图片添加细节），或者以特定方式使用纹理的数据，例如读取代表世界地图的纹理来确定放置物体的位置目的。</p>
-</blockquote>
-<p>There are several ways of writing code that reads from or writes to pixel data. The one you choose depends on what you plan to do with the data and the performance needs of your project.</p>
-<blockquote>
-<p>有多种编写读取或写入像素数据的代码的方法。选择哪一种取决于如何处理数据，以及项目的性能需求。</p>
-</blockquote>
-<p>This blog and the accompanying sample project are intended to help you navigate the available API and common performance pitfalls. An understanding of both will help you write a performant solution or address performance bottlenecks as they appear.</p>
-<blockquote>
-<p>本博客和示例旨在帮助您了解可用的 API 和常见的性能陷阱。对两者的理解将帮助您编写高性能解决方案或解决出现的性能瓶颈。</p>
-</blockquote>
-<h1 id="cpu-and-gpu-copies-of-pixel-data">CPU and GPU copies of pixel data</h1>
-<p>For most types of textures, Unity stores two copies of the pixel data: one in GPU memory, which is required for rendering, and the other in CPU memory. This copy is optional and allows you to read from, write to, and manipulate pixel data on the CPU. A texture with a copy of its pixel data stored in CPU memory is called a readable texture. One detail to note is that RenderTexture exists only in GPU memory.</p>
-<blockquote>
-<p>对于大多数类型的纹理，Unity 存储像素数据的两份副本：一份位于渲染所需的显示内存中，可简称为GPU副本；另一份位于系统内存中，可简称为CPU副本。在系统内存中的副本是可选的，这个副本可以使用CPU 读取、写入和操作像素数据。称为<strong>可读纹理（readable texture）</strong> 副本。需要注意的一个细节是：<strong>RenderTexture仅存在于显示内存中</strong>。</p>
-</blockquote>
-<h1 id="the-differences-between-cpu-and-gpu">The differences between CPU and GPU</h1>
-<h2 id="memory">Memory</h2>
-<p>The memory available to the CPU differs from that of the GPU on most hardware. Some devices have a form of partially shared memory, but for this blog we will assume the classic PC configuration where the CPU only has direct access to the RAM plugged into the motherboard and the GPU relies on its own video RAM (VRAM). Any data transferred between these different environments has to pass through the PCI bus, which is slower than transferring data within the same type of memory. Due to these costs, you should try to limit the amount of data transferred each frame.</p>
-<blockquote>
-<p>在大多数硬件上，CPU 可用的系统内存与 GPU 可用的显示内存不同。有些设备具有部分共享内存的形式，但在本博客中，我们将假设经典的 PC 配置，其中 CPU 只能直接访问插入主板的 RAM，而 GPU 依赖其自己的视频 RAM (VRAM)。在这些不同环境之间传输的任何数据都必须通过 PCI 总线，这比在相同类型的内存内传输数据要慢。所以从性能考虑应该尝试限制每帧传输的数据量。</p>
-</blockquote>
-<p><img src="./images/Texture_API_blogpost_API_drawio.png" alt="enter description here"></p>
-<h2 id="processing">Processing</h2>
-<p>Sampling textures in shaders is the most common GPU pixel data operation. To alter this data, you can copy between textures or render into a texture using a shader. All these operations can be performed quickly by the GPU.</p>
-<blockquote>
-<p>在着色器中采样纹理是最常见的 GPU 像素数据操作。要更改此数据，您可以在纹理之间复制或使用着色器渲染到纹理中。所有这些操作都可以由GPU快速执行。</p>
-</blockquote>
-<p>In some cases, it may be preferable to manipulate your texture data on the CPU, which offers more flexibility in how data is accessed. CPU pixel data operations act only on the CPU copy of the data, so require readable textures. If you want to sample the updated pixel data in a shader, you must first copy it from the CPU to the GPU by calling Apply. Depending on the texture involved and the complexity of the operations, it may be faster and easier to stick to CPU operations (for example, when copying several 2D textures into a Texture2DArray asset).</p>
-<blockquote>
-<p>在某些情况下，最好在 CPU 上操作纹理数据，这样可以更灵活地访问数据。CPU 对像素数据进行操作，<strong>仅能作用于可读纹理副本</strong> 。如果要在着色器中采样更新的像素数据，<strong>必须首先调用<a href="https://docs.unity3d.com/ScriptReference/Texture2D.Apply.html">Apply</a>方法，将其从CPU复制到GPU</strong> 。根据所涉及的纹理和操作的复杂性，坚持 CPU 操作可能会更快、更容易（例如，将多个 2D 纹理复制到 Texture2DArray 资源中时）。</p>
-</blockquote>
-<p>The Unity API provides several methods to access or process texture data. Some operations act on both the GPU and CPU copy if both are present. As a result, the performance of these methods varies depending on whether the textures are readable. Different methods can be used to achieve the same results, but each method has its own performance and ease-of-use characteristics.</p>
-<blockquote>
-<p>Unity API 提供了多种访问或处理纹理数据的方法。某些操作同时作用于 GPU 和 CPU 副本（如果两者都存在）。因此，这些方法的性能取决于纹理是否可读。可以使用不同的方法来实现相同的结果，但每种方法都有其自己的性能和易用性特点。</p>
-</blockquote>
-<p>Answer the following questions to determine the optimal solution:</p>
-<ul>
-<li>
-<p>Can the GPU perform your calculations faster than the CPU?</p>
-<ol>
-<li>What level of pressure is the process putting on the texture caches? (For example, sampling many high-resolution textures without using mipmaps is likely to slow down the GPU.)</li>
-<li>Does the process require a random write texture, or can it output to a color or depth attachment? (Writing to random pixels on a texture requires frequent cache flushes that slow down the process.)</li>
-</ol>
-</li>
-<li>
-<p>Is my project already GPU bottlenecked? Even if the GPU is able to execute a process faster than the CPU, can the GPU afford to take on more work without exceeding its frame time budget?</p>
-<ol>
-<li>If both the GPU and the CPU main thread are near their frame time limit, then perhaps the slow part of a process could be performed by CPU worker threads.</li>
-</ol>
-</li>
-<li>
-<p>How much data needs to be uploaded to or downloaded from the GPU to calculate or process the results?
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>高效地访问纹理数据 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="高效地访问纹理数据"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/accessing_texture_data_efficiently/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="高效地访问纹理数据"><meta property="og:description" content="高效地访问纹理数据"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-11-22T20:20:49+08:00"><meta property="article:modified_time" content="2023-11-22T20:20:49+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="高效地访问纹理数据"><meta itemprop=description content="高效地访问纹理数据"><meta itemprop=datePublished content="2023-11-22T20:20:49+08:00"><meta itemprop=dateModified content="2023-11-22T20:20:49+08:00"><meta itemprop=wordCount content="3353"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>高效地访问纹理数据</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2023-11-22T20:20:49+08:00>November 22, 2023</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>高效地访问纹理数据</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#memory>Memory</a></li><li><a href=#processing>Processing</a></li></ul><ul><li><a href=#simplecopy-example>SimpleCopy example</a><ul><li><a href=#results>Results</a></li></ul></li><li><a href=#plasmatexture-example>PlasmaTexture example</a><ul><li><a href=#results-1>Results</a></li></ul></li><li><a href=#transfergputexture-example>TransferGPUTexture example</a></li><li><a href=#pixel-data-api-recommendations>Pixel data API recommendations</a><ul><li><a href=#copytexture>CopyTexture</a></li><li><a href=#blit>Blit</a></li><li><a href=#getpixeldata-and-setpixeldata>GetPixelData and SetPixelData</a></li></ul></li><li><a href=#apply>Apply</a></li><li><a href=#requestintonativearray-and-requestintonativeslice>RequestIntoNativeArray and RequestIntoNativeSlice</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><a href=https://blog.unity.com/engine-platform/accessing-texture-data-efficiently>原文地址</a></p><h1 id=working-with-pixel-data-in-unity>Working with pixel data in Unity</h1><p>Pixel data describes the color of individual pixels in a texture. Unity provides methods that enable you to read from or write to pixel data with C# scripts.</p><blockquote><p>像素数据描述纹理中各个像素的颜色。Unity 提供了使用 C# 脚本读取或写入像素数据的方法。</p></blockquote><p>You might use these methods to duplicate or update a texture (for example, adding a detail to a player’s profile picture), or use the texture’s data in a particular way, like reading a texture that represents a world map to determine where to place an object.</p><blockquote><p>可以使用这些方法来复制或更新纹理（例如，向玩家的个人资料图片添加细节），或者以特定方式使用纹理的数据，例如读取代表世界地图的纹理来确定放置物体的位置目的。</p></blockquote><p>There are several ways of writing code that reads from or writes to pixel data. The one you choose depends on what you plan to do with the data and the performance needs of your project.</p><blockquote><p>有多种编写读取或写入像素数据的代码的方法。选择哪一种取决于如何处理数据，以及项目的性能需求。</p></blockquote><p>This blog and the accompanying sample project are intended to help you navigate the available API and common performance pitfalls. An understanding of both will help you write a performant solution or address performance bottlenecks as they appear.</p><blockquote><p>本博客和示例旨在帮助您了解可用的 API 和常见的性能陷阱。对两者的理解将帮助您编写高性能解决方案或解决出现的性能瓶颈。</p></blockquote><h1 id=cpu-and-gpu-copies-of-pixel-data>CPU and GPU copies of pixel data</h1><p>For most types of textures, Unity stores two copies of the pixel data: one in GPU memory, which is required for rendering, and the other in CPU memory. This copy is optional and allows you to read from, write to, and manipulate pixel data on the CPU. A texture with a copy of its pixel data stored in CPU memory is called a readable texture. One detail to note is that RenderTexture exists only in GPU memory.</p><blockquote><p>对于大多数类型的纹理，Unity 存储像素数据的两份副本：一份位于渲染所需的显示内存中，可简称为GPU副本；另一份位于系统内存中，可简称为CPU副本。在系统内存中的副本是可选的，这个副本可以使用CPU 读取、写入和操作像素数据。称为<strong>可读纹理（readable texture）</strong> 副本。需要注意的一个细节是：<strong>RenderTexture仅存在于显示内存中</strong>。</p></blockquote><h1 id=the-differences-between-cpu-and-gpu>The differences between CPU and GPU</h1><h2 id=memory>Memory</h2><p>The memory available to the CPU differs from that of the GPU on most hardware. Some devices have a form of partially shared memory, but for this blog we will assume the classic PC configuration where the CPU only has direct access to the RAM plugged into the motherboard and the GPU relies on its own video RAM (VRAM). Any data transferred between these different environments has to pass through the PCI bus, which is slower than transferring data within the same type of memory. Due to these costs, you should try to limit the amount of data transferred each frame.</p><blockquote><p>在大多数硬件上，CPU 可用的系统内存与 GPU 可用的显示内存不同。有些设备具有部分共享内存的形式，但在本博客中，我们将假设经典的 PC 配置，其中 CPU 只能直接访问插入主板的 RAM，而 GPU 依赖其自己的视频 RAM (VRAM)。在这些不同环境之间传输的任何数据都必须通过 PCI 总线，这比在相同类型的内存内传输数据要慢。所以从性能考虑应该尝试限制每帧传输的数据量。</p></blockquote><p><img src=./images/Texture_API_blogpost_API_drawio.png alt="enter description here"></p><h2 id=processing>Processing</h2><p>Sampling textures in shaders is the most common GPU pixel data operation. To alter this data, you can copy between textures or render into a texture using a shader. All these operations can be performed quickly by the GPU.</p><blockquote><p>在着色器中采样纹理是最常见的 GPU 像素数据操作。要更改此数据，您可以在纹理之间复制或使用着色器渲染到纹理中。所有这些操作都可以由GPU快速执行。</p></blockquote><p>In some cases, it may be preferable to manipulate your texture data on the CPU, which offers more flexibility in how data is accessed. CPU pixel data operations act only on the CPU copy of the data, so require readable textures. If you want to sample the updated pixel data in a shader, you must first copy it from the CPU to the GPU by calling Apply. Depending on the texture involved and the complexity of the operations, it may be faster and easier to stick to CPU operations (for example, when copying several 2D textures into a Texture2DArray asset).</p><blockquote><p>在某些情况下，最好在 CPU 上操作纹理数据，这样可以更灵活地访问数据。CPU 对像素数据进行操作，<strong>仅能作用于可读纹理副本</strong> 。如果要在着色器中采样更新的像素数据，<strong>必须首先调用<a href=https://docs.unity3d.com/ScriptReference/Texture2D.Apply.html>Apply</a>方法，将其从CPU复制到GPU</strong> 。根据所涉及的纹理和操作的复杂性，坚持 CPU 操作可能会更快、更容易（例如，将多个 2D 纹理复制到 Texture2DArray 资源中时）。</p></blockquote><p>The Unity API provides several methods to access or process texture data. Some operations act on both the GPU and CPU copy if both are present. As a result, the performance of these methods varies depending on whether the textures are readable. Different methods can be used to achieve the same results, but each method has its own performance and ease-of-use characteristics.</p><blockquote><p>Unity API 提供了多种访问或处理纹理数据的方法。某些操作同时作用于 GPU 和 CPU 副本（如果两者都存在）。因此，这些方法的性能取决于纹理是否可读。可以使用不同的方法来实现相同的结果，但每种方法都有其自己的性能和易用性特点。</p></blockquote><p>Answer the following questions to determine the optimal solution:</p><ul><li><p>Can the GPU perform your calculations faster than the CPU?</p><ol><li>What level of pressure is the process putting on the texture caches? (For example, sampling many high-resolution textures without using mipmaps is likely to slow down the GPU.)</li><li>Does the process require a random write texture, or can it output to a color or depth attachment? (Writing to random pixels on a texture requires frequent cache flushes that slow down the process.)</li></ol></li><li><p>Is my project already GPU bottlenecked? Even if the GPU is able to execute a process faster than the CPU, can the GPU afford to take on more work without exceeding its frame time budget?</p><ol><li>If both the GPU and the CPU main thread are near their frame time limit, then perhaps the slow part of a process could be performed by CPU worker threads.</li></ol></li><li><p>How much data needs to be uploaded to or downloaded from the GPU to calculate or process the results?
 Could a shader or C# job pack the data into a smaller format to reduce the bandwidth required?
 1.Could a RenderTexture be downsampled into a smaller resolution version that is downloaded instead?
-2.Can the process be performed in chunks? (If a lot of data needs to be processed at once, there’s a risk of the GPU not having enough memory for it.)</p>
-</li>
-<li>
-<p>How quickly are the results required? Can calculations or data transfers be performed asynchronously and handled later? (If too much work is done in a single frame, there is a risk that the GPU won’t have enough time to render the actual graphics for each frame.)</p>
-</li>
-</ul>
-<h1 id="making-a-texture-readable-or-nonreadable">Making a texture readable or nonreadable</h1>
-<p>By default, texture assets that you import into your project are nonreadable, while textures created from a script are readable.</p>
-<blockquote>
-<p>默认情况下，导入到项目中的纹理资源是不可读的，<strong>而从脚本创建的纹理是可读的</strong>。</p>
-</blockquote>
-<p>Readable textures use twice as much memory as nonreadable textures because they need to have a copy of their pixel data in CPU RAM. You should only make a texture readable when you need to, and make them nonreadable when you are done working with the data on the CPU.</p>
-<blockquote>
-<p>可读纹理使用的内存是不可读纹理的两倍，因为它们需要在系统内存中拥有像素数据的副本。应该<strong>仅在需要时</strong>将纹理设为可读，并在处理完 CPU 上的数据后将其设为不可读。</p>
-</blockquote>
-<p>To see if a texture asset in your project is readable and make edits, use the Read/Write Enabled option in Texture Import Settings, or the TextureImporter.isReadable API.</p>
-<blockquote>
-<p>要查看项目中的纹理资源是否可读并进行编辑，请使用“<strong>Texture Import Settings</strong>”中的“<strong>Read/Write Enabled</strong>”选项，或使用API函数<code>TextureImporter.isReadable</code> 。</p>
-</blockquote>
-<p>To make a texture nonreadable, call its Apply method with the makeNoLongerReadable parameter set to “true” (for example, Texture2D.Apply or Cubemap.Apply). A nonreadable texture can’t be made readable again.</p>
-<blockquote>
-<p>要使纹理不可读，请调用其 Apply 方法，并将<code>makeNoLongerReadable</code>参数设置为“<strong>true</strong>”（例如，<code>Texture2D.Apply</code> 或 C<code>ubemap.Apply</code>）。<strong>不可读的纹理无法再次变得可读</strong>。</p>
-</blockquote>
-<p>All textures are readable to the Editor in Edit and Play modes. Calling Apply to make the texture nonreadable will update the value of isReadable, preventing you from accessing the CPU data. However, some Unity processes will function as if the texture is readable because they see that the internal CPU data is valid.</p>
-<blockquote>
-<p><strong>在Unity编辑器中，在编辑模式或者是Play模式下，所有的纹理都是可读的</strong>。调用Apply方法，使纹理不可读时，会将更新<code>Texture.isReadable</code>属性的值，从而阻止您访问CPU数据。但是，某些 Unity 进程会像纹理可读一样运行，因为它们发现内部 CPU 数据有效。(译注：<strong>所以江湖传闻在编辑器模式下开Profiler，看到资源的性能消耗通常是实际打包后独立运行的两倍的说法就是这样来的</strong>)</p>
-</blockquote>
-<h1 id="texture-access-api-examples-in-github">Texture Access API examples in GitHub</h1>
-<p><img src="./images/TextureSamples_Fullscreen_1020x574_1.jpg" alt="CPU 每帧生成的纹理示例"></p>
-<p>Performance differs greatly across the various ways of accessing texture data, especially on the CPU (although less so at lower resolutions). The Unity Texture Access API examples repository on GitHub contains a number of examples showing performance differences between various APIs that allow access to, or manipulation of, texture data. The UI only shows the main thread CPU timings. In some cases, DOTS features like Burst and the job system are used to maximize performance.</p>
-<blockquote>
-<p>访问纹理数据的各种方式的性能差异很大，尤其是在 CPU 上（尽管在较低分辨率下差异较小）。GitHub 上的<a href="https://github.com/Unity-Technologies/UnityTextureAccessApiExamples/tree/2023-best-practices-article">Unity纹理访问 API 示例</a>包含许多示例，显示了允许访问或操作纹理数据的各种 API 之间的性能差异。UI 仅显示主线程 CPU 计时。在某些情况下，使用<a href="https://docs.unity3d.com/Packages/com.unity.burst@1.8/manual/index.html">Burst</a>和<a href="https://docs.unity3d.com/Manual/JobSystem.html">Job System</a>等 DOTS 功能来最大限度地提高性能。</p>
-</blockquote>
-<p>Here are the examples included in the GitHub repository:</p>
-<ul>
-<li>SimpleCopy: Copying all pixels from one texture to another</li>
-<li>PlasmaTexture: A plasma texture updated on the CPU per frame</li>
-<li>TransferGPUTexture: Transferring (copying to a different size or format) all pixels on the GPU from a texture to a RenderTexture</li>
-</ul>
-<blockquote>
-<p>以下是 GitHub 存储库中包含的示例：</p>
-<ul>
-<li>SimpleCopy：将所有像素从一个纹理复制到另一个纹理</li>
-<li>PlasmaTexture：每帧在 ​​CPU 上更新的等离子纹理</li>
-<li>TransferGPUTexture：将 GPU 上的所有像素从纹理传输（复制到不同的大小或格式）到 RenderTexture</li>
-</ul>
-</blockquote>
-<p>Listed below are performance measurements taken from the examples on GitHub. These numbers are used to support the recommendations that follow. The measurements are from a player build on a system with a 3.7 GHz 8-core Xeon® W-2145 CPU and an RTX 2080.</p>
-<blockquote>
-<p>下面列出的是从 GitHub 上的示例中获取的性能测量结果。这些数字用于支持随后的建议。测量结果来自构建在具有 3.7 GHz 8 核 Xeon® W-2145 CPU 和 RTX 2080 的系统上的播放器。</p>
-</blockquote>
-<h2 id="simplecopy-example">SimpleCopy example</h2>
-<p>These are the median CPU times for SimpleCopy.UpdateTestCase with a texture size of 2,048.</p>
-<p>Note that the Graphics methods complete nearly instantly on the main thread because they simply push work onto the RenderThread, which is later executed by the GPU. Their results will be ready when the next frame is being rendered.</p>
-<blockquote>
-<p>这些是纹理大小为 2,048 的 SimpleCopy.UpdateTestCase 的中值 CPU 时间。
-请注意，Graphics 方法几乎立即在主线程上完成，因为它们只是将工作推送到 RenderThread，稍后由 GPU 执行。当渲染下一帧时，他们的结果将准备就绪。</p>
-</blockquote>
-<h3 id="results">Results</h3>
-<p>1,326 ms  <code>foreach(mip) for(x in width) for(y in height) SetPixel(x, y, GetPixel(x, y, mip), mip)</code>
-32.14 ms  <code>foreach(mip) SetPixels(source.GetPixels(mip), mip)</code>
-6.96 ms  <code>foreach(mip) SetPixels32(source.GetPixels32(mip), mip)</code>
-6.74 ms  <code>LoadRawTextureData(source.GetRawTextureData())</code>
-3.54 ms  <code>Graphics.CopyTexture(readableSource, readableTarget)</code>
-2.87 ms  <code>foreach(mip) SetPixelData&lt;byte&gt;(mip, GetPixelData&lt;byte&gt;(mip))</code>
-2.87 ms  <code>LoadRawTextureData(source.GetRawTextureData&lt;byte&gt;())</code>
-0.00 ms  <code>Graphics.ConvertTexture(source, target)</code>
-0.00 ms  <code>Graphics.CopyTexture(nonReadableSource, target)</code></p>
-<h2 id="plasmatexture-example">PlasmaTexture example</h2>
-<p>These are the median CPU times for PlasmaTexture.UpdateTestCase with a texture size of 512.</p>
-<p>You’ll see that SetPixels32 is unexpectedly slower than SetPixels. This is due to having to take the float-based Color result from the plasma pixel calculation and convert it to the byte-based Color32 struct. SetPixels32NoConversion skips this conversion and just assigns a default value to the Color32 output array, resulting in better performance than SetPixels. In order to beat the performance of SetPixels and the underlying color conversion performed by Unity, it is necessary to rework the pixel calculation method itself to directly output a Color32 value. A simple implementation using SetPixelData is almost guaranteed to give better results than careful SetPixels and SetPixels32 approaches.</p>
-<blockquote>
-<p>这些是纹理大小为 512 的 PlasmaTexture.UpdateTestCase 的中值 CPU 时间。</p>
-</blockquote>
-<blockquote>
-<p>您会发现 SetPixels32 意外地比 SetPixels 慢。这是因为必须从等离子像素计算中获取基于浮点的颜色结果并将其转换为基于字节的 Color32 结构。SetPixels32NoConversion 会跳过此转换，仅将默认值分配给 Color32 输出数组，从而获得比 SetPixels 更好的性能。为了击败 SetPixels 和 Unity 执行的底层颜色转换的性能，有必要重新设计像素计算方法本身以直接输出 Color32 值。使用 SetPixelData 的简单实现几乎可以保证比仔细的 SetPixels 和 SetPixels32 方法提供更好的结果。</p>
-</blockquote>
-<h3 id="results-1">Results</h3>
-<p>126.95 ms – SetPixel
+2.Can the process be performed in chunks? (If a lot of data needs to be processed at once, there’s a risk of the GPU not having enough memory for it.)</p></li><li><p>How quickly are the results required? Can calculations or data transfers be performed asynchronously and handled later? (If too much work is done in a single frame, there is a risk that the GPU won’t have enough time to render the actual graphics for each frame.)</p></li></ul><h1 id=making-a-texture-readable-or-nonreadable>Making a texture readable or nonreadable</h1><p>By default, texture assets that you import into your project are nonreadable, while textures created from a script are readable.</p><blockquote><p>默认情况下，导入到项目中的纹理资源是不可读的，<strong>而从脚本创建的纹理是可读的</strong>。</p></blockquote><p>Readable textures use twice as much memory as nonreadable textures because they need to have a copy of their pixel data in CPU RAM. You should only make a texture readable when you need to, and make them nonreadable when you are done working with the data on the CPU.</p><blockquote><p>可读纹理使用的内存是不可读纹理的两倍，因为它们需要在系统内存中拥有像素数据的副本。应该<strong>仅在需要时</strong>将纹理设为可读，并在处理完 CPU 上的数据后将其设为不可读。</p></blockquote><p>To see if a texture asset in your project is readable and make edits, use the Read/Write Enabled option in Texture Import Settings, or the TextureImporter.isReadable API.</p><blockquote><p>要查看项目中的纹理资源是否可读并进行编辑，请使用“<strong>Texture Import Settings</strong>”中的“<strong>Read/Write Enabled</strong>”选项，或使用API函数<code>TextureImporter.isReadable</code> 。</p></blockquote><p>To make a texture nonreadable, call its Apply method with the makeNoLongerReadable parameter set to “true” (for example, Texture2D.Apply or Cubemap.Apply). A nonreadable texture can’t be made readable again.</p><blockquote><p>要使纹理不可读，请调用其 Apply 方法，并将<code>makeNoLongerReadable</code>参数设置为“<strong>true</strong>”（例如，<code>Texture2D.Apply</code> 或 C<code>ubemap.Apply</code>）。<strong>不可读的纹理无法再次变得可读</strong>。</p></blockquote><p>All textures are readable to the Editor in Edit and Play modes. Calling Apply to make the texture nonreadable will update the value of isReadable, preventing you from accessing the CPU data. However, some Unity processes will function as if the texture is readable because they see that the internal CPU data is valid.</p><blockquote><p><strong>在Unity编辑器中，在编辑模式或者是Play模式下，所有的纹理都是可读的</strong>。调用Apply方法，使纹理不可读时，会将更新<code>Texture.isReadable</code>属性的值，从而阻止您访问CPU数据。但是，某些 Unity 进程会像纹理可读一样运行，因为它们发现内部 CPU 数据有效。(译注：<strong>所以江湖传闻在编辑器模式下开Profiler，看到资源的性能消耗通常是实际打包后独立运行的两倍的说法就是这样来的</strong>)</p></blockquote><h1 id=texture-access-api-examples-in-github>Texture Access API examples in GitHub</h1><p><img src=./images/TextureSamples_Fullscreen_1020x574_1.jpg alt="CPU 每帧生成的纹理示例"></p><p>Performance differs greatly across the various ways of accessing texture data, especially on the CPU (although less so at lower resolutions). The Unity Texture Access API examples repository on GitHub contains a number of examples showing performance differences between various APIs that allow access to, or manipulation of, texture data. The UI only shows the main thread CPU timings. In some cases, DOTS features like Burst and the job system are used to maximize performance.</p><blockquote><p>访问纹理数据的各种方式的性能差异很大，尤其是在 CPU 上（尽管在较低分辨率下差异较小）。GitHub 上的<a href=https://github.com/Unity-Technologies/UnityTextureAccessApiExamples/tree/2023-best-practices-article>Unity纹理访问 API 示例</a>包含许多示例，显示了允许访问或操作纹理数据的各种 API 之间的性能差异。UI 仅显示主线程 CPU 计时。在某些情况下，使用<a href=https://docs.unity3d.com/Packages/com.unity.burst@1.8/manual/index.html>Burst</a>和<a href=https://docs.unity3d.com/Manual/JobSystem.html>Job System</a>等 DOTS 功能来最大限度地提高性能。</p></blockquote><p>Here are the examples included in the GitHub repository:</p><ul><li>SimpleCopy: Copying all pixels from one texture to another</li><li>PlasmaTexture: A plasma texture updated on the CPU per frame</li><li>TransferGPUTexture: Transferring (copying to a different size or format) all pixels on the GPU from a texture to a RenderTexture</li></ul><blockquote><p>以下是 GitHub 存储库中包含的示例：</p><ul><li>SimpleCopy：将所有像素从一个纹理复制到另一个纹理</li><li>PlasmaTexture：每帧在 ​​CPU 上更新的等离子纹理</li><li>TransferGPUTexture：将 GPU 上的所有像素从纹理传输（复制到不同的大小或格式）到 RenderTexture</li></ul></blockquote><p>Listed below are performance measurements taken from the examples on GitHub. These numbers are used to support the recommendations that follow. The measurements are from a player build on a system with a 3.7 GHz 8-core Xeon® W-2145 CPU and an RTX 2080.</p><blockquote><p>下面列出的是从 GitHub 上的示例中获取的性能测量结果。这些数字用于支持随后的建议。测量结果来自构建在具有 3.7 GHz 8 核 Xeon® W-2145 CPU 和 RTX 2080 的系统上的播放器。</p></blockquote><h2 id=simplecopy-example>SimpleCopy example</h2><p>These are the median CPU times for SimpleCopy.UpdateTestCase with a texture size of 2,048.</p><p>Note that the Graphics methods complete nearly instantly on the main thread because they simply push work onto the RenderThread, which is later executed by the GPU. Their results will be ready when the next frame is being rendered.</p><blockquote><p>这些是纹理大小为 2,048 的 SimpleCopy.UpdateTestCase 的中值 CPU 时间。
+请注意，Graphics 方法几乎立即在主线程上完成，因为它们只是将工作推送到 RenderThread，稍后由 GPU 执行。当渲染下一帧时，他们的结果将准备就绪。</p></blockquote><h3 id=results>Results</h3><p>1,326 ms <code>foreach(mip) for(x in width) for(y in height) SetPixel(x, y, GetPixel(x, y, mip), mip)</code>
+32.14 ms <code>foreach(mip) SetPixels(source.GetPixels(mip), mip)</code>
+6.96 ms <code>foreach(mip) SetPixels32(source.GetPixels32(mip), mip)</code>
+6.74 ms <code>LoadRawTextureData(source.GetRawTextureData())</code>
+3.54 ms <code>Graphics.CopyTexture(readableSource, readableTarget)</code>
+2.87 ms <code>foreach(mip) SetPixelData&lt;byte>(mip, GetPixelData&lt;byte>(mip))</code>
+2.87 ms <code>LoadRawTextureData(source.GetRawTextureData&lt;byte>())</code>
+0.00 ms <code>Graphics.ConvertTexture(source, target)</code>
+0.00 ms <code>Graphics.CopyTexture(nonReadableSource, target)</code></p><h2 id=plasmatexture-example>PlasmaTexture example</h2><p>These are the median CPU times for PlasmaTexture.UpdateTestCase with a texture size of 512.</p><p>You’ll see that SetPixels32 is unexpectedly slower than SetPixels. This is due to having to take the float-based Color result from the plasma pixel calculation and convert it to the byte-based Color32 struct. SetPixels32NoConversion skips this conversion and just assigns a default value to the Color32 output array, resulting in better performance than SetPixels. In order to beat the performance of SetPixels and the underlying color conversion performed by Unity, it is necessary to rework the pixel calculation method itself to directly output a Color32 value. A simple implementation using SetPixelData is almost guaranteed to give better results than careful SetPixels and SetPixels32 approaches.</p><blockquote><p>这些是纹理大小为 512 的 PlasmaTexture.UpdateTestCase 的中值 CPU 时间。</p></blockquote><blockquote><p>您会发现 SetPixels32 意外地比 SetPixels 慢。这是因为必须从等离子像素计算中获取基于浮点的颜色结果并将其转换为基于字节的 Color32 结构。SetPixels32NoConversion 会跳过此转换，仅将默认值分配给 Color32 输出数组，从而获得比 SetPixels 更好的性能。为了击败 SetPixels 和 Unity 执行的底层颜色转换的性能，有必要重新设计像素计算方法本身以直接输出 Color32 值。使用 SetPixelData 的简单实现几乎可以保证比仔细的 SetPixels 和 SetPixels32 方法提供更好的结果。</p></blockquote><h3 id=results-1>Results</h3><p>126.95 ms – SetPixel
 113.16 ms – SetPixels32
 88.96 ms – SetPixels
 86.30 ms – SetPixels32NoConversion
 16.91 ms – SetPixelDataBurst
-4.27 ms – SetPixelDataBurstParallel</p>
-<h2 id="transfergputexture-example">TransferGPUTexture example</h2>
-<p>These are the Editor GPU times for TransferGPUTexture.UpdateTestCase with a texture size of 8,196:</p>
-<blockquote>
-<p>以下是纹理大小为 8,196 的 TransferGPUTexture.UpdateTestCase 的编辑器 GPU 时间：</p>
-</blockquote>
-<p>Blit – 1.584 ms
-CopyTexture – 0.882 ms</p>
-<h2 id="pixel-data-api-recommendations">Pixel data API recommendations</h2>
-<p>You can access pixel data in various ways. However, not all methods support every format, texture type, or use case, and some take longer to execute than others. This section goes over recommended methods, and the following section covers those to use with caution.</p>
-<blockquote>
-<p>您可以通过多种方式访问​​像素数据。然而，并非所有方法都支持每种格式、纹理类型或用例，并且有些方法的执行时间比其他方法更长。本节介绍推荐的方法，下一节介绍需要谨慎使用的方法。</p>
-</blockquote>
-<h3 id="copytexture">CopyTexture</h3>
-<p>CopyTexture is the fastest way to transfer GPU data from one texture into another. It does not perform any format conversion. You can partially copy data by specifying a source and target position, in addition to the width and height of the region. If both textures are readable, the copy operation will also be performed on the CPU data, bringing the total cost of this method closer to that of a CPU-only copy using SetPixelData with the result of GetPixelData from a source texture.</p>
-<p><a href="https://docs.unity3d.com/ScriptReference/Graphics.CopyTexture.html">CopyTexture</a>是将 GPU 数据从一个纹理传输到另一个纹理的最快方法。它不执行任何格式转换。除了区域的宽度和高度之外，您还可以通过指定源位置和目标位置来部分复制数据。如果两个纹理都是可读的，则复制操作也会对 CPU 数据执行，从而使该方法的总成本更接近使用 SetPixelData 以及来自源纹理的GetPixelData结果的)是将 GPU 数据从一个纹理传输到另一个纹理的最快方法。它不执行任何格式转换。除了区域的宽度和高度之外，您还可以通过指定源位置和目标位置来部分复制数据。如果两个纹理都是可读的，则复制操作也会对 CPU 数据执行，从而使该方法的总成本更接近使用 SetPixelData 以及来自源纹理的GetPixelData结果的</p>
-<h3 id="blit">Blit</h3>
-<p>Blit is a fast and powerful method of transferring GPU data into a RenderTexture using a shader. In practice, this has to set up the graphics pipeline API state to render to the target RenderTexture. It comes with a small resolution-independent setup cost compared to CopyTexture. The default Blit shader used by the method takes an input texture and renders it into the target RenderTexture. By providing a custom material or shader, you can define complex texture-to-texture rendering processes.</p>
-<blockquote>
-<p><a href="https://docs.unity3d.com/ScriptReference/Graphics.Blit.html">Blit</a>是一种使用着色器将 GPU 数据传输到 RenderTexture 的快速而强大的方法。实际上，这必须设置图形管道 API 状态以渲染到目标 RenderTexture。与 CopyTexture 相比，它具有较小的与分辨率无关的设置成本。该方法使用的默认 Blit 着色器采用输入纹理并将其渲染到目标 RenderTexture 中。通过提供自定义材质或着色器，您可以定义复杂的纹理到纹理渲染过程。</p>
-</blockquote>
-<h3 id="getpixeldata-and-setpixeldata">GetPixelData and SetPixelData</h3>
-<p>GetPixelData and SetPixelData (along with GetRawTextureData) are the fastest methods to use when only touching CPU data. Both methods require you to provide a struct type as a template parameter used to reinterpret the data. The methods themselves only need this struct to derive the correct size, so you can just use byte if you don’t want to define a custom struct to represent the texture’s format.</p>
-<blockquote>
-<p><a href="https://docs.unity3d.com/ScriptReference/Texture2D.GetPixelData.html">GetPixelData</a>和<a href="https://docs.unity3d.com/ScriptReference/Texture2D.SetPixelData.html">SetPixelData</a>（以及<a href="https://docs.unity3d.com/ScriptReference/Texture2D.GetRawTextureData.html">GetRawTextureData</a>）是仅接触 CPU 数据时使用最快的方法。这两种方法都要求您提供结构类型作为用于重新解释数据的模板参数。这些方法本身只需要这个结构体来派生正确的大小，因此如果您不想定义自定义结构体来表示纹理的格式，则可以只使用字节。</p>
-</blockquote>
-<p>When accessing individual pixels, it’s a good idea to define a custom struct with some utility methods for ease of use. For example, an R5G5B5A1 format struct could be made up out of a ushort data member and a few get/set methods to access the individual channels as bytes.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">FormatR5G5B5A1</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">ushort</span> data;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">ushort</span> redOffset = <span style="color:#ae81ff">11</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">ushort</span> greenOffset = <span style="color:#ae81ff">6</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">ushort</span> blueOffset = <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">ushort</span> alphaOffset = <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">ushort</span> redMask = <span style="color:#ae81ff">31</span> &lt;&lt; redOffset;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">ushort</span> greenMask = <span style="color:#ae81ff">31</span> &lt;&lt; greenOffset;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">ushort</span> blueMask = <span style="color:#ae81ff">31</span> &lt;&lt; blueOffset;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">ushort</span> alphaMask = <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">byte</span> red { <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">byte</span>)((data &amp; redMask) &gt;&gt; redOffset); } }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">byte</span> green { <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">byte</span>)((data &amp; greenMask) &gt;&gt; greenOffset); } }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">byte</span> blue { <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">byte</span>)((data &amp; blueMask) &gt;&gt; blueOffset); } }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">byte</span> alpha { <span style="color:#66d9ef">get</span> { <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">byte</span>)((data &amp; alphaMask) &gt;&gt; alphaOffset); } }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>The above code is an example from an implementation of an object representing a pixel in the R5G5B5A5A1 format; the corresponding property setters are omitted for brevity.</p>
-<p>SetPixelData can be used to copy a full mip level of data into the target texture. GetPixelData will return a NativeArray that actually points to one mip level of Unity’s internal CPU texture data. This allows you to directly read/write that data without the need for any copy operations. The catch is that the NativeArray returned by GetPixelData is only guaranteed to be valid until the user code calling GetPixelData returns control to Unity, such as when MonoBehaviour.Update returns. Instead of storing the result of GetPixelData between frames, you have to get the correct NativeArray from GetPixelData for every frame you want to access this data from.</p>
-<blockquote>
-<p>上面的代码是表示 R5G5B5A5A1 格式的像素的对象的实现示例；为了简洁起见，省略了相应的属性设置器。</p>
-</blockquote>
-<blockquote>
-<p>SetPixelData 可用于将完整 mip 级别的数据复制到目标纹理中。GetPixelData 将返回一个 NativeArray，它实际上指向 Unity 内部 CPU 纹理数据的一个 mip 级别。这允许您直接读取/写入该数据，而不需要任何复制操作。问题是 GetPixelData 返回的 NativeArray 仅保证在调用 GetPixelData 的用户代码将控制返回给 Unity 之前有效，例如当 MonoBehaviour.Update 返回时。您必须为要从中访问此数据的每个帧从 GetPixelData 获取正确的 NativeArray，而不是在帧之间存储 GetPixelData 的结果。</p>
-</blockquote>
-<h2 id="apply">Apply</h2>
-<p>The Apply method returns after the CPU data has been uploaded to the GPU. The makeNoLongerReadable parameter should be set to “true” where possible to free up the memory of the CPU data after the upload.</p>
-<blockquote>
-<p>当CPU数据上传到GPU后<a href="https://docs.unity3d.com/ScriptReference/Texture2D.Apply.html">Apply</a>方法返回。makeNoLongerReadable 参数应尽可能设置为“true”，以便在上传后释放 CPU 数据的内存。</p>
-</blockquote>
-<h2 id="requestintonativearray-and-requestintonativeslice">RequestIntoNativeArray and RequestIntoNativeSlice</h2>
-<p>The RequestIntoNativeArray and RequestIntoNativeSlice methods asynchronously download GPU data from the specified Texture into (a slice of) a NativeArray provided by the user.</p>
-<p>Calling the methods will return a request handle that can indicate if the requested data is done downloading. Support is limited to only a handful of formats, so use SystemInfo.IsFormatSupported with FormatUsage.ReadPixels to check format support. The AsyncGPUReadback class also has a Request method, which allocates a NativeArray for you. If you need to repeat this operation, you will get better performance if you allocate a NativeArray that you reuse instead.</p>
-<blockquote>
-<p><code>RequestIntoNativeArray</code>和<a href="https://docs.unity3d.com/ScriptReference/Rendering.AsyncGPUReadback.RequestIntoNativeSlice.html">RequestIntoNativeSlice</a>方法将 GPU 数据从指定纹理异步下载到用户提供的 NativeArray（切片）中。</p>
-</blockquote>
-<blockquote>
-<p>调用这些方法将返回一个请求句柄，该句柄可以指示请求的数据是否已完成下载。支持仅限于少数格式，因此请使用SystemInfo.IsFormatSupported和FormatUsage.ReadPixels来检查格式支持。AsyncGPUReadback类还有一个<a href="https://docs.unity3d.com/ScriptReference/Rendering.AsyncGPUReadback.Request.html">Request</a>方法，它为您分配一个 NativeArray。如果您需要重复此操作，如果您分配一个重复使用的 NativeArray，您将获得更好的性能。</p>
-</blockquote>
-<p>Methods to use with caution
-There are a number of methods that should be used with caution due to potentially significant performance impacts. Let’s take a look at them in more detail.</p>
-<p>Pixel accessors with underlying conversions
-These methods perform pixel format conversions of varying complexity. The Pixels32 variants are the most performant of the bunch, but even they can still perform format conversions if the underlying format of the texture doesn’t perfectly match the Color32 struct. When using the following methods, it’s best to keep in mind that their performance impact significantly increases by varying degrees as the number of pixels grows:</p>
-<p>GetPixel
+4.27 ms – SetPixelDataBurstParallel</p><h2 id=transfergputexture-example>TransferGPUTexture example</h2><p>These are the Editor GPU times for TransferGPUTexture.UpdateTestCase with a texture size of 8,196:</p><blockquote><p>以下是纹理大小为 8,196 的 TransferGPUTexture.UpdateTestCase 的编辑器 GPU 时间：</p></blockquote><p>Blit – 1.584 ms
+CopyTexture – 0.882 ms</p><h2 id=pixel-data-api-recommendations>Pixel data API recommendations</h2><p>You can access pixel data in various ways. However, not all methods support every format, texture type, or use case, and some take longer to execute than others. This section goes over recommended methods, and the following section covers those to use with caution.</p><blockquote><p>您可以通过多种方式访问​​像素数据。然而，并非所有方法都支持每种格式、纹理类型或用例，并且有些方法的执行时间比其他方法更长。本节介绍推荐的方法，下一节介绍需要谨慎使用的方法。</p></blockquote><h3 id=copytexture>CopyTexture</h3><p>CopyTexture is the fastest way to transfer GPU data from one texture into another. It does not perform any format conversion. You can partially copy data by specifying a source and target position, in addition to the width and height of the region. If both textures are readable, the copy operation will also be performed on the CPU data, bringing the total cost of this method closer to that of a CPU-only copy using SetPixelData with the result of GetPixelData from a source texture.</p><p><a href=https://docs.unity3d.com/ScriptReference/Graphics.CopyTexture.html>CopyTexture</a>是将 GPU 数据从一个纹理传输到另一个纹理的最快方法。它不执行任何格式转换。除了区域的宽度和高度之外，您还可以通过指定源位置和目标位置来部分复制数据。如果两个纹理都是可读的，则复制操作也会对 CPU 数据执行，从而使该方法的总成本更接近使用 SetPixelData 以及来自源纹理的GetPixelData结果的)是将 GPU 数据从一个纹理传输到另一个纹理的最快方法。它不执行任何格式转换。除了区域的宽度和高度之外，您还可以通过指定源位置和目标位置来部分复制数据。如果两个纹理都是可读的，则复制操作也会对 CPU 数据执行，从而使该方法的总成本更接近使用 SetPixelData 以及来自源纹理的GetPixelData结果的</p><h3 id=blit>Blit</h3><p>Blit is a fast and powerful method of transferring GPU data into a RenderTexture using a shader. In practice, this has to set up the graphics pipeline API state to render to the target RenderTexture. It comes with a small resolution-independent setup cost compared to CopyTexture. The default Blit shader used by the method takes an input texture and renders it into the target RenderTexture. By providing a custom material or shader, you can define complex texture-to-texture rendering processes.</p><blockquote><p><a href=https://docs.unity3d.com/ScriptReference/Graphics.Blit.html>Blit</a>是一种使用着色器将 GPU 数据传输到 RenderTexture 的快速而强大的方法。实际上，这必须设置图形管道 API 状态以渲染到目标 RenderTexture。与 CopyTexture 相比，它具有较小的与分辨率无关的设置成本。该方法使用的默认 Blit 着色器采用输入纹理并将其渲染到目标 RenderTexture 中。通过提供自定义材质或着色器，您可以定义复杂的纹理到纹理渲染过程。</p></blockquote><h3 id=getpixeldata-and-setpixeldata>GetPixelData and SetPixelData</h3><p>GetPixelData and SetPixelData (along with GetRawTextureData) are the fastest methods to use when only touching CPU data. Both methods require you to provide a struct type as a template parameter used to reinterpret the data. The methods themselves only need this struct to derive the correct size, so you can just use byte if you don’t want to define a custom struct to represent the texture’s format.</p><blockquote><p><a href=https://docs.unity3d.com/ScriptReference/Texture2D.GetPixelData.html>GetPixelData</a>和<a href=https://docs.unity3d.com/ScriptReference/Texture2D.SetPixelData.html>SetPixelData</a>（以及<a href=https://docs.unity3d.com/ScriptReference/Texture2D.GetRawTextureData.html>GetRawTextureData</a>）是仅接触 CPU 数据时使用最快的方法。这两种方法都要求您提供结构类型作为用于重新解释数据的模板参数。这些方法本身只需要这个结构体来派生正确的大小，因此如果您不想定义自定义结构体来表示纹理的格式，则可以只使用字节。</p></blockquote><p>When accessing individual pixels, it’s a good idea to define a custom struct with some utility methods for ease of use. For example, an R5G5B5A1 format struct could be made up out of a ushort data member and a few get/set methods to access the individual channels as bytes.</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>struct</span> <span style=color:#1f2328>FormatR5G5B5A1</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>public</span> <span style=color:#cf222e>ushort</span> data<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>const</span> <span style=color:#cf222e>ushort</span> redOffset <span style=color:#1f2328>=</span> <span style=color:#0550ae>11</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>const</span> <span style=color:#cf222e>ushort</span> greenOffset <span style=color:#1f2328>=</span> <span style=color:#0550ae>6</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>const</span> <span style=color:#cf222e>ushort</span> blueOffset <span style=color:#1f2328>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>const</span> <span style=color:#cf222e>ushort</span> alphaOffset <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>const</span> <span style=color:#cf222e>ushort</span> redMask <span style=color:#1f2328>=</span> <span style=color:#0550ae>31</span> <span style=color:#1f2328>&lt;&lt;</span> redOffset<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>const</span> <span style=color:#cf222e>ushort</span> greenMask <span style=color:#1f2328>=</span> <span style=color:#0550ae>31</span> <span style=color:#1f2328>&lt;&lt;</span> greenOffset<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>const</span> <span style=color:#cf222e>ushort</span> blueMask <span style=color:#1f2328>=</span> <span style=color:#0550ae>31</span> <span style=color:#1f2328>&lt;&lt;</span> blueOffset<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>const</span> <span style=color:#cf222e>ushort</span> alphaMask <span style=color:#1f2328>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>public</span> <span style=color:#cf222e>byte</span> red <span style=color:#1f2328>{</span> <span style=color:#cf222e>get</span> <span style=color:#1f2328>{</span> <span style=color:#cf222e>return</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>byte</span><span style=color:#1f2328>)((</span>data <span style=color:#1f2328>&amp;</span> redMask<span style=color:#1f2328>)</span> <span style=color:#1f2328>&gt;&gt;</span> redOffset<span style=color:#1f2328>);</span> <span style=color:#1f2328>}</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>public</span> <span style=color:#cf222e>byte</span> green <span style=color:#1f2328>{</span> <span style=color:#cf222e>get</span> <span style=color:#1f2328>{</span> <span style=color:#cf222e>return</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>byte</span><span style=color:#1f2328>)((</span>data <span style=color:#1f2328>&amp;</span> greenMask<span style=color:#1f2328>)</span> <span style=color:#1f2328>&gt;&gt;</span> greenOffset<span style=color:#1f2328>);</span> <span style=color:#1f2328>}</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>public</span> <span style=color:#cf222e>byte</span> blue <span style=color:#1f2328>{</span> <span style=color:#cf222e>get</span> <span style=color:#1f2328>{</span> <span style=color:#cf222e>return</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>byte</span><span style=color:#1f2328>)((</span>data <span style=color:#1f2328>&amp;</span> blueMask<span style=color:#1f2328>)</span> <span style=color:#1f2328>&gt;&gt;</span> blueOffset<span style=color:#1f2328>);</span> <span style=color:#1f2328>}</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>public</span> <span style=color:#cf222e>byte</span> alpha <span style=color:#1f2328>{</span> <span style=color:#cf222e>get</span> <span style=color:#1f2328>{</span> <span style=color:#cf222e>return</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>byte</span><span style=color:#1f2328>)((</span>data <span style=color:#1f2328>&amp;</span> alphaMask<span style=color:#1f2328>)</span> <span style=color:#1f2328>&gt;&gt;</span> alphaOffset<span style=color:#1f2328>);</span> <span style=color:#1f2328>}</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>The above code is an example from an implementation of an object representing a pixel in the R5G5B5A5A1 format; the corresponding property setters are omitted for brevity.</p><p>SetPixelData can be used to copy a full mip level of data into the target texture. GetPixelData will return a NativeArray that actually points to one mip level of Unity’s internal CPU texture data. This allows you to directly read/write that data without the need for any copy operations. The catch is that the NativeArray returned by GetPixelData is only guaranteed to be valid until the user code calling GetPixelData returns control to Unity, such as when MonoBehaviour.Update returns. Instead of storing the result of GetPixelData between frames, you have to get the correct NativeArray from GetPixelData for every frame you want to access this data from.</p><blockquote><p>上面的代码是表示 R5G5B5A5A1 格式的像素的对象的实现示例；为了简洁起见，省略了相应的属性设置器。</p></blockquote><blockquote><p>SetPixelData 可用于将完整 mip 级别的数据复制到目标纹理中。GetPixelData 将返回一个 NativeArray，它实际上指向 Unity 内部 CPU 纹理数据的一个 mip 级别。这允许您直接读取/写入该数据，而不需要任何复制操作。问题是 GetPixelData 返回的 NativeArray 仅保证在调用 GetPixelData 的用户代码将控制返回给 Unity 之前有效，例如当 MonoBehaviour.Update 返回时。您必须为要从中访问此数据的每个帧从 GetPixelData 获取正确的 NativeArray，而不是在帧之间存储 GetPixelData 的结果。</p></blockquote><h2 id=apply>Apply</h2><p>The Apply method returns after the CPU data has been uploaded to the GPU. The makeNoLongerReadable parameter should be set to “true” where possible to free up the memory of the CPU data after the upload.</p><blockquote><p>当CPU数据上传到GPU后<a href=https://docs.unity3d.com/ScriptReference/Texture2D.Apply.html>Apply</a>方法返回。makeNoLongerReadable 参数应尽可能设置为“true”，以便在上传后释放 CPU 数据的内存。</p></blockquote><h2 id=requestintonativearray-and-requestintonativeslice>RequestIntoNativeArray and RequestIntoNativeSlice</h2><p>The RequestIntoNativeArray and RequestIntoNativeSlice methods asynchronously download GPU data from the specified Texture into (a slice of) a NativeArray provided by the user.</p><p>Calling the methods will return a request handle that can indicate if the requested data is done downloading. Support is limited to only a handful of formats, so use SystemInfo.IsFormatSupported with FormatUsage.ReadPixels to check format support. The AsyncGPUReadback class also has a Request method, which allocates a NativeArray for you. If you need to repeat this operation, you will get better performance if you allocate a NativeArray that you reuse instead.</p><blockquote><p><code>RequestIntoNativeArray</code>和<a href=https://docs.unity3d.com/ScriptReference/Rendering.AsyncGPUReadback.RequestIntoNativeSlice.html>RequestIntoNativeSlice</a>方法将 GPU 数据从指定纹理异步下载到用户提供的 NativeArray（切片）中。</p></blockquote><blockquote><p>调用这些方法将返回一个请求句柄，该句柄可以指示请求的数据是否已完成下载。支持仅限于少数格式，因此请使用SystemInfo.IsFormatSupported和FormatUsage.ReadPixels来检查格式支持。AsyncGPUReadback类还有一个<a href=https://docs.unity3d.com/ScriptReference/Rendering.AsyncGPUReadback.Request.html>Request</a>方法，它为您分配一个 NativeArray。如果您需要重复此操作，如果您分配一个重复使用的 NativeArray，您将获得更好的性能。</p></blockquote><p>Methods to use with caution
+There are a number of methods that should be used with caution due to potentially significant performance impacts. Let’s take a look at them in more detail.</p><p>Pixel accessors with underlying conversions
+These methods perform pixel format conversions of varying complexity. The Pixels32 variants are the most performant of the bunch, but even they can still perform format conversions if the underlying format of the texture doesn’t perfectly match the Color32 struct. When using the following methods, it’s best to keep in mind that their performance impact significantly increases by varying degrees as the number of pixels grows:</p><p>GetPixel
 GetPixelBilinear
 SetPixel
 GetPixels
@@ -376,120 +47,66 @@ SetPixels
 GetPixels32
 SetPixels32
 Fast data accessors with a catch
-GetRawTextureData and LoadRawTextureData are Texture2D-only methods that work with arrays containing the raw pixel data of all mip levels, one after another. The layout goes from largest to smallest mip, with each mip being “height” amount of “width” pixel values. These functions are quick to give CPU data access. GetRawTextureData does have a “gotcha” where the non-templated variant returns a copy of the data. This is a bit slower, and does not allow direct manipulation of the underlying buffer managed by Unity. GetPixelData does not have this quirk and can only return a NativeArray pointing to the underlying buffer that remains valid until user code returns control to Unity.</p>
-<p>ConvertTexture
-ConvertTexture is a way to transfer the GPU data from one texture to another, where the source and destination textures don’t have the same size or format. This conversion process is as efficient as it gets under the circumstances, but it’s not cheap. This is the internal process:</p>
-<p>Allocate a temporary RenderTexture matching the destination texture.
+GetRawTextureData and LoadRawTextureData are Texture2D-only methods that work with arrays containing the raw pixel data of all mip levels, one after another. The layout goes from largest to smallest mip, with each mip being “height” amount of “width” pixel values. These functions are quick to give CPU data access. GetRawTextureData does have a “gotcha” where the non-templated variant returns a copy of the data. This is a bit slower, and does not allow direct manipulation of the underlying buffer managed by Unity. GetPixelData does not have this quirk and can only return a NativeArray pointing to the underlying buffer that remains valid until user code returns control to Unity.</p><p>ConvertTexture
+ConvertTexture is a way to transfer the GPU data from one texture to another, where the source and destination textures don’t have the same size or format. This conversion process is as efficient as it gets under the circumstances, but it’s not cheap. This is the internal process:</p><p>Allocate a temporary RenderTexture matching the destination texture.
 Perform a Blit from the source texture to the temporary RenderTexture.
 Copy the Blit result from the temporary RenderTexture to the destination texture.
-Answer the following questions to help determine if this method is suited to your use case:</p>
-<p>Do I need to perform this conversion?
+Answer the following questions to help determine if this method is suited to your use case:</p><p>Do I need to perform this conversion?
 Can I make sure the source texture is created in the desired size/format for the target platform at import time?
 Can I change my processes to use the same formats, allowing the result of one process to be directly used as an input for another process?
 Can I create and use a RenderTexture as the destination instead? Doing so would reduce the conversion process to a single Blit to the destination RenderTexture.
 ReadPixels
-The ReadPixels method synchronously downloads GPU data from the active RenderTexture (RenderTexture.active) into a Texture2D’s CPU data. This enables you to store or process the output from a rendering operation. Support is limited to only a handful of formats, so use SystemInfo.IsFormatSupported with FormatUsage.ReadPixels to check format support.</p>
-<p>Downloading data back from the GPU is a slow process. Before it can begin, ReadPixels has to wait for the GPU to complete all preceding work. It’s best to avoid this method as it will not return until the requested data is available, which will slow down performance. Usability is also a concern because you need GPU data to be in a RenderTexture, which has to be configured as the currently active one. Both usability and performance are better when using the AsyncGPUReadback methods discussed earlier.</p>
-<p>Methods to convert between image file formats
-The ImageConversion class has methods to convert between Texture2D and several image file formats. LoadImage is able to load JPG, PNG, or EXR (since 2023.1) data into a Texture2D and upload this to the GPU for you. The loaded pixel data can be compressed on the fly depending on Texture2D’s original format. Other methods can convert a Texture2D or pixel data array to an array of JPG, PNG, TGA, or EXR data.</p>
-<p>These methods are not particularly fast, but can be useful if your project needs to pass pixel data around through common image file formats. Typical use cases include loading a user’s avatar from disk and sharing it with other players over a network.</p>
-<p>Key takeaways and more advanced resources
-There are many resources available to learn more about graphics optimization, related topics, and best practices in Unity. The graphics performance and profiling section of the documentation is a good starting point.</p>
-<p>You can also check out several technical e-books for advanced users, including Ultimate guide to profiling Unity games,  Optimize your mobile game performance, and Optimize your console and PC game performance.</p>
-<p>You’ll find many more advanced best practices on the Unity how-to hub.</p>
-<p>Here’s a summary of the key points to remember:</p>
-<p>When manipulating textures, the first step is to assess which operations can be performed on the GPU for optimal performance. The existing CPU/GPU workload and size of the input/output data are key factors to consider.
+The ReadPixels method synchronously downloads GPU data from the active RenderTexture (RenderTexture.active) into a Texture2D’s CPU data. This enables you to store or process the output from a rendering operation. Support is limited to only a handful of formats, so use SystemInfo.IsFormatSupported with FormatUsage.ReadPixels to check format support.</p><p>Downloading data back from the GPU is a slow process. Before it can begin, ReadPixels has to wait for the GPU to complete all preceding work. It’s best to avoid this method as it will not return until the requested data is available, which will slow down performance. Usability is also a concern because you need GPU data to be in a RenderTexture, which has to be configured as the currently active one. Both usability and performance are better when using the AsyncGPUReadback methods discussed earlier.</p><p>Methods to convert between image file formats
+The ImageConversion class has methods to convert between Texture2D and several image file formats. LoadImage is able to load JPG, PNG, or EXR (since 2023.1) data into a Texture2D and upload this to the GPU for you. The loaded pixel data can be compressed on the fly depending on Texture2D’s original format. Other methods can convert a Texture2D or pixel data array to an array of JPG, PNG, TGA, or EXR data.</p><p>These methods are not particularly fast, but can be useful if your project needs to pass pixel data around through common image file formats. Typical use cases include loading a user’s avatar from disk and sharing it with other players over a network.</p><p>Key takeaways and more advanced resources
+There are many resources available to learn more about graphics optimization, related topics, and best practices in Unity. The graphics performance and profiling section of the documentation is a good starting point.</p><p>You can also check out several technical e-books for advanced users, including Ultimate guide to profiling Unity games, Optimize your mobile game performance, and Optimize your console and PC game performance.</p><p>You’ll find many more advanced best practices on the Unity how-to hub.</p><p>Here’s a summary of the key points to remember:</p><p>When manipulating textures, the first step is to assess which operations can be performed on the GPU for optimal performance. The existing CPU/GPU workload and size of the input/output data are key factors to consider.
 Using low level functions like GetRawTextureData to implement a specific conversion path where necessary can offer improved performance over the more convenient methods that perform (often redundant) copies and conversions.
 More complex operations, such as large readbacks and pixel calculations, are only viable on the CPU when performed asynchronously or in parallel. The combination of Burst and the job system allows C# to perform certain operations that would otherwise only be performant on a GPU.
 Profile frequently: There are many pitfalls you can encounter during development, from unexpected and unnecessary conversions to stalls from waiting on another process. Some performance issues will only start surfacing as the game scales up and certain parts of your code see heavier usage. The example project demonstrates how seemingly small increases in texture resolution can cause certain APIs to become a performance issue.
-Share your feedback on texture data with us in the Scripting or General Graphics forums. Be sure to watch for new technical blogs from other Unity developers as part of the ongoing Tech from the Trenches series.</p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/2d_pixel_perfect_package/">Unity的2D Pixel Perfect包的工作原理</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_http_details/">Http详解及如何在Unity上使用</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/interior_mapping_document/">伪内部空间映射的相关文档</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/volumetric_clouds_write_up/">Volumetric Clouds Write-up(翻译)</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/unity_texture_compression_detail/">Unity纹理压缩格式详解</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+Share your feedback on texture data with us in the Scripting or General Graphics forums. Be sure to watch for new technical blogs from other Unity developers as part of the ongoing Tech from the Trenches series.</p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/2d_pixel_perfect_package/>Unity的2D Pixel Perfect包的工作原理</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_http_details/>Http详解及如何在Unity上使用</a></li><li class=related__item><a class=related__link href=/post/unity3d/interior_mapping_document/>伪内部空间映射的相关文档</a></li><li class=related__item><a class=related__link href=/post/unity3d/volumetric_clouds_write_up/>Volumetric Clouds Write-up(翻译)</a></li><li class=related__item><a class=related__link href=/post/unity3d/unity_texture_compression_detail/>Unity纹理压缩格式详解</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

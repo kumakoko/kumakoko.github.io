@@ -1,389 +1,405 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Unity3D | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="Unity3D" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/tags/unity3d/" />
-
-
-		<meta itemprop="name" content="Unity3D">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/tags/unity3d/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-term">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/tags/">Tags</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity3D</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">Unity3D</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/_additional_lights_vertex/">Unity3D的内置宏 _ADDITIONAL_LIGHTS_VERTEX</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-在Unity URP中，_ADDITIONAL_LIGHTS_VERTEX 是一个与 附加光源处理方式 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 控制附加光源的光照计算阶段，决定是在 顶点着色器 还是 片元着色器 中处理附加光源的贡献。
-核心含义 1. 光源计算阶段选择 启用时（_ADDITIONAL_LIGHTS_VERTEX 被定义）：
-附加光源的光照计算在 顶点着色器 阶段完成，计算结果通过顶点插值传递到片元着色器。 未启用时（默认或使用 _ADDITIONAL_LIGHTS）：
-附加光源的光照计算在 片元着色器 阶段逐像素完成。 2. 性能与质量的权衡 模式 性能消耗 光照精度 适用场景 _ADDITIONAL_LIGHTS_VERTEX 较低 中等（顶点插值） 移动端、低性能设备 _ADDITIONAL_LIGHTS 较高 高（逐像素） PC/主机、高质量渲染需求 触发条件 该宏的激活由以下因素决定：
-URP Asset设置
-在URP资源中启用 Additional Lights（附加光源） 设置 Per Object Light 类型为 Vertex 或 Fragment（对应不同模式） Shader编译指令
-在Shader中使用以下指令声明变体：
-#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS 实际光源数量
-当场景中存在 附加光源（点光源、聚光灯等） 且影响当前渲染对象时，Unity自动选择对应变体。
-技术实现原理 顶点着色器阶段处理（_ADDITIONAL_LIGHTS_VERTEX） // 顶点着色器中计算附加光源 Varyings vert(Attributes input) { Varyings output; // .</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-11-19T21:21:49&#43;08:00">November 19, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/stylized_water_2_doc/">StylizedWater2插件帮助文档精读</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-插件官方文档地址
-Stylized Water 2 入门指南 1. 准备工作 确保项目无控制台错误：未解决的代码错误会导致资源代码无法编译，材质可能显示为粉色。 项目设置： 使用 Universal Render Pipeline (URP)：在 Edit -&gt; Project Settings -&gt; Graphics 中检查是否已分配 URP 资源。 如果没有正确设置 URP，材质将显示为粉色。请参考 Unity 的 URP 文档进行设置。 注意：建议在项目早期决定使用 URP，因为在生产过程中切换到 URP 可能导致其他自定义着色器失效。 颜色空间：推荐使用 Linear 颜色空间（新项目默认使用 Gamma 空间），详细信息请参考 Unity 文档。 2. URP 设置 启用必要选项： Depth Texture：用于多种效果（如深度和交互动画）。如果禁用，这些效果将失效，且在 Android 上构建时水可能会不可见。 Opaque Texture：用于折射效果，启用折射时需要。 如果这些选项未启用，但着色器使用了相关功能，材质 UI 中会显示警告并提供快速修复按钮。 相机设置：每个相机可以覆盖这些设置。如果某些效果在特定场景或相机中不可见，请检查这些选项是否被设置为“Off”。 质量级别设置：如果使用了不同质量级别的管道设置，请确保这些选项也已启用，否则在较低质量级别下运行时，水效果可能失效。 3. 向场景中添加水 建议：创建或复制材质（而不是直接使用包中的材质），以避免更新资源时设置被意外覆盖。 方法： 方法 1：将 Assets/StylizedWater2/Prefabs 中的预制件拖入场景，并调整材质属性。 方法 2：通过 GameObject -&gt; 3D Object -&gt; Water -&gt; Object 菜单选项创建新的 Mesh Renderer。 方法 3： 在场景中创建一个平面网格。 创建新材质并分配 StylizedWater2/Default 着色器。 通过 Add Component -&gt; Stylized Water 2 -&gt; Water Object 添加 Water Object 组件（仅在需要使用平面反射时必要，但无负面影响）。 材质参数：每个参数都有工具提示，鼠标悬停可查看描述。 Stylized Water 2 着色器使用指南 1.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-11-19T20:21:49&#43;08:00">November 19, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/amplify_imposter_manual/">Amplify Imposter 插件使用指南</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-描述 Amplify Impostors 是一款小巧但功能强大的工具，可用于创建不同类型的 Impostors，这些 Impostors 是平面和简单多边形构成的复杂高多边形对象的替代品（substitutes ），可渲染原始对象的虚假版本（fake version）（因此得名）。与传统精灵非常相似，它们通常由单个平面四边形或简单多边形组成，并且像经典广告牌（classic billboard）一样始终面向相机。将它们视为要渲染的面向相机的纸板版本。使用此类技术的常见目的是能够用非常低的多边形表示远处的物体，例如树木、灌木丛、岩石、废墟、建筑物、道具等。
-有多种方法可以创建这些 impostor，每种方法都有各自的优点和缺点。此工具旨在提供最有用和最流行的技术，同时使创建过程尽可能简单。
-安装 打开 AmplifyImpostors.unitypackage Unity 加载后会显示“导入包”窗口，选择全部并点击导入 警告 - 如果您在同一个项目中使用 Amplify Shader Editor请确保两个软件包都是最新的；检查您的控制台是否存在与之相关的任何错误 快速入门说明 选择场景中的游戏对象或项目中的预制件 在检查器窗口中搜索并添加“Amplify Impostor”组件 按“Bake Impostor”并选择要保存impostor文件的位置 当前功能 Impostor类型 目前支持三种预先烘焙的 Impostor 类型 （左边是真实网格，右边是冒名顶替网格）
-效果图 示意图 描述 球面(spherical)：以典型的经纬度格式拍摄多张照片。着色器更简单、更快速，近距离拍摄时， impostor看起来基本没问题，但帧间跳动相当明显。可以通过增加轴帧数（以牺牲分辨率为代价）来缓解这一问题。 八面 (Octahedron) ：以十球面格式(icosphere format)拍摄多张照片。这样做是为了保证相邻帧数固定为 3，这样在相对于相机的任何给定位置，我们都可以混合最近的三帧。这样做的好处是消除帧之间的弹出。另一方面，着色器复杂度更高，当近距离观察时，混合变得太明显，出现明显的重影伪影。 半八面体(HemiOctahedron)：半八面体变体与正八面体类似，不同之处在于只从物体的上半球拍摄相同数量的镜头，从而有效地使混合精度翻倍。但缺点是，由于不烘焙下半球，从下方看时会产生不正确的结果。这种方法通常仅在您知道物体将始终从上方观看时使用（即：自上而下的相机(top-down cameras)）。 实时渲染 这些预烘焙解决方案中的每一个方案，都会渲染表面的构成部分贴图，以支持实时照明。这些方案支持：
-可编写脚本的渲染管道（HD 和 LW）（v4.9.0+） 标准/旧版前向渲染和延迟渲染 动态灯光和阴影 对象交叉点(object intersection)的深度写入 全局照明 烘焙光照贴图（通过自定义烘焙） GPU 实例 抖动交叉淡入淡出 其他的 自定义打包贴图（package map）：使用标准材质烘焙渲染最多 4 张贴图和自定义材质，使用自定义烘焙渲染最多 8 张不同的地图（支持 PNG 和未压缩的 TGA） 反照率 (RGB) | Alpha 蒙版 (A) 镜面反射 (RGB) | 平滑度 (A) 物体法线 (RGB) | 深度 (A) 发射 (RGB) | 环境光遮蔽 (A) 自定义形状编辑器（Custom Shape Editor）：自动生成自定义形状，以移除替代器的大部分透明区域，从而减少过度绘制。还支持手动编辑。 烘焙预设(baking presets)：定义烘焙替代者的预设，其中还包含各种导入和导出选项。 脚本化的渲染管道（scriptable render pipeline） 为了将 Amplify Impostors 与 SRP 一起使用，请务必导入所需的包 ( AmplifyImpostors\Plugins\EditorResources\RenderPipelinePackages )。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-11-12T19:21:49&#43;08:00">November 12, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/amplify_imposter_custom_baking/">Amplify Imposter Custom Baking</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-介绍 标准烘焙器收集延迟的 GBuffer 信息，其中包含典型 PBR 渲染的所有材质数据。然而，这可能并不总是必要的，甚至可能不够。在某些情况下，想要为其创建替代者的对象具有一些特殊的实时着色器效果，而简单的 PBR 渲染无法涵盖这些效果。在其他情况下，可能只想减少生成的数据量，因为有更高的平台限制（即移动设备）。自定义烘焙背后的想法是允许告诉工具想要烘焙什么以及希望如何根据具体情况进行渲染。
-##要求 为本指南创建着色器可能非常困难，因此我们在包中包含了可与 Amplify Shader Editor 插件一起使用的必要模板和节点，从而使该过程变得更加轻松快捷。如果不熟悉它，Amplify Shader Editor 是我们自己的屡获殊荣的着色器编辑器，可以在基于节点的图形编辑器中创建着色器，而无需了解着色器代码。本指南假设使用 Amplify Shader Editor，因此如果对直观的基于节点的着色器创作工具感兴趣，请随时在此处查看其商店页面。还可以在此处的 wiki 页面中了解更多信息。
-可以在软件包的目录AmplifyImpostors/Examples/Scenes/CustomBaking中找到本指南的文件和示例。如果是高级用户，并且想要手动创建着色器，仍然可以通过将结果与给定的示例进行比较来遵循指南。
-Shader Graph 限制了使用自定义代码的能力，从而阻止了对 Amplify Impostors 的支持。请考虑使用替代方案Amplify Shader Editor，它从头开始设计，可扩展并可适应任何管道要求。
-描述 本指南演示了创建与示例中相同的自定义替代器的过程。目的是为包含特殊动态着色器的对象创建替代器。此着色器在对象顶部添加了一个程序化油漆层。此油漆层是程序化的，因为它使用对象位置来计算油漆的伪随机颜色。如果我们为这个对象烘焙一个常规替代器，我们将失去这种程序行为，最终得到一个静态版本。
-为了实现这一点，需要两个特殊的着色器。一个着色器将使用被代替的物体的原始着色器来烘焙不同的纹理贴图。此着色器包含不同的输出，这些输出将用于生成不同的纹理及其通道所包含的内容。称为“烘焙着色器”。另一个着色器将使用生成的纹理，并使用可能正在寻找的预期自定义效果，正确渲染地impostor。这是将在产品中使用的创建imposter效果的着色器。我们将其称为“运行时着色器”。最后，需要设置输出并将着色器链接到它们，使用可以在Impostor组件中创建和引用的预设资产文件来执行此操作。
-创建烘焙着色器 在的项目中单击鼠标右键，然后创建一个新的 Impostor Bake 着色器。 注意：如果看不到此条目，请确保在着色器编辑器之后导入 Impostors 包，并打开着色器编辑器画布以检测更改。 在编辑器中打开着色器后，首先放置纹理采样器并将它们打包到所选输出，并确保属性名称与原始着色器匹配。 然后创建与我们可以烘焙到地图中的静态部分相对应的图形节点和连接，在我们的例子中，这是除程序颜色部分之外的所有内容。此外，因为我们稍后需要特殊遮罩来重新创建最终的程序效果，并且因为我们想要节省一些纹理内存，所以我们会将其与剩余数据一起打包并将其连接到同一个输出。 添加“Pack Normal Depth”着色器功能节点，它将法线转换为必要的空间并在 Alpha 通道中创建深度信息。 （可选）如果的对象着色器使用“剪切”效果，请确保通过减去剪辑蒙版值并将其连接到“剪辑”输出来模仿它。 创建运行时着色器 在的项目中单击鼠标右键并创建一个新的 Impostor Runtime 着色器。 在编辑器中添加一个新的“Amplify Impostor 节点”，将 Albedo、World Normal 和 Alpha 输出连接到主节点中的可用输入。点击 ASE 画布中的保存按钮。 注意：这样做应该会编译一个使用烘焙中最重要的数据的 Impostor 兼容着色器，但我们仍然需要进一步定制它以支持预期的程序效果。 在我们的例子中，我们想要获取原始输出中没有的自定义地图，我们通过选择 Impostor 节点并将“Extra Samplers”字段更改为适当的数字（在我们的例子中为 1）并连接一个带有名称的纹理对象节点来实现此目的，稍后将使用该名称来引用此地图。在本例中，我们将其称为“_Mask”。 我们现在需要从原始着色器创建程序逻辑，该着色器使用波函数中的对象 XZ 位置来生成颜色。 最后，从额外输出将程序颜色过滤到蒙版，并将适当的通道连接到其输出。保存。 创建烘焙预设 通过转到“Assets &gt; Create &gt; Amplify Impostor Bake Preset”或点击 impostor 组件中的“New”按钮来创建新预设。在所选项目位置中选择它。 将着色器分配给预设并添加或删除输出，直到拥有与在 [步骤 2] 中创建的着色器相同数量的可用输出。 配置输出以表示它们所保存的数据。在本例中，第一个输出保存 RGB 中的反照率颜色数据，因此我们将其标记为 sRGB 颜色空间。务必标记包含 alpha 通道的输出，在本例中它是第一个，因此我们保留单选按钮不变。 现在，只需在 impostor 组件中选择新的预设，必要时覆盖字段并点击“Bake Impostor” 最终结果 这是最终结果，请注意右侧的替代器现在可以模仿原始对象的效果并按预期显示程序颜色。此外，这些替代器仅使用三个贴图来实现它，而不是像标准替代器那样使用四个贴图。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-11-12T18:21:49&#43;08:00">November 12, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_fov_and_screentoworldpoint/">Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-在Unity3D编程中经常会碰到以下的问题：
-比如一开始的FOV为60度，后来设置为22度，可以通过怎样的公式，使得使用22度FOV对应生成的3D位置点，通过这个公式，可以转换到其位置点和使用60度生成的一样呢
-当从一个FOV为60度的视角切换到22度的视角时，使用Camera.ScreenToWorldPoint函数生成的3D位置点会发生变化，因为FOV直接影响视锥体的宽度和高度。要解决这个问题，需要通过调整视锥体的缩放因子，来抵消FOV变化带来的位置偏移。
-问题分析 当FOV变化时，屏幕坐标对应的世界坐标会随之缩放。假设有一个屏幕坐标screenPos，在FOV为60度时通过Camera.ScreenToWorldPoint生成一个3D位置点P60。当FOV变为22度时，假设生成的3D位置点为P22。我们需要找到一个转换公式，使得P22转换回P60。
-FOV与世界坐标的关系 视锥体的高度（在深度为z处）与FOV通过以下公式相关：
-$$ Heightz=2×z×tan⁡(FOV2)\text{Height}_z = 2 \times z \times \tan\left(\frac{FOV}{2}\right)Heightz=2×z×tan(2FOV) $$
-其中：
-Height_z ：在深度为z处的视锥体高度。 FOV：垂直视野角度。 z：深度（从摄像机到目标点的距离）。 视锥体的宽度和高度成比例地变化，具体公式为：
-$$ Widthz=Heightz×Aspect Ratio\text{Width}_z = \text{Height}_z \times \text{Aspect Ratio}Widthz=Heightz×Aspect Ratio $$
-对于两个不同的FOV（如60度和22度），可以计算出它们对应的视锥体高度比值。为了让FOV为22度时生成的世界坐标与FOV为60度时生成的一致，需要应用这个比值进行缩放。
-缩放因子的推导 在FOV为60度时的视锥体高度：
-$$ \mathrm{Heigth}_{60}=2\times \mathrm{z}\times \tan \left( \frac{60^o}{2} \right) $$
-在FOV为22度时的视锥体高度：
-$$ \mathrm{Heigth}_{22}=2\times \mathrm{z}\times \tan \left( \frac{22^o}{2} \right) $$
-缩放因子： 需要将FOV为22度时的世界坐标缩放到FOV为60度的视锥体高度，因此缩放因子是这两个视锥体高度的比值：
-$$ ScaleFactor=\frac{Height_{60}}{Height_{22}}=\frac{\tan \left( 30^{o} \right)}{\tan \left( 11^{o} \right)} $$
-可以计算出这个缩放因子：
-$$ \mathrm{ScaleFactor}=\frac{0.5774}{0.1944}\approx 2.97 $$
-公式应用 在FOV为22度时生成的3D世界坐标P22可以通过如下公式转换为FOV为60度时的3D世界坐标P60：</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-09-22T20:20:49&#43;08:00">September 22, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_from_depthmap_to_world_coord/">Unity3D中根据深度值重建像素点对应的世界坐标</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-1 深度图介绍 就是将深度信息(Z坐标值)保存在了一张贴图上的R通道上，因为R通道的值范围是[0, 1]，所以我们可以用ndc空间下的Z坐标值做下处理就能变成[0, 1]范围了（ (Zndc+1)*0.5
-2 C#接口取得深度图纹理的方法 Shader.GetGlobalTexture(&#34;_CameraDepthTexture&#34;) 3 在NDC空间下深度值的计算公式 4 从片元着色器中根据深度图反推出片元世界坐标且输出的shader Shader &#34;zznewclear13/DepthToPositionShader&#34; { Properties { [Toggle(REQUIRE_POSITION_VS)] _Require_Position_VS(&#34;Require Position VS&#34;, float) = 0 } HLSLINCLUDE #include &#34;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&#34; #include &#34;Packages/com.unity.render-pipelines.universal/ShaderLibrary/core.hlsl&#34; #pragma multi_compile _ REQUIRE_POSITION_VS sampler2D _CameraDepthTexture; struct Attributes { float4 positionOS : POSITION; float2 texcoord : TEXCOORD0; }; struct Varyings { float4 positionCS : SV_POSITION; float2 texcoord : TEXCOORD0; }; Varyings Vert(Attributes input) { Varyings output = (Varyings)0; // 根据顶点在其模型坐标系下的值，计算得到在裁剪空间中的齐次坐标 VertexPositionInputs vertexPositionInputs = GetVertexPositionInputs(input.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-07-11T20:20:49&#43;08:00">July 11, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/rendering_meshes_in_unity_without_meshrenderers/">不使用MeshRenderer去绘制Mesh【翻译】</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-在 Unity 中不使用 MeshRenderer 渲染网格 1. 概述 目的：使用 DrawMesh 系列方法在 Unity 中渲染大量网格，而无需创建和管理 GameObject。 特点： 网格会受到光照影响，可以投射和接收阴影。 可以针对所有相机或特定相机渲染。 支持 GPU 实例化和 Compute Shader。 2. 常用方法 DrawMesh：最简单的渲染方法，使用指定材质渲染网格。 DrawMeshInstanced：通过 GPU 实例化渲染大量相同网格，支持小规模变化（如颜色）。 DrawMeshInstancedIndirect：通过 ComputeBuffer 传递实例数量和位置等数据，适用于大规模实例化。 DrawMeshInstancedProcedural：与 DrawMeshInstancedIndirect 类似，但实例数量可以直接从 C# 传递。 DrawProcedural：在 GPU 上执行绘制调用，无需顶点或索引缓冲区，适用于 Compute Shader。 DrawProceduralIndirect：与 DrawProcedural 类似，但实例数量等数据从 ComputeBuffer 传递。 3. 代码示例 DrawMesh： public class ExampleDrawMesh : MonoBehaviour { public Mesh mesh; public Material material; void Update() { Graphics.DrawMesh(mesh, Vector3.zero, Quaternion.identity, material, 0); } } DrawMeshNow： public class ExampleDrawMeshNow : MonoBehaviour { public Mesh mesh; public Material material; public void OnPostRender() { material.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-02-17T19:08:53&#43;08:00">February 17, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_unity_engine_graphics_format_detail/">Unity3D中枚举类型UnityEngine.Experimental.Rendering.GraphicsFormat详解</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com 在Unity中，UnityEngine.Experimental.Rendering.GraphicsFormat 枚举类型定义了多种图形格式，用于描述纹理、渲染目标等的像素格式。每种格式都有不同的通道数、每个像素的字节数以及适用场景。以下是 GraphicsFormat 中每个值的具体含义、通道数、每个像素的字节数等详细信息：
-1. 常用图形格式 枚举值 含义 通道数 每个像素字节数 描述 None 无格式 - - 未定义格式。 R8_UNorm 单通道 8 位无符号归一化 1 1 适用于单通道数据，如灰度图。 R8_SNorm 单通道 8 位有符号归一化 1 1 适用于单通道有符号数据。 R8_UInt 单通道 8 位无符号整数 1 1 适用于单通道无符号整数数据。 R8_SInt 单通道 8 位有符号整数 1 1 适用于单通道有符号整数数据。 R16_UNorm 单通道 16 位无符号归一化 1 2 适用于单通道高精度数据。 R16_SNorm 单通道 16 位有符号归一化 1 2 适用于单通道高精度有符号数据。 R16_UInt 单通道 16 位无符号整数 1 2 适用于单通道高精度无符号整数数据。 R16_SInt 单通道 16 位有符号整数 1 2 适用于单通道高精度有符号整数数据。 R16_SFloat 单通道 16 位有符号浮点数 1 2 适用于单通道高精度浮点数数据。 R32_UInt 单通道 32 位无符号整数 1 4 适用于单通道超高精度无符号整数数据。 R32_SInt 单通道 32 位有符号整数 1 4 适用于单通道超高精度有符号整数数据。 R32_SFloat 单通道 32 位有符号浮点数 1 4 适用于单通道超高精度浮点数数据。 R8G8_UNorm 双通道 8 位无符号归一化 2 2 适用于双通道数据，如法线贴图的 XY 通道。 R8G8_SNorm 双通道 8 位有符号归一化 2 2 适用于双通道有符号数据。 R8G8_UInt 双通道 8 位无符号整数 2 2 适用于双通道无符号整数数据。 R8G8_SInt 双通道 8 位有符号整数 2 2 适用于双通道有符号整数数据。 R16G16_UNorm 双通道 16 位无符号归一化 2 4 适用于双通道高精度数据。 R16G16_SNorm 双通道 16 位有符号归一化 2 4 适用于双通道高精度有符号数据。 R16G16_UInt 双通道 16 位无符号整数 2 4 适用于双通道高精度无符号整数数据。 R16G16_SInt 双通道 16 位有符号整数 2 4 适用于双通道高精度有符号整数数据。 R16G16_SFloat 双通道 16 位有符号浮点数 2 4 适用于双通道高精度浮点数数据。 R32G32_UInt 双通道 32 位无符号整数 2 8 适用于双通道超高精度无符号整数数据。 R32G32_SInt 双通道 32 位有符号整数 2 8 适用于双通道超高精度有符号整数数据。 R32G32_SFloat 双通道 32 位有符号浮点数 2 8 适用于双通道超高精度浮点数数据。 R8G8B8A8_UNorm 四通道 8 位无符号归一化 4 4 适用于 RGBA 颜色数据。 R8G8B8A8_SNorm 四通道 8 位有符号归一化 4 4 适用于 RGBA 有符号数据。 R8G8B8A8_UInt 四通道 8 位无符号整数 4 4 适用于 RGBA 无符号整数数据。 R8G8B8A8_SInt 四通道 8 位有符号整数 4 4 适用于 RGBA 有符号整数数据。 R16G16B16A16_UNorm 四通道 16 位无符号归一化 4 8 适用于 RGBA 高精度数据。 R16G16B16A16_SNorm 四通道 16 位有符号归一化 4 8 适用于 RGBA 高精度有符号数据。 R16G16B16A16_UInt 四通道 16 位无符号整数 4 8 适用于 RGBA 高精度无符号整数数据。 R16G16B16A16_SInt 四通道 16 位有符号整数 4 8 适用于 RGBA 高精度有符号整数数据。 R16G16B16A16_SFloat 四通道 16 位有符号浮点数 4 8 适用于 RGBA 高精度浮点数数据。 R32G32B32A32_UInt 四通道 32 位无符号整数 4 16 适用于 RGBA 超高精度无符号整数数据。 R32G32B32A32_SInt 四通道 32 位有符号整数 4 16 适用于 RGBA 超高精度有符号整数数据。 R32G32B32A32_SFloat 四通道 32 位有符号浮点数 4 16 适用于 RGBA 超高精度浮点数数据。 B8G8R8A8_UNorm 四通道 BGRA 8 位无符号归一化 4 4 适用于 BGRA 颜色数据。 B8G8R8A8_SNorm 四通道 BGRA 8 位有符号归一化 4 4 适用于 BGRA 有符号数据。 B8G8R8A8_UInt 四通道 BGRA 8 位无符号整数 4 4 适用于 BGRA 无符号整数数据。 B8G8R8A8_SInt 四通道 BGRA 8 位有符号整数 4 4 适用于 BGRA 有符号整数数据。 B8G8R8X8_UNorm 四通道 BGRA 8 位无符号归一化（无 Alpha） 4 4 适用于 BGRA 颜色数据（无 Alpha 通道）。 B8G8R8X8_SNorm 四通道 BGRA 8 位有符号归一化（无 Alpha） 4 4 适用于 BGRA 有符号数据（无 Alpha 通道）。 B8G8R8X8_UInt 四通道 BGRA 8 位无符号整数（无 Alpha） 4 4 适用于 BGRA 无符号整数数据（无 Alpha 通道）。 B8G8R8X8_SInt 四通道 BGRA 8 位有符号整数（无 Alpha） 4 4 适用于 BGRA 有符号整数数据（无 Alpha 通道）。 R10G10B10A2_UNorm 四通道 RGBA，RGB 各 10 位，A 2 位 4 4 适用于高精度 RGB 和低精度 Alpha 数据。 R10G10B10A2_UInt 四通道 RGBA，RGB 各 10 位，A 2 位 4 4 适用于高精度 RGB 和低精度 Alpha 无符号整数数据。 R11G11B10_UFloat 三通道 RGB，R 和 G 各 11 位，B 10 位 3 4 适用于 HDR 数据，节省内存。 D16_UNorm 16 位深度 1 2 适用于深度缓冲区。 D24_UNorm_S8_UInt 24 位深度 + 8 位模板 2 4 适用于深度和模板缓冲区。 D32_SFloat 32 位深度 1 4 适用于高精度深度缓冲区。 D32_SFloat_S8_UInt 32 位深度 + 8 位模板 2 5 适用于高精度深度和模板缓冲区。 2.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2023-12-09T18:38:27&#43;08:00">December 09, 2023</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_unity_engine_texture_format_detail/">Unity3D中枚举类型UnityEngine.TextureFormat详解</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-在Unity中，UnityEngine.TextureFormat 枚举类型定义了多种纹理格式，每种格式都有不同的通道数、每个像素的字节数以及适用场景。以下是 UnityEngine.TextureFormat 中每个值的具体含义、通道数、每个像素的字节数等详细信息：
-1. 常用纹理格式 枚举值 含义 通道数 每个像素字节数 描述 Alpha8 单通道 Alpha 1 1 仅存储 Alpha 通道，适用于遮罩或透明度贴图。 ARGB4444 4 通道 ARGB，每通道 4 位 4 2 每个通道 4 位，适用于低精度颜色贴图。 RGB24 3 通道 RGB，每通道 8 位 3 3 存储 RGB 颜色，无 Alpha 通道，适用于普通颜色贴图。 RGBA32 4 通道 RGBA，每通道 8 位 4 4 存储 RGBA 颜色，适用于带透明度的颜色贴图。 RGB565 3 通道 RGB，R 和 B 各 5 位，G 6 位 3 2 压缩格式，适用于低精度颜色贴图。 R16 单通道 16 位 1 2 存储单通道 16 位数据，适用于高度图或深度图。 DXT1 DXT1 压缩格式 3 0.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2023-12-08T18:38:27&#43;08:00">December 08, 2023</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/accessing_texture_data_efficiently/">高效地访问纹理数据</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-Working with pixel data in Unity Pixel data describes the color of individual pixels in a texture. Unity provides methods that enable you to read from or write to pixel data with C# scripts.
-像素数据描述纹理中各个像素的颜色。Unity 提供了使用 C# 脚本读取或写入像素数据的方法。
-You might use these methods to duplicate or update a texture (for example, adding a detail to a player’s profile picture), or use the texture’s data in a particular way, like reading a texture that represents a world map to determine where to place an object.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2023-11-22T20:20:49&#43;08:00">November 22, 2023</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
-<div class="pagination block">
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/">1</a>
-				<span class="pagination__item pagination__item--active" data-total="7">2</span>
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/3/">3</a>
-			<span class="pagination__item pagination__item--gap">&hellip;</span>
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/7/">7</a>
-</div>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Unity3D | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/tags/unity3d/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Unity3D"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="Unity3D"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2026-03-28T21:21:49+08:00"><meta itemprop=dateModified content="2026-03-28T21:21:49+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/tags/unity3d/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-term"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/tags/>Tags</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Unity3D</li></ol></nav><div class="page block"><h1 class=page__title>Unity3D</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/reconstruct_world_position/>一段根据片元深度值重建对应的深度坐标值的代码及其解释</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>// 从深度信息重建世界空间坐标</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 参数：</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//   screenPos - 屏幕空间坐标（通常来自顶点着色器的SV_Position）</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//   viewDir - 视图空间方向向量</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//   sceneDepth - 包含原始深度和线性深度值的结构体</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float3</span> ReconstructWorldPosition<span style=color:#1f2328>(</span><span style=color:#cf222e>float4</span> screenPos<span style=color:#1f2328>,</span> <span style=color:#cf222e>float3</span> viewDir<span style=color:#1f2328>,</span> SceneDepth sceneDepth<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 平台深度缓冲处理 ----------------------------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> UNITY_REVERSED_Z <span style=color:#57606a>// 处理Reversed-Z平台（如DirectX）</span>
+</span></span><span style=display:flex><span>        real rawDepth <span style=color:#0550ae>=</span> sceneDepth<span style=color:#1f2328>.</span>raw<span style=color:#1f2328>;</span> <span style=color:#57606a>// 直接使用原始深度值</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>else</span> <span style=color:#57606a>// OpenGL等常规深度缓冲平台</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 将深度值从[0,1]映射到[Near,1]，适配OpenGL的NDC范围</span>
+</span></span><span style=display:flex><span>        real rawDepth <span style=color:#0550ae>=</span> <span style=color:#6639ba>lerp</span><span style=color:#1f2328>(</span>UNITY_NEAR_CLIP_VALUE<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> sceneDepth<span style=color:#1f2328>.</span>raw<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 正交投影处理 --------------------------------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> <span style=color:#0550ae>defined</span><span style=color:#1f2328>(</span>ORTHOGRAPHIC_SUPPORT<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 将屏幕坐标转换为NDC空间（-1到1范围）</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float4</span> viewPos <span style=color:#0550ae>=</span> <span style=color:#cf222e>float4</span><span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>(</span>screenPos<span style=color:#1f2328>.</span>xy <span style=color:#0550ae>/</span> screenPos<span style=color:#1f2328>.</span>w<span style=color:#1f2328>)</span> <span style=color:#0550ae>*</span> <span style=color:#0550ae>2.0</span> <span style=color:#0550ae>-</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>,</span> <span style=color:#57606a>// 透视除法后映射到NDC</span>
+</span></span><span style=display:flex><span>            rawDepth<span style=color:#1f2328>,</span> <span style=color:#57606a>// 深度值</span>
+</span></span><span style=display:flex><span>            <span style=color:#0550ae>1.0</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 获取视图-世界变换矩阵</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float4x4</span> viewToWorld <span style=color:#0550ae>=</span> UNITY_MATRIX_I_VP<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Unity版本兼容性修复（7.3.1后需要反转矩阵第二行）</span>
+</span></span><span style=display:flex><span>        <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> UNITY_REVERSED_Z
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 修正矩阵：_12, _22, _32, _42分量取反</span>
+</span></span><span style=display:flex><span>            viewToWorld<span style=color:#1f2328>.</span>_12_22_32_42 <span style=color:#0550ae>=</span> <span style=color:#0550ae>-</span>viewToWorld<span style=color:#1f2328>.</span>_12_22_32_42<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 矩阵变换得到世界坐标</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float4</span> viewWorld <span style=color:#0550ae>=</span> <span style=color:#6639ba>mul</span><span style=color:#1f2328>(</span>viewToWorld<span style=color:#1f2328>,</span> viewPos<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float3</span> viewWorldPos <span style=color:#0550ae>=</span> viewWorld<span style=color:#1f2328>.</span>xyz <span style=color:#0550ae>/</span> viewWorld<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span> <span style=color:#57606a>// 透视除法</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 透视投影处理 --------------------------------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 获取当前相机世界坐标</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float3</span> camPos <span style=color:#0550ae>=</span> GetCurrentViewPosition<span style=color:#1f2328>().</span>xyz<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 计算透视投影的世界坐标：</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// sceneDepth.eye - 线性深度值（相机到表面的距离）</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// viewDir/screenPos.w - 视图方向归一化（screenPos.w存储投影前的z分量）</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float3</span> worldPos <span style=color:#0550ae>=</span> sceneDepth<span style=color:#1f2328>.</span>eye <span style=color:#0550ae>*</span> <span style=color:#1f2328>(</span>viewDir <span style=color:#0550ae>/</span> screenPos<span style=color:#1f2328>.</span>w<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> camPos<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float3</span> perspWorldPos <span style=color:#0550ae>=</span> <span style=color:#0550ae>-</span>worldPos<span style=color:#1f2328>;</span> <span style=color:#57606a>// 方向修正（视图空间到世界空间转换）</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 结果混合 -----------------------------------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> <span style=color:#0550ae>defined</span><span style=color:#1f2328>(</span>ORTHOGRAPHIC_SUPPORT<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 使用unity_OrthoParams.w（0=透视，1=正交）混合两种投影结果</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#6639ba>lerp</span><span style=color:#1f2328>(</span>perspWorldPos<span style=color:#1f2328>,</span> viewWorldPos<span style=color:#1f2328>,</span> unity_OrthoParams<span style=color:#1f2328>.</span>w<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> perspWorldPos<span style=color:#1f2328>;</span> <span style=color:#57606a>// 仅返回透视投影结果</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>第一部分是关于处理深度值，这里有一个条件编译<code>UNITY_REVERSED_Z</code>。Unity中不同的平台可能使用不同的深度缓冲范围，比如DirectX通常使用Reversed-Z，即近平面为1，远平面为0，而OpenGL则是0到1。所以这里如果是Reversed-Z，直接使用sceneDepth.raw；否则，用<code>lerp</code>将原始深度值调整到<code>UNITY_NEAR_CLIP_VALUE</code>到1之间，可能是为了适配OpenGL的NDC空间。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-11-29T23:21:49+08:00>November 29, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/surface_depth/>一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>// 计算场景深度与当前透明几何像素的线性深度差</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 参数：</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//   depth - 包含场景深度信息的结构体（包含原始深度和线性眼空间深度）</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//   positionCS - 当前像素在裁剪空间中的位置坐标（SV_Position）</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> SurfaceDepth<span style=color:#1f2328>(</span>SceneDepth depth<span style=color:#1f2328>,</span> <span style=color:#cf222e>float4</span> positionCS<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ===================== 场景深度计算 =====================</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 根据投影模式选择计算方式：</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// unity_OrthoParams.w: 0=透视投影 | 1=正交投影</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>const</span> <span style=color:#cf222e>float</span> sceneDepth <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>unity_OrthoParams<span style=color:#1f2328>.</span>w <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>        <span style=color:#0550ae>?</span> depth<span style=color:#1f2328>.</span>eye  <span style=color:#57606a>// 透视模式：直接使用预计算的线性眼空间深度</span>
+</span></span><span style=display:flex><span>        <span style=color:#0550ae>:</span> LinearDepthToEyeDepth<span style=color:#1f2328>(</span>depth<span style=color:#1f2328>.</span>raw<span style=color:#1f2328>);</span> <span style=color:#57606a>// 正交模式：将原始深度转换到眼空间</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ================= 当前像素深度计算 ====================</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>const</span> <span style=color:#cf222e>float</span> clipSpaceDepth <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>unity_OrthoParams<span style=color:#1f2328>.</span>w <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#0550ae>?</span> LinearEyeDepth<span style=color:#1f2328>(</span>positionCS<span style=color:#1f2328>.</span>z<span style=color:#1f2328>,</span> _ZBufferParams<span style=color:#1f2328>)</span> <span style=color:#57606a>// 透视模式：裁剪空间z转线性眼深度</span>
+</span></span><span style=display:flex><span>        <span style=color:#0550ae>:</span> LinearDepthToEyeDepth<span style=color:#1f2328>(</span>positionCS<span style=color:#1f2328>.</span>z <span style=color:#0550ae>/</span> positionCS<span style=color:#1f2328>.</span>w<span style=color:#1f2328>);</span> <span style=color:#57606a>// 正交模式：NDC z转眼空间深度</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ================ 深度差异计算结果 =====================</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> sceneDepth <span style=color:#0550ae>-</span> clipSpaceDepth<span style=color:#1f2328>;</span> <span style=color:#57606a>// 返回场景深度与当前像素深度的差值</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>首先，函数内部有两个const float变量，<code>sceneDepth</code>和<code>clipSpaceDepth</code>，然后返回它们的差值。我需要理解这两个变量是如何计算的，特别是条件判断部分<code>unity_OrthoParams.w</code>是否等于0，这可能涉及到正交投影和透视投影的不同处理。</p><p>先看<code>sceneDepth</code>的计算：如果<code>unity_OrthoParams.w</code>为0，就使用<code>depth.eye</code>，否则调用<code>LinearDepthToEyeDepth</code>函数处理<code>depth.raw</code>。这可能意味着在透视投影下使用线性眼空间深度，而在正交投影下需要转换原始深度值到眼空间深度。</p><p>接下来是<code>clipSpaceDepth</code>的计算：同样判断<code>unity_OrthoParams.w</code>是否为0，如果是的话，调用LinearEyeDepth函数处理positionCS.z，否则还是用<code>LinearDepthToEyeDepth</code>处理<code>positionCS.z</code>除以<code>positionCS.w</code>的结果。这里可能涉及到将裁剪空间深度转换为眼空间深度，但正交和透视的情况处理不同。</p><p>我需要回忆一下Unity中的深度处理。在Unity中，深度缓冲的存储方式可能因平台而异，比如<code>Reversed-Z</code>在DirectX等平台使用，而OpenGL则不同。另外，眼空间深度（eye depth）通常指的是从相机到某点的距离，而裁剪空间的位置z分量可能需要转换才能得到正确的深度值。</p><p><code>unity_OrthoParams</code>是一个Unity内置变量，其中w分量用来判断当前是否是正交投影，当w为1时表示正交投影，0则是透视投影。所以这里的条件判断是根据投影模式来选择不同的深度处理方式。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-11-28T23:21:49+08:00>November 28, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/dynamiclightmap_on/>Unity3D的内置宏 DYNAMICLIGHTMAP_ON</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>在Unity中，<strong><code>DYNAMICLIGHTMAP_ON</code></strong> 是一个与 <strong>动态光照贴图（Dynamic Lightmaps）</strong> 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 <strong>控制着色器是否处理动态光照贴图数据</strong>，主要用于实现动态物体的间接光照混合效果。</p><hr><h2 id=核心含义><strong>核心含义</strong></h2><ol><li><p><strong>动态光照贴图标识</strong></p><ul><li>当该宏被激活时（<code>#if defined(DYNAMICLIGHTMAP_ON)</code>），表示当前渲染的物体 <strong>启用了动态光照贴图</strong>，需要在着色器中采样动态光照贴图数据。</li><li>若未激活，则物体仅使用静态光照贴图或实时光照。</li></ul></li><li><p><strong>技术目的</strong></p><ul><li>允许动态物体（如可移动的物件）与烘焙的静态场景光照进行间接光交互。</li><li>结合 <strong>Enlighten</strong> 或 <strong>Progressive Lightmapper</strong> 系统，实现动态物体的间接光实时更新。</li></ul></li></ol><hr><h2 id=触发条件><strong>触发条件</strong></h2><p>该宏在以下情况下自动激活：</p><ol><li><p><strong>物体设置</strong></p><ul><li>物体的 <strong>Mesh Renderer</strong> 组件中勾选 <strong>Lightmap Static</strong> 为 <strong>Contribute GI</strong>，同时设置 <strong>Lightmap Parameters</strong> 为支持动态更新。</li></ul></li><li><p><strong>光照系统配置</strong></p><ul><li>项目中启用了 <strong>Realtime Global Illumination</strong>（实时全局光照）。</li><li>使用 <strong>Baked Indirect</strong> 或 <strong>Shadowmask</strong> 混合光照模式。</li></ul></li><li><p><strong>Shader编译指令</strong></p><ul><li>在Shader中通过 <code>#pragma multi_compile</code> 或 <code>#pragma shader_feature</code> 声明动态光照贴图支持：<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>#pragma multi_compile __ DYNAMICLIGHTMAP_ON</span>
+</span></span></code></pre></div></li></ul></li></ol><hr><h2 id=技术实现机制><strong>技术实现机制</strong></h2><h3 id=1-数据传递>1. 数据传递</h3><p>动态光照贴图信息通过以下方式传递到着色器：</p><ul><li><strong>顶点数据</strong>：动态光照贴图坐标通过 <code>TEXCOORD2</code> 传递。</li><li><strong>Uniform变量</strong>：动态光照贴图纹理（<code>unity_DynamicLightmap</code>）和采样器（<code>samplerunity_DynamicLightmap</code>）。</li></ul><h3 id=2-着色器代码示例>2. 着色器代码示例</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>struct</span> v2f <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float2</span> uv <span style=color:#0550ae>:</span> TEXCOORD0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> <span style=color:#0550ae>defined</span><span style=color:#1f2328>(</span>LIGHTMAP_ON<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float2</span> lightmapUV <span style=color:#0550ae>:</span> TEXCOORD1<span style=color:#1f2328>;</span> <span style=color:#57606a>// 静态光照贴图UV</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> <span style=color:#0550ae>defined</span><span style=color:#1f2328>(</span>DYNAMICLIGHTMAP_ON<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float2</span> dynamicLightmapUV <span style=color:#0550ae>:</span> TEXCOORD2<span style=color:#1f2328>;</span> <span style=color:#57606a>// 动态光照贴图UV</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>half3</span> GetLightmapColor<span style=color:#1f2328>(</span>v2f i<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>half3</span> staticGI <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>half3</span> dynamicGI <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> <span style=color:#0550ae>defined</span><span style=color:#1f2328>(</span>LIGHTMAP_ON<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        staticGI <span style=color:#0550ae>=</span> SampleLightmap<span style=color:#1f2328>(</span>unity_Lightmap<span style=color:#1f2328>,</span> samplerunity_Lightmap<span style=color:#1f2328>,</span> i<span style=color:#1f2328>.</span>lightmapUV<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> <span style=color:#0550ae>defined</span><span style=color:#1f2328>(</span>DYNAMICLIGHTMAP_ON<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        dynamicGI <span style=color:#0550ae>=</span> SampleLightmap<span style=color:#1f2328>(</span>unity_DynamicLightmap<span style=color:#1f2328>,</span> samplerunity_DynamicLightmap<span style=color:#1f2328>,</span> i<span style=color:#1f2328>.</span>dynamicLightmapUV<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> staticGI <span style=color:#0550ae>+</span> dynamicGI<span style=color:#1f2328>;</span> <span style=color:#57606a>// 混合静态和动态间接光</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><hr><h2 id=应用场景><strong>应用场景</strong></h2><h3 id=1-动态物体间接光更新>1. 动态物体间接光更新</h3><ul><li><strong>示例</strong>：场景中的可移动箱子在移动后，其表面的间接光照（如环境反射光）能根据新位置的光照环境实时更新。</li><li><strong>实现</strong>：通过动态光照贴图重新烘焙该区域的间接光，着色器通过 <code>DYNAMICLIGHTMAP_ON</code> 采样更新后的数据。</li></ul><h3 id=2-混合光照模式>2. 混合光照模式</h3><ul><li><strong>Shadowmask / Distance Shadowmask</strong> 模式中，动态物体的间接光依赖动态光照贴图。</li><li><strong>Baked Indirect</strong> 模式下，直接光实时计算，间接光通过动态贴图更新。</li></ul><hr><h2 id=性能影响与优化><strong>性能影响与优化</strong></h2><table><thead><tr><th>模式</th><th>内存占用</th><th>GPU计算开销</th><th>适用场景</th></tr></thead><tbody><tr><td><code>DYNAMICLIGHTMAP_ON</code></td><td>较高</td><td>中等</td><td>需要动态间接光的移动物体</td></tr><tr><td>纯静态光照贴图</td><td>低</td><td>低</td><td>完全静态的场景物件</td></tr><tr><td>纯实时光照</td><td>最低</td><td>高</td><td>全动态场景或低端设备</td></tr></tbody></table><p><strong>优化建议</strong>：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-11-19T23:21:49+08:00>November 19, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/requires_vertex_shadow_coord_interpolator/>Unity3D的内置宏 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>在Unity URP中，<strong><code>REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</code></strong> 是一个与阴影计算相关的内置宏（Shader Variant Keyword），它的作用是：</p><hr><h2 id=核心含义><strong>核心含义</strong></h2><p><strong>控制顶点着色器是否需要生成并传递阴影坐标插值器</strong><br>当该宏被激活时，Unity会在顶点着色器阶段计算主光源的阴影坐标，并通过顶点着色器输出结构体（<code>Varyings</code>）传递到片元着色器。这使得片元着色器可以直接使用插值后的阴影坐标进行阴影采样，避免在片元阶段重复计算。</p><hr><h2 id=触发条件><strong>触发条件</strong></h2><p>该宏会自动激活，当以下条件满足时：</p><ol><li>项目中启用了 <strong>主光源阴影</strong>（Main Light Shadows）</li><li>使用了 <strong>逐顶点阴影坐标插值</strong> 的优化模式（而非逐片元计算）</li><li>在Shader中通过 <code>#pragma multi_compile</code> 启用了阴影相关功能（例如 <code>_MAIN_LIGHT_SHADOWS</code>）</li></ol><hr><h2 id=典型应用场景><strong>典型应用场景</strong></h2><p>在URP的Shader中，你会在顶点着色器输出结构体 <code>Varyings</code> 中看到类似代码：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>struct</span> Varyings <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float4</span> positionCS <span style=color:#0550ae>:</span> SV_POSITION<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float3</span> positionWS <span style=color:#0550ae>:</span> TEXCOORD0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 当 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR 激活时，自动添加阴影坐标字段</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> <span style=color:#0550ae>defined</span><span style=color:#1f2328>(</span>REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float4</span> shadowCoord <span style=color:#0550ae>:</span> TEXCOORD1<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><hr><h2 id=技术原理><strong>技术原理</strong></h2><ol><li><p><strong>阴影坐标生成</strong><br>顶点着色器通过 <code>GetShadowCoord(vertexInput)</code> 计算阴影坐标，并存储在 <code>shadowCoord</code> 中。</p></li><li><p><strong>插值优化</strong><br>阴影坐标在顶点阶段计算后，通过插值器传递到片元着色器，减少片元阶段的计算量。</p></li><li><p><strong>自动编译控制</strong><br>Unity会根据项目设置和Shader特性，在编译时自动决定是否启用该宏，生成不同的Shader变体。</p></li></ol><hr><h2 id=对比其他阴影模式><strong>对比其他阴影模式</strong></h2><table><thead><tr><th>宏名称</th><th>计算阶段</th><th>性能消耗</th><th>精度</th></tr></thead><tbody><tr><td><code>REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</code></td><td>顶点着色器</td><td>较低</td><td>中等</td></tr><tr><td><code>REQUIRES_FRAGMENT_SHADOW_COORD_INTERPOLATOR</code></td><td>片元着色器</td><td>较高</td><td>较高</td></tr></tbody></table><hr><h2 id=调试与手动控制><strong>调试与手动控制</strong></h2><ol><li><p><strong>强制启用/禁用</strong>（不推荐）<br>在Shader顶部添加以下代码，手动控制宏的状态：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-11-19T23:21:49+08:00>November 19, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/_light_layers/>Unity3D的内置宏 _LIGHT_LAYERS</a></h1><div class=entry__content><p>Unity3D的内置宏 ADDITIONAL_LIGHTS_VERTEX</p><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>在Unity URP/HDRP中，<strong><code>_LIGHT_LAYERS</code></strong> 是一个与 <strong>光源层级过滤（Light Layer Masking）</strong> 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 <strong>实现基于层级的光源与物体交互控制</strong>，允许开发者通过层掩码（Layer Masks）精确控制哪些光源可以影响特定物体。</p><hr><h2 id=核心含义><strong>核心含义</strong></h2><h3 id=1-功能定位>1. 功能定位</h3><ul><li><strong>光源筛选机制</strong>：激活该宏后，物体会根据自身的 <strong>Light Layer Mask</strong> 和光源的 <strong>Light Layer Mask</strong> 进行匹配，只有匹配层的光源才会对该物体产生光照影响。</li><li><strong>渲染优化</strong>：通过层级过滤减少无效光源计算，提升复杂场景性能。</li></ul><h3 id=2-技术目标>2. 技术目标</h3><ul><li><strong>精细化光源控制</strong>：例如让装饰性灯光只影响场景道具，不影响角色</li><li><strong>多世界渲染支持</strong>：用于分屏游戏或VR中不同视角的独立光照逻辑</li></ul><hr><h2 id=触发条件><strong>触发条件</strong></h2><p>该宏的激活需要同时满足以下条件：</p><ol><li><p><strong>项目设置启用</strong></p><ul><li><strong>URP/HDRP Asset</strong> 中开启光源层支持：<ul><li>URP: Lighting > Light Layers > Enable Light Layers</li><li>HDRP: Lighting > Light Layers</li></ul></li></ul></li><li><p><strong>Shader声明</strong><br>在着色器中通过<code>#pragma</code>指令声明支持：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>#pragma multi_compile _ _LIGHT_LAYERS</span>
+</span></span></code></pre></div></li><li><p><strong>光源与物体配置</strong></p><ul><li>光源的 <strong>Light Layer Mask</strong> 设置为非"Everything"值</li><li>物体的 <strong>Renderer组件 > Rendering Layer Mask</strong> 设置为与光源匹配的层级</li></ul></li></ol><hr><h2 id=技术实现机制><strong>技术实现机制</strong></h2><h3 id=1-数据传递流程>1. 数据传递流程</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>// 在片元着色器中筛选有效光源</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#if defined(_LIGHT_LAYERS)</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 获取物体的渲染层掩码（8位/32位，取决于设置）</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>uint</span> renderingLayers <span style=color:#0550ae>=</span> GetMeshRenderingLayer<span style=color:#1f2328>();</span> <span style=color:#57606a>// 例如0b00000101</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 光源层掩码与物体层掩码进行按位与操作</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>((</span>light<span style=color:#1f2328>.</span>layerMask <span style=color:#0550ae>&amp;</span> renderingLayers<span style=color:#1f2328>)</span> <span style=color:#0550ae>!=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 该光源影响当前物体</span>
+</span></span><span style=display:flex><span>        ApplyLighting<span style=color:#1f2328>(</span>light<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif</span>
+</span></span></code></pre></div><h3 id=2-核心函数>2. 核心函数</h3><ul><li><code>GetMeshRenderingLayer()</code>：获取当前片元所属物体的层掩码</li><li><code>GetLightLayerMask(lightIndex)</code>：获取指定光源的层掩码</li></ul><hr><h2 id=应用场景><strong>应用场景</strong></h2><h3 id=1-选择性光照影响>1. 选择性光照影响</h3><table><thead><tr><th>物体类型</th><th>层掩码</th><th>光源类型</th><th>层掩码</th><th>交互结果</th></tr></thead><tbody><tr><td>角色模型</td><td>0b00000001</td><td>角色聚光灯</td><td>0b00000001</td><td>影响</td></tr><tr><td>环境装饰物</td><td>0b00000010</td><td>角色聚光灯</td><td>0b00000001</td><td>不影响</td></tr><tr><td>全场景物体</td><td>0b11111111</td><td>全局方向光</td><td>0b00000100</td><td>不影响（掩码不匹配）</td></tr></tbody></table><h3 id=2-多玩家分屏>2. 多玩家分屏</h3><ul><li><strong>玩家1视角</strong>：光源层=0b0001，角色层=0b0001</li><li><strong>玩家2视角</strong>：光源层=0b0010，角色层=0b0010</li><li>实现各玩家只能看到自己角色的光照效果</li></ul><h3 id=3-特效隔离>3. 特效隔离</h3><ul><li>爆炸特效光源层=0b0100</li><li>重要NPC渲染层=0b0100</li><li>确保爆炸光效仅影响特定NPC</li></ul><hr><h2 id=配置步骤><strong>配置步骤</strong></h2><ol><li><p><strong>启用光源层系统</strong></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-11-19T22:21:49+08:00>November 19, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/_additional_lights_vertex/>Unity3D的内置宏 _ADDITIONAL_LIGHTS_VERTEX</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>在Unity URP中，<strong><code>_ADDITIONAL_LIGHTS_VERTEX</code></strong> 是一个与 <strong>附加光源处理方式</strong> 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 <strong>控制附加光源的光照计算阶段</strong>，决定是在 <strong>顶点着色器</strong> 还是 <strong>片元着色器</strong> 中处理附加光源的贡献。</p><hr><h2 id=核心含义><strong>核心含义</strong></h2><h3 id=1-光源计算阶段选择>1. 光源计算阶段选择</h3><ul><li><strong>启用时</strong>（<code>_ADDITIONAL_LIGHTS_VERTEX</code> 被定义）：<br>附加光源的光照计算在 <strong>顶点着色器</strong> 阶段完成，计算结果通过顶点插值传递到片元着色器。</li><li><strong>未启用时</strong>（默认或使用 <code>_ADDITIONAL_LIGHTS</code>）：<br>附加光源的光照计算在 <strong>片元着色器</strong> 阶段逐像素完成。</li></ul><h3 id=2-性能与质量的权衡>2. 性能与质量的权衡</h3><table><thead><tr><th>模式</th><th>性能消耗</th><th>光照精度</th><th>适用场景</th></tr></thead><tbody><tr><td><code>_ADDITIONAL_LIGHTS_VERTEX</code></td><td>较低</td><td>中等（顶点插值）</td><td>移动端、低性能设备</td></tr><tr><td><code>_ADDITIONAL_LIGHTS</code></td><td>较高</td><td>高（逐像素）</td><td>PC/主机、高质量渲染需求</td></tr></tbody></table><hr><h2 id=触发条件><strong>触发条件</strong></h2><p>该宏的激活由以下因素决定：</p><ol><li><p><strong>URP Asset设置</strong></p><ul><li>在URP资源中启用 <strong>Additional Lights</strong>（附加光源）</li><li>设置 <strong>Per Object Light</strong> 类型为 <strong>Vertex</strong> 或 <strong>Fragment</strong>（对应不同模式）</li></ul></li><li><p><strong>Shader编译指令</strong><br>在Shader中使用以下指令声明变体：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS</span>
+</span></span></code></pre></div></li><li><p><strong>实际光源数量</strong><br>当场景中存在 <strong>附加光源（点光源、聚光灯等）</strong> 且影响当前渲染对象时，Unity自动选择对应变体。</p></li></ol><hr><h3 id=技术实现原理><strong>技术实现原理</strong></h3><h4 id=顶点着色器阶段处理_additional_lights_vertex>顶点着色器阶段处理（<code>_ADDITIONAL_LIGHTS_VERTEX</code>）</h4><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>// 顶点着色器中计算附加光源</span>
+</span></span><span style=display:flex><span>Varyings vert<span style=color:#1f2328>(</span>Attributes input<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Varyings output<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ...</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>ifdef _ADDITIONAL_LIGHTS_VERTEX
+</span></span><span style=display:flex><span>        output<span style=color:#1f2328>.</span>vertexLighting <span style=color:#0550ae>=</span> CalculateVertexLights<span style=color:#1f2328>(</span>input<span style=color:#1f2328>.</span>positionWS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> output<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=片元着色器阶段处理_additional_lights>片元着色器阶段处理（<code>_ADDITIONAL_LIGHTS</code>）</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>// 片元着色器中计算附加光源</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>half4</span> frag<span style=color:#1f2328>(</span>Varyings input<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> <span style=color:#0550ae>SV_Target</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ...</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>ifdef _ADDITIONAL_LIGHTS
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>half3</span> additionalLights <span style=color:#0550ae>=</span> CalculateFragmentLights<span style=color:#1f2328>(</span>input<span style=color:#1f2328>.</span>positionWS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> color<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><hr><h2 id=典型应用场景><strong>典型应用场景</strong></h2><h3 id=1-顶点着色器模式优化性能>1. 顶点着色器模式（优化性能）</h3><ul><li><strong>代码特征</strong>：<br>在顶点输出结构体（<code>Varyings</code>）中存储预计算的光照值：<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>struct</span> Varyings <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float4</span> positionCS <span style=color:#0550ae>:</span> SV_POSITION<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> <span style=color:#0550ae>defined</span><span style=color:#1f2328>(</span>_ADDITIONAL_LIGHTS_VERTEX<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>half3</span> vertexLighting <span style=color:#0550ae>:</span> TEXCOORD5<span style=color:#1f2328>;</span> <span style=color:#57606a>// 存储顶点光照结果</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div></li><li><strong>视觉效果</strong>：<br>光照过渡呈现顶点插值的“块状”效果，适用于动态物体或低精度需求场景。</li></ul><h4 id=2-片元着色器模式追求质量>2. 片元着色器模式（追求质量）</h4><ul><li><strong>代码特征</strong>：<br>在片元着色器中直接调用光照计算函数：<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>half4</span> frag<span style=color:#1f2328>(</span>Varyings input<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> <span style=color:#0550ae>SV_Target</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    InputData lightingData <span style=color:#0550ae>=</span> <span style=color:#1f2328>...;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span><span style=color:#cf222e>if</span> <span style=color:#0550ae>defined</span><span style=color:#1f2328>(</span>_ADDITIONAL_LIGHTS<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        additionalLights <span style=color:#0550ae>+=</span> GetAdditionalLights<span style=color:#1f2328>(</span>lightingData<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>endif
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></li><li><strong>视觉效果</strong>：<br>光照过渡平滑，适用于静态高精度场景（如角色面部、复杂材质）。</li></ul><hr><h3 id=调试与手动控制><strong>调试与手动控制</strong></h3><h4 id=1-强制指定模式测试用>1. 强制指定模式（测试用）</h4><p>在Shader顶部添加定义：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-11-19T21:21:49+08:00>November 19, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/stylized_water_2_doc/>StylizedWater2插件帮助文档精读</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><a href="https://staggart.xyz/unity/stylized-water-2/sws-2-docs/?section=stylized-water-2">插件官方文档地址</a></p><hr><h2 id=stylized-water-2-入门指南><strong>Stylized Water 2 入门指南</strong></h2><h3 id=1-准备工作><strong>1. 准备工作</strong></h3><ul><li><strong>确保项目无控制台错误</strong>：未解决的代码错误会导致资源代码无法编译，材质可能显示为粉色。</li><li><strong>项目设置</strong>：<ul><li>使用 <strong>Universal Render Pipeline (URP)</strong>：在 <code>Edit -> Project Settings -> Graphics</code> 中检查是否已分配 URP 资源。</li><li>如果没有正确设置 URP，材质将显示为粉色。请参考 Unity 的 URP 文档进行设置。</li><li><strong>注意</strong>：建议在项目早期决定使用 URP，因为在生产过程中切换到 URP 可能导致其他自定义着色器失效。</li><li><strong>颜色空间</strong>：推荐使用 <strong>Linear 颜色空间</strong>（新项目默认使用 Gamma 空间），详细信息请参考 Unity 文档。</li></ul></li></ul><h3 id=2-urp-设置><strong>2. URP 设置</strong></h3><ul><li><strong>启用必要选项</strong>：<ul><li><strong>Depth Texture</strong>：用于多种效果（如深度和交互动画）。如果禁用，这些效果将失效，且在 Android 上构建时水可能会不可见。</li><li><strong>Opaque Texture</strong>：用于折射效果，启用折射时需要。</li><li>如果这些选项未启用，但着色器使用了相关功能，材质 UI 中会显示警告并提供快速修复按钮。</li></ul></li><li><strong>相机设置</strong>：每个相机可以覆盖这些设置。如果某些效果在特定场景或相机中不可见，请检查这些选项是否被设置为“Off”。</li><li><strong>质量级别设置</strong>：如果使用了不同质量级别的管道设置，请确保这些选项也已启用，否则在较低质量级别下运行时，水效果可能失效。</li></ul><h3 id=3-向场景中添加水><strong>3. 向场景中添加水</strong></h3><ul><li><strong>建议</strong>：创建或复制材质（而不是直接使用包中的材质），以避免更新资源时设置被意外覆盖。</li><li><strong>方法</strong>：<ul><li><strong>方法 1</strong>：将 <code>Assets/StylizedWater2/Prefabs</code> 中的预制件拖入场景，并调整材质属性。</li><li><strong>方法 2</strong>：通过 <code>GameObject -> 3D Object -> Water -> Object</code> 菜单选项创建新的 Mesh Renderer。</li><li><strong>方法 3</strong>：<ol><li>在场景中创建一个平面网格。</li><li>创建新材质并分配 <code>StylizedWater2/Default</code> 着色器。</li><li>通过 <code>Add Component -> Stylized Water 2 -> Water Object</code> 添加 Water Object 组件（仅在需要使用平面反射时必要，但无负面影响）。</li></ol></li></ul></li><li><strong>材质参数</strong>：每个参数都有工具提示，鼠标悬停可查看描述。</li></ul><hr><h2 id=stylized-water-2-着色器使用指南><strong>Stylized Water 2 着色器使用指南</strong></h2><h3 id=1-基本设置><strong>1. 基本设置</strong></h3><ul><li><strong>着色器与材质</strong>：着色器分配给材质，材质应用于网格。由于水的透明特性，着色器始终以 <strong>Forward 渲染</strong> 方式渲染。</li><li><strong>材质参数工具提示</strong>：大多数参数都有工具提示，鼠标悬停可查看描述。也可通过“Toggle tooltips”按钮展开所有提示。</li></ul><h3 id=2-着色模式><strong>2. 着色模式</strong></h3><ul><li><strong>高级着色模式（Advanced Shading Mode）</strong>：<ul><li>专注于高端渲染，适合需要高质量水效果的项目。</li><li>特点：<ul><li><strong>色散折射（chromatic refractions）</strong>：颜色通道分离一个像素。</li><li><strong>焦散/太阳反射遮罩(caustics/sun)</strong>：即使水不接收阴影，也会读取阴影贴图以避免这些效果出现在阴影中。</li><li><strong>透射颜色(translucency color)与光源颜色(light color)更精确地混合</strong>。</li><li><strong>双采样折射(double-sampling of refraction)</strong>：使颜色梯度也呈现折射效果。</li><li><strong>第二法线贴图采样(double-sampling of refraction)</strong>：用于远距离法线。</li></ul></li><li><strong>适用场景</strong>：如果水在游戏中仅为背景或俯视角查看，高级模式可能无明显优势。</li></ul></li><li><strong>简单着色模式（Simple Shading Mode）</strong>：<ul><li>适合移动设备硬件，性能更优。</li></ul></li></ul><h3 id=3-构建时切换功能><strong>3. 构建时切换功能</strong></h3><ul><li><strong>关键词（Keywords）</strong>：<ul><li>着色器使用关键词来控制特定代码的执行或跳过，类似于 C# 中的定义符号。</li><li>关键词状态保存在材质中。</li><li><strong>多编译关键词（Multi-compile Keywords）</strong>：<ul><li>Unity 在构建项目时会编译多个着色器变体，以实现实时质量/性能调整。</li><li>例如，点光源/聚光灯的启用或禁用。</li></ul></li><li><strong>着色器功能（Shader Features）</strong>：<ul><li>对于法线贴图、泡沫和波浪等功能，如果未在材质中启用，构建时不会创建禁用该功能的着色器变体。</li><li><strong>原因</strong>：多编译关键词会指数级增加着色器变体数量，可能导致多达 200 万种变体，显著增加构建时间（数小时）。</li></ul></li></ul></li><li><strong>修改关键词</strong>：<ul><li>如果需要允许功能切换，可以修改着色器文件（<code>StylizedWater2.shader</code>），将 <code>#pragma shader_feature_local _WAVES</code> 替换为 <code>#pragma multi_compile_local _ _WAVES</code>。</li><li>之后可通过 <code>material.SetKeyword("_WAVES", true/false);</code> 切换关键词状态。</li></ul></li><li><strong>替代方案</strong>：<ul><li>创建两个材质：一个启用功能，另一个禁用功能。只要两个材质都包含在构建中，Unity 会编译两种变体，允许在运行时切换。</li></ul></li></ul><h3 id=总结><strong>总结</strong></h3><ul><li><strong>着色模式选择</strong>：根据项目需求和目标平台选择“简单”或“高级”着色模式。</li><li><strong>功能切换</strong>：通过关键词控制着色器功能，但需注意多编译关键词可能显著增加构建时间。</li><li><strong>优化建议</strong>：修改着色器文件或创建多个材质以实现功能切换，同时平衡性能与灵活性。</li></ul><hr><h2 id=stylized-water-2-顶点颜色功能><strong>Stylized Water 2 顶点颜色功能</strong></h2><h3 id=1-顶点颜色概述><strong>1. 顶点颜色概述</strong></h3><ul><li><strong>定义</strong>：顶点颜色是网格顶点属性（Vector4），类似于位置、法线和 UV。</li><li><strong>用途</strong>：可用于驱动着色器的某些行为。</li><li><strong>编辑方式</strong>：<ul><li>在主流 3D 工具（如 Maya、Blender、3DS Max）中绘制。</li><li>在 Unity 编辑器中使用 <strong>PolyBrush</strong> 绘制。</li><li>通过 C# 脚本程序化生成（示例脚本：<a href=https://pastebin.com/csT6AmYQ>链接</a>）。脚本通过射线检测测量顶点到地形的距离，并将归一化距离存储在顶点颜色通道中。</li></ul></li></ul><h3 id=2-顶点颜色的应用><strong>2. 顶点颜色的应用</strong></h3><ul><li><strong>最佳实践</strong>：使用为环境定制的自定义网格，以获得最佳效果。</li><li><strong>注意事项</strong>：<ul><li>在 Unity 编辑器中绘制顶点颜色后，网格会变为唯一实例并保存到场景文件中，无法再与预制件一起使用。</li><li>可使用 <strong>FBX Exporter</strong> 包将网格导出为新文件。</li></ul></li></ul><h3 id=3-顶点颜色通道的具体功能><strong>3. 顶点颜色通道的具体功能</strong></h3><ul><li><p><strong>红色通道（Red Channel）</strong>：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-11-19T20:21:49+08:00>November 19, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/amplify_imposter_manual/>Amplify Imposter 插件使用指南</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><a href="https://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Impostors/Manual">原文地址</a></p><h2 id=描述>描述</h2><p>Amplify Impostors 是一款小巧但功能强大的工具，可用于创建不同类型的 Impostors，这些 Impostors 是平面和简单多边形构成的复杂高多边形对象的<strong>替代品</strong>（substitutes ），可渲染原始对象的<strong>虚假版本</strong>（fake version）（因此得名）。与传统精灵非常相似，它们通常由单个平面四边形或简单多边形组成，并且像经典广告牌（classic billboard）一样始终面向相机。将它们视为要渲染的面向相机的纸板版本。使用此类技术的常见目的是能够用非常低的多边形表示远处的物体，例如树木、灌木丛、岩石、废墟、建筑物、道具等。</p><p>有多种方法可以创建这些 impostor，每种方法都有各自的优点和缺点。此工具旨在提供最有用和最流行的技术，同时使创建过程尽可能简单。</p><hr><h2 id=安装>安装</h2><ol><li>打开 AmplifyImpostors.unitypackage</li><li>Unity 加载后会显示“导入包”窗口，选择全部并点击导入</li><li><strong>警告</strong> - 如果您在同一个项目中使用 Amplify Shader Editor请确保两个软件包都是最新的；检查您的控制台是否存在与之相关的任何错误</li></ol><hr><h2 id=快速入门说明>快速入门说明</h2><ol><li>选择场景中的游戏对象或项目中的预制件</li><li>在检查器窗口中搜索并添加“<strong>Amplify Impostor</strong>”组件</li><li>按“<strong>Bake Impostor</strong>”并选择要保存impostor文件的位置</li></ol><hr><h2 id=当前功能>当前功能</h2><h3 id=impostor类型>Impostor类型</h3><p>目前支持三种预先烘焙的 Impostor 类型 （左边是真实网格，右边是冒名顶替网格）</p><table><thead><tr><th>效果图</th><th>示意图</th><th>描述</th></tr></thead><tbody><tr><td><img src=https://wiki.amplify.pt/images/ImpostorsImages/SphericalExample.gif alt></td><td><img src=https://wiki.amplify.pt/images/ImpostorsImages/Spherical.png alt></td><td><strong>球面</strong>(spherical)：以典型的经纬度格式拍摄多张照片。着色器更简单、更快速，近距离拍摄时， impostor看起来基本没问题，但帧间跳动相当明显。可以通过增加轴帧数（以牺牲分辨率为代价）来缓解这一问题。</td></tr><tr><td><img src=https://wiki.amplify.pt/images/ImpostorsImages/OctahedronExample.gif alt></td><td><img src=https://wiki.amplify.pt/images/ImpostorsImages/Octahedron.png alt></td><td><strong>八面</strong> (Octahedron) ：以<strong>十球面格式</strong>(icosphere format)拍摄多张照片。这样做是为了保证相邻帧数固定为 3，这样在相对于相机的任何给定位置，我们都可以混合最近的三帧。这样做的好处是消除帧之间的弹出。另一方面，着色器复杂度更高，当近距离观察时，混合变得太明显，出现明显的重影伪影。</td></tr><tr><td><img src=https://wiki.amplify.pt/images/ImpostorsImages/HemiOctahedronExample.gif alt></td><td><img src=https://wiki.amplify.pt/images/ImpostorsImages/HemiOctahedron.png alt></td><td><strong>半八面体</strong>(HemiOctahedron)：半八面体变体与正八面体类似，不同之处在于只从物体的上半球拍摄相同数量的镜头，从而有效地使混合精度翻倍。但缺点是，由于不烘焙下半球，从下方看时会产生不正确的结果。这种方法通常仅在您知道物体将始终从上方观看时使用（即：<strong>自上而下的相机</strong>(top-down cameras)）。</td></tr></tbody></table><h3 id=实时渲染>实时渲染</h3><p>这些预烘焙解决方案中的每一个方案，都会渲染表面的构成部分贴图，以支持实时照明。这些方案支持：</p><ul><li>可编写脚本的渲染管道（HD 和 LW）（v4.9.0+）</li><li>标准/旧版前向渲染和延迟渲染</li><li>动态灯光和阴影</li><li><strong>对象交叉点</strong>(object intersection)的深度写入</li><li>全局照明</li><li>烘焙光照贴图（通过自定义烘焙）</li><li>GPU 实例</li><li>抖动交叉淡入淡出</li></ul><h3 id=其他的>其他的</h3><ul><li><strong>自定义打包贴图</strong>（package map）：使用标准材质烘焙渲染最多 4 张贴图和自定义材质，使用自定义烘焙渲染最多 8 张不同的地图（支持 PNG 和未压缩的 TGA）<ul><li>反照率 (RGB) | Alpha 蒙版 (A)</li><li>镜面反射 (RGB) | 平滑度 (A)</li><li>物体法线 (RGB) | 深度 (A)</li><li>发射 (RGB) | 环境光遮蔽 (A)</li></ul></li><li><strong>自定义形状编辑器</strong>（Custom Shape Editor）：自动生成自定义形状，以移除替代器的大部分透明区域，从而减少过度绘制。还支持手动编辑。</li><li>烘焙预设(baking presets)：定义烘焙替代者的预设，其中还包含各种导入和导出选项。</li></ul><h3 id=脚本化的渲染管道scriptable-render-pipeline>脚本化的渲染管道（scriptable render pipeline）</h3><p>为了将 Amplify Impostors 与 SRP 一起使用，请务必导入所需的包 ( AmplifyImpostors\Plugins\EditorResources\RenderPipelinePackages )。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-11-12T19:21:49+08:00>November 12, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/amplify_imposter_custom_baking/>Amplify Imposter Custom Baking</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><a href="https://wiki.amplify.pt/index.php?title=Unity_Products:Amplify_Impostors/Custom_Baking">原文地址</a></p><h2 id=介绍>介绍</h2><p>标准烘焙器收集延迟的 GBuffer 信息，其中包含典型 PBR 渲染的所有材质数据。然而，这可能并不总是必要的，甚至可能不够。在某些情况下，想要为其创建替代者的对象具有一些特殊的实时着色器效果，而简单的 PBR 渲染无法涵盖这些效果。在其他情况下，可能只想减少生成的数据量，因为有更高的平台限制（即移动设备）。自定义烘焙背后的想法是允许告诉工具想要烘焙什么以及希望如何根据具体情况进行渲染。</p><hr><p>##要求
+为本指南创建着色器可能非常困难，因此我们在包中包含了可与 Amplify Shader Editor 插件一起使用的必要模板和节点，从而使该过程变得更加轻松快捷。如果不熟悉它，Amplify Shader Editor 是我们自己的屡获殊荣的着色器编辑器，可以在基于节点的图形编辑器中创建着色器，而无需了解着色器代码。本指南假设使用 Amplify Shader Editor，因此如果对直观的基于节点的着色器创作工具感兴趣，请随时在此处查看其商店页面。还可以在此处的 wiki 页面中了解更多信息。</p><p>可以在软件包的目录<strong>AmplifyImpostors/Examples/Scenes/CustomBaking</strong>中找到本指南的文件和示例。如果是高级用户，并且想要手动创建着色器，仍然可以通过将结果与给定的示例进行比较来遵循指南。</p><p><strong>Shader Graph</strong> 限制了使用自定义代码的能力，从而阻止了对 Amplify Impostors 的支持。请考虑使用替代方案<strong>Amplify Shader Editor</strong>，它从头开始设计，可扩展并可适应任何管道要求。</p><hr><h2 id=描述>描述</h2><p>本指南演示了创建与示例中相同的自定义替代器的过程。目的是为包含特殊动态着色器的对象创建替代器。此着色器在对象顶部添加了一个程序化油漆层。此油漆层是程序化的，因为它使用对象位置来计算油漆的伪随机颜色。如果我们为这个对象烘焙一个常规替代器，我们将失去这种程序行为，最终得到一个静态版本。</p><p><img src=https://wiki.amplify.pt/images/ImpostorsImages/Problem.gif alt=请注意左侧真实物体如何改变颜色，而右侧冒名顶替物体保持静态红色></p><p>为了实现这一点，需要两个特殊的着色器。一个着色器将使用<strong>被代替的物体的原始着色器</strong>来烘焙不同的纹理贴图。此着色器包含不同的输出，这些输出将用于生成不同的纹理及其通道所包含的内容。称为“<strong>烘焙着色器</strong>”。另一个着色器将使用生成的纹理，并使用可能正在寻找的预期自定义效果，正确渲染地impostor。这是将在产品中使用的创建imposter效果的着色器。我们将其称为“运行时着色器”。最后，需要设置输出并将着色器链接到它们，使用可以在Impostor组件中创建和引用的预设资产文件来执行此操作。</p><hr><h2 id=创建烘焙着色器>创建烘焙着色器</h2><ol><li>在的项目中单击鼠标右键，然后创建一个新的 Impostor Bake 着色器。
+<strong>注意</strong>：如果看不到此条目，请确保在着色器编辑器之后导入 Impostors 包，并打开着色器编辑器画布以检测更改。</li></ol><p><img src=http://wiki.amplify.pt/images/ImpostorsImages/NewBakeShader.png alt></p><ol start=2><li>在编辑器中打开着色器后，首先放置纹理采样器并将它们打包到所选输出，并确保属性名称与原始着色器匹配。</li></ol><p><img src=http://wiki.amplify.pt/images/ImpostorsImages/BakeShader1.jpg alt></p><ol start=3><li>然后创建与我们可以烘焙到地图中的静态部分相对应的图形节点和连接，在我们的例子中，这是除程序颜色部分之外的所有内容。此外，因为我们稍后需要特殊遮罩来重新创建最终的程序效果，并且因为我们想要节省一些纹理内存，所以我们会将其与剩余数据一起打包并将其连接到同一个输出。</li></ol><p><img src=http://wiki.amplify.pt/images/ImpostorsImages/BakeShader2.jpg alt></p><ol start=4><li>添加“Pack Normal Depth”着色器功能节点，它将法线转换为必要的空间并在 Alpha 通道中创建深度信息。</li></ol><p><img src=http://wiki.amplify.pt/images/ImpostorsImages/BakeShader3.jpg alt></p><ol start=5><li>（可选）如果的对象着色器使用“剪切”效果，请确保通过减去剪辑蒙版值并将其连接到“剪辑”输出来模仿它。</li></ol><p><img src=http://wiki.amplify.pt/images/ImpostorsImages/BakeShader4.jpg alt></p><hr><h2 id=创建运行时着色器>创建运行时着色器</h2><ol><li>在的项目中单击鼠标右键并创建一个新的 Impostor Runtime 着色器。</li></ol><p><img src=http://wiki.amplify.pt/images/ImpostorsImages/NewRuntimeShader.png alt></p><ol start=2><li>在编辑器中添加一个新的“Amplify Impostor 节点”，将 Albedo、World Normal 和 Alpha 输出连接到主节点中的可用输入。点击 ASE 画布中的保存按钮。
+注意：这样做应该会编译一个使用烘焙中最重要的数据的 Impostor 兼容着色器，但我们仍然需要进一步定制它以支持预期的程序效果。</li></ol><p><img src=http://wiki.amplify.pt/images/ImpostorsImages/RuntimeShader1.jpg alt></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-11-12T18:21:49+08:00>November 12, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_fov_and_screentoworldpoint/>Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>在Unity3D编程中经常会碰到以下的问题：</p><blockquote><p>比如一开始的FOV为60度，后来设置为22度，可以通过怎样的公式，使得使用22度FOV对应生成的3D位置点，通过这个公式，可以转换到其位置点和使用60度生成的一样呢</p></blockquote><p>当从一个FOV为60度的视角切换到22度的视角时，使用<code>Camera.ScreenToWorldPoint</code>函数生成的3D位置点会发生变化，因为FOV直接影响视锥体的宽度和高度。要解决这个问题，需要通过调整视锥体的缩放因子，来抵消FOV变化带来的位置偏移。</p><h2 id=问题分析>问题分析</h2><p>当FOV变化时，屏幕坐标对应的世界坐标会随之缩放。假设有一个屏幕坐标<code>screenPos</code>，在FOV为60度时通过<code>Camera.ScreenToWorldPoint</code>生成一个3D位置点<code>P60</code>。当FOV变为22度时，假设生成的3D位置点为<code>P22</code>。我们需要找到一个转换公式，使得<code>P22</code>转换回<code>P60</code>。</p><h2 id=fov与世界坐标的关系>FOV与世界坐标的关系</h2><p>视锥体的高度（在深度为z处）与FOV通过以下公式相关：</p><p>$$ Heightz=2×z×tan⁡(FOV2)\text{Height}_z = 2 \times z \times \tan\left(\frac{FOV}{2}\right)Heightz=2×z×tan(2FOV) $$</p><p>其中：</p><ul><li>Height_z ：在深度为z处的视锥体高度。</li><li>FOV：垂直视野角度。</li><li>z：深度（从摄像机到目标点的距离）。</li></ul><p>视锥体的宽度和高度成比例地变化，具体公式为：</p><p>$$ Widthz=Heightz×Aspect Ratio\text{Width}_z = \text{Height}_z \times \text{Aspect Ratio}Widthz=Heightz×Aspect Ratio $$</p><p>对于两个不同的FOV（如60度和22度），可以计算出它们对应的视锥体高度比值。为了让FOV为22度时生成的世界坐标与FOV为60度时生成的一致，需要应用这个比值进行缩放。</p><h2 id=缩放因子的推导>缩放因子的推导</h2><p>在FOV为60度时的视锥体高度：</p><p>$$
+\mathrm{Heigth}_{60}=2\times \mathrm{z}\times \tan \left( \frac{60^o}{2} \right)
+$$</p><p>在FOV为22度时的视锥体高度：</p><p>$$
+\mathrm{Heigth}_{22}=2\times \mathrm{z}\times \tan \left( \frac{22^o}{2} \right)
+$$</p><p>缩放因子： 需要将FOV为22度时的世界坐标缩放到FOV为60度的视锥体高度，因此缩放因子是这两个视锥体高度的比值：</p><p>$$
+ScaleFactor=\frac{Height_{60}}{Height_{22}}=\frac{\tan \left( 30^{o} \right)}{\tan \left( 11^{o} \right)}
+$$</p><p>可以计算出这个缩放因子：</p><p>$$
+\mathrm{ScaleFactor}=\frac{0.5774}{0.1944}\approx 2.97
+$$</p><h2 id=公式应用>公式应用</h2><p>在FOV为22度时生成的3D世界坐标<code>P22</code>可以通过如下公式转换为FOV为60度时的3D世界坐标<code>P60</code>：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-09-22T20:20:49+08:00>September 22, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_from_depthmap_to_world_coord/>Unity3D中根据深度值重建像素点对应的世界坐标</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=1-深度图介绍>1 深度图介绍</h2><p>就是将深度信息(Z坐标值)保存在了一张贴图上的R通道上，因为R通道的值范围是[0, 1]，所以我们可以用ndc空间下的Z坐标值做下处理就能变成[0, 1]范围了（ (Zndc+1)*0.5</p><h2 id=2-c接口取得深度图纹理的方法>2 C#接口取得深度图纹理的方法</h2><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>Shader<span style=color:#1f2328>.</span>GetGlobalTexture<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;_CameraDepthTexture&#34;</span><span style=color:#1f2328>)</span>
+</span></span></code></pre></div><h2 id=3-在ndc空间下深度值的计算公式>3 在NDC空间下深度值的计算公式</h2><p><img src=/image/u3d/u3d_from_depth_to_ws/00.jpg alt=在NDC空间下深度值的计算公式></p><h2 id=4-从片元着色器中根据深度图反推出片元世界坐标且输出的shader>4 从片元着色器中根据深度图反推出片元世界坐标且输出的shader</h2><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span>Shader <span style=color:#0a3069>&#34;zznewclear13/DepthToPositionShader&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Properties
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#1f2328>[</span>Toggle<span style=color:#1f2328>(</span>REQUIRE_POSITION_VS<span style=color:#1f2328>)]</span> 
+</span></span><span style=display:flex><span>	   _Require_Position_VS<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Require Position VS&#34;</span><span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    HLSLINCLUDE
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>include <span style=color:#0a3069>&#34;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>include <span style=color:#0a3069>&#34;Packages/com.unity.render-pipelines.universal/ShaderLibrary/core.hlsl&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#f6f8fa;background-color:#82071e>#</span>pragma multi_compile _ REQUIRE_POSITION_VS
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    sampler2D _CameraDepthTexture<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>struct</span> Attributes
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float4</span> positionOS   <span style=color:#0550ae>:</span> POSITION<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float2</span> texcoord     <span style=color:#0550ae>:</span> TEXCOORD0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>struct</span> Varyings
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float4</span> positionCS   <span style=color:#0550ae>:</span> SV_POSITION<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float2</span> texcoord     <span style=color:#0550ae>:</span> TEXCOORD0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Varyings Vert<span style=color:#1f2328>(</span>Attributes input<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Varyings output <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>Varyings<span style=color:#1f2328>)</span><span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 根据顶点在其模型坐标系下的值，计算得到在裁剪空间中的齐次坐标</span>
+</span></span><span style=display:flex><span>        VertexPositionInputs vertexPositionInputs <span style=color:#0550ae>=</span> 
+</span></span><span style=display:flex><span>		                     GetVertexPositionInputs<span style=color:#1f2328>(</span>input<span style=color:#1f2328>.</span>positionOS<span style=color:#1f2328>.</span>xyz<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>							 
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// vertexPositionInputs.positionCS的是齐次裁剪空间坐标，即一个 float4 值，</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 形式为 (x, y, z, w)，其中 w 是用于透视除法的分量。透视除法会在后续的处理</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 步骤中进行，得到标准化设备坐标（NDC），最终决定物体在屏幕上的位置。</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 在透视除法之前，齐次裁剪空间的 x 和 y 值可以超出任何特定范围，因为它们与</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// w 是关联的。最终，它们会通过透视除法得到以下标准化的范围</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 透视除法后（标准化设备坐标）的取值范围：</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// x / w 和 y / w 的取值范围为 [-1, 1]。</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// -1 表示屏幕的最左边（x 方向）或最下方（y 方向）。</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 1 表示屏幕的最右边（x 方向）或最上方（y 方向）。</span>
+</span></span><span style=display:flex><span>        output<span style=color:#1f2328>.</span>positionCS <span style=color:#0550ae>=</span> vertexPositionInputs<span style=color:#1f2328>.</span>positionCS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        output<span style=color:#1f2328>.</span>texcoord <span style=color:#0550ae>=</span> input<span style=color:#1f2328>.</span>texcoord<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> output<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float4</span> Frag<span style=color:#1f2328>(</span>Varyings input<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> SV_TARGET
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>	    <span style=color:#57606a>// 根据片元的在裁剪空间中的坐标值，算出片元对应的在屏幕空间的坐标值</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// _ScreenParams的xy分量是渲染目标纹理的宽度和高度（以像素为单位），</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// z分量是1.0 + 1.0/宽度，w为1.0 + 1.0/高度。所以屏幕空间的坐标值为</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>//【齐次裁剪空间坐标】的坐标值的xy，分别除以渲染目标纹理的高宽</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 因为input.positionCS.xy的取值范围是[0,渲染目标纹理的宽]和</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// [0,渲染目标纹理的高]，故而positionSS的xy分量，经过上一步的运算后，</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 分别得到的取值范围是[0,1]。就是一个有效的纹理坐标uv值</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float2</span> positionSS <span style=color:#0550ae>=</span> input<span style=color:#1f2328>.</span>positionCS<span style=color:#1f2328>.</span>xy <span style=color:#0550ae>*</span> <span style=color:#1f2328>(</span>_ScreenParams<span style=color:#1f2328>.</span>zw <span style=color:#0550ae>-</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 利用纹理坐标uv值，对深度图纹理进行采样，得到的值，就是当前屏幕空间中</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 片元对应的深度值，即NDC空间中的坐标值z分量</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// _CameraDepthTexture是Unity3D的内置着色器变量</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> depth <span style=color:#0550ae>=</span> <span style=color:#6639ba>tex2D</span><span style=color:#1f2328>(</span>_CameraDepthTexture<span style=color:#1f2328>,</span> positionSS<span style=color:#1f2328>).</span>r<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 因为NDC空间的取值范围是：</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// X和Y轴的取值范围：[-1, 1]。</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// -1表示屏幕的最左侧或最底部。1表示屏幕的最右侧或最顶部。</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// Z轴的取值范围是[0, 1]。0和1分别表示相机的近截平面和远截平面</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 而positionSS的取值范围是[0,1]，所以需要做【乘2减1】的操作，将其映射到</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// [-1,1]的取值范围内。</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float3</span> positionNDC <span style=color:#0550ae>=</span> <span style=color:#cf222e>float3</span><span style=color:#1f2328>(</span>positionSS <span style=color:#0550ae>*</span> <span style=color:#0550ae>2</span> <span style=color:#0550ae>-</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> depth<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#if UNITY_UV_STARTS_AT_TOP</span>
+</span></span><span style=display:flex><span>        positionNDC<span style=color:#1f2328>.</span>y <span style=color:#0550ae>=</span> <span style=color:#0550ae>-</span>positionNDC<span style=color:#1f2328>.</span>y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 得到裁剪空间的NDC坐标之后，就可以反向地推出片元对应的屏幕空间了</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#if REQUIRE_POSITION_VS</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// UNITY_MATRIX_I_P是投影矩阵的逆矩阵(inverse projection matrix)</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float4</span> positionVS <span style=color:#0550ae>=</span> <span style=color:#6639ba>mul</span><span style=color:#1f2328>(</span>UNITY_MATRIX_I_P<span style=color:#1f2328>,</span> <span style=color:#cf222e>float4</span><span style=color:#1f2328>(</span>positionNDC<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 当你通过逆投影矩阵将点从 clip space 变换回 view space 时，生成的点仍</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 然是齐次坐标 (x, y, z, w)，因此需要除以 w 来将其转换回标准的三维欧几里</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 得坐标。这是因为：在齐次坐标系下，w 分量影响了 x、y 和 z 分量的比例。</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 如果不除以 w，这些分量的值将无法正确反映物体在视图空间中的位置，导致不正</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 确的几何表示。view space中的坐标应该是三维欧几里得坐标，而不是齐次坐标。</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 透视除法确保得到的 x&#39;、y&#39;、z&#39; 是正确的三维位置。</span>
+</span></span><span style=display:flex><span>        positionVS <span style=color:#0550ae>/=</span> positionVS<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>		
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 再通过观察矩阵的逆矩阵，将顶点变换回世界坐标</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float4</span> positionWS <span style=color:#0550ae>=</span> <span style=color:#6639ba>mul</span><span style=color:#1f2328>(</span>UNITY_MATRIX_I_V<span style=color:#1f2328>,</span> positionVS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#else</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float4</span> positionWS <span style=color:#0550ae>=</span> <span style=color:#6639ba>mul</span><span style=color:#1f2328>(</span>UNITY_MATRIX_I_VP<span style=color:#1f2328>,</span> <span style=color:#cf222e>float4</span><span style=color:#1f2328>(</span>positionNDC<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>        positionWS <span style=color:#0550ae>/=</span> positionWS<span style=color:#1f2328>.</span>w<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> positionWS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float4</span> DepthFrag<span style=color:#1f2328>(</span>Varyings input<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> SV_TARGET
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    ENDHLSL
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    SubShader
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Tags<span style=color:#1f2328>{</span> <span style=color:#0a3069>&#34;RenderType&#34;</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;Opaque&#34;</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        LOD <span style=color:#0550ae>100</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        Pass
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            Tags<span style=color:#1f2328>{</span><span style=color:#0a3069>&#34;LightMode&#34;</span><span style=color:#0550ae>=</span><span style=color:#0a3069>&#34;UniversalForward&#34;</span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            ZWrite On
+</span></span><span style=display:flex><span>            ZTest LEqual
+</span></span><span style=display:flex><span>            HLSLPROGRAM
+</span></span><span style=display:flex><span>            <span style=color:#f6f8fa;background-color:#82071e>#</span>pragma vertex Vert
+</span></span><span style=display:flex><span>            <span style=color:#f6f8fa;background-color:#82071e>#</span>pragma fragment Frag
+</span></span><span style=display:flex><span>            ENDHLSL
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        Pass
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            Tags<span style=color:#1f2328>{</span><span style=color:#0a3069>&#34;LightMode&#34;</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;DepthOnly&#34;</span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            ZWrite On
+</span></span><span style=display:flex><span>            ZTest LEqual
+</span></span><span style=display:flex><span>            HLSLPROGRAM
+</span></span><span style=display:flex><span>            <span style=color:#f6f8fa;background-color:#82071e>#</span>pragma vertex Vert
+</span></span><span style=display:flex><span>            <span style=color:#f6f8fa;background-color:#82071e>#</span>pragma fragment DepthFrag
+</span></span><span style=display:flex><span>            ENDHLSL
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h2 id=5-在unity3d默认渲染管线中在后处理阶段用深度图重建世界坐标>5 在Unity3D默认渲染管线中在后处理阶段用深度图重建世界坐标</h2><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>[RequireComponent(typeof(Camera))]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>PostEffectUseDepthTex</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> Camera m_Camera<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> Material m_GetWorldPosByDepthMat<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Start<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        m_Camera <span style=color:#1f2328>=</span> GetComponent<span style=color:#1f2328>&lt;</span>Camera<span style=color:#1f2328>&gt;();</span>
+</span></span><span style=display:flex><span>        m_GetWorldPosByDepthMat <span style=color:#1f2328>=</span> 
+</span></span><span style=display:flex><span>		          <span style=color:#cf222e>new</span> Material<span style=color:#1f2328>(</span>Shader<span style=color:#1f2328>.</span>Find<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;My/DepthTex/GetWorldPosByDepth&#34;</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> OnRenderImage<span style=color:#1f2328>(</span>RenderTexture src<span style=color:#1f2328>,</span> RenderTexture dst<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 用摄像机的观察矩阵和投影矩阵相乘，然后得出其逆矩阵</span>
+</span></span><span style=display:flex><span>		<span style=color:#57606a>// 将其传递给shader的_ClipToWorldMatrix，即从齐次裁剪空间变换回世界空间中</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>var</span> VPMatrix <span style=color:#1f2328>=</span> m_Camera<span style=color:#1f2328>.</span>projectionMatrix <span style=color:#1f2328>*</span> m_Camera<span style=color:#1f2328>.</span>worldToCameraMatrix<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>var</span> clipToWorldMatrix <span style=color:#1f2328>=</span> VPMatrix<span style=color:#1f2328>.</span>inverse<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        m_GetWorldPosByDepthMat<span style=color:#1f2328>.</span>SetMatrix<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;_ClipToWorldMatrix&#34;</span><span style=color:#1f2328>,</span> clipToWorldMatrix<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        Graphics<span style=color:#1f2328>.</span>Blit<span style=color:#1f2328>(</span>src<span style=color:#1f2328>,</span> dst<span style=color:#1f2328>,</span> m_GetWorldPosByDepthMat<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>下面是shader代码</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-07-11T20:20:49+08:00>July 11, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/ab_label_rule/>Unity asset bundle的打标签规则</a></h1><div class=entry__content><h1 id=unity-asset-bundle的打标签规则>Unity asset bundle的打标签规则</h1><p>构建unity assetbundle 资源包时，碰到了以下的编译问题：</p><blockquote><p>Cannot mark assets and scenes in one AssetBundle. AssetBundle name is &ldquo;scenes/map/fb_bossrush_01&rdquo;.使用Unity打assetbundle包出了这个问题，是不是打assetbundle标签规则有问题</p></blockquote><p>✅ 确实是<strong>AB标签规则违反Unity硬性限制</strong>：</p><blockquote><p><strong>同一个AssetBundle包，只能二选一：要么全是普通资源(prefab/texture/material等)，要么全是<code>.unity</code>场景文件，不能混在一起</strong>。</p></blockquote><p>你的报错包名：<code>scenes/map/fb_bossrush_01</code>
+说明这个ab包里，<strong>同时存在 .unity场景文件 + 普通资源文件</strong>。</p><h2 id=产生这个错误的3种常见原因>产生这个错误的3种常见原因</h2><h3 id=1文件夹直接设置了ab包名最高频>1）文件夹直接设置了AB包名（最高频）</h3><p>你把整个文件夹 <code>scenes/map/</code> 的Inspector底部设置了AB包名 <code>scenes/map/fb_bossrush_01</code>。
+文件夹打AB标签 = 文件夹下<strong>所有子文件全部归入这个ab</strong>。</p><ul><li>如果文件夹里：既有 <code>fb_bossrush_01.unity</code>（场景），又有prefab/mat/texture等普通资源 → 直接触发报错。</li></ul><blockquote><p>⚠️坑：文件夹设置ab标签，哪怕子文件单独改了标签，仍然会继承文件夹的ab设置。</p></blockquote><h3 id=2手动给多个不同类型资源设置同一个ab包名>2）手动给多个不同类型资源设置同一个ab包名</h3><ul><li>场景文件 <code>fb_bossrush_01.unity</code> 设置ab=<code>scenes/map/fb_bossrush_01</code></li><li>同时这个目录下某个prefab/贴图也手动设置成同一个ab名字。
+场景文件与普通资源共用同一个ab名称，报错。</li></ul><h3 id=3代码批量赋值ab标签逻辑bug>3）代码批量赋值AB标签逻辑bug</h3><p>编辑器脚本遍历目录，给目录下所有文件统一设置ab name，没有区分<code>.unity</code>场景文件，场景和普通资源被分配到同一个ab。</p><hr><h2 id=快速定位问题资源>快速定位问题资源</h2><ol><li>Project窗口搜索框输入：<code>b:scenes/map/fb_bossrush_01</code></li></ol><blockquote><p><code>b:</code> 是UnityProject窗口搜索语法，筛选所有标记为此ab包名的资源，会列出所有被打上这个ab标签的文件，一眼看哪些是<code>.unity</code>场景、哪些是普通资源。</p></blockquote><ol start=2><li>检查<strong>父文件夹</strong>：选中搜索结果的父文件夹，看Inspector底部AB包名，很多时候是文件夹被设置了ab，不是单个文件。</li></ol><h2 id=修复方案>修复方案</h2><h3 id=方案a场景单独一个ab包推荐>方案A：场景单独一个AB包（推荐）</h3><ol><li><strong>场景文件 <code>fb_bossrush_01.unity</code></strong>：ab标签设置为 <code>scenes/map/fb_bossrush_01</code>（这个包只能放这一个场景）</li><li>同目录下的prefab、贴图、材质<strong>不能再使用这个ab包名</strong>，分到别的ab包。</li></ol><blockquote><p>💡注意：场景AB包会<strong>自动把场景引用到的贴图、模型打进包内</strong>，不需要你手动把这些资源打上这个ab标签；手动打就会报错。</p></blockquote><h3 id=方案b不要给文件夹设置ab标签>方案B：不要给文件夹设置AB标签</h3><p>不要直接选中文件夹设置ab name，<strong>只给单个文件设置ab标签</strong>。文件夹设置ab标签极易出现场景与资源混杂。</p><h3 id=方案c代码打包场景请使用专用api>方案C：代码打包场景请使用专用API</h3><ul><li>普通资源打包：<code>BuildPipeline.BuildAssetBundles()</code></li><li><strong>场景必须使用 <code>BuildPipeline.BuildStreamedSceneAssetBundle()</code></strong>，不要把场景文件混到普通BuildAssetBundles流程里。</li></ul><h2 id=关键规则小结>关键规则小结</h2><ol><li>❌禁止：1个ab包同时包含<code>.unity场景</code>和普通资源(prefab/texture/material)</li><li>✅场景ab：只给场景文件打标签，依赖资源由Unity自动收集，不要手动把依赖资源打上该ab名</li><li>⚠️谨慎给文件夹设置ab标签，极易出现混杂；优先单个文件打标签</li><li>搜索语法<code>b:xxx</code>快速排查哪些资源归属某个ab包</li></ol></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-03-28T20:22:49+08:00>March 28, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/assetbundle/ rel=tag>assetbundle</a></span></div></div></article></div></div></main><div class="pagination block"><a class="pagination__item pagination__item--desktop" href=/tags/unity3d/>1</a>
+<span class="pagination__item pagination__item--active" data-total=7>2</span>
+<a class="pagination__item pagination__item--desktop" href=/tags/unity3d/page/3/>3</a>
+<span class="pagination__item pagination__item--gap">&mldr;</span>
+<a class="pagination__item pagination__item--desktop" href=/tags/unity3d/page/7/>7</a></div></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

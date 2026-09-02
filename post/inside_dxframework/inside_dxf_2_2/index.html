@@ -1,341 +1,111 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>深度探索DxFramework 2-2 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="深度探索DxFramework">
-		<meta property="og:title" content="深度探索DxFramework 2-2" />
-<meta property="og:description" content="深度探索DxFramework" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_2_2/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2007-10-12T18:08:30+08:00" />
-<meta property="article:modified_time" content="2007-10-12T18:08:30+08:00" />
-
-
-		<meta itemprop="name" content="深度探索DxFramework 2-2">
-<meta itemprop="description" content="深度探索DxFramework"><meta itemprop="datePublished" content="2007-10-12T18:08:30+08:00" />
-<meta itemprop="dateModified" content="2007-10-12T18:08:30+08:00" />
-<meta itemprop="wordCount" content="573">
-<meta itemprop="keywords" content="DxFramework," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">深度探索DxFramework 2-2</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2007-10-12T18:08:30&#43;08:00">October 12, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">深度探索DxFramework 2-2</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#23-dxframework的内存泄漏检测机制">2.3 DxFramework的内存泄漏检测机制</a>
-      <ul>
-        <li><a href="#231-内存泄漏的原因">2.3.1 内存泄漏的原因</a></li>
-        <li><a href="#232-dxframework的检测方案">2.3.2 DxFramework的检测方案</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h1 id="第2章-dxframework的架构剖析-2">第2章 DxFramework的架构剖析 2</h1>
-<h2 id="23-dxframework的内存泄漏检测机制">2.3 DxFramework的内存泄漏检测机制</h2>
-<p>内存泄漏（memory leak）是使用C/C++等程序设计语言进行编程时常常见到的一个问题。内存泄漏给程序运行时带来的影响有很多。一般最后的结果要么是程序死掉；要么是提示系统内存不足。还有一种可能就是程序不会死掉，但是程序的响应速度会明显变慢。</p>
-<h3 id="231-内存泄漏的原因">2.3.1 内存泄漏的原因</h3>
-<p>产生内存泄漏的原因一般是如下几点：</p>
-<ol>
-<li>动态分配了内存空间，在不需要时忘记释放。</li>
-<li>动态分配了内存空间，在不需要时忘记释放。</li>
-<li>对某些API函数的不正确使用，导致内存泄漏。</li>
-</ol>
-<p>在编程时忘记释放不需要的内存空间是编程时很常见。动态分配的内存在使用完毕后，如若不需要了就一定要释放。如果不释放,那就会造成内存的泄漏。如果造成内存泄漏的代码经常被调用的话，那么内存泄漏的数目就会越来越多的。从而影响整个系统的运行。 如下面的代码段：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SomeOperation</span>()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span><span style="color:#f92672">*</span> pBuffer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">32</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>( <span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>; i<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">32</span> ; <span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        pBuffer[i] <span style="color:#f92672">=</span> i<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>很明显，上述的局部变量pTemp指向了一段从堆（heap）空间中分配的内存空间，而在函数退出时没有作任何的释放操作。一旦调用此函数就将导致了内存泄漏。当这个函数被频繁调用的时候，堆空间的内存空间将会被消耗殆尽。</p>
-<p>因为代码编写的问题,会导致某些动态分配的内存根本就无从回收,比如下面的代码段：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">SomeOperation</span>()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span><span style="color:#f92672">*</span> pBuffer1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">32</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span><span style="color:#f92672">*</span> pBuffer2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">32</span>];
-</span></span><span style="display:flex;"><span>    pBuffer1 <span style="color:#f92672">=</span> pBuffer2;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( pBuffer1 )
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">delete</span> [] pBuffer1;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这样,pBuffer1最初指向的那段内存空间的首地址就丢掉了，无法恢复了。这时候最初分配的那一段内存空间就无法释放掉。</p>
-<p>Windows提供了一些特殊的API,如FormatMessage。如果给它参数传递的函数有FORMAT_MESSAGE_ALLOCATE_BUFFER,它会在函数内部动态分配一块内存缓冲区，返回给用户。但是这个内存缓冲区需要用户显式调用LocalFree来释放。如果用户忘了的话。也会产生内存泄漏。如下面的代码段：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;windows.h&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">FormatAndPrintOneMessage</span>(DWORD dwError)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    HLOCAL hLocal <span style="color:#f92672">=</span> NULL; <span style="color:#75715e">// 用来存储返回的描述错误信息的字符串的内存缓冲区
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    BOOL fOK <span style="color:#f92672">=</span> FormatMessage(
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 指定标志，动态分配一块缓冲区
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    FORMAT_MESSAGE_FROM_SYSTEM <span style="color:#f92672">|</span>FORMAT_MESSAGE_ALLOCATE_BUFFER , 
-</span></span><span style="display:flex;"><span>    NULL , dwError , MAKELANGID(LANG_ENGLISH,SUBLANG_ENGLISH_US),
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 返回动态分配的内存缓冲区
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span>LPTSTR<span style="color:#f92672">&gt;</span>(<span style="color:#f92672">&amp;</span>hLocal),  <span style="color:#ae81ff">0</span> , NULL );
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( hLocal <span style="color:#f92672">&amp;&amp;</span> fOK )
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;Error Message: &#34;</span><span style="color:#f92672">&lt;&lt;</span>(<span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span>LPCTSTR<span style="color:#f92672">&gt;</span>
-</span></span><span style="display:flex;"><span>            (LocalLock(hLocal)))<span style="color:#f92672">&lt;&lt;</span>endl;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// 如果忘记了这一句，将会导致通过FormatMessage函数动态分配的
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// 内存无法释放，从而导致内存泄漏
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      LocalFree(hLocal); 
-</span></span><span style="display:flex;"><span>   }
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>   {
-</span></span><span style="display:flex;"><span>      cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;Error number not found&#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
-</span></span><span style="display:flex;"><span>   }
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    FormatAndPrintOneMessage(<span style="color:#ae81ff">5</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>检查已经发布的程序是否存在内存泄漏实在是费时费力，所以我们要把内存泄漏扼杀在萌芽状态。在编码过程中就要时刻进行检查。</p>
-<h3 id="232-dxframework的检测方案">2.3.2 DxFramework的检测方案</h3>
-<p>有很多方法可以检测程序是否存在内存泄漏。最简单也最现代化的办法大概就是用CompuWare公司的BoundChecker工具来检测了。但这些工具的价格往往只有企业单位才能承受得起，对于个人而言实在是贵了。幸运的是，Visual C++提供了一整套的方案。利用Visual Studio的调试器(debugger)和一套C Runtime（CRT）函数来检查内存泄漏。DxFramework就是采用这一解决方案。</p>
-<p>DxFramework简单地使用了下面的几个CRT函数来检测内存泄漏。下面是DxFramework在main.cpp文件中WinMain函数的代码。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;globals.h&#34;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span> 
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> WINAPI <span style="color:#a6e22e">WinMain</span>( HINSTANCE instanceHnd,  HINSTANCE prevInstanceHnd,  <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> p_CmdLine, <span style="color:#66d9ef">int</span> numCmds)
-</span></span><span style="display:flex;"><span>{    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Memory leak debugging... 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//http://DxFramework.sourceforge.net/manual/29.html
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    _CrtMemState memstate;
-</span></span><span style="display:flex;"><span>    _CrtMemCheckpoint(<span style="color:#f92672">&amp;</span>memstate);
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//_crtBreakAlloc = 383;    
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// DO NOT ADD CODE BEFORE THIS LINE!
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//...
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// DO NOT ADD CODE AFTER THIS LINE!  
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//(except the possible change of the return value) 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    _CrtMemDumpAllObjectsSince(<span style="color:#f92672">&amp;</span>memstate);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//Dump memory leaks, see comment at top of this function. 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;<span style="color:#75715e">// could return a more useful value here
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>} 
-</span></span></code></pre></div><p>一进和一出WinMain函数都受到了有_Crt前缀的一组“_Crt家族成员”的欢迎和欢送。没有使用过这些函数的程序员可能会对此觉得陌生。要剖析DxFramework的这一套机制，还是从查“_Crt家族”的“家底”开始。</p>
-<p>Visual C++ 提供的一套CRT函数可以报告调试堆（debug heap）在某个指定时刻的内容。DxFramework使用了如下的几个结构体和函数：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>struct _CrtMemState</td>
-<td>_CrtMemState结构体是用来存放调试堆在某个指定时刻的内容快照（snapshot）。</td>
-<td></td>
-</tr>
-<tr>
-<td>void _CrtMemCheckpoint( _CrtMemState *state )</td>
-<td>此函数将会设置一个内存检查点，获取调试堆的当前状态，并且将数值存储到由用户体提供的一个_CrtMemState结构体中去。</td>
-<td></td>
-</tr>
-<tr>
-<td>void _CrtMemDumpAllObjectsSince( const _CrtMemState *state)</td>
-<td>函数将在调试器的output窗口中倾印出在堆中分配给用户的每一块内存空间的信息。这些信息要么是从程序开始处；要么是从指定的调试堆状态处。当传递的参数为NULL时，倾印出从程序启动处的堆空间分配信息。</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>DxFramework内存泄漏侦测机制的原理如下：</p>
-<p>首先在WinMain函数开始处，启动DxFramework之前，获取到内存状态的快照。然后在WinMain结束处，即假定所有的被申请的内存空间已被释放的地方，再获取一次内存状态的快照。这时候被分配而在程序结束时还未被释放的内存空间都将被显示出来。只要程序是以Debug模式编译链接。所有的未被释放的内存将被标识（tagged）。通过这个标识（tag），用户可以查出这段未被释放的内存是在代码何处被分配的。当代码是以Release模式编译的时候，这些侦测函数将会自动失效。仿照DxFramework的内存泄漏侦测架构，这里以一个简单的程序为例子：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;windows.h&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;crtdbg.h&gt;</span><span style="color:#75715e"> </span><span style="color:#75715e">// 要使用CRT内存泄漏检测机制，就必须包含这个头文件
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>()
-</span></span><span style="display:flex;"><span>{  
-</span></span><span style="display:flex;"><span>    _CrtMemState memstate;
-</span></span><span style="display:flex;"><span>    _CrtMemCheckpoint(<span style="color:#f92672">&amp;</span>memstate); <span style="color:#75715e">// 在程序开始处设置一个检查点，获取开始时的内存快照
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//_crtBreakAlloc = 383;    
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// DO NOT ADD CODE BEFORE THIS LINE!
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span><span style="color:#f92672">*</span> pTmp <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">32</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span><span style="color:#f92672">*</span> pTmp2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>[<span style="color:#ae81ff">16</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">//DO NOT ADD CODE AFTER THIS LINE!
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//(except the possible change of the return value)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    _CrtMemDumpAllObjectsSince(<span style="color:#f92672">&amp;</span>memstate); <span style="color:#75715e">// 检查从程序开始处的内存分配和释放情况，并且倾印出来
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>编译运行这段程序，很明显，这段程序是会产生内存泄漏。运行后，Visual Studio的调试器output窗口将会出现如下的提示：</p>
-<pre tabindex="0"><code>Dumping objects -&gt;
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>深度探索DxFramework 2-2 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="深度探索DxFramework"><meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_2_2/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="深度探索DxFramework 2-2"><meta property="og:description" content="深度探索DxFramework"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2007-10-12T18:08:30+08:00"><meta property="article:modified_time" content="2007-10-12T18:08:30+08:00"><meta property="article:tag" content="DxFramework"><meta itemprop=name content="深度探索DxFramework 2-2"><meta itemprop=description content="深度探索DxFramework"><meta itemprop=datePublished content="2007-10-12T18:08:30+08:00"><meta itemprop=dateModified content="2007-10-12T18:08:30+08:00"><meta itemprop=wordCount content="573"><meta itemprop=keywords content="DxFramework"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>深度探索DxFramework 2-2</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2007-10-12T18:08:30+08:00>October 12, 2007</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/directx/ rel=category>DirectX</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/dxframework/ rel=tag>DxFramework</a></span></div></div><h1 class=entry__title>深度探索DxFramework 2-2</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#23-dxframework的内存泄漏检测机制>2.3 DxFramework的内存泄漏检测机制</a><ul><li><a href=#231-内存泄漏的原因>2.3.1 内存泄漏的原因</a></li><li><a href=#232-dxframework的检测方案>2.3.2 DxFramework的检测方案</a></li></ul></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=第2章-dxframework的架构剖析-2>第2章 DxFramework的架构剖析 2</h1><h2 id=23-dxframework的内存泄漏检测机制>2.3 DxFramework的内存泄漏检测机制</h2><p>内存泄漏（memory leak）是使用C/C++等程序设计语言进行编程时常常见到的一个问题。内存泄漏给程序运行时带来的影响有很多。一般最后的结果要么是程序死掉；要么是提示系统内存不足。还有一种可能就是程序不会死掉，但是程序的响应速度会明显变慢。</p><h3 id=231-内存泄漏的原因>2.3.1 内存泄漏的原因</h3><p>产生内存泄漏的原因一般是如下几点：</p><ol><li>动态分配了内存空间，在不需要时忘记释放。</li><li>动态分配了内存空间，在不需要时忘记释放。</li><li>对某些API函数的不正确使用，导致内存泄漏。</li></ol><p>在编程时忘记释放不需要的内存空间是编程时很常见。动态分配的内存在使用完毕后，如若不需要了就一定要释放。如果不释放,那就会造成内存的泄漏。如果造成内存泄漏的代码经常被调用的话，那么内存泄漏的数目就会越来越多的。从而影响整个系统的运行。 如下面的代码段：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>SomeOperation</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span><span style=color:#0550ae>*</span> pBuffer <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>int</span><span style=color:#1f2328>[</span><span style=color:#0550ae>32</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span><span style=color:#1f2328>(</span> <span style=color:#cf222e>int</span> i<span style=color:#0550ae>=</span><span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i<span style=color:#0550ae>&lt;</span><span style=color:#0550ae>32</span> <span style=color:#1f2328>;</span> <span style=color:#0550ae>++</span>i<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        pBuffer<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> i<span style=color:#0550ae>*</span><span style=color:#0550ae>2</span><span style=color:#0550ae>+</span><span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>很明显，上述的局部变量pTemp指向了一段从堆（heap）空间中分配的内存空间，而在函数退出时没有作任何的释放操作。一旦调用此函数就将导致了内存泄漏。当这个函数被频繁调用的时候，堆空间的内存空间将会被消耗殆尽。</p><p>因为代码编写的问题,会导致某些动态分配的内存根本就无从回收,比如下面的代码段：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>SomeOperation</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span><span style=color:#0550ae>*</span> pBuffer1 <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>int</span><span style=color:#1f2328>[</span><span style=color:#0550ae>32</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span><span style=color:#0550ae>*</span> pBuffer2 <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>int</span><span style=color:#1f2328>[</span><span style=color:#0550ae>32</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    pBuffer1 <span style=color:#0550ae>=</span> pBuffer2<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> pBuffer1 <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>delete</span> <span style=color:#1f2328>[]</span> pBuffer1<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>这样,pBuffer1最初指向的那段内存空间的首地址就丢掉了，无法恢复了。这时候最初分配的那一段内存空间就无法释放掉。</p><p>Windows提供了一些特殊的API,如FormatMessage。如果给它参数传递的函数有FORMAT_MESSAGE_ALLOCATE_BUFFER,它会在函数内部动态分配一块内存缓冲区，返回给用户。但是这个内存缓冲区需要用户显式调用LocalFree来释放。如果用户忘了的话。也会产生内存泄漏。如下面的代码段：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;windows.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;iostream&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#cf222e>namespace</span> std<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>FormatAndPrintOneMessage</span><span style=color:#1f2328>(</span>DWORD dwError<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    HLOCAL hLocal <span style=color:#0550ae>=</span> <span style=color:#6639ba>NULL</span><span style=color:#1f2328>;</span> <span style=color:#57606a>// 用来存储返回的描述错误信息的字符串的内存缓冲区
+</span></span></span><span style=display:flex><span>    BOOL fOK <span style=color:#0550ae>=</span> FormatMessage<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 指定标志，动态分配一块缓冲区
+</span></span></span><span style=display:flex><span>    FORMAT_MESSAGE_FROM_SYSTEM <span style=color:#0550ae>|</span>FORMAT_MESSAGE_ALLOCATE_BUFFER <span style=color:#1f2328>,</span> 
+</span></span><span style=display:flex><span>    <span style=color:#6639ba>NULL</span> <span style=color:#1f2328>,</span> dwError <span style=color:#1f2328>,</span> MAKELANGID<span style=color:#1f2328>(</span>LANG_ENGLISH<span style=color:#1f2328>,</span>SUBLANG_ENGLISH_US<span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 返回动态分配的内存缓冲区
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>reinterpret_cast</span><span style=color:#0550ae>&lt;</span>LPTSTR<span style=color:#0550ae>&gt;</span><span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>hLocal<span style=color:#1f2328>),</span>  <span style=color:#0550ae>0</span> <span style=color:#1f2328>,</span> <span style=color:#6639ba>NULL</span> <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> hLocal <span style=color:#0550ae>&amp;&amp;</span> fOK <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        cout<span style=color:#0550ae>&lt;&lt;</span><span style=color:#0a3069>&#34;Error Message: &#34;</span><span style=color:#0550ae>&lt;&lt;</span><span style=color:#1f2328>(</span><span style=color:#cf222e>reinterpret_cast</span><span style=color:#0550ae>&lt;</span>LPCTSTR<span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>(</span>LocalLock<span style=color:#1f2328>(</span>hLocal<span style=color:#1f2328>)))</span><span style=color:#0550ae>&lt;&lt;</span>endl<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#57606a>// 如果忘记了这一句，将会导致通过FormatMessage函数动态分配的
+</span></span></span><span style=display:flex><span>      <span style=color:#57606a>// 内存无法释放，从而导致内存泄漏
+</span></span></span><span style=display:flex><span>      LocalFree<span style=color:#1f2328>(</span>hLocal<span style=color:#1f2328>);</span> 
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>      cout<span style=color:#0550ae>&lt;&lt;</span><span style=color:#0a3069>&#34;Error number not found&#34;</span><span style=color:#0550ae>&lt;&lt;</span>endl<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>main</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    FormatAndPrintOneMessage<span style=color:#1f2328>(</span><span style=color:#0550ae>5</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>检查已经发布的程序是否存在内存泄漏实在是费时费力，所以我们要把内存泄漏扼杀在萌芽状态。在编码过程中就要时刻进行检查。</p><h3 id=232-dxframework的检测方案>2.3.2 DxFramework的检测方案</h3><p>有很多方法可以检测程序是否存在内存泄漏。最简单也最现代化的办法大概就是用CompuWare公司的BoundChecker工具来检测了。但这些工具的价格往往只有企业单位才能承受得起，对于个人而言实在是贵了。幸运的是，Visual C++提供了一整套的方案。利用Visual Studio的调试器(debugger)和一套C Runtime（CRT）函数来检查内存泄漏。DxFramework就是采用这一解决方案。</p><p>DxFramework简单地使用了下面的几个CRT函数来检测内存泄漏。下面是DxFramework在main.cpp文件中WinMain函数的代码。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&#34;globals.h&#34;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#cf222e>int</span> WINAPI <span style=color:#6639ba>WinMain</span><span style=color:#1f2328>(</span> HINSTANCE instanceHnd<span style=color:#1f2328>,</span>  HINSTANCE prevInstanceHnd<span style=color:#1f2328>,</span>  <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> p_CmdLine<span style=color:#1f2328>,</span> <span style=color:#cf222e>int</span> numCmds<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Memory leak debugging... 
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>//http://DxFramework.sourceforge.net/manual/29.html
+</span></span></span><span style=display:flex><span>    _CrtMemState memstate<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    _CrtMemCheckpoint<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>memstate<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//_crtBreakAlloc = 383;    
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// DO NOT ADD CODE BEFORE THIS LINE!
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>//...
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// DO NOT ADD CODE AFTER THIS LINE!  
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>//(except the possible change of the return value) 
+</span></span></span><span style=display:flex><span>    _CrtMemDumpAllObjectsSince<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>memstate<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//Dump memory leaks, see comment at top of this function. 
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span><span style=color:#57606a>// could return a more useful value here
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>}</span> 
+</span></span></code></pre></div><p>一进和一出WinMain函数都受到了有_Crt前缀的一组“_Crt家族成员”的欢迎和欢送。没有使用过这些函数的程序员可能会对此觉得陌生。要剖析DxFramework的这一套机制，还是从查“_Crt家族”的“家底”开始。</p><p>Visual C++ 提供的一套CRT函数可以报告调试堆（debug heap）在某个指定时刻的内容。DxFramework使用了如下的几个结构体和函数：</p><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td>struct _CrtMemState</td><td>_CrtMemState结构体是用来存放调试堆在某个指定时刻的内容快照（snapshot）。</td><td></td></tr><tr><td>void _CrtMemCheckpoint( _CrtMemState *state )</td><td>此函数将会设置一个内存检查点，获取调试堆的当前状态，并且将数值存储到由用户体提供的一个_CrtMemState结构体中去。</td><td></td></tr><tr><td>void _CrtMemDumpAllObjectsSince( const _CrtMemState *state)</td><td>函数将在调试器的output窗口中倾印出在堆中分配给用户的每一块内存空间的信息。这些信息要么是从程序开始处；要么是从指定的调试堆状态处。当传递的参数为NULL时，倾印出从程序启动处的堆空间分配信息。</td><td></td></tr></tbody></table><p>DxFramework内存泄漏侦测机制的原理如下：</p><p>首先在WinMain函数开始处，启动DxFramework之前，获取到内存状态的快照。然后在WinMain结束处，即假定所有的被申请的内存空间已被释放的地方，再获取一次内存状态的快照。这时候被分配而在程序结束时还未被释放的内存空间都将被显示出来。只要程序是以Debug模式编译链接。所有的未被释放的内存将被标识（tagged）。通过这个标识（tag），用户可以查出这段未被释放的内存是在代码何处被分配的。当代码是以Release模式编译的时候，这些侦测函数将会自动失效。仿照DxFramework的内存泄漏侦测架构，这里以一个简单的程序为例子：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;windows.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;iostream&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;crtdbg.h&gt;</span><span style=color:#57606a> </span><span style=color:#57606a>// 要使用CRT内存泄漏检测机制，就必须包含这个头文件
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#cf222e>namespace</span> std<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>int</span> <span style=color:#6639ba>main</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>    _CrtMemState memstate<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    _CrtMemCheckpoint<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>memstate<span style=color:#1f2328>);</span> <span style=color:#57606a>// 在程序开始处设置一个检查点，获取开始时的内存快照
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>//_crtBreakAlloc = 383;    
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// DO NOT ADD CODE BEFORE THIS LINE!
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span><span style=color:#0550ae>*</span> pTmp <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>int</span><span style=color:#1f2328>[</span><span style=color:#0550ae>32</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span><span style=color:#0550ae>*</span> pTmp2 <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>int</span><span style=color:#1f2328>[</span><span style=color:#0550ae>16</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//DO NOT ADD CODE AFTER THIS LINE!
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>//(except the possible change of the return value)
+</span></span></span><span style=display:flex><span>    _CrtMemDumpAllObjectsSince<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>memstate<span style=color:#1f2328>);</span> <span style=color:#57606a>// 检查从程序开始处的内存分配和释放情况，并且倾印出来
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>编译运行这段程序，很明显，这段程序是会产生内存泄漏。运行后，Visual Studio的调试器output窗口将会出现如下的提示：</p><pre tabindex=0><code>Dumping objects -&gt;
 {43} normal block at 0x00340950, 64 bytes long.
 Data: &lt;  &gt; CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD 
 {42} normal block at 0x00340888, 128 bytes long.
 Data: &lt;  &gt; CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD 
 Object dump complete.
-</code></pre><p>分析上面的提示信息：</p>
-<p><code>{43}，{42}：</code>
-花括弧内的数字是内存分配序号。</p>
-<p><code>64 bytes ，128 bytes：</code>
-表示两个分配的内存块的大小，分别为64个字节和128个字节</p>
-<p><code>CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD：</code>
-表示内存块的前16个字节的内容，从低位到到高位排列</p>
-<p><code>0x00340950，0x00340888</code>：
-表示在地址0x00340888起始处，有一个128字节大小的内存块被分配，但是未被释放。在地址0x00340950起始处，有一个64字节大小的内存块被分配，但也未被释放。</p>
-<p><code>normal block</code>：
-表示产生泄漏的内存块的类型，CRT把每一个被分配的内存块分为以下几种类型：</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>描述</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>normal block（普通块）</td>
-<td>是指由用户代码分配的内存</td>
-<td></td>
-</tr>
-<tr>
-<td>client block（客户端块）</td>
-<td>是一种特殊类型的内存块，专用于MFC程序中有析构函数的对象。MFC的new操作符视具体情况既可以为所创建的对象建立普通块，也可以为之建立客户块。</td>
-<td></td>
-</tr>
-<tr>
-<td>CRT block（C运行期块）</td>
-<td>是由 C RunTime Library 供自己使用而分配的内存块。由 CRT 库自己来管理这些内存的分配与释放，一般不会在内存泄漏报告中发现CRT内存泄漏，除非程序发生了严重的错误。（例如 CRT 库崩溃）。</td>
-<td></td>
-</tr>
-<tr>
-<td>free block（空闲块）</td>
-<td>已经被释放(free)的内存块。</td>
-<td></td>
-</tr>
-<tr>
-<td>Ignore block（忽略块）</td>
-<td>这是程序员显式声明过不要在内存泄漏报告中出现的内存块。</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>最后两种类型的内存块，它们不会出现在内存泄漏报告中：</p>
-<p>上面提示了检测到代码中有导致内存泄漏的地方，但是仍未有明确的信息告知用户引起内存泄漏的原因。调试器只是告诉用户一段数据，通过再次运行此代码。这个数据可以帮助用户找到泄漏处。</p>
-<p>注意在_CrtMemCheckpoint函数后有一句注解语句</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//_crtBreakAlloc = 383;
-</span></span></span></code></pre></div><p>crtBreakAlloc其实是一个CRT运行库的全局变量。再观察提示内存泄漏的倾印信息，最下面一句的提示语句，即</p>
-<p><code>{42} normal block at 0x00340888, 128 bytes long.</code></p>
-<p>中花括号内的数字,即42，把原来的383替换掉，然后把注解符号去掉，使其成为一句有效的代码语句。重新编译链接，再次以debug方式启动程序，这时候，程序将会在new操作符或者是malloc函数的内部实现代码处停下，弹出一个提示对话框（图Image0003.bmp）。这时候通过观察函数调用栈便可以得知未被释放的内存是在何处被分配的。如下：</p>
-<pre tabindex="0"><code>_heap_alloc_dbg(unsigned int 128, int 1, const char * 0x00000000, int 0) line 338
+</code></pre><p>分析上面的提示信息：</p><p><code>{43}，{42}：</code>
+花括弧内的数字是内存分配序号。</p><p><code>64 bytes ，128 bytes：</code>
+表示两个分配的内存块的大小，分别为64个字节和128个字节</p><p><code>CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD CD：</code>
+表示内存块的前16个字节的内容，从低位到到高位排列</p><p><code>0x00340950，0x00340888</code>：
+表示在地址0x00340888起始处，有一个128字节大小的内存块被分配，但是未被释放。在地址0x00340950起始处，有一个64字节大小的内存块被分配，但也未被释放。</p><p><code>normal block</code>：
+表示产生泄漏的内存块的类型，CRT把每一个被分配的内存块分为以下几种类型：</p><table><thead><tr><th>名称</th><th>描述</th><th></th></tr></thead><tbody><tr><td>normal block（普通块）</td><td>是指由用户代码分配的内存</td><td></td></tr><tr><td>client block（客户端块）</td><td>是一种特殊类型的内存块，专用于MFC程序中有析构函数的对象。MFC的new操作符视具体情况既可以为所创建的对象建立普通块，也可以为之建立客户块。</td><td></td></tr><tr><td>CRT block（C运行期块）</td><td>是由 C RunTime Library 供自己使用而分配的内存块。由 CRT 库自己来管理这些内存的分配与释放，一般不会在内存泄漏报告中发现CRT内存泄漏，除非程序发生了严重的错误。（例如 CRT 库崩溃）。</td><td></td></tr><tr><td>free block（空闲块）</td><td>已经被释放(free)的内存块。</td><td></td></tr><tr><td>Ignore block（忽略块）</td><td>这是程序员显式声明过不要在内存泄漏报告中出现的内存块。</td><td></td></tr></tbody></table><p>最后两种类型的内存块，它们不会出现在内存泄漏报告中：</p><p>上面提示了检测到代码中有导致内存泄漏的地方，但是仍未有明确的信息告知用户引起内存泄漏的原因。调试器只是告诉用户一段数据，通过再次运行此代码。这个数据可以帮助用户找到泄漏处。</p><p>注意在_CrtMemCheckpoint函数后有一句注解语句</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>//_crtBreakAlloc = 383;
+</span></span></span></code></pre></div><p>crtBreakAlloc其实是一个CRT运行库的全局变量。再观察提示内存泄漏的倾印信息，最下面一句的提示语句，即</p><p><code>{42} normal block at 0x00340888, 128 bytes long.</code></p><p>中花括号内的数字,即42，把原来的383替换掉，然后把注解符号去掉，使其成为一句有效的代码语句。重新编译链接，再次以debug方式启动程序，这时候，程序将会在new操作符或者是malloc函数的内部实现代码处停下，弹出一个提示对话框（图Image0003.bmp）。这时候通过观察函数调用栈便可以得知未被释放的内存是在何处被分配的。如下：</p><pre tabindex=0><code>_heap_alloc_dbg(unsigned int 128, int 1, const char * 0x00000000, int 0) line 338
 _nh_malloc_dbg(unsigned int 128, int 1, int 1, const char * 0x00000000, int 0) 
 line 248 + 21 bytes
 _nh_malloc(unsigned int 128, int 1) line 197 + 19 bytes
@@ -343,126 +113,84 @@ operator new(unsigned int 128) line 24 + 11 bytes
 main() line 15 + 10 bytes
 mainCRTStartup() line 206 + 25 bytes
 KERNEL32! 77e71af6()
-</code></pre><p>值得注意的是，采用上述的侦测方法检查是否有内存泄漏，当在IDE的output窗口没有倾印出泄漏信息，并不意味着你的代码一定不存在内存泄漏（的可能），这仅仅代表着，在最后一次的调试运行时，没有执行到“有分配而无释放”的代码而已。如下代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;crtdbg.h&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    _CrtMemState memstate;
-</span></span><span style="display:flex;"><span>    _CrtMemCheckpoint(<span style="color:#f92672">&amp;</span>memstate);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> number;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>p <span style="color:#f92672">=</span> NULL <span style="color:#960050;background-color:#1e0010">，</span><span style="color:#f92672">*</span>q <span style="color:#f92672">=</span> NULL;
-</span></span><span style="display:flex;"><span>    cout<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34;please input an arbitrary number: &#34;</span><span style="color:#f92672">&lt;&lt;</span>endl;
-</span></span><span style="display:flex;"><span>    cin<span style="color:#f92672">&gt;&gt;</span>number;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( number )
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        p <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        q <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">int</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( p ){<span style="color:#66d9ef">delete</span> p;}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    _CrtMemDumpAllObjectsSince(<span style="color:#f92672">&amp;</span>memstate);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>当输入一个非零的数字值的时候，使用这种机制并不会有任何的内存泄漏信息被倾印出来——因为导致内存泄漏的代码并没有被执行到。</p>
-<p>在C++代码中，要使用CRT的debug heap来进行调试，必须要使用_CRTDBG_MAP_ALLOC宏 ，</p>
-<p>当使用了上述的符号时，的所有在代码中的new操作符都会自动映射到debug版本的new操作符，这时候将会时候将会自动记录new语句所在的源文件文件名和所在行行号。DxFramework在globas.h定义了此宏，如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#ifdef _DEBUG
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define _CRTDBG_MAP_ALLOC </span><span style="color:#75715e">// include Microsoft memory leak detection procedures
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#define _INC_MALLOC          </span><span style="color:#75715e">// exclude standard memory  alloc procedures
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#define enw DEBUG_NEW     </span><span style="color:#75715e">// 注，此处是应是程序设计者的笔误。enw应为“new”
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#75715e">#endif
-</span></span></span></code></pre></div></div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/dxframework/">DxFramework</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_2_1/">深度探索DxFramework 2-1</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_1/">深度探索DxFramework 1</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_0/">深度探索DxFramework 0</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+</code></pre><p>值得注意的是，采用上述的侦测方法检查是否有内存泄漏，当在IDE的output窗口没有倾印出泄漏信息，并不意味着你的代码一定不存在内存泄漏（的可能），这仅仅代表着，在最后一次的调试运行时，没有执行到“有分配而无释放”的代码而已。如下代码：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;iostream&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;crtdbg.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#cf222e>namespace</span> std<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>main</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    _CrtMemState memstate<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    _CrtMemCheckpoint<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>memstate<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> number<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> <span style=color:#0550ae>*</span>p <span style=color:#0550ae>=</span> <span style=color:#6639ba>NULL</span> <span style=color:#f6f8fa;background-color:#82071e>，</span><span style=color:#0550ae>*</span>q <span style=color:#0550ae>=</span> <span style=color:#6639ba>NULL</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    cout<span style=color:#0550ae>&lt;&lt;</span><span style=color:#0a3069>&#34;please input an arbitrary number: &#34;</span><span style=color:#0550ae>&lt;&lt;</span>endl<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    cin<span style=color:#0550ae>&gt;&gt;</span>number<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> number <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        p <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>int</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        q <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>int</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> p <span style=color:#1f2328>){</span><span style=color:#cf222e>delete</span> p<span style=color:#1f2328>;}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    _CrtMemDumpAllObjectsSince<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>memstate<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>当输入一个非零的数字值的时候，使用这种机制并不会有任何的内存泄漏信息被倾印出来——因为导致内存泄漏的代码并没有被执行到。</p><p>在C++代码中，要使用CRT的debug heap来进行调试，必须要使用_CRTDBG_MAP_ALLOC宏 ，</p><p>当使用了上述的符号时，的所有在代码中的new操作符都会自动映射到debug版本的new操作符，这时候将会时候将会自动记录new语句所在的源文件文件名和所在行行号。DxFramework在globas.h定义了此宏，如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#ifdef _DEBUG
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define _CRTDBG_MAP_ALLOC </span><span style=color:#57606a>// include Microsoft memory leak detection procedures
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define _INC_MALLOC          </span><span style=color:#57606a>// exclude standard memory  alloc procedures
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define enw DEBUG_NEW     </span><span style=color:#57606a>// 注，此处是应是程序设计者的笔误。enw应为“new”
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span></code></pre></div></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/dxframework/>DxFramework</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_2_1/>深度探索DxFramework 2-1</a></li><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_1/>深度探索DxFramework 1</a></li><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_0/>深度探索DxFramework 0</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

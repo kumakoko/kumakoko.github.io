@@ -1,368 +1,77 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>一篇文章说透计算着色器的SV_DispatchThreadID | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="一篇文章说透计算着色器的SV_DispatchThreadID">
-		<meta property="og:title" content="一篇文章说透计算着色器的SV_DispatchThreadID" />
-<meta property="og:description" content="一篇文章说透计算着色器的SV_DispatchThreadID" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/hlsl_sv_dispatch_thread_id_detail/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2024-12-30T20:20:49+08:00" />
-<meta property="article:modified_time" content="2024-12-30T20:20:49+08:00" />
-
-
-		<meta itemprop="name" content="一篇文章说透计算着色器的SV_DispatchThreadID">
-<meta itemprop="description" content="一篇文章说透计算着色器的SV_DispatchThreadID"><meta itemprop="datePublished" content="2024-12-30T20:20:49+08:00" />
-<meta itemprop="dateModified" content="2024-12-30T20:20:49+08:00" />
-<meta itemprop="wordCount" content="289">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">一篇文章说透计算着色器的SV_DispatchThreadID</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2024-12-30T20:20:49&#43;08:00">December 30, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">一篇文章说透计算着色器的SV_DispatchThreadID</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#sv_dispatchthreadid-的含义"><code>SV_DispatchThreadID</code> 的含义</a></li>
-    <li><a href="#sv_dispatchthreadid-的计算方式"><code>SV_DispatchThreadID</code> 的计算方式</a></li>
-    <li><a href="#示例">示例</a></li>
-    <li><a href="#其他相关语义">其他相关语义</a></li>
-    <li><a href="#实际应用">实际应用</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<p><code>SV_DispatchThreadID</code> 是HLSL（High-Level Shading Language）中的一个语义（Semantic），用于在Compute Shader中获取当前线程的全局线程ID。它是Compute Shader中非常重要的一个概念，用于确定每个线程处理的数据或任务。</p>
-<hr>
-<h2 id="sv_dispatchthreadid-的含义"><code>SV_DispatchThreadID</code> 的含义</h2>
-<ol>
-<li>
-<p><strong>全局线程ID</strong>：</p>
-<ul>
-<li><code>SV_DispatchThreadID</code> 是一个 <code>uint3</code> 类型的变量，表示<strong>当前线程在全局线程空间中的ID</strong>。</li>
-<li>它的三个分量（<code>x</code>、<code>y</code>、<code>z</code>）分别表示线程在X、Y、Z三个维度上的全局索引。</li>
-</ul>
-</li>
-<li>
-<p><strong>线程的全局位置</strong>：</p>
-<ul>
-<li><code>SV_DispatchThreadID</code> 的值范围由<strong>程序语言层（例如C#）</strong> 的<code>Dispatch</code> 调用，和<strong>HLSL语言</strong>中的 <code>numthreads</code> 语句定义。</li>
-<li>例如，如果调度了 <code>Dispatch(10, 20, 30)</code>，并且 <code>numthreads</code> 是 <code>[8, 8, 1]</code>，那么：
-<ul>
-<li><code>SV_DispatchThreadID.x</code> 的范围是 <code>[0, 10*8-1]</code>（即 <code>[0, 79]</code>）。</li>
-<li><code>SV_DispatchThreadID.y</code> 的范围是 <code>[0, 20*8-1]</code>（即 <code>[0, 159]</code>）。</li>
-<li><code>SV_DispatchThreadID.z</code> 的范围是 <code>[0, 30*1-1]</code>（即 <code>[0, 29]</code>）。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>用途</strong>：</p>
-<ul>
-<li><code>SV_DispatchThreadID</code> 通常用于确定当前线程处理的数据索引。</li>
-<li>例如，在处理2D纹理时，<code>SV_DispatchThreadID.xy</code> 可以直接用作纹理坐标。</li>
-<li>在处理1D数组时，<code>SV_DispatchThreadID.x</code> 可以直接用作数组索引。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="sv_dispatchthreadid-的计算方式"><code>SV_DispatchThreadID</code> 的计算方式</h2>
-<p><code>SV_DispatchThreadID</code> 的值是由以下两个因素决定的：</p>
-<ol>
-<li>
-<p><strong>线程组的大小</strong>（由 <code>numthreads</code> 定义）：</p>
-<ul>
-<li>例如，<code>[numthreads(8, 8, 1)]</code> 表示每个线程组有 8x8x1 = 64 个线程。<strong>即是说，numthread语句，是声明“线程”的。</strong></li>
-</ul>
-</li>
-<li>
-<p><strong>线程组的数量</strong>（由 <code>Dispatch</code> 调用定义）：</p>
-<ul>
-<li>例如，<code>Dispatch(10, 20, 30)</code> 表示在X、Y、Z三个维度上分别调度了10、20、30个线程组。<strong>即是说，Dispatch语句，是声明“线程组”的。</strong></li>
-</ul>
-</li>
-</ol>
-<p><code>SV_DispatchThreadID</code> 的计算公式如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plaintext" data-lang="plaintext"><span style="display:flex;"><span>SV_DispatchThreadID.x = GroupID.x * ThreadGroupSize.x + ThreadID.x
-</span></span><span style="display:flex;"><span>SV_DispatchThreadID.y = GroupID.y * ThreadGroupSize.y + ThreadID.y
-</span></span><span style="display:flex;"><span>SV_DispatchThreadID.z = GroupID.z * ThreadGroupSize.z + ThreadID.z
-</span></span></code></pre></div><ul>
-<li><strong>GroupID</strong>：当前线程组的ID（通过 <code>SV_GroupID</code> 获取）。</li>
-<li><strong>ThreadID</strong>：当前线程在线程组内的局部ID（通过 <code>SV_GroupThreadID</code> 获取）。</li>
-<li><strong>ThreadGroupSize</strong>：线程组的大小（由 <code>numthreads</code> 定义）。</li>
-</ul>
-<hr>
-<h2 id="示例">示例</h2>
-<p>假设我们有以下Compute Shader代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span>[<span style="color:#a6e22e">numthreads</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">1</span>)]
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> CSMain(<span style="color:#66d9ef">uint3</span> id <span style="color:#f92672">:</span> <span style="color:#a6e22e">SV_DispatchThreadID</span>)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// id.x 和 id.y 表示当前线程的全局ID</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// id.z 表示当前线程在Z轴上的ID（在这个例子中始终为0）</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ul>
-<li><strong>线程组大小</strong>：<code>[numthreads(8, 8, 1)]</code> 表示每个线程组有 8x8x1 = 64 个线程。</li>
-<li><strong>调度调用</strong>：<code>Dispatch(10, 20, 1)</code> 表示在X、Y、Z三个维度上分别调度了10、20、1个线程组。</li>
-</ul>
-<p>那么：</p>
-<ul>
-<li><code>SV_DispatchThreadID.x</code> 的范围是 <code>[0, 10*8-1]</code>（即 <code>[0, 79]</code>）。</li>
-<li><code>SV_DispatchThreadID.y</code> 的范围是 <code>[0, 20*8-1]</code>（即 <code>[0, 159]</code>）。</li>
-<li><code>SV_DispatchThreadID.z</code> 的范围是 <code>[0, 1*1-1]</code>（即 <code>[0, 0]</code>）。</li>
-</ul>
-<hr>
-<h2 id="其他相关语义">其他相关语义</h2>
-<p>在Compute Shader中，除了 <code>SV_DispatchThreadID</code>，还有其他几个常用的语义：</p>
-<ol>
-<li>
-<p><strong>SV_GroupID</strong>：</p>
-<ul>
-<li>表示当前线程组的ID（<code>uint3</code> 类型）。<strong>即是对应于Dispatch函数中的三个参数的数值</strong>。</li>
-<li>例如，<code>Dispatch(10, 20, 30)</code> 时，<code>SV_GroupID.x</code> 的范围是 <code>[0, 9]</code>，<code>SV_GroupID.y</code> 的范围是 <code>[0, 19]</code>，<code>SV_GroupID.z</code> 的范围是 <code>[0, 29]</code>。</li>
-</ul>
-</li>
-<li>
-<p><strong>SV_GroupThreadID</strong>：</p>
-<ul>
-<li>表示当前线程在线程组内的局部ID（<code>uint3</code> 类型）。<strong>即是对应于Dispatch函数中的三个参数的数值</strong>。</li>
-<li>例如，<code>[numthreads(8, 8, 1)]</code> 时，<code>SV_GroupThreadID.x</code> 的范围是 <code>[0, 7]</code>，<code>SV_GroupThreadID.y</code> 的范围是 <code>[0, 7]</code>，<code>SV_GroupThreadID.z</code> 的范围是 <code>[0, 0]</code>。</li>
-</ul>
-</li>
-<li>
-<p><strong>SV_GroupIndex</strong>：</p>
-<ul>
-<li>表示当前线程在线程组内的线性索引（<code>uint</code> 类型）。<strong>即是对应于numthreads函数中的三个参数的乘积</strong>。</li>
-<li>例如，<code>[numthreads(8, 8, 1)]</code> 时，<code>SV_GroupIndex</code> 的范围是 <code>[0, 63]</code>。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="实际应用">实际应用</h2>
-<p><code>SV_DispatchThreadID</code> 通常用于确定当前线程处理的数据索引。例如：</p>
-<ol>
-<li>
-<p><strong>处理2D纹理</strong>：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span>[<span style="color:#a6e22e">numthreads</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">1</span>)]
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> CSMain(<span style="color:#66d9ef">uint3</span> id <span style="color:#f92672">:</span> <span style="color:#a6e22e">SV_DispatchThreadID</span>)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float4</span> color <span style="color:#f92672">=</span> tex2D(inputTexture, <span style="color:#66d9ef">float2</span>(id.x, id.y));
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 处理颜色数据</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></li>
-<li>
-<p><strong>处理1D数组</strong>：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span>[<span style="color:#a6e22e">numthreads</span>(<span style="color:#ae81ff">64</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)]
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> CSMain(<span style="color:#66d9ef">uint3</span> id <span style="color:#f92672">:</span> <span style="color:#a6e22e">SV_DispatchThreadID</span>)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> value <span style="color:#f92672">=</span> inputArray[id.x];
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 处理数组数据</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></li>
-<li>
-<p><strong>处理3D体素</strong>：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span>[<span style="color:#a6e22e">numthreads</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>)]
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> CSMain(<span style="color:#66d9ef">uint3</span> id <span style="color:#f92672">:</span> <span style="color:#a6e22e">SV_DispatchThreadID</span>)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> value <span style="color:#f92672">=</span> voxelData[id.x <span style="color:#f92672">+</span> id.y <span style="color:#f92672">*</span> width <span style="color:#f92672">+</span> id.z <span style="color:#f92672">*</span> width <span style="color:#f92672">*</span> height];
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 处理体素数据</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div></li>
-</ol>
-<hr>
-<h2 id="总结">总结</h2>
-<ul>
-<li><code>SV_DispatchThreadID</code> 是Compute Shader中用于获取当前线程全局ID的语义。</li>
-<li>它是一个 <code>uint3</code> 类型的变量，表示线程在X、Y、Z三个维度上的全局索引。</li>
-<li>它的值由 <code>numthreads</code> 和 <code>Dispatch</code> 调用共同决定。</li>
-<li>在Compute Shader中，<code>SV_DispatchThreadID</code> 通常用于确定当前线程处理的数据索引，是并行计算的核心概念之一。</li>
-</ul>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/texture_streaming/">使用mipmap streaming来优化GPU的纹理内存</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/reconstruct_world_position/">一段根据片元深度值重建对应的深度坐标值的代码及其解释</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/surface_depth/">一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/dynamiclightmap_on/">Unity3D的内置宏 DYNAMICLIGHTMAP_ON</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/requires_vertex_shadow_coord_interpolator/">Unity3D的内置宏 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>一篇文章说透计算着色器的SV_DispatchThreadID | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="一篇文章说透计算着色器的SV_DispatchThreadID"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/hlsl_sv_dispatch_thread_id_detail/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="一篇文章说透计算着色器的SV_DispatchThreadID"><meta property="og:description" content="一篇文章说透计算着色器的SV_DispatchThreadID"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2024-12-30T20:20:49+08:00"><meta property="article:modified_time" content="2024-12-30T20:20:49+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="一篇文章说透计算着色器的SV_DispatchThreadID"><meta itemprop=description content="一篇文章说透计算着色器的SV_DispatchThreadID"><meta itemprop=datePublished content="2024-12-30T20:20:49+08:00"><meta itemprop=dateModified content="2024-12-30T20:20:49+08:00"><meta itemprop=wordCount content="289"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>一篇文章说透计算着色器的SV_DispatchThreadID</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2024-12-30T20:20:49+08:00>December 30, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>一篇文章说透计算着色器的SV_DispatchThreadID</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#sv_dispatchthreadid-的含义><code>SV_DispatchThreadID</code> 的含义</a></li><li><a href=#sv_dispatchthreadid-的计算方式><code>SV_DispatchThreadID</code> 的计算方式</a></li><li><a href=#示例>示例</a></li><li><a href=#其他相关语义>其他相关语义</a></li><li><a href=#实际应用>实际应用</a></li><li><a href=#总结>总结</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><code>SV_DispatchThreadID</code> 是HLSL（High-Level Shading Language）中的一个语义（Semantic），用于在Compute Shader中获取当前线程的全局线程ID。它是Compute Shader中非常重要的一个概念，用于确定每个线程处理的数据或任务。</p><hr><h2 id=sv_dispatchthreadid-的含义><code>SV_DispatchThreadID</code> 的含义</h2><ol><li><p><strong>全局线程ID</strong>：</p><ul><li><code>SV_DispatchThreadID</code> 是一个 <code>uint3</code> 类型的变量，表示<strong>当前线程在全局线程空间中的ID</strong>。</li><li>它的三个分量（<code>x</code>、<code>y</code>、<code>z</code>）分别表示线程在X、Y、Z三个维度上的全局索引。</li></ul></li><li><p><strong>线程的全局位置</strong>：</p><ul><li><code>SV_DispatchThreadID</code> 的值范围由<strong>程序语言层（例如C#）</strong> 的<code>Dispatch</code> 调用，和<strong>HLSL语言</strong>中的 <code>numthreads</code> 语句定义。</li><li>例如，如果调度了 <code>Dispatch(10, 20, 30)</code>，并且 <code>numthreads</code> 是 <code>[8, 8, 1]</code>，那么：<ul><li><code>SV_DispatchThreadID.x</code> 的范围是 <code>[0, 10*8-1]</code>（即 <code>[0, 79]</code>）。</li><li><code>SV_DispatchThreadID.y</code> 的范围是 <code>[0, 20*8-1]</code>（即 <code>[0, 159]</code>）。</li><li><code>SV_DispatchThreadID.z</code> 的范围是 <code>[0, 30*1-1]</code>（即 <code>[0, 29]</code>）。</li></ul></li></ul></li><li><p><strong>用途</strong>：</p><ul><li><code>SV_DispatchThreadID</code> 通常用于确定当前线程处理的数据索引。</li><li>例如，在处理2D纹理时，<code>SV_DispatchThreadID.xy</code> 可以直接用作纹理坐标。</li><li>在处理1D数组时，<code>SV_DispatchThreadID.x</code> 可以直接用作数组索引。</li></ul></li></ol><hr><h2 id=sv_dispatchthreadid-的计算方式><code>SV_DispatchThreadID</code> 的计算方式</h2><p><code>SV_DispatchThreadID</code> 的值是由以下两个因素决定的：</p><ol><li><p><strong>线程组的大小</strong>（由 <code>numthreads</code> 定义）：</p><ul><li>例如，<code>[numthreads(8, 8, 1)]</code> 表示每个线程组有 8x8x1 = 64 个线程。<strong>即是说，numthread语句，是声明“线程”的。</strong></li></ul></li><li><p><strong>线程组的数量</strong>（由 <code>Dispatch</code> 调用定义）：</p><ul><li>例如，<code>Dispatch(10, 20, 30)</code> 表示在X、Y、Z三个维度上分别调度了10、20、30个线程组。<strong>即是说，Dispatch语句，是声明“线程组”的。</strong></li></ul></li></ol><p><code>SV_DispatchThreadID</code> 的计算公式如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-plaintext data-lang=plaintext><span style=display:flex><span>SV_DispatchThreadID.x = GroupID.x * ThreadGroupSize.x + ThreadID.x
+</span></span><span style=display:flex><span>SV_DispatchThreadID.y = GroupID.y * ThreadGroupSize.y + ThreadID.y
+</span></span><span style=display:flex><span>SV_DispatchThreadID.z = GroupID.z * ThreadGroupSize.z + ThreadID.z
+</span></span></code></pre></div><ul><li><strong>GroupID</strong>：当前线程组的ID（通过 <code>SV_GroupID</code> 获取）。</li><li><strong>ThreadID</strong>：当前线程在线程组内的局部ID（通过 <code>SV_GroupThreadID</code> 获取）。</li><li><strong>ThreadGroupSize</strong>：线程组的大小（由 <code>numthreads</code> 定义）。</li></ul><hr><h2 id=示例>示例</h2><p>假设我们有以下Compute Shader代码：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#1f2328>[</span><span style=color:#0550ae>numthreads</span><span style=color:#1f2328>(</span><span style=color:#0550ae>8</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>8</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> CSMain<span style=color:#1f2328>(</span><span style=color:#cf222e>uint3</span> id <span style=color:#0550ae>:</span> <span style=color:#0550ae>SV_DispatchThreadID</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// id.x 和 id.y 表示当前线程的全局ID</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// id.z 表示当前线程在Z轴上的ID（在这个例子中始终为0）</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><ul><li><strong>线程组大小</strong>：<code>[numthreads(8, 8, 1)]</code> 表示每个线程组有 8x8x1 = 64 个线程。</li><li><strong>调度调用</strong>：<code>Dispatch(10, 20, 1)</code> 表示在X、Y、Z三个维度上分别调度了10、20、1个线程组。</li></ul><p>那么：</p><ul><li><code>SV_DispatchThreadID.x</code> 的范围是 <code>[0, 10*8-1]</code>（即 <code>[0, 79]</code>）。</li><li><code>SV_DispatchThreadID.y</code> 的范围是 <code>[0, 20*8-1]</code>（即 <code>[0, 159]</code>）。</li><li><code>SV_DispatchThreadID.z</code> 的范围是 <code>[0, 1*1-1]</code>（即 <code>[0, 0]</code>）。</li></ul><hr><h2 id=其他相关语义>其他相关语义</h2><p>在Compute Shader中，除了 <code>SV_DispatchThreadID</code>，还有其他几个常用的语义：</p><ol><li><p><strong>SV_GroupID</strong>：</p><ul><li>表示当前线程组的ID（<code>uint3</code> 类型）。<strong>即是对应于Dispatch函数中的三个参数的数值</strong>。</li><li>例如，<code>Dispatch(10, 20, 30)</code> 时，<code>SV_GroupID.x</code> 的范围是 <code>[0, 9]</code>，<code>SV_GroupID.y</code> 的范围是 <code>[0, 19]</code>，<code>SV_GroupID.z</code> 的范围是 <code>[0, 29]</code>。</li></ul></li><li><p><strong>SV_GroupThreadID</strong>：</p><ul><li>表示当前线程在线程组内的局部ID（<code>uint3</code> 类型）。<strong>即是对应于Dispatch函数中的三个参数的数值</strong>。</li><li>例如，<code>[numthreads(8, 8, 1)]</code> 时，<code>SV_GroupThreadID.x</code> 的范围是 <code>[0, 7]</code>，<code>SV_GroupThreadID.y</code> 的范围是 <code>[0, 7]</code>，<code>SV_GroupThreadID.z</code> 的范围是 <code>[0, 0]</code>。</li></ul></li><li><p><strong>SV_GroupIndex</strong>：</p><ul><li>表示当前线程在线程组内的线性索引（<code>uint</code> 类型）。<strong>即是对应于numthreads函数中的三个参数的乘积</strong>。</li><li>例如，<code>[numthreads(8, 8, 1)]</code> 时，<code>SV_GroupIndex</code> 的范围是 <code>[0, 63]</code>。</li></ul></li></ol><hr><h2 id=实际应用>实际应用</h2><p><code>SV_DispatchThreadID</code> 通常用于确定当前线程处理的数据索引。例如：</p><ol><li><p><strong>处理2D纹理</strong>：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#1f2328>[</span><span style=color:#0550ae>numthreads</span><span style=color:#1f2328>(</span><span style=color:#0550ae>8</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>8</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> CSMain<span style=color:#1f2328>(</span><span style=color:#cf222e>uint3</span> id <span style=color:#0550ae>:</span> <span style=color:#0550ae>SV_DispatchThreadID</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float4</span> color <span style=color:#0550ae>=</span> <span style=color:#6639ba>tex2D</span><span style=color:#1f2328>(</span>inputTexture<span style=color:#1f2328>,</span> <span style=color:#cf222e>float2</span><span style=color:#1f2328>(</span>id<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> id<span style=color:#1f2328>.</span>y<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 处理颜色数据</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></li><li><p><strong>处理1D数组</strong>：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#1f2328>[</span><span style=color:#0550ae>numthreads</span><span style=color:#1f2328>(</span><span style=color:#0550ae>64</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> CSMain<span style=color:#1f2328>(</span><span style=color:#cf222e>uint3</span> id <span style=color:#0550ae>:</span> <span style=color:#0550ae>SV_DispatchThreadID</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> value <span style=color:#0550ae>=</span> inputArray<span style=color:#1f2328>[</span>id<span style=color:#1f2328>.</span>x<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 处理数组数据</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></li><li><p><strong>处理3D体素</strong>：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#1f2328>[</span><span style=color:#0550ae>numthreads</span><span style=color:#1f2328>(</span><span style=color:#0550ae>8</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>8</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>8</span><span style=color:#1f2328>)]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> CSMain<span style=color:#1f2328>(</span><span style=color:#cf222e>uint3</span> id <span style=color:#0550ae>:</span> <span style=color:#0550ae>SV_DispatchThreadID</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> value <span style=color:#0550ae>=</span> voxelData<span style=color:#1f2328>[</span>id<span style=color:#1f2328>.</span>x <span style=color:#0550ae>+</span> id<span style=color:#1f2328>.</span>y <span style=color:#0550ae>*</span> width <span style=color:#0550ae>+</span> id<span style=color:#1f2328>.</span>z <span style=color:#0550ae>*</span> width <span style=color:#0550ae>*</span> height<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 处理体素数据</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></li></ol><hr><h2 id=总结>总结</h2><ul><li><code>SV_DispatchThreadID</code> 是Compute Shader中用于获取当前线程全局ID的语义。</li><li>它是一个 <code>uint3</code> 类型的变量，表示线程在X、Y、Z三个维度上的全局索引。</li><li>它的值由 <code>numthreads</code> 和 <code>Dispatch</code> 调用共同决定。</li><li>在Compute Shader中，<code>SV_DispatchThreadID</code> 通常用于确定当前线程处理的数据索引，是并行计算的核心概念之一。</li></ul></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/texture_streaming/>使用mipmap streaming来优化GPU的纹理内存</a></li><li class=related__item><a class=related__link href=/post/unity3d/reconstruct_world_position/>一段根据片元深度值重建对应的深度坐标值的代码及其解释</a></li><li class=related__item><a class=related__link href=/post/unity3d/surface_depth/>一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</a></li><li class=related__item><a class=related__link href=/post/unity3d/dynamiclightmap_on/>Unity3D的内置宏 DYNAMICLIGHTMAP_ON</a></li><li class=related__item><a class=related__link href=/post/unity3d/requires_vertex_shadow_coord_interpolator/>Unity3D的内置宏 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

@@ -1,351 +1,69 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta name="generator" content="Hugo 0.121.2">
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Responsive card-based &amp; code-light Hugo theme">
-		<meta property="og:title" content="XGF" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/" />
-
-
-		<meta itemprop="name" content="XGF">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-home">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-			<div class="cards">
-					<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_8_2/">深度探索DxFramework 8-2</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第8章 World Map的剖析 2 8.2 Demo的游戏角色 8.2.1 游戏角色（role）的概念 world map demo用C_MapPC类描述了游戏主角player。而C_MapPC又继承自C_MapObject。追本溯源，就必须先要分析和理解C_MapPC类的实现。前面提过，C_MapObject继承自C_GameObject2D。是作为任何一种在游戏场景地图上的游戏对象（game object）的基类。比如主角，敌人，各种宝物等等。在这个demo中。这些“地图上的游戏对象”有什么共同的属性？答案就在C_MapObejct类的成员变量中：
-class C_MapObject : public C_GameObject2D { protected: DIR_TYPE face; //角色的朝向，东，南，西，北 int moveX; //每次角色移动距离的 int moveY; //大小，以像素为单位 int stepSize; //moveX/moveY变量的修正值 int xPos, yPos; //角色在世界中的坐标 int xModifier, //用在包围盒计算的修正值，将会在 int yModifier; //CheckWalkOn成员函数中使用 int animFrame; //当前播放的动画帧 C_Sprite* p_MapSprite // sprite on map }; DIR_TYPE类型的face成员变量很好理解，在大部分2D游戏中，主角，或者是NPC。都有着四个或者更多的朝向。如果是静止的物品，比如说是一个不会动的道具，那么它的朝向就只有一个。对应地，每一个朝向也对应着一系列的动画帧，如图：
-int类型的成员变量moveX，moveY也容易理解，当游戏对象在世界中移动时，每一帧都产生了位移。world map demo是基于二维空间的，所以必须使用两个变量来分别描述游戏对象沿着X轴和Y轴产生的位移。游戏对象既然生存在“游戏世界”中，所以就需要两个成员变量xPos，yPos来描述它在世界中的位置，以便进行绘制和其他相关的操作。作为一个2D游戏对象，要能渲染出来，就肯定少不了需要一个C_Sprite实例来作为它的成员。如果这个2D游戏对象还有动画效果的话，就应还需要一个变量来维护当前正绘制的动画帧。C_Sprite类型的对象指针p_MapSprite和int类型成员变animFrame正是满足所需。另外的几个修正值变量：stepSize，xModifier，yModifer将会在后面代码分析中详细描述它们的含义和作用。
-在world map demo中，游戏对象有几个重要的行为。它们是：
-游戏对象和场景间的碰撞检测。即是说某个游戏对象，比如主角，能否通过某一个格子而向前移动。 游戏对象沿着某个方向移动。 游戏对象在游戏场景地图中绘制。 游戏对象在小地图中绘制。 //负责移动map object在地图上移动的函数 void C_MapObject::Move(DIR_TYPE direction) { if (direction == DIR_NORTH) { moveY = -stepSize; } else if (direction == DIR_SOUTH) { moveY = stepSize; } else if (direction == DIR_EAST) { moveX = stepSize; } else { //(direction == DIR_WEST) moveX = -stepSize; } face = direction; ++animFrame; } 上面的函数很好理解，stepSize成员变量的作用在此也很明白了。就是根据不同的移动方向，设定沿X轴，Y轴移动的位移量。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-20T18:08:30&#43;08:00">October 20, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-					</div>
-					<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_8_1/">深度探索DxFramework 8-1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第8章 World Map的剖析 1 World map demo展示了经典的2D RPG的一些基本的实现技术。在world map demo中，玩家通过键盘操纵主角，即一个小精灵。在几个场景中来回行走。。游戏运行时如图：
-这个demo的程序代码分别在以下几个文件中，它们分别是：
-worldmap.h worldmap.cpp mapobject.cpp mapobject.h map_pc.h map_pc.cpp 这个Demo主要实现了的几个技术点功能是：
-游戏场景的瓷砖拼图实现。 大于屏幕的地图的卷轴（scrolling）显示技术 游戏场景地图之间的切换。 主角和场景之间的碰撞检测 小地图的显示。 玩一玩这个demo。并且用面向对象的思维方式思考一下，这个demo可以划分成怎样的类？对象的粒度，类的层次应该如何搭建比较合适？我们可以追随这个demo的设计者的思维，看看为了实现这个demo，他们是如何进行架构分析的。
-前面我们提过，每一个利用DxFramework开发的游戏实例，都是一个game state。world map demo也不能违反这个规定，所以实现了一个类C_WorldMap，此类继承自C_GameState。此类作为一个游戏“总管”，负责了游戏场景地图的初始化和渲染；外设输入的响应；游戏状态的更新；以及对所有在地图上的游戏对象（game object），比如主角等，进行管理。
-类C_MapObject继承自C_GameObject2D。它可以用来作为任何一种在游戏场景地图上的物体（map object）的基类。比如主角，敌人，各种道具等等。world map demo只实现了“主角”这一个在地图上的物体。如果要实现各种宝物的话，可以继承自C_MapObject，派生一个具有宝物行为和属性的类即可。
-类C_MapPC则表示了由玩家控制的主角player。C_MapPC继承自C_MapObject。表明了主角player也是“生存”在场景中，拥有map object的一般行为。world map demo主要就是利用了这三个类实现了游戏，架构很简单明了。下面是这个demo的静态类图：
-上面的图反映了world map demo的类层次架构，而这个demo的运行时序则如下图：
-DxFramework调用类C_WorldMap的构造函数，构造出游戏场景；构造出各种游戏对象（game object）实例对象，在这demo中就是C_MapPC类的一个实例对象。然后在每一帧中，DxFramework调用void C_WorldMap::Update()函数，在这个函数中响应了外设的输入；更新world map demo的游戏场景和游戏对象的各个属性状态。其后DxFramework调用void C_WorldMap::Render2D()，把游戏场景，各种游戏对象，统计窗口，小地图依次渲染出来。
-8.1. demo的场景地图分析 游戏场景是一个游戏中最重要的部件之一。作为角色，道具，游戏剧本的载体。游戏中发生的各种各样的事件，游戏剧情的发展，都离不开游戏场景这一个“容器”。因此，场景作为游戏世界的一个具体表现，它应该负责整个游戏框架内场景状态的各种操作，控制。同时它也应该能对“在它上面”的游戏组成元素进行有效的管理，比如对各种敌人的添加，删除，状态更新等等。游戏场景各种角色道具剧本都应该以特定的次序添加到场景中。它还应该负责对玩家的输入操作进行管理和派发，等等。正因为如此，demo用整个游戏实例类C_Worldmap来实现场景管理是合理的。下面就来一步一步分析world map demo是如何组织和管理场景的。
-8.1.1. 场景坐标系和屏幕坐标系 在讨论场景之前，有必要弄明白两个非常重要的概念：场景坐标系 ，屏幕坐标系。所作者在写作过程中曾经以“世界坐标系”表达这同一个概念，但是在3D渲染流水线中也有一个“世界坐标系”。考虑到这样会导致读者产生混淆，所以在这里改用“场景坐标系”表示这一概念谓的场景坐标系就是指，以实际游戏场景地图的某个点为原点，指定。。。。屏幕坐标系是指。。。
-为什么要建立两个坐标系？用一个屏幕坐标系也完全可以实现的啊？道理很简单，因为一个屏幕不能全部显现整副地图，地图需要卷动才能显现各部分于屏幕上。引入场景坐标系，将大大方便了后文提到的“地图卷轴”技术的实现。
-指定一个坐标系有两个要素，第一个就是原点的定位，第二个就是坐标轴的朝向。千言万语不如一张图来得直观。世界坐标系和屏幕坐标系的关系如下图：
-明白了场景坐标系和屏幕坐标系后，可以开始着手分析了游戏场景的组成了World map采用了常用的正方形瓷砖拼图（tile）的方式来组织地图元素。什么是瓷砖拼图？观察上面的游戏运行时的图，可以发现，大多数场景都是呈有规律状地重复排列的。因此，美术人员在着手绘制游戏场景的时候，并不需要整幅整副图去绘制。而是绘制一系列大小相同而样子不同的图片，这些图片便称之为瓷砖（tile）。然后针对不同的场景设定要求，利用编辑器，把整个场景划分成一系列和瓷砖大小一样的格子。接着好像铺地板一样，把瓷砖贴到相对应的格子中。外观表现相同的格子就贴同一种瓷砖就可以了。这样子，利用有限的瓷砖图片，就可以组合成各种各样不同的场景，既可以大量地节省美术人员的时间，也可以提高游戏的性能。一般地，美术人员绘制好所有的瓷砖图片之后，都会把这些瓷砖整合成一张大的图片。这样子的好处是，用一个大存储空间来保存这些图片数据，其运行效率和工作性能都比用几个小的存储空间保存多个图片要好。world map demo使用的场景瓷砖图片的文件如下：
-可以看到，world map使用了四种瓷砖，通过对这四种瓷砖进行各样的排列，就能拼成各种不同的游戏场景地图。这四种瓷砖分别是草地，岩石，树林，河水。
-8.1.2. 场景数据的组织 有了不同的瓷砖，在计算机中，就必须要用不同的数值去表示它。在world map demo中。分别使用整数0，1，2，3表示草地，岩石，树林，河水。在游戏中，游戏场景地图数据都是用文件的方式保存在磁盘中，在初始化的时候再从磁盘中载入到内存中。world map demo也不例外。这个demo的所有游戏场景地图的信息都是保存在map.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-19T18:08:30&#43;08:00">October 19, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-					</div>
-					<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_7_1/">深度探索DxFramework 7-1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第7章 </div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-18T18:08:30&#43;08:00">October 18, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-					</div>
-					<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_6_1/">深度探索DxFramework 6-1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第6章 </div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-17T18:08:30&#43;08:00">October 17, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-					</div>
-					<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_5_1/">深度探索DxFramework 5-1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第5章 </div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-16T18:08:30&#43;08:00">October 16, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-					</div>
-					<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_4_1/">深度探索DxFramework 4-1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第4章 初始锋芒 剖析DemoA 4.1 Demo实现的功能点和整体架构 4.1.1 实现的功能点 4.1.2 Demo的整体架构 4.2 Demo实例类的定义和初始化 class C_DemoA : public C_GameState { public: C_DemoA(); virtual ~C_DemoA(); virtual void Input(); virtual void Update(); virtual void Render2D(); private: C_Sprite* p_Background; //背景图片 C_Sprite* p_Box; //用来演示的小方盒 // 各种dxfrramework支持的图片格式 C_Sprite* p_Bmp8; //8位bmp格式 C_Sprite* p_Bmp24; //24位bmp格式 C_Sprite* p_Png8; //8位png格式 C_Sprite* p_Png24; //24位png格式 C_Sprite* p_Png32; //32位png格式 DVECTOR2 translation; // box的屏幕坐标 int alpha; // box的透明度 static const int VELOCITY; // box的移动速度，为常量 static const int ANIMATION_SPEED; // box的动画变化速度，为常量 }; C_DemoA::C_DemoA() { alpha = 255; p_Background = new C_Sprite(_T(&#34;demoa_background.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-15T18:08:30&#43;08:00">October 15, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-					</div>
-					<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_3_2/">深度探索DxFramework 3-2</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第3章 步入二维游戏的世界 2 3.5 DxFramework对精灵的封装实现 3.5.1 什么是精灵 3.5.2 精灵的实现——C_Sprite类 3.6 游戏中的Game Object 3.6.1 game object的定义 3.6.2 二维的game object GameObject2D类 </div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-14T18:08:30&#43;08:00">October 14, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-					</div>
-					<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_3_1/">深度探索DxFramework 3-1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第3章 步入二维游戏的世界 1 3.1 二维动画的原理 在介绍计算机动画的原理之前，先谈谈大家都非常熟悉的电影的播放原理。播放电影的时候需要一大盘的电影胶片。胶片上面就是一帧一帧连续的静止图像。当播放的时候，把胶片按播放顺序，依次通过播放机的镜头，这样胶片上的图像将会逐帧投影到银幕上。因为人眼存在着视觉暂留的生理现象。当眼睛正在观察的物体突然消失的时候，被观察的物体还能在人眼中存留约1/24秒左右。因此，只要一系列本来就是连续的静止的图像，当以合适的速度逐个通过人眼的时候。便会产生连续的“会动”的视觉效果。
-根据人的视觉存留时间可以知道，当电影胶片以每秒24帧的速度播放时，人们看到的就是和现实生活中速度相同的画面。当电影胶片以每秒大于24帧的速度播放时，画面中的各种动作将会变快，这就是俗称的“快镜头”。而如果电影胶片以每秒低于24帧的速度播放时，画面中的各种动作将会变慢，这就是俗称的“慢镜头”。
-计算机动画的原理和播放电影的原理是类似的。举一个简单的二维动画例子：假如要做一个人物走动的二维动画，首先要研究人走路时身体各部位，如躯干、四肢移动摆动的位置。然后按相应时间相应的位置，把这些连续动作绘制成一副副的图。在计算机中就可以存储在一些图片文件中。这些“一副副的图”其实就是类似于电影胶片。把图从磁盘文件中载入到内存，然后按顺序将其逐帧在屏幕中绘制出来，就类似于播放电影的过程。当一组动作播放完成后，再从头从动作的第一帧播放，周而复始，就形成了连贯的动画。
-三维动画和二维动画播放原理是一致的，也是一帧一帧地在屏幕中绘制。与二维动画类似，三维动画也可以分实时和非实时。我们玩的三维计算机游戏的游戏画面其实就可以认为是一种实时三维动画，这些画面都是在每一帧显示前由计算机实时地计算生成。非实时三维动画则用相关软件预先逐帧计算好并且存储在文件中，播放的时候从文件中逐帧读取数据显示即可。在本章中先讨论二维动画。
-3.2 基础数学工具 接着介绍是vector2.h文件中的模板类和函数。VECTOR2定义了一个二维矢量的模板类。
-#pragma once #include &#34;globals.h&#34; #include &#34;error.h&#34; //最小误差，意思是两浮点数之差为小于0.0001的时候， //就认为这两浮点数是相等的。 const XFLOAT VECTOR2_ZERO_TOLERANCE = 0.0001; /* MSVC6 cannot use the overloaded operators due to a compiler bug/feature */ #if _MSC_VER &lt; 1300 #ifndef NO_TEMPLATE_SELECTION #define NO_TEMPLATE_SELECTION #endif #endif template&lt; class T &gt; class VECTOR2 { public: VECTOR2() {} VECTOR2(const T&amp; x, const T&amp; y) : x(x), y(y) {} //复制Direct3D的D3DXVECTOR2类型数据的内容 VECTOR2(const D3DXVECTOR2&amp; v) : x((T)v.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-13T18:08:30&#43;08:00">October 13, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-					</div>
-					<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_2_2/">深度探索DxFramework 2-2</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第2章 DxFramework的架构剖析 2 2.3 DxFramework的内存泄漏检测机制 内存泄漏（memory leak）是使用C/C++等程序设计语言进行编程时常常见到的一个问题。内存泄漏给程序运行时带来的影响有很多。一般最后的结果要么是程序死掉；要么是提示系统内存不足。还有一种可能就是程序不会死掉，但是程序的响应速度会明显变慢。
-2.3.1 内存泄漏的原因 产生内存泄漏的原因一般是如下几点：
-动态分配了内存空间，在不需要时忘记释放。 动态分配了内存空间，在不需要时忘记释放。 对某些API函数的不正确使用，导致内存泄漏。 在编程时忘记释放不需要的内存空间是编程时很常见。动态分配的内存在使用完毕后，如若不需要了就一定要释放。如果不释放,那就会造成内存的泄漏。如果造成内存泄漏的代码经常被调用的话，那么内存泄漏的数目就会越来越多的。从而影响整个系统的运行。 如下面的代码段：
-void SomeOperation() { int* pBuffer = new int[32]; for( int i=0; i&lt;32 ; ++i) { pBuffer[i] = i*2+1; } } 很明显，上述的局部变量pTemp指向了一段从堆（heap）空间中分配的内存空间，而在函数退出时没有作任何的释放操作。一旦调用此函数就将导致了内存泄漏。当这个函数被频繁调用的时候，堆空间的内存空间将会被消耗殆尽。
-因为代码编写的问题,会导致某些动态分配的内存根本就无从回收,比如下面的代码段：
-void SomeOperation() { int* pBuffer1 = new int[32]; int* pBuffer2 = new int[32]; pBuffer1 = pBuffer2; if( pBuffer1 ) { delete [] pBuffer1; } } 这样,pBuffer1最初指向的那段内存空间的首地址就丢掉了，无法恢复了。这时候最初分配的那一段内存空间就无法释放掉。
-Windows提供了一些特殊的API,如FormatMessage。如果给它参数传递的函数有FORMAT_MESSAGE_ALLOCATE_BUFFER,它会在函数内部动态分配一块内存缓冲区，返回给用户。但是这个内存缓冲区需要用户显式调用LocalFree来释放。如果用户忘了的话。也会产生内存泄漏。如下面的代码段：
-#include &lt;windows.h&gt; #include &lt;iostream&gt; using namespace std; void FormatAndPrintOneMessage(DWORD dwError) { HLOCAL hLocal = NULL; // 用来存储返回的描述错误信息的字符串的内存缓冲区 BOOL fOK = FormatMessage( // 指定标志，动态分配一块缓冲区 FORMAT_MESSAGE_FROM_SYSTEM |FORMAT_MESSAGE_ALLOCATE_BUFFER , NULL , dwError , MAKELANGID(LANG_ENGLISH,SUBLANG_ENGLISH_US), // 返回动态分配的内存缓冲区 reinterpret_cast&lt;LPTSTR&gt;(&amp;hLocal), 0 , NULL ); if( hLocal &amp;&amp; fOK ) { cout&lt;&lt;&#34;Error Message: &#34;&lt;&lt;(reinterpret_cast&lt;LPCTSTR&gt; (LocalLock(hLocal)))&lt;&lt;endl; // 如果忘记了这一句，将会导致通过FormatMessage函数动态分配的 // 内存无法释放，从而导致内存泄漏 LocalFree(hLocal); } else { cout&lt;&lt;&#34;Error number not found&#34;&lt;&lt;endl; } } void main() { FormatAndPrintOneMessage(5); } 检查已经发布的程序是否存在内存泄漏实在是费时费力，所以我们要把内存泄漏扼杀在萌芽状态。在编码过程中就要时刻进行检查。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-12T18:08:30&#43;08:00">October 12, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-					</div>
-					<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_2_1/">深度探索DxFramework 2-1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第2章 DxFramework的架构剖析 1 2.1 DxFramework的全局头文件 在开始着手分析DxFramework之前，我们有必要先弄懂DxFramework所定义的一些在其引擎代码内部中频繁使用的一些数据类型，宏，和全局函数。
-众所周知，由于C++语言的灵活性和自由性；在不同的操作系统平台下，不同的编译器对同一关键字所指定的数据类型所占字节大小是不一致的——C++标准委员会对此也并没有做统一的要求。以int类型为例，C++标准委员会只是要求此类型的大小至少不小于16位。例如在Microsoft Win32平台下，Visual C++6编译器所实现的int是32位整形数据。而在DOS系统下，Borland C++ 3.1实现的int则只有16位。因此，为了代码的平台移植，或者是便于版本的数据类型升级和扩充，一般的大型软件系统都有其自定义的数据类型。以Microsoft定义的win32数据类型为例，就有诸如无符号双字类型，32位的DWORD；无符号单字类型，十六位的WORD；无符号的整形数据，UINT等等。DxFramework也不例外，它也有着它自身的预定义数据类型，它们定义在globals.h文件中，现在我们来逐个分析。代码如下：
-//globals.h #define WIN32_LEAN_AND_MEAN #define DIRECTINPUT_VERSION 0x0800	//指定使用的DInput版本 /* 忽略编号为4786的编译器警告 当变量标识符名字过长（超过255个字符）的时候，调试器无法调试变量标 识符号超过255个字符长度的代码。无法在调试器中查看、计算、更新或监视被截断的符号。调试器在调试过程中 将会把变量标识符“截短”至255个字符。有时在嵌套声明的变量名中，会出现一串长的警告，在使用STL 的时候， 这种警告会经常出现，使用此指令可以关掉此警告 */ #pragma warning(disable: 4786) //用来进行内存侦测的起到开关作用的宏 #ifdef _DEBUG #define _CRTDBG_MAP_ALLOC	//定义此宏，使得CRT内存泄漏侦测函数可用，此宏在crtdbg.h中定义 #define _INC_MALLOC #define enw DEBUG_NEW #endif //定义使用UNICODE的宏 #define UNICODE //如果宏UNCODE定义了，则把宏_UNICODE也定义 #ifdef UNICODE #define _UNICODE #endif #define USE_DOUBLE_FLOAT_PRECISION /* 如果定义了USE_DOUBLE_FLOAT_PRECISION宏 XVECTOR2定义为用双精度浮点数类型实例化模板类 类型的DVECTOR2替代为，XFLOAT定义为如果没有定义的话，就把XVECTOR2定义为单精度浮点数 实例化的模板类类型FVECTOR2，XFLOAT定义为floatFVECTOR2，DVECTOR2类型在vector2.h中定义， 稍后详述 */ #ifdef USE_DOUBLE_FLOAT_PRECISION #define XVECTOR2 DVECTOR2 #define XFLOAT double #else #define XVECTOR2 FVECTOR2 #define XFLOAT float #endif //预包含engine所要使用的系统头文件 #include &lt;tchar.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-11T18:08:30&#43;08:00">October 11, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-					</div>
-			</div>
-	</main>
-	
-<div class="pagination block">
-				<a class="pagination__item pagination__item--desktop" href="/">1</a>
-				<a class="pagination__item pagination__item--desktop" href="/page/2/">2</a>
-				<a class="pagination__item pagination__item--desktop" href="/page/3/">3</a>
-			<span class="pagination__item pagination__item--gap">&hellip;</span>
-				<a class="pagination__item pagination__item--desktop" href="/page/13/">13</a>
-				<span class="pagination__item pagination__item--active" data-total="15">14</span>
-				<a class="pagination__item pagination__item--desktop" href="/page/15/">15</a>
-</div>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta name=generator content="Hugo 0.165.0"><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Responsive card-based & code-light Hugo theme"><meta property="og:url" content="http://www.xionggf.com/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="XGF"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="XGF"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2026-03-28T21:21:49+08:00"><meta itemprop=dateModified content="2026-03-28T21:21:49+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-home"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/using_lightmap_data_in_shaders/></a></h1><div class=entry__content><h2 id=在unity3d-shader中使用光照贴图数据翻译>#在Unity3D shader中使用光照贴图数据【翻译】</h2><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a></strong></p><p><a href=http://barkingmousestudio.com/articles/unity-lightmaps/>原文地址</a></p><p>在Unity3D中创建一个用来接收光照图数据的shader要比你所想象的要难，这个shader的代码在<a href=https://gist.github.com/jimfleming/5937437>这里</a>。下面是做这个工作时的要特别注意的三个小贴士：</p><p>##1 surface shader是无效（不能用来接收光照图数据）的</p><p>要接收光照图数据，首先要确定的是不能使用U3D独有的表面着色器，而是要直接用Cg代码写顶点和片元着色器。即使U3D的ShaderLab语言看起来和标准的Cg语言语法不大一样，但它还是能正常工作。这是因为在U3D里面，surface shader最终还是会展开成Cg代码编写的顶点和片元着色器。而当这些ShaderLab代码被展开的时候，一些必要的光照图变量便不易察觉地自动地“为你而设置了”。因为这个原因，当你试图去访问这些这些变量时，尤其是在代码展开阶段(expansion step)，你会得到一个“未定义这些变量”的编译错误。当最后的编译shader代码的时候，你会得到一个“重复定义这些变量”的错误。</p><p>##2 U3D的内置变量unity_LightmapST是一个不合法的变量名字</p><p>另一个细节则是你必须使用正确的变量。这些变量是U3D引擎用来传递光照贴图数据的。它们是：</p><pre tabindex=0><code class=language-cg data-lang=cg>sampler2D unity_Lightmap;
+float4 unity_LightmapST;
+</code></pre><p>第二个变量用来管理光照贴图图集数据（lightmaps atlas data）。它的名字很重要，原因是它的命名规则是不正确的！（译注：Unity3D的bug？）在一般情况下，带有_ST后缀名的变量，将会由Unity根据该变量所绑定的shader property的图集，自动地传递赋值（populate）过去。现在这个变量漏了下划线了，因为一个非常有用的用来进行变换操作的宏，导致这个遗漏成了一个大问题。该宏是在UntiyCG.cginc文件中定义的TRANSFORM_TEX。代码如下：</p><pre tabindex=0><code class=language-cg data-lang=cg>#define TRANSFORM_TEX(tex,name) (tex.xy * name##_ST.xy + name##_ST.zw)
+</code></pre><p>如代码所示，在这个宏里面，变量名是需要加下划线的，所以必须仿照这个宏的定义，去手写一遍，代码如下：</p><pre tabindex=0><code class=language-cg data-lang=cg>o.uv1 = i.texcoord1.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+</code></pre><p>UnityCG.cginc文件包含了大量的便于开发的函数，完成这个工作需要用到里面的函数，所以需要在代码中包含这个文件，如下：</p><pre tabindex=0><code class=language-cg data-lang=cg>#include &#34;UnityCG.cginc&#34;
+</code></pre><p>##3 使用Unity3D提供的光照图解码函数</p><p>最后一个重要的步骤便是对光照贴图数据进行正确的解码。在不同的平台上解码方式有所不同，但U3D已经在UnityCG.cginc文件中提供了DecodeLightmap函数完成这功能，代码如下：</p><pre tabindex=0><code class=language-cg data-lang=cg>// Decodes lightmaps:
+// doubleLDR encoded on GLES
+// RGBM encoded with range [0;8] on other platforms using surface shaders
+inline fixed3 DecodeLightmap(fixed4 color)
+{
+#if defined(SHADER_API_GLES) &amp;&amp; defined(SHADER_API_MOBILE)
+    return 2.0 * color.rgb;
+#else
+    return (8.0 * color.a) * color.rgb;
+#endif
+}
+</code></pre><p>这个函数将在片元着色器中，对传递进来的光照贴图颜色数据，即参数color，依据不同的目标平台，进行转换，并且输出一个带有四个分量的颜色值。</p></div><div class="entry__meta meta mt tar"></div></article></div></div></main><div class="pagination block"><a class="pagination__item pagination__item--desktop" href=/>1</a>
+<a class="pagination__item pagination__item--desktop" href=/page/2/>2</a>
+<a class="pagination__item pagination__item--desktop" href=/page/3/>3</a>
+<span class="pagination__item pagination__item--gap">&mldr;</span>
+<a class="pagination__item pagination__item--desktop" href=/page/13/>13</a>
+<span class="pagination__item pagination__item--active" data-total=14>14</span></div></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

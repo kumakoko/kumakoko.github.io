@@ -1,379 +1,134 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Unity3D | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="Unity3D" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/tags/unity3d/" />
-
-
-		<meta itemprop="name" content="Unity3D">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/tags/unity3d/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-term">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/tags/">Tags</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity3D</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">Unity3D</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/editor/model_import_setting_wnd_model_tab/">Unity3D的Model Import Settings window - Model tab</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-1 Model tab 当选中模型文件时，Inspector窗口就会显现出Import Settings窗口，且定位到Model页。可以通过在此页中调整参数控制模型导入的细节。
-Model页上的各种属性可以分为三个区，分别是：
-分区 细节 (A) Scene 和关卡场景相关的，比如光源和摄像机的导入，还有scale factor的设置 (B) Meshes. 和网格导入相关的属性 (C) Geometry 和网格拓扑相关的户型，比如的顶点的纹理UV，法线等等 2 Scene分区的属性描述表格 属性 功能 Scale Factor 在导入的原始模型文件的比例值，不适合项目中的预期比例时，设置此值，可作为一个全局的对原始模型的缩放比例值。 Unity的物理系统，期望游戏世界中的1米，就对应于原始模型文件的1个单位。 Convert Units 启用此选项，可将导入的原始模型文件的比例值。转换为Unity的比例。导入BlendShapes时，启用此属性可允许Unity导入网格物体的混合形状。 Import BlendShapes Enable this property to allow Unity to import blend shapes with your Mesh. See Importing blend shapes below for details.Note: Importing blend shape normals requires smoothing groups in the FBX file Import Visibility 导入FBX设置，这些设置将会确定是否启用MeshRenderer组件，当启用时改mesh可见 Import Cameras 从.FBX文件中导入在这些文件中定义的camera Import Lights 从.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2020-01-02T15:40:26&#43;08:00">January 02, 2020</time>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/unityeditor/" rel="tag">UnityEditor</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/update_fixedupdate_lateupdate/">Update、FixedUpdate、LateUpdate函数，定时器和帧速率</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-1 Update、LateUpdate、FixedUpdate函数 Unity将每帧调用一次 Update() 函数。这意味着，如果你以60fps的速度运行，那意味着每秒调用60次 Update() 函数。如果以50fps的速度运行，则每秒调用50次Update函数。这也就是说。每两次执行update函数之间的时间间隔，其实是变化不定的。正是由于这一点，使用 Update() 函数的最大问题是它可能与物理引擎不同步。调用行为可以改变，因为它可以结束更快或更慢，这取决于您的图形在渲染的硬件上放置了多少负载，使用物理更新可能会导致完全错误的反应。
-Unity确实会尝试以项目所指定的速率调用FixedUpdate()函数。但是，这些调用也需要根据当前实际的帧速率去确定。这意味着虽然任何给定帧上可能有零次，一次甚至超过100次对FixedUpdate()函数的调用，但Unity会动态调整到实际帧速率。通过深入挖掘，我们逐渐意识到，这也意味着对FixedUpdate()的所有调用都不一定在指定的时间间隔内。下面举例说明下这种情况：
-默认情况下 FixedUpdate() 函数的更新频率是50FPS（0.02s），如果当游戏的更新频率为60FPS时，那么FixedUpdate有固定的更新速率是很好理解的，因为这种绝对可以保证到，每执行一次 FixedUpdate() 函数，就至少执行了一帧，但是如果游戏本身的更新频率就很低，例如为30FPS时，每一帧的时间间隔明显大于0.02秒的，那么这时候在每两次 Update() 函数的调用之间。 FixedUpdate() 函数就被调用了多次。
-通常 FixedUpdate() 函数比 Update() 函数更频繁地被调用。 FixedUpdate() 函数可以在一帧内被调用多次，如果帧速率很低，则根本不能在帧之间调用。 如果帧速率很高，也可能不会调用 FixedUpdate() 。 在 FixedUpdate() 函数被调用之后立即进行所有物理计算和更新。 作用力，扭矩或其他与物理相关的函数时，应使用FixedUpdate函数。 FixedUpdate() 函数由一个准确可信的计时器调用，而与实际的帧速率无关，因此在 FixedUpdate() 中应用移动计算时，您不需要将您的值乘以Time.deltaTime。 Update() 函数是每一帧中执行更新操作的主要（入口）函数。 Update() 函数中用来移动非物理系统驱动的物体。 Update() 函数用来接受用户输入。 Update() 函数可用来实现简单的计时器。 由于 Update() 的执行方式，与物理引擎的执行步调不同，即可能在一帧中， FixedUpdate() 函数执行了多次，而Update函数则只执行了一次。这取决于渲染器在渲染图形时的负载量，以及所耗费的CPU时间。如果在 Update() 函数中执行物理运算时，会导致未知的结果。同时也可以看到： 函数的执行间隔，未必就是TimeManager界面中Fixed TimeStep项中所指定的值。
-LateUpdate() 函数每帧会被调用一次，在 Update() 函数结束后调用 所有在 Update() 函数中执行的计算，将会在 LateUpdate() 函数调用之前完成执行。 如果实现一个跟随式的第三视角摄像机，则摄像机的状态更新放在 LateUpdate() 函数中执行是一个通用的做法。 因为你的角色是在 Update() 函数里面执行移动和转向的操作。所以在 LateUpdate() 函数执行摄像机的位置和旋转度计算，可以确保在计算时，角色已经全部完成了位置计算，摄像机可以正确地跟踪到角色的正确位置。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2019-12-31T12:32:55&#43;08:00">December 31, 2019</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_shader_optimization/">Unity3D shader优化技巧集合</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-一些优化的tips，基于2019.3版本 只做需要的计算，比如一直在shader设置某个固定颜色，就等于白做计算 能给vs做的，就不要给fs做，能在脚本设置的，就不要在shader里做，比如在shader代码里面用 if-else ,就不如在脚本中用 keyword 优化surface shader：启用 approxview 编译指示符，在光照计算时，在vs中而不是在fs中做视线向量的规格化 优化surface shader：启用 halfasview 编译指示符，在光照计算时，使用半角向量做光照计算，且半角向量的计算在vs中执行 优化surface shader：启用 noforwardadd 编译指示符，确保在 Forward rendering 模式中， 只使用一个有向平行光光源 在fs中执行光照计算，其他的实时光源都只在vs中进行计算，此指示符确保只在一个pass中执行渲染操作 优化surface shader：编译指令 noambient 禁用着色器上的环境照明和球谐光。这样可以使性能稍快一些。 数据精度的优化：世界坐标系下的坐标值，纹理映射坐标值，用 float 数据精度的优化：除了HDR颜色之外的数据，使用 half 数据精度的优化：纹理数据的相关的一些简单操作用 fixed 各种GPU的区别： 桌面GPU ，内部都会统一用 float 计算 各种GPU的区别： 移动GPU 内部能真正支持half精度，大胆地使用它 各种GPU的区别： 老旧的GPU 才内部实现了 fixed ， OpenGL ES3 及后续的都内部把 fixed 处理为 half 了 Alpha Testing ：在iOS等等使用了PowerVR芯片的平台，表现不佳。 ColorMask ：在某些平台上（大多数是在iOS和Android设备的移动GPU），使用 ColorMask 忽略某些通道（例如 ColorMask RGB ）可能会占用大量资源，因此仅在确实需要时才使用它。 参考网页： https://docs.unity3d.com/Manual/SL-ShaderPerformance.html
-https://www.cnblogs.com/sifenkesi/p/4716791.html</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2019-12-31T11:37:25&#43;08:00">December 31, 2019</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
-		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
-		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/my_books/u3d_shader_annotation/">《Unity3D内建着色器源码剖析》</a></h1>
-	<div class="entry__content">书籍信息 信息 详情 定价 89.00 出版社 人民邮电出版社 版次 1 出版时间 2019年08月 开本 16 装帧 平装 页数 334 ISBN编码 9787115507044 官方QQ群 群1号码：672523982
-书籍配套代码 代码文件 MD5值 Unity3D内建着色器源代码 版本2017.2.0f3 MD5: 1737874a497c6fa04031af3c90ff2f99 第12章的代码工程 MD5：640938e9f1a259b7e693b1abe866f368 书中参考引用到的一些技术文章 微软网站上关于DXT及BC系列格式的详细介绍 微软MSDN上有介绍块状压缩的文章 nVidia开发者网站有一篇介绍单程立体渲染原理的文章。 Unity3D官网也有单程立体渲染的介绍 《Unity3D内建着色器源码剖析》勘误表 第1版第1刷 章节 页数 位置 错误内容 正确内容 1.2.2 正文第4页 第5段第5行 $$\left&lt; p_1,p_2,p_3 \right&gt;$$ 的排列顺序称为顺时针方向（clockwise，CW）。 $$ \left&lt; p_1,p_3,p_2 \right&gt; $$ 的排列顺序称为顺时针方向（clockwise，CW）。…… 1.2.2 正文第4页 第6段第2行 在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_2,p_3 \right&gt; $$ 在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_3,p_2 \right&gt; $$ 1.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2019-12-30T15:25:10&#43;08:00">December 30, 2019</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">Shader</a>, 
-		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/mac_ios/high_ver_sdk_for_low_ver_xcode/">在低版本中的XCode中使用高版本的iOS SDK</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-当iPhone或iPad的手机的iOS系统，升级到了版本，例如11.1版本时，而当前的Xcode版本，例如Xcode9，所能编译出来的软件，最多只能支持的最高版本是11.0时，就会出现以下的问题:
-最好的解决的方式当然是直接升级XCode到最新版本，但有时候，升级XCode到最新的版本，需要你当前运行的MacOS的版本到某一个版本号，即还需要你首先升级操作系统，但往往有时候因为你的硬件比较陈旧，没法升级到某个新版本的MacOS了，这时候你就不得不购买新的iMac或者Mac Mini，而如果这时候你又 囊中羞涩 的话……。
-为了解决这个囧况，可以通过一些hack手段，让你当前低版本的XCode，能使用上新的iOS SDK。方法如下：
-1 首先下载iOS SDK 苹果网站上提供了SDK的下载，但往往在天朝内访问苹果实在太慢了，所以在 这里 有人整理出来所有的iOS SDK供下载。（ 务必注意的是，因为这些SDK是非官方渠道提供的，本站不保证其安全性和有效性，所以必须要慎用，使用的话责任自负，本站将不承担任何责任 ）。接着找到XCode程序的安装路径，一般是在 【/Appplications】 目录下，右键选择 【显示包内容】 打开，一路进入到 【/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport】 。把下载得到的SDK放置到这个DevicesSupport目录下，如图所示：
-2 修改SDKSetting.plist文件 3 修改SDKSettings.plist文件中的版本号 进入 【/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk】 目录，打开SDKSettings.plist文件，将里面所有跟版本有关的数字都修改为填上最新的SDK版本号，例如11.1即可。运行就好可以了，如下图所示：
-参考网页 解决低版本Xcode不支持高版本iOS真机调试的问题</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2019-12-30T11:35:31&#43;08:00">December 30, 2019</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/ios/" rel="category">iOS</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/ios/" rel="tag">iOS</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_component_construction_func/">继承自Monobehaviour的组件组件的构造函数</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-问题1： 在unity中，继承自MonoBehaviour的组件类可以写构造函数吗？构造函数应该是public，protected，还是private的，构造函数的执行顺序比Awake和Start事件方法更早吗？
-你想了解在Unity中，继承自MonoBehaviour的组件类里构造函数的使用规则、访问修饰符选择，以及它和Awake/Start的执行顺序关系，这个问题触及了Unity组件生命周期的核心知识点。
-一、核心结论与详细解释 1. 可以写构造函数，但强烈不推荐 从语法上讲，你完全可以为MonoBehaviour子类编写构造函数，但Unity的组件系统设计逻辑决定了这是一种错误的实践。
-原因：
-Unity组件的实例化不是由new关键字创建的，而是由Unity引擎在场景加载、对象实例化（如Instantiate()）时自动创建的。 如果你手动写构造函数，Unity引擎并不会调用它（除非你自己用new创建，但这会导致组件脱离Unity的GameObject体系，失去所有MonoBehaviour的特性）。 构造函数中如果访问Unity的核心API（如transform、gameObject），会直接报错，因为此时组件还未被引擎初始化，这些引用都是null。 2. 构造函数的访问修饰符 即使你非要写构造函数，访问修饰符的选择也没有实际意义：
-public：语法合法，但无意义，因为你不会手动new一个MonoBehaviour组件。 protected/private：同样合法，但Unity引擎也不会调用，仅能被类内部/子类的代码调用（而这种调用本身就不符合Unity的使用规范）。 总结： 无论选择哪种修饰符，对Unity组件的正常使用都没有帮助，反而可能造成误解。
-3. 执行顺序对比 构造函数的执行顺序确实比Awake和Start更早，但这个“更早”没有实际价值：
-执行时机： 构造函数：当Unity引擎在内存中创建组件对象的“裸实例”时执行（场景加载/Instantiate的最早期）。 Awake：组件对象被引擎初始化（绑定到GameObject、初始化transform等引用）后立即执行（游戏开始/对象创建时）。 Start：在Awake之后，该组件第一次更新（Update）前执行。 关键问题：构造函数执行时，组件的gameObject、transform等核心属性都是null，无法进行任何有效的Unity相关操作，此时执行的代码几乎没有实际意义。 二、正确的替代方案 如果你想在组件初始化时执行代码，应该使用Unity提供的生命周期方法，而不是构造函数：
-using UnityEngine; public class MyComponent : MonoBehaviour { // 错误示范：不要写构造函数 // public MyComponent() // { // // 这里访问transform会报错！ // // transform.position = Vector3.zero; // } // 正确：初始化逻辑写在Awake（最早的有效时机） private void Awake() { // 此时所有Unity引用都已初始化，可以安全操作 transform.position = Vector3.zero; Debug.Log(&#34;Awake执行：组件初始化&#34;); } // 可选：延迟初始化写在Start（在Awake之后） private void Start() { Debug.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2018-04-23T20:20:49&#43;08:00">April 23, 2018</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/from_cs_to_quad/">从计算着色器到四边形【翻译】</a></h1>
-	<div class="entry__content">原文地址
-// input texture Texture2D&lt;float3&gt; _sourceTexture; // a compute buffer that we can append to for output AppendStructuredBuffer&lt;int2&gt; _brightPoints; 在上面的代码段中，_sourceTexture是从外部传给GPU的纹理。和在fragment shader中访问纹理不一样的是，在片元着色器中通过采样器(sampler)获取纹理，纹理坐标是浮点数，而在compute shader中，“纹理”可以视为一个二维数组，可以通过整数索引值，直接访问这“二维数组”中的元素——纹素。
-AppendStructedBuffer AppendStructuredBuffer 可视为是原始缓冲区的“升级版”，即结构化缓冲区。原始缓冲区（raw buffer）只是一个字节数组，而结构化缓冲区意味着可以为缓冲区中的每个元素定义一个结构。可以用来AppendStructuredBuffer.Append()方法将元素从缓冲区的末尾加入。重AppendStructuredBuffer.Append()是一个线程安全的操作。即使有数千个线程同时尝试向缓冲区添加某些内容，也不会产生冲突。
-// tell Unity that the function &#34;FindBrights&#34; is a compute kernel #pragma kernel FindBrights // define thread groups for the FindBrights kernel [numthreads(32, 32, 1)] pragma kernel 指令 #pragma kernel FindBrights是Unity专用的代码。用来通知Unity函数FindBrights是计算内核(compute kernel)，这意味着它可以用作计算着色器，而不仅仅是一个普通函数。
-numthreads指令 numthreads指令的三个输入参数分别表示该着色器在工作组（Work Group）内的线程布局。具体来说，numthreads(x, y, z)指令中xyz三个参数分别定义了在X、Y和Z三个维度上每个工作组中线程的数量。这三个参数决定了工作组内线程的总数量，例如numthreads(8, 8, 1) 就定义了一个工作组包含 8 x 8 x 1 = 64 个线程。工作组的总线程数直接影响计算的并行性，在实际调用时，通过Dispatch()函数定义工作组的分布。如下代码：</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2016-02-17T19:08:53&#43;08:00">February 17, 2016</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/cg_programming_unity_debugging_of_shaders/">在Unity3D中使用Visual Studio调试shader【翻译】</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-本文主要介绍在U3D中调试shader代码的主要技术：false-color images:通过设置片元颜色中的某个分量，使得该值可视。然后根据resulting image中的颜色分量的亮度（intensity of that color component），你可以得到shader代码中的值的结论，这种技术的确是一种很原始的调试技术，但不幸的是，这在U3D中并不是不常见的。
-1 顶点数据来自何方 在RGB cube一节中，你可以看到片元着色器如何通过顶点着色器输出的结构体中，获取到对应的数据。那么问现在的问题是：顶点着色器从何方拿到这些数据？在U3D环境下，答案是从绑定到game object中的Mesh Renderer组件中获取。Mesh Renderer组件将在每一帧中所有的发送网格顶点数据给OpenGL。这一步发送操作通常被称为“draw call”。必须注意的是，每一个的draw call都有一些性能耗费（performance overhead）。因而，一次性地给OpenGL发送一个大的网格数据，比分多次发送，每次发送一些较小的网格数据，要来得更高效些。这些网格数据通常由一系列的三角形组成，而每一个三角形则是以”三个顶点数据和一些其他属性数据“的方式被定义。这些属性数据将会通过”顶点输入参数（vertex input parameter）“的方式在顶点着色器中被启用。每一个顶点输入参数将会指定一系列的语义，如POSITION, NORMAL, TEXCOORD0, TEXCOORD1, TANGENT, COLOR等等。在U3D环境下的Cg语言的特定编程实现中。这些内建的顶点输入参数将会由一个特定的名字。
-2 内建的顶点输入参数，以及如何使得它们可视 在U3D中的，内建的顶点输入参数不仅仅有特定的语义表示符号，还有特定的变量名字和类型，此外，他们还被包含在一个单独的结构体中，如下：
-struct vertexInput { float4 vertex:POSITION; // position (in object coordinates, i.e. local or model coordinates) float4 tangent:TANGENT; // vector orthogonal to the surface normal float3 normal:NORMAL; //surface normal vector (in object coordinates; usually normalized to unit //length float4 texcoord:TEXCOORD0; //0th set of texture coordinates (a.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2016-02-17T19:08:53&#43;08:00">February 17, 2016</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_player_prefs/">Unity3D PlayerPrefs的存储位置</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-平台 存储位置 macOS 存储在 【~/Library/Preferences】 目录下名字为 【unity.[company name].[product name].plist】 文件中,其中的 【company name】 和 【product names】 在 【Project Settings】 面板中设置。而且这个plist文件是为编辑器版本和单独可执行版本的程序共同使用。 Windows 存在注册表中的注册项中，该注册项的路径是 【HKEY_CURRENT_USER\Software[company name][product name]】。其中的 【company name】 和 【product names】 在 【Project Settings】 面板中设置。注意编辑器版本和单独可执行版本的注册表路径是不同的，例如 【company name】 是 “TomCompany” ,例如 【product name】 是 “TomGame” 的话，在编辑器中执行程序，其注册项路径为 【计算机\HKEY_CURRENT_USER\Software\Unity\UnityEditor\TomCompany\TomGame】 Linux PlayerPrefs存储在 【~/.config/unity3d/[CompanyName]/[ProductName]】 。其中的 【company name】 和 【product names】 在 【Project Settings】 面板中设置.。 Windows Store Apps PlayerPrefs存储在 【%userprofile%\AppData\Local\Packages[ProductPackageId]\LocalState\playerprefs.dat】 文件中 Windows Phone 8 PlayerPrefs存储在应用的 “local folder” 中，可查阅Directory.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2015-11-11T20:20:49&#43;08:00">November 11, 2015</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_2d_collision_trigger/">Unity2D的碰撞检测响应处理细节</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-Unity中的2D碰撞/触发回调的触发规则遵循一下的规则
-详细的触发规则 首先明确两个核心概念的区别：
-碰撞（Collision）：需要两个Collider2D都勾选Is Trigger = false，且满足物理交互条件 触发（Trigger）：至少一个Collider2D勾选Is Trigger = true 1. 碰撞回调（OnCollisionEnter2D/Stay2D/Exit2D）的触发条件 要接收到碰撞回调，必须满足：
-两个Collider2D都未勾选Is Trigger 至少其中一个 GameObject拥有 非静态 的Rigidbody2D组件（注意：Rigidbody2D不能设为Kinematic+Is Kinematic且另一个也无Rigidbody2D，这种情况不会触发） 两个Collider2D的Layer层碰撞矩阵允许交互 2. 触发回调（OnTriggerEnter2D/Stay2D/Exit2D）的触发条件 要接收到触发回调，规则更宽松：
-至少一个Collider2D勾选Is Trigger 满足以下任一条件即可： 其中一个GameObject有 非静态 的Rigidbody2D（可以是动态/运动学） 其中一个GameObject是 运动的静态物体（Static GameObject，且通过代码主动改变位置/旋转） 注意：两个纯静态（Static）且无Rigidbody2D的物体碰撞，不会触发任何回调 常见场景示例 为了让你更直观理解，这里列出几个典型场景：
-场景 A物体（Collider2D） B物体（Collider2D） 是否触发回调 1 有Rigidbody2D（动态） 无Rigidbody2D ✅（碰撞/触发都可） 2 无Rigidbody2D 有Rigidbody2D（动态） ✅（碰撞/触发都可） 3 无Rigidbody2D（静态） 无Rigidbody2D（静态） ❌（无任何回调） 4 有Rigidbody2D（运动学） 无Rigidbody2D ✅（触发可，碰撞需B也有非运动学Rigidbody2D） 关键补充 回调函数（如OnCollisionEnter2D）必须写在有Collider2D的GameObject所挂载的脚本中，且脚本所在的GameObject需满足上述Rigidbody2D条件，否则接收不到回调。 Rigidbody2D的Body Type影响： Dynamic（动态）：受物理力影响，是最常用的能触发回调的类型 Kinematic（运动学）：不受物理力影响，但主动移动时能触发触发回调 Static（静态）：等同于无Rigidbody2D的静态物体 总结 核心规则：要接收2D碰撞/触发回调，不能两个物体都没有Rigidbody2D且都是静态的，至少一个物体要有非静态的Rigidbody2D（触发回调允许运动学Rigidbody2D）。 简化记忆：日常开发中，给需要检测碰撞/触发的物体（或其中一个）挂载Rigidbody2D（动态类型），就能稳定接收到回调。 触发vs碰撞：触发回调规则更宽松（运动学Rigidbody2D也可），碰撞回调要求更严格（至少一个动态Rigidbody2D）。 3D的Collider和Rigidbody也是遵循一样的规则吗 你问的这个问题很关键，3D的Collider和Rigidbody的碰撞/触发回调规则核心逻辑和2D一致，但在细节上有一些专属的差异，并不是完全一模一样。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2015-03-23T20:20:49&#43;08:00">March 23, 2015</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
-<div class="pagination block">
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/">1</a>
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/2/">2</a>
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/3/">3</a>
-			<span class="pagination__item pagination__item--gap">&hellip;</span>
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/5/">5</a>
-				<span class="pagination__item pagination__item--active" data-total="7">6</span>
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/7/">7</a>
-</div>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Unity3D | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/tags/unity3d/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Unity3D"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="Unity3D"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2026-03-28T21:21:49+08:00"><meta itemprop=dateModified content="2026-03-28T21:21:49+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/tags/unity3d/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-term"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/tags/>Tags</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Unity3D</li></ol></nav><div class="page block"><h1 class=page__title>Unity3D</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_shader_optimization/>Unity3D shader优化技巧集合</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=一些优化的tips基于20193版本>一些优化的tips，基于2019.3版本</h2><ol><li>只做需要的计算，比如一直在shader设置某个固定颜色，就等于白做计算</li><li>能给vs做的，就不要给fs做，能在脚本设置的，就不要在shader里做，比如在shader代码里面用 <strong>if-else</strong> ,就不如在脚本中用 <strong>keyword</strong></li><li>优化surface shader：启用 <strong>approxview</strong> 编译指示符，在光照计算时，在vs中而不是在fs中做视线向量的规格化</li><li>优化surface shader：启用 <strong>halfasview</strong> 编译指示符，在光照计算时，使用半角向量做光照计算，且半角向量的计算在vs中执行</li><li>优化surface shader：启用 <strong>noforwardadd</strong> 编译指示符，确保在 <strong>Forward rendering</strong> 模式中， <strong>只使用一个有向平行光光源</strong> 在fs中执行光照计算，其他的实时光源都只在vs中进行计算，此指示符确保只在一个pass中执行渲染操作</li><li>优化surface shader：编译指令 <strong>noambient</strong> 禁用着色器上的环境照明和球谐光。这样可以使性能稍快一些。</li><li>数据精度的优化：世界坐标系下的坐标值，纹理映射坐标值，用 <strong>float</strong></li><li>数据精度的优化：除了HDR颜色之外的数据，使用 <strong>half</strong></li><li>数据精度的优化：纹理数据的相关的一些简单操作用 <strong>fixed</strong></li><li>各种GPU的区别： <strong>桌面GPU</strong> ，内部都会统一用 <strong>float</strong> 计算</li><li>各种GPU的区别： <strong>移动GPU</strong> 内部能真正支持half精度，大胆地使用它</li><li>各种GPU的区别： <strong>老旧的GPU</strong> 才内部实现了 <strong>fixed</strong> ， <strong>OpenGL ES3</strong> 及后续的都内部把 <strong>fixed</strong> 处理为 <strong>half</strong> 了</li><li><strong>Alpha Testing</strong> ：在iOS等等使用了PowerVR芯片的平台，表现不佳。</li><li><strong>ColorMask</strong> ：在某些平台上（大多数是在iOS和Android设备的移动GPU），使用 <strong>ColorMask</strong> 忽略某些通道（例如 <strong>ColorMask RGB</strong> ）可能会占用大量资源，因此仅在确实需要时才使用它。</li></ol><h2 id=参考网页>参考网页：</h2><p><a href=https://docs.unity3d.com/Manual/SL-ShaderPerformance.html>https://docs.unity3d.com/Manual/SL-ShaderPerformance.html</a></p><p><a href=https://www.cnblogs.com/sifenkesi/p/4716791.html>https://www.cnblogs.com/sifenkesi/p/4716791.html</a></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2019-12-31T11:37:25+08:00>December 31, 2019</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a>,
+<a class=meta-categories__link href=/categories/shaderlab/ rel=category>ShaderLab</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>shader</a>,
+<a class=meta-tags__link href=/tags/shaderlab/ rel=tag>ShaderLab</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/my_books/u3d_shader_annotation/>《Unity3D内建着色器源码剖析》</a></h1><div class=entry__content><p><img src=/image/book_erratas/u3d_shader_annotation.jpg alt></p><h2 id=书籍信息>书籍信息</h2><table><thead><tr><th style=text-align:center>信息</th><th style=text-align:center>详情</th></tr></thead><tbody><tr><td style=text-align:center>定价</td><td style=text-align:center>89.00</td></tr><tr><td style=text-align:center>出版社</td><td style=text-align:center>人民邮电出版社</td></tr><tr><td style=text-align:center>版次</td><td style=text-align:center>1</td></tr><tr><td style=text-align:center>出版时间</td><td style=text-align:center>2019年08月</td></tr><tr><td style=text-align:center>开本</td><td style=text-align:center>16</td></tr><tr><td style=text-align:center>装帧</td><td style=text-align:center>平装</td></tr><tr><td style=text-align:center>页数</td><td style=text-align:center>334</td></tr><tr><td style=text-align:center>ISBN编码</td><td style=text-align:center>9787115507044</td></tr></tbody></table><h2 id=官方qq群>官方QQ群</h2><p>群1号码：<strong>672523982</strong></p><h2 id=书籍配套代码>书籍配套代码</h2><table><thead><tr><th style=text-align:center>代码文件</th><th style=text-align:center>MD5值</th></tr></thead><tbody><tr><td style=text-align:center><a href=/files/builtin_shaders-2017.2.0f3.zip>Unity3D内建着色器源代码 版本2017.2.0f3</a></td><td style=text-align:center>MD5: 1737874a497c6fa04031af3c90ff2f99</td></tr><tr><td style=text-align:center><a href=/files/StarNight.zip>第12章的代码工程</a></td><td style=text-align:center>MD5：640938e9f1a259b7e693b1abe866f368</td></tr></tbody></table><h2 id=书中参考引用到的一些技术文章>书中参考引用到的一些技术文章</h2><ol><li>微软网站上关于DXT及BC系列格式的<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb694531(v=vs.85).aspx#BC1">详细介绍</a></li><li>微软MSDN上有介绍<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/hh308955(v=vs.85).aspx">块状压缩</a>的文章</li><li>nVidia开发者网站有一篇介绍<a href=https://developer.nvidia.com/vrworks/graphics/singlepassstereo>单程立体渲染原理</a>的文章。</li><li>Unity3D官网也有<a href=https://docs.unity3d.com/2017.2/Documentation/Manual/SinglePassStereoRendering.html>单程立体渲染</a>的介绍</li></ol><h2 id=unity3d内建着色器源码剖析勘误表>《Unity3D内建着色器源码剖析》勘误表</h2><h3 id=第1版第1刷>第1版第1刷</h3><table><thead><tr><th style=text-align:center>章节</th><th style=text-align:center>页数</th><th style=text-align:center>位置</th><th style=text-align:center>错误内容</th><th style=text-align:center>正确内容</th></tr></thead><tbody><tr><td style=text-align:center>1.2.2</td><td style=text-align:center>正文第4页</td><td style=text-align:center>第5段第5行</td><td style=text-align:center>$$\left&lt; p_1,p_2,p_3 \right>$$ 的排列顺序称为顺时针方向（clockwise，CW）。</td><td style=text-align:center>$$ \left&lt; p_1,p_3,p_2 \right> $$ 的排列顺序称为顺时针方向（clockwise，CW）。……</td></tr><tr><td style=text-align:center>1.2.2</td><td style=text-align:center>正文第4页</td><td style=text-align:center>第6段第2行</td><td style=text-align:center>在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_2,p_3 \right> $$</td><td style=text-align:center>在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_3,p_2 \right> $$</td></tr><tr><td style=text-align:center>1.2.3</td><td style=text-align:center>正文第6页</td><td style=text-align:center>式1-7</td><td style=text-align:center><img src=/image/book_erratas/shi1-7-error.jpg alt></td><td style=text-align:center><img src=/image/book_erratas/shi1-7-correct.jpg alt></td></tr><tr><td style=text-align:center>1.2.3</td><td style=text-align:center>正文第8页</td><td style=text-align:center>第8段第4行</td><td style=text-align:center>&mldr;当 <strong>M</strong> 为旋转变换矩阵、平移变换矩阵和非均匀缩放矩阵中的一种或者它们的组合时，&mldr;</td><td style=text-align:center>&mldr;当 <strong>M</strong> 为非均匀缩放矩阵，或者是非均匀缩放矩阵与“旋转变换矩阵、平移变换矩阵这两种矩阵中的一个（或两个）”的组合时，&mldr;</td></tr><tr><td style=text-align:center>1.3.3</td><td style=text-align:center>正文第20页</td><td style=text-align:center>第2段第1行</td><td style=text-align:center>$$ T_2 $$ 表示 <strong>背面</strong> 三角形， $$ T_1 $$ 表示 <strong>正面</strong> 三角形</td><td style=text-align:center>$$ T_2 $$ 表示 <strong>正面</strong> 三角形，$ T_1 $$ 表示 <strong>背面</strong> 三角形</td></tr><tr><td style=text-align:center>1.3.3</td><td style=text-align:center>正文第20页</td><td style=text-align:center>图1-19</td><td style=text-align:center>$$ n_1.c_1 > 0 $$ ， <strong>正面</strong> ， $$ n_2.c_2 &lt; 0 $$ ， <strong>背面</strong></td><td style=text-align:center>$$ n_1.c_1 > 0 $$ ， <strong>背面</strong> ， $$ n_2.c_2 &lt; 0 $$ ， <strong>正面</strong></td></tr><tr><td style=text-align:center>2.2</td><td style=text-align:center>正文第35页</td><td style=text-align:center>第6段第3行</td><td style=text-align:center>&mldr; $$ \Phi _{\text{v}}\left( \lambda \right) $$ 为 <strong>辐射</strong> 通量对波长的函数； $$ \Phi _{\text{e}}\left( \lambda \right) $$ 为 <strong>光</strong> 通量对波长的函数；&mldr;</td><td style=text-align:center>&mldr; $$ \Phi _{\text{v}}\left( \lambda \right) $$ 为 <strong>光</strong> 通量对波长的函数； $$ \Phi _{\text{e}}\left( \lambda \right) $$ 为 <strong>辐射</strong> 通量对波长的函数；&mldr;</td></tr><tr><td style=text-align:center>3.1</td><td style=text-align:center>正文第57页</td><td style=text-align:center>表3-4第4行第2列</td><td style=text-align:center>指定一个函数，使用 <strong>DX 11的GPU镶嵌（tesselation）</strong> 功能计算 <strong>镶嵌因子</strong></td><td style=text-align:center>指定一个函数，使用 <strong>DirectX 11的GPU曲面细分（tesselation）</strong> 功能计算 <strong>曲面细分因子（tesselation factor）</strong></td></tr><tr><td style=text-align:center>3.4.3</td><td style=text-align:center>正文第48页</td><td style=text-align:center>第9小段</td><td style=text-align:center><strong>multi_compile_fwdadd</strong> 编译指示符将会根据当前选定的雾化因子&mldr;</td><td style=text-align:center><strong>multi_compile_fog</strong> 编译指示符将会根据当前选定的雾化因子&mldr;</td></tr><tr><td style=text-align:center>10.1</td><td style=text-align:center>正文第214页</td><td style=text-align:center>公式10-1</td><td style=text-align:center>$$ I_{do} = I_{do}K_d\max \left( \cos \theta , 0 \right) $$</td><td style=text-align:center>$$ I_{do} = I_{di}K_d\max \left( \cos \theta , 0 \right) $$</td></tr></tbody></table></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2019-12-30T15:25:10+08:00>December 30, 2019</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>Shader</a>,
+<a class=meta-tags__link href=/tags/shaderlab/ rel=tag>ShaderLab</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/mac_ios/high_ver_sdk_for_low_ver_xcode/>在低版本中的XCode中使用高版本的iOS SDK</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>当iPhone或iPad的手机的iOS系统，升级到了版本，例如11.1版本时，而当前的Xcode版本，例如Xcode9，所能编译出来的软件，最多只能支持的最高版本是11.0时，就会出现以下的问题:</p><p><img src=/image/misc/could_not_locate_device_support_files.jpg alt></p><p>最好的解决的方式当然是直接升级XCode到最新版本，但有时候，升级XCode到最新的版本，需要你当前运行的MacOS的版本到某一个版本号，即还需要你首先升级操作系统，但往往有时候因为你的硬件比较陈旧，没法升级到某个新版本的MacOS了，这时候你就不得不购买新的iMac或者Mac Mini，而如果这时候你又 <strong><font color=blue>囊中羞涩</font></strong> 的话……。</p><p>为了解决这个囧况，可以通过一些hack手段，让你当前低版本的XCode，能使用上新的iOS SDK。方法如下：</p><h2 id=1-首先下载ios-sdk>1 首先下载iOS SDK</h2><p>苹果网站上提供了SDK的下载，但往往在天朝内访问苹果实在太慢了，所以在 <strong><a href=https://github.com/xushuduo/Xcode-iOS-Developer-Disk-Image>这里</a></strong> 有人整理出来所有的iOS SDK供下载。（ <strong>务必注意的是，因为这些SDK是非官方渠道提供的，本站不保证其安全性和有效性，所以必须要慎用，使用的话责任自负，本站将不承担任何责任</strong> ）。接着找到XCode程序的安装路径，一般是在 <strong>【/Appplications】</strong> 目录下，右键选择 <strong>【显示包内容】</strong> 打开，一路进入到 <strong>【/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/DeviceSupport】</strong> 。把下载得到的SDK放置到这个DevicesSupport目录下，如图所示：</p><p><img src=/image/misc/ios_sdk.jpg alt></p><h2 id=2-修改sdksettingplist文件>2 修改SDKSetting.plist文件</h2><h2 id=3-修改sdksettingsplist文件中的版本号>3 修改SDKSettings.plist文件中的版本号</h2><p>进入 <strong>【/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk】</strong> 目录，打开<strong>SDKSettings.plist</strong>文件，将里面所有跟版本有关的数字都修改为填上最新的SDK版本号，例如<strong>11.1</strong>即可。运行就好可以了，如下图所示：</p><p><img src=/image/misc/ios_sdk_version.jpg alt></p><h2 id=参考网页>参考网页</h2><p><a href="https://blog.csdn.net/xiangzhihong8/article/details/78360091?tdsourcetag=s_pcqq_aiomsg">解决低版本Xcode不支持高版本iOS真机调试的问题</a></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2019-12-30T11:35:31+08:00>December 30, 2019</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/ios/ rel=category>iOS</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/ios/ rel=tag>iOS</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_component_construction_func/>继承自Monobehaviour的组件组件的构造函数</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=问题1>问题1：</h2><p>在unity中，继承自MonoBehaviour的组件类可以写构造函数吗？构造函数应该是public，protected，还是private的，构造函数的执行顺序比Awake和Start事件方法更早吗？</p><p>你想了解在Unity中，继承自MonoBehaviour的组件类里构造函数的使用规则、访问修饰符选择，以及它和Awake/Start的执行顺序关系，这个问题触及了Unity组件生命周期的核心知识点。</p><h3 id=一核心结论与详细解释>一、核心结论与详细解释</h3><h4 id=1-可以写构造函数但强烈不推荐>1. 可以写构造函数，但<strong>强烈不推荐</strong></h4><p>从语法上讲，你完全可以为MonoBehaviour子类编写构造函数，但Unity的组件系统设计逻辑决定了这是一种错误的实践。</p><p><strong>原因：</strong></p><ul><li>Unity组件的实例化不是由<code>new</code>关键字创建的，而是由Unity引擎在场景加载、对象实例化（如<code>Instantiate()</code>）时自动创建的。</li><li>如果你手动写构造函数，Unity引擎并不会调用它（除非你自己用<code>new</code>创建，但这会导致组件脱离Unity的GameObject体系，失去所有MonoBehaviour的特性）。</li><li>构造函数中如果访问Unity的核心API（如<code>transform</code>、<code>gameObject</code>），会直接报错，因为此时组件还未被引擎初始化，这些引用都是<code>null</code>。</li></ul><h4 id=2-构造函数的访问修饰符>2. 构造函数的访问修饰符</h4><p>即使你非要写构造函数，访问修饰符的选择也没有实际意义：</p><ul><li><code>public</code>：语法合法，但无意义，因为你不会手动<code>new</code>一个MonoBehaviour组件。</li><li><code>protected/private</code>：同样合法，但Unity引擎也不会调用，仅能被类内部/子类的代码调用（而这种调用本身就不符合Unity的使用规范）。</li></ul><p><strong>总结：</strong> 无论选择哪种修饰符，对Unity组件的正常使用都没有帮助，反而可能造成误解。</p><h4 id=3-执行顺序对比>3. 执行顺序对比</h4><p>构造函数的执行顺序<strong>确实比Awake和Start更早</strong>，但这个“更早”没有实际价值：</p><ul><li><strong>执行时机</strong>：<ol><li>构造函数：当Unity引擎在内存中创建组件对象的“裸实例”时执行（场景加载/<code>Instantiate</code>的最早期）。</li><li>Awake：组件对象被引擎初始化（绑定到GameObject、初始化<code>transform</code>等引用）后立即执行（游戏开始/对象创建时）。</li><li>Start：在Awake之后，该组件第一次更新（Update）前执行。</li></ol></li><li><strong>关键问题</strong>：构造函数执行时，组件的<code>gameObject</code>、<code>transform</code>等核心属性都是<code>null</code>，无法进行任何有效的Unity相关操作，此时执行的代码几乎没有实际意义。</li></ul><h3 id=二正确的替代方案>二、正确的替代方案</h3><p>如果你想在组件初始化时执行代码，应该使用Unity提供的生命周期方法，而不是构造函数：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>MyComponent</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 错误示范：不要写构造函数</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// public MyComponent()</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// {</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//     // 这里访问transform会报错！</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>//     // transform.position = Vector3.zero;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// }</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 正确：初始化逻辑写在Awake（最早的有效时机）</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>void</span> Awake<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 此时所有Unity引用都已初始化，可以安全操作</span>
+</span></span><span style=display:flex><span>        transform<span style=color:#1f2328>.</span>position <span style=color:#1f2328>=</span> Vector3<span style=color:#1f2328>.</span>zero<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Awake执行：组件初始化&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 可选：延迟初始化写在Start（在Awake之后）</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>void</span> Start<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Start执行：延迟初始化&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=总结>总结</h3><ol><li><strong>不推荐写构造函数</strong>：MonoBehaviour组件由Unity引擎管理实例化，手动写构造函数无实际作用，还可能引发空引用错误。</li><li><strong>访问修饰符无意义</strong>：无论public/protected/private，Unity都不会调用自定义构造函数，仅语法合法而已。</li><li><strong>执行顺序</strong>：构造函数确实比Awake/Start更早，但此时组件未完成Unity初始化，无法访问<code>transform</code>/<code>gameObject</code>等核心属性，无实用价值；初始化逻辑应优先写在Awake中。</li></ol><p>核心原则：遵循Unity的生命周期规范，所有组件初始化逻辑都放在Awake/Start中，而非构造函数。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2018-04-23T20:20:49+08:00>April 23, 2018</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/from_cs_to_quad/>从计算着色器到四边形【翻译】</a></h1><div class=entry__content><p><a href=https://samdriver.xyz/article/compute-shader-intro>原文地址</a></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>// input texture</span>
+</span></span><span style=display:flex><span>Texture2D<span style=color:#1f2328>&lt;</span>float3<span style=color:#1f2328>&gt;</span> _sourceTexture<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// a compute buffer that we can append to for output</span>
+</span></span><span style=display:flex><span>AppendStructuredBuffer<span style=color:#1f2328>&lt;</span>int2<span style=color:#1f2328>&gt;</span> _brightPoints<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>在上面的代码段中，<code>_sourceTexture</code>是从外部传给GPU的纹理。和在fragment shader中访问纹理不一样的是，在片元着色器中通过采样器(sampler)获取纹理，纹理坐标是浮点数，而在compute shader中，“纹理”可以视为一个二维数组，可以通过整数索引值，直接访问这“二维数组”中的元素——纹素。</p><h2 id=appendstructedbuffer>AppendStructedBuffer</h2><p><code>AppendStructuredBuffer</code> 可视为是原始缓冲区的“升级版”，即结构化缓冲区。原始缓冲区（raw buffer）只是一个字节数组，而结构化缓冲区意味着可以为缓冲区中的每个元素定义一个结构。可以用来<code>AppendStructuredBuffer.Append()</code>方法将元素从缓冲区的末尾加入。重<code>AppendStructuredBuffer.Append()</code>是一个<strong>线程安全</strong>的操作。即使有数千个线程同时尝试向缓冲区添加某些内容，也不会产生冲突。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>// tell Unity that the function &#34;FindBrights&#34; is a compute kernel</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#pragma</span> kernel FindBrights
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// define thread groups for the FindBrights kernel</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>[numthreads(32, 32, 1)]</span>
+</span></span></code></pre></div><h2 id=pragma-kernel-指令>pragma kernel 指令</h2><p><code>#pragma kernel FindBrights</code>是Unity专用的代码。用来通知Unity函数<code>FindBrights</code>是<strong>计算内核</strong>(compute kernel)，这意味着它可以用作计算着色器，而不仅仅是一个普通函数。</p><h2 id=numthreads指令>numthreads指令</h2><p><code>numthreads</code>指令的三个输入参数分别表示该着色器在<strong>工作组</strong>（Work Group）内的<strong>线程布局</strong>。具体来说，<code>numthreads(x, y, z)</code>指令中xyz三个参数分别定义了在X、Y和Z三个维度上每个工作组中线程的数量。这三个参数决定了工作组内线程的总数量，例如<code>numthreads(8, 8, 1)</code> 就定义了<strong>一个工作组包含 8 x 8 x 1 = 64 个线程</strong>。工作组的总线程数直接影响计算的并行性，在实际调用时，通过<code>Dispatch()</code>函数定义工作组的分布。如下代码：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2016-02-17T19:08:53+08:00>February 17, 2016</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/cg_programming_unity_debugging_of_shaders/>在Unity3D中使用Visual Studio调试shader【翻译】</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><a href=http://en.wikibooks.org/wiki/Cg_Programming/Unity/Debugging_of_Shaders>原文地址</a></p><p>本文主要介绍在U3D中调试shader代码的主要技术：false-color images:通过设置片元颜色中的某个分量，使得该值可视。然后根据resulting image中的颜色分量的亮度（intensity of that color component），你可以得到shader代码中的值的结论，这种技术的确是一种很原始的调试技术，但不幸的是，这在U3D中并不是不常见的。</p><h2 id=1-顶点数据来自何方>1 顶点数据来自何方</h2><p>在RGB cube一节中，你可以看到片元着色器如何通过顶点着色器输出的结构体中，获取到对应的数据。那么问现在的问题是：顶点着色器从何方拿到这些数据？在U3D环境下，答案是从绑定到game object中的Mesh Renderer组件中获取。Mesh Renderer组件将在每一帧中所有的发送网格顶点数据给OpenGL。这一步发送操作通常被称为“draw call”。必须注意的是，每一个的draw call都有一些性能耗费（performance overhead）。因而，一次性地给OpenGL发送一个大的网格数据，比分多次发送，每次发送一些较小的网格数据，要来得更高效些。这些网格数据通常由一系列的三角形组成，而每一个三角形则是以”三个顶点数据和一些其他属性数据“的方式被定义。这些属性数据将会通过”顶点输入参数（vertex input parameter）“的方式在顶点着色器中被启用。每一个顶点输入参数将会指定一系列的语义，如POSITION, NORMAL, TEXCOORD0, TEXCOORD1, TANGENT, COLOR等等。在U3D环境下的Cg语言的特定编程实现中。这些内建的顶点输入参数将会由一个特定的名字。</p><h2 id=2-内建的顶点输入参数以及如何使得它们可视>2 内建的顶点输入参数，以及如何使得它们可视</h2><p>在U3D中的，内建的顶点输入参数不仅仅有特定的语义表示符号，还有特定的变量名字和类型，此外，他们还被包含在一个单独的结构体中，如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>struct</span> <span style=color:#1f2328>vertexInput</span> 
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>  float4 <span style=color:#900;font-weight:700>vertex</span><span style=color:#1f2328>:</span>POSITION<span style=color:#1f2328>;</span> <span style=color:#57606a>// position (in object coordinates,  i.e. local or model coordinates)
+</span></span></span><span style=display:flex><span>  float4 <span style=color:#900;font-weight:700>tangent</span><span style=color:#1f2328>:</span>TANGENT<span style=color:#1f2328>;</span> <span style=color:#57606a>// vector orthogonal to the surface normal
+</span></span></span><span style=display:flex><span>  float3 <span style=color:#900;font-weight:700>normal</span><span style=color:#1f2328>:</span>NORMAL<span style=color:#1f2328>;</span> <span style=color:#57606a>//surface normal vector (in object coordinates; usually normalized to unit                            //length
+</span></span></span><span style=display:flex><span>  float4 <span style=color:#900;font-weight:700>texcoord</span><span style=color:#1f2328>:</span>TEXCOORD0<span style=color:#1f2328>;</span> <span style=color:#57606a>//0th set of texture coordinates (a.k.a. “UV”; between 0 and 1) 
+</span></span></span><span style=display:flex><span>  float4 <span style=color:#900;font-weight:700>texcoord1</span><span style=color:#1f2328>:</span>TEXCOORD1<span style=color:#1f2328>;</span> <span style=color:#57606a>//1st set of texture coordinates  (a.k.a. “UV”; between 0 and 1)
+</span></span></span><span style=display:flex><span>  fixed4 <span style=color:#900;font-weight:700>color</span><span style=color:#1f2328>:</span>COLOR<span style=color:#1f2328>;</span> <span style=color:#57606a>//color (usually constant)
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><p>这个数据结构可以以下的方式被使用:</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2016-02-17T19:08:53+08:00>February 17, 2016</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_player_prefs/>Unity3D PlayerPrefs的存储位置</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><table><thead><tr><th style=text-align:center>平台</th><th style=text-align:left>存储位置</th></tr></thead><tbody><tr><td style=text-align:center>macOS</td><td style=text-align:left>存储在 <strong>【~/Library/Preferences】</strong> 目录下名字为 <strong>【unity.[company name].[product name].plist】</strong> 文件中,其中的 <strong>【company name】</strong> 和 <strong>【product names】</strong> 在 <strong>【Project Settings】</strong> 面板中设置。而且这个plist文件是为编辑器版本和单独可执行版本的程序共同使用。</td></tr><tr><td style=text-align:center>Windows</td><td style=text-align:left>存在注册表中的注册项中，该注册项的路径是 <strong>【HKEY_CURRENT_USER\Software[company name][product name]】</strong>。其中的 <strong>【company name】</strong> 和 <strong>【product names】</strong> 在 <strong>【Project Settings】</strong> 面板中设置。注意编辑器版本和单独可执行版本的注册表路径是不同的，例如 <strong>【company name】</strong> 是 <strong>“TomCompany”</strong> ,例如 <strong>【product name】</strong> 是 <strong>“TomGame”</strong> 的话，在编辑器中执行程序，其注册项路径为 <strong>【计算机\HKEY_CURRENT_USER\Software\Unity\UnityEditor\TomCompany\TomGame】</strong></td></tr><tr><td style=text-align:center>Linux</td><td style=text-align:left>PlayerPrefs存储在 <strong>【~/.config/unity3d/[CompanyName]/[ProductName]】</strong> 。其中的 <strong>【company name】</strong> 和 <strong>【product names】</strong> 在 <strong>【Project Settings】</strong> 面板中设置.。</td></tr><tr><td style=text-align:center>Windows Store Apps</td><td style=text-align:left>PlayerPrefs存储在 <strong>【%userprofile%\AppData\Local\Packages[ProductPackageId]\LocalState\playerprefs.dat】</strong> 文件中</td></tr><tr><td style=text-align:center>Windows Phone 8</td><td style=text-align:left>PlayerPrefs存储在应用的 <strong>“local folder”</strong> 中，可查阅Directory.localFolder</td></tr><tr><td style=text-align:center>Android</td><td style=text-align:left>PlayerPrefs存储在 <strong>【/data/data/pkg-name/shared_prefs/pkg-name.xml】</strong> 文件中</td></tr><tr><td style=text-align:center>WebGL</td><td style=text-align:left>PlayerPrefs存储在浏览器的 <strong>“IndexedDB”</strong> API中</td></tr><tr><td style=text-align:center>iOS</td><td style=text-align:left>PlayerPrefs存储在/Library/Preferences/[bundle identifier].plist文件中</td></tr></tbody></table></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2015-11-11T20:20:49+08:00>November 11, 2015</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_sript_life/>Unity脚本生命周期</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>首先看两张时序图：</p><p><img src=/image/u3d/u3d_script_life/script_life_flow_1.png alt="脚本生命周期图 1">
+<img src=/image/u3d/u3d_script_life/script_life_flow_2.png alt="脚本生命周期图 2"></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2015-06-23T20:20:49+08:00>June 23, 2015</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_2d_collision_trigger/>Unity2D的碰撞检测响应处理细节</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>Unity中的2D碰撞/触发回调的触发规则遵循一下的规则</p><h3 id=详细的触发规则>详细的触发规则</h3><p>首先明确两个核心概念的区别：</p><ul><li><strong>碰撞（Collision）</strong>：需要两个Collider2D都勾选<code>Is Trigger = false</code>，且满足物理交互条件</li><li><strong>触发（Trigger）</strong>：至少一个Collider2D勾选<code>Is Trigger = true</code></li></ul><h4 id=1-碰撞回调oncollisionenter2dstay2dexit2d的触发条件>1. 碰撞回调（OnCollisionEnter2D/Stay2D/Exit2D）的触发条件</h4><p>要接收到碰撞回调，必须满足：</p><ul><li>两个Collider2D都未勾选<code>Is Trigger</code></li><li><strong>至少其中一个</strong> GameObject拥有 <strong>非静态</strong> 的Rigidbody2D组件（注意：Rigidbody2D不能设为<code>Kinematic</code>+<code>Is Kinematic</code>且另一个也无Rigidbody2D，这种情况不会触发）</li><li>两个Collider2D的<code>Layer</code>层碰撞矩阵允许交互</li></ul><h4 id=2-触发回调ontriggerenter2dstay2dexit2d的触发条件>2. 触发回调（OnTriggerEnter2D/Stay2D/Exit2D）的触发条件</h4><p>要接收到触发回调，规则更宽松：</p><ul><li>至少一个Collider2D勾选<code>Is Trigger</code></li><li>满足以下任一条件即可：<ul><li>其中一个GameObject有 <strong>非静态</strong> 的Rigidbody2D（可以是动态/运动学）</li><li>其中一个GameObject是 <strong>运动的静态物体</strong>（Static GameObject，且通过代码主动改变位置/旋转）</li><li>注意：两个纯静态（Static）且无Rigidbody2D的物体碰撞，<strong>不会触发任何回调</strong></li></ul></li></ul><h3 id=常见场景示例>常见场景示例</h3><p>为了让你更直观理解，这里列出几个典型场景：</p><table><thead><tr><th>场景</th><th>A物体（Collider2D）</th><th>B物体（Collider2D）</th><th>是否触发回调</th></tr></thead><tbody><tr><td>1</td><td>有Rigidbody2D（动态）</td><td>无Rigidbody2D</td><td>✅（碰撞/触发都可）</td></tr><tr><td>2</td><td>无Rigidbody2D</td><td>有Rigidbody2D（动态）</td><td>✅（碰撞/触发都可）</td></tr><tr><td>3</td><td>无Rigidbody2D（静态）</td><td>无Rigidbody2D（静态）</td><td>❌（无任何回调）</td></tr><tr><td>4</td><td>有Rigidbody2D（运动学）</td><td>无Rigidbody2D</td><td>✅（触发可，碰撞需B也有非运动学Rigidbody2D）</td></tr></tbody></table><h3 id=关键补充>关键补充</h3><ol><li>回调函数（如<code>OnCollisionEnter2D</code>）<strong>必须写在有Collider2D的GameObject所挂载的脚本中</strong>，且脚本所在的GameObject需满足上述Rigidbody2D条件，否则接收不到回调。</li><li>Rigidbody2D的<code>Body Type</code>影响：<ul><li><code>Dynamic</code>（动态）：受物理力影响，是最常用的能触发回调的类型</li><li><code>Kinematic</code>（运动学）：不受物理力影响，但主动移动时能触发触发回调</li><li><code>Static</code>（静态）：等同于无Rigidbody2D的静态物体</li></ul></li></ol><h3 id=总结>总结</h3><ol><li><strong>核心规则</strong>：要接收2D碰撞/触发回调，<strong>不能两个物体都没有Rigidbody2D且都是静态的</strong>，至少一个物体要有非静态的Rigidbody2D（触发回调允许运动学Rigidbody2D）。</li><li><strong>简化记忆</strong>：日常开发中，给需要检测碰撞/触发的物体（或其中一个）挂载<code>Rigidbody2D</code>（动态类型），就能稳定接收到回调。</li><li><strong>触发vs碰撞</strong>：触发回调规则更宽松（运动学Rigidbody2D也可），碰撞回调要求更严格（至少一个动态Rigidbody2D）。</li></ol><h2 id=3d的collider和rigidbody也是遵循一样的规则吗>3D的Collider和Rigidbody也是遵循一样的规则吗</h2><p>你问的这个问题很关键，3D的Collider和Rigidbody的碰撞/触发回调规则<strong>核心逻辑和2D一致</strong>，但在细节上有一些专属的差异，并不是完全一模一样。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2015-03-23T20:20:49+08:00>March 23, 2015</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_collision_trigger/>Unity3D的碰撞检测响应处理细节</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=1-对碰撞做出响应所必须的条件>1 对碰撞做出响应所必须的条件</h2><p>要想两个物体A，B发生碰撞检测，即触发<code>OnCollision</code>相关事件，或者触发<code>OnTrigger</code>相关事件。必须：</p><ul><li>物体A,B都挂接上了一个碰撞器组件，即<code>Collider</code>类（2D环境下是<code>Collider2D</code>类）的子类</li><li>运动着的物体，要携带一个刚体组件，即<code>RigidBody</code>类（2D环境下是<code>RigidBody2D</code>类），另一方的物体如果是静止的话，可以不用携带刚体组件。</li></ul><h2 id=2-碰撞时触发oncollision相关事件的条件>2 碰撞时触发OnCollision相关事件的条件</h2><p>在满足第1节中所提出的条件下，当两者的刚体组件（如果有的话）的<code>Is Kinematic</code>属性都未勾选，且两者的碰撞器组件的<code>Is Trigger</code>属性，都没勾选时，便会触发<code>OnCollision</code>相关事件。</p><h2 id=3-碰撞时触发oncollision相关事件的条件>3 碰撞时触发OnCollision相关事件的条件</h2><p>在满足第1节中所提出的条件下，当两者的碰撞器组件的<code>Is Trigger</code>属性，其中有一个勾选时，就会触发<code>OnTrigger</code>相关事件。</p><h2 id=4-响应事件的分类>4 响应事件的分类</h2><p>响应事件分为<code>Enter</code>、<code>Stay</code>、<code>Exit</code>。以<code>OnTrigger</code>为例，就是<code>OnTriggerEnter</code>、<code>OnTriggerStay</code>、<code>OnTriggerExit</code>（2D环境下就是<code>OnTriggerEnter2D</code>，<code>OnTriggerStay2D</code>，<code>OnTriggerExit2D</code>，<code>OnCollision</code>事件以此类推）。</p><p><code>Enter</code>事件便是两个物体碰撞的那一瞬间，此事件在碰撞过程会执行一次
+<code>Stay</code>事件表示两个物体在持续接触时，此事件在碰撞过程会多次执行。
+<code>Exit</code>事件便是两个物体在分开的那一瞬间，此事件在碰撞过程会执行一次</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2015-03-22T20:20:49+08:00>March 22, 2015</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_png_iccp_warning/>解决Unity3D在编译时出现libpng iccp警告的问题</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>项目组使用Unity3D4.6进行渠道商SDK接入，在编译Android版本时，发现部分渠道商提供的SDK包在编译时会出现如下图的问题：</p><p><img src=/image/u3d/u3d_compile_warning.png alt></p><p>经查证，新版本的Unity3D采用了较高版本的libpng库作为png格式图片的处理模块，产生此问题的原因是新版本的libpng对png的ICCP采用了更严格的约束条件，因此，我们必须使用软件对渠道商提供的这些资源png图片进行处理，以解决这个问题。开源软件 <strong>ImageMagick</strong> 提供了处理这个问题的方案。</p><p>从ImageMagick网站下载了ImageMagick Display软件包，安装后如下图：</p><p><img src=/image/u3d/imagemagick_display.png alt></p><p>我们使用软件包中的<code>convert.exe</code>程序对这些图片进行处理。convert程序是一个命令行程序，该程序有很多开关参数。我们使用<code>-strip</code>参数处理。命令行格式为：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bat data-lang=bat><span style=display:flex><span>convert 待处理的图片的文件名 -strip 处理后输出的图片文件名
+</span></span></code></pre></div><p>如果需要一口气处理同一文件夹下的许多png，我们可以将处理命令写成一个批处理文件，代码如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bat data-lang=bat><span style=display:flex><span><span style=color:#cf222e>set</span> <span style=color:#953800>fn</span><span style=color:#1f2328>=</span>E:\software\ImageMagick-6.9.0-Q16\convert.exe
+</span></span><span style=display:flex><span><span style=color:#cf222e>for</span> <span style=color:#cf222e>/f</span> <span style=color:#0a3069>&#34;tokens=*&#34;</span> <span style=color:#0a3069>%%</span>i <span style=color:#cf222e>in</span> <span style=color:#1f2328>(</span><span style=color:#0a3069>&#39;dir/s/b *.png&#39;</span><span style=color:#1f2328>)</span> <span style=color:#cf222e>do</span> <span style=color:#0a3069>&#34;</span><span style=color:#953800>%fn%</span><span style=color:#0a3069>&#34;</span> <span style=color:#0a3069>&#34;</span><span style=color:#0a3069>%%</span><span style=color:#0a3069>i&#34;</span> -strip <span style=color:#0a3069>&#34;</span><span style=color:#0a3069>%%</span><span style=color:#0a3069>i&#34;</span>
+</span></span></code></pre></div></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2015-03-19T20:20:49+08:00>March 19, 2015</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_mesh_edge_flicker/>在Unity3D中模型渲染时边缘抖动有杂点的问题解决方案</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>项目主美反映了一个问题，即在U3D中，给模型使用了镜面高光的材质，结果模型的边缘有很多白色的杂点，如果换用了普通漫反射材质的话，杂点的明显稍微没那么强烈，如下图，左边是使用了镜面高光材质，右边是使用了漫反射材质。</p><p><img src=/image/u3d/u3d_diffuse_shader_flicker.png alt> <img src=/image/u3d/u3d_specular_shader_flicker.png alt></p><p>一开始，我以为是因为模型的Z-fighting问题，即两个带纹理的模型因为太靠近了，导致因渲染时的精度问题而造成模型的穿插。但后来检查了模型，并不存在“靴子里面还套着小腿”的这种情况。所以不是Z-fighting的问题。</p><p>后来google了一下，发现老外们也曾经发现过类似的问题。最终<a href=http://forum.unity3d.com/threads/white-pixels-from-aa-and-specular-shader.130498/>有人提出</a>这是一个因为抗锯齿做得不好的问题，解决方案就是给摄像机加一个基于image post process机制的脚本AntialiasingAsPostEffect，然后选用FXAA反走样的着色器。加入之后，效果不错，杂点问题得到了较为明显的改善。</p><p>KlayGE引擎开发者，大神龚敏敏认为基于<a href="http://www.klayge.org/?p=1129">post process处理的技术</a>目前已经是逐渐成为主流。nVidia等公司有很多大牛也提出了不少的算法。比如FXAA算法就是由nVidia的研究员Timothy Lottes提出的算法。所以可以预见不远的将来这项技术会逐渐普及。但目前因为硬件能力的问题，在手机移动平台上，依然要注意使用这种算法的性能问题。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2015-03-18T20:20:49+08:00>March 18, 2015</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div></div></main><div class="pagination block"><a class="pagination__item pagination__item--desktop" href=/tags/unity3d/>1</a>
+<a class="pagination__item pagination__item--desktop" href=/tags/unity3d/page/2/>2</a>
+<a class="pagination__item pagination__item--desktop" href=/tags/unity3d/page/3/>3</a>
+<span class="pagination__item pagination__item--gap">&mldr;</span>
+<a class="pagination__item pagination__item--desktop" href=/tags/unity3d/page/5/>5</a>
+<span class="pagination__item pagination__item--active" data-total=7>6</span>
+<a class="pagination__item pagination__item--desktop" href=/tags/unity3d/page/7/>7</a></div></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

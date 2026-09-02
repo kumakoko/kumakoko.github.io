@@ -1,510 +1,186 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>深度探索Skinned Mesh【翻译】 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="skinned mesh">
-		<meta property="og:title" content="深度探索Skinned Mesh【翻译】" />
-<meta property="og:description" content="skinned mesh" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/d3d/skinned_mesh_with_d3d9/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2005-11-21T18:08:30+08:00" />
-<meta property="article:modified_time" content="2005-11-21T18:08:30+08:00" />
-
-
-		<meta itemprop="name" content="深度探索Skinned Mesh【翻译】">
-<meta itemprop="description" content="skinned mesh"><meta itemprop="datePublished" content="2005-11-21T18:08:30+08:00" />
-<meta itemprop="dateModified" content="2005-11-21T18:08:30+08:00" />
-<meta itemprop="wordCount" content="2128">
-<meta itemprop="keywords" content="DirectX," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">深度探索Skinned Mesh【翻译】</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2005-11-21T18:08:30&#43;08:00">November 21, 2005</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/directx/" rel="tag">DirectX</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">深度探索Skinned Mesh【翻译】</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#译注">译注</a></li>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#1-角色网格层级概述">1 角色网格层级概述</a>
-      <ul>
-        <li><a href="#11-骨块及其继承式的变换">1.1 骨块及其继承式的变换</a></li>
-        <li><a href="#12-d3dxframe">1.2 D3DXFRAME</a></li>
-        <li><a href="#13-计算得到组合变换矩阵的c代码">1.3 计算得到组合变换矩阵的C++代码</a></li>
-      </ul>
-    </li>
-    <li><a href="#2-关键帧和动画">2 关键帧和动画</a>
-      <ul>
-        <li><a href="#21-计算中间姿势">2.1 计算中间姿势</a></li>
-      </ul>
-    </li>
-    <li><a href="#3-刚体动画及其一个问题">3 刚体动画及其一个问题</a></li>
-    <li><a href="#4-解决方案顶点混合">4 解决方案：顶点混合</a>
-      <ul>
-        <li><a href="#41-偏移变换">4.1 偏移变换</a></li>
-        <li><a href="#42-顶点混合的实现细节">4.2 顶点混合的实现细节</a></li>
-      </ul>
-    </li>
-    <li><a href="#5用d3d90的实现细节">5.用D3D9.0的实现细节</a>
-      <ul>
-        <li><a href="#51-d3dxmeshcontainer">5.1. D3DXMESHCONTAINER</a></li>
-        <li><a href="#52-id3dxanimationcontroller">5.2. ID3DXAnimationController</a></li>
-        <li><a href="#54-d3dxloadmeshhierarchyfromx和d3dxframedestroy">5.4 D3DXLoadMeshHierarchyFromX和D3DXFrameDestroy</a></li>
-        <li><a href="#55-找到一个唯一的网格">5.5 找到一个唯一的网格</a></li>
-        <li><a href="#56-转换为一个蒙皮网格">5.6 转换为一个蒙皮网格</a></li>
-        <li><a href="#57-创建一个组合变换矩阵组">5.7 创建一个组合变换矩阵组</a></li>
-        <li><a href="#58-初始化过程的概述">5.8 初始化过程的概述</a></li>
-        <li><a href="#59-运行起来的工作使角色网格活动起来">5.9 运行起来的工作，使角色网格活动起来</a></li>
-      </ul>
-    </li>
-    <li><a href="#6-多序列动画">6 多序列动画</a></li>
-    <li><a href="#7-动画混合">7 动画混合</a></li>
-    <li><a href="#8-动画回调机制">8 动画回调机制</a>
-      <ul>
-        <li><a href="#81-回调操作器">8.1 回调操作器</a></li>
-        <li><a href="#82-回调导向键">8.2 回调导向键</a></li>
-        <li><a href="#83-操作回调">8.3 操作回调</a></li>
-        <li><a href="#84-设置回调键">8.4 设置回调键</a></li>
-      </ul>
-    </li>
-    <li><a href="#9-总结">9 总结</a></li>
-    <li><a href="#10-参考书目">10 参考书目</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="www.xionggf.com">www.xionggf.com</a></strong></p>
-<h2 id="译注">译注</h2>
-<p>我在学习蒙皮骨骼动画的技术实现时，阅读了大量的中英文文档。但绝大部分文档，要么是语焉不详过度抽象，并且流于纸上谈兵。要么就是翻译得实在让人难以理解。Frank Luna的这篇文章是我所阅读过的最棒的蒙皮骨骼动画论文。Frank不仅有生花妙笔，把一些难以理解的技术要点以深入浅出的方式说得清清楚楚，而且还有着很强的实作能力，给文章配上了对应的示例程序。让读者能深入到每一个实现细节中。因此，我把Frank的这篇文章翻译出来，以供大家交流。欢迎批评指正。</p>
-<h2 id="前言">前言</h2>
-<p>在大量的3D仿真程序，尤其是3D计算机游戏中扮演了一个重要的角色。本论文描述了用以驱动一个现代的实时的角色动画系统所需的数据结构和算法。另外，本文还对D3DX9.0c动画系统的进行了详细的研究。</p>
-<p>本文第1章描述了用来表征3D角色及其运动的数据结构。第2章聚焦在用来描述一个动画序列（animation sequence）的数据集。第3章考察了基于刚体（rigid body）的动画技术，并且强调了使用该技术的问题所在。第4章解析一个新的动画技术：顶点混合（vertex blending），也通常称为蒙皮动画（skinned mesh animation）。该技术可以避免刚体动画带来的问题。第5章则展示了如何通过使用D3DX动画相关的API去实现一个角色蒙皮动画。第6章展示了如何使用多个不同的动画序列。第7章则演示了通过使用D3DX动画混合（animation blending）相关的API，如何用既有的动画，产生新的动画。最后，第8章则解释了通过使用D3DX的动画回调（animation callback）相关的API，来并行执行代码。</p>
-<h2 id="1-角色网格层级概述">1 角色网格层级概述</h2>
-<p>图1展现了一个角色网格（character mesh）。途中高亮的链接成条的骨块（chain of bones）被称之为一个骨架（skeleton）。骨骼动画系统就自然而然地以该骨架结构为实现底层，构架而成，骨架外部被一个皮肤（skin）所环绕。在此，“皮肤”将被建模成一个三维的几何体（也即顶点及其构成的多边形）。和真实世界中一样，骨架中的每一个骨块将会影响皮肤的形状和位置。。从数学的观点来说，这些骨块通过变换矩阵（transformation matrix）的方式来表征的。这些变换矩阵可以适当地变换皮肤的几何体。因而，当我们操纵骨架运动时，附着在该骨架的皮肤也会随着当前骨架的姿势（pose）来运动。</p>
-<p><img src="/image/d3d9_skinnedmesh/skinned_mesh_d3d9_1.png" alt="">
-图1：角色网格，高亮的骨块链条【bone chain】表示了角色的骨架【skeleton】黑色的多边形则表示了角色的皮肤</p>
-<h3 id="11-骨块及其继承式的变换">1.1 骨块及其继承式的变换</h3>
-<p>首先，所有的骨块都初始布局在骨块空间（bone space）中。骨块B有两个关联的变换。第一个是其局部变换（local transform），称之为L，另一个是组合变换（combined transform），称之为C。局部变换负责在骨块空间中，让骨块B绕着它的关节（joint）旋转（如图2左图所示）。如果骨块B的关节还连接到另一个称为B的父骨块（parent bone）的骨块时。局部变换L还负责了骨块B相对其父骨块的平移量（如图2右图所示）</p>
-<p><img src="/image/d3d9_skinnedmesh/skinned_mesh_d3d9_2.png" alt="">
-图2: a图中的骨块在骨块空间中，绕着它的环枢关节【pivot joint】旋转，b图中的骨块发生偏移，为其父骨块腾出了空位</p>
-<p>与局部变换形成对照，组合变换则负责对构成角色骨架的骨块进行摆姿势（posing）的操作，如图3所示。也就是说。组合变换将把一个骨块，从它自身的骨块空间，变换到角色空间（character space）中去。。因而，组合变换就是用来操作皮肤的在角色空间中的位置和形状的。</p>
-<p><img src="/image/d3d9_skinnedmesh/skinned_mesh_d3d9_3.png" alt="">
-图3: “组合变换”把骨块从骨块空间变换到角色空间，在本图中，在骨块中间的骨块，变成了角色的右上臂的骨块</p>
-<p>我们该如何确定组合变换。这个确定过程并不是很直截了当。因为骨块之间并不是相互独立的，而是相互之间会影响其位置。暂时先不考虑旋转，首先考虑如图4所示的一个手臂的骨架。如下图：</p>
-<p><img src="/image/d3d9_skinnedmesh/skinned_mesh_d3d9_4.png" alt="">
-图4: 图中所示的是一个手臂的骨架。观察如何使用T(v0), T(v1)和T(v2)定位手掌的位置。同样地，观察如何使用T(v0), T(v1)定位前臂，使用T(v0)定位上臂。【实际上T(v0)并不起什么作用，因为上臂已经是根骨块不需要进行平移】</p>
-<p>在骨块空间中，给定一个上臂，前臂，手掌的骨块。我们需要找出每个骨块的组合变换，用来将这些骨块定位在图4所示的位置。因为每个骨块的局部变换使得该骨块与其父骨块发生偏移。从图4中我们可以容易看到：一个骨块的位置，首先通过使用（applying）它自身的局部变换，然后使用它的父骨块的局部变换，再使用其父骨块的父骨块的局部变换，依次类推。</p>
-<p><img src="/image/d3d9_skinnedmesh/skinned_mesh_d3d9_5.png" alt="">
-图5:层级式变换。观察一个骨块的父骨块的变换，如何影响该骨块和该骨块的子骨块</p>
-<p>现在我们看到，处于骨块层级架构中的每个骨块，都从各自的父骨块中继承得到平移量和旋转量。这也就是说，得到一个骨块的组合变换，是通过：首先由作用其自身的局部变换（先平移接着旋转）；然后再作用其父骨块的局部变换；再作用其祖父骨块的局部变换，依次类推。一直到作为根节点的那个祖先骨块为止。从数学观点上来说。第i个骨块的组合变换矩阵C i是由以下公式得到：</p>
-<p>$ C_i = L_i \times P_i $</p>
-<p>其中 $ L_i $ 是编号为第i号的骨块的局部变换矩阵。 $ P_i $ i是编号为第i号的骨块的父骨块的组合变换矩阵。注意，通过做矩阵级乘，得到某骨块的组合变换时，需要先乘以骨块自身的局部变换矩阵，而后再乘以父骨块的组合变换矩阵。</p>
-<h3 id="12-d3dxframe">1.2 D3DXFRAME</h3>
-<p>现在介绍D3DX库提供的用以构建骨骼层次数据的结构体D3DXFRAME。我们将使用这个结构体来表征角色的骨块。通过对一些指针变量进行赋值，我们可以连接起整个骨架中的骨块。如图6中所示的骨架。</p>
-<p><img src="/image/d3d9_skinnedmesh/skinned_mesh_d3d9_6.png" alt="">
-图6: 图1所示的角色模型的骨骼层次示意图）。垂直向下的箭头表示下部的骨块是上部的骨块的第一个子骨块。水平向右的箭头表示左右两边的骨块是兄弟关系。</p>
-<p>应当承认，在角色动画范畴内的上下文概念中。名字BONE通常就是指D3DXFRAME。但D3DXFRAME是一个通用的数据结构，也可用来描述一个非角色网格层级（non-character mesh hierarchies）的数据。无论如何，只要在角色动画范畴内，我们可以交替使用“bone”和“frame”表示同一个概念。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span>  <span style="color:#a6e22e">_D3DXFRAME</span>{
-</span></span><span style="display:flex;"><span>    LPSTR Name; 
-</span></span><span style="display:flex;"><span>    D3DXMATRIX TransformationMatrix; 
-</span></span><span style="display:flex;"><span>    LPD3DXMESHCONTAINER pMeshContainer; 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span>  <span style="color:#a6e22e">_D3DXFRAME</span> <span style="color:#f92672">*</span>pFrameSibling; 
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span>  <span style="color:#a6e22e">_D3DXFRAME</span> <span style="color:#f92672">*</span>pFrameFirstChild; 
-</span></span><span style="display:flex;"><span>} D3DXFRAME, <span style="color:#f92672">*</span>LPD3DXFRAME; 
-</span></span></code></pre></div><p>D3DXFRAME结构的数据成员的描述的如下表：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Data Member</td>
-<td>Description</td>
-</tr>
-<tr>
-<td>Name</td>
-<td>The name of the node</td>
-</tr>
-<tr>
-<td>TransformationMatrix</td>
-<td>The local transformation matrix.</td>
-</tr>
-<tr>
-<td>pMeshContainer</td>
-<td>Pointer to a D3DXMESHCONTIANER. This member is used in the case that you want to associate a container of meshes with this frame. If no mesh container is associated with this frame, set this pointer to null. We will ignore this member for now and come back to D3DXMESHCONTIANER in Section 5 of this paper.</td>
-</tr>
-<tr>
-<td>pFrameSibling</td>
-<td>Pointer to this frame’s sibling frame; one of two pointers used to connect this node to the mesh hierarchy—see Figure 6.</td>
-</tr>
-<tr>
-<td>pFrameFirstChild</td>
-<td>Pointer to this frame’s first child frame; one of two pointers used to connect this node to the mesh hierarchy—see Figure 6.</td>
-</tr>
-</tbody>
-</table>
-<p>D3DXFRAME的问题是它不含有一个用来表示combined transform的成员数据。为了解决这个问题我们可以扩展D3DXFRAME，如下代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">FrameEx</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> D3DXFRAME
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>     D3DXMATRIX combinedTransform;
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><h3 id="13-计算得到组合变换矩阵的c代码">1.3 计算得到组合变换矩阵的C++代码</h3>
-<p>我们可以通过递归遍历访问（recursively traversing）层级结构的方法，去计算每一个层级中的节点（node），也即每一个骨块的组合变换矩阵，如下便是C++代码。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">CombineTransforms</span>(FrameEx<span style="color:#f92672">*</span> frame,D3DXMATRIX<span style="color:#f92672">&amp;</span> P) 
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// P就是本骨块的父骨块的组合变换矩阵
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>{
-</span></span><span style="display:flex;"><span>    D3DXMATRIX<span style="color:#f92672">&amp;</span> L <span style="color:#f92672">=</span> frame<span style="color:#f92672">-&gt;</span>TransformationMatrix;
-</span></span><span style="display:flex;"><span>    D3DXMATRIX<span style="color:#f92672">&amp;</span> C <span style="color:#f92672">=</span> frame<span style="color:#f92672">-&gt;</span>combinedTransform;
-</span></span><span style="display:flex;"><span>    C <span style="color:#f92672">=</span> L <span style="color:#f92672">*</span> P;
-</span></span><span style="display:flex;"><span>    FrameEx<span style="color:#f92672">*</span> sibling <span style="color:#f92672">=</span> (FrameEx<span style="color:#f92672">*</span>)frame<span style="color:#f92672">-&gt;</span>pFrameSibling;
-</span></span><span style="display:flex;"><span>    FrameEx<span style="color:#f92672">*</span> firstChild <span style="color:#f92672">=</span> (FrameEx<span style="color:#f92672">*</span>)frame<span style="color:#f92672">-&gt;</span>pFrameFirstChild;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( sibling ) <span style="color:#75715e">// 如果本骨块存在兄弟骨块，那么计算兄弟骨块的组合变换矩阵
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        combineTransforms(sibling, P);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>( firstChild ) <span style="color:#75715e">// 如果本骨块存在子骨块，那么计算子骨块的组合变换矩阵
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        combineTransforms(firstChild , C);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>开始执行该递归遍历操作的函数的方式如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>D3DXMATRIX identity;
-</span></span><span style="display:flex;"><span>D3DXMatrixIdentity(<span style="color:#f92672">&amp;</span>identity);
-</span></span><span style="display:flex;"><span>CombineTransforms( rootBone, identity );
-</span></span></code></pre></div><p>因为作d为根骨块的那个骨块是没有父骨块的。所以给作为父骨块组合变换矩阵的那个参数，传一个单位矩阵进去。</p>
-<h2 id="2-关键帧和动画">2 关键帧和动画</h2>
-<p>在本文中，我们将会考虑预先录制的动画数据（prerecorded animation data）。也就是说动画数据在3D建模工具或者是运动捕捉设备中就已经预先建立好了。通过骨块的变换矩阵，附着在骨架上的皮肤也将会相对应地发生运动，以反映出当前骨架的姿势。所以，现在的问题就是：怎样使得一副骨架发生运动。</p>
-<p>为了使得问题表述得更具体化形象化。我们举一个特定的例子。假定一个3D美工被指派了一个任务，要求他创建一个机器人手臂的动画序列（animation sequence），并且该序列必须要持续5秒。在时间段[0.0s, 2.5s]内，机器人的上臂要绕它的肩关节旋转60°，前臂相对于上臂不发生任何移动。在时间段(2.5s, 5.0s]内，上臂绕肩关节旋转-30°。前臂相对于上臂也还不发生任何移动。为了创建这样的一个动画序列，艺术家粗略地为上臂骨块创建了三个关键帧（key frame）。这三个关键帧这分别取在时刻t0 = 0s, t 1 = 2.5s, 和t2  = 5s处，如图7所示</p>
-<p><img src="/image/d3d9_skinnedmesh/skinned_mesh_d3d9_7.png" alt=""></p>
-<p>图7: 在[0.0s-2.5s]时间段内，手臂绕着肩连接点旋转了60度，在 (2.5s, 5.0s]时间段内，手臂绕着肩连接点旋转了-30度</p>
-<p>一个关键帧可以视为：在某一时刻，骨架中某一骨块的一个有显著含义的姿势（significant pose）。在动画序列中，骨架中的每一个骨块都特别含有若干个关键帧。一般地，关键帧由一个旋转值四元数，放缩值向量，平移值向量所构成。</p>
-<p>我们注意到关键帧定义了动画中的极值姿势（extreme pose）。那也就是说，动画中所有其他的姿势，都分布在其中某两个关键帧之间。。现在我们注意到了每个骨块只有三个关键帧的话是不能构成一个5秒长的运动轨迹足够平滑（smoothly）的动画。</p>
-<p><img src="/image/d3d9_skinnedmesh/skinned_mesh_d3d9_8.png" alt=""></p>
-<p>图8:关键帧插值 回到图7所示的原始示例在[0.0s, 2.5s] 时间段内，手臂将会从1号关键帧运动到2号关键帧。然后，在(2.5s, 5.0s],时间段内，从2号关键帧运动到3号关键帧）</p>
-<h3 id="21-计算中间姿势">2.1 计算中间姿势</h3>
-<p>每两个关键帧之间的中间姿势（intermediate pose）是通过插值计算而得。也就是说，给定关键帧K0 和K1，K0描述了骨块的一个姿势，K1描述了骨块的另一个姿势，在这两个姿势之间的表示某个姿势的帧，可以通过数学插值得到。图8展示了通过对关键帧K0和K1进行插值计算的方法。通过指定取值范围在[0,1]之间的不同的插值参数s，我们可以看到当插值参数从0到1变化时，表示中间姿势的帧也在K0和K1间变化。因而，参数s表示了从一个关键帧过渡到另一个关键帧时，得到的中间姿势关键帧中，K0和K1两个关键帧各自所占的百分比。</p>
-<p>我们如何在两个骨块间进行插值？对于平移量和放缩量来说，使用 <strong>线性插值（linear interpolation）</strong> ，在三维空间中的旋转相对复杂些。我们必须使用四元数去描述旋转，使用 <strong>球面插值（spherical interpolation）</strong> 方法去对四元数进行正确的插值。D3DX库对这两种插值方法提供了函数： <strong>D3DXVec3Lerp</strong> 和 <strong>D3DXQuaternionSlerp</strong> 。</p>
-<p>注意：我们从不对矩阵进行插值，因为旋转量使用矩阵去描述的话，难以正确地进行插值计算，所以我们使用四元数来进行插值。因而，关键帧的变换量通常都是分别“旋转值四元数”，“放缩值向量”，“平移值向量”来描述（简称RST-Value）。而不直接使用一个矩阵。对所有的骨块的RST-Value进行插值后。可以把RST-value转换成一个变换用矩阵。最后，如果一个文件是以矩阵的形式去存储关键帧数据的话，我们首先要把这个矩阵分解转换成RST-Value值来进行插值计算。</p>
-<p>现在我们知道，如何去计算中间姿势了。让我们重新看看整个处理过程。给定一个时刻t，求该时刻的中间姿势。第一步要找到时刻$ t_0 $和$ t_1 $ （t0 ≤ t ≤ t1）的关键帧  $ K_i $ 和 $ K_{i+1}$ ，然后对着两个关键帧，在时刻t处进行插值。第二步是把时刻t从取值范围[t0, t1]变换到取值范围[0, 1]。以便能正确地反映在中间姿势帧中，K i和Ki+1各占的插值计算百分比。接着我们遍历每一块骨块，执行相同的插值计算。最后，利用所有骨块的经过插值计算后的RST值，更新骨块的局部变换矩阵，以反映当前时刻下t的骨块姿势。</p>
-<p>指定在时刻t下，对某个骨块，在两个关键帧K0和K1中间计算中间姿势的伪代码如下。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Keyframe</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> time;
-</span></span><span style="display:flex;"><span>    D3DXQUATERNION R;
-</span></span><span style="display:flex;"><span>    D3DXVECTOR3 S;
-</span></span><span style="display:flex;"><span>    D3DXVECTOR3 T;
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">interpolateBone</span>(Keyframe<span style="color:#f92672">&amp;</span> K0, Keyframe<span style="color:#f92672">&amp;</span> K1, D3DXMATRIX<span style="color:#f92672">&amp;</span> L)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Transform to [0, 1]
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">float</span> t0 <span style="color:#f92672">=</span> K0.time;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> t1 <span style="color:#f92672">=</span> K1.time;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span> lerpTime <span style="color:#f92672">=</span> (t <span style="color:#f92672">-</span> t0) <span style="color:#f92672">/</span> (t1 <span style="color:#f92672">-</span> t0);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Compute interpolated RST-values.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   D3DXVECTOR3 lerpedT;
-</span></span><span style="display:flex;"><span>   D3DXVECTOR3 lerpedS;
-</span></span><span style="display:flex;"><span>   D3DXQUATERNION lerpedR;
-</span></span><span style="display:flex;"><span>   D3DXVec3Lerp( <span style="color:#f92672">&amp;</span>lerpedT, <span style="color:#f92672">&amp;</span>K0.T, <span style="color:#f92672">&amp;</span>K1.T, lerpTime);
-</span></span><span style="display:flex;"><span>   D3DXVec3Lerp( <span style="color:#f92672">&amp;</span>lerpedS, <span style="color:#f92672">&amp;</span>K0.S, <span style="color:#f92672">&amp;</span>K1.S, lerpTime);
-</span></span><span style="display:flex;"><span>   D3DXQuaternionSlerp(<span style="color:#f92672">&amp;</span>lerpedR, <span style="color:#f92672">&amp;</span>K0.R, <span style="color:#f92672">&amp;</span>K1.R, lerpTime);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>   <span style="color:#75715e">// Build and return the interpolated local transformation matrix for this bone.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   D3DXMATRIX T, S, R;
-</span></span><span style="display:flex;"><span>   D3DXMatrixTranslation(<span style="color:#f92672">&amp;</span>T, lerpedT.x, lerpedT.y, lerpedT.z);
-</span></span><span style="display:flex;"><span>   D3DXMatrixScaling(<span style="color:#f92672">&amp;</span>S, lerpedS.x, lerpedS.y, lerpedS.z);
-</span></span><span style="display:flex;"><span>   D3DXMatrixRotationQuaternion(<span style="color:#f92672">&amp;</span>R, <span style="color:#f92672">&amp;</span>lerpedQ);
-</span></span><span style="display:flex;"><span>   L <span style="color:#f92672">=</span> R <span style="color:#f92672">*</span> S <span style="color:#f92672">*</span> T;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>注意：在一般情况下，关键帧的平移值和放缩值都会是一个常数，所以不必进行插值。</p>
-<p>上面的代码只是展示了对一个骨块的插值计算。当然为了使得整个骨架运动。我们必须对骨架中的每一个骨块进行相同操作。我们称含有插值后骨块的骨架为插值后骨架（interpolated-skeleton）.</p>
-<p>在实际代码中我们并不会自行地计算任何中间姿势，这些工作是通过使用D3DX库提供的ID3DXAnimationController接口完成。但无论如何我们需要理解插值计算中间姿势的工作原理，理解幕后发生的一切。</p>
-<h2 id="3-刚体动画及其一个问题">3 刚体动画及其一个问题</h2>
-<p>通过使用一个骨架，我们现在知道怎么表现一个会运动的角色网格了。也知道如何使用关键帧插值来让角色动起来。但我们还没深入讨论骨块和皮肤之间的关系。在两者之间建立最直截了当的关联的办法就是：一个骨块对应于一个表示皮肤的独立的网格（separatemesh）。而且这样的网格还可以很方便地在对应的骨块的骨块空间中进行建模。因为这些骨块的组合变换信息，能够正确地把其对应的独立的网格定位在该角色正确的位置上。因而，给定一个经过重新计算的，表示当前的动画姿势的组合变换后，我们可以使用它，逐一地在正确的位置上，渲染出每一个骨块对应的皮肤网格。如下面的代码所示。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">RecursRender</span>(D3DXFRAME<span style="color:#f92672">*</span> node, D3DXMATRIX<span style="color:#f92672">&amp;</span> parentTransform)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    D3DXMATRIXC <span style="color:#f92672">=</span> node<span style="color:#f92672">-&gt;</span>TransformationMatrix <span style="color:#f92672">*</span> parentTransform;
-</span></span><span style="display:flex;"><span>    _device<span style="color:#f92672">-&gt;</span>SetTransform(D3DTS_WORLD, <span style="color:#f92672">&amp;</span>C);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(uint32 i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> node<span style="color:#f92672">-&gt;</span>pMeshContainer<span style="color:#f92672">-&gt;</span>NumMaterials; <span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        D3DXMESHCONTAINER<span style="color:#f92672">*</span> mc <span style="color:#f92672">=</span> node<span style="color:#f92672">-&gt;</span>pMeshContainer;
-</span></span><span style="display:flex;"><span>        D3DMATERIAL9<span style="color:#f92672">&amp;</span> mtrl <span style="color:#f92672">=</span>mc<span style="color:#f92672">-&gt;</span>pMaterials[i].MatD3D;
-</span></span><span style="display:flex;"><span>        _device<span style="color:#f92672">-&gt;</span>SetMaterial(<span style="color:#f92672">&amp;</span>mtrl);
-</span></span><span style="display:flex;"><span>       node<span style="color:#f92672">-&gt;</span>pMeshContainer<span style="color:#f92672">-&gt;</span>MeshData.pMesh<span style="color:#f92672">-&gt;</span>DrawSubset(i);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span>( node<span style="color:#f92672">-&gt;</span>pFrameSibling )
-</span></span><span style="display:flex;"><span>       recursRender(node<span style="color:#f92672">-&gt;</span>pFrameSibling, parentTransform);
-</span></span><span style="display:flex;"><span>   <span style="color:#66d9ef">if</span>( node<span style="color:#f92672">-&gt;</span>pFrameFirstChild )
-</span></span><span style="display:flex;"><span>       recursRender(node<span style="color:#f92672">-&gt;</span>pFrameFirstChild, C);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这个技术叫做刚体动画（rigid bodyanimation） 。通过这个技术我们也可以让一个角色网格动起来 。尽管如此，图 9演示了该技术的瑕疵，使得这种技术可能无法为同时代的游戏所接受。</p>
-<h2 id="4-解决方案顶点混合">4 解决方案：顶点混合</h2>
-<p>因为把角色的皮肤分割成若干不连接的部分，所以使用刚体动画的角色模型在运动时会不可避免地产生裂缝。要解决此问题，我们可以先把角色的皮肤处理成一个联系的网格。现在我们先看图10中所演示的。</p>
-<p><img src="/image/d3d9_skinnedmesh/skinned_mesh_d3d9_10.png" alt=""></p>
-<p>仔细观察，图中的皮肤网格是连续的，在手臂中某部位的皮肤，它延伸并紧贴到其他部分。特别地，靠近关节的顶点，看起来是同时受上臂和前臂同时影响的。这也就是说，靠近关节的顶点，是由两个对其施加了影响的骨块的变换值，加权平均决定的。这是顶点混合（vertex algorithm）算法的核心思想。即某处的皮肤，可能受到多于一个的骨块影响。</p>
-<h3 id="41-偏移变换">4.1 偏移变换</h3>
-<p>在继续实现顶点混合算法的细节之前，我们先解决一个问题。之前，在一个有关节的（articulated ）角色网格模型中，一个骨块是对应一个独立的网格。而且网格是建模在它对应的骨块的骨块空间中的 。骨块本身的组合变换可以把它对应的皮肤网格正确地定位到角色模型上。尽管如此，在顶点混合算法中。我们是把角色的整张皮肤，连续地建模在角色空间中的。这样导致的后果就是，因为这些顶点不是在骨块空间中，所以我们不能简单地使用骨块变换去把皮肤网格定位。</p>
-<p>为了解决这个问题。我们要介绍一个新的变换，我们称之为偏移变换（offset transform）。骨架中每一个骨块都有一个对应的偏移变换矩阵。一个偏移变换矩阵，把在绑定空间（bind space）中的顶点 ，变换到各自对应的骨块的骨块空间中去。图 11概述了这个变换过程。</p>
-<p>因而，通过使用偏移变换矩阵对骨块 B 的顶点进行变换。我们将顶点移到骨块B的骨块空间。一旦我们在骨块空间拥有了顶点，我们可以使用 B 的组合变换矩阵来将其定位到角色空间中当前的动画姿势下的位置中去。所以我们还接着介绍一个变换，称之为最终变换（final transform）。该变换由骨块的偏移变换和组合变换组合而成。在数学上，第 $ i $ 个骨块的最终变换矩阵 $ F_i $ 可由下式指定。</p>
-<p>(2) $ F_i = M_i \times C_i $</p>
-<p>其中，Mi是骨块的偏移矩阵，Ci 是骨块的组合矩阵。</p>
-<h3 id="42-顶点混合的实现细节">4.2 顶点混合的实现细节</h3>
-<p>实际上，Real Time Rendering 一书中提及到，通常，不要超过4个骨块影响同一个顶点。因此我们的设计中，也是同一个顶点最多受到4个骨块的影响。为了实现顶点混合技术。我们现在把角色网格建模成一个连续的网格。每一个顶点含有 4个索引值，这些索引值将指向一个矩阵调色板（matrix palette）中的四项。矩阵调色板是一个矩阵数组，里面含有的每一个骨块的最终变换矩阵。每一个顶点也含有四个权重值，分别表述了影响该顶点的各个最终变换矩阵，各自所占的比例值。因此我们可以得到以下的顶点结构。</p>
-<p>如果一个连续的网格，它的顶点有上述的结构体所描述的信息的话，我们将称这些网格为蒙皮网格（skinned mesh） 。任意一个顶点 v 的最终位置 v′可以由下面的公式进行计算。</p>
-<p>观察上述的等式。 对一个给定的顶点 v，我们使用了所有的影响了该顶点的骨块最终变换矩阵去对其进行变换。然后我们对其进行加权平均计算。得到最后的位置 v′。因此，顶点的最后的位置是由所有对该顶点有影响的骨块的权重值决定的。注意：所有的混合权重值相加必须要为 1.0</p>
-<p>最后我们使用 DirectX HLSL语言撰写一个顶点着色器执行顶点混合操作，并返回一个经过合适地混合计算的（blendedvertex）顶点。我们使用2.0 版本的顶点着色器。这样子每个顶点所受的骨块影响的个数， 可以动态调整的。 每个顶点可以受到 2 个， 3个或者 4个骨块的影响。 如果你的显卡不支持2.0版本的顶点着色器。这个实例程序可以在 REF 格式的设备上运行之。请看接下来的提示，以了解如何修改实例代码，使得它能在较低版本的顶点着色器上运行。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//////////////////////////////////////////////////////////////////
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// File: vertblendDynamic.txt
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Author:Frank Luna
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Desc: Vertexblending vertex shader. Supports mesheswith2-4
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// bone influences per vertex.We can dynamically set
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// NumVertInfluencesso that the shader knowshow many
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// weightsit is processing per vertex. In order to support
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// dynamicloops, wemustuse at least vertexshader
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// version2.0.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//////////////////////////////////////////////////////////////////
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">extern</span> float4x4WorldViewProj;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">extern</span> float4x4FinalTransforms[<span style="color:#ae81ff">35</span>];
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">extern</span> texture Tex;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">extern</span> intNumVertInfluences <span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>; <span style="color:#75715e">//&lt;--- Normally set dynamically.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span>sampler S0<span style="color:#f92672">=</span> sampler_state 
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    Texture <span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span>Tex<span style="color:#f92672">&gt;</span>;
-</span></span><span style="display:flex;"><span>    MinFilter <span style="color:#f92672">=</span> LINEAR;
-</span></span><span style="display:flex;"><span>    MagFilter <span style="color:#f92672">=</span> LINEAR;
-</span></span><span style="display:flex;"><span>    MipFilter <span style="color:#f92672">=</span> LINEAR;
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">VS_OUTPUT</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    float4 pos: POSITION0;
-</span></span><span style="display:flex;"><span>    float2 texCoord: TEXCOORD;
-</span></span><span style="display:flex;"><span>    float4 diffuse : COLOR0;
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>VS_OUTPUT <span style="color:#a6e22e">VertexBlend</span>(float4 pos : POSITION0,
-</span></span><span style="display:flex;"><span>float2 texCoord: TEXCOORD0,
-</span></span><span style="display:flex;"><span>float4 weights: BLENDWEIGHT0,
-</span></span><span style="display:flex;"><span>int4 boneIndices : BLENDINDICES0)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>     VS_OUTPUT output <span style="color:#f92672">=</span> (VS_OUTPUT)<span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>     float4 p <span style="color:#f92672">=</span> float4(<span style="color:#ae81ff">0.0f</span>, <span style="color:#ae81ff">0.0f</span>, <span style="color:#ae81ff">0.0f</span>,<span style="color:#ae81ff">1.0f</span>);
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">float</span> lastWeight <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0f</span>;
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">int</span> n<span style="color:#f92672">=</span> NumVertInfluences<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>     <span style="color:#75715e">// This next code segmentcomputes formula (3).
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>     <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> n; <span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>     {
-</span></span><span style="display:flex;"><span>         lastWeight<span style="color:#f92672">+=</span> weights[i];
-</span></span><span style="display:flex;"><span>         p <span style="color:#f92672">+=</span> weights[i]<span style="color:#f92672">*</span>mul(pos, FinalTransforms[boneIndices[i]]);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    lastWeight<span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0f</span> <span style="color:#f92672">-</span> lastWeight;
-</span></span><span style="display:flex;"><span>    p <span style="color:#f92672">+=</span> lastWeight<span style="color:#f92672">*</span> mul(pos, FinalTransforms[boneIndices[n]]);
-</span></span><span style="display:flex;"><span>    p.w <span style="color:#f92672">=</span><span style="color:#ae81ff">1.0f</span>;
-</span></span><span style="display:flex;"><span>    output.pos<span style="color:#f92672">=</span> mul(p, WorldViewProj);
-</span></span><span style="display:flex;"><span>    output.texCoord<span style="color:#f92672">=</span> texCoord;
-</span></span><span style="display:flex;"><span>    output.diffuse <span style="color:#f92672">=</span> float4(<span style="color:#ae81ff">1.0f</span>, <span style="color:#ae81ff">1.0f</span>,<span style="color:#ae81ff">1.0f</span>, <span style="color:#ae81ff">1.0f</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> output;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>technique VertexBlendingTech
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    pass P0
-</span></span><span style="display:flex;"><span>   {
-</span></span><span style="display:flex;"><span>      vertexShader <span style="color:#f92672">=</span> compile vs_2_0 VertexBlend();
-</span></span><span style="display:flex;"><span>      Sampler[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">=</span> <span style="color:#f92672">&lt;</span>S0<span style="color:#f92672">&gt;</span>;
-</span></span><span style="display:flex;"><span>      Lighting <span style="color:#f92672">=</span>false;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>注意：当使用低于 2.0 版本的顶点着色器（例如1.1 版）进行顶点混合时，会发生两个问题。第一个问题是：低版本的着色器无法保证有足够的常量寄存器来存放矩阵调色板数据。可以通过查询D3DCAPS9::MaxVertexShaderConst属性检查这版本的常量寄存器的数量。我们可以知道 1.1 版本的着色器仅仅能保证有 96 个常量寄存器。除以4 的话，也只能刚好够24 个 4X4 的矩阵使用。解决这个问题的一个而方法是把这些蒙皮网格切割成多个网格，再逐次渲染它们。这样子可以使得每一部分的网格的矩阵调色板能有足够的常量寄存器使用。( h ID3DXSkinInfo::ConvertToIndexedBlendedMesh能切割这些蒙皮网格.) 而相反地，2.0版本的顶点着色器可以保证提供 256个常量寄存器，一般来说这么多的寄存器是够用了的，不需要把蒙皮网格切分。</p>
-<p>低版本顶点着色器的第二个问题是一些旧显卡（如Geforce3）并不支持D3DDECLTYPE_UBYTE4类型的着色器输入参数宣告类型。而这个类型的数据一般是用来输入顶点骨块索引值的。解决的方式是把这个类型的数据转换成旧显卡支持的D3DDECLTYPE_D3DCOLOR类型。然后可以通过使用 HLS L的本征函数 D3DCOLORtoUBYTE4，把 D3DCOLOR类型的参数解出这些索引值来。</p>
-<p>使用低版本顶点着色器最后一个不便之处就是它不支持动态分支。这也就是说不能在着色器代码中使用循环和分支。因此，如果一个网格，它的每一个顶点所受的骨块影响的数目存在着不同的话，就无法使用一个通用的着色器代码去处理它。而在实际中我们肯定会有很多不同的角色网格。这些网格，有些是顶点受两个骨块影响，有些是四个。很显然使用一个通用的着色器代码去应付各种不同的情况是非常方便的。</p>
-<h2 id="5用d3d90的实现细节">5.用D3D9.0的实现细节</h2>
-<p>在本章中，我们将通过使用 D3DX 库和顶点混合算法，把一个蒙皮网格动起来，对前面章节中所提及的理论进行实践。本节所讨论的示例代码名字是“d3dx_skinnedMesh” 。在深入讨论其实现的细节之前。我们先回忆一下，为了实现顶点混合动画，所需要的理论知识是什么。从而先把“实现顶点混合动画”这一任务的基本要素掌握在手。</p>
-<p>首先，我们需要一个骨块层级结构，和一个蒙皮网格。另外，为了计算每个骨块在当前动作姿势下的最终变换信息。我们还需要骨块的偏移变换矩阵，和更新过的组合变换矩阵。对于动画播放而言 ，我们需要每一个骨块的关键帧。这些关键帧数据可以从 X 文件中导入。我们还需要在两个关键帧中插值的功能。给定了上述所需的数据和功能后。我们便可以通过顶点混合算法去让一个蒙皮网格动起来了。后续的章节将详细描述如何获取，创建和使用这些数据和功能。</p>
-<h3 id="51-d3dxmeshcontainer">5.1. D3DXMESHCONTAINER</h3>
-<p>在 1.2节中提到过 D3DXFRAME 结构体。该结构体含有一个 D3DXMESHCONTAINER 类型的指针。该指针允许我们把一个存储 mesh 的容器（该容器就是一个链表）和本frame建立起关联。之前我们没有详细描述 D3DXMESHCONTAINER 结构。现在我们就详细分析它，该结构定义如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">_D3DXMESHCONTAINER</span> {
-</span></span><span style="display:flex;"><span>    LPSTR Name;
-</span></span><span style="display:flex;"><span>    D3DXMESHDATA MeshData;
-</span></span><span style="display:flex;"><span>    LPD3DXMATERIAL pMaterials;
-</span></span><span style="display:flex;"><span>    LPD3DXEFFECTINSTANCEpEffects;
-</span></span><span style="display:flex;"><span>    DWORD NumMaterials;
-</span></span><span style="display:flex;"><span>    DWORD<span style="color:#f92672">*</span> pAdjacency;
-</span></span><span style="display:flex;"><span>    LPD3DXSKININFO pSkinInfo;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">_D3DXMESHCONTAINER</span><span style="color:#f92672">*</span> pNextMeshContainer;
-</span></span><span style="display:flex;"><span>}D3DXMESHCONTAINER,<span style="color:#f92672">*</span>LPD3DXMESHCONTAINER;
-</span></span></code></pre></div><p>D3DXMESHCONTAINER 数据成员描述如下表</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">Data Member</th>
-<th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Name</td>
-<td style="text-align:left">The name of themesh.</td>
-</tr>
-<tr>
-<td style="text-align:center">MeshData</td>
-<td style="text-align:left">A D3DXMESHCONTAINER is a general structure and canbean ID3DXMesh, ID3DXPMesh, or ID3DXPatchMesh.TheD3DXMESHDATA structure specifies what type of meshthisis,andcontains a valid pointer to that type of mesh.</td>
-</tr>
-<tr>
-<td style="text-align:center">pMaterials</td>
-<td style="text-align:left">Pointer to an array of D3DXMATERIAL structures.</td>
-</tr>
-<tr>
-<td style="text-align:center">pEffects</td>
-<td style="text-align:left">Pointer to a D3DXEFFECTINSTANCE structure,which contains effectfile information. We will not be loading any effect datafrom the.X file, and therefore we can ignore this variable.</td>
-</tr>
-<tr>
-<td style="text-align:center">NumMaterials</td>
-<td style="text-align:left">The number of elements in thematerial array</td>
-</tr>
-<tr>
-<td style="text-align:center">pAdjacency</td>
-<td style="text-align:left">points to.pAdjacency Pointer tothe adjacencyinfo of the mesh.</td>
-</tr>
-<tr>
-<td style="text-align:center">pSkinInfo</td>
-<td style="text-align:left">Pointer to anID3DXSkinInfo interface,which contains information needed for performing vertex blending.That is, it contains offset matrices for each bone, vertex weights,andvertex bone indices.The important methods of ID3DXSkinInfo will be discussed later onat the time they are used.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="52-id3dxanimationcontroller">5.2. ID3DXAnimationController</h3>
-<p>ID3DXAnimationController 接口负责处理动画。对于每一个动画序列而言。它存储了每一个骨块的所有关键帧。并且它还包含了在两个关键帧的插值的功能，以及其他的如动画混合动画回调的功能。</p>
-<p>在一个动画序列中，把角色从当前时刻 t 的姿势，更新到t+Δt时刻对应的另一个姿势。为了能渲染出平滑连续的动画，需要把Δt 取得足够小。ID3DXAnimationController::AdvanceTime方法能正确达到这个目的。通过使用关键帧插值机制，该方法把角色的骨块在时刻t 的姿势，更新到 t +Δt时刻对
-应的姿势。该方法的原型如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>HRESULT ID3DXAnimationController<span style="color:#f92672">::</span>AdvanceTime( DOUBLE TimeDelta,
-</span></span><span style="display:flex;"><span>LPD3DXANIMATIONCALLBACKHANDLERpCallbackHandler);
-</span></span></code></pre></div><p>参数 TimeDelta就是Δt，第二个参数我们目前可以忽略，传递一个NULL值给他。注意当动画序列播放到末尾端的时候。缺省地，当前的播放轨计时器（track timer）将会复位，回滚到动画序列的起始端。</p>
-<p>一旦动画控制器对所有的骨块进行插值以对应更新后的姿势后。我们需要访问它们。在哪可以获得这些插值后的骨块？动画控制器有指向层级中所有 frame的 D3DXFRAME::TransformationMatrix 的指针。这一点是很重要的，这是因为当动画控制器对骨块进行插值计算时，会对该骨块所对应的
-D3DXFRAME::TransformationMatrix 进行更新写入。因而，通过 D3DXFRAME::TransformationMatrix ，我们可以直接在任何时刻访问这些经过插值的骨块。下面的代码就是我们对 ID3DXAllocateHierarchy 的子类的实现。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AllocMeshHierarchy</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> ID3DXAllocateHierarchy
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    HRESULT STDMETHODCALLTYPECreateFrame(THIS_ PCSTR Name,D3DXFRAME<span style="color:#f92672">**</span> ppNewFrame);
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    HRESULT <span style="color:#a6e22e">STDMETHODCALLTYPECreateMeshContainer</span>(
-</span></span><span style="display:flex;"><span>                                 PCSTR Name,
-</span></span><span style="display:flex;"><span>                                 <span style="color:#66d9ef">const</span> D3DXMESHDATA<span style="color:#f92672">*</span>pMeshData,
-</span></span><span style="display:flex;"><span>                                 <span style="color:#66d9ef">const</span> D3DXMATERIAL<span style="color:#f92672">*</span>pMaterials,
-</span></span><span style="display:flex;"><span>                                 <span style="color:#66d9ef">const</span> D3DXEFFECTINSTANCE<span style="color:#f92672">*</span> pEffectInstances,
-</span></span><span style="display:flex;"><span>                                 DWORD NumMaterials,
-</span></span><span style="display:flex;"><span>                                 <span style="color:#66d9ef">const</span> DWORD <span style="color:#f92672">*</span>pAdjacency,
-</span></span><span style="display:flex;"><span>                                 ID3DXSkinInfo<span style="color:#f92672">*</span>pSkinInfo,
-</span></span><span style="display:flex;"><span>                                 D3DXMESHCONTAINER<span style="color:#f92672">**</span>ppNewMeshContainer);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    HRESULT <span style="color:#a6e22e">STDMETHODCALLTYPEDestroyFrame</span>( THIS_D3DXFRAME<span style="color:#f92672">*</span> pFrameToFree);
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    HRESULT <span style="color:#a6e22e">STDMETHODCALLTYPEDestroyMeshContainer</span>(THIS_ D3DXMESHCONTAINER<span style="color:#f92672">*</span>pMeshContainerBase);
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>ID3DXAllocateHierarchy 的抽象成员方法描述如下表：</p>
-<p>Function
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>深度探索Skinned Mesh【翻译】 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="skinned mesh"><meta property="og:url" content="http://www.xionggf.com/post/d3d/skinned_mesh_with_d3d9/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="深度探索Skinned Mesh【翻译】"><meta property="og:description" content="skinned mesh"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2005-11-21T18:08:30+08:00"><meta property="article:modified_time" content="2005-11-21T18:08:30+08:00"><meta property="article:tag" content="DirectX"><meta itemprop=name content="深度探索Skinned Mesh【翻译】"><meta itemprop=description content="skinned mesh"><meta itemprop=datePublished content="2005-11-21T18:08:30+08:00"><meta itemprop=dateModified content="2005-11-21T18:08:30+08:00"><meta itemprop=wordCount content="2128"><meta itemprop=keywords content="Direct3D,MD2"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>深度探索Skinned Mesh【翻译】</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2005-11-21T18:08:30+08:00>November 21, 2005</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/directx/ rel=category>DirectX</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/directx/ rel=tag>DirectX</a></span></div></div><h1 class=entry__title>深度探索Skinned Mesh【翻译】</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#译注>译注</a></li><li><a href=#前言>前言</a></li><li><a href=#1-角色网格层级概述>1 角色网格层级概述</a><ul><li><a href=#11-骨块及其继承式的变换>1.1 骨块及其继承式的变换</a></li><li><a href=#12-d3dxframe>1.2 D3DXFRAME</a></li><li><a href=#13-计算得到组合变换矩阵的c代码>1.3 计算得到组合变换矩阵的C++代码</a></li></ul></li><li><a href=#2-关键帧和动画>2 关键帧和动画</a><ul><li><a href=#21-计算中间姿势>2.1 计算中间姿势</a></li></ul></li><li><a href=#3-刚体动画及其一个问题>3 刚体动画及其一个问题</a></li><li><a href=#4-解决方案顶点混合>4 解决方案：顶点混合</a><ul><li><a href=#41-偏移变换>4.1 偏移变换</a></li><li><a href=#42-顶点混合的实现细节>4.2 顶点混合的实现细节</a></li></ul></li><li><a href=#5用d3d90的实现细节>5.用D3D9.0的实现细节</a><ul><li><a href=#51-d3dxmeshcontainer>5.1. D3DXMESHCONTAINER</a></li><li><a href=#52-id3dxanimationcontroller>5.2. ID3DXAnimationController</a></li><li><a href=#54-d3dxloadmeshhierarchyfromx和d3dxframedestroy>5.4 D3DXLoadMeshHierarchyFromX和D3DXFrameDestroy</a></li><li><a href=#55-找到一个唯一的网格>5.5 找到一个唯一的网格</a></li><li><a href=#56-转换为一个蒙皮网格>5.6 转换为一个蒙皮网格</a></li><li><a href=#57-创建一个组合变换矩阵组>5.7 创建一个组合变换矩阵组</a></li><li><a href=#58-初始化过程的概述>5.8 初始化过程的概述</a></li><li><a href=#59-运行起来的工作使角色网格活动起来>5.9 运行起来的工作，使角色网格活动起来</a></li></ul></li><li><a href=#6-多序列动画>6 多序列动画</a></li><li><a href=#7-动画混合>7 动画混合</a></li><li><a href=#8-动画回调机制>8 动画回调机制</a><ul><li><a href=#81-回调操作器>8.1 回调操作器</a></li><li><a href=#82-回调导向键>8.2 回调导向键</a></li><li><a href=#83-操作回调>8.3 操作回调</a></li><li><a href=#84-设置回调键>8.4 设置回调键</a></li></ul></li><li><a href=#9-总结>9 总结</a></li><li><a href=#10-参考书目>10 参考书目</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a></strong></p><h2 id=译注>译注</h2><p>我在学习蒙皮骨骼动画的技术实现时，阅读了大量的中英文文档。但绝大部分文档，要么是语焉不详过度抽象，并且流于纸上谈兵。要么就是翻译得实在让人难以理解。Frank Luna的这篇文章是我所阅读过的最棒的蒙皮骨骼动画论文。Frank不仅有生花妙笔，把一些难以理解的技术要点以深入浅出的方式说得清清楚楚，而且还有着很强的实作能力，给文章配上了对应的示例程序。让读者能深入到每一个实现细节中。因此，我把Frank的这篇文章翻译出来，以供大家交流。欢迎批评指正。</p><h2 id=前言>前言</h2><p>在大量的3D仿真程序，尤其是3D计算机游戏中扮演了一个重要的角色。本论文描述了用以驱动一个现代的实时的角色动画系统所需的数据结构和算法。另外，本文还对D3DX9.0c动画系统的进行了详细的研究。</p><p>本文第1章描述了用来表征3D角色及其运动的数据结构。第2章聚焦在用来描述一个动画序列（animation sequence）的数据集。第3章考察了基于刚体（rigid body）的动画技术，并且强调了使用该技术的问题所在。第4章解析一个新的动画技术：顶点混合（vertex blending），也通常称为蒙皮动画（skinned mesh animation）。该技术可以避免刚体动画带来的问题。第5章则展示了如何通过使用D3DX动画相关的API去实现一个角色蒙皮动画。第6章展示了如何使用多个不同的动画序列。第7章则演示了通过使用D3DX动画混合（animation blending）相关的API，如何用既有的动画，产生新的动画。最后，第8章则解释了通过使用D3DX的动画回调（animation callback）相关的API，来并行执行代码。</p><h2 id=1-角色网格层级概述>1 角色网格层级概述</h2><p>图1展现了一个角色网格（character mesh）。途中高亮的链接成条的骨块（chain of bones）被称之为一个骨架（skeleton）。骨骼动画系统就自然而然地以该骨架结构为实现底层，构架而成，骨架外部被一个皮肤（skin）所环绕。在此，“皮肤”将被建模成一个三维的几何体（也即顶点及其构成的多边形）。和真实世界中一样，骨架中的每一个骨块将会影响皮肤的形状和位置。。从数学的观点来说，这些骨块通过变换矩阵（transformation matrix）的方式来表征的。这些变换矩阵可以适当地变换皮肤的几何体。因而，当我们操纵骨架运动时，附着在该骨架的皮肤也会随着当前骨架的姿势（pose）来运动。</p><p><img src=/image/d3d9_skinnedmesh/skinned_mesh_d3d9_1.png alt>
+图1：角色网格，高亮的骨块链条【bone chain】表示了角色的骨架【skeleton】黑色的多边形则表示了角色的皮肤</p><h3 id=11-骨块及其继承式的变换>1.1 骨块及其继承式的变换</h3><p>首先，所有的骨块都初始布局在骨块空间（bone space）中。骨块B有两个关联的变换。第一个是其局部变换（local transform），称之为L，另一个是组合变换（combined transform），称之为C。局部变换负责在骨块空间中，让骨块B绕着它的关节（joint）旋转（如图2左图所示）。如果骨块B的关节还连接到另一个称为B的父骨块（parent bone）的骨块时。局部变换L还负责了骨块B相对其父骨块的平移量（如图2右图所示）</p><p><img src=/image/d3d9_skinnedmesh/skinned_mesh_d3d9_2.png alt>
+图2: a图中的骨块在骨块空间中，绕着它的环枢关节【pivot joint】旋转，b图中的骨块发生偏移，为其父骨块腾出了空位</p><p>与局部变换形成对照，组合变换则负责对构成角色骨架的骨块进行摆姿势（posing）的操作，如图3所示。也就是说。组合变换将把一个骨块，从它自身的骨块空间，变换到角色空间（character space）中去。。因而，组合变换就是用来操作皮肤的在角色空间中的位置和形状的。</p><p><img src=/image/d3d9_skinnedmesh/skinned_mesh_d3d9_3.png alt>
+图3: “组合变换”把骨块从骨块空间变换到角色空间，在本图中，在骨块中间的骨块，变成了角色的右上臂的骨块</p><p>我们该如何确定组合变换。这个确定过程并不是很直截了当。因为骨块之间并不是相互独立的，而是相互之间会影响其位置。暂时先不考虑旋转，首先考虑如图4所示的一个手臂的骨架。如下图：</p><p><img src=/image/d3d9_skinnedmesh/skinned_mesh_d3d9_4.png alt>
+图4: 图中所示的是一个手臂的骨架。观察如何使用T(v0), T(v1)和T(v2)定位手掌的位置。同样地，观察如何使用T(v0), T(v1)定位前臂，使用T(v0)定位上臂。【实际上T(v0)并不起什么作用，因为上臂已经是根骨块不需要进行平移】</p><p>在骨块空间中，给定一个上臂，前臂，手掌的骨块。我们需要找出每个骨块的组合变换，用来将这些骨块定位在图4所示的位置。因为每个骨块的局部变换使得该骨块与其父骨块发生偏移。从图4中我们可以容易看到：一个骨块的位置，首先通过使用（applying）它自身的局部变换，然后使用它的父骨块的局部变换，再使用其父骨块的父骨块的局部变换，依次类推。</p><p><img src=/image/d3d9_skinnedmesh/skinned_mesh_d3d9_5.png alt>
+图5:层级式变换。观察一个骨块的父骨块的变换，如何影响该骨块和该骨块的子骨块</p><p>现在我们看到，处于骨块层级架构中的每个骨块，都从各自的父骨块中继承得到平移量和旋转量。这也就是说，得到一个骨块的组合变换，是通过：首先由作用其自身的局部变换（先平移接着旋转）；然后再作用其父骨块的局部变换；再作用其祖父骨块的局部变换，依次类推。一直到作为根节点的那个祖先骨块为止。从数学观点上来说。第i个骨块的组合变换矩阵C i是由以下公式得到：</p><p>$ C_i = L_i \times P_i $</p><p>其中 $ L_i $ 是编号为第i号的骨块的局部变换矩阵。 $ P_i $ i是编号为第i号的骨块的父骨块的组合变换矩阵。注意，通过做矩阵级乘，得到某骨块的组合变换时，需要先乘以骨块自身的局部变换矩阵，而后再乘以父骨块的组合变换矩阵。</p><h3 id=12-d3dxframe>1.2 D3DXFRAME</h3><p>现在介绍D3DX库提供的用以构建骨骼层次数据的结构体D3DXFRAME。我们将使用这个结构体来表征角色的骨块。通过对一些指针变量进行赋值，我们可以连接起整个骨架中的骨块。如图6中所示的骨架。</p><p><img src=/image/d3d9_skinnedmesh/skinned_mesh_d3d9_6.png alt>
+图6: 图1所示的角色模型的骨骼层次示意图）。垂直向下的箭头表示下部的骨块是上部的骨块的第一个子骨块。水平向右的箭头表示左右两边的骨块是兄弟关系。</p><p>应当承认，在角色动画范畴内的上下文概念中。名字BONE通常就是指D3DXFRAME。但D3DXFRAME是一个通用的数据结构，也可用来描述一个非角色网格层级（non-character mesh hierarchies）的数据。无论如何，只要在角色动画范畴内，我们可以交替使用“bone”和“frame”表示同一个概念。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>typedef</span> <span style=color:#cf222e>struct</span>  <span style=color:#1f2328>_D3DXFRAME</span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    LPSTR Name<span style=color:#1f2328>;</span> 
+</span></span><span style=display:flex><span>    D3DXMATRIX TransformationMatrix<span style=color:#1f2328>;</span> 
+</span></span><span style=display:flex><span>    LPD3DXMESHCONTAINER pMeshContainer<span style=color:#1f2328>;</span> 
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>struct</span>  <span style=color:#1f2328>_D3DXFRAME</span> <span style=color:#0550ae>*</span>pFrameSibling<span style=color:#1f2328>;</span> 
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>struct</span>  <span style=color:#1f2328>_D3DXFRAME</span> <span style=color:#0550ae>*</span>pFrameFirstChild<span style=color:#1f2328>;</span> 
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span> D3DXFRAME<span style=color:#1f2328>,</span> <span style=color:#0550ae>*</span>LPD3DXFRAME<span style=color:#1f2328>;</span> 
+</span></span></code></pre></div><p>D3DXFRAME结构的数据成员的描述的如下表：</p><table><thead><tr><th></th><th></th></tr></thead><tbody><tr><td>Data Member</td><td>Description</td></tr><tr><td>Name</td><td>The name of the node</td></tr><tr><td>TransformationMatrix</td><td>The local transformation matrix.</td></tr><tr><td>pMeshContainer</td><td>Pointer to a D3DXMESHCONTIANER. This member is used in the case that you want to associate a container of meshes with this frame. If no mesh container is associated with this frame, set this pointer to null. We will ignore this member for now and come back to D3DXMESHCONTIANER in Section 5 of this paper.</td></tr><tr><td>pFrameSibling</td><td>Pointer to this frame’s sibling frame; one of two pointers used to connect this node to the mesh hierarchy—see Figure 6.</td></tr><tr><td>pFrameFirstChild</td><td>Pointer to this frame’s first child frame; one of two pointers used to connect this node to the mesh hierarchy—see Figure 6.</td></tr></tbody></table><p>D3DXFRAME的问题是它不含有一个用来表示combined transform的成员数据。为了解决这个问题我们可以扩展D3DXFRAME，如下代码：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>struct</span> <span style=color:#1f2328>FrameEx</span> <span style=color:#0550ae>:</span> <span style=color:#cf222e>public</span> D3DXFRAME
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>     D3DXMATRIX combinedTransform<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><h3 id=13-计算得到组合变换矩阵的c代码>1.3 计算得到组合变换矩阵的C++代码</h3><p>我们可以通过递归遍历访问（recursively traversing）层级结构的方法，去计算每一个层级中的节点（node），也即每一个骨块的组合变换矩阵，如下便是C++代码。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>CombineTransforms</span><span style=color:#1f2328>(</span>FrameEx<span style=color:#0550ae>*</span> frame<span style=color:#1f2328>,</span>D3DXMATRIX<span style=color:#0550ae>&amp;</span> P<span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span><span style=color:#57606a>// P就是本骨块的父骨块的组合变换矩阵
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    D3DXMATRIX<span style=color:#0550ae>&amp;</span> L <span style=color:#0550ae>=</span> frame<span style=color:#0550ae>-&gt;</span>TransformationMatrix<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    D3DXMATRIX<span style=color:#0550ae>&amp;</span> C <span style=color:#0550ae>=</span> frame<span style=color:#0550ae>-&gt;</span>combinedTransform<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    C <span style=color:#0550ae>=</span> L <span style=color:#0550ae>*</span> P<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    FrameEx<span style=color:#0550ae>*</span> sibling <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>FrameEx<span style=color:#0550ae>*</span><span style=color:#1f2328>)</span>frame<span style=color:#0550ae>-&gt;</span>pFrameSibling<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    FrameEx<span style=color:#0550ae>*</span> firstChild <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>FrameEx<span style=color:#0550ae>*</span><span style=color:#1f2328>)</span>frame<span style=color:#0550ae>-&gt;</span>pFrameFirstChild<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> sibling <span style=color:#1f2328>)</span> <span style=color:#57606a>// 如果本骨块存在兄弟骨块，那么计算兄弟骨块的组合变换矩阵
+</span></span></span><span style=display:flex><span>        combineTransforms<span style=color:#1f2328>(</span>sibling<span style=color:#1f2328>,</span> P<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> firstChild <span style=color:#1f2328>)</span> <span style=color:#57606a>// 如果本骨块存在子骨块，那么计算子骨块的组合变换矩阵
+</span></span></span><span style=display:flex><span>        combineTransforms<span style=color:#1f2328>(</span>firstChild <span style=color:#1f2328>,</span> C<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>开始执行该递归遍历操作的函数的方式如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>D3DXMATRIX identity<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>D3DXMatrixIdentity<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>identity<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>CombineTransforms<span style=color:#1f2328>(</span> rootBone<span style=color:#1f2328>,</span> identity <span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>因为作d为根骨块的那个骨块是没有父骨块的。所以给作为父骨块组合变换矩阵的那个参数，传一个单位矩阵进去。</p><h2 id=2-关键帧和动画>2 关键帧和动画</h2><p>在本文中，我们将会考虑预先录制的动画数据（prerecorded animation data）。也就是说动画数据在3D建模工具或者是运动捕捉设备中就已经预先建立好了。通过骨块的变换矩阵，附着在骨架上的皮肤也将会相对应地发生运动，以反映出当前骨架的姿势。所以，现在的问题就是：怎样使得一副骨架发生运动。</p><p>为了使得问题表述得更具体化形象化。我们举一个特定的例子。假定一个3D美工被指派了一个任务，要求他创建一个机器人手臂的动画序列（animation sequence），并且该序列必须要持续5秒。在时间段[0.0s, 2.5s]内，机器人的上臂要绕它的肩关节旋转60°，前臂相对于上臂不发生任何移动。在时间段(2.5s, 5.0s]内，上臂绕肩关节旋转-30°。前臂相对于上臂也还不发生任何移动。为了创建这样的一个动画序列，艺术家粗略地为上臂骨块创建了三个关键帧（key frame）。这三个关键帧这分别取在时刻t0 = 0s, t 1 = 2.5s, 和t2 = 5s处，如图7所示</p><p><img src=/image/d3d9_skinnedmesh/skinned_mesh_d3d9_7.png alt></p><p>图7: 在[0.0s-2.5s]时间段内，手臂绕着肩连接点旋转了60度，在 (2.5s, 5.0s]时间段内，手臂绕着肩连接点旋转了-30度</p><p>一个关键帧可以视为：在某一时刻，骨架中某一骨块的一个有显著含义的姿势（significant pose）。在动画序列中，骨架中的每一个骨块都特别含有若干个关键帧。一般地，关键帧由一个旋转值四元数，放缩值向量，平移值向量所构成。</p><p>我们注意到关键帧定义了动画中的极值姿势（extreme pose）。那也就是说，动画中所有其他的姿势，都分布在其中某两个关键帧之间。。现在我们注意到了每个骨块只有三个关键帧的话是不能构成一个5秒长的运动轨迹足够平滑（smoothly）的动画。</p><p><img src=/image/d3d9_skinnedmesh/skinned_mesh_d3d9_8.png alt></p><p>图8:关键帧插值 回到图7所示的原始示例在[0.0s, 2.5s] 时间段内，手臂将会从1号关键帧运动到2号关键帧。然后，在(2.5s, 5.0s],时间段内，从2号关键帧运动到3号关键帧）</p><h3 id=21-计算中间姿势>2.1 计算中间姿势</h3><p>每两个关键帧之间的中间姿势（intermediate pose）是通过插值计算而得。也就是说，给定关键帧K0 和K1，K0描述了骨块的一个姿势，K1描述了骨块的另一个姿势，在这两个姿势之间的表示某个姿势的帧，可以通过数学插值得到。图8展示了通过对关键帧K0和K1进行插值计算的方法。通过指定取值范围在[0,1]之间的不同的插值参数s，我们可以看到当插值参数从0到1变化时，表示中间姿势的帧也在K0和K1间变化。因而，参数s表示了从一个关键帧过渡到另一个关键帧时，得到的中间姿势关键帧中，K0和K1两个关键帧各自所占的百分比。</p><p>我们如何在两个骨块间进行插值？对于平移量和放缩量来说，使用 <strong>线性插值（linear interpolation）</strong> ，在三维空间中的旋转相对复杂些。我们必须使用四元数去描述旋转，使用 <strong>球面插值（spherical interpolation）</strong> 方法去对四元数进行正确的插值。D3DX库对这两种插值方法提供了函数： <strong>D3DXVec3Lerp</strong> 和 <strong>D3DXQuaternionSlerp</strong> 。</p><p>注意：我们从不对矩阵进行插值，因为旋转量使用矩阵去描述的话，难以正确地进行插值计算，所以我们使用四元数来进行插值。因而，关键帧的变换量通常都是分别“旋转值四元数”，“放缩值向量”，“平移值向量”来描述（简称RST-Value）。而不直接使用一个矩阵。对所有的骨块的RST-Value进行插值后。可以把RST-value转换成一个变换用矩阵。最后，如果一个文件是以矩阵的形式去存储关键帧数据的话，我们首先要把这个矩阵分解转换成RST-Value值来进行插值计算。</p><p>现在我们知道，如何去计算中间姿势了。让我们重新看看整个处理过程。给定一个时刻t，求该时刻的中间姿势。第一步要找到时刻$ t_0 $和$ t_1 $ （t0 ≤ t ≤ t1）的关键帧 $ K_i $ 和 $ K_{i+1}$ ，然后对着两个关键帧，在时刻t处进行插值。第二步是把时刻t从取值范围[t0, t1]变换到取值范围[0, 1]。以便能正确地反映在中间姿势帧中，K i和Ki+1各占的插值计算百分比。接着我们遍历每一块骨块，执行相同的插值计算。最后，利用所有骨块的经过插值计算后的RST值，更新骨块的局部变换矩阵，以反映当前时刻下t的骨块姿势。</p><p>指定在时刻t下，对某个骨块，在两个关键帧K0和K1中间计算中间姿势的伪代码如下。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>struct</span> <span style=color:#1f2328>Keyframe</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> time<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    D3DXQUATERNION R<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    D3DXVECTOR3 S<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    D3DXVECTOR3 T<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>interpolateBone</span><span style=color:#1f2328>(</span>Keyframe<span style=color:#0550ae>&amp;</span> K0<span style=color:#1f2328>,</span> Keyframe<span style=color:#0550ae>&amp;</span> K1<span style=color:#1f2328>,</span> D3DXMATRIX<span style=color:#0550ae>&amp;</span> L<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Transform to [0, 1]
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> t0 <span style=color:#0550ae>=</span> K0<span style=color:#1f2328>.</span>time<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> t1 <span style=color:#0550ae>=</span> K1<span style=color:#1f2328>.</span>time<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> lerpTime <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>t <span style=color:#0550ae>-</span> t0<span style=color:#1f2328>)</span> <span style=color:#0550ae>/</span> <span style=color:#1f2328>(</span>t1 <span style=color:#0550ae>-</span> t0<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>   <span style=color:#57606a>// Compute interpolated RST-values.
+</span></span></span><span style=display:flex><span>   D3DXVECTOR3 lerpedT<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   D3DXVECTOR3 lerpedS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   D3DXQUATERNION lerpedR<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   D3DXVec3Lerp<span style=color:#1f2328>(</span> <span style=color:#0550ae>&amp;</span>lerpedT<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>K0<span style=color:#1f2328>.</span>T<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>K1<span style=color:#1f2328>.</span>T<span style=color:#1f2328>,</span> lerpTime<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   D3DXVec3Lerp<span style=color:#1f2328>(</span> <span style=color:#0550ae>&amp;</span>lerpedS<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>K0<span style=color:#1f2328>.</span>S<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>K1<span style=color:#1f2328>.</span>S<span style=color:#1f2328>,</span> lerpTime<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   D3DXQuaternionSlerp<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>lerpedR<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>K0<span style=color:#1f2328>.</span>R<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>K1<span style=color:#1f2328>.</span>R<span style=color:#1f2328>,</span> lerpTime<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>   <span style=color:#57606a>// Build and return the interpolated local transformation matrix for this bone.
+</span></span></span><span style=display:flex><span>   D3DXMATRIX T<span style=color:#1f2328>,</span> S<span style=color:#1f2328>,</span> R<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   D3DXMatrixTranslation<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>T<span style=color:#1f2328>,</span> lerpedT<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> lerpedT<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> lerpedT<span style=color:#1f2328>.</span>z<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   D3DXMatrixScaling<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>S<span style=color:#1f2328>,</span> lerpedS<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> lerpedS<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> lerpedS<span style=color:#1f2328>.</span>z<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   D3DXMatrixRotationQuaternion<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>R<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>lerpedQ<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   L <span style=color:#0550ae>=</span> R <span style=color:#0550ae>*</span> S <span style=color:#0550ae>*</span> T<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>注意：在一般情况下，关键帧的平移值和放缩值都会是一个常数，所以不必进行插值。</p><p>上面的代码只是展示了对一个骨块的插值计算。当然为了使得整个骨架运动。我们必须对骨架中的每一个骨块进行相同操作。我们称含有插值后骨块的骨架为插值后骨架（interpolated-skeleton）.</p><p>在实际代码中我们并不会自行地计算任何中间姿势，这些工作是通过使用D3DX库提供的ID3DXAnimationController接口完成。但无论如何我们需要理解插值计算中间姿势的工作原理，理解幕后发生的一切。</p><h2 id=3-刚体动画及其一个问题>3 刚体动画及其一个问题</h2><p>通过使用一个骨架，我们现在知道怎么表现一个会运动的角色网格了。也知道如何使用关键帧插值来让角色动起来。但我们还没深入讨论骨块和皮肤之间的关系。在两者之间建立最直截了当的关联的办法就是：一个骨块对应于一个表示皮肤的独立的网格（separatemesh）。而且这样的网格还可以很方便地在对应的骨块的骨块空间中进行建模。因为这些骨块的组合变换信息，能够正确地把其对应的独立的网格定位在该角色正确的位置上。因而，给定一个经过重新计算的，表示当前的动画姿势的组合变换后，我们可以使用它，逐一地在正确的位置上，渲染出每一个骨块对应的皮肤网格。如下面的代码所示。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>RecursRender</span><span style=color:#1f2328>(</span>D3DXFRAME<span style=color:#0550ae>*</span> node<span style=color:#1f2328>,</span> D3DXMATRIX<span style=color:#0550ae>&amp;</span> parentTransform<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    D3DXMATRIXC <span style=color:#0550ae>=</span> node<span style=color:#0550ae>-&gt;</span>TransformationMatrix <span style=color:#0550ae>*</span> parentTransform<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    _device<span style=color:#0550ae>-&gt;</span>SetTransform<span style=color:#1f2328>(</span>D3DTS_WORLD<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>C<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span><span style=color:#1f2328>(</span>uint32 i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> node<span style=color:#0550ae>-&gt;</span>pMeshContainer<span style=color:#0550ae>-&gt;</span>NumMaterials<span style=color:#1f2328>;</span> <span style=color:#0550ae>++</span>i<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        D3DXMESHCONTAINER<span style=color:#0550ae>*</span> mc <span style=color:#0550ae>=</span> node<span style=color:#0550ae>-&gt;</span>pMeshContainer<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        D3DMATERIAL9<span style=color:#0550ae>&amp;</span> mtrl <span style=color:#0550ae>=</span>mc<span style=color:#0550ae>-&gt;</span>pMaterials<span style=color:#1f2328>[</span>i<span style=color:#1f2328>].</span>MatD3D<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        _device<span style=color:#0550ae>-&gt;</span>SetMaterial<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>mtrl<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>       node<span style=color:#0550ae>-&gt;</span>pMeshContainer<span style=color:#0550ae>-&gt;</span>MeshData<span style=color:#1f2328>.</span>pMesh<span style=color:#0550ae>-&gt;</span>DrawSubset<span style=color:#1f2328>(</span>i<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> node<span style=color:#0550ae>-&gt;</span>pFrameSibling <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>       recursRender<span style=color:#1f2328>(</span>node<span style=color:#0550ae>-&gt;</span>pFrameSibling<span style=color:#1f2328>,</span> parentTransform<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> node<span style=color:#0550ae>-&gt;</span>pFrameFirstChild <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>       recursRender<span style=color:#1f2328>(</span>node<span style=color:#0550ae>-&gt;</span>pFrameFirstChild<span style=color:#1f2328>,</span> C<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>这个技术叫做刚体动画（rigid bodyanimation） 。通过这个技术我们也可以让一个角色网格动起来 。尽管如此，图 9演示了该技术的瑕疵，使得这种技术可能无法为同时代的游戏所接受。</p><h2 id=4-解决方案顶点混合>4 解决方案：顶点混合</h2><p>因为把角色的皮肤分割成若干不连接的部分，所以使用刚体动画的角色模型在运动时会不可避免地产生裂缝。要解决此问题，我们可以先把角色的皮肤处理成一个联系的网格。现在我们先看图10中所演示的。</p><p><img src=/image/d3d9_skinnedmesh/skinned_mesh_d3d9_10.png alt></p><p>仔细观察，图中的皮肤网格是连续的，在手臂中某部位的皮肤，它延伸并紧贴到其他部分。特别地，靠近关节的顶点，看起来是同时受上臂和前臂同时影响的。这也就是说，靠近关节的顶点，是由两个对其施加了影响的骨块的变换值，加权平均决定的。这是顶点混合（vertex algorithm）算法的核心思想。即某处的皮肤，可能受到多于一个的骨块影响。</p><h3 id=41-偏移变换>4.1 偏移变换</h3><p>在继续实现顶点混合算法的细节之前，我们先解决一个问题。之前，在一个有关节的（articulated ）角色网格模型中，一个骨块是对应一个独立的网格。而且网格是建模在它对应的骨块的骨块空间中的 。骨块本身的组合变换可以把它对应的皮肤网格正确地定位到角色模型上。尽管如此，在顶点混合算法中。我们是把角色的整张皮肤，连续地建模在角色空间中的。这样导致的后果就是，因为这些顶点不是在骨块空间中，所以我们不能简单地使用骨块变换去把皮肤网格定位。</p><p>为了解决这个问题。我们要介绍一个新的变换，我们称之为偏移变换（offset transform）。骨架中每一个骨块都有一个对应的偏移变换矩阵。一个偏移变换矩阵，把在绑定空间（bind space）中的顶点 ，变换到各自对应的骨块的骨块空间中去。图 11概述了这个变换过程。</p><p>因而，通过使用偏移变换矩阵对骨块 B 的顶点进行变换。我们将顶点移到骨块B的骨块空间。一旦我们在骨块空间拥有了顶点，我们可以使用 B 的组合变换矩阵来将其定位到角色空间中当前的动画姿势下的位置中去。所以我们还接着介绍一个变换，称之为最终变换（final transform）。该变换由骨块的偏移变换和组合变换组合而成。在数学上，第 $ i $ 个骨块的最终变换矩阵 $ F_i $ 可由下式指定。</p><p>(2) $ F_i = M_i \times C_i $</p><p>其中，Mi是骨块的偏移矩阵，Ci 是骨块的组合矩阵。</p><h3 id=42-顶点混合的实现细节>4.2 顶点混合的实现细节</h3><p>实际上，Real Time Rendering 一书中提及到，通常，不要超过4个骨块影响同一个顶点。因此我们的设计中，也是同一个顶点最多受到4个骨块的影响。为了实现顶点混合技术。我们现在把角色网格建模成一个连续的网格。每一个顶点含有 4个索引值，这些索引值将指向一个矩阵调色板（matrix palette）中的四项。矩阵调色板是一个矩阵数组，里面含有的每一个骨块的最终变换矩阵。每一个顶点也含有四个权重值，分别表述了影响该顶点的各个最终变换矩阵，各自所占的比例值。因此我们可以得到以下的顶点结构。</p><p>如果一个连续的网格，它的顶点有上述的结构体所描述的信息的话，我们将称这些网格为蒙皮网格（skinned mesh） 。任意一个顶点 v 的最终位置 v′可以由下面的公式进行计算。</p><p>观察上述的等式。 对一个给定的顶点 v，我们使用了所有的影响了该顶点的骨块最终变换矩阵去对其进行变换。然后我们对其进行加权平均计算。得到最后的位置 v′。因此，顶点的最后的位置是由所有对该顶点有影响的骨块的权重值决定的。注意：所有的混合权重值相加必须要为 1.0</p><p>最后我们使用 DirectX HLSL语言撰写一个顶点着色器执行顶点混合操作，并返回一个经过合适地混合计算的（blendedvertex）顶点。我们使用2.0 版本的顶点着色器。这样子每个顶点所受的骨块影响的个数， 可以动态调整的。 每个顶点可以受到 2 个， 3个或者 4个骨块的影响。 如果你的显卡不支持2.0版本的顶点着色器。这个实例程序可以在 REF 格式的设备上运行之。请看接下来的提示，以了解如何修改实例代码，使得它能在较低版本的顶点着色器上运行。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>//////////////////////////////////////////////////////////////////
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// File: vertblendDynamic.txt
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// Author:Frank Luna
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// Desc: Vertexblending vertex shader. Supports mesheswith2-4
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// bone influences per vertex.We can dynamically set
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// NumVertInfluencesso that the shader knowshow many
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// weightsit is processing per vertex. In order to support
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// dynamicloops, wemustuse at least vertexshader
+</span></span></span><span style=display:flex><span><span style=color:#57606a>// version2.0.
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//////////////////////////////////////////////////////////////////
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>extern</span> float4x4WorldViewProj<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>extern</span> float4x4FinalTransforms<span style=color:#1f2328>[</span><span style=color:#0550ae>35</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>extern</span> texture Tex<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>extern</span> intNumVertInfluences <span style=color:#0550ae>=</span><span style=color:#0550ae>2</span><span style=color:#1f2328>;</span> <span style=color:#57606a>//&lt;--- Normally set dynamically.
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>sampler S0<span style=color:#0550ae>=</span> sampler_state 
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Texture <span style=color:#0550ae>=</span> <span style=color:#0550ae>&lt;</span>Tex<span style=color:#0550ae>&gt;</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    MinFilter <span style=color:#0550ae>=</span> LINEAR<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    MagFilter <span style=color:#0550ae>=</span> LINEAR<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    MipFilter <span style=color:#0550ae>=</span> LINEAR<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>struct</span> <span style=color:#1f2328>VS_OUTPUT</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    float4 <span style=color:#900;font-weight:700>pos</span><span style=color:#1f2328>:</span> POSITION0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    float2 <span style=color:#900;font-weight:700>texCoord</span><span style=color:#1f2328>:</span> TEXCOORD<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    float4 <span style=color:#900;font-weight:700>diffuse</span> <span style=color:#1f2328>:</span> COLOR0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>VS_OUTPUT <span style=color:#6639ba>VertexBlend</span><span style=color:#1f2328>(</span>float4 <span style=color:#900;font-weight:700>pos</span> <span style=color:#1f2328>:</span> POSITION0<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>float2 <span style=color:#900;font-weight:700>texCoord</span><span style=color:#1f2328>:</span> TEXCOORD0<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>float4 <span style=color:#900;font-weight:700>weights</span><span style=color:#1f2328>:</span> BLENDWEIGHT0<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>int4 <span style=color:#900;font-weight:700>boneIndices</span> <span style=color:#1f2328>:</span> BLENDINDICES0<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>     VS_OUTPUT output <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>VS_OUTPUT<span style=color:#1f2328>)</span><span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>     float4 p <span style=color:#0550ae>=</span> float4<span style=color:#1f2328>(</span><span style=color:#0550ae>0.0f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>,</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>     <span style=color:#cf222e>float</span> lastWeight <span style=color:#0550ae>=</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>     <span style=color:#cf222e>int</span> n<span style=color:#0550ae>=</span> NumVertInfluences<span style=color:#0550ae>-</span><span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>     <span style=color:#57606a>// This next code segmentcomputes formula (3).
+</span></span></span><span style=display:flex><span>     <span style=color:#cf222e>for</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#0550ae>&lt;</span> n<span style=color:#1f2328>;</span> <span style=color:#0550ae>++</span>i<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>     <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>         lastWeight<span style=color:#0550ae>+=</span> weights<span style=color:#1f2328>[</span>i<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>         p <span style=color:#0550ae>+=</span> weights<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span><span style=color:#0550ae>*</span>mul<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>,</span> FinalTransforms<span style=color:#1f2328>[</span>boneIndices<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]]);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    lastWeight<span style=color:#0550ae>=</span> <span style=color:#0550ae>1.0f</span> <span style=color:#0550ae>-</span> lastWeight<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    p <span style=color:#0550ae>+=</span> lastWeight<span style=color:#0550ae>*</span> mul<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>,</span> FinalTransforms<span style=color:#1f2328>[</span>boneIndices<span style=color:#1f2328>[</span>n<span style=color:#1f2328>]]);</span>
+</span></span><span style=display:flex><span>    p<span style=color:#1f2328>.</span>w <span style=color:#0550ae>=</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    output<span style=color:#1f2328>.</span>pos<span style=color:#0550ae>=</span> mul<span style=color:#1f2328>(</span>p<span style=color:#1f2328>,</span> WorldViewProj<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    output<span style=color:#1f2328>.</span>texCoord<span style=color:#0550ae>=</span> texCoord<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    output<span style=color:#1f2328>.</span>diffuse <span style=color:#0550ae>=</span> float4<span style=color:#1f2328>(</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0f</span><span style=color:#1f2328>,</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> output<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>technique VertexBlendingTech
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    pass P0
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>      vertexShader <span style=color:#0550ae>=</span> compile vs_2_0 VertexBlend<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>      Sampler<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>]</span><span style=color:#0550ae>=</span> <span style=color:#0550ae>&lt;</span>S0<span style=color:#0550ae>&gt;</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>      Lighting <span style=color:#0550ae>=</span><span style=color:#6639ba>false</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>注意：当使用低于 2.0 版本的顶点着色器（例如1.1 版）进行顶点混合时，会发生两个问题。第一个问题是：低版本的着色器无法保证有足够的常量寄存器来存放矩阵调色板数据。可以通过查询D3DCAPS9::MaxVertexShaderConst属性检查这版本的常量寄存器的数量。我们可以知道 1.1 版本的着色器仅仅能保证有 96 个常量寄存器。除以4 的话，也只能刚好够24 个 4X4 的矩阵使用。解决这个问题的一个而方法是把这些蒙皮网格切割成多个网格，再逐次渲染它们。这样子可以使得每一部分的网格的矩阵调色板能有足够的常量寄存器使用。( h ID3DXSkinInfo::ConvertToIndexedBlendedMesh能切割这些蒙皮网格.) 而相反地，2.0版本的顶点着色器可以保证提供 256个常量寄存器，一般来说这么多的寄存器是够用了的，不需要把蒙皮网格切分。</p><p>低版本顶点着色器的第二个问题是一些旧显卡（如Geforce3）并不支持D3DDECLTYPE_UBYTE4类型的着色器输入参数宣告类型。而这个类型的数据一般是用来输入顶点骨块索引值的。解决的方式是把这个类型的数据转换成旧显卡支持的D3DDECLTYPE_D3DCOLOR类型。然后可以通过使用 HLS L的本征函数 D3DCOLORtoUBYTE4，把 D3DCOLOR类型的参数解出这些索引值来。</p><p>使用低版本顶点着色器最后一个不便之处就是它不支持动态分支。这也就是说不能在着色器代码中使用循环和分支。因此，如果一个网格，它的每一个顶点所受的骨块影响的数目存在着不同的话，就无法使用一个通用的着色器代码去处理它。而在实际中我们肯定会有很多不同的角色网格。这些网格，有些是顶点受两个骨块影响，有些是四个。很显然使用一个通用的着色器代码去应付各种不同的情况是非常方便的。</p><h2 id=5用d3d90的实现细节>5.用D3D9.0的实现细节</h2><p>在本章中，我们将通过使用 D3DX 库和顶点混合算法，把一个蒙皮网格动起来，对前面章节中所提及的理论进行实践。本节所讨论的示例代码名字是“d3dx_skinnedMesh” 。在深入讨论其实现的细节之前。我们先回忆一下，为了实现顶点混合动画，所需要的理论知识是什么。从而先把“实现顶点混合动画”这一任务的基本要素掌握在手。</p><p>首先，我们需要一个骨块层级结构，和一个蒙皮网格。另外，为了计算每个骨块在当前动作姿势下的最终变换信息。我们还需要骨块的偏移变换矩阵，和更新过的组合变换矩阵。对于动画播放而言 ，我们需要每一个骨块的关键帧。这些关键帧数据可以从 X 文件中导入。我们还需要在两个关键帧中插值的功能。给定了上述所需的数据和功能后。我们便可以通过顶点混合算法去让一个蒙皮网格动起来了。后续的章节将详细描述如何获取，创建和使用这些数据和功能。</p><h3 id=51-d3dxmeshcontainer>5.1. D3DXMESHCONTAINER</h3><p>在 1.2节中提到过 D3DXFRAME 结构体。该结构体含有一个 D3DXMESHCONTAINER 类型的指针。该指针允许我们把一个存储 mesh 的容器（该容器就是一个链表）和本frame建立起关联。之前我们没有详细描述 D3DXMESHCONTAINER 结构。现在我们就详细分析它，该结构定义如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>typedef</span> <span style=color:#cf222e>struct</span> <span style=color:#1f2328>_D3DXMESHCONTAINER</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    LPSTR Name<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    D3DXMESHDATA MeshData<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    LPD3DXMATERIAL pMaterials<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    LPD3DXEFFECTINSTANCEpEffects<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    DWORD NumMaterials<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    DWORD<span style=color:#0550ae>*</span> pAdjacency<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    LPD3DXSKININFO pSkinInfo<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>struct</span> <span style=color:#1f2328>_D3DXMESHCONTAINER</span><span style=color:#0550ae>*</span> pNextMeshContainer<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>D3DXMESHCONTAINER<span style=color:#1f2328>,</span><span style=color:#0550ae>*</span>LPD3DXMESHCONTAINER<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>D3DXMESHCONTAINER 数据成员描述如下表</p><table><thead><tr><th style=text-align:center>Data Member</th><th style=text-align:left>Description</th></tr></thead><tbody><tr><td style=text-align:center>Name</td><td style=text-align:left>The name of themesh.</td></tr><tr><td style=text-align:center>MeshData</td><td style=text-align:left>A D3DXMESHCONTAINER is a general structure and canbean ID3DXMesh, ID3DXPMesh, or ID3DXPatchMesh.TheD3DXMESHDATA structure specifies what type of meshthisis,andcontains a valid pointer to that type of mesh.</td></tr><tr><td style=text-align:center>pMaterials</td><td style=text-align:left>Pointer to an array of D3DXMATERIAL structures.</td></tr><tr><td style=text-align:center>pEffects</td><td style=text-align:left>Pointer to a D3DXEFFECTINSTANCE structure,which contains effectfile information. We will not be loading any effect datafrom the.X file, and therefore we can ignore this variable.</td></tr><tr><td style=text-align:center>NumMaterials</td><td style=text-align:left>The number of elements in thematerial array</td></tr><tr><td style=text-align:center>pAdjacency</td><td style=text-align:left>points to.pAdjacency Pointer tothe adjacencyinfo of the mesh.</td></tr><tr><td style=text-align:center>pSkinInfo</td><td style=text-align:left>Pointer to anID3DXSkinInfo interface,which contains information needed for performing vertex blending.That is, it contains offset matrices for each bone, vertex weights,andvertex bone indices.The important methods of ID3DXSkinInfo will be discussed later onat the time they are used.</td></tr></tbody></table><h3 id=52-id3dxanimationcontroller>5.2. ID3DXAnimationController</h3><p>ID3DXAnimationController 接口负责处理动画。对于每一个动画序列而言。它存储了每一个骨块的所有关键帧。并且它还包含了在两个关键帧的插值的功能，以及其他的如动画混合动画回调的功能。</p><p>在一个动画序列中，把角色从当前时刻 t 的姿势，更新到t+Δt时刻对应的另一个姿势。为了能渲染出平滑连续的动画，需要把Δt 取得足够小。ID3DXAnimationController::AdvanceTime方法能正确达到这个目的。通过使用关键帧插值机制，该方法把角色的骨块在时刻t 的姿势，更新到 t +Δt时刻对
+应的姿势。该方法的原型如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>HRESULT ID3DXAnimationController<span style=color:#0550ae>::</span>AdvanceTime<span style=color:#1f2328>(</span> DOUBLE TimeDelta<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>LPD3DXANIMATIONCALLBACKHANDLERpCallbackHandler<span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>参数 TimeDelta就是Δt，第二个参数我们目前可以忽略，传递一个NULL值给他。注意当动画序列播放到末尾端的时候。缺省地，当前的播放轨计时器（track timer）将会复位，回滚到动画序列的起始端。</p><p>一旦动画控制器对所有的骨块进行插值以对应更新后的姿势后。我们需要访问它们。在哪可以获得这些插值后的骨块？动画控制器有指向层级中所有 frame的 D3DXFRAME::TransformationMatrix 的指针。这一点是很重要的，这是因为当动画控制器对骨块进行插值计算时，会对该骨块所对应的
+D3DXFRAME::TransformationMatrix 进行更新写入。因而，通过 D3DXFRAME::TransformationMatrix ，我们可以直接在任何时刻访问这些经过插值的骨块。下面的代码就是我们对 ID3DXAllocateHierarchy 的子类的实现。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>class</span> <span style=color:#1f2328>AllocMeshHierarchy</span> <span style=color:#0550ae>:</span> <span style=color:#cf222e>public</span> ID3DXAllocateHierarchy
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    HRESULT STDMETHODCALLTYPECreateFrame<span style=color:#1f2328>(</span>THIS_ PCSTR Name<span style=color:#1f2328>,</span>D3DXFRAME<span style=color:#0550ae>**</span> ppNewFrame<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    HRESULT <span style=color:#6639ba>STDMETHODCALLTYPECreateMeshContainer</span><span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>                                 PCSTR Name<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                 <span style=color:#cf222e>const</span> D3DXMESHDATA<span style=color:#0550ae>*</span>pMeshData<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                 <span style=color:#cf222e>const</span> D3DXMATERIAL<span style=color:#0550ae>*</span>pMaterials<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                 <span style=color:#cf222e>const</span> D3DXEFFECTINSTANCE<span style=color:#0550ae>*</span> pEffectInstances<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                 DWORD NumMaterials<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                 <span style=color:#cf222e>const</span> DWORD <span style=color:#0550ae>*</span>pAdjacency<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                 ID3DXSkinInfo<span style=color:#0550ae>*</span>pSkinInfo<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                 D3DXMESHCONTAINER<span style=color:#0550ae>**</span>ppNewMeshContainer<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    HRESULT <span style=color:#6639ba>STDMETHODCALLTYPEDestroyFrame</span><span style=color:#1f2328>(</span> THIS_D3DXFRAME<span style=color:#0550ae>*</span> pFrameToFree<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    HRESULT <span style=color:#6639ba>STDMETHODCALLTYPEDestroyMeshContainer</span><span style=color:#1f2328>(</span>THIS_ D3DXMESHCONTAINER<span style=color:#0550ae>*</span>pMeshContainerBase<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><p>ID3DXAllocateHierarchy 的抽象成员方法描述如下表：</p><p>Function
 Description
 CreateFrame
 Given the frame name as input, createand return a newly allocate D3DXFRAME through ppNewFrame.
@@ -513,87 +189,67 @@ Given all the parameters, except the last, as valid input values,create and retu
 DestroyFrame
 Free any memory or interfaces pFrameToFree owns, and delete pFrameToFree.
 DestroyMeshContainer
-Free any memory or interfaces pMeshContainerBase owns,and delete pMeshContainerBase</p>
-<p>这些函数的实现是简单易懂的。所以在此就不作讨论。你可以查阅本文所对应的示例代码中对AllocMeshHierarchy 类的完全实现</p>
-<h3 id="54-d3dxloadmeshhierarchyfromx和d3dxframedestroy">5.4 D3DXLoadMeshHierarchyFromX和D3DXFrameDestroy</h3>
-<p>我们实现 ID3DXAllocateHierarchy 接口之后，我们可以使用D3DX库提供的函数去从X 文件中载入网格层级了。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>HRESULT WINAPI  <span style="color:#a6e22e">D3DXLoadMeshHierarchyFromX</span>(
-</span></span><span style="display:flex;"><span>    LPCSTR Filename,
-</span></span><span style="display:flex;"><span>    DWORD MeshOptions,
-</span></span><span style="display:flex;"><span>    LPDIRECT3DDEVICE9 pDevice,
-</span></span><span style="display:flex;"><span>    LPD3DXALLOCATEHIERARCHY pAlloc,
-</span></span><span style="display:flex;"><span>    LPD3DXLOADUSERDATA pUserDataLoader,
-</span></span><span style="display:flex;"><span>    LPD3DXFRAME<span style="color:#f92672">*</span> ppFrameHeirarchy,
-</span></span><span style="display:flex;"><span>    LPD3DXANIMATIONCONTROLLER<span style="color:#f92672">*</span> ppAnimController);
-</span></span></code></pre></div><p>通过使用 D3DXFrameDestroy 函数我们可以销毁 frame hierarchy。接下来的代码演示了如何使用D3DXLoadMeshHierarchyFromX 函数和D3DXFrameDestroy 函数。</p>
-<h3 id="55-找到一个唯一的网格">5.5 找到一个唯一的网格</h3>
-<p>为了简化的目的。我们将作如下的假定：我们约定在所读取的 X 文件中，只包含一个蒙皮网格。这个假定并不是一个特别的限制。比如 DX SDK 的名为 tiny的 X 文件就含且仅含一个蒙皮网格。基于这个假定，在 CreateMeshContainer方法中我们将会忽略掉非蒙皮网格。因此，我们可以断定，在网格层次中，仅有一个 frame，是含有一个指向 D3DXMESHCONTAINER 类型指针，即一个有效的 pMesh数据成员值。加之我们仅读取蒙皮网格。所以我们读进来的这个 mesh container，是含有蒙皮信息（skinning info）的，也即，pSkinInfo 数据成员不是一个空指针。所以现在让我们找到这个唯一的 mesh container。下面的方法将递归搜索整个层级，找到那个含有指向 mesh 的指针的 frame。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>D3DXFRAME<span style="color:#f92672">*</span>SkinnedMesh<span style="color:#f92672">::</span>findNodeWithMesh(D3DXFRAME<span style="color:#f92672">*</span> frame)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span>( frame<span style="color:#f92672">-&gt;</span>pMeshContainer <span style="color:#f92672">&amp;&amp;</span> frame<span style="color:#f92672">-&gt;</span>pMeshContainer<span style="color:#f92672">-&gt;</span>MeshData.pMesh <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> )
-</span></span><span style="display:flex;"><span>         <span style="color:#66d9ef">return</span> frame;
-</span></span><span style="display:flex;"><span>      D3DXFRAME<span style="color:#f92672">*</span>f <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span>(frame<span style="color:#f92672">-&gt;</span>pFrameSibling <span style="color:#f92672">&amp;&amp;</span> f<span style="color:#f92672">=</span> findNodeWithMesh(frame<span style="color:#f92672">-&gt;</span>pFrameSibling)
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> f;
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">if</span>(frame<span style="color:#f92672">-&gt;</span>pFrameFirstChild <span style="color:#f92672">&amp;&amp;</span> f<span style="color:#f92672">=</span> findNodeWithMesh(frame<span style="color:#f92672">-&gt;</span>pFrameFirstChild )
-</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">return</span> f;
-</span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>后面的代码开始执行递归搜索，保存一个指向 mesh container 的局部指针变量，保存指向skin info的指针。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">// Find the one and only mesh in the tree hierarchy.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>D3DXFRAME<span style="color:#f92672">*</span>f <span style="color:#f92672">=</span> findNodeWithMesh(_root);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span>( f<span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>  THROW_DXERR(E_FAIL);
-</span></span><span style="display:flex;"><span>D3DXMESHCONTAINER<span style="color:#f92672">*</span> meshContainer <span style="color:#f92672">=</span> f<span style="color:#f92672">-&gt;</span>pMeshContainer;
-</span></span><span style="display:flex;"><span>_skinInfo <span style="color:#f92672">=</span> meshContainer<span style="color:#f92672">-&gt;</span>pSkinInfo;
-</span></span><span style="display:flex;"><span>_skinInfo<span style="color:#f92672">-&gt;</span>AddRef();
-</span></span></code></pre></div><p>应当注意，我们仅仅保存了指向mesh container 的指针。而且我们不需要负责释放它。因为网格是保留在层级中的，当摧毁层级时将会自动释放它。相反地我们要对 skin infoobject 进行引用计数加 1.我们要在 SkinnedMesh::deleteDeviceObject方法中负责释放该 skin infoobject。</p>
-<h3 id="56-转换为一个蒙皮网格">5.6 转换为一个蒙皮网格</h3>
-<p>到目前为止我们拥有指向唯一的一个网格容器的指针。该网格容器也含且仅含有一个网格。但这时候，网格的顶点格式并不包含顶点权重 （vertex weight）， 或者是指向骨块的索引值 （bone indexdata） ，这两个是顶点混合算法所必须的。因而，我们必须把网格转换成一个“索引顶点混合网格 ”（indexed-blended-mesh） 。或者把其转成一个带有使用顶点混合算法所必须顶点格式的蒙皮网格。接下来的这个函数，传递进来的参数是指向那个唯一的网格的指针值，这函数就做上面提到的转换。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SkinnedMesh<span style="color:#f92672">::</span>buildSkinnedMesh(ID3DXMesh<span style="color:#f92672">*</span>mesh)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DWORDnumBoneComboEntries<span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    ID3DXBuffer<span style="color:#f92672">*</span> boneComboTable <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    THROW_DXERR( _skinInfo<span style="color:#f92672">-&gt;</span>ConvertToIndexedBlendedMesh(mesh,
-</span></span><span style="display:flex;"><span>         D3DXMESH_MANAGED <span style="color:#f92672">|</span> D3DXMESH_WRITEONLY,
-</span></span><span style="display:flex;"><span>         SkinnedMesh<span style="color:#f92672">::</span>MAX_NUM_BONES_SUPPORTED,
-</span></span><span style="display:flex;"><span>         <span style="color:#ae81ff">0</span>,  <span style="color:#75715e">//  ignore adjacency  in
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>         <span style="color:#ae81ff">0</span>,  <span style="color:#75715e">//  ignore adjacency out
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>         <span style="color:#ae81ff">0</span>,  <span style="color:#75715e">// ignore face remap
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>         <span style="color:#ae81ff">0</span>,  <span style="color:#75715e">// ignore x vertex remap
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>         <span style="color:#f92672">&amp;</span>_maxVertInfluences,
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&amp;</span>numBoneComboEntries,
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&amp;</span>boneComboTable,
-</span></span><span style="display:flex;"><span>         <span style="color:#f92672">&amp;</span>_skinnedMesh) )
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// We do not need the bone table, so just release it.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>   ReleaseCOM(boneComboTable);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>成员函数 buildSkinnedMesh 中调用的关键函数是ID3DXSkinInfo::ConvertToIndexedBlendedMesh 。回到第 5.1节，ID3DXSkinInfo 接口包含了每一个骨块的偏移矩阵，顶点权重和顶点与指明哪块骨块相关联的索引值。因而 ID3DXSkinInfo 接口可以把一个输入的网格转化成蒙皮网格。</p>
-<p>ID3DXSkinInfo::ConvertToIndexedBlendedMesh 方法的大部分参数在所给的示例程序中已经得到解释了。但其中个别参数要特别注意。因为本文中不使用骨块联合表（bonecombination table），因此相关的两个参数要被忽略。返回值_maxVertInfluences 得到在本蒙皮网格中，一个顶点，被若干骨块影响它，最多的骨块个数。最后我们可以看到经过转换得到的蒙皮网格，将会存储在_skinnedMesh 成员变量中。</p>
-<h3 id="57-创建一个组合变换矩阵组">5.7 创建一个组合变换矩阵组</h3>
-<p>因为我们最后需要给顶点着色器程序设置 4.2 节中提到的矩阵调色板数组。 该数组把组合矩阵存成一个便于使用的数组格式。但我们并不需要去对这些组合矩阵做一个拷贝。这是因为当层级中的组合变换矩阵发生变化时（每帧都会发生变化），我们还得去更新这个拷贝。因此我们只需要得到使用一个包含指向这些组合矩阵的指针的数组，去直接访问和更新组合矩阵，而不用去复制一份。下面的代码展示了如何去保存指向组合矩阵的指针到数组中。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SkinnedMesh<span style="color:#f92672">::</span>buildCombinedTransforms()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>(UINT i<span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;i <span style="color:#f92672">&lt;</span> _numBones;<span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Find the frame that corresponds with the ith bone offset matrix.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> boneName<span style="color:#f92672">=</span> _skinInfo<span style="color:#f92672">-&gt;</span>GetBoneName(i);
-</span></span><span style="display:flex;"><span>        D3DXFRAME<span style="color:#f92672">*</span>frame <span style="color:#f92672">=</span> D3DXFrameFind(_root, boneName);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>( frame )
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            FrameEx<span style="color:#f92672">*</span> frameEx <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>FrameEx<span style="color:#f92672">*&gt;</span>( frame );
-</span></span><span style="display:flex;"><span>            _combinedTransforms[i] <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>frameEx<span style="color:#f92672">-&gt;</span>combinedTransform;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
+Free any memory or interfaces pMeshContainerBase owns,and delete pMeshContainerBase</p><p>这些函数的实现是简单易懂的。所以在此就不作讨论。你可以查阅本文所对应的示例代码中对AllocMeshHierarchy 类的完全实现</p><h3 id=54-d3dxloadmeshhierarchyfromx和d3dxframedestroy>5.4 D3DXLoadMeshHierarchyFromX和D3DXFrameDestroy</h3><p>我们实现 ID3DXAllocateHierarchy 接口之后，我们可以使用D3DX库提供的函数去从X 文件中载入网格层级了。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>HRESULT WINAPI  <span style=color:#6639ba>D3DXLoadMeshHierarchyFromX</span><span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>    LPCSTR Filename<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    DWORD MeshOptions<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    LPDIRECT3DDEVICE9 pDevice<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    LPD3DXALLOCATEHIERARCHY pAlloc<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    LPD3DXLOADUSERDATA pUserDataLoader<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    LPD3DXFRAME<span style=color:#0550ae>*</span> ppFrameHeirarchy<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>    LPD3DXANIMATIONCONTROLLER<span style=color:#0550ae>*</span> ppAnimController<span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>通过使用 D3DXFrameDestroy 函数我们可以销毁 frame hierarchy。接下来的代码演示了如何使用D3DXLoadMeshHierarchyFromX 函数和D3DXFrameDestroy 函数。</p><h3 id=55-找到一个唯一的网格>5.5 找到一个唯一的网格</h3><p>为了简化的目的。我们将作如下的假定：我们约定在所读取的 X 文件中，只包含一个蒙皮网格。这个假定并不是一个特别的限制。比如 DX SDK 的名为 tiny的 X 文件就含且仅含一个蒙皮网格。基于这个假定，在 CreateMeshContainer方法中我们将会忽略掉非蒙皮网格。因此，我们可以断定，在网格层次中，仅有一个 frame，是含有一个指向 D3DXMESHCONTAINER 类型指针，即一个有效的 pMesh数据成员值。加之我们仅读取蒙皮网格。所以我们读进来的这个 mesh container，是含有蒙皮信息（skinning info）的，也即，pSkinInfo 数据成员不是一个空指针。所以现在让我们找到这个唯一的 mesh container。下面的方法将递归搜索整个层级，找到那个含有指向 mesh 的指针的 frame。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>D3DXFRAME<span style=color:#0550ae>*</span>SkinnedMesh<span style=color:#0550ae>::</span>findNodeWithMesh<span style=color:#1f2328>(</span>D3DXFRAME<span style=color:#0550ae>*</span> frame<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>      <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> frame<span style=color:#0550ae>-&gt;</span>pMeshContainer <span style=color:#0550ae>&amp;&amp;</span> frame<span style=color:#0550ae>-&gt;</span>pMeshContainer<span style=color:#0550ae>-&gt;</span>MeshData<span style=color:#1f2328>.</span>pMesh <span style=color:#0550ae>!=</span> <span style=color:#0550ae>0</span> <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>         <span style=color:#cf222e>return</span> frame<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>      D3DXFRAME<span style=color:#0550ae>*</span>f <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>      <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span>frame<span style=color:#0550ae>-&gt;</span>pFrameSibling <span style=color:#0550ae>&amp;&amp;</span> f<span style=color:#0550ae>=</span> findNodeWithMesh<span style=color:#1f2328>(</span>frame<span style=color:#0550ae>-&gt;</span>pFrameSibling<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> f<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>     <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span>frame<span style=color:#0550ae>-&gt;</span>pFrameFirstChild <span style=color:#0550ae>&amp;&amp;</span> f<span style=color:#0550ae>=</span> findNodeWithMesh<span style=color:#1f2328>(</span>frame<span style=color:#0550ae>-&gt;</span>pFrameFirstChild <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> f<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>     <span style=color:#cf222e>return</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>后面的代码开始执行递归搜索，保存一个指向 mesh container 的局部指针变量，保存指向skin info的指针。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>// Find the one and only mesh in the tree hierarchy.
+</span></span></span><span style=display:flex><span>D3DXFRAME<span style=color:#0550ae>*</span>f <span style=color:#0550ae>=</span> findNodeWithMesh<span style=color:#1f2328>(</span>_root<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> f<span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>  THROW_DXERR<span style=color:#1f2328>(</span>E_FAIL<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>D3DXMESHCONTAINER<span style=color:#0550ae>*</span> meshContainer <span style=color:#0550ae>=</span> f<span style=color:#0550ae>-&gt;</span>pMeshContainer<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>_skinInfo <span style=color:#0550ae>=</span> meshContainer<span style=color:#0550ae>-&gt;</span>pSkinInfo<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>_skinInfo<span style=color:#0550ae>-&gt;</span>AddRef<span style=color:#1f2328>();</span>
+</span></span></code></pre></div><p>应当注意，我们仅仅保存了指向mesh container 的指针。而且我们不需要负责释放它。因为网格是保留在层级中的，当摧毁层级时将会自动释放它。相反地我们要对 skin infoobject 进行引用计数加 1.我们要在 SkinnedMesh::deleteDeviceObject方法中负责释放该 skin infoobject。</p><h3 id=56-转换为一个蒙皮网格>5.6 转换为一个蒙皮网格</h3><p>到目前为止我们拥有指向唯一的一个网格容器的指针。该网格容器也含且仅含有一个网格。但这时候，网格的顶点格式并不包含顶点权重 （vertex weight）， 或者是指向骨块的索引值 （bone indexdata） ，这两个是顶点混合算法所必须的。因而，我们必须把网格转换成一个“索引顶点混合网格 ”（indexed-blended-mesh） 。或者把其转成一个带有使用顶点混合算法所必须顶点格式的蒙皮网格。接下来的这个函数，传递进来的参数是指向那个唯一的网格的指针值，这函数就做上面提到的转换。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> SkinnedMesh<span style=color:#0550ae>::</span>buildSkinnedMesh<span style=color:#1f2328>(</span>ID3DXMesh<span style=color:#0550ae>*</span>mesh<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    DWORDnumBoneComboEntries<span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    ID3DXBuffer<span style=color:#0550ae>*</span> boneComboTable <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    THROW_DXERR<span style=color:#1f2328>(</span> _skinInfo<span style=color:#0550ae>-&gt;</span>ConvertToIndexedBlendedMesh<span style=color:#1f2328>(</span>mesh<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>         D3DXMESH_MANAGED <span style=color:#0550ae>|</span> D3DXMESH_WRITEONLY<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>         SkinnedMesh<span style=color:#0550ae>::</span>MAX_NUM_BONES_SUPPORTED<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>         <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span>  <span style=color:#57606a>//  ignore adjacency  in
+</span></span></span><span style=display:flex><span>         <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span>  <span style=color:#57606a>//  ignore adjacency out
+</span></span></span><span style=display:flex><span>         <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span>  <span style=color:#57606a>// ignore face remap
+</span></span></span><span style=display:flex><span>         <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span>  <span style=color:#57606a>// ignore x vertex remap
+</span></span></span><span style=display:flex><span>         <span style=color:#0550ae>&amp;</span>_maxVertInfluences<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>         <span style=color:#0550ae>&amp;</span>numBoneComboEntries<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>         <span style=color:#0550ae>&amp;</span>boneComboTable<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>         <span style=color:#0550ae>&amp;</span>_skinnedMesh<span style=color:#1f2328>)</span> <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// We do not need the bone table, so just release it.
+</span></span></span><span style=display:flex><span>   ReleaseCOM<span style=color:#1f2328>(</span>boneComboTable<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>成员函数 buildSkinnedMesh 中调用的关键函数是ID3DXSkinInfo::ConvertToIndexedBlendedMesh 。回到第 5.1节，ID3DXSkinInfo 接口包含了每一个骨块的偏移矩阵，顶点权重和顶点与指明哪块骨块相关联的索引值。因而 ID3DXSkinInfo 接口可以把一个输入的网格转化成蒙皮网格。</p><p>ID3DXSkinInfo::ConvertToIndexedBlendedMesh 方法的大部分参数在所给的示例程序中已经得到解释了。但其中个别参数要特别注意。因为本文中不使用骨块联合表（bonecombination table），因此相关的两个参数要被忽略。返回值_maxVertInfluences 得到在本蒙皮网格中，一个顶点，被若干骨块影响它，最多的骨块个数。最后我们可以看到经过转换得到的蒙皮网格，将会存储在_skinnedMesh 成员变量中。</p><h3 id=57-创建一个组合变换矩阵组>5.7 创建一个组合变换矩阵组</h3><p>因为我们最后需要给顶点着色器程序设置 4.2 节中提到的矩阵调色板数组。 该数组把组合矩阵存成一个便于使用的数组格式。但我们并不需要去对这些组合矩阵做一个拷贝。这是因为当层级中的组合变换矩阵发生变化时（每帧都会发生变化），我们还得去更新这个拷贝。因此我们只需要得到使用一个包含指向这些组合矩阵的指针的数组，去直接访问和更新组合矩阵，而不用去复制一份。下面的代码展示了如何去保存指向组合矩阵的指针到数组中。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> SkinnedMesh<span style=color:#0550ae>::</span>buildCombinedTransforms<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span><span style=color:#1f2328>(</span>UINT i<span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>i <span style=color:#0550ae>&lt;</span> _numBones<span style=color:#1f2328>;</span><span style=color:#0550ae>++</span>i<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Find the frame that corresponds with the ith bone offset matrix.
+</span></span></span><span style=display:flex><span>        <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> boneName<span style=color:#0550ae>=</span> _skinInfo<span style=color:#0550ae>-&gt;</span>GetBoneName<span style=color:#1f2328>(</span>i<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        D3DXFRAME<span style=color:#0550ae>*</span>frame <span style=color:#0550ae>=</span> D3DXFrameFind<span style=color:#1f2328>(</span>_root<span style=color:#1f2328>,</span> boneName<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> frame <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            FrameEx<span style=color:#0550ae>*</span> frameEx <span style=color:#0550ae>=</span> <span style=color:#cf222e>static_cast</span><span style=color:#0550ae>&lt;</span>FrameEx<span style=color:#0550ae>*&gt;</span><span style=color:#1f2328>(</span> frame <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            _combinedTransforms<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>&amp;</span>frameEx<span style=color:#0550ae>-&gt;</span>combinedTransform<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
 </span></span></code></pre></div><p>从上面代码可以看到。我们保存指向了组合变换矩阵的指针到数组。这些第 i 个指针也对应了第 i个骨块的偏移矩阵。所以，一旦给定了第 i个骨块。我们就可以获取第 i 个偏移矩阵和第i个组合变换矩阵。然而还有另一个原因要如此去配置矩阵数组的布局。在上面的代码中我们把源网格转换成一个
-索引顶点混合网格。 “顶点的骨块索引”和_skinInfo 接口所管理的骨块数组（bone array）是相关联的 。所以把组合变换矩阵数组与偏移矩阵数组建立起关联也是很重要的。</p>
-<h3 id="58-初始化过程的概述">5.8 初始化过程的概述</h3>
-<p>首先让我们概述一下开始创建和准备渲染一个蒙皮网格时的初始化步骤。首先，我们继承实现ID3DXAllocateHierachy 的四个纯虚方法， 这四个方法将会在使用 D3DXLoadMeshHierarchyFromX 函数和 D3DXFrameDestroy函数去创建和销毁骨骼层次时被调用到。调用D3DXLoadMeshHierarchyFromX
-函数从 X 文件中装载一个角色网格，然后在骨骼层次中，找到包含有指向角色蒙皮数据的指针的那个骨块。接着，因为在刚装载进来的网格的顶点格式，不是一个蒙皮网格所需的顶点格式（没有顶点权重值） 。所以我们必须使用 ID3DXSkinInfo::ConvertToIndexedBlendedMesh 方法去将其转换之。最后，我们创建一个装有指向骨块的组合变换矩阵的指针的数组。一遍我们可以快速地访问这些矩阵。执行这些步骤之后，就可以让蒙皮网格动起来，并且渲染之。</p>
-<h3 id="59-运行起来的工作使角色网格活动起来">5.9 运行起来的工作，使角色网格活动起来</h3>
-<p>初始化之后，我们拥有了偏移矩阵，指向每个骨块的组合矩阵的指针。还有用以进行骨块插值计算的动画控制器，以及一个配置好的使用顶点混合算法的蒙皮网格。这也就是说，一切就绪。可以让蒙皮网格动起来，画出来。为了达成这个任务，可以将其划分为五个步骤。</p>
-<p>1
+索引顶点混合网格。 “顶点的骨块索引”和_skinInfo 接口所管理的骨块数组（bone array）是相关联的 。所以把组合变换矩阵数组与偏移矩阵数组建立起关联也是很重要的。</p><h3 id=58-初始化过程的概述>5.8 初始化过程的概述</h3><p>首先让我们概述一下开始创建和准备渲染一个蒙皮网格时的初始化步骤。首先，我们继承实现ID3DXAllocateHierachy 的四个纯虚方法， 这四个方法将会在使用 D3DXLoadMeshHierarchyFromX 函数和 D3DXFrameDestroy函数去创建和销毁骨骼层次时被调用到。调用D3DXLoadMeshHierarchyFromX
+函数从 X 文件中装载一个角色网格，然后在骨骼层次中，找到包含有指向角色蒙皮数据的指针的那个骨块。接着，因为在刚装载进来的网格的顶点格式，不是一个蒙皮网格所需的顶点格式（没有顶点权重值） 。所以我们必须使用 ID3DXSkinInfo::ConvertToIndexedBlendedMesh 方法去将其转换之。最后，我们创建一个装有指向骨块的组合变换矩阵的指针的数组。一遍我们可以快速地访问这些矩阵。执行这些步骤之后，就可以让蒙皮网格动起来，并且渲染之。</p><h3 id=59-运行起来的工作使角色网格活动起来>5.9 运行起来的工作，使角色网格活动起来</h3><p>初始化之后，我们拥有了偏移矩阵，指向每个骨块的组合矩阵的指针。还有用以进行骨块插值计算的动画控制器，以及一个配置好的使用顶点混合算法的蒙皮网格。这也就是说，一切就绪。可以让蒙皮网格动起来，画出来。为了达成这个任务，可以将其划分为五个步骤。</p><p>1
 使用 ID3DXAnimationController::AdvanceTime 方法，通过插值计算。把骨骼摆到当前姿势。因为动画控制器含有指向层次中的骨块的变换矩阵（D3DXMATRIX::TransformationMatrix） 。所以动画控制器通过在动画序列中的两个关键帧之间进行插值，能够更新这些矩阵，以反映当前时刻下角色的姿势。
 2
 现在，骨块被摆放到当前姿势了。通过经过插值的 D3DXMATRIX::TransformationMatrix 递归遍历计算骨块的组合变换矩阵。如 1.3节所提到的。
@@ -602,77 +258,59 @@ Free any memory or interfaces pMeshContainerBase owns,and delete pMeshContainerB
 4
 把已经包含了能正确地把皮肤网格变换到当前姿势的最终矩阵的数组，传给顶点着色器
 5
-最后，在当前的姿势渲染角色网格。下面的代码中，SkinnedMesh::frameMove 函数内包含了前四个步骤的实现。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SkinnedMesh<span style="color:#f92672">::</span>frameMove(<span style="color:#66d9ef">float</span> deltaTime,D3DXMATRIX<span style="color:#f92672">&amp;</span>worldViewProj)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>AdvanceTime(deltaTime, <span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>    D3DXMATRIX identity;
-</span></span><span style="display:flex;"><span>    D3DXMatrixIdentity(<span style="color:#f92672">&amp;</span>identity);
-</span></span><span style="display:flex;"><span>    combineTransforms(<span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>FrameEx<span style="color:#f92672">*&gt;</span>(_root), identity);
-</span></span><span style="display:flex;"><span>    D3DXMATRIXoffsetTemp, combinedTemp;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span>( UINT i<span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;i <span style="color:#f92672">&lt;</span> _numBones;<span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        offsetTemp<span style="color:#f92672">=</span> <span style="color:#f92672">*</span>_skinInfo<span style="color:#f92672">-&gt;</span>GetBoneOffsetMatrix(i);
-</span></span><span style="display:flex;"><span>        combinedTemp <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>_combinedTransforms[i];
-</span></span><span style="display:flex;"><span>        _finalTransforms[i] <span style="color:#f92672">=</span> offsetTemp <span style="color:#f92672">*</span> combinedTemp;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    _effect<span style="color:#f92672">-&gt;</span>SetMatrix(_hWorldViewProj,<span style="color:#f92672">&amp;</span>worldViewProj);
-</span></span><span style="display:flex;"><span>    _effect<span style="color:#f92672">-&gt;</span>SetMatrixArray(_hFinalTransforms,<span style="color:#f92672">&amp;</span>_finalTransforms[<span style="color:#ae81ff">0</span>], _finalTransforms.size());
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>下面的代码是第五个步骤的实现，在 SkinnedMesh::render 函数中。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SkinnedMesh<span style="color:#f92672">::</span>render()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    _effect<span style="color:#f92672">-&gt;</span>SetTechnique(_hTech);
-</span></span><span style="display:flex;"><span>    UINT numPasses <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    _effect<span style="color:#f92672">-&gt;</span>Begin(<span style="color:#f92672">&amp;</span>numPasses, <span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (UINT i<span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;i <span style="color:#f92672">&lt;</span> numPasses;<span style="color:#f92672">++</span>i)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        _effect<span style="color:#f92672">-&gt;</span>BeginPass(i);
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// Draw the oneand only subset.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        _skinnedMesh<span style="color:#f92672">-&gt;</span>DrawSubset(<span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>        _effect<span style="color:#f92672">-&gt;</span>EndPass();
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>    _effect<span style="color:#f92672">-&gt;</span>End();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>我们的示例程序使用 DirectXSDK 中的 tiny.x 文件中的角色网格模型。图 13 显示了该截图。</p>
-<h2 id="6-多序列动画">6 多序列动画</h2>
-<p>一个动态的角色可以含有若干个动画序列的数据。这些数据我们可以称之为“动画集”（animationset）。例如，一个角色可以含有一个行走的动画， 一个奔跑的动画，一个开枪的动画，一个跳跃的动画 ，还有一个死亡的动画。在本节中，我们将会开发一个名为 d3dx_multiAnimation 的程序，用来演示如何在一个角色的多个动画中进行切换播放。我们注意到我们做的程序，将要比 DirectXSDK 中的“MultiAnimation”示例要简单得多。</p>
-<p>在我们开始之前， 我们首先需要一个含有多个动画序列的X 文件 （tiny.x文件中的模型只有一个动画集） 。DirectX SDK 发布了一个名为“tiny_4anim.x”的文件。该文件含有与 tiny.x 文件相同的网格模型，但是有四个动画集。这四个动画集分别是挥手动画，慢跑动画，行走动画，徘徊动画，Tiny_4anim.x可以在 DirectX SDK 中的“MultiAnimation”示例中找到。如下图所示。</p>
-<p>现在我们拥有了一个有多个动画集的 x文件，使用上节中相同的方法去装载模型，装载动画数据 。当动画集装载完毕后。我们可以使用动画控制器去在动画序列中进行切换。为了从播放一个动画序列切换到另一个动画序列。我们必须当前的播放序列设置成另一个序列。
-可通过下面的方法来完成。</p>
-<p>HRESULT ID3DXAnimationController::SetTrackAnimationSet(UINT Track, LPD3DXANIMATIONSET pAnimSet);</p>
-<p>参数值 Track 是用来标识我们将要设置动画集 pAnimSet 上去的播放轨的索引值。在下一节中将会深入解释播放轨。当前我们仅需知道我们仅仅在一个时刻内播放一个动画就可以了。所以，我们使用第一个播放轨。0 号播放轨。所以，当我们把一个新的动画集设置到 0 号播放轨时，我们就把这新的动画集替掉旧的，从而改变当前播放的动画序列。这也就是说，ID3DXAnimationController::AdvanceTime方法将用当前这个新的动画序列来操纵骨块。但我们从哪里得到指向动画控制器的动画集的指针呢？可通过以下的方法：</p>
-<p>HRESULT ID3DXAnimationController::GetAnimationSet(UINT Index,LPD3DXANIMATIONSET *ppAnimSet);</p>
-<p>这个方法将返回参数 Index 指定的动画集的指针。该指针可通过参数 ppAnimSet 活得。动画控制器中的动画集个数需要通过方法 ID3DXAnimationController::GetNumAnimationSets 来获得。</p>
-<p>最后，当在两个动画序列中切换时，我们想重置全局动画时间（globalanimationtime）。使得新的动画能从起始处开始播放。可以通过调用 ID3DXAnimationController::ResetTime方法来完成。</p>
-<p>让我们通过解释“d3dx_multiAnimation”示例程序来总结本节的实现细节。为了模块服用的目的 ，我们将继承 SkinnedMesh类，用来特别处理 tiny_4anim.x 文件。这个新类在其父类的基础上增加了在四个动画序列中切换的功能。</p>
-<p>// Note ha we hardcode these index values and they are
-// specific to tiny_4anim.x.They were found by  actually examining the .x file.
+最后，在当前的姿势渲染角色网格。下面的代码中，SkinnedMesh::frameMove 函数内包含了前四个步骤的实现。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> SkinnedMesh<span style=color:#0550ae>::</span>frameMove<span style=color:#1f2328>(</span><span style=color:#cf222e>float</span> deltaTime<span style=color:#1f2328>,</span>D3DXMATRIX<span style=color:#0550ae>&amp;</span>worldViewProj<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>AdvanceTime<span style=color:#1f2328>(</span>deltaTime<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    D3DXMATRIX identity<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    D3DXMatrixIdentity<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>identity<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    combineTransforms<span style=color:#1f2328>(</span><span style=color:#cf222e>static_cast</span><span style=color:#0550ae>&lt;</span>FrameEx<span style=color:#0550ae>*&gt;</span><span style=color:#1f2328>(</span>_root<span style=color:#1f2328>),</span> identity<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    D3DXMATRIXoffsetTemp<span style=color:#1f2328>,</span> combinedTemp<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span><span style=color:#1f2328>(</span> UINT i<span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>i <span style=color:#0550ae>&lt;</span> _numBones<span style=color:#1f2328>;</span><span style=color:#0550ae>++</span>i<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        offsetTemp<span style=color:#0550ae>=</span> <span style=color:#0550ae>*</span>_skinInfo<span style=color:#0550ae>-&gt;</span>GetBoneOffsetMatrix<span style=color:#1f2328>(</span>i<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        combinedTemp <span style=color:#0550ae>=</span> <span style=color:#0550ae>*</span>_combinedTransforms<span style=color:#1f2328>[</span>i<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        _finalTransforms<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> offsetTemp <span style=color:#0550ae>*</span> combinedTemp<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    _effect<span style=color:#0550ae>-&gt;</span>SetMatrix<span style=color:#1f2328>(</span>_hWorldViewProj<span style=color:#1f2328>,</span><span style=color:#0550ae>&amp;</span>worldViewProj<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _effect<span style=color:#0550ae>-&gt;</span>SetMatrixArray<span style=color:#1f2328>(</span>_hFinalTransforms<span style=color:#1f2328>,</span><span style=color:#0550ae>&amp;</span>_finalTransforms<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>],</span> _finalTransforms<span style=color:#1f2328>.</span>size<span style=color:#1f2328>());</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>下面的代码是第五个步骤的实现，在 SkinnedMesh::render 函数中。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> SkinnedMesh<span style=color:#0550ae>::</span>render<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    _effect<span style=color:#0550ae>-&gt;</span>SetTechnique<span style=color:#1f2328>(</span>_hTech<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    UINT numPasses <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    _effect<span style=color:#0550ae>-&gt;</span>Begin<span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>numPasses<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span>UINT i<span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>i <span style=color:#0550ae>&lt;</span> numPasses<span style=color:#1f2328>;</span><span style=color:#0550ae>++</span>i<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        _effect<span style=color:#0550ae>-&gt;</span>BeginPass<span style=color:#1f2328>(</span>i<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Draw the oneand only subset.
+</span></span></span><span style=display:flex><span>        _skinnedMesh<span style=color:#0550ae>-&gt;</span>DrawSubset<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        _effect<span style=color:#0550ae>-&gt;</span>EndPass<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    _effect<span style=color:#0550ae>-&gt;</span>End<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>我们的示例程序使用 DirectXSDK 中的 tiny.x 文件中的角色网格模型。图 13 显示了该截图。</p><h2 id=6-多序列动画>6 多序列动画</h2><p>一个动态的角色可以含有若干个动画序列的数据。这些数据我们可以称之为“动画集”（animationset）。例如，一个角色可以含有一个行走的动画， 一个奔跑的动画，一个开枪的动画，一个跳跃的动画 ，还有一个死亡的动画。在本节中，我们将会开发一个名为 d3dx_multiAnimation 的程序，用来演示如何在一个角色的多个动画中进行切换播放。我们注意到我们做的程序，将要比 DirectXSDK 中的“MultiAnimation”示例要简单得多。</p><p>在我们开始之前， 我们首先需要一个含有多个动画序列的X 文件 （tiny.x文件中的模型只有一个动画集） 。DirectX SDK 发布了一个名为“tiny_4anim.x”的文件。该文件含有与 tiny.x 文件相同的网格模型，但是有四个动画集。这四个动画集分别是挥手动画，慢跑动画，行走动画，徘徊动画，Tiny_4anim.x可以在 DirectX SDK 中的“MultiAnimation”示例中找到。如下图所示。</p><p>现在我们拥有了一个有多个动画集的 x文件，使用上节中相同的方法去装载模型，装载动画数据 。当动画集装载完毕后。我们可以使用动画控制器去在动画序列中进行切换。为了从播放一个动画序列切换到另一个动画序列。我们必须当前的播放序列设置成另一个序列。
+可通过下面的方法来完成。</p><p>HRESULT ID3DXAnimationController::SetTrackAnimationSet(UINT Track, LPD3DXANIMATIONSET pAnimSet);</p><p>参数值 Track 是用来标识我们将要设置动画集 pAnimSet 上去的播放轨的索引值。在下一节中将会深入解释播放轨。当前我们仅需知道我们仅仅在一个时刻内播放一个动画就可以了。所以，我们使用第一个播放轨。0 号播放轨。所以，当我们把一个新的动画集设置到 0 号播放轨时，我们就把这新的动画集替掉旧的，从而改变当前播放的动画序列。这也就是说，ID3DXAnimationController::AdvanceTime方法将用当前这个新的动画序列来操纵骨块。但我们从哪里得到指向动画控制器的动画集的指针呢？可通过以下的方法：</p><p>HRESULT ID3DXAnimationController::GetAnimationSet(UINT Index,LPD3DXANIMATIONSET *ppAnimSet);</p><p>这个方法将返回参数 Index 指定的动画集的指针。该指针可通过参数 ppAnimSet 活得。动画控制器中的动画集个数需要通过方法 ID3DXAnimationController::GetNumAnimationSets 来获得。</p><p>最后，当在两个动画序列中切换时，我们想重置全局动画时间（globalanimationtime）。使得新的动画能从起始处开始播放。可以通过调用 ID3DXAnimationController::ResetTime方法来完成。</p><p>让我们通过解释“d3dx_multiAnimation”示例程序来总结本节的实现细节。为了模块服用的目的 ，我们将继承 SkinnedMesh类，用来特别处理 tiny_4anim.x 文件。这个新类在其父类的基础上增加了在四个动画序列中切换的功能。</p><p>// Note ha we hardcode these index values and they are
+// specific to tiny_4anim.x.They were found by actually examining the .x file.
 enum ANIMATIONSET_INDEX
 {
 WAVE_INDEX= 0,
 JOG_INDEX = 1,
 WALK_INDEX= 2,
 LOITER_INDEX = 3
-};</p>
-<p>class Tiny_X : public SkinnedMesh
+};</p><p>class Tiny_X : public SkinnedMesh
 {
 public:
 void playWave();
 void playJog();
 void playWalk();
 void playLoiter();
-};</p>
-<p>为了使得文章简洁些我们仅展示其中一个函数的实现，如下：</p>
-<p>void Tiny_X::playLoiter()
+};</p><p>为了使得文章简洁些我们仅展示其中一个函数的实现，如下：</p><p>void Tiny_X::playLoiter()
 {
 ID3DXAnimationSet* loiter= 0;
-_animCtrl-&gt;GetAnimationSet(LOITER_INDEX,&amp;loiter);
-_animCtrl-&gt;SetTrackAnimationSet(0, loiter);
-_animCtrl-&gt;ResetTime();
-}</p>
-<p>在实际的“d3dx_multiAnimation”示例代码中。我们在每一帧都会检查一个计数器（counter） ，该计数器响应用户的输入以更新其计数值。该计数器的值将决定了要播放哪个动画序列，代码如下：</p>
-<p>HRESULT MultiAnimDemoApp::FrameMove()
+_animCtrl->GetAnimationSet(LOITER_INDEX,&amp;loiter);
+_animCtrl->SetTrackAnimationSet(0, loiter);
+_animCtrl->ResetTime();
+}</p><p>在实际的“d3dx_multiAnimation”示例代码中。我们在每一帧都会检查一个计数器（counter） ，该计数器响应用户的输入以更新其计数值。该计数器的值将决定了要播放哪个动画序列，代码如下：</p><p>HRESULT MultiAnimDemoApp::FrameMove()
 {
 switch( _animationIndex )
 {
@@ -690,225 +328,154 @@ _tinyxMesh.playWave();
 break;
 }
 _tinyxMesh.frameMove(m_fElapsedTime, _worldViewProj);
-&hellip;
-}</p>
-<p>例如，如果变量值 animationIndex 为 LOITER_INDEX，那么_tinyxMesh.playLoiter()将会被调用，徘徊动画将会代替当前的动画而播放之。然后当 ID3DXAnimationController::AdvanceTime 方法在_tinyxMesh.frameMove 函数内被调用时，角色模型的骨块将会按徘徊动画所指定的姿势播放之。所以
-就产生播放徘徊动画的效果。</p>
-<h2 id="7-动画混合">7 动画混合</h2>
-<p>假定你的游戏角色有一个奔跑动画序列和一个开枪动画序列。你也许希望你的角色能够边跑边开枪。 现在你明显希望你的3D 美工给你创建一个奔跑中开枪的动画序列。但为什么我们不通过对两个已有的动画序列进行数学上的混合处理，让计算机来产生这个所需的动画，从而节省一些开发实践和内存呢？事实上，动画混合（animation blending）技术允许你这样子做。这个技术允许你通过两个现有的动画序列，通过混合它们，产生一个新的动画序列。</p>
-<p>D3DX 库提供的 API很方便地支持动画混合。在上一节中我们提到动画控制器可以有若干个不同的播放轨，你可以把一个动画集给附着（attach）到播放轨上去。到目前为止我们只是使用了第一个播放轨，0 号播放轨。使用D3DX 库去使用动画混合技术的关键点在于，动画控制器能自动地对当前所
+&mldr;
+}</p><p>例如，如果变量值 animationIndex 为 LOITER_INDEX，那么_tinyxMesh.playLoiter()将会被调用，徘徊动画将会代替当前的动画而播放之。然后当 ID3DXAnimationController::AdvanceTime 方法在_tinyxMesh.frameMove 函数内被调用时，角色模型的骨块将会按徘徊动画所指定的姿势播放之。所以
+就产生播放徘徊动画的效果。</p><h2 id=7-动画混合>7 动画混合</h2><p>假定你的游戏角色有一个奔跑动画序列和一个开枪动画序列。你也许希望你的角色能够边跑边开枪。 现在你明显希望你的3D 美工给你创建一个奔跑中开枪的动画序列。但为什么我们不通过对两个已有的动画序列进行数学上的混合处理，让计算机来产生这个所需的动画，从而节省一些开发实践和内存呢？事实上，动画混合（animation blending）技术允许你这样子做。这个技术允许你通过两个现有的动画序列，通过混合它们，产生一个新的动画序列。</p><p>D3DX 库提供的 API很方便地支持动画混合。在上一节中我们提到动画控制器可以有若干个不同的播放轨，你可以把一个动画集给附着（attach）到播放轨上去。到目前为止我们只是使用了第一个播放轨，0 号播放轨。使用D3DX 库去使用动画混合技术的关键点在于，动画控制器能自动地对当前所
 有的已启动的（enabled）播放轨进行自动混合。所以为了执行动画混合。我们所需的是把若干的动画集，设置到若干不同的播放轨上，然后启动它们。然后<code>ID3DXAnimationController::AdvanceTime</code>方法便会混合所有的动画播放轨，从而操纵骨骼。特别重要的是，仅仅往不同的播放轨上添加动画集是不
-够的。播放轨还得启动它。可以通过以下的方法启动或者是停用播放轨：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>HRESULT ID3DXAnimationController<span style="color:#f92672">::</span>SetTrackEnable(
-</span></span><span style="display:flex;"><span>UINT Track,
-</span></span><span style="display:flex;"><span>BOOL Enable  <span style="color:#75715e">// True to enable and false to disable.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>);
-</span></span></code></pre></div><p>当启动一个新的播放轨时我们还需要定义它的播放速度。我们可以通过下面的方法来设置：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>HRESULT ID3DXAnimationController<span style="color:#f92672">::</span>SetTrackSpeed( UINT Track,FLOAT Speed);
-</span></span></code></pre></div><p>大多数情况下，播放速度设置为1，当然了，可以通过设置播放速度从1 变化为其他值，以达到“快进”和“慢动作”等特殊的播放效果</p>
-<p>如果我们能制定每一个播放轨对最终混合的动画，各自所贡献的权重值的话，是很有利的。例如 。你可能想其中一个播放轨贡献 30%的权重，另一个播放轨贡献70%的权重。不必惊讶，D3DX 动画库函数支持这个功能，如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>HRESULT ID3DXAnimationController<span style="color:#f92672">::</span>SetTrackWeight(UINT Track,FLOATWeight);
+够的。播放轨还得启动它。可以通过以下的方法启动或者是停用播放轨：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>HRESULT ID3DXAnimationController<span style=color:#0550ae>::</span>SetTrackEnable<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>UINT Track<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>BOOL Enable  <span style=color:#57606a>// True to enable and false to disable.
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>当启动一个新的播放轨时我们还需要定义它的播放速度。我们可以通过下面的方法来设置：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>HRESULT ID3DXAnimationController<span style=color:#0550ae>::</span>SetTrackSpeed<span style=color:#1f2328>(</span> UINT Track<span style=color:#1f2328>,</span>FLOAT Speed<span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>大多数情况下，播放速度设置为1，当然了，可以通过设置播放速度从1 变化为其他值，以达到“快进”和“慢动作”等特殊的播放效果</p><p>如果我们能制定每一个播放轨对最终混合的动画，各自所贡献的权重值的话，是很有利的。例如 。你可能想其中一个播放轨贡献 30%的权重，另一个播放轨贡献70%的权重。不必惊讶，D3DX 动画库函数支持这个功能，如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>HRESULT ID3DXAnimationController<span style=color:#0550ae>::</span>SetTrackWeight<span style=color:#1f2328>(</span>UINT Track<span style=color:#1f2328>,</span>FLOATWeight<span style=color:#1f2328>);</span>
 </span></span></code></pre></div><p>这个方法设置编号为 Track 的播放轨在最终的混合动画中所贡献的权重值。注意，所有的播放轨的权重值之和必须要等于 1.一般地。在“权重贡献”这一个话题上。D3DX 库提供了一个很好的控制 。我们可以通过给一个动画播放轨设置 D3DXPRIORITY_HIGH 或 D3DXPRIORITY_LOW，来指定该播
-放轨的播放优先级。在进行混合计算时，所有高优先的播放轨会单独进行混合。低优先级的也会单独混合。然后这两个独立混合计算所得的结果，将会再次进行混合，以达到最终的混合动画。可以通过如下的方法来设置优先级：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>HRESULT ID3DXAnimationController<span style="color:#f92672">::</span>SetTrackPriority(UINTTrack,D3DXPRIORITY_TYPE Priority);
-</span></span></code></pre></div><p>通过分析“d3dx_blendAnim”示例程序的具体实现来总结本节的内容。首先我们先继承上届所实现的 Tiny_X类。添加播放混合动画的函数。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tiny_X</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> SkinnedMesh
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    ...
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> playLoiterWaveBlend();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">playLoiterJogBlend</span>();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">playJogWaveBlend</span>();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">playWalkWaveBlend</span>();
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>为了使文章简单我们仅展示其中一个函数，如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Tiny_X<span style="color:#f92672">::</span>playJogWaveBlend()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    ID3DXAnimationSet<span style="color:#f92672">*</span> jog <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    ID3DXAnimationSet<span style="color:#f92672">*</span> wave <span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>GetAnimationSet(JOG_INDEX, <span style="color:#f92672">&amp;</span>jog);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>GetAnimationSet(WAVE_INDEX, <span style="color:#f92672">&amp;</span>wave);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackAnimationSet(<span style="color:#ae81ff">0</span>, jog);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackAnimationSet(<span style="color:#ae81ff">1</span>, wave);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackWeight(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0.4f</span>);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackWeight(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.6f</span>);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackEnable(<span style="color:#ae81ff">0</span>, true);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackEnable(<span style="color:#ae81ff">1</span>, true);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackSpeed(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1.0f</span>);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackSpeed(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1.0f</span>);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackPriority(<span style="color:#ae81ff">0</span>,D3DXPRIORITY_HIGH);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackPriority(<span style="color:#ae81ff">1</span>,D3DXPRIORITY_HIGH);
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>ResetTime();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>正像上一个示例“d3dx_multiAnimation” 。实际的程序中将会读取文件。每一帧查询由用户输入所更新的计数器值，以决定播放哪个动画。</p>
-<h2 id="8-动画回调机制">8 动画回调机制</h2>
-<p>经常我们希望在响应一个动画回调（animationcallback）时能执行一些代码。一个动画回调是指在一个动画序列的某个指定的时间点被触发， 然后和动画播放并行实行的一段代码。例如在 DirectX SD K中的“MultiAnimation”示例。当模型的脚踏到地面时它会播放脚步声。同样地我们也可以在播放一个开火动画时播放开枪的声音。另一个例子，当一个角色播放一个特殊的战斗技能时，我们可以拉近镜头，给角色一个特写。以增加动作的强度感。所以动画回调的关键点就是在于：我们可以执行一段和动画序列相耦合的任意的代码。此外，因为回调的代码和动画紧耦合。你也许希望它不是在主线程循环中执行。而是希望动画在适当的时刻自行执行之。这个任务可以由动画回调机制来完成。</p>
-<p>本节中对应该技术的实现的程序是“d3dx_animCallbacks ” 。回调代码将会让镜头旋转 90 度。在本示例中我们使用 tiny.x文件。接下来将解释如何去实现动画回调</p>
-<h3 id="81-回调操作器">8.1 回调操作器</h3>
-<p>回调执行器（callback handler）是一段包含了需要在动画播放过程中执行的代码的函数。我们可以继承并实现 <code>ID3DXAnimationCallbackHandler</code>接口的唯一方法 HandleCallback。如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TinyXCallbackHandler</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> ID3DXAnimationCallbackHandler
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    HRESULT CALLBACK HandleCallback(THIS_UINTTrack, LPVOID pCallbackData);
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>实现回调操作器之后我们必须将其挂接到动画控制器上，使得当一个动画回调被触发后，控制器能够知道调用哪个对应的回调操作器。为了达成需求，我们将会把<code>TinyXCallbackHandler</code>的实例对象指针当做<code>AdvnaceTime</code>方法的第二个参数，传递进去，如下：</p>
-<pre tabindex="0"><code>TinyXCallbackHandler callbackHandler;
+放轨的播放优先级。在进行混合计算时，所有高优先的播放轨会单独进行混合。低优先级的也会单独混合。然后这两个独立混合计算所得的结果，将会再次进行混合，以达到最终的混合动画。可以通过如下的方法来设置优先级：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>HRESULT ID3DXAnimationController<span style=color:#0550ae>::</span>SetTrackPriority<span style=color:#1f2328>(</span>UINTTrack<span style=color:#1f2328>,</span>D3DXPRIORITY_TYPE Priority<span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>通过分析“d3dx_blendAnim”示例程序的具体实现来总结本节的内容。首先我们先继承上届所实现的 Tiny_X类。添加播放混合动画的函数。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>class</span> <span style=color:#1f2328>Tiny_X</span> <span style=color:#0550ae>:</span> <span style=color:#cf222e>public</span> SkinnedMesh
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>...</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> playLoiterWaveBlend<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>playLoiterJogBlend</span><span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>playJogWaveBlend</span><span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>playWalkWaveBlend</span><span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><p>为了使文章简单我们仅展示其中一个函数，如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> Tiny_X<span style=color:#0550ae>::</span>playJogWaveBlend<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    ID3DXAnimationSet<span style=color:#0550ae>*</span> jog <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    ID3DXAnimationSet<span style=color:#0550ae>*</span> wave <span style=color:#0550ae>=</span><span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>GetAnimationSet<span style=color:#1f2328>(</span>JOG_INDEX<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>jog<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>GetAnimationSet<span style=color:#1f2328>(</span>WAVE_INDEX<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>wave<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackAnimationSet<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> jog<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackAnimationSet<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> wave<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackWeight<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.4f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackWeight<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.6f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackEnable<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#6639ba>true</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackEnable<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#6639ba>true</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackSpeed<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackSpeed<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackPriority<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span>D3DXPRIORITY_HIGH<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackPriority<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span>D3DXPRIORITY_HIGH<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>ResetTime<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>正像上一个示例“d3dx_multiAnimation” 。实际的程序中将会读取文件。每一帧查询由用户输入所更新的计数器值，以决定播放哪个动画。</p><h2 id=8-动画回调机制>8 动画回调机制</h2><p>经常我们希望在响应一个动画回调（animationcallback）时能执行一些代码。一个动画回调是指在一个动画序列的某个指定的时间点被触发， 然后和动画播放并行实行的一段代码。例如在 DirectX SD K中的“MultiAnimation”示例。当模型的脚踏到地面时它会播放脚步声。同样地我们也可以在播放一个开火动画时播放开枪的声音。另一个例子，当一个角色播放一个特殊的战斗技能时，我们可以拉近镜头，给角色一个特写。以增加动作的强度感。所以动画回调的关键点就是在于：我们可以执行一段和动画序列相耦合的任意的代码。此外，因为回调的代码和动画紧耦合。你也许希望它不是在主线程循环中执行。而是希望动画在适当的时刻自行执行之。这个任务可以由动画回调机制来完成。</p><p>本节中对应该技术的实现的程序是“d3dx_animCallbacks ” 。回调代码将会让镜头旋转 90 度。在本示例中我们使用 tiny.x文件。接下来将解释如何去实现动画回调</p><h3 id=81-回调操作器>8.1 回调操作器</h3><p>回调执行器（callback handler）是一段包含了需要在动画播放过程中执行的代码的函数。我们可以继承并实现 <code>ID3DXAnimationCallbackHandler</code>接口的唯一方法 HandleCallback。如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>class</span> <span style=color:#1f2328>TinyXCallbackHandler</span> <span style=color:#0550ae>:</span> <span style=color:#cf222e>public</span> ID3DXAnimationCallbackHandler
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    HRESULT CALLBACK HandleCallback<span style=color:#1f2328>(</span>THIS_UINTTrack<span style=color:#1f2328>,</span> LPVOID pCallbackData<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><p>实现回调操作器之后我们必须将其挂接到动画控制器上，使得当一个动画回调被触发后，控制器能够知道调用哪个对应的回调操作器。为了达成需求，我们将会把<code>TinyXCallbackHandler</code>的实例对象指针当做<code>AdvnaceTime</code>方法的第二个参数，传递进去，如下：</p><pre tabindex=0><code>TinyXCallbackHandler callbackHandler;
 _animCtrl-&gt;AdvanceTime(deltaTime, &amp;callbackHandler);
-</code></pre><p>通过继承实现<code>ID3DXAnimationCallbackHandler</code>接口产生不同的回调操作器，然后把这些回调操作器的实例对象的指针传递给 AdvanceTime 方法。我们可以在不同的回调操作器实例之间进行切换。</p>
-<h3 id="82-回调导向键">8.2 回调导向键</h3>
-<p>一个支持回调机制的动画序列会包含一系列的回调导向键。一个回调导向键定义了该回调的执行时刻（相对于该动画序列而言） 。还定义了一个动画回调被触发时将要执行的操作（如一个回调操作器将被执行） 。此外。一个回调导向键还包含了要传递给被触发的动画回调器的输入参数。D3DX库定义的回调导向键如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">_D3DXKEY_CALLBACK</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    FLOAT Time;  <span style="color:#75715e">// Time callback handler should be executed
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    LPVOID pCallbackData;  <span style="color:#75715e">// Input data to callback handler
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}D3DXKEY_CALLBACK, <span style="color:#f92672">*</span>LPD3DXKEY_CALLBACK;
-</span></span></code></pre></div><p>注意到回调导向键的设计思想是类似于关键帧的。关键帧是定义了一个动画序列的运动。回调导向则是定义了一段将会被并行执行的代码段。</p>
-<p>在 &quot; d3dx_animCallbacks &quot; 示例中我们给回调操作器传递的输入参数很简单。就是一直指向摄像机theta 坐标值的指针，如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">TinyXCallbackInfo</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float</span><span style="color:#f92672">*</span> theta;
-</span></span><span style="display:flex;"><span>};
-</span></span></code></pre></div><p>当然你可以如上代码所示，给回调操作器传递任意数据。例如，你可以在输入参数中包含一些条件变量，使得回调操作器能够根据不同的条件执行不同的代码分支段。</p>
-<h3 id="83-操作回调">8.3 操作回调</h3>
-<p>操作一个动画回调是很直接明了的：给定输入数据， 执行你想要的操作。 在 d3dx_animCallbacks&quot;示例中我们在每一次的回调操作中，简单地旋转摄像机 90 度。如下代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>HRESULT TinyXCallbackHandler<span style="color:#f92672">::</span>HandleCallback(UINT Track, LPVOID pCallbackData)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Given your callback data,execute any desired code.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    TinyXCallbackInfo<span style="color:#f92672">*</span> data <span style="color:#f92672">=</span>(TinyXCallbackInfo<span style="color:#f92672">*</span>)pCallbackData;
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// rotate camera 0 to 90 degrees
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">*</span>(data<span style="color:#f92672">-&gt;</span>theta) <span style="color:#f92672">+=</span> D3DX_PI<span style="color:#f92672">*</span> <span style="color:#ae81ff">0.5f</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> D3D_OK;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="84-设置回调键">8.4 设置回调键</h3>
-<p>我们已经讨论了回调导向键，以及如何操作他们。但到目前为止我们还没讨论如何在一个动画序列中添加回调导向键。如果没有添加回调导向键的话是不会有任何的回调操作被触发的。接下来的这些加入了注解的代码将会展现如何增加回调导向键。注意这里使用了的一些 D3DX函数和类型没有加入注释。在大多数情况下这些函数和类型都是可以顾其名思其义的。如果还有不甚了解的地方请查阅DirectXSDK文档去了解更多的细节。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Tiny_X<span style="color:#f92672">::</span>setupCallbackKeyframes(<span style="color:#66d9ef">float</span><span style="color:#f92672">*</span> theta)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Remark:  theta is pointer to the  camera&#39;s theta coordinate.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Grab the current animation set for &#39;tiny.x&#39; (we know there is only one.)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ID3DXKeyframedAnimationSet<span style="color:#f92672">*</span> animSetTemp <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    _animCtrl<span style="color:#f92672">-&gt;</span>GetAnimationSet(<span style="color:#ae81ff">0</span>, (ID3DXAnimationSet<span style="color:#f92672">**</span>)<span style="color:#f92672">&amp;</span>animSetTemp);
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Compress  it.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ID3DXBuffer<span style="color:#f92672">*</span> compressedInfo <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    animSetTemp<span style="color:#f92672">-&gt;</span>Compress(D3DXCOMPRESS_DEFAULT,<span style="color:#ae81ff">0.5f</span>,<span style="color:#ae81ff">0</span>, <span style="color:#f92672">&amp;</span>compressedInfo);
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Setup two callback keys.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    UINT numCallbacks <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
-</span></span><span style="display:flex;"><span>    D3DXKEY_CALLBACK keys[<span style="color:#ae81ff">2</span>];
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Make static so it does not pop off the  stack.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">static</span> TinyXCallbackInfo CallbackData;
-</span></span><span style="display:flex;"><span>    CallbackData.theta <span style="color:#f92672">=</span>theta;
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// GetSourceTicksPerSecond() returns the number of 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// animation keyframe ticks that occur per second.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Callback keyframe times are tick based. 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">double</span> ticks <span style="color:#f92672">=</span> animSetTemp<span style="color:#f92672">-&gt;</span>GetSourceTicksPerSecond();
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Set the first callback key to triggeraa  callback half way  through the animation  sequence.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    keys[<span style="color:#ae81ff">0</span>].Time <span style="color:#f92672">=</span> <span style="color:#66d9ef">float</span>(animSetTemp<span style="color:#f92672">-&gt;</span>GetPeriod()<span style="color:#f92672">/</span><span style="color:#ae81ff">2.0f</span><span style="color:#f92672">*</span>ticks);
-</span></span><span style="display:flex;"><span>    keys[<span style="color:#ae81ff">0</span>].pCallbackData <span style="color:#f92672">=</span> (<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>CallbackData;
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Set the second callback key to trigge  callback at the end of the animation  sequence.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    keys[<span style="color:#ae81ff">1</span>].Time <span style="color:#f92672">=</span> animSetTemp<span style="color:#f92672">-&gt;</span>GetPeriod()<span style="color:#f92672">*</span>ticks;
-</span></span><span style="display:flex;"><span>    keys[<span style="color:#ae81ff">1</span>].pCallbackData <span style="color:#f92672">=</span> (<span style="color:#66d9ef">void</span><span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>CallbackData;
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Create the ID3DXCompressedAnimationSet  interface with the callback  keys.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ID3DXCompressedAnimationSet<span style="color:#f92672">*</span> compressedAnimSet <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    D3DXCreateCompressedAnimationSet(animSetTemp<span style="color:#f92672">-&gt;</span>GetName(),
-</span></span><span style="display:flex;"><span>    animSetTemp<span style="color:#f92672">-&gt;</span>GetSourceTicksPerSecond(),
-</span></span><span style="display:flex;"><span>    animSetTemp<span style="color:#f92672">-&gt;</span>GetPlaybackType(), compressedInfo,numCallbacks, keys, <span style="color:#f92672">&amp;</span>compressedAnimSet);
-</span></span><span style="display:flex;"><span>    compressedInfo<span style="color:#f92672">-&gt;</span>Release();
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Remove the old (non  ) compressed) animation  set.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    _animCtrl<span style="color:#f92672">-&gt;</span>UnregisterAnimationSet(animSetTemp);
-</span></span><span style="display:flex;"><span>    animSetTemp<span style="color:#f92672">-&gt;</span>Release();
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Add the  w new  ) (compressed) animation  set.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    _animCtrl<span style="color:#f92672">-&gt;</span>RegisterAnimationSet(compressedAnimSet);
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Hook up the animation set to the first  track.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    _animCtrl<span style="color:#f92672">-&gt;</span>SetTrackAnimationSet(<span style="color:#ae81ff">0</span>, compressedAnimSet);
-</span></span><span style="display:flex;"><span>    compressedAnimSet<span style="color:#f92672">-&gt;</span>Release();
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="9-总结">9 总结</h2>
-<p>本文概述了蒙皮网格和角色动画。我们已经学习了如何去表征一个角色模型的骨骼层次。学习了一个骨块时如何继承它的父骨块的变换。学习了如果通过给每一个骨块增加一组关键帧，去描述一个动画序列。学习了关于使用了顶点混合技术的蒙皮动画及其优点，并且学习了如何使用 D3DX 动画相关的 API 去实现一个顶点混合。我们还学习了如何通过使用 D3DX 动画相关的API 对多重动画序列进行混合操作。最后，我们学习了如何通过使用回调操作器去并行执行一段代码。</p>
-<h2 id="10-参考书目">10 参考书目</h2>
-<p>Akenine-Möller, Tomas,and Eric Haines. Real-Time Rendering. 2nd ed.Natick,Mass : A K Peters,Ltd., 2002.</p>
-<p>Freidlin, Benjamin. “DirectX 8.0: Enhancing Real-Time Character Animation with Matrix Palette Skinning and Vertex Shaders.” MSDN Magazine, June 2001.</p>
-<p>Lander,Jeff. “Slashing ThroughReal-Time CharacterAnimation.” Game Developer Magazine, April1998.</p>
-<p>Lander,Jeff. “Skin Them Bones: GameProgramming for theWeb Generation.” Game DeveloperMagazine, May 1998.</p>
-<p>Lander,Jeff. “Over MyDead,PolygonalBody.” Game Developer Magazine, October 1999.</p>
-<p>Microsoft Corporation. Microsoft DirectX 9.0c SDK Documentation. Microsoft Corporation,2003.</p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/directx/">DirectX</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/d3d/dx8_md2_demo/">Direct3D8下载入显示MD2 Model的demo的设计文档</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+</code></pre><p>通过继承实现<code>ID3DXAnimationCallbackHandler</code>接口产生不同的回调操作器，然后把这些回调操作器的实例对象的指针传递给 AdvanceTime 方法。我们可以在不同的回调操作器实例之间进行切换。</p><h3 id=82-回调导向键>8.2 回调导向键</h3><p>一个支持回调机制的动画序列会包含一系列的回调导向键。一个回调导向键定义了该回调的执行时刻（相对于该动画序列而言） 。还定义了一个动画回调被触发时将要执行的操作（如一个回调操作器将被执行） 。此外。一个回调导向键还包含了要传递给被触发的动画回调器的输入参数。D3DX库定义的回调导向键如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>typedef</span> <span style=color:#cf222e>struct</span> <span style=color:#1f2328>_D3DXKEY_CALLBACK</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    FLOAT Time<span style=color:#1f2328>;</span>  <span style=color:#57606a>// Time callback handler should be executed
+</span></span></span><span style=display:flex><span>    LPVOID pCallbackData<span style=color:#1f2328>;</span>  <span style=color:#57606a>// Input data to callback handler
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>}</span>D3DXKEY_CALLBACK<span style=color:#1f2328>,</span> <span style=color:#0550ae>*</span>LPD3DXKEY_CALLBACK<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>注意到回调导向键的设计思想是类似于关键帧的。关键帧是定义了一个动画序列的运动。回调导向则是定义了一段将会被并行执行的代码段。</p><p>在 " d3dx_animCallbacks " 示例中我们给回调操作器传递的输入参数很简单。就是一直指向摄像机theta 坐标值的指针，如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>struct</span> <span style=color:#1f2328>TinyXCallbackInfo</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span><span style=color:#0550ae>*</span> theta<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><p>当然你可以如上代码所示，给回调操作器传递任意数据。例如，你可以在输入参数中包含一些条件变量，使得回调操作器能够根据不同的条件执行不同的代码分支段。</p><h3 id=83-操作回调>8.3 操作回调</h3><p>操作一个动画回调是很直接明了的：给定输入数据， 执行你想要的操作。 在 d3dx_animCallbacks"示例中我们在每一次的回调操作中，简单地旋转摄像机 90 度。如下代码：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>HRESULT TinyXCallbackHandler<span style=color:#0550ae>::</span>HandleCallback<span style=color:#1f2328>(</span>UINT Track<span style=color:#1f2328>,</span> LPVOID pCallbackData<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Given your callback data,execute any desired code.
+</span></span></span><span style=display:flex><span>    TinyXCallbackInfo<span style=color:#0550ae>*</span> data <span style=color:#0550ae>=</span><span style=color:#1f2328>(</span>TinyXCallbackInfo<span style=color:#0550ae>*</span><span style=color:#1f2328>)</span>pCallbackData<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// rotate camera 0 to 90 degrees
+</span></span></span><span style=display:flex><span>    <span style=color:#0550ae>*</span><span style=color:#1f2328>(</span>data<span style=color:#0550ae>-&gt;</span>theta<span style=color:#1f2328>)</span> <span style=color:#0550ae>+=</span> D3DX_PI<span style=color:#0550ae>*</span> <span style=color:#0550ae>0.5f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> D3D_OK<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=84-设置回调键>8.4 设置回调键</h3><p>我们已经讨论了回调导向键，以及如何操作他们。但到目前为止我们还没讨论如何在一个动画序列中添加回调导向键。如果没有添加回调导向键的话是不会有任何的回调操作被触发的。接下来的这些加入了注解的代码将会展现如何增加回调导向键。注意这里使用了的一些 D3DX函数和类型没有加入注释。在大多数情况下这些函数和类型都是可以顾其名思其义的。如果还有不甚了解的地方请查阅DirectXSDK文档去了解更多的细节。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> Tiny_X<span style=color:#0550ae>::</span>setupCallbackKeyframes<span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#0550ae>*</span> theta<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Remark:  theta is pointer to the  camera&#39;s theta coordinate.
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// Grab the current animation set for &#39;tiny.x&#39; (we know there is only one.)
+</span></span></span><span style=display:flex><span>    ID3DXKeyframedAnimationSet<span style=color:#0550ae>*</span> animSetTemp <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>GetAnimationSet<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#1f2328>(</span>ID3DXAnimationSet<span style=color:#0550ae>**</span><span style=color:#1f2328>)</span><span style=color:#0550ae>&amp;</span>animSetTemp<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Compress  it.
+</span></span></span><span style=display:flex><span>    ID3DXBuffer<span style=color:#0550ae>*</span> compressedInfo <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    animSetTemp<span style=color:#0550ae>-&gt;</span>Compress<span style=color:#1f2328>(</span>D3DXCOMPRESS_DEFAULT<span style=color:#1f2328>,</span><span style=color:#0550ae>0.5f</span><span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>compressedInfo<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Setup two callback keys.
+</span></span></span><span style=display:flex><span>    UINT numCallbacks <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    D3DXKEY_CALLBACK keys<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Make static so it does not pop off the  stack.
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>static</span> TinyXCallbackInfo CallbackData<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    CallbackData<span style=color:#1f2328>.</span>theta <span style=color:#0550ae>=</span>theta<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// GetSourceTicksPerSecond() returns the number of 
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// animation keyframe ticks that occur per second.
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// Callback keyframe times are tick based. 
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>double</span> ticks <span style=color:#0550ae>=</span> animSetTemp<span style=color:#0550ae>-&gt;</span>GetSourceTicksPerSecond<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Set the first callback key to triggeraa  callback half way  through the animation  sequence.
+</span></span></span><span style=display:flex><span>    keys<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>].</span>Time <span style=color:#0550ae>=</span> <span style=color:#cf222e>float</span><span style=color:#1f2328>(</span>animSetTemp<span style=color:#0550ae>-&gt;</span>GetPeriod<span style=color:#1f2328>()</span><span style=color:#0550ae>/</span><span style=color:#0550ae>2.0f</span><span style=color:#0550ae>*</span>ticks<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    keys<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>].</span>pCallbackData <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>void</span><span style=color:#0550ae>*</span><span style=color:#1f2328>)</span><span style=color:#0550ae>&amp;</span>CallbackData<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Set the second callback key to trigge  callback at the end of the animation  sequence.
+</span></span></span><span style=display:flex><span>    keys<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>].</span>Time <span style=color:#0550ae>=</span> animSetTemp<span style=color:#0550ae>-&gt;</span>GetPeriod<span style=color:#1f2328>()</span><span style=color:#0550ae>*</span>ticks<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    keys<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>].</span>pCallbackData <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>void</span><span style=color:#0550ae>*</span><span style=color:#1f2328>)</span><span style=color:#0550ae>&amp;</span>CallbackData<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Create the ID3DXCompressedAnimationSet  interface with the callback  keys.
+</span></span></span><span style=display:flex><span>    ID3DXCompressedAnimationSet<span style=color:#0550ae>*</span> compressedAnimSet <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    D3DXCreateCompressedAnimationSet<span style=color:#1f2328>(</span>animSetTemp<span style=color:#0550ae>-&gt;</span>GetName<span style=color:#1f2328>(),</span>
+</span></span><span style=display:flex><span>    animSetTemp<span style=color:#0550ae>-&gt;</span>GetSourceTicksPerSecond<span style=color:#1f2328>(),</span>
+</span></span><span style=display:flex><span>    animSetTemp<span style=color:#0550ae>-&gt;</span>GetPlaybackType<span style=color:#1f2328>(),</span> compressedInfo<span style=color:#1f2328>,</span>numCallbacks<span style=color:#1f2328>,</span> keys<span style=color:#1f2328>,</span> <span style=color:#0550ae>&amp;</span>compressedAnimSet<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    compressedInfo<span style=color:#0550ae>-&gt;</span>Release<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Remove the old (non  ) compressed) animation  set.
+</span></span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>UnregisterAnimationSet<span style=color:#1f2328>(</span>animSetTemp<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    animSetTemp<span style=color:#0550ae>-&gt;</span>Release<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Add the  w new  ) (compressed) animation  set.
+</span></span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>RegisterAnimationSet<span style=color:#1f2328>(</span>compressedAnimSet<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Hook up the animation set to the first  track.
+</span></span></span><span style=display:flex><span>    _animCtrl<span style=color:#0550ae>-&gt;</span>SetTrackAnimationSet<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> compressedAnimSet<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    compressedAnimSet<span style=color:#0550ae>-&gt;</span>Release<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h2 id=9-总结>9 总结</h2><p>本文概述了蒙皮网格和角色动画。我们已经学习了如何去表征一个角色模型的骨骼层次。学习了一个骨块时如何继承它的父骨块的变换。学习了如果通过给每一个骨块增加一组关键帧，去描述一个动画序列。学习了关于使用了顶点混合技术的蒙皮动画及其优点，并且学习了如何使用 D3DX 动画相关的 API 去实现一个顶点混合。我们还学习了如何通过使用 D3DX 动画相关的API 对多重动画序列进行混合操作。最后，我们学习了如何通过使用回调操作器去并行执行一段代码。</p><h2 id=10-参考书目>10 参考书目</h2><p>Akenine-Möller, Tomas,and Eric Haines. Real-Time Rendering. 2nd ed.Natick,Mass : A K Peters,Ltd., 2002.</p><p>Freidlin, Benjamin. “DirectX 8.0: Enhancing Real-Time Character Animation with Matrix Palette Skinning and Vertex Shaders.” MSDN Magazine, June 2001.</p><p>Lander,Jeff. “Slashing ThroughReal-Time CharacterAnimation.” Game Developer Magazine, April1998.</p><p>Lander,Jeff. “Skin Them Bones: GameProgramming for theWeb Generation.” Game DeveloperMagazine, May 1998.</p><p>Lander,Jeff. “Over MyDead,PolygonalBody.” Game Developer Magazine, October 1999.</p><p>Microsoft Corporation. Microsoft DirectX 9.0c SDK Documentation. Microsoft Corporation,2003.</p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/directx/>DirectX</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/d3d/dx8_md2_demo/>Direct3D8下载入显示MD2 Model的demo的设计文档</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

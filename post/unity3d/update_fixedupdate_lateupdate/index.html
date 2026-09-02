@@ -1,277 +1,58 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Update、FixedUpdate、LateUpdate函数，定时器和帧速率 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Update、FixedUpdate、LateUpdate函数，定时器和帧速率">
-		<meta property="og:title" content="Update、FixedUpdate、LateUpdate函数，定时器和帧速率" />
-<meta property="og:description" content="Update、FixedUpdate、LateUpdate函数，定时器和帧速率" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/update_fixedupdate_lateupdate/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2019-12-31T12:32:55+08:00" />
-<meta property="article:modified_time" content="2019-12-31T12:32:55+08:00" />
-
-
-		<meta itemprop="name" content="Update、FixedUpdate、LateUpdate函数，定时器和帧速率">
-<meta itemprop="description" content="Update、FixedUpdate、LateUpdate函数，定时器和帧速率"><meta itemprop="datePublished" content="2019-12-31T12:32:55+08:00" />
-<meta itemprop="dateModified" content="2019-12-31T12:32:55+08:00" />
-<meta itemprop="wordCount" content="180">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Update、FixedUpdate、LateUpdate函数，定时器和帧速率</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2019-12-31T12:32:55&#43;08:00">December 31, 2019</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">Update、FixedUpdate、LateUpdate函数，定时器和帧速率</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#1-updatelateupdatefixedupdate函数">1 Update、LateUpdate、FixedUpdate函数</a></li>
-    <li><a href="#2-unityenginetime类">2 UnityEngine.Time类</a>
-      <ul>
-        <li><a href="#21-timedeltatime">2.1 Time.deltaTime</a></li>
-        <li><a href="#22-timetimescale">2.2 Time.timeScale</a></li>
-      </ul>
-    </li>
-    <li><a href="#参考文档">参考文档</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h2 id="1-updatelateupdatefixedupdate函数">1 Update、LateUpdate、FixedUpdate函数</h2>
-<p>Unity将每帧调用一次 <code>Update()</code> 函数。这意味着，如果你以60fps的速度运行，那意味着每秒调用60次 <code>Update()</code> 函数。如果以50fps的速度运行，则每秒调用50次Update函数。这也就是说。每两次执行update函数之间的时间间隔，其实是变化不定的。正是由于这一点，使用 <code>Update()</code> 函数的最大问题是它可能与物理引擎不同步。调用行为可以改变，因为它可以结束更快或更慢，这取决于您的图形在渲染的硬件上放置了多少负载，使用物理更新可能会导致完全错误的反应。</p>
-<p>Unity确实会<strong>尝试以项目所指定的速率</strong>调用<code>FixedUpdate()</code>函数。但是，这些调用也需要根据当前实际的帧速率去确定。这意味着虽然任何给定帧上可能有零次，一次甚至超过100次对<code>FixedUpdate()</code>函数的调用，但Unity会动态调整到实际帧速率。通过深入挖掘，我们逐渐意识到，这也意味着对<code>FixedUpdate()</code>的所有调用都不一定在指定的时间间隔内。下面举例说明下这种情况：</p>
-<p>默认情况下 <code>FixedUpdate()</code> 函数的更新频率是50FPS（0.02s），如果当游戏的更新频率为60FPS时，那么FixedUpdate有固定的更新速率是很好理解的，因为这种绝对可以保证到，每执行一次 <code>FixedUpdate()</code> 函数，就至少执行了一帧，但是如果游戏本身的更新频率就很低，例如为30FPS时，每一帧的时间间隔明显大于0.02秒的，那么这时候在每两次 <code>Update()</code> 函数的调用之间。 <code>FixedUpdate()</code> 函数就被调用了多次。</p>
-<ol>
-<li>通常 <code>FixedUpdate()</code> 函数比 <code>Update()</code> 函数更频繁地被调用。</li>
-<li><code>FixedUpdate()</code> 函数可以在一帧内被调用多次，如果帧速率很低，则根本不能在帧之间调用。</li>
-<li>如果帧速率很高，也可能不会调用 <code>FixedUpdate()</code> 。</li>
-<li>在 <code>FixedUpdate()</code> 函数被调用之后立即进行所有物理计算和更新。</li>
-<li>作用力，扭矩或其他与物理相关的函数时，应使用<code>FixedUpdate</code>函数。</li>
-<li><code>FixedUpdate()</code> 函数由一个准确可信的计时器调用，而与实际的帧速率无关，因此在 <code>FixedUpdate()</code> 中应用移动计算时，您不需要将您的值乘以<code>Time.deltaTime</code>。</li>
-<li><code>Update()</code> 函数是每一帧中执行更新操作的主要（入口）函数。</li>
-<li><code>Update()</code> 函数中用来移动非物理系统驱动的物体。</li>
-<li><code>Update()</code> 函数用来接受用户输入。</li>
-<li><code>Update()</code> 函数可用来实现简单的计时器。</li>
-</ol>
-<p>由于 <code>Update()</code> 的执行方式，与物理引擎的执行步调不同，即可能在一帧中， <code>FixedUpdate()</code> 函数执行了多次，而Update函数则只执行了一次。这取决于渲染器在渲染图形时的负载量，以及所耗费的CPU时间。如果在  <code>Update()</code> 函数中执行物理运算时，会导致未知的结果。同时也可以看到： <strong>函数的执行间隔，未必就是TimeManager界面中Fixed TimeStep项中所指定的值。</strong></p>
-<ol>
-<li><code>LateUpdate()</code> 函数每帧会被调用一次，在 <code>Update()</code> 函数结束后调用</li>
-<li>所有在 <code>Update()</code> 函数中执行的计算，将会在 <code>LateUpdate()</code> 函数调用之前完成执行。</li>
-<li>如果实现一个跟随式的第三视角摄像机，则摄像机的状态更新放在 <code>LateUpdate()</code> 函数中执行是一个通用的做法。</li>
-</ol>
-<p>因为你的角色是在 <code>Update()</code> 函数里面执行移动和转向的操作。所以在 <code>LateUpdate()</code> 函数执行摄像机的位置和旋转度计算，可以确保在计算时，角色已经全部完成了位置计算，摄像机可以正确地跟踪到角色的正确位置。</p>
-<h2 id="2-unityenginetime类">2 UnityEngine.Time类</h2>
-<h3 id="21-timedeltatime">2.1 Time.deltaTime</h3>
-<p><code>Time.deltaTime</code> 是类Time的一个公有静态的浮点类型成员变量</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">float</span> deltaTime;
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Update、FixedUpdate、LateUpdate函数，定时器和帧速率 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Update、FixedUpdate、LateUpdate函数，定时器和帧速率"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/update_fixedupdate_lateupdate/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Update、FixedUpdate、LateUpdate函数，定时器和帧速率"><meta property="og:description" content="Update、FixedUpdate、LateUpdate函数，定时器和帧速率"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2019-12-31T12:32:55+08:00"><meta property="article:modified_time" content="2019-12-31T12:32:55+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="Update、FixedUpdate、LateUpdate函数，定时器和帧速率"><meta itemprop=description content="Update、FixedUpdate、LateUpdate函数，定时器和帧速率"><meta itemprop=datePublished content="2019-12-31T12:32:55+08:00"><meta itemprop=dateModified content="2019-12-31T12:32:55+08:00"><meta itemprop=wordCount content="180"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Update、FixedUpdate、LateUpdate函数，定时器和帧速率</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2019-12-31T12:32:55+08:00>December 31, 2019</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>Update、FixedUpdate、LateUpdate函数，定时器和帧速率</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#1-updatelateupdatefixedupdate函数>1 Update、LateUpdate、FixedUpdate函数</a></li><li><a href=#2-unityenginetime类>2 UnityEngine.Time类</a><ul><li><a href=#21-timedeltatime>2.1 Time.deltaTime</a></li><li><a href=#22-timetimescale>2.2 Time.timeScale</a></li></ul></li><li><a href=#参考文档>参考文档</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=1-updatelateupdatefixedupdate函数>1 Update、LateUpdate、FixedUpdate函数</h2><p>Unity将每帧调用一次 <code>Update()</code> 函数。这意味着，如果你以60fps的速度运行，那意味着每秒调用60次 <code>Update()</code> 函数。如果以50fps的速度运行，则每秒调用50次Update函数。这也就是说。每两次执行update函数之间的时间间隔，其实是变化不定的。正是由于这一点，使用 <code>Update()</code> 函数的最大问题是它可能与物理引擎不同步。调用行为可以改变，因为它可以结束更快或更慢，这取决于您的图形在渲染的硬件上放置了多少负载，使用物理更新可能会导致完全错误的反应。</p><p>Unity确实会<strong>尝试以项目所指定的速率</strong>调用<code>FixedUpdate()</code>函数。但是，这些调用也需要根据当前实际的帧速率去确定。这意味着虽然任何给定帧上可能有零次，一次甚至超过100次对<code>FixedUpdate()</code>函数的调用，但Unity会动态调整到实际帧速率。通过深入挖掘，我们逐渐意识到，这也意味着对<code>FixedUpdate()</code>的所有调用都不一定在指定的时间间隔内。下面举例说明下这种情况：</p><p>默认情况下 <code>FixedUpdate()</code> 函数的更新频率是50FPS（0.02s），如果当游戏的更新频率为60FPS时，那么FixedUpdate有固定的更新速率是很好理解的，因为这种绝对可以保证到，每执行一次 <code>FixedUpdate()</code> 函数，就至少执行了一帧，但是如果游戏本身的更新频率就很低，例如为30FPS时，每一帧的时间间隔明显大于0.02秒的，那么这时候在每两次 <code>Update()</code> 函数的调用之间。 <code>FixedUpdate()</code> 函数就被调用了多次。</p><ol><li>通常 <code>FixedUpdate()</code> 函数比 <code>Update()</code> 函数更频繁地被调用。</li><li><code>FixedUpdate()</code> 函数可以在一帧内被调用多次，如果帧速率很低，则根本不能在帧之间调用。</li><li>如果帧速率很高，也可能不会调用 <code>FixedUpdate()</code> 。</li><li>在 <code>FixedUpdate()</code> 函数被调用之后立即进行所有物理计算和更新。</li><li>作用力，扭矩或其他与物理相关的函数时，应使用<code>FixedUpdate</code>函数。</li><li><code>FixedUpdate()</code> 函数由一个准确可信的计时器调用，而与实际的帧速率无关，因此在 <code>FixedUpdate()</code> 中应用移动计算时，您不需要将您的值乘以<code>Time.deltaTime</code>。</li><li><code>Update()</code> 函数是每一帧中执行更新操作的主要（入口）函数。</li><li><code>Update()</code> 函数中用来移动非物理系统驱动的物体。</li><li><code>Update()</code> 函数用来接受用户输入。</li><li><code>Update()</code> 函数可用来实现简单的计时器。</li></ol><p>由于 <code>Update()</code> 的执行方式，与物理引擎的执行步调不同，即可能在一帧中， <code>FixedUpdate()</code> 函数执行了多次，而Update函数则只执行了一次。这取决于渲染器在渲染图形时的负载量，以及所耗费的CPU时间。如果在 <code>Update()</code> 函数中执行物理运算时，会导致未知的结果。同时也可以看到： <strong>函数的执行间隔，未必就是TimeManager界面中Fixed TimeStep项中所指定的值。</strong></p><ol><li><code>LateUpdate()</code> 函数每帧会被调用一次，在 <code>Update()</code> 函数结束后调用</li><li>所有在 <code>Update()</code> 函数中执行的计算，将会在 <code>LateUpdate()</code> 函数调用之前完成执行。</li><li>如果实现一个跟随式的第三视角摄像机，则摄像机的状态更新放在 <code>LateUpdate()</code> 函数中执行是一个通用的做法。</li></ol><p>因为你的角色是在 <code>Update()</code> 函数里面执行移动和转向的操作。所以在 <code>LateUpdate()</code> 函数执行摄像机的位置和旋转度计算，可以确保在计算时，角色已经全部完成了位置计算，摄像机可以正确地跟踪到角色的正确位置。</p><h2 id=2-unityenginetime类>2 UnityEngine.Time类</h2><h3 id=21-timedeltatime>2.1 Time.deltaTime</h3><p><code>Time.deltaTime</code> 是类Time的一个公有静态的浮点类型成员变量</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>float</span> deltaTime<span style=color:#1f2328>;</span>
 </span></span></code></pre></div><p>这个变量是只读的， <strong>返回本帧到上一帧流逝的时间，单位是秒</strong> 。 <code>Time.deltaTime</code>的使用例子如下：
-如果要沿着Y轴移动某个game object，那么假设移动速度为每秒n个单位，那么每一帧移动的距离distance为：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">float</span> n = <span style="color:#ae81ff">10.0f</span>; <span style="color:#75715e">// 每秒移动的速度</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">float</span> distance = Time.deltaTime * n<span style="color:#960050;background-color:#1e0010">；</span>
-</span></span></code></pre></div><p>然后把计算结果distance累加到game object自身的local Position的y值上即可</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>GameObject o = GameObject.Find(<span style="color:#e6db74">&#34;AnObject&#34;</span>);
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> localPos = o.transform.localPosition
-</span></span><span style="display:flex;"><span>localPos.y += distance;
-</span></span><span style="display:flex;"><span>o.tranform.localPosition = localPos;
-</span></span></code></pre></div><p>这样子，虽然不确定一秒内到底能执行了多少帧，但在一秒内每帧执行的时长是可以得知的。利用每帧之间的时长乘以每秒物体运行的速度，就可以得到该帧要发生的位移的距离值。最终无论帧速率如何，一秒钟内移动的距离是确定的。当然如果帧速率太低的话，物体移动时就会有很明显的跳跃感。比如一秒钟内要移动一百米，一秒钟内执行了30帧，和一秒钟内执行了1帧，其给用户的观感肯定有着非常明显的差异。</p>
-<p>在 <code>MonoBehaviour.FixedUpdate()</code>函数中要使用 <code>fixedDeltaTime</code>变量代替 <code>deltaTime</code> .在 <code>MonoBehaviour.OnGUI()</code>函数中不要依赖于 <code>Time.deltaTime</code>进行计算，因为在一帧中 <code>OnGUI()</code>中可能会被调用多次，那么每次在 <code>OnGUI()</code>函数中拿到的 <code>deltaTime</code>值就是一个定值，这显然会导致计算逻辑出错。</p>
-<h3 id="22-timetimescale">2.2 Time.timeScale</h3>
-<p><code>Time.timeScale</code>属性可以用来控制<code>Time.deltaTime</code>的大小。如果 <code>Time.timeScale</code>为1， <code>Time.timeDelta</code> 的值为N。每帧之间流逝的时间为R。这时候：</p>
-<p>$$ N = R $$</p>
-<p>当把 <code>Time.timeScale</code>设置为 <strong>0.5</strong> 的时，每帧之间流逝的 <strong>实际时间依然为R</strong> ，但这时候 <code>Time.timeDelta</code> 则变成了 <strong>0.5N</strong> 。这时候每帧的移动距离 <strong>distance</strong> ，从原来的：</p>
-<p>$$ distance = N \times moveSpeed $$</p>
-<p>变成了：</p>
-<p>$$ distance = 0.5 \times N \times moveSpeed $$</p>
-<p>实际每帧所花费的时间还是R，但每帧移动的距离变小了。所以画面呈现了“慢动作”的效果。如果把 <code>Time.timeScale</code> 设置为 <strong>2</strong> 的时,每帧移动的距离变了,所以画面呈现了快进的效果。可参照<a href="/unity3ddemo/2017430F1/TestTimeScale.zip">示例工程</a> 。</p>
-<h2 id="参考文档">参考文档</h2>
-<p><a href="https://aresthedog.com/unity-concepts-update-vs-fixedupdate-vs-lateupdate">https://aresthedog.com/unity-concepts-update-vs-fixedupdate-vs-lateupdate</a></p>
-<p><a href="https://www.cnblogs.com/murongxiaopifu/p/7683140.html">FixedUpdate真的是固定时间片执行的吗?</a></p>
-<p><a href="https://www.jianshu.com/p/d2a83d49d027">初学unity Time.deltatime的理解</a></p>
-<p><a href="http://www.xuanyusong.com/archives/2956">Unity3D研究院之Time.timeScale、游戏暂停（七十四）</a></p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_component_construction_func/">继承自Monobehaviour的组件组件的构造函数</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/from_cs_to_quad/">从计算着色器到四边形【翻译】</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/cg_programming_unity_debugging_of_shaders/">在Unity3D中使用Visual Studio调试shader【翻译】</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_player_prefs/">Unity3D PlayerPrefs的存储位置</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_2d_collision_trigger/">Unity2D的碰撞检测响应处理细节</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+如果要沿着Y轴移动某个game object，那么假设移动速度为每秒n个单位，那么每一帧移动的距离distance为：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> n <span style=color:#1f2328>=</span> <span style=color:#0550ae>10.0f</span><span style=color:#1f2328>;</span> <span style=color:#57606a>// 每秒移动的速度</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> distance <span style=color:#1f2328>=</span> Time<span style=color:#1f2328>.</span>deltaTime <span style=color:#1f2328>*</span> n<span style=color:#f6f8fa;background-color:#82071e>；</span>
+</span></span></code></pre></div><p>然后把计算结果distance累加到game object自身的local Position的y值上即可</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>GameObject o <span style=color:#1f2328>=</span> GameObject<span style=color:#1f2328>.</span>Find<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;AnObject&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>var</span> localPos <span style=color:#1f2328>=</span> o<span style=color:#1f2328>.</span>transform<span style=color:#1f2328>.</span>localPosition
+</span></span><span style=display:flex><span>localPos<span style=color:#1f2328>.</span>y <span style=color:#1f2328>+=</span> distance<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>o<span style=color:#1f2328>.</span>tranform<span style=color:#1f2328>.</span>localPosition <span style=color:#1f2328>=</span> localPos<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>这样子，虽然不确定一秒内到底能执行了多少帧，但在一秒内每帧执行的时长是可以得知的。利用每帧之间的时长乘以每秒物体运行的速度，就可以得到该帧要发生的位移的距离值。最终无论帧速率如何，一秒钟内移动的距离是确定的。当然如果帧速率太低的话，物体移动时就会有很明显的跳跃感。比如一秒钟内要移动一百米，一秒钟内执行了30帧，和一秒钟内执行了1帧，其给用户的观感肯定有着非常明显的差异。</p><p>在 <code>MonoBehaviour.FixedUpdate()</code>函数中要使用 <code>fixedDeltaTime</code>变量代替 <code>deltaTime</code> .在 <code>MonoBehaviour.OnGUI()</code>函数中不要依赖于 <code>Time.deltaTime</code>进行计算，因为在一帧中 <code>OnGUI()</code>中可能会被调用多次，那么每次在 <code>OnGUI()</code>函数中拿到的 <code>deltaTime</code>值就是一个定值，这显然会导致计算逻辑出错。</p><h3 id=22-timetimescale>2.2 Time.timeScale</h3><p><code>Time.timeScale</code>属性可以用来控制<code>Time.deltaTime</code>的大小。如果 <code>Time.timeScale</code>为1， <code>Time.timeDelta</code> 的值为N。每帧之间流逝的时间为R。这时候：</p><p>$$ N = R $$</p><p>当把 <code>Time.timeScale</code>设置为 <strong>0.5</strong> 的时，每帧之间流逝的 <strong>实际时间依然为R</strong> ，但这时候 <code>Time.timeDelta</code> 则变成了 <strong>0.5N</strong> 。这时候每帧的移动距离 <strong>distance</strong> ，从原来的：</p><p>$$ distance = N \times moveSpeed $$</p><p>变成了：</p><p>$$ distance = 0.5 \times N \times moveSpeed $$</p><p>实际每帧所花费的时间还是R，但每帧移动的距离变小了。所以画面呈现了“慢动作”的效果。如果把 <code>Time.timeScale</code> 设置为 <strong>2</strong> 的时,每帧移动的距离变了,所以画面呈现了快进的效果。可参照<a href=/unity3ddemo/2017430F1/TestTimeScale.zip>示例工程</a> 。</p><h2 id=参考文档>参考文档</h2><p><a href=https://aresthedog.com/unity-concepts-update-vs-fixedupdate-vs-lateupdate>https://aresthedog.com/unity-concepts-update-vs-fixedupdate-vs-lateupdate</a></p><p><a href=https://www.cnblogs.com/murongxiaopifu/p/7683140.html>FixedUpdate真的是固定时间片执行的吗?</a></p><p><a href=https://www.jianshu.com/p/d2a83d49d027>初学unity Time.deltatime的理解</a></p><p><a href=http://www.xuanyusong.com/archives/2956>Unity3D研究院之Time.timeScale、游戏暂停（七十四）</a></p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/u3d_component_construction_func/>继承自Monobehaviour的组件组件的构造函数</a></li><li class=related__item><a class=related__link href=/post/unity3d/from_cs_to_quad/>从计算着色器到四边形【翻译】</a></li><li class=related__item><a class=related__link href=/post/unity3d/cg_programming_unity_debugging_of_shaders/>在Unity3D中使用Visual Studio调试shader【翻译】</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_player_prefs/>Unity3D PlayerPrefs的存储位置</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_sript_life/>Unity脚本生命周期</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

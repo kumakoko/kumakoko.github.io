@@ -1,152 +1,59 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>HDR | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="HDR" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/tags/hdr/" />
-
-
-		<meta itemprop="name" content="HDR">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/tags/hdr/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-term">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/tags/">Tags</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">HDR</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">HDR</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/inside_hdr/">理解高动态范围光</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-现在大部分图形程序员（包括我）可能是从directxsdk处接触到这个概念并开始学习。DirectX SDK中的示例demo较为清晰地展示了一个完整的HDR技术所要采用的流程，如下：
-在 float render target 上去渲染当前的场景。 使用 RGBM ， LogLuv 等编码方式来节省所需的内存和带宽 通过 down sample 去计算场景亮度 根据亮度对场景做一个 矫正（tone mapping） 最后输出到一个 rgb8 的 render target 上 上面的流程的四个步骤就展示了四个高大上的概念，我们先一一弄懂这些基础概念，再进一步分析。 1 float render target 首先是float render target。render target（以下简称RT）这个概念就不在此详细描述了，这个概念都还没弄懂的话需要先放下这篇文章，先夯实基础再说。RT可以理解为一系列的像素点的集合。在计算机中自然需要用一个一个字节去表示像素点的RGBA信息。最常见的是使用一个字节去表示像素点的一个颜色分量。这样子表示一个像素点则需要四个字节共32位。但一个字节表示一个颜色分量，比如Red分量的话，最多就只能表示256阶的信息。在很多时候，尤其是在处理我们的HDR信息的时候，256阶是远远不够用。所以我们要采用32位或者更高精度的浮点数去表示每一位颜色分量。float render target正是表示这一个概念。
-1.1 RGBM RGBM是一种颜色编码方式，如上所述，为了解决这个精度不足以存储亮度范围信息的问题，我们可以创建一个精度更高的buffer，以扩展之前的那个限定在[0,1]取值域的取值范围，从而使得我们可以在RT上渲染一个更高的亮度范围的画面效果。但使用高精度的buffer则带来另一个问题：即需要更高的内存存储空间和更高的带宽，并且有些渲染硬件无法以操作8位精度的buffer的速度去操作16位浮点数的buffer。因此为了解决这个问题，我们需要采用一种编码方法将这些颜色数据编码成一个能以8位颜色分量的存储的数据。编码方式有多种，例如RGBM编码，LogLuv编码，等等。假如有一个给定的包含了RGB颜色分量的颜色值C，将其编码成一个含有RGBM四个分量的颜色值的步骤是：
-定义一个&quot;最大范围值&quot;,假定为变量MaxRange 取得C的RGB分量中最大的那个值。将这个最大值赋值给变量maxRGB。 用maxRGB除以MaxRange，得到商，将这个商赋值给变量M 用M乘以255得到结果值之后，取得大于这个结果值的最小整数，然后再将这个最小值除以255之后，再赋值给变量M 最后，用C的各个颜色分量，除以M和MaxRange的乘积，作为最终结果颜色的RGB分量，M就作为最后一个分量。 这些步骤写成shader代码如下:
-float MaxRange = 8; float4 EncodeRGBM(float3 rgb) { float maxRGB = max(rgb.x,max(rgb.g,rgb.b)); float M = maxRGB / MaxRange; M = ceil(M * 255.0) / 255.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2017-03-08T14:59:52&#43;08:00">March 08, 2017</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>, 
-		<a class="meta-tags__link" href="/tags/hdr/" rel="tag">HDR</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>HDR | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/tags/hdr/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="HDR"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="HDR"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2017-03-08T14:59:52+08:00"><meta itemprop=dateModified content="2017-03-08T14:59:52+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/tags/hdr/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-term"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/tags/>Tags</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>HDR</li></ol></nav><div class="page block"><h1 class=page__title>HDR</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/cg/inside_hdr/>理解高动态范围光</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>现在大部分图形程序员（包括我）可能是从directxsdk处接触到这个概念并开始学习。DirectX SDK中的示例demo较为清晰地展示了一个完整的HDR技术所要采用的流程，如下：</p><ol><li>在 <strong>float render target</strong> 上去渲染当前的场景。</li><li>使用 <strong>RGBM</strong> ， <strong>LogLuv</strong> 等编码方式来节省所需的内存和带宽</li><li>通过 <strong>down sample</strong> 去计算场景亮度</li><li>根据亮度对场景做一个 <strong>矫正（tone mapping）</strong> 最后输出到一个 <strong>rgb8</strong> 的 <strong>render target</strong> 上</li><li>上面的流程的四个步骤就展示了四个高大上的概念，我们先一一弄懂这些基础概念，再进一步分析。</li></ol><h2 id=1-float-render-target>1 float render target</h2><p>首先是float render target。render target（以下简称RT）这个概念就不在此详细描述了，这个概念都还没弄懂的话需要先放下这篇文章，先夯实基础再说。RT可以理解为一系列的像素点的集合。在计算机中自然需要用一个一个字节去表示像素点的RGBA信息。最常见的是使用一个字节去表示像素点的一个颜色分量。这样子表示一个像素点则需要四个字节共32位。但一个字节表示一个颜色分量，比如Red分量的话，最多就只能表示256阶的信息。在很多时候，尤其是在处理我们的HDR信息的时候，256阶是远远不够用。所以我们要采用32位或者更高精度的浮点数去表示每一位颜色分量。float render target正是表示这一个概念。</p><h3 id=11-rgbm>1.1 RGBM</h3><p>RGBM是一种颜色编码方式，如上所述，为了解决这个精度不足以存储亮度范围信息的问题，我们可以创建一个精度更高的buffer，以扩展之前的那个限定在[0,1]取值域的取值范围，从而使得我们可以在RT上渲染一个更高的亮度范围的画面效果。但使用高精度的buffer则带来另一个问题：即需要更高的内存存储空间和更高的带宽，并且有些渲染硬件无法以操作8位精度的buffer的速度去操作16位浮点数的buffer。因此为了解决这个问题，我们需要采用一种编码方法将这些颜色数据编码成一个能以8位颜色分量的存储的数据。编码方式有多种，例如RGBM编码，LogLuv编码，等等。假如有一个给定的包含了RGB颜色分量的颜色值C，将其编码成一个含有RGBM四个分量的颜色值的步骤是：</p><ol><li>定义一个"最大范围值",假定为变量<code>MaxRange</code></li><li>取得C的RGB分量中最大的那个值。将这个最大值赋值给变量<code>maxRGB</code>。</li><li>用<code>maxRGB</code>除以<code>MaxRange</code>，得到商，将这个商赋值给变量<code>M</code></li><li>用M乘以255得到结果值之后，取得大于这个结果值的最小整数，然后再将这个最小值除以255之后，再赋值给变量<code>M</code></li><li>最后，用C的各个颜色分量，除以<code>M</code>和<code>MaxRange</code>的乘积，作为最终结果颜色的RGB分量，<code>M</code>就作为最后一个分量。</li></ol><p>这些步骤写成shader代码如下:</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>float</span> MaxRange <span style=color:#0550ae>=</span> <span style=color:#0550ae>8</span><span style=color:#1f2328>;</span> 
+</span></span><span style=display:flex><span><span style=color:#cf222e>float4</span> EncodeRGBM<span style=color:#1f2328>(</span><span style=color:#cf222e>float3</span> rgb<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>  <span style=color:#cf222e>float</span> maxRGB <span style=color:#0550ae>=</span> <span style=color:#6639ba>max</span><span style=color:#1f2328>(</span>rgb<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span><span style=color:#6639ba>max</span><span style=color:#1f2328>(</span>rgb<span style=color:#1f2328>.</span>g<span style=color:#1f2328>,</span>rgb<span style=color:#1f2328>.</span>b<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>  <span style=color:#cf222e>float</span> M <span style=color:#0550ae>=</span> maxRGB <span style=color:#0550ae>/</span> MaxRange<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>  M <span style=color:#0550ae>=</span> <span style=color:#6639ba>ceil</span><span style=color:#1f2328>(</span>M <span style=color:#0550ae>*</span> <span style=color:#0550ae>255.0</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>/</span> <span style=color:#0550ae>255.0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>  <span style=color:#cf222e>return</span> <span style=color:#cf222e>float4</span><span style=color:#1f2328>(</span>rgb <span style=color:#0550ae>/</span> <span style=color:#1f2328>(</span>M <span style=color:#0550ae>*</span> MaxRange<span style=color:#1f2328>),</span> M<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=12-logluv>1.2 LogLuv</h3><p>LogLuv编码格式是由Greg Ward在其论文The LogLuv Encoding for Full Gamut, High Dynamic Range Images中提出的。该编码格式最初是被设计来处理静态图像数据。后来经过Ninja Theory公司的前程序员Marco salvi的改进，此算法能使用在实时游戏中了。通过将一个32位的像素点的其中16位空间用来存储亮度信息，该编码格式可以存储一个非常大的范围的亮度数据值以适应于HDR渲染。LogLuv的编解码算法可以通过一段非常简单但高效的像素着色器函数去完成，这些函数由Christer Ericcson所提供，如下：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2017-03-08T14:59:52+08:00>March 08, 2017</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/cg/ rel=category>CG</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/cg/ rel=tag>CG</a>,
+<a class=meta-tags__link href=/tags/hdr/ rel=tag>HDR</a></span></div></div></article></div></div></main></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

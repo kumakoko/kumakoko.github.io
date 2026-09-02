@@ -1,483 +1,54 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>深度探索DxFramework 1 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="深度探索DxFramework">
-		<meta property="og:title" content="深度探索DxFramework 1" />
-<meta property="og:description" content="深度探索DxFramework" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_1/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2007-10-11T10:08:30+08:00" />
-<meta property="article:modified_time" content="2007-10-11T10:08:30+08:00" />
-
-
-		<meta itemprop="name" content="深度探索DxFramework 1">
-<meta itemprop="description" content="深度探索DxFramework"><meta itemprop="datePublished" content="2007-10-11T10:08:30+08:00" />
-<meta itemprop="dateModified" content="2007-10-11T10:08:30+08:00" />
-<meta itemprop="wordCount" content="170">
-<meta itemprop="keywords" content="DxFramework," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">深度探索DxFramework 1</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2007-10-11T10:08:30&#43;08:00">October 11, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">深度探索DxFramework 1</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#11-工程的来源和作者">1.1 工程的来源和作者</a></li>
-    <li><a href="#12-工程的配置">1.2 工程的配置</a></li>
-    <li><a href="#13-工程的各个demo介绍">1.3 工程的各个DEMO介绍</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h1 id="第1章-dxframework工程简介">第1章 DxFramework工程简介</h1>
-<h2 id="11-工程的来源和作者">1.1 工程的来源和作者</h2>
-<p>DxFramework是由Corey于年月发起的。Corey 开发了项目中最初的2D游戏引擎。并且负责了游戏所需的艺术资源的相关工作。他创建了DxFramework的第一个版本。Corey现在在Maxis公司工作，不再是DxFramework的主要的开发者了。而随后加入的Jonathan现在已经是项目管理员。他在Laird教授的领导下参与了程序设计的很多方面的工作。还有一位重要的贡献者是David Yeung，作为DxFramework的重要组成部分的3D Framework和相关示例demo的最原始的版本正是由David Yeung所编写的。还有就是Nuttapong，Nuttapong在David Yeung之后对3D Framework部分做了大量的扩充，增加了许多的功能以及一些demo和sample。</p>
-<p>另外还对DxFramework作出贡献的人员还有：</p>
-<p>Adam Tercala创建了world map demo的最初版本
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>深度探索DxFramework 1 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="深度探索DxFramework"><meta property="og:url" content="http://www.xionggf.com/post/inside_dxframework/inside_dxf_1/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="深度探索DxFramework 1"><meta property="og:description" content="深度探索DxFramework"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2007-10-11T10:08:30+08:00"><meta property="article:modified_time" content="2007-10-11T10:08:30+08:00"><meta property="article:tag" content="DxFramework"><meta itemprop=name content="深度探索DxFramework 1"><meta itemprop=description content="深度探索DxFramework"><meta itemprop=datePublished content="2007-10-11T10:08:30+08:00"><meta itemprop=dateModified content="2007-10-11T10:08:30+08:00"><meta itemprop=wordCount content="170"><meta itemprop=keywords content="DxFramework"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>深度探索DxFramework 1</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2007-10-11T10:08:30+08:00>October 11, 2007</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/directx/ rel=category>DirectX</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/dxframework/ rel=tag>DxFramework</a></span></div></div><h1 class=entry__title>深度探索DxFramework 1</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#11-工程的来源和作者>1.1 工程的来源和作者</a></li><li><a href=#12-工程的配置>1.2 工程的配置</a></li><li><a href=#13-工程的各个demo介绍>1.3 工程的各个DEMO介绍</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=第1章-dxframework工程简介>第1章 DxFramework工程简介</h1><h2 id=11-工程的来源和作者>1.1 工程的来源和作者</h2><p>DxFramework是由Corey于年月发起的。Corey 开发了项目中最初的2D游戏引擎。并且负责了游戏所需的艺术资源的相关工作。他创建了DxFramework的第一个版本。Corey现在在Maxis公司工作，不再是DxFramework的主要的开发者了。而随后加入的Jonathan现在已经是项目管理员。他在Laird教授的领导下参与了程序设计的很多方面的工作。还有一位重要的贡献者是David Yeung，作为DxFramework的重要组成部分的3D Framework和相关示例demo的最原始的版本正是由David Yeung所编写的。还有就是Nuttapong，Nuttapong在David Yeung之后对3D Framework部分做了大量的扩充，增加了许多的功能以及一些demo和sample。</p><p>另外还对DxFramework作出贡献的人员还有：</p><p>Adam Tercala创建了world map demo的最初版本
 Jeremy Lee创建了sound demo(DEMO C)的最初版本，并且撰写了C_Sound类
-Evan Leung创建了最初的用户接口类（User Interface Object class C_UIObject）以及一系列继承自此类的其他类。</p>
-<h2 id="12-工程的配置">1.2 工程的配置</h2>
-<p>本书剖析的版本是0.93版本，这个版本是2004月8月16日发布的。也是在本书截稿为止的最新版本。在DxFramework的主页中所发布的是三个Zip格式的压缩包。它们分别是：</p>
-<p>DxFramework-binary-0.9.3.zip
+Evan Leung创建了最初的用户接口类（User Interface Object class C_UIObject）以及一系列继承自此类的其他类。</p><h2 id=12-工程的配置>1.2 工程的配置</h2><p>本书剖析的版本是0.93版本，这个版本是2004月8月16日发布的。也是在本书截稿为止的最新版本。在DxFramework的主页中所发布的是三个Zip格式的压缩包。它们分别是：</p><p>DxFramework-binary-0.9.3.zip
 DxFramework-engine-0.9.3.zip
-DxFramework-0.9.3.zip</p>
-<p>DxFramework-binary-0.9.3.zip只是包含了DxFramework的所发布的可执行数据文件版本。没有相关的源代码。而DxFramework-engine-0.9.3.zip也只是包含了DxFramework的引擎框架代码，而没有示例的代码以及运行所需要的相关文件和数据。而DxFramework-0.9.3则两者兼备。如果是利用DxFramework来编写我们自己的游戏，那么当然选择基于DxFramework-engine-0.9.3，但是本书是通过剖析引擎和示例代码来学习游戏设计技术的，因此本书的剖析对象是DxFramework-0.9.3.zip的内容。</p>
-<p>下载解压缩之根目录有如下的一些文件和目录，目录如下：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>目录</td>
-<td>内容</td>
-<td></td>
-</tr>
-<tr>
-<td>Data</td>
-<td>存放示例demo&quot;pic pac&quot;所需的地图数据文件</td>
-<td></td>
-</tr>
-<tr>
-<td>Docs</td>
-<td>存放DxFramework相关的文档</td>
-<td></td>
-</tr>
-<tr>
-<td>Images</td>
-<td>存放DxFramework所需的一些艺术资源，比如一些示例程序所需要的图片等等</td>
-<td></td>
-</tr>
-<tr>
-<td>Resources</td>
-<td>存放DxFramework所用到的图标文件，里面是big.ico和small.ico文件</td>
-<td></td>
-</tr>
-<tr>
-<td>Sounds</td>
-<td>存放DxFramework使用到的一些声音文件，有wav，mp3，mid格式</td>
-<td></td>
-</tr>
-<tr>
-<td>Source</td>
-<td>存放了DxFramework的引擎和示例的原代码，这里面的内容便是本书的重点部分</td>
-<td></td>
-</tr>
-<tr>
-<td>Frustum</td>
-<td>点击鼠标将能绘制该视截体的轮廓，这样可以移开camera到别的位置去看看这个视截体像什么。悬浮在空中的球，当鼠标点击的时候，它会依据它在视截体内与否来决定是否改变其纹理。</td>
-<td></td>
-</tr>
-<tr>
-<td>Models</td>
-<td>Models Demo装载了MD2格式的模型和X格式的模型。MD2的动画可以循环播放</td>
-<td></td>
-</tr>
-<tr>
-<td>Seek and Hide</td>
-<td>追踪和躲藏，演示一个简单的AI游戏</td>
-<td></td>
-</tr>
-<tr>
-<td>Simple Demo</td>
-<td>本demo演示了如何使用DxFramework来开发一个3D游戏。这个demo的代码有很多的注释和演示。</td>
-<td></td>
-</tr>
-<tr>
-<td>Ray Tracking</td>
-<td>这个demo演示了如何使用鼠标来点击选中不同的DxFramework图元。鼠标点击点将会变成一个会延伸扩展的球的球心。</td>
-<td></td>
-</tr>
-<tr>
-<td>LandScape and Billboard</td>
-<td>本demo展示一个通过高度图生成的风景地貌。另外还展现了公告板技术。</td>
-<td></td>
-</tr>
-<tr>
-<td>Split</td>
-<td>演示如何把一个基本图元切割成更小的基本图元</td>
-<td></td>
-</tr>
-<tr>
-<td>MD3 Demo</td>
-<td>演示了使用ID Software定义了md3文件格式的模型</td>
-<td></td>
-</tr>
-<tr>
-<td>BSP</td>
-<td>演示了使用二叉空间分割树（binary space partitation tree）对场景数据进行组织</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>文件如下：</p>
-<table>
-<thead>
-<tr>
-<th>文件</th>
-<th>内容</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>changelog,txt</td>
-<td>关于代码修改的日志文件</td>
-<td></td>
-</tr>
-<tr>
-<td>doxygen.txt</td>
-<td>Doxygen用来从代码中抽取注释生成代码注释文档的数据文件</td>
-<td></td>
-</tr>
-<tr>
-<td>doxygen.dox</td>
-<td>Doxygen用来从代码中抽取注释生成代码注释文档的数据文件</td>
-<td></td>
-</tr>
-<tr>
-<td>doxygen-engine.dox</td>
-<td>Doxygen用来从代码中抽取注释生成代码注释文档的数据文件</td>
-<td></td>
-</tr>
-<tr>
-<td>DxFramework.sln</td>
-<td>DxFramework的工作区文件</td>
-<td></td>
-</tr>
-<tr>
-<td>dxframework.vcproj</td>
-<td>DxFramework的工程文件</td>
-<td></td>
-</tr>
-<tr>
-<td>LICENSE.txt</td>
-<td>授权文件</td>
-<td></td>
-</tr>
-<tr>
-<td>ReadMe.txt</td>
-<td>描述文件</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="13-工程的各个demo介绍">1.3 工程的各个DEMO介绍</h2>
-<p>到目前为止，DxFramework一共提供了共19个充分展示了这一engine的能力的demo,它们如下表：</p>
-<table>
-<thead>
-<tr>
-<th>DEMO名称</th>
-<th>内容介绍</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>DemoA</td>
-<td>DemoA是一个非常简单的demo。这个demo覆盖了alpha混合，精灵和精灵动画，以及基本的键盘输入等技术。使用方向键来移动screen里的一个小BOX。通过改变屏幕所显示的alpha值，BOX将会在一段时间内慢慢消失，然后又慢慢重现。通过指定精灵文件的名字可以把BOX以精灵动画的形式来表现。当调用Animation()的时候，animates将会周期性地切换帧来达到动画的效果</td>
-<td></td>
-</tr>
-<tr>
-<td>DemoB</td>
-<td>DemoB是另外一个简单的示例。这次集中演示了game object的使用。如碰撞检测，还有一个非常简单的物理运动模型。通过点击鼠标或者按下向上箭头键可以添加球。如果使用鼠标来添加球，在释放鼠标前可以通过移动鼠标来给这些球一个初始速度。当球与墙或者是球与球之间发生碰撞之后将会发生反弹（球，墙都是game object），按向下箭头键将逐个移去球</td>
-<td></td>
-</tr>
-<tr>
-<td>DemoC</td>
-<td>DemoC将简单介绍在DxFramework中使用DirectShow。在屏幕四角的糖果分别表示四个不同的文件。点击这些糖果将会播放不同的声音文件</td>
-<td></td>
-</tr>
-<tr>
-<td>Pong</td>
-<td>Pong将是项目中的第一个游戏。DirectPlay在此以一种简单的示例形式来使用。两人可以联机对战，这里，不能两人同时使用一台机器进行游戏，这就留待给读者作为练习</td>
-<td></td>
-</tr>
-<tr>
-<td>Worldmap</td>
-<td>World map demo是被设计成如何创建一个经典的2D RPG类型的地图的示例。这里没有很多需要探险的地图，当不等于说这个demo没有更多的东西可做。值得注意的是这些地图数据是存储在一个简单的文本文件中的，所以很容易修改。</td>
-<td></td>
-</tr>
-<tr>
-<td>Pac</td>
-<td>Pac是吃豆子游戏的翻版。这也是另一个2D游戏demo。这个demo囊括了计时，动画，用户输入，地图数据组织等技术。和world map技术一样。这个游戏的地图数据是存储在一个简单的文本文件中的，所以很容易修改和扩充。</td>
-<td></td>
-</tr>
-<tr>
-<td>3D primitives</td>
-<td>这是第一个3D demo，显示了几个不同的3D基本图元。还设置了基本的摄像机行为</td>
-<td></td>
-</tr>
-<tr>
-<td>Cameras</td>
-<td>这个demo主要集中在camera的定义和camera的描述上。Camera被放在一个大盒子内部。移动鼠标可以转动镜头四处观察。WASD键平移镜头，同时雾化效果也将在本Demo中展现。不同的类型和参数设置将会能得到即时的处理</td>
-<td></td>
-</tr>
-<tr>
-<td>Lights</td>
-<td>这个demo主要集中展现了简单的DxFramework所能支持的光照效果</td>
-<td></td>
-</tr>
-<tr>
-<td>Materials and Texture</td>
-<td>这个demo试验了不同的材质和纹理效果。左边的BOX是用来接受不同的参数操作的，而右边的BOX则是用来作为参照物。</td>
-<td></td>
-</tr>
-<tr>
-<td>Basic Collision</td>
-<td>DemoB的3D版本。这个demo用了一个很简单的，不甚精确的物理模型来模拟3D空间中碰撞。球形包络盒将用来做快速的碰撞检测</td>
-<td></td>
-</tr>
-<tr>
-<td>Multitextures</td>
-<td>与3D Primitive Demo相似。本Demo试验了在基本图元上添加多纹理功能混合的功能</td>
-<td></td>
-</tr>
-<tr>
-<td>Frustum</td>
-<td>与camera demo相似。本demo使用视截体剪除了在视野之外的部分。点击鼠标将能绘制该视截体的轮廓，这样可以移开camera到别的位置去看看这个视截体像什么。悬浮在空中的球，当鼠标点击的时候，它会依据它在视截体内与否来决定是否改变其纹理。</td>
-<td></td>
-</tr>
-<tr>
-<td>Models</td>
-<td>Models Demo装载了MD2格式的模型和X格式的模型。MD2的动画可以循环播放。</td>
-<td></td>
-</tr>
-<tr>
-<td>Seek and Hide</td>
-<td>本demo演示了如何使用DxFramework来开发一个3D游戏。这个demo的代码有很多的注释和演示。</td>
-<td></td>
-</tr>
-<tr>
-<td>Ray Tracking</td>
-<td>这个demo演示了如何使用鼠标来点击选中不同的DxFramework图元。鼠标点击点将会变成一个会延伸扩展的球的球心。</td>
-<td></td>
-</tr>
-<tr>
-<td>LandScape and Billboard</td>
-<td>本demo展示一个通过高度图生成的风景地貌。另外还展现了公告板技术。</td>
-<td></td>
-</tr>
-<tr>
-<td>Split</td>
-<td>演示如何把一个基本图元切割成更小的基本图元</td>
-<td></td>
-</tr>
-<tr>
-<td>md3 Demo</td>
-<td>演示了使用ID Software定义了md3文件格式的模型</td>
-<td></td>
-</tr>
-<tr>
-<td>BSP Demo</td>
-<td>演示了使用二叉空间分割树（binary space partitation tree）对场景数据进行组织</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/dxframework/">DxFramework</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/inside_dxframework/inside_dxf_0/">深度探索DxFramework 0</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+DxFramework-0.9.3.zip</p><p>DxFramework-binary-0.9.3.zip只是包含了DxFramework的所发布的可执行数据文件版本。没有相关的源代码。而DxFramework-engine-0.9.3.zip也只是包含了DxFramework的引擎框架代码，而没有示例的代码以及运行所需要的相关文件和数据。而DxFramework-0.9.3则两者兼备。如果是利用DxFramework来编写我们自己的游戏，那么当然选择基于DxFramework-engine-0.9.3，但是本书是通过剖析引擎和示例代码来学习游戏设计技术的，因此本书的剖析对象是DxFramework-0.9.3.zip的内容。</p><p>下载解压缩之根目录有如下的一些文件和目录，目录如下：</p><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td>目录</td><td>内容</td><td></td></tr><tr><td>Data</td><td>存放示例demo"pic pac"所需的地图数据文件</td><td></td></tr><tr><td>Docs</td><td>存放DxFramework相关的文档</td><td></td></tr><tr><td>Images</td><td>存放DxFramework所需的一些艺术资源，比如一些示例程序所需要的图片等等</td><td></td></tr><tr><td>Resources</td><td>存放DxFramework所用到的图标文件，里面是big.ico和small.ico文件</td><td></td></tr><tr><td>Sounds</td><td>存放DxFramework使用到的一些声音文件，有wav，mp3，mid格式</td><td></td></tr><tr><td>Source</td><td>存放了DxFramework的引擎和示例的原代码，这里面的内容便是本书的重点部分</td><td></td></tr><tr><td>Frustum</td><td>点击鼠标将能绘制该视截体的轮廓，这样可以移开camera到别的位置去看看这个视截体像什么。悬浮在空中的球，当鼠标点击的时候，它会依据它在视截体内与否来决定是否改变其纹理。</td><td></td></tr><tr><td>Models</td><td>Models Demo装载了MD2格式的模型和X格式的模型。MD2的动画可以循环播放</td><td></td></tr><tr><td>Seek and Hide</td><td>追踪和躲藏，演示一个简单的AI游戏</td><td></td></tr><tr><td>Simple Demo</td><td>本demo演示了如何使用DxFramework来开发一个3D游戏。这个demo的代码有很多的注释和演示。</td><td></td></tr><tr><td>Ray Tracking</td><td>这个demo演示了如何使用鼠标来点击选中不同的DxFramework图元。鼠标点击点将会变成一个会延伸扩展的球的球心。</td><td></td></tr><tr><td>LandScape and Billboard</td><td>本demo展示一个通过高度图生成的风景地貌。另外还展现了公告板技术。</td><td></td></tr><tr><td>Split</td><td>演示如何把一个基本图元切割成更小的基本图元</td><td></td></tr><tr><td>MD3 Demo</td><td>演示了使用ID Software定义了md3文件格式的模型</td><td></td></tr><tr><td>BSP</td><td>演示了使用二叉空间分割树（binary space partitation tree）对场景数据进行组织</td><td></td></tr></tbody></table><p>文件如下：</p><table><thead><tr><th>文件</th><th>内容</th><th></th></tr></thead><tbody><tr><td>changelog,txt</td><td>关于代码修改的日志文件</td><td></td></tr><tr><td>doxygen.txt</td><td>Doxygen用来从代码中抽取注释生成代码注释文档的数据文件</td><td></td></tr><tr><td>doxygen.dox</td><td>Doxygen用来从代码中抽取注释生成代码注释文档的数据文件</td><td></td></tr><tr><td>doxygen-engine.dox</td><td>Doxygen用来从代码中抽取注释生成代码注释文档的数据文件</td><td></td></tr><tr><td>DxFramework.sln</td><td>DxFramework的工作区文件</td><td></td></tr><tr><td>dxframework.vcproj</td><td>DxFramework的工程文件</td><td></td></tr><tr><td>LICENSE.txt</td><td>授权文件</td><td></td></tr><tr><td>ReadMe.txt</td><td>描述文件</td><td></td></tr></tbody></table><h2 id=13-工程的各个demo介绍>1.3 工程的各个DEMO介绍</h2><p>到目前为止，DxFramework一共提供了共19个充分展示了这一engine的能力的demo,它们如下表：</p><table><thead><tr><th>DEMO名称</th><th>内容介绍</th><th></th></tr></thead><tbody><tr><td>DemoA</td><td>DemoA是一个非常简单的demo。这个demo覆盖了alpha混合，精灵和精灵动画，以及基本的键盘输入等技术。使用方向键来移动screen里的一个小BOX。通过改变屏幕所显示的alpha值，BOX将会在一段时间内慢慢消失，然后又慢慢重现。通过指定精灵文件的名字可以把BOX以精灵动画的形式来表现。当调用Animation()的时候，animates将会周期性地切换帧来达到动画的效果</td><td></td></tr><tr><td>DemoB</td><td>DemoB是另外一个简单的示例。这次集中演示了game object的使用。如碰撞检测，还有一个非常简单的物理运动模型。通过点击鼠标或者按下向上箭头键可以添加球。如果使用鼠标来添加球，在释放鼠标前可以通过移动鼠标来给这些球一个初始速度。当球与墙或者是球与球之间发生碰撞之后将会发生反弹（球，墙都是game object），按向下箭头键将逐个移去球</td><td></td></tr><tr><td>DemoC</td><td>DemoC将简单介绍在DxFramework中使用DirectShow。在屏幕四角的糖果分别表示四个不同的文件。点击这些糖果将会播放不同的声音文件</td><td></td></tr><tr><td>Pong</td><td>Pong将是项目中的第一个游戏。DirectPlay在此以一种简单的示例形式来使用。两人可以联机对战，这里，不能两人同时使用一台机器进行游戏，这就留待给读者作为练习</td><td></td></tr><tr><td>Worldmap</td><td>World map demo是被设计成如何创建一个经典的2D RPG类型的地图的示例。这里没有很多需要探险的地图，当不等于说这个demo没有更多的东西可做。值得注意的是这些地图数据是存储在一个简单的文本文件中的，所以很容易修改。</td><td></td></tr><tr><td>Pac</td><td>Pac是吃豆子游戏的翻版。这也是另一个2D游戏demo。这个demo囊括了计时，动画，用户输入，地图数据组织等技术。和world map技术一样。这个游戏的地图数据是存储在一个简单的文本文件中的，所以很容易修改和扩充。</td><td></td></tr><tr><td>3D primitives</td><td>这是第一个3D demo，显示了几个不同的3D基本图元。还设置了基本的摄像机行为</td><td></td></tr><tr><td>Cameras</td><td>这个demo主要集中在camera的定义和camera的描述上。Camera被放在一个大盒子内部。移动鼠标可以转动镜头四处观察。WASD键平移镜头，同时雾化效果也将在本Demo中展现。不同的类型和参数设置将会能得到即时的处理</td><td></td></tr><tr><td>Lights</td><td>这个demo主要集中展现了简单的DxFramework所能支持的光照效果</td><td></td></tr><tr><td>Materials and Texture</td><td>这个demo试验了不同的材质和纹理效果。左边的BOX是用来接受不同的参数操作的，而右边的BOX则是用来作为参照物。</td><td></td></tr><tr><td>Basic Collision</td><td>DemoB的3D版本。这个demo用了一个很简单的，不甚精确的物理模型来模拟3D空间中碰撞。球形包络盒将用来做快速的碰撞检测</td><td></td></tr><tr><td>Multitextures</td><td>与3D Primitive Demo相似。本Demo试验了在基本图元上添加多纹理功能混合的功能</td><td></td></tr><tr><td>Frustum</td><td>与camera demo相似。本demo使用视截体剪除了在视野之外的部分。点击鼠标将能绘制该视截体的轮廓，这样可以移开camera到别的位置去看看这个视截体像什么。悬浮在空中的球，当鼠标点击的时候，它会依据它在视截体内与否来决定是否改变其纹理。</td><td></td></tr><tr><td>Models</td><td>Models Demo装载了MD2格式的模型和X格式的模型。MD2的动画可以循环播放。</td><td></td></tr><tr><td>Seek and Hide</td><td>本demo演示了如何使用DxFramework来开发一个3D游戏。这个demo的代码有很多的注释和演示。</td><td></td></tr><tr><td>Ray Tracking</td><td>这个demo演示了如何使用鼠标来点击选中不同的DxFramework图元。鼠标点击点将会变成一个会延伸扩展的球的球心。</td><td></td></tr><tr><td>LandScape and Billboard</td><td>本demo展示一个通过高度图生成的风景地貌。另外还展现了公告板技术。</td><td></td></tr><tr><td>Split</td><td>演示如何把一个基本图元切割成更小的基本图元</td><td></td></tr><tr><td>md3 Demo</td><td>演示了使用ID Software定义了md3文件格式的模型</td><td></td></tr><tr><td>BSP Demo</td><td>演示了使用二叉空间分割树（binary space partitation tree）对场景数据进行组织</td><td></td></tr></tbody></table></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/dxframework/>DxFramework</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/inside_dxframework/inside_dxf_0/>深度探索DxFramework 0</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

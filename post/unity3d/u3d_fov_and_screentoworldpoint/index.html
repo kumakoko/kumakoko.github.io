@@ -1,318 +1,105 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系">
-		<meta property="og:title" content="Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系" />
-<meta property="og:description" content="Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/u3d_fov_and_screentoworldpoint/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2024-09-22T20:20:49+08:00" />
-<meta property="article:modified_time" content="2024-09-22T20:20:49+08:00" />
-
-
-		<meta itemprop="name" content="Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系">
-<meta itemprop="description" content="Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系"><meta itemprop="datePublished" content="2024-09-22T20:20:49+08:00" />
-<meta itemprop="dateModified" content="2024-09-22T20:20:49+08:00" />
-<meta itemprop="wordCount" content="201">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2024-09-22T20:20:49&#43;08:00">September 22, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#问题分析">问题分析</a></li>
-    <li><a href="#fov与世界坐标的关系">FOV与世界坐标的关系</a></li>
-    <li><a href="#缩放因子的推导">缩放因子的推导</a></li>
-    <li><a href="#公式应用">公式应用</a></li>
-    <li><a href="#实际代码实现">实际代码实现</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<p>在Unity3D编程中经常会碰到以下的问题：</p>
-<blockquote>
-<p>比如一开始的FOV为60度，后来设置为22度，可以通过怎样的公式，使得使用22度FOV对应生成的3D位置点，通过这个公式，可以转换到其位置点和使用60度生成的一样呢</p>
-</blockquote>
-<p>当从一个FOV为60度的视角切换到22度的视角时，使用<code>Camera.ScreenToWorldPoint</code>函数生成的3D位置点会发生变化，因为FOV直接影响视锥体的宽度和高度。要解决这个问题，需要通过调整视锥体的缩放因子，来抵消FOV变化带来的位置偏移。</p>
-<h2 id="问题分析">问题分析</h2>
-<p>当FOV变化时，屏幕坐标对应的世界坐标会随之缩放。假设有一个屏幕坐标<code>screenPos</code>，在FOV为60度时通过<code>Camera.ScreenToWorldPoint</code>生成一个3D位置点<code>P60</code>。当FOV变为22度时，假设生成的3D位置点为<code>P22</code>。我们需要找到一个转换公式，使得<code>P22</code>转换回<code>P60</code>。</p>
-<h2 id="fov与世界坐标的关系">FOV与世界坐标的关系</h2>
-<p>视锥体的高度（在深度为z处）与FOV通过以下公式相关：</p>
-<p>$$  Heightz=2×z×tan⁡(FOV2)\text{Height}_z = 2 \times z \times \tan\left(\frac{FOV}{2}\right)Heightz=2×z×tan(2FOV) $$</p>
-<p>其中：</p>
-<ul>
-<li>Height_z ：在深度为z处的视锥体高度。</li>
-<li>FOV：垂直视野角度。</li>
-<li>z：深度（从摄像机到目标点的距离）。</li>
-</ul>
-<p>视锥体的宽度和高度成比例地变化，具体公式为：</p>
-<p>$$  Widthz=Heightz×Aspect Ratio\text{Width}_z = \text{Height}_z \times \text{Aspect Ratio}Widthz=Heightz×Aspect Ratio $$</p>
-<p>对于两个不同的FOV（如60度和22度），可以计算出它们对应的视锥体高度比值。为了让FOV为22度时生成的世界坐标与FOV为60度时生成的一致，需要应用这个比值进行缩放。</p>
-<h2 id="缩放因子的推导">缩放因子的推导</h2>
-<p>在FOV为60度时的视锥体高度：</p>
-<p>$$
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/u3d_fov_and_screentoworldpoint/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系"><meta property="og:description" content="Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2024-09-22T20:20:49+08:00"><meta property="article:modified_time" content="2024-09-22T20:20:49+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系"><meta itemprop=description content="Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系"><meta itemprop=datePublished content="2024-09-22T20:20:49+08:00"><meta itemprop=dateModified content="2024-09-22T20:20:49+08:00"><meta itemprop=wordCount content="201"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2024-09-22T20:20:49+08:00>September 22, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#问题分析>问题分析</a></li><li><a href=#fov与世界坐标的关系>FOV与世界坐标的关系</a></li><li><a href=#缩放因子的推导>缩放因子的推导</a></li><li><a href=#公式应用>公式应用</a></li><li><a href=#实际代码实现>实际代码实现</a></li><li><a href=#总结>总结</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>在Unity3D编程中经常会碰到以下的问题：</p><blockquote><p>比如一开始的FOV为60度，后来设置为22度，可以通过怎样的公式，使得使用22度FOV对应生成的3D位置点，通过这个公式，可以转换到其位置点和使用60度生成的一样呢</p></blockquote><p>当从一个FOV为60度的视角切换到22度的视角时，使用<code>Camera.ScreenToWorldPoint</code>函数生成的3D位置点会发生变化，因为FOV直接影响视锥体的宽度和高度。要解决这个问题，需要通过调整视锥体的缩放因子，来抵消FOV变化带来的位置偏移。</p><h2 id=问题分析>问题分析</h2><p>当FOV变化时，屏幕坐标对应的世界坐标会随之缩放。假设有一个屏幕坐标<code>screenPos</code>，在FOV为60度时通过<code>Camera.ScreenToWorldPoint</code>生成一个3D位置点<code>P60</code>。当FOV变为22度时，假设生成的3D位置点为<code>P22</code>。我们需要找到一个转换公式，使得<code>P22</code>转换回<code>P60</code>。</p><h2 id=fov与世界坐标的关系>FOV与世界坐标的关系</h2><p>视锥体的高度（在深度为z处）与FOV通过以下公式相关：</p><p>$$ Heightz=2×z×tan⁡(FOV2)\text{Height}_z = 2 \times z \times \tan\left(\frac{FOV}{2}\right)Heightz=2×z×tan(2FOV) $$</p><p>其中：</p><ul><li>Height_z ：在深度为z处的视锥体高度。</li><li>FOV：垂直视野角度。</li><li>z：深度（从摄像机到目标点的距离）。</li></ul><p>视锥体的宽度和高度成比例地变化，具体公式为：</p><p>$$ Widthz=Heightz×Aspect Ratio\text{Width}_z = \text{Height}_z \times \text{Aspect Ratio}Widthz=Heightz×Aspect Ratio $$</p><p>对于两个不同的FOV（如60度和22度），可以计算出它们对应的视锥体高度比值。为了让FOV为22度时生成的世界坐标与FOV为60度时生成的一致，需要应用这个比值进行缩放。</p><h2 id=缩放因子的推导>缩放因子的推导</h2><p>在FOV为60度时的视锥体高度：</p><p>$$
 \mathrm{Heigth}_{60}=2\times \mathrm{z}\times \tan \left( \frac{60^o}{2} \right)
-$$</p>
-<p>在FOV为22度时的视锥体高度：</p>
-<p>$$
+$$</p><p>在FOV为22度时的视锥体高度：</p><p>$$
 \mathrm{Heigth}_{22}=2\times \mathrm{z}\times \tan \left( \frac{22^o}{2} \right)
-$$</p>
-<p>缩放因子： 需要将FOV为22度时的世界坐标缩放到FOV为60度的视锥体高度，因此缩放因子是这两个视锥体高度的比值：</p>
-<p>$$
+$$</p><p>缩放因子： 需要将FOV为22度时的世界坐标缩放到FOV为60度的视锥体高度，因此缩放因子是这两个视锥体高度的比值：</p><p>$$
 ScaleFactor=\frac{Height_{60}}{Height_{22}}=\frac{\tan \left( 30^{o} \right)}{\tan \left( 11^{o} \right)}
-$$</p>
-<p>可以计算出这个缩放因子：</p>
-<p>$$
+$$</p><p>可以计算出这个缩放因子：</p><p>$$
 \mathrm{ScaleFactor}=\frac{0.5774}{0.1944}\approx 2.97
-$$</p>
-<h2 id="公式应用">公式应用</h2>
-<p>在FOV为22度时生成的3D世界坐标<code>P22</code>可以通过如下公式转换为FOV为60度时的3D世界坐标<code>P60</code>：</p>
-<p>$$
+$$</p><h2 id=公式应用>公式应用</h2><p>在FOV为22度时生成的3D世界坐标<code>P22</code>可以通过如下公式转换为FOV为60度时的3D世界坐标<code>P60</code>：</p><p>$$
 \mathrm{P_{60}}=\mathrm{P_{22}}\times \mathrm{ScaleFactor}
-$$</p>
-<p>其中ScaleFactor为大约2.97。</p>
-<h2 id="实际代码实现">实际代码实现</h2>
-<p>下面的代码展示了如何将FOV为22度生成的3D位置点，转换为FOV为60度的等效位置点：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> UnityEngine;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FOVConversion</span> : MonoBehaviour
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Camera mainCamera;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">float</span> depth = <span style="color:#ae81ff">10f</span>; <span style="color:#75715e">// 距离摄像机的深度</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">float</span> scaleFactor;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> Start()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 计算缩放因子</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float</span> fov60 = <span style="color:#ae81ff">60f</span>;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">float</span> fov22 = <span style="color:#ae81ff">22f</span>;
-</span></span><span style="display:flex;"><span>        scaleFactor = Mathf.Tan(fov60 * Mathf.Deg2Rad / <span style="color:#ae81ff">2</span>) / 
-</span></span><span style="display:flex;"><span>		              Mathf.Tan(fov22 * Mathf.Deg2Rad / <span style="color:#ae81ff">2</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> Update()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (Input.GetMouseButtonDown(<span style="color:#ae81ff">0</span>))
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            Vector3 mousePos = Input.mousePosition;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 使用22度FOV生成世界坐标</span>
-</span></span><span style="display:flex;"><span>            Vector3 worldPos22 = ScreenToWorldWithFOV(mousePos, <span style="color:#ae81ff">22f</span>, depth);
-</span></span><span style="display:flex;"><span>            
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 将22度FOV生成的坐标转换为60度FOV等效坐标</span>
-</span></span><span style="display:flex;"><span>            Vector3 worldPos60 = worldPos22 * scaleFactor;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            Debug.Log(<span style="color:#e6db74">&#34;World Position at FOV 22: &#34;</span> + worldPos22);
-</span></span><span style="display:flex;"><span>            Debug.Log(<span style="color:#e6db74">&#34;Equivalent World Position at FOV 60: &#34;</span> + worldPos60);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    Vector3 ScreenToWorldWithFOV(Vector3 screenPos, <span style="color:#66d9ef">float</span> fov, <span style="color:#66d9ef">float</span> z)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 设置摄像机的FOV</span>
-</span></span><span style="display:flex;"><span>        mainCamera.fieldOfView = fov;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 使用ScreenToWorldPoint进行转换</span>
-</span></span><span style="display:flex;"><span>        Vector3 worldPos = mainCamera.ScreenToWorldPoint(
-</span></span><span style="display:flex;"><span>		                   <span style="color:#66d9ef">new</span> Vector3(screenPos.x, screenPos.y, z));
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> worldPos;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h2 id="总结">总结</h2>
-<ul>
-<li>FOV的影响：较大的FOV会使视锥体的宽度和高度增加，导致相同的屏幕坐标映射到较远的世界坐标。较小的FOV则会使视锥体变窄，映射到较近的世界坐标。</li>
-<li>缩放因子：通过计算两个FOV视锥体的高度比值，可以得到一个缩放因子，将小FOV生成的世界坐标转换为大FOV生成的等效世界坐标。</li>
-</ul>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_from_depthmap_to_world_coord/">Unity3D中根据深度值重建像素点对应的世界坐标</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/rendering_meshes_in_unity_without_meshrenderers/">不使用MeshRenderer去绘制Mesh【翻译】</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_unity_engine_graphics_format_detail/">Unity3D中枚举类型UnityEngine.Experimental.Rendering.GraphicsFormat详解</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_unity_engine_texture_format_detail/">Unity3D中枚举类型UnityEngine.TextureFormat详解</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/accessing_texture_data_efficiently/">高效地访问纹理数据</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+$$</p><p>其中ScaleFactor为大约2.97。</p><h2 id=实际代码实现>实际代码实现</h2><p>下面的代码展示了如何将FOV为22度生成的3D位置点，转换为FOV为60度的等效位置点：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>FOVConversion</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> Camera mainCamera<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>float</span> depth <span style=color:#1f2328>=</span> <span style=color:#0550ae>10f</span><span style=color:#1f2328>;</span> <span style=color:#57606a>// 距离摄像机的深度</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>float</span> scaleFactor<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Start<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 计算缩放因子</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> fov60 <span style=color:#1f2328>=</span> <span style=color:#0550ae>60f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> fov22 <span style=color:#1f2328>=</span> <span style=color:#0550ae>22f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        scaleFactor <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>Tan<span style=color:#1f2328>(</span>fov60 <span style=color:#1f2328>*</span> Mathf<span style=color:#1f2328>.</span>Deg2Rad <span style=color:#1f2328>/</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>/</span> 
+</span></span><span style=display:flex><span>		              Mathf<span style=color:#1f2328>.</span>Tan<span style=color:#1f2328>(</span>fov22 <span style=color:#1f2328>*</span> Mathf<span style=color:#1f2328>.</span>Deg2Rad <span style=color:#1f2328>/</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Update<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>Input<span style=color:#1f2328>.</span>GetMouseButtonDown<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            Vector3 mousePos <span style=color:#1f2328>=</span> Input<span style=color:#1f2328>.</span>mousePosition<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 使用22度FOV生成世界坐标</span>
+</span></span><span style=display:flex><span>            Vector3 worldPos22 <span style=color:#1f2328>=</span> ScreenToWorldWithFOV<span style=color:#1f2328>(</span>mousePos<span style=color:#1f2328>,</span> <span style=color:#0550ae>22f</span><span style=color:#1f2328>,</span> depth<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 将22度FOV生成的坐标转换为60度FOV等效坐标</span>
+</span></span><span style=display:flex><span>            Vector3 worldPos60 <span style=color:#1f2328>=</span> worldPos22 <span style=color:#1f2328>*</span> scaleFactor<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;World Position at FOV 22: &#34;</span> <span style=color:#1f2328>+</span> worldPos22<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Equivalent World Position at FOV 60: &#34;</span> <span style=color:#1f2328>+</span> worldPos60<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Vector3 ScreenToWorldWithFOV<span style=color:#1f2328>(</span>Vector3 screenPos<span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span> fov<span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span> z<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 设置摄像机的FOV</span>
+</span></span><span style=display:flex><span>        mainCamera<span style=color:#1f2328>.</span>fieldOfView <span style=color:#1f2328>=</span> fov<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 使用ScreenToWorldPoint进行转换</span>
+</span></span><span style=display:flex><span>        Vector3 worldPos <span style=color:#1f2328>=</span> mainCamera<span style=color:#1f2328>.</span>ScreenToWorldPoint<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>		                   <span style=color:#cf222e>new</span> Vector3<span style=color:#1f2328>(</span>screenPos<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> screenPos<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> z<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> worldPos<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h2 id=总结>总结</h2><ul><li>FOV的影响：较大的FOV会使视锥体的宽度和高度增加，导致相同的屏幕坐标映射到较远的世界坐标。较小的FOV则会使视锥体变窄，映射到较近的世界坐标。</li><li>缩放因子：通过计算两个FOV视锥体的高度比值，可以得到一个缩放因子，将小FOV生成的世界坐标转换为大FOV生成的等效世界坐标。</li></ul></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/u3d_from_depthmap_to_world_coord/>Unity3D中根据深度值重建像素点对应的世界坐标</a></li><li class=related__item><a class=related__link href=/post/unity3d/ab_label_rule/>Unity asset bundle的打标签规则</a></li><li class=related__item><a class=related__link href=/post/unity3d/rendering_meshes_in_unity_without_meshrenderers/>不使用MeshRenderer去绘制Mesh【翻译】</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_unity_engine_graphics_format_detail/>Unity3D中枚举类型UnityEngine.Experimental.Rendering.GraphicsFormat详解</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_unity_engine_texture_format_detail/>Unity3D中枚举类型UnityEngine.TextureFormat详解</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

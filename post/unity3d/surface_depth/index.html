@@ -1,367 +1,76 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释">
-		<meta property="og:title" content="一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释" />
-<meta property="og:description" content="一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/surface_depth/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2024-11-28T23:21:49+08:00" />
-<meta property="article:modified_time" content="2024-11-28T23:21:49+08:00" />
-
-
-		<meta itemprop="name" content="一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释">
-<meta itemprop="description" content="一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释"><meta itemprop="datePublished" content="2024-11-28T23:21:49+08:00" />
-<meta itemprop="dateModified" content="2024-11-28T23:21:49+08:00" />
-<meta itemprop="wordCount" content="188">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2024-11-28T23:21:49&#43;08:00">November 28, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#深度计算逻辑详解">深度计算逻辑详解</a></li>
-        <li><a href="#关键参数解析">关键参数解析</a></li>
-        <li><a href="#数学原理图解">数学原理图解</a></li>
-        <li><a href="#典型应用场景">典型应用场景</a></li>
-        <li><a href="#平台差异处理">平台差异处理</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#75715e">// 计算场景深度与当前透明几何像素的线性深度差</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 参数：</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//   depth - 包含场景深度信息的结构体（包含原始深度和线性眼空间深度）</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">//   positionCS - 当前像素在裁剪空间中的位置坐标（SV_Position）</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">float</span> SurfaceDepth(SceneDepth depth, <span style="color:#66d9ef">float4</span> positionCS)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ===================== 场景深度计算 =====================</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 根据投影模式选择计算方式：</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// unity_OrthoParams.w: 0=透视投影 | 1=正交投影</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">float</span> sceneDepth <span style="color:#f92672">=</span> (unity_OrthoParams.w <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) 
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">?</span> depth.eye  <span style="color:#75715e">// 透视模式：直接使用预计算的线性眼空间深度</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">:</span> LinearDepthToEyeDepth(depth.raw); <span style="color:#75715e">// 正交模式：将原始深度转换到眼空间</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ================= 当前像素深度计算 ====================</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">float</span> clipSpaceDepth <span style="color:#f92672">=</span> (unity_OrthoParams.w <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">?</span> LinearEyeDepth(positionCS.z, _ZBufferParams) <span style="color:#75715e">// 透视模式：裁剪空间z转线性眼深度</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#f92672">:</span> LinearDepthToEyeDepth(positionCS.z <span style="color:#f92672">/</span> positionCS.w); <span style="color:#75715e">// 正交模式：NDC z转眼空间深度</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ================ 深度差异计算结果 =====================</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> sceneDepth <span style="color:#f92672">-</span> clipSpaceDepth; <span style="color:#75715e">// 返回场景深度与当前像素深度的差值</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>首先，函数内部有两个const float变量，<code>sceneDepth</code>和<code>clipSpaceDepth</code>，然后返回它们的差值。我需要理解这两个变量是如何计算的，特别是条件判断部分<code>unity_OrthoParams.w</code>是否等于0，这可能涉及到正交投影和透视投影的不同处理。</p>
-<p>先看<code>sceneDepth</code>的计算：如果<code>unity_OrthoParams.w</code>为0，就使用<code>depth.eye</code>，否则调用<code>LinearDepthToEyeDepth</code>函数处理<code>depth.raw</code>。这可能意味着在透视投影下使用线性眼空间深度，而在正交投影下需要转换原始深度值到眼空间深度。</p>
-<p>接下来是<code>clipSpaceDepth</code>的计算：同样判断<code>unity_OrthoParams.w</code>是否为0，如果是的话，调用LinearEyeDepth函数处理positionCS.z，否则还是用<code>LinearDepthToEyeDepth</code>处理<code>positionCS.z</code>除以<code>positionCS.w</code>的结果。这里可能涉及到将裁剪空间深度转换为眼空间深度，但正交和透视的情况处理不同。</p>
-<p>我需要回忆一下Unity中的深度处理。在Unity中，深度缓冲的存储方式可能因平台而异，比如<code>Reversed-Z</code>在DirectX等平台使用，而OpenGL则不同。另外，眼空间深度（eye depth）通常指的是从相机到某点的距离，而裁剪空间的位置z分量可能需要转换才能得到正确的深度值。</p>
-<p><code>unity_OrthoParams</code>是一个Unity内置变量，其中w分量用来判断当前是否是正交投影，当w为1时表示正交投影，0则是透视投影。所以这里的条件判断是根据投影模式来选择不同的深度处理方式。</p>
-<p>对于sceneDepth的计算，当是透视投影时，直接使用<code>depth.eye</code>，这应该是已经存储在<code>SceneDepth</code>结构中的线性眼深度。而在正交投影下，需要将<code>depth.raw</code>（可能是原始的深度缓冲值）通过<code>LinearDepthToEyeDepth</code>转换为眼空间深度。这里的<code>LinearDepthToEyeDepth</code>函数可能是将非线性深度转换为线性眼深度，或者根据正交投影的特性进行调整。</p>
-<p>在<code>clipSpaceDepth</code>的计算中，透视投影下使用<code>LinearEyeDepth(positionCS.z, _ZBufferParams)</code>，这应该将裁剪空间的z值转换为线性眼深度。对于正交投影，则将<code>positionCS.z</code>除以<code>positionCS.w</code>（可能是归一化裁剪空间坐标的z值），然后同样用<code>LinearDepthToEyeDepth</code>处理。这里的分母<code>positionCS.w</code>可能是为了处理齐次坐标，因为在正交投影中，w分量为1，而在透视投影中，w是视角空间的z值，所以可能需要除以w来得到正确的NDC坐标。</p>
-<p>最后返回<code>sceneDepth</code>减去<code>clipSpaceDepth</code>的差值，这应该表示当前透明像素与场景中不透明物体的深度差，可能用于后续的深度测试或效果处理，比如水面效果中的深度比较。</p>
-<p>现在需要验证这些理解是否正确。例如，在透视投影下，<code>sceneDepth</code>直接取depth.eye，而<code>clipSpaceDepth</code>通过<code>LinearEyeDepth</code>转换<code>positionCS.z</code>。这可能是正确的，因为<code>LinearEyeDepth</code>函数通常用于将裁剪空间深度转换为眼空间线性深度，而透视投影和正交投影的处理方式不同，因为它们的投影矩阵不同。</p>
-<p>此外，需要注意在正交投影中，眼空间深度可能与裁剪空间深度有不同的转换方式，所以需要调用<code>LinearDepthToEyeDepth</code>来处理。可能<code>LinearDepthToEyeDepth</code>是针对正交投影设计的转换函数，而<code>LinearEyeDepth</code>是针对透视投影的。</p>
-<p>总结一下，这段代码的目的是根据当前的投影模式（正交或透视），正确计算出场景深度和当前像素的裁剪空间深度的差值。这可能在渲染透明物体时，用于确定它们与背景的深度关系，从而进行正确的混合或其他效果处理。</p>
-<p>接下来需要将这些分析转化为详细的注释，解释每个步骤的作用，特别是条件判断和不同投影模式下的处理方式，以及涉及的函数和参数的意义。</p>
-<h3 id="深度计算逻辑详解">深度计算逻辑详解</h3>
-<h4 id="场景深度-scenedepth-计算分支"><strong>场景深度 (<code>sceneDepth</code>) 计算分支</strong></h4>
-<table>
-<thead>
-<tr>
-<th>投影模式</th>
-<th>计算方法</th>
-<th>核心函数说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>透视投影</strong></td>
-<td><code>depth.eye</code></td>
-<td>直接使用预烘焙的线性眼空间深度值</td>
-</tr>
-<tr>
-<td><strong>正交投影</strong></td>
-<td><code>LinearDepthToEyeDepth(depth.raw)</code></td>
-<td>将原始深度值转换为线性眼空间深度</td>
-</tr>
-</tbody>
-</table>
-<h4 id="当前像素深度-clipspacedepth-计算分支"><strong>当前像素深度 (<code>clipSpaceDepth</code>) 计算分支</strong></h4>
-<table>
-<thead>
-<tr>
-<th>投影模式</th>
-<th>计算方法</th>
-<th>核心函数说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>透视投影</strong></td>
-<td><code>LinearEyeDepth(positionCS.z, _ZBufferParams)</code></td>
-<td>将裁剪空间Z值转换为线性眼空间深度</td>
-</tr>
-<tr>
-<td><strong>正交投影</strong></td>
-<td><code>LinearDepthToEyeDepth(positionCS.z/positionCS.w)</code></td>
-<td>将NDC Z值转换为眼空间深度</td>
-</tr>
-</tbody>
-</table>
-<h3 id="关键参数解析">关键参数解析</h3>
-<ol>
-<li>
-<p><strong><code>unity_OrthoParams.w</code></strong><br>
-Unity内置变量，表示当前投影模式：</p>
-<ul>
-<li><code>0</code>: 透视投影模式</li>
-<li><code>1</code>: 正交投影模式</li>
-</ul>
-</li>
-<li>
-<p><strong><code>_ZBufferParams</code></strong><br>
-Unity提供的深度缓冲参数，用于处理不同平台的深度范围差异，计算公式为：</p>
-<pre tabindex="0"><code class="language-math" data-lang="math">\text{LinearDepth} = \frac{1.0}{(\text{rawDepth} \times \_ZBufferParams.x + \_ZBufferParams.y)}
-</code></pre></li>
-<li>
-<p><strong><code>LinearEyeDepth</code> vs <code>LinearDepthToEyeDepth</code></strong></p>
-<ul>
-<li><code>LinearEyeDepth()</code>: 专用于透视投影的深度转换，处理非线性深度缓冲的线性化</li>
-<li><code>LinearDepthToEyeDepth()</code>: 正交投影专用，直接将NDC Z转换为眼空间线性深度</li>
-</ul>
-</li>
-</ol>
-<h3 id="数学原理图解">数学原理图解</h3>
-<h4 id="透视投影模式">透视投影模式</h4>
-<pre tabindex="0"><code>Eye Space        → Clip Space          → Depth Buffer
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/surface_depth/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释"><meta property="og:description" content="一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2024-11-28T23:21:49+08:00"><meta property="article:modified_time" content="2024-11-28T23:21:49+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释"><meta itemprop=description content="一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释"><meta itemprop=datePublished content="2024-11-28T23:21:49+08:00"><meta itemprop=dateModified content="2024-11-28T23:21:49+08:00"><meta itemprop=wordCount content="188"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2024-11-28T23:21:49+08:00>November 28, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><ul><li><a href=#深度计算逻辑详解>深度计算逻辑详解</a></li><li><a href=#关键参数解析>关键参数解析</a></li><li><a href=#数学原理图解>数学原理图解</a></li><li><a href=#典型应用场景>典型应用场景</a></li><li><a href=#平台差异处理>平台差异处理</a></li></ul></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>// 计算场景深度与当前透明几何像素的线性深度差</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 参数：</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//   depth - 包含场景深度信息的结构体（包含原始深度和线性眼空间深度）</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//   positionCS - 当前像素在裁剪空间中的位置坐标（SV_Position）</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> SurfaceDepth<span style=color:#1f2328>(</span>SceneDepth depth<span style=color:#1f2328>,</span> <span style=color:#cf222e>float4</span> positionCS<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ===================== 场景深度计算 =====================</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 根据投影模式选择计算方式：</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// unity_OrthoParams.w: 0=透视投影 | 1=正交投影</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>const</span> <span style=color:#cf222e>float</span> sceneDepth <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>unity_OrthoParams<span style=color:#1f2328>.</span>w <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> 
+</span></span><span style=display:flex><span>        <span style=color:#0550ae>?</span> depth<span style=color:#1f2328>.</span>eye  <span style=color:#57606a>// 透视模式：直接使用预计算的线性眼空间深度</span>
+</span></span><span style=display:flex><span>        <span style=color:#0550ae>:</span> LinearDepthToEyeDepth<span style=color:#1f2328>(</span>depth<span style=color:#1f2328>.</span>raw<span style=color:#1f2328>);</span> <span style=color:#57606a>// 正交模式：将原始深度转换到眼空间</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ================= 当前像素深度计算 ====================</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>const</span> <span style=color:#cf222e>float</span> clipSpaceDepth <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>unity_OrthoParams<span style=color:#1f2328>.</span>w <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#0550ae>?</span> LinearEyeDepth<span style=color:#1f2328>(</span>positionCS<span style=color:#1f2328>.</span>z<span style=color:#1f2328>,</span> _ZBufferParams<span style=color:#1f2328>)</span> <span style=color:#57606a>// 透视模式：裁剪空间z转线性眼深度</span>
+</span></span><span style=display:flex><span>        <span style=color:#0550ae>:</span> LinearDepthToEyeDepth<span style=color:#1f2328>(</span>positionCS<span style=color:#1f2328>.</span>z <span style=color:#0550ae>/</span> positionCS<span style=color:#1f2328>.</span>w<span style=color:#1f2328>);</span> <span style=color:#57606a>// 正交模式：NDC z转眼空间深度</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ================ 深度差异计算结果 =====================</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> sceneDepth <span style=color:#0550ae>-</span> clipSpaceDepth<span style=color:#1f2328>;</span> <span style=color:#57606a>// 返回场景深度与当前像素深度的差值</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>首先，函数内部有两个const float变量，<code>sceneDepth</code>和<code>clipSpaceDepth</code>，然后返回它们的差值。我需要理解这两个变量是如何计算的，特别是条件判断部分<code>unity_OrthoParams.w</code>是否等于0，这可能涉及到正交投影和透视投影的不同处理。</p><p>先看<code>sceneDepth</code>的计算：如果<code>unity_OrthoParams.w</code>为0，就使用<code>depth.eye</code>，否则调用<code>LinearDepthToEyeDepth</code>函数处理<code>depth.raw</code>。这可能意味着在透视投影下使用线性眼空间深度，而在正交投影下需要转换原始深度值到眼空间深度。</p><p>接下来是<code>clipSpaceDepth</code>的计算：同样判断<code>unity_OrthoParams.w</code>是否为0，如果是的话，调用LinearEyeDepth函数处理positionCS.z，否则还是用<code>LinearDepthToEyeDepth</code>处理<code>positionCS.z</code>除以<code>positionCS.w</code>的结果。这里可能涉及到将裁剪空间深度转换为眼空间深度，但正交和透视的情况处理不同。</p><p>我需要回忆一下Unity中的深度处理。在Unity中，深度缓冲的存储方式可能因平台而异，比如<code>Reversed-Z</code>在DirectX等平台使用，而OpenGL则不同。另外，眼空间深度（eye depth）通常指的是从相机到某点的距离，而裁剪空间的位置z分量可能需要转换才能得到正确的深度值。</p><p><code>unity_OrthoParams</code>是一个Unity内置变量，其中w分量用来判断当前是否是正交投影，当w为1时表示正交投影，0则是透视投影。所以这里的条件判断是根据投影模式来选择不同的深度处理方式。</p><p>对于sceneDepth的计算，当是透视投影时，直接使用<code>depth.eye</code>，这应该是已经存储在<code>SceneDepth</code>结构中的线性眼深度。而在正交投影下，需要将<code>depth.raw</code>（可能是原始的深度缓冲值）通过<code>LinearDepthToEyeDepth</code>转换为眼空间深度。这里的<code>LinearDepthToEyeDepth</code>函数可能是将非线性深度转换为线性眼深度，或者根据正交投影的特性进行调整。</p><p>在<code>clipSpaceDepth</code>的计算中，透视投影下使用<code>LinearEyeDepth(positionCS.z, _ZBufferParams)</code>，这应该将裁剪空间的z值转换为线性眼深度。对于正交投影，则将<code>positionCS.z</code>除以<code>positionCS.w</code>（可能是归一化裁剪空间坐标的z值），然后同样用<code>LinearDepthToEyeDepth</code>处理。这里的分母<code>positionCS.w</code>可能是为了处理齐次坐标，因为在正交投影中，w分量为1，而在透视投影中，w是视角空间的z值，所以可能需要除以w来得到正确的NDC坐标。</p><p>最后返回<code>sceneDepth</code>减去<code>clipSpaceDepth</code>的差值，这应该表示当前透明像素与场景中不透明物体的深度差，可能用于后续的深度测试或效果处理，比如水面效果中的深度比较。</p><p>现在需要验证这些理解是否正确。例如，在透视投影下，<code>sceneDepth</code>直接取depth.eye，而<code>clipSpaceDepth</code>通过<code>LinearEyeDepth</code>转换<code>positionCS.z</code>。这可能是正确的，因为<code>LinearEyeDepth</code>函数通常用于将裁剪空间深度转换为眼空间线性深度，而透视投影和正交投影的处理方式不同，因为它们的投影矩阵不同。</p><p>此外，需要注意在正交投影中，眼空间深度可能与裁剪空间深度有不同的转换方式，所以需要调用<code>LinearDepthToEyeDepth</code>来处理。可能<code>LinearDepthToEyeDepth</code>是针对正交投影设计的转换函数，而<code>LinearEyeDepth</code>是针对透视投影的。</p><p>总结一下，这段代码的目的是根据当前的投影模式（正交或透视），正确计算出场景深度和当前像素的裁剪空间深度的差值。这可能在渲染透明物体时，用于确定它们与背景的深度关系，从而进行正确的混合或其他效果处理。</p><p>接下来需要将这些分析转化为详细的注释，解释每个步骤的作用，特别是条件判断和不同投影模式下的处理方式，以及涉及的函数和参数的意义。</p><h3 id=深度计算逻辑详解>深度计算逻辑详解</h3><h4 id=场景深度-><strong>场景深度 (<code>sceneDepth</code>) 计算分支</strong></h4><table><thead><tr><th>投影模式</th><th>计算方法</th><th>核心函数说明</th></tr></thead><tbody><tr><td><strong>透视投影</strong></td><td><code>depth.eye</code></td><td>直接使用预烘焙的线性眼空间深度值</td></tr><tr><td><strong>正交投影</strong></td><td><code>LinearDepthToEyeDepth(depth.raw)</code></td><td>将原始深度值转换为线性眼空间深度</td></tr></tbody></table><h4 id=当前像素深度-><strong>当前像素深度 (<code>clipSpaceDepth</code>) 计算分支</strong></h4><table><thead><tr><th>投影模式</th><th>计算方法</th><th>核心函数说明</th></tr></thead><tbody><tr><td><strong>透视投影</strong></td><td><code>LinearEyeDepth(positionCS.z, _ZBufferParams)</code></td><td>将裁剪空间Z值转换为线性眼空间深度</td></tr><tr><td><strong>正交投影</strong></td><td><code>LinearDepthToEyeDepth(positionCS.z/positionCS.w)</code></td><td>将NDC Z值转换为眼空间深度</td></tr></tbody></table><h3 id=关键参数解析>关键参数解析</h3><ol><li><p><strong><code>unity_OrthoParams.w</code></strong><br>Unity内置变量，表示当前投影模式：</p><ul><li><code>0</code>: 透视投影模式</li><li><code>1</code>: 正交投影模式</li></ul></li><li><p><strong><code>_ZBufferParams</code></strong><br>Unity提供的深度缓冲参数，用于处理不同平台的深度范围差异，计算公式为：</p><pre tabindex=0><code class=language-math data-lang=math>\text{LinearDepth} = \frac{1.0}{(\text{rawDepth} \times \_ZBufferParams.x + \_ZBufferParams.y)}
+</code></pre></li><li><p><strong><code>LinearEyeDepth</code> vs <code>LinearDepthToEyeDepth</code></strong></p><ul><li><code>LinearEyeDepth()</code>: 专用于透视投影的深度转换，处理非线性深度缓冲的线性化</li><li><code>LinearDepthToEyeDepth()</code>: 正交投影专用，直接将NDC Z转换为眼空间线性深度</li></ul></li></ol><h3 id=数学原理图解>数学原理图解</h3><h4 id=透视投影模式>透视投影模式</h4><pre tabindex=0><code>Eye Space        → Clip Space          → Depth Buffer
 线性深度[depth.eye] → 非线性Z(positionCS.z) → 通过_ZBufferParams重建
-</code></pre><h4 id="正交投影模式">正交投影模式</h4>
-<pre tabindex="0"><code>NDC Space        → Eye Space
+</code></pre><h4 id=正交投影模式>正交投影模式</h4><pre tabindex=0><code>NDC Space        → Eye Space
 positionCS.z/w → LinearDepthToEyeDepth()
-</code></pre><h3 id="典型应用场景">典型应用场景</h3>
-<ol>
-<li>
-<p><strong>透明物体渲染</strong><br>
-通过比较场景深度与当前像素深度，实现：</p>
-<ul>
-<li>水面折射/反射的深度消隐</li>
-<li>玻璃材质的厚度模拟</li>
-</ul>
-</li>
-<li>
-<p><strong>边缘检测</strong><br>
-在描边效果中识别深度突变区域</p>
-</li>
-<li>
-<p><strong>体积效果</strong><br>
-计算烟雾/光晕等效果的深度衰减</p>
-</li>
-<li>
-<p><strong>软粒子</strong><br>
-实现粒子与场景几何体的柔和混合</p>
-</li>
-</ol>
-<h3 id="平台差异处理">平台差异处理</h3>
-<p>代码中隐含的跨平台特性：</p>
-<ol>
-<li><strong>自动处理Reversed-Z</strong><br>
-通过<code>_ZBufferParams</code>自动适配不同平台的深度范围</li>
-<li><strong>NDC空间归一化</strong><br>
-正交投影中<code>positionCS.z/positionCS.w</code>确保正确的[-1,1]范围转换</li>
-</ol>
-<p>该代码段展示了Unity Shader中处理多投影模式深度计算的经典范式，通过条件分支和专用函数实现了跨平台的深度系统兼容性。</p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/dynamiclightmap_on/">Unity3D的内置宏 DYNAMICLIGHTMAP_ON</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/requires_vertex_shadow_coord_interpolator/">Unity3D的内置宏 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/_light_layers/">Unity3D的内置宏 _LIGHT_LAYERS</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/_additional_lights_vertex/">Unity3D的内置宏 _ADDITIONAL_LIGHTS_VERTEX</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/stylized_water_2_doc/">StylizedWater2插件帮助文档精读</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+</code></pre><h3 id=典型应用场景>典型应用场景</h3><ol><li><p><strong>透明物体渲染</strong><br>通过比较场景深度与当前像素深度，实现：</p><ul><li>水面折射/反射的深度消隐</li><li>玻璃材质的厚度模拟</li></ul></li><li><p><strong>边缘检测</strong><br>在描边效果中识别深度突变区域</p></li><li><p><strong>体积效果</strong><br>计算烟雾/光晕等效果的深度衰减</p></li><li><p><strong>软粒子</strong><br>实现粒子与场景几何体的柔和混合</p></li></ol><h3 id=平台差异处理>平台差异处理</h3><p>代码中隐含的跨平台特性：</p><ol><li><strong>自动处理Reversed-Z</strong><br>通过<code>_ZBufferParams</code>自动适配不同平台的深度范围</li><li><strong>NDC空间归一化</strong><br>正交投影中<code>positionCS.z/positionCS.w</code>确保正确的[-1,1]范围转换</li></ol><p>该代码段展示了Unity Shader中处理多投影模式深度计算的经典范式，通过条件分支和专用函数实现了跨平台的深度系统兼容性。</p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/dynamiclightmap_on/>Unity3D的内置宏 DYNAMICLIGHTMAP_ON</a></li><li class=related__item><a class=related__link href=/post/unity3d/requires_vertex_shadow_coord_interpolator/>Unity3D的内置宏 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</a></li><li class=related__item><a class=related__link href=/post/unity3d/_light_layers/>Unity3D的内置宏 _LIGHT_LAYERS</a></li><li class=related__item><a class=related__link href=/post/unity3d/_additional_lights_vertex/>Unity3D的内置宏 _ADDITIONAL_LIGHTS_VERTEX</a></li><li class=related__item><a class=related__link href=/post/unity3d/stylized_water_2_doc/>StylizedWater2插件帮助文档精读</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

@@ -1,500 +1,337 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>C&#43;&#43;的右值和移动构造函数的测试程序说明 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="move constuctor and right value of C&#43;&#43;">
-		<meta property="og:title" content="C&#43;&#43;的右值和移动构造函数的测试程序说明" />
-<meta property="og:description" content="move constuctor and right value of C&#43;&#43;" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/cpp/cpp_rvalue_test/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2020-01-22T22:02:43+08:00" />
-<meta property="article:modified_time" content="2020-01-22T22:02:43+08:00" />
-
-
-		<meta itemprop="name" content="C&#43;&#43;的右值和移动构造函数的测试程序说明">
-<meta itemprop="description" content="move constuctor and right value of C&#43;&#43;"><meta itemprop="datePublished" content="2020-01-22T22:02:43+08:00" />
-<meta itemprop="dateModified" content="2020-01-22T22:02:43+08:00" />
-<meta itemprop="wordCount" content="615">
-<meta itemprop="keywords" content="C&#43;&#43;," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">C&#43;&#43;的右值和移动构造函数的测试程序说明</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2020-01-22T22:02:43&#43;08:00">January 22, 2020</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/c&#43;&#43;/" rel="category">C&#43;&#43;</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/c&#43;&#43;/" rel="tag">C&#43;&#43;</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">C&#43;&#43;的右值和移动构造函数的测试程序说明</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents"></nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<p>本文用以测试C++的<strong>右值</strong>，<strong>移动构造函数</strong>，以及<strong>标准库容器的emplace和push操作</strong>的区别。
-测试环境是<strong>Visual C++ 14.0.25431.01 Update 3</strong>版本，未启用任何编译优化操作</p>
-<p>代码可以在<a href="https://github.com/kumakoko/cpp11exercise/blob/master/Cpp11Exercise/rvalue_test.cc">github</a>中获取。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdlib&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;map&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vector&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DemoClassA</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    DemoClassA() <span style="color:#f92672">:</span>num_(<span style="color:#ae81ff">0</span>), name_(<span style="color:#66d9ef">nullptr</span>)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassA::DemoClassA()</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">~</span>DemoClassA()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (name_)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassA::~DemoClassA(%d,%s)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, num_, name_);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">delete</span>[] name_;
-</span></span><span style="display:flex;"><span>            name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassA::~DemoClassA()</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    DemoClassA(<span style="color:#66d9ef">int</span> num, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> name)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        num_ <span style="color:#f92672">=</span> num;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">auto</span> len <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>strlen(name) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>        name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">char</span>[len];
-</span></span><span style="display:flex;"><span>        memset(name_, <span style="color:#ae81ff">0</span>, len);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>strcpy(name_, name);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassA::DemoClassA(%d,%s)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, num_, name_);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    DemoClassA(<span style="color:#66d9ef">const</span> DemoClassA<span style="color:#f92672">&amp;</span> rhs)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        num_ <span style="color:#f92672">=</span> rhs.num_;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">auto</span> len <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>strlen(rhs.name_) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>        name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">char</span>[len];
-</span></span><span style="display:flex;"><span>        memset(name_, <span style="color:#ae81ff">0</span>, len);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>strcpy(name_, rhs.name_);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassA::DemoClassA(const DemoClassA&amp; rhs)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    DemoClassA(DemoClassA<span style="color:#f92672">&amp;&amp;</span> rhs)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        num_ <span style="color:#f92672">=</span> rhs.num_;
-</span></span><span style="display:flex;"><span>        name_ <span style="color:#f92672">=</span> rhs.name_;
-</span></span><span style="display:flex;"><span>        rhs.num_ <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>        rhs.name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassA::DemoClassA(DemoClassA&amp;&amp; rhs)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    DemoClassA<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span> <span style="color:#f92672">=</span> (<span style="color:#66d9ef">const</span> DemoClassA<span style="color:#f92672">&amp;</span> rhs)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (name_)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">delete</span>[] name_;
-</span></span><span style="display:flex;"><span>            name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        num_ <span style="color:#f92672">=</span> rhs.num_;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">auto</span> len <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>strlen(rhs.name_) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>        name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">char</span>[len];
-</span></span><span style="display:flex;"><span>        memset(name_, <span style="color:#ae81ff">0</span>, len);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>strcpy(name_, rhs.name_);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassA::operator = (const DemoClassA&amp; rhs)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    DemoClassA<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span> <span style="color:#f92672">=</span> (DemoClassA<span style="color:#f92672">&amp;&amp;</span> rhs)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (name_)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">delete</span>[] name_;
-</span></span><span style="display:flex;"><span>            name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        num_ <span style="color:#f92672">=</span> rhs.num_;
-</span></span><span style="display:flex;"><span>        name_ <span style="color:#f92672">=</span> rhs.name_;
-</span></span><span style="display:flex;"><span>        rhs.num_ <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>        rhs.name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassA::operator = (DemoClassA&amp;&amp; rhs)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">PrintInfo</span>()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (name_)
-</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassA: I am %s.My number is %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, name_, num_);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassA: I am a dummy</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ChangeNumber</span>(<span style="color:#66d9ef">int</span> new_num)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        num_ <span style="color:#f92672">=</span> new_num;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span> num_ <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DemoClassB</span>
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    DemoClassB() <span style="color:#f92672">:</span>num_(<span style="color:#ae81ff">0</span>), name_(<span style="color:#66d9ef">nullptr</span>)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassB::DemoClassB()</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f92672">~</span>DemoClassB()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (name_)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassB::~DemoClassB(%d,%s)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, num_, name_);
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">delete</span>[] name_;
-</span></span><span style="display:flex;"><span>            name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassB::~DemoClassB()</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    DemoClassB(<span style="color:#66d9ef">int</span> num, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> name)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        num_ <span style="color:#f92672">=</span> num;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">auto</span> len <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>strlen(name) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>        name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">char</span>[len];
-</span></span><span style="display:flex;"><span>        memset(name_, <span style="color:#ae81ff">0</span>, len);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>strcpy(name_, name);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassB::DemoClassB(%d,%s)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, num_, name_);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    DemoClassB(<span style="color:#66d9ef">const</span> DemoClassB<span style="color:#f92672">&amp;</span> rhs)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        num_ <span style="color:#f92672">=</span> rhs.num_;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">auto</span> len <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>strlen(rhs.name_) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>        name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">char</span>[len];
-</span></span><span style="display:flex;"><span>        memset(name_, <span style="color:#ae81ff">0</span>, len);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>strcpy(name_, rhs.name_);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>printf(
-</span></span><span style="display:flex;"><span>         <span style="color:#e6db74">&#34;DemoClassB::DemoClassB(const DemoClassB&amp; rhs %d,%s)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, num_, name_);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    DemoClassB<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span> <span style="color:#f92672">=</span> (<span style="color:#66d9ef">const</span> DemoClassB<span style="color:#f92672">&amp;</span> rhs)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (name_)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">delete</span>[] name_;
-</span></span><span style="display:flex;"><span>            name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>        num_ <span style="color:#f92672">=</span> rhs.num_;
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">auto</span> len <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>strlen(rhs.name_) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
-</span></span><span style="display:flex;"><span>        name_ <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">char</span>[len];
-</span></span><span style="display:flex;"><span>        memset(name_, <span style="color:#ae81ff">0</span>, len);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>strcpy(name_, rhs.name_);
-</span></span><span style="display:flex;"><span>        std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassB::operator = (const DemoClassB&amp; rhs)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">PrintInfo</span>()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (name_)
-</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>printf(
-</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;DemoClassB: I am %s.My number is %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, name_, num_);
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>
-</span></span><span style="display:flex;"><span>            std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;DemoClassB: I am a dummy</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ChangeNumber</span>(<span style="color:#66d9ef">int</span> new_num)
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        num_ <span style="color:#f92672">=</span> new_num;
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">int</span>     num_;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span>   name_;
-</span></span><span style="display:flex;"><span>};
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>DemoClassA <span style="color:#a6e22e">MakeDemoClassAInstance1</span>(<span style="color:#66d9ef">int</span> num, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> name)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> DemoClassA(num, name);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>DemoClassA <span style="color:#a6e22e">MakeDemoClassAInstance2</span>(<span style="color:#66d9ef">int</span> num, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> name)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    DemoClassA a(num, name);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> a;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>DemoClassB <span style="color:#a6e22e">MakeDemoClassBInstance1</span>(<span style="color:#66d9ef">int</span> num, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> name)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 因为这里没有别的操作，只是一个简单的return，所以就算不开优化
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 这个MakeDemoClassBInstance1函数实质上是等同于不存在的，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">return</span> DemoClassB(num, name);
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>DemoClassB <span style="color:#a6e22e">MakeDemoClassBInstance2</span>(<span style="color:#66d9ef">int</span> num, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> name)
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 因为DemoClassB没有移动构造函数，所以返回b对象所对应的临时
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 对象时，会调用DemoClassB的拷贝构造函数生成这个临时对象
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    DemoClassB b(num, name);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> b;
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>()
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>DemoClassA<span style="color:#f92672">&gt;</span> VecDemoClassA;
-</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>DemoClassB<span style="color:#f92672">&gt;</span> VecDemoClassB;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    VecDemoClassA.reserve(<span style="color:#ae81ff">10</span>);
-</span></span><span style="display:flex;"><span>    VecDemoClassB.reserve(<span style="color:#ae81ff">10</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从执行结果可以看出，调用MakeDemoClassAInstance1函数后，只发生了调用DemoClassA
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 构造函数这一次函数调用。所以哪怕没有开任何的优化开关，这个MakeDemoClassAInstance1
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 函数直接优化掉了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;MakeDemoClassAInstance1 begins ----&gt;&gt;&gt;&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> dca1 <span style="color:#f92672">=</span> MakeDemoClassAInstance1(<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;John&#34;</span>);
-</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;MakeDemoClassAInstance1 ends ------&lt;&lt;&lt;&lt;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从执行结果可以看出，调用MakeDemoClassAInstance2函数后，调用DemoClassA
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 构造函数1次，移动构造函数1次，析构函数一次，也就是说，如果类明确定了它的移动构造函数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 则发生临时对象的生成的传递时，优先调用移动构造函数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;MakeDemoClassAInstance2 begins ----&gt;&gt;&gt;&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> dca2 <span style="color:#f92672">=</span> MakeDemoClassAInstance2(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Bob&#34;</span>);
-</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;MakeDemoClassAInstance2 ends ------&lt;&lt;&lt;&lt;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从执行结果可以看出，调用MakeDemoClassBInstance1函数后，只发生了调用DemoClassB
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 构造函数这一次函数调用。所以哪怕没有开任何的优化开关，这个MakeDemoClassBInstance1
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 函数直接优化掉了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;MakeDemoClassBInstance1 begins ----&gt;&gt;&gt;&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> dcb1 <span style="color:#f92672">=</span> MakeDemoClassBInstance1(<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;Lucy&#34;</span>);
-</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;MakeDemoClassBInstance1 ends ------&lt;&lt;&lt;&lt;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从执行结果可以看出，调用MakeDemoClassBInstance2函数后，调用DemoClassB
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 构造函数1次，拷贝构造函数1次，析构函数一次，也就是说，如果类没有明确定了它的移动构造
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 函数，则发生临时对象的生成的传递时，使用拷贝构造函数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;MakeDemoClassBInstance2 begins ----&gt;&gt;&gt;&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> dcb2 <span style="color:#f92672">=</span> MakeDemoClassBInstance2(<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;Lily&#34;</span>);
-</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;MakeDemoClassBInstance2 ends ------&lt;&lt;&lt;&lt;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从执行结果可以看出，std::vector的push_back方法会拷贝一个副本到vector里面，因为
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 且“DemoClassA(4, &#34;Ken&#34;)”这样的语句生成了一个右值对象，且DemoClassA有移动构造函
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 数，所以是使用了移动构造函数，构造了一个对象副本放进vector里
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;std::vector&lt;DemoClassA&gt;::push_back begins ----&gt;&gt;&gt;&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    VecDemoClassA.push_back(DemoClassA(<span style="color:#ae81ff">4</span>, <span style="color:#e6db74">&#34;Ken&#34;</span>));
-</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;std::vector&lt;DemoClassA&gt;::push_back ends ------&lt;&lt;&lt;&lt;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从执行结果可以看出，如果先构造一个DemoClassA的实例对象dcb11，然后再调用std::vector的
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// push_back方法时，如果不使用std::move方法将dcb11转为右值的话，调用拷贝构造函数构造一个
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 副本，如使用std::move方法将dcb11转为右值，则调用移动构造函数构造副本放进vector
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 一般地，被std::move处理过的对象，它持有的变量被偷了，所以一般不要随便再继续使用它
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;std::vector&lt;DemoClassA&gt;::push_back with move begins ----&gt;&gt;&gt;&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> dcb11 <span style="color:#f92672">=</span> DemoClassA(<span style="color:#ae81ff">74</span>, <span style="color:#e6db74">&#34;Obama&#34;</span>);
-</span></span><span style="display:flex;"><span>    VecDemoClassA.push_back(dcb11);
-</span></span><span style="display:flex;"><span>    VecDemoClassA.push_back(std<span style="color:#f92672">::</span>move(dcb11));
-</span></span><span style="display:flex;"><span>    dcb11.PrintInfo(); <span style="color:#75715e">// dcb11的name_指向的资源已经被偷走了，name_已经被置为nullptr
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;std::vector&lt;DemoClassA&gt;::push_back with move ends ------&lt;&lt;&lt;&lt;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从执行结果可以看出，std::vector的push_back方法会拷贝一个副本到vector里面，因为
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// DemoClassA只有拷贝构造函数，所以是使用了拷贝构造函数构造了一个对象副本放进vector里
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;std::vector&lt;DemoClassB&gt;::push_back begins ----&gt;&gt;&gt;&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    VecDemoClassB.push_back(DemoClassB(<span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#34;David&#34;</span>));
-</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;std::vector&lt;DemoClassB&gt;::push_back ends ------&lt;&lt;&lt;&lt;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从执行结果可以看出，emplace_back会直接生成给一个临时对象push到vector里
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;std::vector&lt;DemoClassA&gt;::emplace_back begins ----&gt;&gt;&gt;&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    VecDemoClassA.emplace_back(<span style="color:#ae81ff">14</span>, <span style="color:#e6db74">&#34;Kate&#34;</span>);
-</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;std::vector&lt;DemoClassA&gt;::emplace_back ends ------&lt;&lt;&lt;&lt;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 从执行结果可以看出，emplace_back会直接生成给一个临时对象push到vector里
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;std::vector&lt;DemoClassB&gt;::emplace_back begins ----&gt;&gt;&gt;&gt;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>    VecDemoClassB.emplace_back(<span style="color:#ae81ff">24</span>, <span style="color:#e6db74">&#34;Fancy&#34;</span>);
-</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>printf(<span style="color:#e6db74">&#34;std::vector&lt;DemoClassB&gt;::emplace_back ends ------&lt;&lt;&lt;&lt;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    system(<span style="color:#e6db74">&#34;PAUSE&#34;</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>程序的执行输出如下图：</p>
-<p><img src="/image/cpp/rvalue_test.png" alt=""></p>
-<h1 id="参考网页">参考网页</h1>
-<p><a href="https://blog.csdn.net/p942005405/article/details/84764104">c++11 之emplace_back 与 push_back的区别</a></p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/cpp/special_using_of_cpp_macro/">C/C&#43;&#43;中macro的一些特殊使用</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>C++的右值和移动构造函数的测试程序说明 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="move constuctor and right value of C++"><meta property="og:url" content="http://www.xionggf.com/post/cpp/cpp_rvalue_test/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="C++的右值和移动构造函数的测试程序说明"><meta property="og:description" content="move constuctor and right value of C++"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-01-22T22:02:43+08:00"><meta property="article:modified_time" content="2020-01-22T22:02:43+08:00"><meta property="article:tag" content="C++"><meta itemprop=name content="C++的右值和移动构造函数的测试程序说明"><meta itemprop=description content="move constuctor and right value of C++"><meta itemprop=datePublished content="2020-01-22T22:02:43+08:00"><meta itemprop=dateModified content="2020-01-22T22:02:43+08:00"><meta itemprop=wordCount content="615"><meta itemprop=keywords content="rvalue"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>C++的右值和移动构造函数的测试程序说明</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2020-01-22T22:02:43+08:00>January 22, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/c++/ rel=category>C++</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/c++/ rel=tag>C++</a></span></div></div><h1 class=entry__title>C++的右值和移动构造函数的测试程序说明</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>本文用以测试C++的<strong>右值</strong>，<strong>移动构造函数</strong>，以及<strong>标准库容器的emplace和push操作</strong>的区别。
+测试环境是<strong>Visual C++ 14.0.25431.01 Update 3</strong>版本，未启用任何编译优化操作</p><p>代码可以在<a href=https://github.com/kumakoko/cpp11exercise/blob/master/Cpp11Exercise/rvalue_test.cc>github</a>中获取。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;cstring&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;cstdlib&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;map&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;vector&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;cstdio&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>class</span> <span style=color:#1f2328>DemoClassA</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#1f2328>()</span> <span style=color:#0550ae>:</span>num_<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>),</span> name_<span style=color:#1f2328>(</span><span style=color:#cf222e>nullptr</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::DemoClassA()</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#0550ae>~</span>DemoClassA<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::~DemoClassA(%d,%s)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> num_<span style=color:#1f2328>,</span> name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>delete</span><span style=color:#1f2328>[]</span> name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::~DemoClassA()</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> num<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>name<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::DemoClassA(%d,%s)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> num_<span style=color:#1f2328>,</span> name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> DemoClassA<span style=color:#0550ae>&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::DemoClassA(const DemoClassA&amp; rhs)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#1f2328>(</span>DemoClassA<span style=color:#0550ae>&amp;&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        rhs<span style=color:#1f2328>.</span>num_ <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        rhs<span style=color:#1f2328>.</span>name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::DemoClassA(DemoClassA&amp;&amp; rhs)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#0550ae>&amp;</span> <span style=color:#cf222e>operator</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> DemoClassA<span style=color:#0550ae>&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>delete</span><span style=color:#1f2328>[]</span> name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::operator = (const DemoClassA&amp; rhs)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>*</span><span style=color:#cf222e>this</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassA<span style=color:#0550ae>&amp;</span> <span style=color:#cf222e>operator</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>DemoClassA<span style=color:#0550ae>&amp;&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>delete</span><span style=color:#1f2328>[]</span> name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        rhs<span style=color:#1f2328>.</span>num_ <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        rhs<span style=color:#1f2328>.</span>name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA::operator = (DemoClassA&amp;&amp; rhs)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>*</span><span style=color:#cf222e>this</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>PrintInfo</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA: I am %s.My number is %d</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> name_<span style=color:#1f2328>,</span> num_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassA: I am a dummy</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>ChangeNumber</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> new_num<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> new_num<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>private</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> num_ <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>class</span> <span style=color:#1f2328>DemoClassB</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    DemoClassB<span style=color:#1f2328>()</span> <span style=color:#0550ae>:</span>num_<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>),</span> name_<span style=color:#1f2328>(</span><span style=color:#cf222e>nullptr</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB::DemoClassB()</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#0550ae>~</span>DemoClassB<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB::~DemoClassB(%d,%s)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> num_<span style=color:#1f2328>,</span> name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>delete</span><span style=color:#1f2328>[]</span> name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB::~DemoClassB()</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassB<span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> num<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>name<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB::DemoClassB(%d,%s)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> num_<span style=color:#1f2328>,</span> name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassB<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> DemoClassB<span style=color:#0550ae>&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>         <span style=color:#0a3069>&#34;DemoClassB::DemoClassB(const DemoClassB&amp; rhs %d,%s)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> num_<span style=color:#1f2328>,</span> name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    DemoClassB<span style=color:#0550ae>&amp;</span> <span style=color:#cf222e>operator</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> DemoClassB<span style=color:#0550ae>&amp;</span> rhs<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>delete</span><span style=color:#1f2328>[]</span> name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>nullptr</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> rhs<span style=color:#1f2328>.</span>num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>auto</span> len <span style=color:#0550ae>=</span> std<span style=color:#0550ae>::</span>strlen<span style=color:#1f2328>(</span>rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        name_ <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>char</span><span style=color:#1f2328>[</span>len<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        memset<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> len<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>strcpy<span style=color:#1f2328>(</span>name_<span style=color:#1f2328>,</span> rhs<span style=color:#1f2328>.</span>name_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB::operator = (const DemoClassB&amp; rhs)</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>*</span><span style=color:#cf222e>this</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>PrintInfo</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>name_<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>                <span style=color:#0a3069>&#34;DemoClassB: I am %s.My number is %d</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>,</span> name_<span style=color:#1f2328>,</span> num_<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>            std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DemoClassB: I am a dummy</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> <span style=color:#6639ba>ChangeNumber</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> new_num<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        num_ <span style=color:#0550ae>=</span> new_num<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>private</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span>     num_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span>   name_<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>DemoClassA <span style=color:#6639ba>MakeDemoClassAInstance1</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> DemoClassA<span style=color:#1f2328>(</span>num<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>DemoClassA <span style=color:#6639ba>MakeDemoClassAInstance2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    DemoClassA a<span style=color:#1f2328>(</span>num<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>DemoClassB <span style=color:#6639ba>MakeDemoClassBInstance1</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 因为这里没有别的操作，只是一个简单的return，所以就算不开优化
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 这个MakeDemoClassBInstance1函数实质上是等同于不存在的，
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> DemoClassB<span style=color:#1f2328>(</span>num<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>DemoClassB <span style=color:#6639ba>MakeDemoClassBInstance2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> num<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>char</span><span style=color:#0550ae>*</span> name<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 因为DemoClassB没有移动构造函数，所以返回b对象所对应的临时
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 对象时，会调用DemoClassB的拷贝构造函数生成这个临时对象
+</span></span></span><span style=display:flex><span>    DemoClassB b<span style=color:#1f2328>(</span>num<span style=color:#1f2328>,</span> name<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> b<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>main</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>vector<span style=color:#0550ae>&lt;</span>DemoClassA<span style=color:#0550ae>&gt;</span> VecDemoClassA<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>vector<span style=color:#0550ae>&lt;</span>DemoClassB<span style=color:#0550ae>&gt;</span> VecDemoClassB<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    VecDemoClassA<span style=color:#1f2328>.</span>reserve<span style=color:#1f2328>(</span><span style=color:#0550ae>10</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassB<span style=color:#1f2328>.</span>reserve<span style=color:#1f2328>(</span><span style=color:#0550ae>10</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，调用MakeDemoClassAInstance1函数后，只发生了调用DemoClassA
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 构造函数这一次函数调用。所以哪怕没有开任何的优化开关，这个MakeDemoClassAInstance1
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 函数直接优化掉了
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassAInstance1 begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>auto</span> dca1 <span style=color:#0550ae>=</span> MakeDemoClassAInstance1<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;John&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassAInstance1 ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，调用MakeDemoClassAInstance2函数后，调用DemoClassA
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 构造函数1次，移动构造函数1次，析构函数一次，也就是说，如果类明确定了它的移动构造函数
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 则发生临时对象的生成的传递时，优先调用移动构造函数
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassAInstance2 begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>auto</span> dca2 <span style=color:#0550ae>=</span> MakeDemoClassAInstance2<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Bob&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassAInstance2 ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，调用MakeDemoClassBInstance1函数后，只发生了调用DemoClassB
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 构造函数这一次函数调用。所以哪怕没有开任何的优化开关，这个MakeDemoClassBInstance1
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 函数直接优化掉了
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassBInstance1 begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>auto</span> dcb1 <span style=color:#0550ae>=</span> MakeDemoClassBInstance1<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Lucy&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassBInstance1 ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，调用MakeDemoClassBInstance2函数后，调用DemoClassB
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 构造函数1次，拷贝构造函数1次，析构函数一次，也就是说，如果类没有明确定了它的移动构造
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 函数，则发生临时对象的生成的传递时，使用拷贝构造函数
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassBInstance2 begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>auto</span> dcb2 <span style=color:#0550ae>=</span> MakeDemoClassBInstance2<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Lily&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;MakeDemoClassBInstance2 ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，std::vector的push_back方法会拷贝一个副本到vector里面，因为
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 且“DemoClassA(4, &#34;Ken&#34;)”这样的语句生成了一个右值对象，且DemoClassA有移动构造函
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 数，所以是使用了移动构造函数，构造了一个对象副本放进vector里
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::push_back begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassA<span style=color:#1f2328>.</span>push_back<span style=color:#1f2328>(</span>DemoClassA<span style=color:#1f2328>(</span><span style=color:#0550ae>4</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Ken&#34;</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::push_back ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，如果先构造一个DemoClassA的实例对象dcb11，然后再调用std::vector的
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// push_back方法时，如果不使用std::move方法将dcb11转为右值的话，调用拷贝构造函数构造一个
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 副本，如使用std::move方法将dcb11转为右值，则调用移动构造函数构造副本放进vector
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// 一般地，被std::move处理过的对象，它持有的变量被偷了，所以一般不要随便再继续使用它
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::push_back with move begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>auto</span> dcb11 <span style=color:#0550ae>=</span> DemoClassA<span style=color:#1f2328>(</span><span style=color:#0550ae>74</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Obama&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassA<span style=color:#1f2328>.</span>push_back<span style=color:#1f2328>(</span>dcb11<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassA<span style=color:#1f2328>.</span>push_back<span style=color:#1f2328>(</span>std<span style=color:#0550ae>::</span>move<span style=color:#1f2328>(</span>dcb11<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    dcb11<span style=color:#1f2328>.</span>PrintInfo<span style=color:#1f2328>();</span> <span style=color:#57606a>// dcb11的name_指向的资源已经被偷走了，name_已经被置为nullptr
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::push_back with move ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，std::vector的push_back方法会拷贝一个副本到vector里面，因为
+</span></span></span><span style=display:flex><span>    <span style=color:#57606a>// DemoClassA只有拷贝构造函数，所以是使用了拷贝构造函数构造了一个对象副本放进vector里
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassB&gt;::push_back begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassB<span style=color:#1f2328>.</span>push_back<span style=color:#1f2328>(</span>DemoClassB<span style=color:#1f2328>(</span><span style=color:#0550ae>5</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;David&#34;</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassB&gt;::push_back ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，emplace_back会直接生成给一个临时对象push到vector里
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::emplace_back begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassA<span style=color:#1f2328>.</span>emplace_back<span style=color:#1f2328>(</span><span style=color:#0550ae>14</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Kate&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassA&gt;::emplace_back ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 从执行结果可以看出，emplace_back会直接生成给一个临时对象push到vector里
+</span></span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassB&gt;::emplace_back begins ----&gt;&gt;&gt;&gt;</span><span style=color:#0a3069>\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    VecDemoClassB<span style=color:#1f2328>.</span>emplace_back<span style=color:#1f2328>(</span><span style=color:#0550ae>24</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;Fancy&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    std<span style=color:#0550ae>::</span>printf<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;std::vector&lt;DemoClassB&gt;::emplace_back ends ------&lt;&lt;&lt;&lt;</span><span style=color:#0a3069>\n\n</span><span style=color:#0a3069>&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    system<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;PAUSE&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>程序的执行输出如下图：</p><p><img src=/image/cpp/rvalue_test.png alt></p><h1 id=参考网页>参考网页</h1><p><a href=https://blog.csdn.net/p942005405/article/details/84764104>c++11 之emplace_back 与 push_back的区别</a></p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/c++/>C++</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/cpp/special_using_of_cpp_macro/>C/C++中macro的一些特殊使用</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

@@ -1,316 +1,55 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>在Mac中如何安装VScode并作为Unity3D开发IDE | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="在Mac中如何安装VScode并作为Unity3D开发IDE">
-		<meta property="og:title" content="在Mac中如何安装VScode并作为Unity3D开发IDE" />
-<meta property="og:description" content="在Mac中如何安装VScode并作为Unity3D开发IDE" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/mac_ios/use_vscode_in_mac/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2019-12-30T11:52:43+08:00" />
-<meta property="article:modified_time" content="2019-12-30T11:52:43+08:00" />
-
-
-		<meta itemprop="name" content="在Mac中如何安装VScode并作为Unity3D开发IDE">
-<meta itemprop="description" content="在Mac中如何安装VScode并作为Unity3D开发IDE"><meta itemprop="datePublished" content="2019-12-30T11:52:43+08:00" />
-<meta itemprop="dateModified" content="2019-12-30T11:52:43+08:00" />
-<meta itemprop="wordCount" content="168">
-<meta itemprop="keywords" content="iOS," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">在Mac中如何安装VScode并作为Unity3D开发IDE</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2019-12-30T11:52:43&#43;08:00">December 30, 2019</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/ios/" rel="category">iOS</a>, 
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/ios/" rel="tag">iOS</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">在Mac中如何安装VScode并作为Unity3D开发IDE</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#11-homebrew的安装">1.1 Homebrew的安装</a></li>
-    <li><a href="#12-homebrew的使用">1.2 Homebrew的使用</a></li>
-    <li><a href="#13-homebrew的安装路径及文件夹">1.3 Homebrew的安装路径及文件夹</a></li>
-    <li><a href="#2-安装vscode">2 安装VSCOde</a>
-      <ul>
-        <li><a href="#21-安装aspnet-5">2.1 安装ASP.NET 5</a></li>
-        <li><a href="#22-下载visual-studiocode">2.2 下载 Visual StudioCode</a></li>
-        <li><a href="#23-安装vscode-for-unity插件">2.3 安装VSCode for Unity插件</a></li>
-      </ul>
-    </li>
-    <li><a href="#3-参考链接">3 参考链接</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h1 id="1-安装brew">1 安装brew</h1>
-<p><strong>Homebrew</strong> 是Mac OSX上的软件包管理工具，能在Mac中方便的安装软件或者卸载软件，相当于linux下的apt-get、yum神器；Homebrew可以在Mac上安装一些MacOS上没有的，从Unix/Linux等系统移植过来的工具，Homebrew将这些工具统统安装到了 <strong>【/usr/local/Cellar】</strong> 目录中，并在 <strong>【/usr/local/bin】</strong> 中创建符号链接。</p>
-<h2 id="11-homebrew的安装">1.1 Homebrew的安装</h2>
-<p>Homebrew的安装很简单，只需在终端下输入如下指令：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>/usr/bin/ruby -e <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><p>Homebrew安装成功后，会自动创建目录 <font color=red>/usr/local/Cellar </font>来存放Homebrew安装的程序。 这时你在命令行状态下面就可以使用 brew 命令了.</p>
-<h2 id="12-homebrew的使用">1.2 Homebrew的使用</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">指令功能</th>
-<th style="text-align:left">指令格式</th>
-<th style="text-align:left">指令示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">安装软件</td>
-<td style="text-align:left"><strong>brew install  软件名</strong></td>
-<td style="text-align:left">brew install wget</td>
-</tr>
-<tr>
-<td style="text-align:left">搜索软件</td>
-<td style="text-align:left"><strong>brew search  软件名</strong></td>
-<td style="text-align:left">brew search wget</td>
-</tr>
-<tr>
-<td style="text-align:left">卸载软件</td>
-<td style="text-align:left"><strong>brew uninstall 软件名</strong></td>
-<td style="text-align:left">brew uninstall wget</td>
-</tr>
-<tr>
-<td style="text-align:left">更新所有软件</td>
-<td style="text-align:left"><strong>brew update</strong></td>
-<td style="text-align:left">通过 update 可以把包信息更新到最新，不过包更新是通过git命令，所以要先通过 <strong>brew install git</strong> 命令安装git。</td>
-</tr>
-<tr>
-<td style="text-align:left">更新具体软件</td>
-<td style="text-align:left"><strong>brew upgrade 软件名</strong></td>
-<td style="text-align:left">brew upgrade git</td>
-</tr>
-<tr>
-<td style="text-align:left">显示已安装软件</td>
-<td style="text-align:left"><strong>brew list</strong></td>
-<td style="text-align:left">brew list</td>
-</tr>
-<tr>
-<td style="text-align:left">查看软件信息</td>
-<td style="text-align:left"><strong>brew info 软件名</strong></td>
-<td style="text-align:left">brew info git</td>
-</tr>
-<tr>
-<td style="text-align:left">用浏览器打开官方网页查看软件信息</td>
-<td style="text-align:left"><strong>brew home 软件名</strong></td>
-<td style="text-align:left">brew home git</td>
-</tr>
-<tr>
-<td style="text-align:left">查看那些已安装的程序需要更新</td>
-<td style="text-align:left"><strong>brew outdated</strong></td>
-<td style="text-align:left">brew outdated</td>
-</tr>
-<tr>
-<td style="text-align:left">显示包依赖</td>
-<td style="text-align:left"><strong>brew deps</strong></td>
-<td style="text-align:left">brew deps</td>
-</tr>
-<tr>
-<td style="text-align:left">创建你自己的Homebrew包</td>
-<td style="text-align:left"><strong>brew create 文件名</strong></td>
-<td style="text-align:left">$ brew create <a href="https://foo.com/bar-1.0.tgz">https://foo.com/bar-1.0.tgz</a></td>
-</tr>
-</tbody>
-</table>
-<h2 id="13-homebrew的安装路径及文件夹">1.3 Homebrew的安装路径及文件夹</h2>
-<p>Homebrew将本地的/usr/local初始化为git的工作树，并将目录所有者变更为当前所操作的用户，以后的操作将不需要sudo。</p>
-<ol>
-<li><strong>-bin</strong>           用于存放所安装程序的启动链接（相当于快捷方式）</li>
-<li><strong>-Cellar</strong>        所以brew安装的程序，都将以[程序名/版本号]存放于本目录下</li>
-<li><strong>-etc</strong>          brew安装程序的配置文件默认存放路径</li>
-<li><strong>-Library</strong>      Homebrew 系统自身文件夹</li>
-</ol>
-<h2 id="2-安装vscode">2 安装VSCOde</h2>
-<h3 id="21-安装aspnet-5">2.1 安装ASP.NET 5</h3>
-<p>首先需要安装ASP.NET 5，之后安装Visual Studio Code（先后顺序没有关系）。安装ASP.NET 5，直接使用Homebrew即可。检测是否安装，可以在终端输入brew，看看有没有提示。按照步骤运行下面的命令：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>brew  tap  aspnet/dnx
-</span></span><span style="display:flex;"><span>brew  update
-</span></span><span style="display:flex;"><span>brew  install  dnvm
-</span></span></code></pre></div><h3 id="22-下载visual-studiocode">2.2 下载 Visual StudioCode</h3>
-<p>微软官网： <strong><a href="http://code.visualstudio.com/Docs/runtimes/unity">http://code.visualstudio.com/Docs/runtimes/unity</a></strong> 。解压后把包拖入launchpad里面去；然后打开vscode，点击扩展，下载一些vscode插件： <strong>C#、Debugger for Unity、Unity Snippets、Unity Tools</strong></p>
-<h3 id="23-安装vscode-for-unity插件">2.3 安装VSCode for Unity插件</h3>
-<p>等所有东西都安装之后，<a href="https://github.com/dotBunny/VSCode">下载</a>一个vscode for unity的插件。所有东西准备好了之后，去unity中创建一个新项目。在项目中，把下载的vscode for unity拖到unity工程中来：然后依次选择菜单栏的 <strong>【Unity|Preferences】</strong> 面板，可以在最下面看到多出来一个栏目，名字为VSCode。点击一下Write Workspace Settings，它会做一些处理文件的事情，将不必要的文件排除。最后，在菜单栏的Assets下选择 <strong>【OpenC# Project In Code】</strong> ，然后写代码就有提示了。</p>
-<h2 id="3-参考链接">3 参考链接</h2>
-<p><a href="https://blog.csdn.net/yxys01/article/details/77452318">Mac之安装并使用Homebrew</a></p>
-<p><a href="https://blog.csdn.net/qq_36458268/article/details/56481069">Mac上使用VScode调试Unity</a></p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/ios/">iOS</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/mac_ios/high_ver_sdk_for_low_ver_xcode/">在低版本中的XCode中使用高版本的iOS SDK</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>在Mac中如何安装VScode并作为Unity3D开发IDE | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="在Mac中如何安装VScode并作为Unity3D开发IDE"><meta property="og:url" content="http://www.xionggf.com/post/mac_ios/use_vscode_in_mac/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="在Mac中如何安装VScode并作为Unity3D开发IDE"><meta property="og:description" content="在Mac中如何安装VScode并作为Unity3D开发IDE"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2019-12-30T11:52:43+08:00"><meta property="article:modified_time" content="2019-12-30T11:52:43+08:00"><meta property="article:tag" content="IOS"><meta itemprop=name content="在Mac中如何安装VScode并作为Unity3D开发IDE"><meta itemprop=description content="在Mac中如何安装VScode并作为Unity3D开发IDE"><meta itemprop=datePublished content="2019-12-30T11:52:43+08:00"><meta itemprop=dateModified content="2019-12-30T11:52:43+08:00"><meta itemprop=wordCount content="168"><meta itemprop=keywords content="iOS"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>在Mac中如何安装VScode并作为Unity3D开发IDE</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2019-12-30T11:52:43+08:00>December 30, 2019</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/ios/ rel=category>iOS</a>,
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/ios/ rel=tag>iOS</a></span></div></div><h1 class=entry__title>在Mac中如何安装VScode并作为Unity3D开发IDE</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#11-homebrew的安装>1.1 Homebrew的安装</a></li><li><a href=#12-homebrew的使用>1.2 Homebrew的使用</a></li><li><a href=#13-homebrew的安装路径及文件夹>1.3 Homebrew的安装路径及文件夹</a></li><li><a href=#2-安装vscode>2 安装VSCOde</a><ul><li><a href=#21-安装aspnet-5>2.1 安装ASP.NET 5</a></li><li><a href=#22-下载visual-studiocode>2.2 下载 Visual StudioCode</a></li><li><a href=#23-安装vscode-for-unity插件>2.3 安装VSCode for Unity插件</a></li></ul></li><li><a href=#3-参考链接>3 参考链接</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=1-安装brew>1 安装brew</h1><p><strong>Homebrew</strong> 是Mac OSX上的软件包管理工具，能在Mac中方便的安装软件或者卸载软件，相当于linux下的apt-get、yum神器；Homebrew可以在Mac上安装一些MacOS上没有的，从Unix/Linux等系统移植过来的工具，Homebrew将这些工具统统安装到了 <strong>【/usr/local/Cellar】</strong> 目录中，并在 <strong>【/usr/local/bin】</strong> 中创建符号链接。</p><h2 id=11-homebrew的安装>1.1 Homebrew的安装</h2><p>Homebrew的安装很简单，只需在终端下输入如下指令：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>/usr/bin/ruby -e <span style=color:#0a3069>&#34;</span><span style=color:#cf222e>$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span style=color:#cf222e>)</span><span style=color:#0a3069>&#34;</span>
+</span></span></code></pre></div><p>Homebrew安装成功后，会自动创建目录 <font color=red>/usr/local/Cellar </font>来存放Homebrew安装的程序。 这时你在命令行状态下面就可以使用 brew 命令了.</p><h2 id=12-homebrew的使用>1.2 Homebrew的使用</h2><table><thead><tr><th style=text-align:left>指令功能</th><th style=text-align:left>指令格式</th><th style=text-align:left>指令示例</th></tr></thead><tbody><tr><td style=text-align:left>安装软件</td><td style=text-align:left><strong>brew install 软件名</strong></td><td style=text-align:left>brew install wget</td></tr><tr><td style=text-align:left>搜索软件</td><td style=text-align:left><strong>brew search 软件名</strong></td><td style=text-align:left>brew search wget</td></tr><tr><td style=text-align:left>卸载软件</td><td style=text-align:left><strong>brew uninstall 软件名</strong></td><td style=text-align:left>brew uninstall wget</td></tr><tr><td style=text-align:left>更新所有软件</td><td style=text-align:left><strong>brew update</strong></td><td style=text-align:left>通过 update 可以把包信息更新到最新，不过包更新是通过git命令，所以要先通过 <strong>brew install git</strong> 命令安装git。</td></tr><tr><td style=text-align:left>更新具体软件</td><td style=text-align:left><strong>brew upgrade 软件名</strong></td><td style=text-align:left>brew upgrade git</td></tr><tr><td style=text-align:left>显示已安装软件</td><td style=text-align:left><strong>brew list</strong></td><td style=text-align:left>brew list</td></tr><tr><td style=text-align:left>查看软件信息</td><td style=text-align:left><strong>brew info 软件名</strong></td><td style=text-align:left>brew info git</td></tr><tr><td style=text-align:left>用浏览器打开官方网页查看软件信息</td><td style=text-align:left><strong>brew home 软件名</strong></td><td style=text-align:left>brew home git</td></tr><tr><td style=text-align:left>查看那些已安装的程序需要更新</td><td style=text-align:left><strong>brew outdated</strong></td><td style=text-align:left>brew outdated</td></tr><tr><td style=text-align:left>显示包依赖</td><td style=text-align:left><strong>brew deps</strong></td><td style=text-align:left>brew deps</td></tr><tr><td style=text-align:left>创建你自己的Homebrew包</td><td style=text-align:left><strong>brew create 文件名</strong></td><td style=text-align:left>$ brew create <a href=https://foo.com/bar-1.0.tgz>https://foo.com/bar-1.0.tgz</a></td></tr></tbody></table><h2 id=13-homebrew的安装路径及文件夹>1.3 Homebrew的安装路径及文件夹</h2><p>Homebrew将本地的/usr/local初始化为git的工作树，并将目录所有者变更为当前所操作的用户，以后的操作将不需要sudo。</p><ol><li><strong>-bin</strong> 用于存放所安装程序的启动链接（相当于快捷方式）</li><li><strong>-Cellar</strong> 所以brew安装的程序，都将以[程序名/版本号]存放于本目录下</li><li><strong>-etc</strong> brew安装程序的配置文件默认存放路径</li><li><strong>-Library</strong> Homebrew 系统自身文件夹</li></ol><h2 id=2-安装vscode>2 安装VSCOde</h2><h3 id=21-安装aspnet-5>2.1 安装ASP.NET 5</h3><p>首先需要安装ASP.NET 5，之后安装Visual Studio Code（先后顺序没有关系）。安装ASP.NET 5，直接使用Homebrew即可。检测是否安装，可以在终端输入brew，看看有没有提示。按照步骤运行下面的命令：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>brew  tap  aspnet/dnx
+</span></span><span style=display:flex><span>brew  update
+</span></span><span style=display:flex><span>brew  install  dnvm
+</span></span></code></pre></div><h3 id=22-下载visual-studiocode>2.2 下载 Visual StudioCode</h3><p>微软官网： <strong><a href=http://code.visualstudio.com/Docs/runtimes/unity>http://code.visualstudio.com/Docs/runtimes/unity</a></strong> 。解压后把包拖入launchpad里面去；然后打开vscode，点击扩展，下载一些vscode插件： <strong>C#、Debugger for Unity、Unity Snippets、Unity Tools</strong></p><h3 id=23-安装vscode-for-unity插件>2.3 安装VSCode for Unity插件</h3><p>等所有东西都安装之后，<a href=https://github.com/dotBunny/VSCode>下载</a>一个vscode for unity的插件。所有东西准备好了之后，去unity中创建一个新项目。在项目中，把下载的vscode for unity拖到unity工程中来：然后依次选择菜单栏的 <strong>【Unity|Preferences】</strong> 面板，可以在最下面看到多出来一个栏目，名字为VSCode。点击一下Write Workspace Settings，它会做一些处理文件的事情，将不必要的文件排除。最后，在菜单栏的Assets下选择 <strong>【OpenC# Project In Code】</strong> ，然后写代码就有提示了。</p><h2 id=3-参考链接>3 参考链接</h2><p><a href=https://blog.csdn.net/yxys01/article/details/77452318>Mac之安装并使用Homebrew</a></p><p><a href=https://blog.csdn.net/qq_36458268/article/details/56481069>Mac上使用VScode调试Unity</a></p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/ios/>IOS</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/mac_ios/high_ver_sdk_for_low_ver_xcode/>在低版本中的XCode中使用高版本的iOS SDK</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

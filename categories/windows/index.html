@@ -1,230 +1,71 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Windows | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="Windows" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/categories/windows/" />
-
-
-		<meta itemprop="name" content="Windows">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/categories/windows/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-term">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/categories/">Categories</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Windows</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">Windows</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/windows/boost_compilation/">一分钟搞定boost库编译</a></h1>
-	<div class="entry__content">假定已经从www.boost.org下载了最新的boost安装包，以boost1.39.0为例：
-把压缩包解压到某目录，比如E:\sdk下，这时候，将得到目录：E:\sdk\boost_1_39_0在此目录下，将有一个子目录boost，里面就是所有的boost内容。
-进入 E:\sdk\boost_1_39_0\tools\jam\src 目录，点击 build.bat 文件，将执行 bjam.exe 文件的构建，构建完毕后，将生成E:\sdk\boost_1_39_0\tools\jam\src\bin.ntx86目录。 bjam.exe 就在此目录下。
-将 bjam.exe 拷贝到E:\sdk\boost_1_39_0下，在在系统菜单中，点出“运行”对话框，执行cmd命令，调出控制台窗口，然后把当前目录定位到E:\sdk\boost_1_39_0。
-输入如下命令：
-bjam stage --toolset=msvc-8.0 link=shared runtime-link=shared threading=multi debug release 注意上面的命令行中，等号两端的变量不能留有空格，比如-toolset = msvc-8.0会报错。这样子，就将使用VC2005，以生成多线程版本的，同时生成调试版和发行版的动态链接库文件的形式构建所有需要构建的boost库，如果想生成所有版本的：包括单多线程，静态动态链接的，调试版发行版的全部都有的库，则可以用下面一句命令搞定：
-bjam --toolset=msvc-8.0 --build-type=complete </div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2016-04-09T13:39:08&#43;08:00">April 09, 2016</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/windows/" rel="category">Windows</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/windows-programming/" rel="tag">Windows Programming</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/windows/launch_adb_question/">Windows平台上无法启动Android ADB Server的解决方案</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-在Windows系统上使用adb时。经常会出现adb devices命令长时间无响应、adb start-server 失败、eclipse adt初始化时卡在dbms-init上等现象。造成这个问题的大部分原因，是在于adb server所默认使用的5037号端口被占用了。这种情况尤其在Windows系统装了类似于360手机助手等软件时经常出现。比如360助手在启动之后，会启动一个名字为360MobileLink.exe的进程。这个进程一般会占用这个默认端口号。
-解决这个问题的最直接野蛮的方法，就是找出占用5037端口的进程，然后关闭它。我们可以使用命令行操作，如下：
-netstat -aon | findstr 127.0.0.1:5037 执行此命令后，便会打印出占用这个端口的进程的PID，根据这个PID值。我们再输入命令如下：
-tasklist|findstr &#34;进程PID&#34; 执行此命令后，便会打印出这个进程对应的可执行文件名，启动任务管理器关闭它即可。关闭了这个进程后，执行
-adb kill-server adb start-server 便可重新启动adb server。所以在开发时，最好先打开elipse等软件，启动了adb之后，再启动360手机助手等软件，才不会发生这种占用端口的问题。
-还有另一种方法就是自己配置adb server使用的端口号，只要在系统环境变量中定义 ANDROID_ADB_SERVER_PORT 的值即可。最好选择一个5位数的端口号（10000 ~ 65535），使用一个生僻的值。不易重复。Windows下只要在环境变量中增加一个ANDROID_ADB_SERVER_PORT值填你自己定义的端口。Linux下只要 export $ANDROID_ADB_SERVER_PORT = 自定义端口，即可。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2015-04-09T13:39:08&#43;08:00">April 09, 2015</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/windows/" rel="category">Windows</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/windows-programming/" rel="tag">Windows Programming</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/windows/build_freetype_dll_with_vs2005/">使用VS2005编译freetype的动态链接库</a></h1>
-	<div class="entry__content">使用VS2005编译freetype的动态链接库 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-使用freetype是2.3.8版本，freetype2.3.8包解压缩后，在**.\builds\win32\visualc**目录下有基于vs2005的sln文件，不过这个解决方案文件，只是包含有生成静态链接的工程设置，要编译动态链接库，还需要手动去处理一下。步骤如下：
-参考./doc目录下的INSTALL.ANY文档。该文档其实已经把标准编译所要包含的文件及它们的作用说得很清楚了，现在使用VC2005建立一个空的win32DLL工程，然后按照INSTALL.ANY的说明把需要加入的文件加入工程内，INSTALL.ANY文件内有一很明显的提醒：“DO NOT COMPILE ALL C FILES!”，就是不要编译所有的C文件，这点应该注意。 要进行修改的文件是ftoption.h，该文件在**/include/freetype/config**目录下，该目录主要存放一些配置头文件。ftoption.h文件里对每一可定制项目都有很详细的解释，为了可以编译成DLL，要进行的修改是： 首先备份一下ftoption.h，如，另存为ftoption_bak.h文件。
-根据ftoption.h在 &ldquo;DLL export compilation&rdquo; 项里的描述，FreeType2库在需要导出的函数前都使用了FT_EXPORT(用在函数定义处)，FT_EXPORT_DEF(用在函数声明处）两个宏，需要重新定义这两个宏。FreeType2库对于FT_EXPORT和FT_EXPORT_DEF宏的缺省定义在ftconfig.h文件中。所以在ftopion.h的该处重新定义自己的FT_EXPORT和FT_EXPORT_DEF就可以了,重新定义如下所示：
-#ifdef FT2_DLL //因为在静态库与动态中都使用该文件，所以区别使用该指示字，使用FT2_DLL表示要编译为DLL动态库。 #ifdef FT2_EXPORTS //按照微软的标准做法，定义__declspec(dllexport)与__declspec(dllimport) #define FT_EXPORT( x ) __declspec(dllexport) x #define FT_EXPORT_DEF( x ) x #else //按照微软的说法，其它__declspec(dllimport)也可以不要的，但这样做,更有效率并且如果不这么做的话有时会出现问题 #define FT_EXPORT( x ) __declspec(dllimport) x #define FT_EXPORT_DEF( x ) x #endif #endif </div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2015-04-09T13:39:08&#43;08:00">April 09, 2015</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/windows/" rel="category">Windows</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/windows-programming/" rel="tag">Windows Programming</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/windows/add_file_extension_to_vc/">给VC添加新的源代码文件扩展名以便能被编译【翻译】</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-读了microsoft的mvp网站上的一篇关于添加VC源文件扩展名的文章，顺便就把它摘要翻译下来，以备参考
-Q: 如何使得Visual Studio能够把.cc后缀名的文件当作C++源文件来（编译）处理。
-A: 可以使用/Tp编译选项指示编译器把.cc文件当作C++源文件来进行处理。可以把/Tp命令添加在工程的&quot;custom build&quot;选项中。或者可以通过修改注册表，把.cc后缀名添加到“可当成是C++源文件来处理的文件”的后缀名列表中。要修改的键如下：
-HKEY_CURRENT_USER/Software/Microsoft/DevStudio/X.0/Build System/Components/Platforms/Win32 (x86)/Tools/32-bit/C/C++/Input_Spec
-HKEY_CURRENT_USER/Software/Microsoft/DevStudio/6.0/Build System/Components/Tools/&lt;Component 0x3&gt;/Input_Spec
-HKEY_CURRENT_USER/Software/Microsoft/DevStudio/X.0/Text Editor/Tabs/Language Settings/C/C++/FileExtensions
-上面的X是Devstudio的版本号（5或者是6）。同时可以通过修改下面的键来使得有新后缀名的文件也能使用语法高亮显示功能。修改注册表要比通过设置/Tp命令来得方便，当然也可以使用后者。最后，不能通过修改注册表来在同一工程中混合使用C源文件和C++源文件。唯一的可行方法就是使用custom build规则。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2014-04-09T13:39:08&#43;08:00">April 09, 2014</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/windows/" rel="category">Windows</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/windows-programming/" rel="tag">Windows Programming</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Windows | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/categories/windows/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Windows"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="Windows"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2016-04-09T13:39:08+08:00"><meta itemprop=dateModified content="2016-04-09T13:39:08+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/categories/windows/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-term"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/categories/>Categories</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Windows</li></ol></nav><div class="page block"><h1 class=page__title>Windows</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/windows/boost_compilation/>一分钟搞定boost库编译</a></h1><div class=entry__content><p>假定已经从<a href=www.boost.org>www.boost.org</a>下载了最新的boost安装包，以boost1.39.0为例：</p><p>把压缩包解压到某目录，比如<code>E:\sdk</code>下，这时候，将得到目录：<code>E:\sdk\boost_1_39_0</code>在此目录下，将有一个子目录<code>boost</code>，里面就是所有的boost内容。</p><p>进入 <code>E:\sdk\boost_1_39_0\tools\jam\src </code>目录，点击 <strong>build.bat</strong> 文件，将执行 <strong>bjam.exe</strong> 文件的构建，构建完毕后，将生成<code>E:\sdk\boost_1_39_0\tools\jam\src\bin.ntx86</code>目录。 <strong>bjam.exe</strong> 就在此目录下。</p><p>将 <strong>bjam.exe</strong> 拷贝到<code>E:\sdk\boost_1_39_0</code>下，在在系统菜单中，点出“运行”对话框，执行cmd命令，调出控制台窗口，然后把当前目录定位到<code>E:\sdk\boost_1_39_0</code>。</p><p>输入如下命令：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bat data-lang=bat><span style=display:flex><span>bjam stage --toolset=msvc-8.0 link=shared runtime-link=shared threading=multi debug release
+</span></span></code></pre></div><p>注意上面的命令行中，等号两端的变量不能留有空格，比如<code>-toolset = msvc-8.0</code>会报错。这样子，就将使用VC2005，以生成多线程版本的，同时生成调试版和发行版的动态链接库文件的形式构建所有需要构建的boost库，如果想生成所有版本的：包括单多线程，静态动态链接的，调试版发行版的全部都有的库，则可以用下面一句命令搞定：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bat data-lang=bat><span style=display:flex><span>bjam --toolset=msvc-8.0 --build-type=complete
+</span></span></code></pre></div></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2016-04-09T13:39:08+08:00>April 09, 2016</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/windows/ rel=category>Windows</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/windows-programming/ rel=tag>Windows Programming</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/windows/launch_adb_question/>Windows平台上无法启动Android ADB Server的解决方案</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com</strong></p><p>在Windows系统上使用adb时。经常会出现adb devices命令长时间无响应、adb start-server 失败、eclipse adt初始化时卡在dbms-init上等现象。造成这个问题的大部分原因，是在于adb server所默认使用的5037号端口被占用了。这种情况尤其在Windows系统装了类似于360手机助手等软件时经常出现。比如360助手在启动之后，会启动一个名字为360MobileLink.exe的进程。这个进程一般会占用这个默认端口号。</p><p>解决这个问题的最直接野蛮的方法，就是找出占用5037端口的进程，然后关闭它。我们可以使用命令行操作，如下：</p><pre tabindex=0><code>netstat -aon | findstr 127.0.0.1:5037
+</code></pre><p>执行此命令后，便会打印出占用这个端口的进程的PID，根据这个PID值。我们再输入命令如下：</p><pre tabindex=0><code>tasklist|findstr &#34;进程PID&#34;
+</code></pre><p>执行此命令后，便会打印出这个进程对应的可执行文件名，启动任务管理器关闭它即可。关闭了这个进程后，执行</p><pre tabindex=0><code>adb kill-server
+adb start-server
+</code></pre><p>便可重新启动adb server。所以在开发时，最好先打开elipse等软件，启动了adb之后，再启动360手机助手等软件，才不会发生这种占用端口的问题。</p><p>还有另一种方法就是自己配置adb server使用的端口号，只要在系统环境变量中定义 <code>ANDROID_ADB_SERVER_PORT</code> 的值即可。最好选择一个5位数的端口号（10000 ~ 65535），使用一个生僻的值。不易重复。Windows下只要在环境变量中增加一个<code>ANDROID_ADB_SERVER_PORT</code>值填你自己定义的端口。Linux下只要 <code>export $ANDROID_ADB_SERVER_PORT = 自定义端口</code>，即可。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2015-04-09T13:39:08+08:00>April 09, 2015</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/windows/ rel=category>Windows</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/windows-programming/ rel=tag>Windows Programming</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/windows/build_freetype_dll_with_vs2005/>使用VS2005编译freetype的动态链接库</a></h1><div class=entry__content><h1 id=使用vs2005编译freetype的动态链接库>使用VS2005编译freetype的动态链接库</h1><hr><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>使用freetype是<code>2.3.8</code>版本，freetype2.3.8包解压缩后，在**.\builds\win32\visualc**目录下有基于vs2005的sln文件，不过这个解决方案文件，只是包含有生成静态链接的工程设置，要编译动态链接库，还需要手动去处理一下。步骤如下：</p><ol><li>参考<code>./doc</code>目录下的<code>INSTALL.ANY</code>文档。该文档其实已经把标准编译所要包含的文件及它们的作用说得很清楚了，现在使用VC2005建立一个空的win32DLL工程，然后按照INSTALL.ANY的说明把需要加入的文件加入工程内，INSTALL.ANY文件内有一很明显的提醒：<strong>“DO NOT COMPILE ALL C FILES!”</strong>，就是不要编译所有的C文件，这点应该注意。</li><li>要进行修改的文件是<code>ftoption.h</code>，该文件在**/include/freetype/config**目录下，该目录主要存放一些配置头文件。<code>ftoption.h</code>文件里对每一可定制项目都有很详细的解释，为了可以编译成DLL，要进行的修改是：</li></ol><ul><li><p>首先备份一下<code>ftoption.h</code>，如，另存为<code>ftoption_bak.h</code>文件。</p></li><li><p>根据<code>ftoption.h</code>在 <strong>&ldquo;DLL export compilation&rdquo;</strong> 项里的描述，FreeType2库在需要导出的函数前都使用了<code>FT_EXPORT</code>(用在函数定义处)，<code>FT_EXPORT_DEF</code>(用在函数声明处）两个宏，需要重新定义这两个宏。FreeType2库对于<code>FT_EXPORT</code>和<code>FT_EXPORT_DEF</code>宏的缺省定义在<code>ftconfig.h</code>文件中。所以在<code>ftopion.h</code>的该处重新定义自己的<code>FT_EXPORT</code>和<code>FT_EXPORT_DEF</code>就可以了,重新定义如下所示：</p></li></ul><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#ifdef FT2_DLL </span><span style=color:#57606a>//因为在静态库与动态中都使用该文件，所以区别使用该指示字，使用FT2_DLL表示要编译为DLL动态库。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#ifdef FT2_EXPORTS </span><span style=color:#57606a>//按照微软的标准做法，定义__declspec(dllexport)与__declspec(dllimport)
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define FT_EXPORT( x ) __declspec(dllexport) x
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define FT_EXPORT_DEF( x ) x
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#else </span><span style=color:#57606a>//按照微软的说法，其它__declspec(dllimport)也可以不要的，但这样做,更有效率并且如果不这么做的话有时会出现问题
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define FT_EXPORT( x ) __declspec(dllimport) x
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define FT_EXPORT_DEF( x ) x
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span></code></pre></div></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2015-04-09T13:39:08+08:00>April 09, 2015</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/windows/ rel=category>Windows</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/windows-programming/ rel=tag>Windows Programming</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/windows/add_file_extension_to_vc/>给VC添加新的源代码文件扩展名以便能被编译【翻译】</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com</strong></p><p><a href=http://www.mvps.org/vcfaq/ide/1.htm>原文地址</a></p><p>读了microsoft的mvp网站上的一篇关于添加VC源文件扩展名的文章，顺便就把它摘要翻译下来，以备参考</p><blockquote><p>Q: 如何使得Visual Studio能够把.cc后缀名的文件当作C++源文件来（编译）处理。</p></blockquote><blockquote><p>A: 可以使用/Tp编译选项指示编译器把.cc文件当作C++源文件来进行处理。可以把/Tp命令添加在工程的"custom build"选项中。或者可以通过修改注册表，把.cc后缀名添加到“可当成是C++源文件来处理的文件”的后缀名列表中。要修改的键如下：</p></blockquote><p><code>HKEY_CURRENT_USER/Software/Microsoft/DevStudio/X.0/Build System/Components/Platforms/Win32 (x86)/Tools/32-bit/C/C++/Input_Spec</code></p><p><code>HKEY_CURRENT_USER/Software/Microsoft/DevStudio/6.0/Build System/Components/Tools/&lt;Component 0x3>/Input_Spec</code></p><p><code>HKEY_CURRENT_USER/Software/Microsoft/DevStudio/X.0/Text Editor/Tabs/Language Settings/C/C++/FileExtensions</code></p><p>上面的X是Devstudio的版本号（5或者是6）。同时可以通过修改下面的键来使得有新后缀名的文件也能使用语法高亮显示功能。修改注册表要比通过设置<code>/Tp</code>命令来得方便，当然也可以使用后者。最后，不能通过修改注册表来在同一工程中混合使用C源文件和C++源文件。唯一的可行方法就是使用custom build规则。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2014-04-09T13:39:08+08:00>April 09, 2014</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/windows/ rel=category>Windows</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/windows-programming/ rel=tag>Windows Programming</a></span></div></div></article></div></div></main></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

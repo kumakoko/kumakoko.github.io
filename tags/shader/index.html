@@ -1,302 +1,225 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Shader | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="Shader" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/tags/shader/" />
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Shader | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/tags/shader/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Shader"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="Shader"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2022-04-29T11:37:25+08:00"><meta itemprop=dateModified content="2022-04-29T11:37:25+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/tags/shader/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-term"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/tags/>Tags</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Shader</li></ol></nav><div class="page block"><h1 class=page__title>Shader</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/from_outline_to_urp_multipass/>从半透明模型的描边到URP Multipass Rendering</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>卡通渲染技术中，描边的实现的有多种做法，有<strong>基于后处理实现</strong>，也有<strong>基于非后处理，通过多次绘制模型的方法</strong>实现。</p><p>通过多次绘制模型的实现，方法无非就是：</p><ol><li>绘制模型本体，同时<strong>写入深度值</strong>。</li><li>让模型顶点<strong>沿着法线外扩</strong>一定的偏移量，即让模型膨胀一些</li><li>全用描边的颜色绘制膨胀过的模型，且，在绘制时，使用<strong>cull front</strong>，即<strong>只绘制模型的背向摄像机面</strong>。在第1步中因为绘制模型本体时已经写入深度值。在本步骤中只要不改变深度测试函数的方式，那么除了膨胀部分之外，是无法写入像素的，能写入的部分，便形成了边缘。</li></ol><p>上述的方式，一般应用于不透明的材质上。如果是半透明的材质的话就有问题，因为在第1步绘制半透明材质时，一般是不写入深度值的。那么第3步在绘制膨胀模型时，模型背部的地方就会被绘制上去。</p><p>解决这个问题有很多，可以利用stencil test的方式。也可以在第一步绘制，不绘制任何颜色，只写入深度，然后再绘制模型，最后再绘制描边。后一种方法，如果用Unity内置管线，大约就是这个样子：</p><pre tabindex=0><code>Shader &#34;Unlit/半透明&#34;
+{
+    Properties
+    {
+        _Diffuse(&#34;Diffuse&#34;,Color) = (1,1,1,1)  //  漫反射
+        _MainTex(&#34;MainTex&#34;,2D) = &#34;white&#34;{}  //  2D纹理贴图
+        _AlphaScale(&#34;Alpha Scale&#34;,Range(0,1)) = 1  //  控制Alpha参数
+    }
+    
+    SubShader
+    {
+        Tags { &#34;Queue&#34; = &#34;Transparent&#34; &#34;IgnoreProjector&#34; = &#34;True&#34; &#34;RenderType&#34; = &#34;Transparent&#34; }   //渲染顺序设置Transparent
+        
+        LOD 100
+        // 用两个pass通道来处理，防止出现渲染错误，第一个pass通道
+        // 每个pass通道都会渲染一次
+        Pass  
+        {
+            ZWrite On   //  注意这里：写入深度 为了确认渲染顺序
+            ColorMask 0  //  掩码遮罩代表这个pass通道不写入任何颜色值
+        }
 
+        Pass  //  第二个pass通道
+        {
+            Tags{&#34;LightMode&#34; = &#34;ForwardBase&#34;}
 
-		<meta itemprop="name" content="Shader">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/tags/shader/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-term">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/tags/">Tags</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Shader</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">Shader</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/from_outline_to_urp_multipass/">从半透明模型的描边到URP Multipass Rendering</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-卡通渲染技术中，描边的实现的有多种做法，有基于后处理实现，也有基于非后处理，通过多次绘制模型的方法实现。
-通过多次绘制模型的实现，方法无非就是：
-绘制模型本体，同时写入深度值。 让模型顶点沿着法线外扩一定的偏移量，即让模型膨胀一些 全用描边的颜色绘制膨胀过的模型，且，在绘制时，使用cull front，即只绘制模型的背向摄像机面。在第1步中因为绘制模型本体时已经写入深度值。在本步骤中只要不改变深度测试函数的方式，那么除了膨胀部分之外，是无法写入像素的，能写入的部分，便形成了边缘。 上述的方式，一般应用于不透明的材质上。如果是半透明的材质的话就有问题，因为在第1步绘制半透明材质时，一般是不写入深度值的。那么第3步在绘制膨胀模型时，模型背部的地方就会被绘制上去。
-解决这个问题有很多，可以利用stencil test的方式。也可以在第一步绘制，不绘制任何颜色，只写入深度，然后再绘制模型，最后再绘制描边。后一种方法，如果用Unity内置管线，大约就是这个样子：
-Shader &#34;Unlit/半透明&#34; { Properties { _Diffuse(&#34;Diffuse&#34;,Color) = (1,1,1,1) // 漫反射 _MainTex(&#34;MainTex&#34;,2D) = &#34;white&#34;{} // 2D纹理贴图 _AlphaScale(&#34;Alpha Scale&#34;,Range(0,1)) = 1 // 控制Alpha参数 } SubShader { Tags { &#34;Queue&#34; = &#34;Transparent&#34; &#34;IgnoreProjector&#34; = &#34;True&#34; &#34;RenderType&#34; = &#34;Transparent&#34; } //渲染顺序设置Transparent LOD 100 // 用两个pass通道来处理，防止出现渲染错误，第一个pass通道 // 每个pass通道都会渲染一次 Pass { ZWrite On // 注意这里：写入深度 为了确认渲染顺序 ColorMask 0 // 掩码遮罩代表这个pass通道不写入任何颜色值 } Pass // 第二个pass通道 { Tags{&#34;LightMode&#34; = &#34;ForwardBase&#34;} ZWrite Off // 注意这里：关闭ZWrite（深度写入） Blend SrcAlpha OneMinusSrcAlpha // 源颜色因子 正常透明混合 CGPROGRAM #pragma vertex vert #pragma fragment frag #include &#34;UnityCG.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2022-04-29T11:37:25&#43;08:00">April 29, 2022</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/pixel_perfect_outline_shaders_unity/">Pixel-Perfect Outline Shaders for Unity</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-以下是基于你提供的内容的总结和解读，保留示例代码和图片链接：
-轮廓着色器的工作原理与优化 1. 经典轮廓技术 起源：在 2003 年游戏《XIII》中首次看到 3D 对象的轮廓效果，使用固定功能管线实现。 实现方式：通过网格的外壳（Outer Hull）和反转法线绘制轮廓，覆盖黑色纹理。 现代改进：使用顶点着色器在单独 Pass 中渲染略微膨胀的网格，剔除正面。 2. 经典轮廓技术的局限性 局限性 描述 轮廓宽度不均匀 轮廓宽度随物体形状和视角变化。 透视缩短 轮廓宽度随物体远离相机而变窄（透视投影）。 对象空间单位 轮廓宽度以对象空间单位指定，而非像素。 3. 经典轮廓着色器代码 Shader &#34;Tutorial/Outline&#34; { Properties { _Color (&#34;Color&#34;, Color) = (1, 1, 1, 1) _Glossiness (&#34;Smoothness&#34;, Range(0, 1)) = 0.5 _Metallic (&#34;Metallic&#34;, Range(0, 1)) = 0 _OutlineColor (&#34;Outline Color&#34;, Color) = (0, 0, 0, 1) _OutlineWidth (&#34;Outline Width&#34;, Range(0, 0.1)) = 0.03 } Subshader { Tags { &#34;RenderType&#34; = &#34;Opaque&#34; } CGPROGRAM #pragma surface surf Standard fullforwardshadows Input { float4 color : COLOR; } half4 _Color; half _Glossiness; half _Metallic; void surf(Input IN, inout SufaceStandardOutput o) { o.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-04-29T11:37:25&#43;08:00">April 29, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
-		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
-		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/opengl/an_introduction_to_shader_derivative_functions/">An Introduction to shader derivative functions（翻译）</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-文档内容总结 1. Shader Derivative Functions 简介 Shader Derivative Functions 是片段着色器中的指令，用于计算任何值相对于屏幕空间坐标的变化率。 在 HLSL 中，这些函数称为 ddx 和 ddy，在 GLSL 中称为 dFdx 和 dFdy。 这些函数在三角形光栅化过程中，通过计算 2x2 像素块中像素值之间的差异来求导数。 2. 导数计算 GPU 在光栅化时，会同时运行多个片段着色器实例，并将它们组织成 2x2 像素块。 dFdx 计算块中左右像素值的差异，dFdy 计算上下像素值的差异。 导数可以用于片段着色器中的任何变量，对于向量和矩阵类型，导数按元素计算。 3. 导数与 Mipmaps Mipmaps 是通过将纹理过滤成更小尺寸的预计算图像序列，用于避免纹理缩小时的锯齿问题。 导数在纹理采样时用于选择最佳的 mipmap 级别，纹理坐标相对于屏幕坐标的变化率越大，选择的 mipmap 级别越高。 4. 面法线计算（Flat Shader） 导数可以用于在片段着色器中计算当前三角形的面法线。 当前片段的世界坐标的水平和垂直导数是位于三角形表面的两个向量，它们的叉积是垂直于表面的向量，其范数为三角形的法线向量。 GLSL 代码示例： normalize(cross(dFdx(pos), dFdy(pos))); 5. 导数与分支 导数计算基于 GPU 硬件上多个着色器实例的并行执行。 在条件分支的情况下，如果核心中的线程没有全部执行相同的分支，则会出现代码执行的分歧，导致导数操作未定义。 为了避免这个问题，着色器编译器可能会展平分支或将纹理读取移到分支控制流之外。 6. 导数块对齐的揭示 通过一个简单的实验揭示了着色器导数的内部块对齐。 实验通过计算步进函数的导数，展示了当步进过渡发生在 2x2 像素块的中间或两个相邻块之间时，导数的不同结果。 7. 参考文献 How a GPU works - Kayvon Fatahalian Computer Graphics: Principles and Practice - Chapter 38.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2020-03-04T20:36:51&#43;08:00">March 04, 2020</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/opengl/" rel="category">OpenGL</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/opengl/" rel="tag">OpenGL</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">Shader</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_shader_multi_compile_variants/">Unity3D Shader的内建multi_compile开关所涵盖的多样体</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-multi_compile_fwdbase 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdbase编译指令，包含了以下 9 个内建的keyword：
-DIRECTIONAL DIRLIGHTMAP_COMBINED DYNAMICLIGHTMAP_ON LIGHTMAP_ON LIGHTMAP_SHADOW_MIXING LIGHTPROBE_SH SHADOWS_SCREEN SHADOWS_SHADOWMASK VERTEXLIGHT_ON 如果不做特别的指定的话，默认地启用了其中的 4 个内建keyword，分别是：DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON组成了 8 个多样体，如下：
-多样体（变体） DIRECTIONAL DIRECTIONAL LIGHTPROBE_SH DIRECTIONAL SHADOWS_SCREEN DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN DIRECTIONAL VERTEXLIGHT_ON DIRECTIONAL LIGHTPROBE_SH VERTEXLIGHT_ON DIRECTIONAL SHADOWS_SCREEN VERTEXLIGHT_ON DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON multi_compile_fwdadd 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdadd编译指令，包含了以下 5 个内建的keyword：
-DIRECTIONAL DIRECTIONAL_COOKIE POINT POINT_COOKIE SPOT 如果不做特别的指定的话，默认地启用了全部的 5 个内建keyword，组成了 8 个多样体，如下：
-keyword组成的多样体（变体） DIRECTIONAL DIRECTIONAL_COOKIE POINT POINT_COOKIE SPOT multi_compile_fwdadd_fullshadows 在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个multi_compile_fwdadd_fullshadows编译指令，包含了以下 5 个内建的keyword：</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2020-01-31T11:37:25&#43;08:00">January 31, 2020</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
-		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
-		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/multicompile_shaderfeature_shadervariant_assetbundle/">Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-multi_compile编译指示符 multi_compile编译指示符的文档在这里。假如有以下的shader示例语句：
-#pragma multi_compile _USE_SEMITRANSPARENT _USE_OPAQUE #pragma multi_compile _MULTI_RED _MULTI_GREEN _MULTI_BLU ... fixed4 frag (v2f i) : SV_Target { fixed4 col = tex2D(_MainTex, i.uv); #if _MULTI_RED col = col * fixed4(1,0,0,1); #elif _MULTI_GREEN col = col * fixed4(0,1,0,1); #elif _MULTI_BLUE col = col * fixed4(0,0,1,1); #endif #if _USE_SEMITRANSPARENT col.a = 0.5; #elif _USE_OPAQUE col.a = 1.0; #endif return col; } 那么根据排列组合，就会有 $ 2 \times 3 = 6 $ 种代码段的组合，即分别是 _USE_SEMITRANSPARENT与_MULTI_RED ， _USE_SEMITRANSPARENT与_MULTI_GREEN ， _USE_SEMITRANSPARENT与_MULTI_BLUE ， _USE_OPAQUE与_MULTI_RED ， _USE_OPAQUE与_MULTI_GREEN ， _USE_OPAQUE与_MULTI_BLUE。总得来说，就是各种排列组合对应编译生成的变体， $\color{#FF0000}{无论有没有被使用上，都会被编译打包到游戏包或者资源包中}$ 。所以 在运行时 ，可以使用 Material.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2020-01-04T13:20:28&#43;08:00">January 04, 2020</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
-		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
-		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_shader_optimization/">Unity3D shader优化技巧集合</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-一些优化的tips，基于2019.3版本 只做需要的计算，比如一直在shader设置某个固定颜色，就等于白做计算 能给vs做的，就不要给fs做，能在脚本设置的，就不要在shader里做，比如在shader代码里面用 if-else ,就不如在脚本中用 keyword 优化surface shader：启用 approxview 编译指示符，在光照计算时，在vs中而不是在fs中做视线向量的规格化 优化surface shader：启用 halfasview 编译指示符，在光照计算时，使用半角向量做光照计算，且半角向量的计算在vs中执行 优化surface shader：启用 noforwardadd 编译指示符，确保在 Forward rendering 模式中， 只使用一个有向平行光光源 在fs中执行光照计算，其他的实时光源都只在vs中进行计算，此指示符确保只在一个pass中执行渲染操作 优化surface shader：编译指令 noambient 禁用着色器上的环境照明和球谐光。这样可以使性能稍快一些。 数据精度的优化：世界坐标系下的坐标值，纹理映射坐标值，用 float 数据精度的优化：除了HDR颜色之外的数据，使用 half 数据精度的优化：纹理数据的相关的一些简单操作用 fixed 各种GPU的区别： 桌面GPU ，内部都会统一用 float 计算 各种GPU的区别： 移动GPU 内部能真正支持half精度，大胆地使用它 各种GPU的区别： 老旧的GPU 才内部实现了 fixed ， OpenGL ES3 及后续的都内部把 fixed 处理为 half 了 Alpha Testing ：在iOS等等使用了PowerVR芯片的平台，表现不佳。 ColorMask ：在某些平台上（大多数是在iOS和Android设备的移动GPU），使用 ColorMask 忽略某些通道（例如 ColorMask RGB ）可能会占用大量资源，因此仅在确实需要时才使用它。 参考网页： https://docs.unity3d.com/Manual/SL-ShaderPerformance.html
-https://www.cnblogs.com/sifenkesi/p/4716791.html</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2019-12-31T11:37:25&#43;08:00">December 31, 2019</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
-		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
-		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/my_books/u3d_shader_annotation/">《Unity3D内建着色器源码剖析》</a></h1>
-	<div class="entry__content">书籍信息 信息 详情 定价 89.00 出版社 人民邮电出版社 版次 1 出版时间 2019年08月 开本 16 装帧 平装 页数 334 ISBN编码 9787115507044 官方QQ群 群1号码：672523982
-书籍配套代码 代码文件 MD5值 Unity3D内建着色器源代码 版本2017.2.0f3 MD5: 1737874a497c6fa04031af3c90ff2f99 第12章的代码工程 MD5：640938e9f1a259b7e693b1abe866f368 书中参考引用到的一些技术文章 微软网站上关于DXT及BC系列格式的详细介绍 微软MSDN上有介绍块状压缩的文章 nVidia开发者网站有一篇介绍单程立体渲染原理的文章。 Unity3D官网也有单程立体渲染的介绍 《Unity3D内建着色器源码剖析》勘误表 第1版第1刷 章节 页数 位置 错误内容 正确内容 1.2.2 正文第4页 第5段第5行 $$\left&lt; p_1,p_2,p_3 \right&gt;$$ 的排列顺序称为顺时针方向（clockwise，CW）。 $$ \left&lt; p_1,p_3,p_2 \right&gt; $$ 的排列顺序称为顺时针方向（clockwise，CW）。…… 1.2.2 正文第4页 第6段第2行 在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_2,p_3 \right&gt; $$ 在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_3,p_2 \right&gt; $$ 1.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2019-12-30T15:25:10&#43;08:00">December 30, 2019</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">Shader</a>, 
-		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
+            ZWrite Off  // 注意这里：关闭ZWrite（深度写入）
+            Blend SrcAlpha OneMinusSrcAlpha  //  源颜色因子  正常透明混合
 
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &#34;UnityCG.cginc&#34;
+            #include &#34;Lighting.cginc&#34;
+
+            struct v2f 
+            {
+                float4 vertex :SV_POSITION;  //  输出顶点信息
+                fixed3 worldNormal : TEXCOORD0;
+                float3 worldPos:TEXCOORD1;
+                float2 uv:TEXCOORD2;
+            };
+
+            fixed4 _Diffuse;
+            float _AlphaScale;
+            sampler2D _MainTex;
+            float4 _MainTex_ST; 
+            
+            v2f vert(appdata_base v)  //  顶点着色器
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                fixed3 worldNormal = UnityObjectToWorldNormal(v.normal); 
+                o.worldNormal = worldNormal;
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex); 
+                o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+                return o;
+            }
+
+            fixed4 frag(v2f i) : SV_Target
+            {
+                fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
+                fixed4 texColor = tex2D(_MainTex, i.uv);  
+                fixed3 worldLightDir = UnityWorldSpaceLightDir(i.worldPos);
+
+                fixed3 diffuse = 
+                texColor.rgb * _LightColor0.rgb * _Diffuse.rgb * 
+                max(0, dot(worldLightDir,i.worldNormal) * 0.5 + 0.5); 
+                fixed3 color = ambient + diffuse;
+                return fixed4(color, texColor.a * _AlphaScale); 
+            }
+            ENDCG
+        }
+    }
+    FallBack &#34;Transparent/VertexLit&#34;    
+}
+</code></pre><p>内置管线的方式很直观。但URP到目前为止（版本10.3.2），无法支持太多的PASS，</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2022-04-29T11:37:25+08:00>April 29, 2022</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>shader</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/pixel_perfect_outline_shaders_unity/>Pixel-Perfect Outline Shaders for Unity</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><a href=https://www.videopoetics.com/tutorials/pixel-perfect-outline-shaders-unity/>原文地址</a></p><p>以下是基于你提供的内容的总结和解读，保留示例代码和图片链接：</p><hr><h1 id=轮廓着色器的工作原理与优化><strong>轮廓着色器的工作原理与优化</strong></h1><h2 id=1-经典轮廓技术><strong>1. 经典轮廓技术</strong></h2><ul><li><strong>起源</strong>：在 2003 年游戏《XIII》中首次看到 3D 对象的轮廓效果，使用固定功能管线实现。</li><li><strong>实现方式</strong>：通过网格的外壳（Outer Hull）和反转法线绘制轮廓，覆盖黑色纹理。</li><li><strong>现代改进</strong>：使用顶点着色器在单独 Pass 中渲染略微膨胀的网格，剔除正面。</li></ul><h2 id=2-经典轮廓技术的局限性><strong>2. 经典轮廓技术的局限性</strong></h2><table><thead><tr><th><strong>局限性</strong></th><th><strong>描述</strong></th></tr></thead><tbody><tr><td><strong>轮廓宽度不均匀</strong></td><td>轮廓宽度随物体形状和视角变化。</td></tr><tr><td><strong>透视缩短</strong></td><td>轮廓宽度随物体远离相机而变窄（透视投影）。</td></tr><tr><td><strong>对象空间单位</strong></td><td>轮廓宽度以对象空间单位指定，而非像素。</td></tr></tbody></table><h2 id=3-经典轮廓着色器代码><strong>3. 经典轮廓着色器代码</strong></h2><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span>Shader <span style=color:#0a3069>&#34;Tutorial/Outline&#34;</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Properties <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        _Color <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Color&#34;</span><span style=color:#1f2328>,</span> Color<span style=color:#1f2328>)</span> <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        _Glossiness <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Smoothness&#34;</span><span style=color:#1f2328>,</span> Range<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>))</span> <span style=color:#1f2328>=</span> <span style=color:#0550ae>0.5</span>
+</span></span><span style=display:flex><span>        _Metallic <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Metallic&#34;</span><span style=color:#1f2328>,</span> Range<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>))</span> <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span>
+</span></span><span style=display:flex><span>        _OutlineColor <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Outline Color&#34;</span><span style=color:#1f2328>,</span> Color<span style=color:#1f2328>)</span> <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        _OutlineWidth <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Outline Width&#34;</span><span style=color:#1f2328>,</span> Range<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.1</span><span style=color:#1f2328>))</span> <span style=color:#1f2328>=</span> <span style=color:#0550ae>0.03</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    Subshader <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Tags <span style=color:#1f2328>{</span> <span style=color:#0a3069>&#34;RenderType&#34;</span> <span style=color:#1f2328>=</span> <span style=color:#0a3069>&#34;Opaque&#34;</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        CGPROGRAM
+</span></span><span style=display:flex><span>        <span style=color:#57606a>#pragma</span> surface surf Standard fullforwardshadows
+</span></span><span style=display:flex><span>        Input <span style=color:#1f2328>{</span> float4 color <span style=color:#1f2328>:</span> COLOR<span style=color:#1f2328>;</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        half4 _Color<span style=color:#1f2328>;</span> half _Glossiness<span style=color:#1f2328>;</span> half _Metallic<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>void</span> surf<span style=color:#1f2328>(</span>Input IN<span style=color:#1f2328>,</span> inout SufaceStandardOutput o<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            o<span style=color:#1f2328>.</span>Albedo <span style=color:#1f2328>=</span> _Color<span style=color:#1f2328>.</span>rgb <span style=color:#1f2328>*</span> IN<span style=color:#1f2328>.</span>color<span style=color:#1f2328>.</span>rgb<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            o<span style=color:#1f2328>.</span>Smoothness <span style=color:#1f2328>=</span> _Glossiness<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            o<span style=color:#1f2328>.</span>Metallic <span style=color:#1f2328>=</span> _Metallic<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            o<span style=color:#1f2328>.</span>Alpha <span style=color:#1f2328>=</span> _Color<span style=color:#1f2328>.</span>a <span style=color:#1f2328>*</span> IN<span style=color:#1f2328>.</span>color<span style=color:#1f2328>.</span>a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        ENDCG
+</span></span><span style=display:flex><span>        Pass <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            Cull Front
+</span></span><span style=display:flex><span>            CGPROGRAM
+</span></span><span style=display:flex><span>            <span style=color:#57606a>#pragma</span> vertex VertexProgram
+</span></span><span style=display:flex><span>            <span style=color:#57606a>#pragma</span> fragment FragmentProgram
+</span></span><span style=display:flex><span>            half _OutlineWidth<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            float4 VertexProgram<span style=color:#1f2328>(</span>float4 position <span style=color:#1f2328>:</span> POSITION<span style=color:#1f2328>,</span> float3 normal <span style=color:#1f2328>:</span> NORMAL<span style=color:#1f2328>)</span> <span style=color:#1f2328>:</span> SV_POSITION <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                position<span style=color:#1f2328>.</span>xyz <span style=color:#1f2328>+=</span> normal <span style=color:#1f2328>*</span> _OutlineWidth<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> UnityObjectToClipPos<span style=color:#1f2328>(</span>position<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            half4 _OutlineColor<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            half4 FragmentProgram<span style=color:#1f2328>()</span> <span style=color:#1f2328>:</span> SV_TARGET <span style=color:#1f2328>{</span> <span style=color:#cf222e>return</span> _OutlineColor<span style=color:#1f2328>;</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            ENDCG
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><ul><li><strong>轮廓 Pass</strong>：通过 <code>Cull Front</code> 剔除正面，沿法线偏移顶点位置生成轮廓。</li></ul><h2 id=4-示例效果><strong>4. 示例效果</strong></h2><ul><li><strong>球体轮廓</strong>：
+<img src=https://www.videopoetics.com/tutorials/pixel-perfect-outline-shaders-unity/classic-sphere.png alt=轮廓效果良好，但球体法线平滑，无法展示尖锐边缘问题></li><li><strong>圆环轮廓</strong>：
+<img src=https://www.videopoetics.com/tutorials/pixel-perfect-outline-shaders-unity/classic-torus.png alt=轮廓延伸到圆环中心，展示法线偏移的效果></li></ul><h2 id=5优化技术><strong>5.优化技术</strong></h2><h3 id=1-在裁剪空间工作><strong>1. 在裁剪空间工作</strong></h3><p>为了消除对象缩放对轮廓宽度的影响，可以将顶点位置和法线转换到裁剪空间。这样，轮廓宽度不会随对象缩放而变化。以下是实现代码：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-04-29T11:37:25+08:00>April 29, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a>,
+<a class=meta-categories__link href=/categories/shaderlab/ rel=category>ShaderLab</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>shader</a>,
+<a class=meta-tags__link href=/tags/shaderlab/ rel=tag>ShaderLab</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/opengl/an_introduction_to_shader_derivative_functions/>An Introduction to shader derivative functions（翻译）</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a></strong></p><p><a href=http://www.aclockworkberry.com/shader-derivative-functions/#footnote_3_1104>原文地址</a></p><h2 id=文档内容总结>文档内容总结</h2><h3 id=1-shader-derivative-functions-简介>1. <strong>Shader Derivative Functions 简介</strong></h3><ul><li><strong>Shader Derivative Functions</strong> 是片段着色器中的指令，用于计算任何值相对于屏幕空间坐标的变化率。</li><li>在 HLSL 中，这些函数称为 <code>ddx</code> 和 <code>ddy</code>，在 GLSL 中称为 <code>dFdx</code> 和 <code>dFdy</code>。</li><li>这些函数在三角形光栅化过程中，通过计算 2x2 像素块中像素值之间的差异来求导数。</li></ul><h3 id=2-导数计算>2. <strong>导数计算</strong></h3><ul><li>GPU 在光栅化时，会同时运行多个片段着色器实例，并将它们组织成 2x2 像素块。</li><li><code>dFdx</code> 计算块中左右像素值的差异，<code>dFdy</code> 计算上下像素值的差异。</li><li>导数可以用于片段着色器中的任何变量，对于向量和矩阵类型，导数按元素计算。</li></ul><h3 id=3-导数与-mipmaps>3. <strong>导数与 Mipmaps</strong></h3><ul><li><strong>Mipmaps</strong> 是通过将纹理过滤成更小尺寸的预计算图像序列，用于避免纹理缩小时的锯齿问题。</li><li>导数在纹理采样时用于选择最佳的 mipmap 级别，纹理坐标相对于屏幕坐标的变化率越大，选择的 mipmap 级别越高。</li></ul><h3 id=4-面法线计算flat-shader>4. <strong>面法线计算（Flat Shader）</strong></h3><ul><li>导数可以用于在片段着色器中计算当前三角形的面法线。</li><li>当前片段的世界坐标的水平和垂直导数是位于三角形表面的两个向量，它们的叉积是垂直于表面的向量，其范数为三角形的法线向量。</li><li>GLSL 代码示例：<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span>normalize<span style=color:#1f2328>(</span>cross<span style=color:#1f2328>(</span>dFdx<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>),</span> dFdy<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>)));</span>
+</span></span></code></pre></div></li></ul><h3 id=5-导数与分支>5. <strong>导数与分支</strong></h3><ul><li>导数计算基于 GPU 硬件上多个着色器实例的并行执行。</li><li>在条件分支的情况下，如果核心中的线程没有全部执行相同的分支，则会出现代码执行的分歧，导致导数操作未定义。</li><li>为了避免这个问题，着色器编译器可能会展平分支或将纹理读取移到分支控制流之外。</li></ul><h3 id=6-导数块对齐的揭示>6. <strong>导数块对齐的揭示</strong></h3><ul><li>通过一个简单的实验揭示了着色器导数的内部块对齐。</li><li>实验通过计算步进函数的导数，展示了当步进过渡发生在 2x2 像素块的中间或两个相邻块之间时，导数的不同结果。</li></ul><h3 id=7-参考文献>7. <strong>参考文献</strong></h3><ul><li><a href=http://www.cs.cmu.edu/~kayvonf/misc/notes.pdf>How a GPU works - Kayvon Fatahalian</a></li><li><a href=https://www.pearson.com/us/higher-education/program/Hughes-Computer-Graphics-Principles-and-Practice-3rd-Edition/PGM228122.html>Computer Graphics: Principles and Practice - Chapter 38. Modern Graphics Hardware</a></li><li><a href=https://www.realtimerendering.com/>Real Time Rendering - Chapter 18. Graphics Hardware</a></li></ul><h3 id=8-源代码示例>8. <strong>源代码示例</strong></h3><ul><li><strong>Flat Shader Example</strong>:<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-glsl data-lang=glsl><span style=display:flex><span>normalize<span style=color:#1f2328>(</span>cross<span style=color:#1f2328>(</span>dFdx<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>),</span> dFdy<span style=color:#1f2328>(</span>pos<span style=color:#1f2328>)));</span>
+</span></span></code></pre></div></li><li><strong>HLSL Branching Experiment</strong>:<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#1f2328>[</span><span style=color:#0550ae>branch</span><span style=color:#1f2328>]</span> <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>condition<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    tmp <span style=color:#0550ae>=</span> <span style=color:#0550ae>10000</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    tmp <span style=color:#0550ae>=</span> <span style=color:#0550ae>20000</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></li></ul><h3 id=9-图片链接>9. <strong>图片链接</strong></h3><ul><li><a href=http://www.aclockworkberry.com/shader-derivative-functions/>Shader Derivatives</a></li><li><a href=http://www.cs.cmu.edu/~kayvonf/misc/notes.pdf>GPU Branching - Kayvon Fatahalian</a></li></ul><h2 id=原文对译内容>原文对译内容</h2><p>Partial difference derivative functions (<code>ddx</code> and <code>ddy</code> in HLSL[a], <code>dFdx</code> and <code>dFdy</code> in GLSL[b]) (in the rest of this article I will use both terms according to the code examples I will provide) are fragment shader instructions wich can be used to compute the rate of variation of any value with respect to the screen-space coordinates.</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-03-04T20:36:51+08:00>March 04, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/opengl/ rel=category>OpenGL</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/opengl/ rel=tag>OpenGL</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>Shader</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_shader_multi_compile_variants/>Unity3D Shader的内建multi_compile开关所涵盖的多样体</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=multi_compile_fwdbase>multi_compile_fwdbase</h2><p>在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个<code>multi_compile_fwdbase</code>编译指令，包含了以下 <strong>9</strong> 个内建的keyword：</p><table><thead><tr><th style=text-align:left></th><th style=text-align:left></th><th></th></tr></thead><tbody><tr><td style=text-align:left>DIRECTIONAL</td><td style=text-align:left>DIRLIGHTMAP_COMBINED</td><td style=text-align:left>DYNAMICLIGHTMAP_ON</td></tr><tr><td style=text-align:left>LIGHTMAP_ON</td><td style=text-align:left>LIGHTMAP_SHADOW_MIXING</td><td style=text-align:left>LIGHTPROBE_SH</td></tr><tr><td style=text-align:left>SHADOWS_SCREEN</td><td style=text-align:left>SHADOWS_SHADOWMASK</td><td style=text-align:left>VERTEXLIGHT_ON</td></tr></tbody></table><p>如果不做特别的指定的话，默认地启用了其中的 <strong>4</strong> 个内建keyword，分别是：<code>DIRECTIONAL</code> <code>LIGHTPROBE_SH</code> <code>SHADOWS_SCREEN</code> <code>VERTEXLIGHT_ON</code>组成了 <strong>8</strong> 个多样体，如下：</p><table><thead><tr><th style=text-align:left>多样体（变体）</th><th></th><th></th><th></th></tr></thead><tbody><tr><td style=text-align:left><code>DIRECTIONAL</code></td><td></td><td></td><td></td></tr><tr><td style=text-align:left><code>DIRECTIONAL LIGHTPROBE_SH</code></td><td></td><td></td><td></td></tr><tr><td style=text-align:left><code>DIRECTIONAL SHADOWS_SCREEN</code></td><td></td><td></td><td></td></tr><tr><td style=text-align:left><code>DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN</code></td><td></td><td></td><td></td></tr><tr><td style=text-align:left><code>DIRECTIONAL VERTEXLIGHT_ON</code></td><td></td><td></td><td></td></tr><tr><td style=text-align:left><code>DIRECTIONAL LIGHTPROBE_SH VERTEXLIGHT_ON</code></td><td></td><td></td><td></td></tr><tr><td style=text-align:left><code>DIRECTIONAL SHADOWS_SCREEN VERTEXLIGHT_ON</code></td><td></td><td></td><td></td></tr><tr><td style=text-align:left><code>DIRECTIONAL LIGHTPROBE_SH SHADOWS_SCREEN VERTEXLIGHT_ON</code></td><td></td><td></td><td></td></tr></tbody></table><h2 id=multi_compile_fwdadd>multi_compile_fwdadd</h2><p>在Unity3D 2018.4.18f1版本下实测到，如果不做其他特别的指定，一个<code>multi_compile_fwdadd</code>编译指令，包含了以下 <strong>5</strong> 个内建的keyword：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-01-31T11:37:25+08:00>January 31, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a>,
+<a class=meta-categories__link href=/categories/shaderlab/ rel=category>ShaderLab</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>shader</a>,
+<a class=meta-tags__link href=/tags/shaderlab/ rel=tag>ShaderLab</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/multicompile_shaderfeature_shadervariant_assetbundle/>Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=multi_compile编译指示符>multi_compile编译指示符</h2><p>multi_compile编译指示符的文档在<a href=https://docs.unity3d.com/Manual/SL-MultipleProgramVariants.html>这里</a>。假如有以下的shader示例语句：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>#pragma</span> multi_compile  _USE_SEMITRANSPARENT _USE_OPAQUE
+</span></span><span style=display:flex><span><span style=color:#57606a>#pragma</span> multi_compile  _MULTI_RED _MULTI_GREEN _MULTI_BLU
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>...</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>fixed4 frag <span style=color:#1f2328>(</span>v2f i<span style=color:#1f2328>)</span> <span style=color:#1f2328>:</span> SV_Target
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    fixed4 col <span style=color:#1f2328>=</span> tex2D<span style=color:#1f2328>(</span>_MainTex<span style=color:#1f2328>,</span> i<span style=color:#1f2328>.</span>uv<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>#if</span> _MULTI_RED
+</span></span><span style=display:flex><span>        col <span style=color:#1f2328>=</span> col <span style=color:#1f2328>*</span> fixed4<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span><span style=color:#0550ae>1</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>#elif</span> _MULTI_GREEN
+</span></span><span style=display:flex><span>        col <span style=color:#1f2328>=</span> col <span style=color:#1f2328>*</span> fixed4<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span><span style=color:#0550ae>1</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>#elif</span>  _MULTI_BLUE
+</span></span><span style=display:flex><span>        col <span style=color:#1f2328>=</span> col <span style=color:#1f2328>*</span> fixed4<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span><span style=color:#0550ae>1</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>#endif</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>#if</span> _USE_SEMITRANSPARENT
+</span></span><span style=display:flex><span>        col<span style=color:#1f2328>.</span>a <span style=color:#1f2328>=</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>#elif</span> _USE_OPAQUE
+</span></span><span style=display:flex><span>        col<span style=color:#1f2328>.</span>a <span style=color:#1f2328>=</span> <span style=color:#0550ae>1.0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>#endif</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> col<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>那么根据排列组合，就会有 $ 2 \times 3 = 6 $ 种代码段的组合，即分别是 <strong>_USE_SEMITRANSPARENT与_MULTI_RED</strong> ， <strong>_USE_SEMITRANSPARENT与_MULTI_GREEN</strong> ， <strong>_USE_SEMITRANSPARENT与_MULTI_BLUE</strong> ， <strong>_USE_OPAQUE与_MULTI_RED</strong> ， <strong>_USE_OPAQUE与_MULTI_GREEN</strong> ， <strong>_USE_OPAQUE与_MULTI_BLUE</strong>。总得来说，就是各种排列组合对应编译生成的变体， <strong>$\color{#FF0000}{无论有没有被使用上，都会被编译打包到游戏包或者资源包中}$</strong> 。所以 <strong>在运行时</strong> ，可以使用 <strong>Material.EnableKeyword</strong> 和 <strong>Material.DisableKeyword</strong> 的方式去启用禁用各个 <strong>shader variant</strong> 。如下代码段所示：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-01-04T13:20:28+08:00>January 04, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a>,
+<a class=meta-categories__link href=/categories/shaderlab/ rel=category>ShaderLab</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>shader</a>,
+<a class=meta-tags__link href=/tags/shaderlab/ rel=tag>ShaderLab</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_shader_optimization/>Unity3D shader优化技巧集合</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=一些优化的tips基于20193版本>一些优化的tips，基于2019.3版本</h2><ol><li>只做需要的计算，比如一直在shader设置某个固定颜色，就等于白做计算</li><li>能给vs做的，就不要给fs做，能在脚本设置的，就不要在shader里做，比如在shader代码里面用 <strong>if-else</strong> ,就不如在脚本中用 <strong>keyword</strong></li><li>优化surface shader：启用 <strong>approxview</strong> 编译指示符，在光照计算时，在vs中而不是在fs中做视线向量的规格化</li><li>优化surface shader：启用 <strong>halfasview</strong> 编译指示符，在光照计算时，使用半角向量做光照计算，且半角向量的计算在vs中执行</li><li>优化surface shader：启用 <strong>noforwardadd</strong> 编译指示符，确保在 <strong>Forward rendering</strong> 模式中， <strong>只使用一个有向平行光光源</strong> 在fs中执行光照计算，其他的实时光源都只在vs中进行计算，此指示符确保只在一个pass中执行渲染操作</li><li>优化surface shader：编译指令 <strong>noambient</strong> 禁用着色器上的环境照明和球谐光。这样可以使性能稍快一些。</li><li>数据精度的优化：世界坐标系下的坐标值，纹理映射坐标值，用 <strong>float</strong></li><li>数据精度的优化：除了HDR颜色之外的数据，使用 <strong>half</strong></li><li>数据精度的优化：纹理数据的相关的一些简单操作用 <strong>fixed</strong></li><li>各种GPU的区别： <strong>桌面GPU</strong> ，内部都会统一用 <strong>float</strong> 计算</li><li>各种GPU的区别： <strong>移动GPU</strong> 内部能真正支持half精度，大胆地使用它</li><li>各种GPU的区别： <strong>老旧的GPU</strong> 才内部实现了 <strong>fixed</strong> ， <strong>OpenGL ES3</strong> 及后续的都内部把 <strong>fixed</strong> 处理为 <strong>half</strong> 了</li><li><strong>Alpha Testing</strong> ：在iOS等等使用了PowerVR芯片的平台，表现不佳。</li><li><strong>ColorMask</strong> ：在某些平台上（大多数是在iOS和Android设备的移动GPU），使用 <strong>ColorMask</strong> 忽略某些通道（例如 <strong>ColorMask RGB</strong> ）可能会占用大量资源，因此仅在确实需要时才使用它。</li></ol><h2 id=参考网页>参考网页：</h2><p><a href=https://docs.unity3d.com/Manual/SL-ShaderPerformance.html>https://docs.unity3d.com/Manual/SL-ShaderPerformance.html</a></p><p><a href=https://www.cnblogs.com/sifenkesi/p/4716791.html>https://www.cnblogs.com/sifenkesi/p/4716791.html</a></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2019-12-31T11:37:25+08:00>December 31, 2019</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a>,
+<a class=meta-categories__link href=/categories/shaderlab/ rel=category>ShaderLab</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>shader</a>,
+<a class=meta-tags__link href=/tags/shaderlab/ rel=tag>ShaderLab</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/my_books/u3d_shader_annotation/>《Unity3D内建着色器源码剖析》</a></h1><div class=entry__content><p><img src=/image/book_erratas/u3d_shader_annotation.jpg alt></p><h2 id=书籍信息>书籍信息</h2><table><thead><tr><th style=text-align:center>信息</th><th style=text-align:center>详情</th></tr></thead><tbody><tr><td style=text-align:center>定价</td><td style=text-align:center>89.00</td></tr><tr><td style=text-align:center>出版社</td><td style=text-align:center>人民邮电出版社</td></tr><tr><td style=text-align:center>版次</td><td style=text-align:center>1</td></tr><tr><td style=text-align:center>出版时间</td><td style=text-align:center>2019年08月</td></tr><tr><td style=text-align:center>开本</td><td style=text-align:center>16</td></tr><tr><td style=text-align:center>装帧</td><td style=text-align:center>平装</td></tr><tr><td style=text-align:center>页数</td><td style=text-align:center>334</td></tr><tr><td style=text-align:center>ISBN编码</td><td style=text-align:center>9787115507044</td></tr></tbody></table><h2 id=官方qq群>官方QQ群</h2><p>群1号码：<strong>672523982</strong></p><h2 id=书籍配套代码>书籍配套代码</h2><table><thead><tr><th style=text-align:center>代码文件</th><th style=text-align:center>MD5值</th></tr></thead><tbody><tr><td style=text-align:center><a href=/files/builtin_shaders-2017.2.0f3.zip>Unity3D内建着色器源代码 版本2017.2.0f3</a></td><td style=text-align:center>MD5: 1737874a497c6fa04031af3c90ff2f99</td></tr><tr><td style=text-align:center><a href=/files/StarNight.zip>第12章的代码工程</a></td><td style=text-align:center>MD5：640938e9f1a259b7e693b1abe866f368</td></tr></tbody></table><h2 id=书中参考引用到的一些技术文章>书中参考引用到的一些技术文章</h2><ol><li>微软网站上关于DXT及BC系列格式的<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/bb694531(v=vs.85).aspx#BC1">详细介绍</a></li><li>微软MSDN上有介绍<a href="https://msdn.microsoft.com/en-us/library/windows/desktop/hh308955(v=vs.85).aspx">块状压缩</a>的文章</li><li>nVidia开发者网站有一篇介绍<a href=https://developer.nvidia.com/vrworks/graphics/singlepassstereo>单程立体渲染原理</a>的文章。</li><li>Unity3D官网也有<a href=https://docs.unity3d.com/2017.2/Documentation/Manual/SinglePassStereoRendering.html>单程立体渲染</a>的介绍</li></ol><h2 id=unity3d内建着色器源码剖析勘误表>《Unity3D内建着色器源码剖析》勘误表</h2><h3 id=第1版第1刷>第1版第1刷</h3><table><thead><tr><th style=text-align:center>章节</th><th style=text-align:center>页数</th><th style=text-align:center>位置</th><th style=text-align:center>错误内容</th><th style=text-align:center>正确内容</th></tr></thead><tbody><tr><td style=text-align:center>1.2.2</td><td style=text-align:center>正文第4页</td><td style=text-align:center>第5段第5行</td><td style=text-align:center>$$\left&lt; p_1,p_2,p_3 \right>$$ 的排列顺序称为顺时针方向（clockwise，CW）。</td><td style=text-align:center>$$ \left&lt; p_1,p_3,p_2 \right> $$ 的排列顺序称为顺时针方向（clockwise，CW）。……</td></tr><tr><td style=text-align:center>1.2.2</td><td style=text-align:center>正文第4页</td><td style=text-align:center>第6段第2行</td><td style=text-align:center>在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_2,p_3 \right> $$</td><td style=text-align:center>在图1-7（b）的左手坐标系下排列顺序改为 $$ \left&lt; p_1,p_3,p_2 \right> $$</td></tr><tr><td style=text-align:center>1.2.3</td><td style=text-align:center>正文第6页</td><td style=text-align:center>式1-7</td><td style=text-align:center><img src=/image/book_erratas/shi1-7-error.jpg alt></td><td style=text-align:center><img src=/image/book_erratas/shi1-7-correct.jpg alt></td></tr><tr><td style=text-align:center>1.2.3</td><td style=text-align:center>正文第8页</td><td style=text-align:center>第8段第4行</td><td style=text-align:center>&mldr;当 <strong>M</strong> 为旋转变换矩阵、平移变换矩阵和非均匀缩放矩阵中的一种或者它们的组合时，&mldr;</td><td style=text-align:center>&mldr;当 <strong>M</strong> 为非均匀缩放矩阵，或者是非均匀缩放矩阵与“旋转变换矩阵、平移变换矩阵这两种矩阵中的一个（或两个）”的组合时，&mldr;</td></tr><tr><td style=text-align:center>1.3.3</td><td style=text-align:center>正文第20页</td><td style=text-align:center>第2段第1行</td><td style=text-align:center>$$ T_2 $$ 表示 <strong>背面</strong> 三角形， $$ T_1 $$ 表示 <strong>正面</strong> 三角形</td><td style=text-align:center>$$ T_2 $$ 表示 <strong>正面</strong> 三角形，$ T_1 $$ 表示 <strong>背面</strong> 三角形</td></tr><tr><td style=text-align:center>1.3.3</td><td style=text-align:center>正文第20页</td><td style=text-align:center>图1-19</td><td style=text-align:center>$$ n_1.c_1 > 0 $$ ， <strong>正面</strong> ， $$ n_2.c_2 &lt; 0 $$ ， <strong>背面</strong></td><td style=text-align:center>$$ n_1.c_1 > 0 $$ ， <strong>背面</strong> ， $$ n_2.c_2 &lt; 0 $$ ， <strong>正面</strong></td></tr><tr><td style=text-align:center>2.2</td><td style=text-align:center>正文第35页</td><td style=text-align:center>第6段第3行</td><td style=text-align:center>&mldr; $$ \Phi _{\text{v}}\left( \lambda \right) $$ 为 <strong>辐射</strong> 通量对波长的函数； $$ \Phi _{\text{e}}\left( \lambda \right) $$ 为 <strong>光</strong> 通量对波长的函数；&mldr;</td><td style=text-align:center>&mldr; $$ \Phi _{\text{v}}\left( \lambda \right) $$ 为 <strong>光</strong> 通量对波长的函数； $$ \Phi _{\text{e}}\left( \lambda \right) $$ 为 <strong>辐射</strong> 通量对波长的函数；&mldr;</td></tr><tr><td style=text-align:center>3.1</td><td style=text-align:center>正文第57页</td><td style=text-align:center>表3-4第4行第2列</td><td style=text-align:center>指定一个函数，使用 <strong>DX 11的GPU镶嵌（tesselation）</strong> 功能计算 <strong>镶嵌因子</strong></td><td style=text-align:center>指定一个函数，使用 <strong>DirectX 11的GPU曲面细分（tesselation）</strong> 功能计算 <strong>曲面细分因子（tesselation factor）</strong></td></tr><tr><td style=text-align:center>3.4.3</td><td style=text-align:center>正文第48页</td><td style=text-align:center>第9小段</td><td style=text-align:center><strong>multi_compile_fwdadd</strong> 编译指示符将会根据当前选定的雾化因子&mldr;</td><td style=text-align:center><strong>multi_compile_fog</strong> 编译指示符将会根据当前选定的雾化因子&mldr;</td></tr><tr><td style=text-align:center>10.1</td><td style=text-align:center>正文第214页</td><td style=text-align:center>公式10-1</td><td style=text-align:center>$$ I_{do} = I_{do}K_d\max \left( \cos \theta , 0 \right) $$</td><td style=text-align:center>$$ I_{do} = I_{di}K_d\max \left( \cos \theta , 0 \right) $$</td></tr></tbody></table></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2019-12-30T15:25:10+08:00>December 30, 2019</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>Shader</a>,
+<a class=meta-tags__link href=/tags/shaderlab/ rel=tag>ShaderLab</a></span></div></div></article></div></div></main></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

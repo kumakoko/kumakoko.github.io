@@ -1,420 +1,159 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>在unity中生成一个guid值 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="在unity中生成一个guid值">
-		<meta property="og:title" content="在unity中生成一个guid值" />
-<meta property="og:description" content="在unity中生成一个guid值" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/u3d_guid/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2025-11-12T18:21:49+08:00" />
-<meta property="article:modified_time" content="2025-11-12T18:21:49+08:00" />
-
-
-		<meta itemprop="name" content="在unity中生成一个guid值">
-<meta itemprop="description" content="在unity中生成一个guid值"><meta itemprop="datePublished" content="2025-11-12T18:21:49+08:00" />
-<meta itemprop="dateModified" content="2025-11-12T18:21:49+08:00" />
-<meta itemprop="wordCount" content="286">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">在unity中生成一个guid值</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2025-11-12T18:21:49&#43;08:00">November 12, 2025</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">在unity中生成一个guid值</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#unity中生成guid的方法">Unity中生成GUID的方法</a></li>
-        <li><a href="#关键说明">关键说明</a></li>
-        <li><a href="#总结">总结</a></li>
-      </ul>
-    </li>
-    <li><a href="#生成一个int类型的guid">生成一个int类型的GUID</a>
-      <ul>
-        <li><a href="#核心说明int无法承载完整guid">核心说明：int无法承载完整GUID</a></li>
-        <li><a href="#方案1从guid中截取哈希值推荐">方案1：从GUID中截取哈希值（推荐）</a></li>
-        <li><a href="#方案2截断guid字节生成int">方案2：截断GUID字节生成int</a></li>
-        <li><a href="#方案3全局自增整数替代方案100唯一">方案3：全局自增整数（替代方案，100%唯一）</a></li>
-        <li><a href="#关键注意事项">关键注意事项</a></li>
-        <li><a href="#总结-1">总结</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h3 id="unity中生成guid的方法">Unity中生成GUID的方法</h3>
-<p>Unity本身提供了便捷的API来生成GUID，同时也兼容C#标准库的GUID生成方式，以下是两种最常用且可靠的方法：</p>
-<h4 id="方法1使用unity内置的guid类推荐">方法1：使用Unity内置的GUID类（推荐）</h4>
-<p>Unity引擎有专门的 <code>UnityEditor.GUID</code> 类（编辑器环境）和 <code>System.Guid</code> 类（运行时/编辑器通用），其中运行时通用的方式兼容性最好：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> UnityEngine;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GuidGenerator</span> : MonoBehaviour
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> Start()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 生成新的GUID</span>
-</span></span><span style="display:flex;"><span>        System.Guid newGuid = System.Guid.NewGuid();
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 转换为字符串（常用格式，包含连字符）</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> guidString = newGuid.ToString();
-</span></span><span style="display:flex;"><span>        Debug.Log(<span style="color:#e6db74">&#34;生成的GUID（带连字符）：&#34;</span> + guidString);
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 转换为无连字符的字符串（适合存储/传输）</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">string</span> guidNoHyphen = newGuid.ToString(<span style="color:#e6db74">&#34;N&#34;</span>);
-</span></span><span style="display:flex;"><span>        Debug.Log(<span style="color:#e6db74">&#34;生成的GUID（无连字符）：&#34;</span> + guidNoHyphen);
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 转换为Unity编辑器专用的GUID类型（仅编辑器环境可用）</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#if</span> UNITY_EDITOR
-</span></span><span style="display:flex;"><span>        UnityEditor.GUID unityGuid = UnityEditor.GUID.Generate();
-</span></span><span style="display:flex;"><span>        Debug.Log(<span style="color:#e6db74">&#34;Unity编辑器GUID：&#34;</span> + unityGuid.ToString());
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">#endif</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h4 id="方法2编辑器扩展批量生成快捷生成">方法2：编辑器扩展（批量生成/快捷生成）</h4>
-<p>如果需要在编辑器面板快速生成GUID，可以写一个简单的编辑器工具：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> UnityEditor;
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> UnityEngine;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GuidCreatorWindow</span> : EditorWindow
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">    [MenuItem(&#34;Tools/生成GUID&#34;)]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> OpenWindow()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        GuidCreatorWindow window = GetWindow&lt;GuidCreatorWindow&gt;(<span style="color:#e6db74">&#34;GUID生成器&#34;</span>);
-</span></span><span style="display:flex;"><span>        window.Show();
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> OnGUI()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        GUILayout.Label(<span style="color:#e6db74">&#34;点击按钮生成新的GUID&#34;</span>, EditorStyles.boldLabel);
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (GUILayout.Button(<span style="color:#e6db74">&#34;生成并复制到剪贴板&#34;</span>))
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">string</span> newGuid = System.Guid.NewGuid().ToString();
-</span></span><span style="display:flex;"><span>            EditorGUIUtility.systemCopyBuffer = newGuid;
-</span></span><span style="display:flex;"><span>            Debug.Log(<span style="color:#e6db74">&#34;已生成并复制GUID：&#34;</span> + newGuid);
-</span></span><span style="display:flex;"><span>            EditorUtility.DisplayDialog(<span style="color:#e6db74">&#34;成功&#34;</span>, <span style="color:#e6db74">&#34;GUID已复制到剪贴板：\n&#34;</span> + newGuid, <span style="color:#e6db74">&#34;确定&#34;</span>);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="关键说明">关键说明</h3>
-<ol>
-<li><strong>运行时 vs 编辑器</strong>：
-<ul>
-<li><code>System.Guid.NewGuid()</code>：可在<strong>运行时和编辑器</strong>中使用，跨平台兼容（PC/手机/主机等）。</li>
-<li><code>UnityEditor.GUID.Generate()</code>：仅在<strong>编辑器环境</strong>可用（打包后会报错），主要用于Unity编辑器内的资源标识。</li>
-</ul>
-</li>
-<li><strong>GUID格式</strong>：
-<ul>
-<li><code>ToString()</code>：默认格式（如 <code>550e8400-e29b-41d4-a716-446655440000</code>）。</li>
-<li><code>ToString(&quot;N&quot;)</code>：无连字符格式（如 <code>550e8400e29b41d4a716446655440000</code>），适合存储到数据库或配置文件。</li>
-</ul>
-</li>
-<li><strong>使用场景</strong>：
-<ul>
-<li>给游戏内的物品/角色/存档数据生成唯一标识。</li>
-<li>编辑器中标记自定义资源，避免重复。</li>
-<li>网络通信中标识唯一的请求/响应。</li>
-</ul>
-</li>
-</ol>
-<h3 id="总结">总结</h3>
-<ol>
-<li><strong>通用场景</strong>：优先使用 <code>System.Guid.NewGuid()</code>，支持运行时和编辑器，跨平台无限制。</li>
-<li><strong>编辑器专属</strong>：仅在编辑器代码中使用 <code>UnityEditor.GUID.Generate()</code>，用于Unity内置资源管理。</li>
-<li><strong>格式选择</strong>：带连字符格式可读性好，无连字符格式更适合存储和传输。</li>
-</ol>
-<p>生成的GUID理论上全球唯一，无需担心重复问题，是Unity中实现唯一标识的最佳方案。</p>
-<h2 id="生成一个int类型的guid">生成一个int类型的GUID</h2>
-<h3 id="核心说明int无法承载完整guid">核心说明：int无法承载完整GUID</h3>
-<p>首先要明确：标准GUID是128位（16字节）的唯一值，而C#的<code>int</code>类型仅32位（4字节），<strong>无法直接将完整GUID转换为int</strong>（会丢失大量信息，导致唯一性失效）。</p>
-<p>但你可以通过以下两种方案，生成基于GUID逻辑的、尽可能唯一的int值：</p>
-<h3 id="方案1从guid中截取哈希值推荐">方案1：从GUID中截取哈希值（推荐）</h3>
-<p>通过GUID生成哈希码（Hash Code），哈希码是int类型，且能最大程度保证唯一性（极低概率重复）：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> UnityEngine;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">IntGuidGenerator</span> : MonoBehaviour
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> Start()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 1. 生成标准GUID</span>
-</span></span><span style="display:flex;"><span>        System.Guid guid = System.Guid.NewGuid();
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 2. 转换为int类型的哈希值（核心步骤）</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> intGuid = guid.GetHashCode();
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        Debug.Log(<span style="color:#e6db74">&#34;生成的GUID：&#34;</span> + guid);
-</span></span><span style="display:flex;"><span>        Debug.Log(<span style="color:#e6db74">&#34;对应的int值：&#34;</span> + intGuid);
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 进阶：生成无符号整数（uint，范围更大）</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">uint</span> uintGuid = (<span style="color:#66d9ef">uint</span>)guid.GetHashCode();
-</span></span><span style="display:flex;"><span>        Debug.Log(<span style="color:#e6db74">&#34;对应的无符号int值：&#34;</span> + uintGuid);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="方案2截断guid字节生成int">方案2：截断GUID字节生成int</h3>
-<p>直接截取GUID的前4个字节转换为int，缺点是唯一性比哈希法略低，但逻辑更直观：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> UnityEngine;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">TruncatedIntGuid</span> : MonoBehaviour
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> Start()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        System.Guid guid = System.Guid.NewGuid();
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 获取GUID的字节数组（共16个字节）</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">byte</span>[] guidBytes = guid.ToByteArray();
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 截取前4个字节转换为int</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">int</span> intGuid = System.BitConverter.ToInt32(guidBytes, <span style="color:#ae81ff">0</span>);
-</span></span><span style="display:flex;"><span>        
-</span></span><span style="display:flex;"><span>        Debug.Log(<span style="color:#e6db74">&#34;截断生成的int GUID：&#34;</span> + intGuid);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="方案3全局自增整数替代方案100唯一">方案3：全局自增整数（替代方案，100%唯一）</h3>
-<p>如果你的核心需求只是“唯一的int标识”，而非必须基于GUID，推荐使用自增整数（完全避免重复）：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> UnityEngine;
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">UniqueIntGenerator</span> : MonoBehaviour
-</span></span><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 静态变量保存当前最大值，保证全局唯一</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> _currentId = <span style="color:#ae81ff">0</span>;
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 线程安全的自增方法</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> GetNextUniqueInt()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> System.Threading.Interlocked.Increment(<span style="color:#66d9ef">ref</span> _currentId);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">void</span> Start()
-</span></span><span style="display:flex;"><span>    {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 生成多个唯一int值测试</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i = <span style="color:#ae81ff">0</span>; i &lt; <span style="color:#ae81ff">5</span>; i++)
-</span></span><span style="display:flex;"><span>        {
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> uniqueInt = GetNextUniqueInt();
-</span></span><span style="display:flex;"><span>            Debug.Log(<span style="color:#e6db74">&#34;唯一int标识：&#34;</span> + uniqueInt);
-</span></span><span style="display:flex;"><span>        }
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="关键注意事项">关键注意事项</h3>
-<ol>
-<li><strong>唯一性风险</strong>：
-<ul>
-<li>方案1/2生成的int值仍有极低概率重复（GUID的128位压缩到32位），适合对唯一性要求不极致的场景（如本地临时标识）。</li>
-<li>方案3的自增int是100%唯一的，适合需要绝对唯一标识的场景（如游戏内物品ID）。</li>
-</ul>
-</li>
-<li><strong>数值范围</strong>：
-<ul>
-<li><code>int</code>的范围是 <code>-2147483648 ~ 2147483647</code>，如果需要更大范围，可改用<code>long</code>（64位），兼容性更好。</li>
-</ul>
-</li>
-<li><strong>使用场景</strong>：
-<ul>
-<li>临时标识、本地缓存key：用方案1/2。</li>
-<li>持久化数据标识、全局唯一ID：用方案3。</li>
-</ul>
-</li>
-</ol>
-<h3 id="总结-1">总结</h3>
-<ol>
-<li><strong>无真正的int型GUID</strong>：因位数限制，无法将128位GUID完整转为32位int，只能通过哈希/截断生成“类GUID的int值”。</li>
-<li><strong>推荐方案</strong>：
-<ul>
-<li>需基于GUID逻辑：用<code>guid.GetHashCode()</code>生成int哈希值。</li>
-<li>需绝对唯一：用全局自增int（最可靠）。</li>
-</ul>
-</li>
-<li><strong>进阶优化</strong>：若int范围不够，可改用<code>long</code>类型（<code>guid.GetHashCode()</code>转为long，或自增long），兼顾唯一性和存储效率。</li>
-</ol>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/yooasset_note/">Yoasset学习笔记和踩坑记录</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_scoped_registry_detail/">详解Unity3D packmanager的scoped registry</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/hlsl_sv_dispatch_thread_id_detail/">一篇文章说透计算着色器的SV_DispatchThreadID</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/texture_streaming/">使用mipmap streaming来优化GPU的纹理内存</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/reconstruct_world_position/">一段根据片元深度值重建对应的深度坐标值的代码及其解释</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>在unity中生成一个guid值 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="在unity中生成一个guid值"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/u3d_guid/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="在unity中生成一个guid值"><meta property="og:description" content="在unity中生成一个guid值"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2025-11-12T18:21:49+08:00"><meta property="article:modified_time" content="2025-11-12T18:21:49+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="在unity中生成一个guid值"><meta itemprop=description content="在unity中生成一个guid值"><meta itemprop=datePublished content="2025-11-12T18:21:49+08:00"><meta itemprop=dateModified content="2025-11-12T18:21:49+08:00"><meta itemprop=wordCount content="286"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>在unity中生成一个guid值</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2025-11-12T18:21:49+08:00>November 12, 2025</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>在unity中生成一个guid值</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><ul><li><a href=#unity中生成guid的方法>Unity中生成GUID的方法</a></li><li><a href=#关键说明>关键说明</a></li><li><a href=#总结>总结</a></li></ul></li><li><a href=#生成一个int类型的guid>生成一个int类型的GUID</a><ul><li><a href=#核心说明int无法承载完整guid>核心说明：int无法承载完整GUID</a></li><li><a href=#方案1从guid中截取哈希值推荐>方案1：从GUID中截取哈希值（推荐）</a></li><li><a href=#方案2截断guid字节生成int>方案2：截断GUID字节生成int</a></li><li><a href=#方案3全局自增整数替代方案100唯一>方案3：全局自增整数（替代方案，100%唯一）</a></li><li><a href=#关键注意事项>关键注意事项</a></li><li><a href=#总结-1>总结</a></li></ul></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h3 id=unity中生成guid的方法>Unity中生成GUID的方法</h3><p>Unity本身提供了便捷的API来生成GUID，同时也兼容C#标准库的GUID生成方式，以下是两种最常用且可靠的方法：</p><h4 id=方法1使用unity内置的guid类推荐>方法1：使用Unity内置的GUID类（推荐）</h4><p>Unity引擎有专门的 <code>UnityEditor.GUID</code> 类（编辑器环境）和 <code>System.Guid</code> 类（运行时/编辑器通用），其中运行时通用的方式兼容性最好：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>GuidGenerator</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Start<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 生成新的GUID</span>
+</span></span><span style=display:flex><span>        System<span style=color:#1f2328>.</span>Guid newGuid <span style=color:#1f2328>=</span> System<span style=color:#1f2328>.</span>Guid<span style=color:#1f2328>.</span>NewGuid<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 转换为字符串（常用格式，包含连字符）</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>string</span> guidString <span style=color:#1f2328>=</span> newGuid<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;生成的GUID（带连字符）：&#34;</span> <span style=color:#1f2328>+</span> guidString<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 转换为无连字符的字符串（适合存储/传输）</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>string</span> guidNoHyphen <span style=color:#1f2328>=</span> newGuid<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;N&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;生成的GUID（无连字符）：&#34;</span> <span style=color:#1f2328>+</span> guidNoHyphen<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 转换为Unity编辑器专用的GUID类型（仅编辑器环境可用）</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>#if</span> UNITY_EDITOR
+</span></span><span style=display:flex><span>        UnityEditor<span style=color:#1f2328>.</span>GUID unityGuid <span style=color:#1f2328>=</span> UnityEditor<span style=color:#1f2328>.</span>GUID<span style=color:#1f2328>.</span>Generate<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Unity编辑器GUID：&#34;</span> <span style=color:#1f2328>+</span> unityGuid<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>());</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>#endif</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h4 id=方法2编辑器扩展批量生成快捷生成>方法2：编辑器扩展（批量生成/快捷生成）</h4><p>如果需要在编辑器面板快速生成GUID，可以写一个简单的编辑器工具：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEditor</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>GuidCreatorWindow</span> <span style=color:#1f2328>:</span> EditorWindow
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>    [MenuItem(&#34;Tools/生成GUID&#34;)]</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> OpenWindow<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        GuidCreatorWindow window <span style=color:#1f2328>=</span> GetWindow<span style=color:#1f2328>&lt;</span>GuidCreatorWindow<span style=color:#1f2328>&gt;(</span><span style=color:#0a3069>&#34;GUID生成器&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        window<span style=color:#1f2328>.</span>Show<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> OnGUI<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        GUILayout<span style=color:#1f2328>.</span>Label<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;点击按钮生成新的GUID&#34;</span><span style=color:#1f2328>,</span> EditorStyles<span style=color:#1f2328>.</span>boldLabel<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>GUILayout<span style=color:#1f2328>.</span>Button<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;生成并复制到剪贴板&#34;</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>string</span> newGuid <span style=color:#1f2328>=</span> System<span style=color:#1f2328>.</span>Guid<span style=color:#1f2328>.</span>NewGuid<span style=color:#1f2328>().</span>ToString<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>            EditorGUIUtility<span style=color:#1f2328>.</span>systemCopyBuffer <span style=color:#1f2328>=</span> newGuid<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;已生成并复制GUID：&#34;</span> <span style=color:#1f2328>+</span> newGuid<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            EditorUtility<span style=color:#1f2328>.</span>DisplayDialog<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;成功&#34;</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;GUID已复制到剪贴板：\n&#34;</span> <span style=color:#1f2328>+</span> newGuid<span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;确定&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=关键说明>关键说明</h3><ol><li><strong>运行时 vs 编辑器</strong>：<ul><li><code>System.Guid.NewGuid()</code>：可在<strong>运行时和编辑器</strong>中使用，跨平台兼容（PC/手机/主机等）。</li><li><code>UnityEditor.GUID.Generate()</code>：仅在<strong>编辑器环境</strong>可用（打包后会报错），主要用于Unity编辑器内的资源标识。</li></ul></li><li><strong>GUID格式</strong>：<ul><li><code>ToString()</code>：默认格式（如 <code>550e8400-e29b-41d4-a716-446655440000</code>）。</li><li><code>ToString("N")</code>：无连字符格式（如 <code>550e8400e29b41d4a716446655440000</code>），适合存储到数据库或配置文件。</li></ul></li><li><strong>使用场景</strong>：<ul><li>给游戏内的物品/角色/存档数据生成唯一标识。</li><li>编辑器中标记自定义资源，避免重复。</li><li>网络通信中标识唯一的请求/响应。</li></ul></li></ol><h3 id=总结>总结</h3><ol><li><strong>通用场景</strong>：优先使用 <code>System.Guid.NewGuid()</code>，支持运行时和编辑器，跨平台无限制。</li><li><strong>编辑器专属</strong>：仅在编辑器代码中使用 <code>UnityEditor.GUID.Generate()</code>，用于Unity内置资源管理。</li><li><strong>格式选择</strong>：带连字符格式可读性好，无连字符格式更适合存储和传输。</li></ol><p>生成的GUID理论上全球唯一，无需担心重复问题，是Unity中实现唯一标识的最佳方案。</p><h2 id=生成一个int类型的guid>生成一个int类型的GUID</h2><h3 id=核心说明int无法承载完整guid>核心说明：int无法承载完整GUID</h3><p>首先要明确：标准GUID是128位（16字节）的唯一值，而C#的<code>int</code>类型仅32位（4字节），<strong>无法直接将完整GUID转换为int</strong>（会丢失大量信息，导致唯一性失效）。</p><p>但你可以通过以下两种方案，生成基于GUID逻辑的、尽可能唯一的int值：</p><h3 id=方案1从guid中截取哈希值推荐>方案1：从GUID中截取哈希值（推荐）</h3><p>通过GUID生成哈希码（Hash Code），哈希码是int类型，且能最大程度保证唯一性（极低概率重复）：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>IntGuidGenerator</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Start<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 1. 生成标准GUID</span>
+</span></span><span style=display:flex><span>        System<span style=color:#1f2328>.</span>Guid guid <span style=color:#1f2328>=</span> System<span style=color:#1f2328>.</span>Guid<span style=color:#1f2328>.</span>NewGuid<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 2. 转换为int类型的哈希值（核心步骤）</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>int</span> intGuid <span style=color:#1f2328>=</span> guid<span style=color:#1f2328>.</span>GetHashCode<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;生成的GUID：&#34;</span> <span style=color:#1f2328>+</span> guid<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;对应的int值：&#34;</span> <span style=color:#1f2328>+</span> intGuid<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 进阶：生成无符号整数（uint，范围更大）</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>uint</span> uintGuid <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>uint</span><span style=color:#1f2328>)</span>guid<span style=color:#1f2328>.</span>GetHashCode<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;对应的无符号int值：&#34;</span> <span style=color:#1f2328>+</span> uintGuid<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=方案2截断guid字节生成int>方案2：截断GUID字节生成int</h3><p>直接截取GUID的前4个字节转换为int，缺点是唯一性比哈希法略低，但逻辑更直观：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>TruncatedIntGuid</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Start<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        System<span style=color:#1f2328>.</span>Guid guid <span style=color:#1f2328>=</span> System<span style=color:#1f2328>.</span>Guid<span style=color:#1f2328>.</span>NewGuid<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 获取GUID的字节数组（共16个字节）</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>byte</span><span style=color:#1f2328>[]</span> guidBytes <span style=color:#1f2328>=</span> guid<span style=color:#1f2328>.</span>ToByteArray<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 截取前4个字节转换为int</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>int</span> intGuid <span style=color:#1f2328>=</span> System<span style=color:#1f2328>.</span>BitConverter<span style=color:#1f2328>.</span>ToInt32<span style=color:#1f2328>(</span>guidBytes<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;截断生成的int GUID：&#34;</span> <span style=color:#1f2328>+</span> intGuid<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=方案3全局自增整数替代方案100唯一>方案3：全局自增整数（替代方案，100%唯一）</h3><p>如果你的核心需求只是“唯一的int标识”，而非必须基于GUID，推荐使用自增整数（完全避免重复）：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>UniqueIntGenerator</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 静态变量保存当前最大值，保证全局唯一</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>int</span> _currentId <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 线程安全的自增方法</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>int</span> GetNextUniqueInt<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> System<span style=color:#1f2328>.</span>Threading<span style=color:#1f2328>.</span>Interlocked<span style=color:#1f2328>.</span>Increment<span style=color:#1f2328>(</span><span style=color:#cf222e>ref</span> _currentId<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Start<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 生成多个唯一int值测试</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>5</span><span style=color:#1f2328>;</span> i<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>int</span> uniqueInt <span style=color:#1f2328>=</span> GetNextUniqueInt<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>            Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;唯一int标识：&#34;</span> <span style=color:#1f2328>+</span> uniqueInt<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=关键注意事项>关键注意事项</h3><ol><li><strong>唯一性风险</strong>：<ul><li>方案1/2生成的int值仍有极低概率重复（GUID的128位压缩到32位），适合对唯一性要求不极致的场景（如本地临时标识）。</li><li>方案3的自增int是100%唯一的，适合需要绝对唯一标识的场景（如游戏内物品ID）。</li></ul></li><li><strong>数值范围</strong>：<ul><li><code>int</code>的范围是 <code>-2147483648 ~ 2147483647</code>，如果需要更大范围，可改用<code>long</code>（64位），兼容性更好。</li></ul></li><li><strong>使用场景</strong>：<ul><li>临时标识、本地缓存key：用方案1/2。</li><li>持久化数据标识、全局唯一ID：用方案3。</li></ul></li></ol><h3 id=总结-1>总结</h3><ol><li><strong>无真正的int型GUID</strong>：因位数限制，无法将128位GUID完整转为32位int，只能通过哈希/截断生成“类GUID的int值”。</li><li><strong>推荐方案</strong>：<ul><li>需基于GUID逻辑：用<code>guid.GetHashCode()</code>生成int哈希值。</li><li>需绝对唯一：用全局自增int（最可靠）。</li></ul></li><li><strong>进阶优化</strong>：若int范围不够，可改用<code>long</code>类型（<code>guid.GetHashCode()</code>转为long，或自增long），兼顾唯一性和存储效率。</li></ol></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/yooassets/yooasset_note/>Yoasset学习笔记和踩坑记录</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_scoped_registry_detail/>详解Unity3D packmanager的scoped registry</a></li><li class=related__item><a class=related__link href=/post/unity3d/unitask/unitask_completion_source/>用UniTask包装异步回调函数以及UniTaskCompletionSource精讲</a></li><li class=related__item><a class=related__link href=/post/unity3d/unitask/unitask_forget/>UniTask的Forget函数精讲</a></li><li class=related__item><a class=related__link href=/post/unity3d/hlsl_sv_dispatch_thread_id_detail/>一篇文章说透计算着色器的SV_DispatchThreadID</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

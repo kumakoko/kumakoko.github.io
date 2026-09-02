@@ -1,401 +1,255 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Posts | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="Posts" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/post/" />
-
-
-		<meta itemprop="name" content="Posts">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/post/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-section">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Posts</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">Posts</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/pixel_perfect_outline_shaders_unity/">Pixel-Perfect Outline Shaders for Unity</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-以下是基于你提供的内容的总结和解读，保留示例代码和图片链接：
-轮廓着色器的工作原理与优化 1. 经典轮廓技术 起源：在 2003 年游戏《XIII》中首次看到 3D 对象的轮廓效果，使用固定功能管线实现。 实现方式：通过网格的外壳（Outer Hull）和反转法线绘制轮廓，覆盖黑色纹理。 现代改进：使用顶点着色器在单独 Pass 中渲染略微膨胀的网格，剔除正面。 2. 经典轮廓技术的局限性 局限性 描述 轮廓宽度不均匀 轮廓宽度随物体形状和视角变化。 透视缩短 轮廓宽度随物体远离相机而变窄（透视投影）。 对象空间单位 轮廓宽度以对象空间单位指定，而非像素。 3. 经典轮廓着色器代码 Shader &#34;Tutorial/Outline&#34; { Properties { _Color (&#34;Color&#34;, Color) = (1, 1, 1, 1) _Glossiness (&#34;Smoothness&#34;, Range(0, 1)) = 0.5 _Metallic (&#34;Metallic&#34;, Range(0, 1)) = 0 _OutlineColor (&#34;Outline Color&#34;, Color) = (0, 0, 0, 1) _OutlineWidth (&#34;Outline Width&#34;, Range(0, 0.1)) = 0.03 } Subshader { Tags { &#34;RenderType&#34; = &#34;Opaque&#34; } CGPROGRAM #pragma surface surf Standard fullforwardshadows Input { float4 color : COLOR; } half4 _Color; half _Glossiness; half _Metallic; void surf(Input IN, inout SufaceStandardOutput o) { o.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-04-29T11:37:25&#43;08:00">April 29, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>, 
-		<a class="meta-categories__link" href="/categories/shaderlab/" rel="category">ShaderLab</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>, 
-		<a class="meta-tags__link" href="/tags/shaderlab/" rel="tag">ShaderLab</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/build_xlua_for_android/">使用Android NDK编译xlua</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-基本上就是按照参考网页所示的那样子，先后安装好Android Studio，打开【File|Setting】菜单项打开界面，把google的CMake选好。注意这里一定要用google家的CMake，用原生CMake不行
-如果google CMake的版本过高的话，会报CMake Error: Could not create named generator Android Gradle - Ninja的错误，较新版本的google CMake会产生这个问题，反而低版本的不会，所以选用3.6.4111459版本的才行。Stack Overflow网站上有人就这个问题做了回答：
-Compatibility of CMake version might be an issue, Old NDK (below 13b) is not compatible with the new CMake, so, either update NDK or remove the new CMake (to force older CMake usage). Check your System Setting and version listed under SDK Tools Go to Appearance &amp; Behaviour -&gt; System Settings -&gt; Android SDK Incompatible 3.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-03-23T15:52:57&#43;08:00">March 23, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_srp_static_dynamic_batch_gpuinstance/">Unity3D的SRP,Static Batching、Dynamic Batching和GPU instancing</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-所谓的draw call batching（绘制批处理），就是指对将要绘制的N个网格，在保持渲染结果正确的前提下，将draw call进行合并，以一整批，而不是单个的方式，向GPU提交这些draw call操作。 绘制批处理有若干种实现方式，有些方式只是减少了提交draw call的次数，但执行draw call的次数没变少。有些方式则是直接减少了draw call的数量。
-在《Unity DrawCall、Batch、SetPassCall的区别》一文中对Batching的解释很到位，摘录如下：
-Batch 把数据加载到显存，设置渲染状态，CPU调用GPU渲染的过程称之为一个Batch。这其实就是渲染流程的运用阶段，最终输出一个渲染图元（点、线、面等），再传递给GPU进行几何阶段和光栅化阶段的渲染显示。一个Batch必然会触发一次或多次DrawCall，且包含了该对象的所有的网格和顶点数据以及材质信息。把数据加载到显存是指把渲染所需的数据从硬盘加载到内存（RAM），再将网格和纹理等加载到显卡（VRAM），这一步比较耗时。设置渲染状态就是设置场景中的网格的顶点（Vertex）/片元（Fragment）着色器，光源属性，材质等。Unity提供的动态合批（Dynamic Batching ）合并的就是这一过程，将渲染状态相同的对象合并成一个Batch，减少DrawCall。
-还有对SetPassCall的解释也很好，摘录如下：
-SetPassCall Shader脚本中一个Pass语义块就是一个完整的渲染流程，一个着色器可以包含多个Pass语义块，每当GPU运行一个Pass之前，就会产生一个SetPassCall，所以可以理解为一次完整的渲染流程次数。
-由此可见，一个Batch包含一个或多个DrawCall，都是产生是在CPU阶段，而目前普遍渲染的瓶颈恰恰就是CPU，GPU的处理速度比CPU快多了，Draw Call太高，CPU会把大量时间花费在处理Draw Call调用上。如果Batch太大，CPU需要频繁的从硬盘加载数据，切换渲染状态，这个消耗要比DrawCall大，所以后面Unity才逐渐弱化了DrawCall的显示。
-再提一下，优化的时候还要关注下Statistics窗口上的三角形数（Tris）和顶点数（Verts），这两个数据也是会影响到性能，比如单个物体的顶点数最好不要超过900，不然会影响到Unity的动态合批。Unity的Statistics窗口上的三角形数（Tris）和顶点数（Verts）并不仅仅是视锥中的梯形内的三角形数和顶点数，而是Camera中 field of view所有取值下的三角形数和顶点数。也就是说，即使当前Game视图中看不到这个 cube，只有 field of view在1-179 范围内都看不到这个cube，stats面板才不会统计，GPU才不会渲染，否则都会渲染，而且Unity不会把模型拆分，这个模型哪怕只有1个顶点需要渲染，Unity也会把整个模型都渲出来。
-四种优化方式的适用场合 优化方式的优先级 一些细节笔记 参考网页 Unity DrawCall、Batch、SetPassCall的区别
-浅谈Draw Call和Batch的区别
-Unity渲染优化的4种批处理：静态批处理，动态批处理，SRP Batcher 与 GPU Instancing
-Draw call batching
-为什么baches（draw calls）数那么高？ 它们有什么意义？
-请教Unity中的Draw Call Batch规则</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-03-18T20:20:49&#43;08:00">March 18, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_fbx_import_tangent_option/">批量设置FBX文件导入模型切线方式</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原理 利用AssetDatabase.FindAssets(&quot;t:Model&quot;)找出所有的FBX模型的GUID。再利用AssetDatabase.GUIDToAssetPath将GUID转为文件路径。然后使用 AssetImporter.GetAtPath函数拿到 模型导入器（ModelImporter） 对象。模型导入期对象里面就有一个importTangents属性项，当此项为None时表示没切线，其他选项都表示带有切线信息。下面是查找所有带有切线信息的模型的函数。
-/// &lt;summary&gt; /// 查找出带有切线信息的模型 /// &lt;/summary&gt; /// List&lt;string&gt; mikkTSpace 使用Morten Mikkelsen切线空间(MikkTSpace)算法计算生成切线的模型文件名 /// List&lt;string&gt; calculateLegacy 使用传统的算法计算生成切线的模型文件名 /// List&lt;string&gt; calculateLegacyWithSplitTangents,使用传统的算法，并对UV图表进行拆分的方式，计算生成切线的模型文件名 /// List&lt;string&gt; imported 从原始文件中导入切线的模型文件名 private void FindAllModelsContainTangent(List&lt;string&gt; mikkTSpace,List&lt;string&gt; calculateLegacy, List&lt;string&gt; calculateLegacyWithSplitTangents,List&lt;string&gt; imported) { // 使用了库函数，用&#34;t:Model&#34;参数检索所有的模型文件。即FBX文件 // 返回的是所有fbx的GUID string[] allModels = AssetDatabase.FindAssets(&#34;t:Model&#34;); for (int i = 0; i &lt; allModels.Length; i++) { // 把GUID换成资源文件路径名，然后使用AssetImporter模块获取到模型导入器 string modelPath = AssetDatabase.GUIDToAssetPath(allModels[i]); var modelImporter = AssetImporter.GetAtPath(modelPath) as ModelImporter; if (modelImporter == null) continue; switch (modelImporter.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-03-06T17:52:57&#43;08:00">March 06, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_ugui_optimization/">UGUI优化</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-影响性能的要素 像素填充率（FillRate） 概念：指每秒每秒显卡能填充的像素数
-填充率和over draw息息相关，over draw由GPU影响
-影响像素填充率的原因
-半透明物体过多
-绘制半透明物体需要： 1 开启ALPHA_BLEND 2 关闭Z TEST和Z WRITE 同一像素的over draw过高， 即重复绘制次数过多
-优化方法
-对于Alpha值为0，但是又要响应输入的不可见物体，采用 无绘制但能响应RayCast的组件来处理 减少填充区域的覆盖，比如一个矩形区域，它的周围空白不 可见区域比较多，那可以考虑把矩形转化为若干个三角形 Draw call draw call受CPU影响
-UGUI引入了canvas的概念，提供给相同材质的 界面组件进行合批，减少draw call
-优化方法
-使用同一组材质球的UI组件，放置在同一个canvas下 动静分离：canvas可以分组，如果某个界面，存在着会动 的元素和不会动的元素，则考虑分成两组。但canvas如果 先SetActive(false)，再SetActive(true)。则需要ForceUpdate 它强制重绘 绘制顺序不要穿插，比如A组件用了A材质球，B组件用了B材 质球，C组件用了A材质球，如果不存在相互遮盖关系的话， 那么应该在scene hierachy窗口中，将三个组件按上下顺序 排序为A,C,B 其他优化策略汇总 少用Mask组件 原理：Mask组件会额外消耗多一个Drawcall来创建遮罩做像素剔除。 Mask组件不利于层级合并。原本同一图集里的ui可以合并层级， 仅需一个Drawcall渲染，如果加入Mask，就会将一个ui整体分割 成了Mask下的子ui与其他ui，两者只能各自进行层级合并，至少 要两个Drawcall。 字体 尽量减少字体特效，outline，渐变等，可以使用本身带有描边的字体文件 ，尽量统一字体风格，减少不必要的额外字体文件，不用richtext 界面切换 原理：增加一个新层，并且将Camera的Culling Mask中取消勾选， 即不渲染该层，UI界面在切换时，将其Canvas所在Layer设置为该 层，看起来就像被隐藏了 优点：于切换时基本没有开销，也不会产生多余的 Draw Call 缺点：隐藏时依然还会有一定的持续开销，而其对应的Mesh 也会始终存在于内存中。 各种界面隐藏方案的优劣分析 SetActive产生GC,会导致画布丢弃它的VBO数据，从而重建和重新批处理，操作频繁时GC导致CPU占用可能会卡顿。 enable Canvas禁用画布,能降低dc，避免SetActive的GC开销，但测试依旧会有SendWillRenderCanvases函数的调用开销。 移出RootCanvas，似乎没有多大优化，理论上会降低dc且不会引起重建。 将单独界面使用Canvas，绑定一个Camera在隐藏时设置Layer进行CullingMask蔽，同时禁用GraphicsRaycaster，能避免重建，但随着canvas增多dc会增多，同时界面较时管理比较费力，注意动态UI的事件。 设置Canvas Group 的alpha为0：依旧会被渲染，但能避免setactive带来的巨大开销，且容易操作。 更改Scale的值为0：点信息被清除，这样不会减少dc开销，同时还会引起重建，不采用。 设置一个Canvas作为根节点，将其layer设置为相机屏蔽的层级，同时禁用GraphicsRaycaster，当需要隐藏某个界面时将其以该Canvas作为根节点移到其下，这样能避免重建同时减少dc，但会有一些SetParent带来的消耗。目前采用该方案。 如果只是隐藏某个Graphic类的，可以考虑获取canvasRenderer.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-03-06T15:52:57&#43;08:00">March 06, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_single_channel_texture/">杂谈Unity3D的single channel texture</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-经实测，在Unity3D 2020.2.6f1版本中，在导入纹理的钩子代码中，如果设置TextureImporter.textureType = TextureImporterType.SingleChannel，以及TextureImporterPlatformSettings.format = TextureImporterFormat.R8是一张2048的贴图，导入后其格式
-根据Unity的纹理格式文档描述：
-当TextureImporter.textureType为TextureImporterType.SingleChannel时，除了R8之外，可选的格式有：
-据UWA的人说，R Compressed 4 bit应该是但在本版本的Unity中，其对应的TextureImporterFormat.COM枚举值应该是EAC_R。
-根据Unity的纹理格式文档描述：
-R Compressed EAC 4 bit是一个High-quality compressed R (single-channel) 纹理。一个256x256的纹理，在内存中其大小为32KB。在Android平台下，OpenGLES2.0版本是不支持该格式的，如果指定了该格式，则会自动解压为 【ETC2 fallback】 标签项所指定的纹理格式。
-考虑到现在Android手机早就已经是支持OpenGLES3了，所以大胆使用此格式，作为单通道贴图的导入格式。
-参考网页 best-texture-format-for-a-single-channel Crunched single channel texture an-introduction-to-texture-compression-in-unity Unity Editor下判断图片是否带alpha通道 Unity 中纹理压缩的方式 – 搁浅の砖厂 Recommended, default, and supported texture formats, by platform C# (CSharp) UnityEditor TextureImporterSettings示例 https://huailiang.github.io/blog/2022/astc/</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-02-23T15:04:03&#43;08:00">February 23, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/animation/animancer_transition/">Animancer的Transition参数手册（翻译）</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-Transitions 与其硬编码淡入淡出的持续时间(hard-coding the fade durations)，开始和结束时间，动画剪辑的播放速度和动画事件，不如使用transition机制。此机制可以在编辑模式下的可视化地编辑它们。由非程序员在Inspector面板中定义这些细节，无需编辑和重新编译任何脚本。
-Animancer中包含的每个State类都有其自己的Transition Type，其中包含与之相关的各种详细信息，以便在将其传递给AnimancerComponent.Play(ITransition)时，这些详细信息可用来创建该State类型。例如，当播放一个AnimationClip对象（即一个动画片段剪辑）时，一个ClipState.Transition将创建一个ClipState实例对象。如下代码所示：
-using Animancer; using UnityEngine; public class TransitionExample : MonoBehaviour { [SerializeField] private AnimancerComponent _Animancer; [SerializeField] private ClipState.Transition _Animation; private void OnEnable() { _Animancer.Play(_Animation); } } 对应的inspector显示如下图：
-这个示例详细演示如何使用transitions。
-Fields 字段名字 代码值 inspector截图 Animation Clip Fade Duration FadeDuration Speed Speed Start Time NormalizedStartTime End Time Events.NormalizedEndTime Events Events 各个属性的说明如下表
-字段名字 说明 Animation 要播放的那个animation clip Fade Duration 从上一个动画淡入淡出到新动画所需的时间。此值不能为负，并且将其设置为0 sill会使动画立即播放。不管使用哪个字段输入值， 此时间字段始终被序列化为秒 Speed 动画以其正常速度的倍数播放的速度。负值会使它向后播放（因此可能希望将Start Time设置为1x，以便从末尾开始向后播放 Start Time 如果启用，播放时动画时刻将立即跳到该值。否则，它将显示默认值：0x（正速度）或1x（负速度）。如果动画的AnimancerNode.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-02-12T20:20:49&#43;08:00">February 12, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/animation/animancer_state/">Animancer的States（翻译）</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-State 当播放一段动画剪辑（animation clip）时，Animancer会创建一个ClipState来管理它并跟踪其进度。ClipState是最常见的一种AnimancerState，除此之外，有其他类型的AnimancerState，例如Controller States和 Mixer States。这些用来在一个state中管理多个动画剪辑。
-执行AnimancerComponent.Play函数播放一个animation clip，就返回一个AnimancerState对象，如下代码所示：
-void PlayAnimation(AnimancerComponent animancer, AnimationClip clip) { // Play the animation and control its state: var state = animancer.Play(clip); state.Time = ... state.NormalizedTime = ... state.Speed = ... state.OnEnd = ... } 也可以自己访问和创建状态，而无需立即播放它们：
-code description var state = animancer.States.GetOrCreate(clip); 访问状态而不播放状态（该Play方法在内部使用此状态）。 var state = animancer.States[clip]; 获取状态（如果存在）（否则为null）。 var state = animancer.States.Create(key, clip); 即使该动画已经存在，也要创建一个新状态。注意必须为每个状态提供不同的key。 var state = new ClipState(animancer, clip); 创建一个新状态而不给它一个Key。可以使用其AnimancerState.Key属性分配一个。 Keys 当用AnimancerComponent.Play方法创建一个state时，这个state存储在一个内部的Dictionary容器中，通过指定某个key，用以在以后用这个key来检索使用该state。
-默认地，该state所播放的那段动画剪辑所对应的AnimationClip实例对象，将作为该state的key值 NameAnimancerComponent将重载其GetKey方法，NameAnimancerComponent类不再使用它播放的AnimationClip对象，而是使用这个动画剪辑的名字字符串去作为key。但在启动时，可以在inspector面板中，在Animation中预先注册好这个 void PlayAnimation(AnimancerComponent animancer, AnimationClip clip) { // Trying to play an animation before registering it does nothing.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-02-11T20:30:49&#43;08:00">February 11, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/animation/u3d_animation_state_detail/">Unity3D的Animator中的animation transition参数细节</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-选项 描述 Has Exit Time 如果设置为true，则仅在指定的动画剪辑已经播放了给定百分比之后，才启用动画剪辑过渡（transition）。 如果禁用，则将在满足其过渡条件后，立即进行切换。 如果要创建由若干个动画剪辑组成的序列，请将其设置为true。 Exit Time 这是满足“Has Exit Time”选项勾选后，指定的播放动画长度的百分比（0-1范围）。 例如，如果将其设置为0.5，则在播放了50％的动画剪辑后，当满足转换条件后，动画的状态将转换。 Fixed Duration 这个属性将和下一个属性“ Transition Duration (s)”结合使用。如果本选项启用，的财产与下一个过渡期间结合在一起。 如果启用，则Transition Duration (s) 项以秒为单位;如果关闭，则以动画播放时间的百分比表示。 Transition Duration (s) 动画状态过渡所需的时间。 这是从一个动画剪辑过渡到另一个所用的时间。 在过渡期间动画剪辑会被混合在一起。 过渡时间越长，会让动画剪辑转换得更平滑些，否则就转换得更锐利。一个好的默认值是大约0.25。 Transition Offset 选项会把待处理的目标动画开始时刻做偏移。该值以动画剪辑的播放百分比表示。 比如将其设置为0.3。意思是说，当从动画剪辑A过渡到动画剪辑B时，那么A过渡到B之后，会从B的30%处开始播放，而不会从B的开始刻度处开始播放。 Interruption Source 此设置告诉Unity某个动画剪辑过渡。是否可以被其他过渡打断。 例如动画系统下有一个默认的Idle动画，Idle动画有Jump动画分支和Walk动画分支，而Walk动画分支下又有一个Jump1动画分支，当我们同时满足两个Jump动画的切换条件时，Interruption Source就可以判断优先从哪个动画源切换到Jump或Jump1。Interruption Source中四个选项如下表中的几个选项的一个 Interruption Source的各个选项表 选项 描述 None 关闭Interruption Source选项 Current State: 从当前源打断 Next State 从下一个源打断 Current State then Next State 优先从当前源打断，如果当前源不能切换到下一个状态则从下一个源打断。 Next State then Current State 和上一个选项相反 Ordered Interruption If set to false, this lets the transition be interrupted by other transitions independently of their order.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-01-02T20:20:49&#43;08:00">January 02, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_color_space/">Unity3D的Color Space细节解析</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-参考网页 https://zhuanlan.zhihu.com/p/36507196
-https://zhuanlan.zhihu.com/p/93216787
-https://blog.csdn.net/candycat1992/article/details/46228771
-https://developer.nvidia.com/gpugems/GPUGems3
-http://www.klayge.org/2011/02/26/gamma%E7%9A%84%E4%BC%A0%E8%AF%B4/
-https://zhuanlan.zhihu.com/p/36507196
-https://www.kinematicsoup.com/news/2016/6/15/gamma-and-linear-space-what-they-are-how-they-differ
-https://zhuanlan.zhihu.com/p/66558476
-https://www.cambridgeincolour.com/tutorials/gamma-correction.htm
-https://zhuanlan.zhihu.com/p/37679604
-https://zhuanlan.zhihu.com/p/271011254</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-01-01T20:20:49&#43;08:00">January 01, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
-<div class="pagination block">
-				<a class="pagination__item pagination__item--desktop" href="/post/">1</a>
-				<a class="pagination__item pagination__item--desktop" href="/post/page/2/">2</a>
-				<a class="pagination__item pagination__item--desktop" href="/post/page/3/">3</a>
-			<span class="pagination__item pagination__item--gap">&hellip;</span>
-				<a class="pagination__item pagination__item--desktop" href="/post/page/5/">5</a>
-				<span class="pagination__item pagination__item--active" data-total="15">6</span>
-				<a class="pagination__item pagination__item--desktop" href="/post/page/7/">7</a>
-			<span class="pagination__item pagination__item--gap">&hellip;</span>
-				<a class="pagination__item pagination__item--desktop" href="/post/page/15/">15</a>
-</div>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Posts | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/post/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Posts"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="Posts"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2026-03-28T21:21:49+08:00"><meta itemprop=dateModified content="2026-03-28T21:21:49+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/post/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-section"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Posts</li></ol></nav><div class="page block"><h1 class=page__title>Posts</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_srp_static_dynamic_batch_gpuinstance/>Unity3D的SRP,Static Batching、Dynamic Batching和GPU instancing</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>所谓的<strong>draw call batching</strong>（<strong>绘制批处理</strong>），就是指对将要绘制的N个网格，在保持渲染结果正确的前提下，将draw call进行合并，以一整批，而不是单个的方式，向GPU提交这些draw call操作。
+绘制批处理有若干种实现方式，有些方式只是减少了提交draw call的次数，但执行draw call的次数没变少。有些方式则是直接减少了draw call的数量。</p><p>在《<a href=https://zhuanlan.zhihu.com/p/366779113>Unity DrawCall、Batch、SetPassCall的区别</a>》一文中对Batching的解释很到位，摘录如下：</p><blockquote><p><strong>Batch</strong>
+把数据加载到显存，设置渲染状态，CPU调用GPU渲染的过程称之为一个Batch。这其实就是渲染流程的运用阶段，最终输出一个渲染图元（点、线、面等），再传递给GPU进行几何阶段和光栅化阶段的渲染显示。<strong>一个Batch必然会触发一次或多次DrawCall</strong>，且包含了该对象的所有的网格和顶点数据以及材质信息。把数据加载到显存是指把渲染所需的数据从硬盘加载到内存（RAM），再将网格和纹理等加载到显卡（VRAM），这一步比较耗时。设置渲染状态就是设置场景中的网格的顶点（Vertex）/片元（Fragment）着色器，光源属性，材质等。Unity提供的动态合批（Dynamic Batching ）合并的就是这一过程，将渲染状态相同的对象合并成一个Batch，减少DrawCall。</p></blockquote><p>还有对SetPassCall的解释也很好，摘录如下：</p><blockquote><p><strong>SetPassCall</strong>
+Shader脚本中一个Pass语义块就是一个完整的渲染流程，一个着色器可以包含多个Pass语义块，每当GPU运行一个Pass之前，就会产生一个SetPassCall，所以可以理解为一次完整的渲染流程次数。</p><p>由此可见，<strong>一个Batch包含一个或多个DrawCall</strong>，都是产生是在CPU阶段，而目前普遍渲染的瓶颈恰恰就是CPU，<strong>GPU的处理速度比CPU快多了</strong>，Draw Call太高，CPU会把大量时间花费在处理Draw Call调用上。如果Batch太大，CPU需要频繁的从硬盘加载数据，切换渲染状态，这个消耗要比DrawCall大，所以后面Unity才逐渐弱化了DrawCall的显示。</p><p>再提一下，优化的时候还要关注下Statistics窗口上的三角形数（Tris）和顶点数（Verts），这两个数据也是会影响到性能，比如单个物体的顶点数最好不要超过900，不然会影响到Unity的动态合批。Unity的Statistics窗口上的三角形数（Tris）和顶点数（Verts）并不仅仅是视锥中的梯形内的三角形数和顶点数，而是Camera中 field of view所有取值下的三角形数和顶点数。也就是说，即使当前Game视图中看不到这个 cube，只有 field of view在1-179 范围内都看不到这个cube，stats面板才不会统计，GPU才不会渲染，否则都会渲染，而且Unity不会把模型拆分，这个模型哪怕只有1个顶点需要渲染，Unity也会把整个模型都渲出来。</p></blockquote><h3 id=四种优化方式的适用场合>四种优化方式的适用场合</h3><p><img src=/image/u3d/srp_static_dynamic_batching_gpu_instancing/all.jpg alt=四种优化方式的适用场合></p><h3 id=优化方式的优先级>优化方式的优先级</h3><p><img src=/image/u3d/srp_static_dynamic_batching_gpu_instancing/all2.png alt=优化方式的优先级></p><h3 id=一些细节笔记>一些细节笔记</h3><p><img src=/image/u3d/srp_static_dynamic_batching_gpu_instancing/srp_batch.svg alt></p><h2 id=参考网页>参考网页</h2><p><a href=https://zhuanlan.zhihu.com/p/366779113>Unity DrawCall、Batch、SetPassCall的区别</a></p><p><a href=http://www.manew.com/4702.html>浅谈Draw Call和Batch的区别</a></p><p><a href=https://zhuanlan.zhihu.com/p/432223843>Unity渲染优化的4种批处理：静态批处理，动态批处理，SRP Batcher 与 GPU Instancing</a></p><p><a href=https://docs.unity3d.com/2020.3/Documentation/Manual/DrawCallBatching.html>Draw call batching</a></p><p><a href=https://support.unity.com/hc/zh-cn/articles/207061413-%E4%B8%BA%E4%BB%80%E4%B9%88baches-draw-calls-%E6%95%B0%E9%82%A3%E4%B9%88%E9%AB%98-%E5%AE%83%E4%BB%AC%E6%9C%89%E4%BB%80%E4%B9%88%E6%84%8F%E4%B9%89->为什么baches（draw calls）数那么高？ 它们有什么意义？</a></p><p><a href=https://answer.uwa4d.com/question/58d290f39ad5c0094f461e62>请教Unity中的Draw Call Batch规则</a></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-03-18T20:20:49+08:00>March 18, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_fbx_import_tangent_option/>批量设置FBX文件导入模型切线方式</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=原理>原理</h2><p>利用<code>AssetDatabase.FindAssets("t:Model")</code>找出所有的FBX模型的GUID。再利用<code>AssetDatabase.GUIDToAssetPath</code>将GUID转为文件路径。然后使用 <code>AssetImporter.GetAtPath</code>函数拿到 <strong>模型导入器（ModelImporter）</strong> 对象。模型导入期对象里面就有一个<code>importTangents</code>属性项，当此项为<code>None</code>时表示没切线，其他选项都表示带有切线信息。下面是查找所有带有切线信息的模型的函数。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>/// &lt;summary&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 查找出带有切线信息的模型</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// &lt;/summary&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// List&lt;string&gt; mikkTSpace 使用Morten Mikkelsen切线空间(MikkTSpace)算法计算生成切线的模型文件名</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// List&lt;string&gt; calculateLegacy 使用传统的算法计算生成切线的模型文件名</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// List&lt;string&gt; calculateLegacyWithSplitTangents,使用传统的算法，并对UV图表进行拆分的方式，计算生成切线的模型文件名</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// List&lt;string&gt; imported 从原始文件中导入切线的模型文件名</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>private</span> <span style=color:#cf222e>void</span> FindAllModelsContainTangent<span style=color:#1f2328>(</span>List<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> mikkTSpace<span style=color:#1f2328>,</span>List<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> calculateLegacy<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>List<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> calculateLegacyWithSplitTangents<span style=color:#1f2328>,</span>List<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> imported<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 使用了库函数，用&#34;t:Model&#34;参数检索所有的模型文件。即FBX文件</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 返回的是所有fbx的GUID</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>string</span><span style=color:#1f2328>[]</span> allModels <span style=color:#1f2328>=</span> AssetDatabase<span style=color:#1f2328>.</span>FindAssets<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;t:Model&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#1f2328>&lt;</span> allModels<span style=color:#1f2328>.</span>Length<span style=color:#1f2328>;</span> i<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 把GUID换成资源文件路径名，然后使用AssetImporter模块获取到模型导入器</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>string</span> modelPath <span style=color:#1f2328>=</span> AssetDatabase<span style=color:#1f2328>.</span>GUIDToAssetPath<span style=color:#1f2328>(</span>allModels<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>var</span> modelImporter <span style=color:#1f2328>=</span> AssetImporter<span style=color:#1f2328>.</span>GetAtPath<span style=color:#1f2328>(</span>modelPath<span style=color:#1f2328>)</span> <span style=color:#cf222e>as</span> ModelImporter<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>modelImporter <span style=color:#1f2328>==</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>continue</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>switch</span> <span style=color:#1f2328>(</span>modelImporter<span style=color:#1f2328>.</span>importTangents<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>case</span> ModelImporterTangents<span style=color:#1f2328>.</span>CalculateLegacy<span style=color:#1f2328>:</span> <span style=color:#57606a>// 使用传统的算法计算生成切线</span>
+</span></span><span style=display:flex><span>                calculateLegacy<span style=color:#1f2328>.</span>Add<span style=color:#1f2328>(</span>modelPath<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>case</span> ModelImporterTangents<span style=color:#1f2328>.</span>CalculateLegacyWithSplitTangents<span style=color:#1f2328>:</span> <span style=color:#57606a>// 使用传统的算法，并对UV图表进行拆分的方式，计算生成切线</span>
+</span></span><span style=display:flex><span>                calculateLegacyWithSplitTangents<span style=color:#1f2328>.</span>Add<span style=color:#1f2328>(</span>modelPath<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>case</span> ModelImporterTangents<span style=color:#1f2328>.</span>CalculateMikk<span style=color:#1f2328>:</span> <span style=color:#57606a>// 使用了MikkTSpace方式生成计算切线 http://www.mikktspace.com/</span>
+</span></span><span style=display:flex><span>                mikkTSpace<span style=color:#1f2328>.</span>Add<span style=color:#1f2328>(</span>modelPath<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>case</span> ModelImporterTangents<span style=color:#1f2328>.</span>Import<span style=color:#1f2328>:</span> <span style=color:#57606a>// 从原始文件中导入切线</span>
+</span></span><span style=display:flex><span>                imported<span style=color:#1f2328>.</span>Add<span style=color:#1f2328>(</span>modelPath<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>case</span> ModelImporterTangents<span style=color:#1f2328>.</span>None<span style=color:#1f2328>:</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>default</span><span style=color:#1f2328>:</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>break</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=参考网页>参考网页</h3><p><a href=http://www.mikktspace.com/>MikkTSpace方式生成计算切线</a></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-03-06T17:52:57+08:00>March 06, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_ugui_optimization/>UGUI优化</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=影响性能的要素>影响性能的要素</h2><h3 id=像素填充率fillrate>像素填充率（FillRate）</h3><ul><li><p>概念：指每秒每秒显卡能填充的像素数</p></li><li><p>填充率和over draw息息相关，over draw由GPU影响</p></li><li><p>影响像素填充率的原因</p><ul><li><p>半透明物体过多</p><ul><li>绘制半透明物体需要：</li><li>1 开启ALPHA_BLEND</li><li>2 关闭Z TEST和Z WRITE</li></ul></li><li><p>同一像素的over draw过高，
+即重复绘制次数过多</p></li></ul></li><li><p>优化方法</p><ul><li>对于Alpha值为0，但是又要响应输入的不可见物体，采用
+无绘制但能响应RayCast的组件来处理</li><li>减少填充区域的覆盖，比如一个矩形区域，它的周围空白不
+可见区域比较多，那可以考虑把矩形转化为若干个三角形</li></ul></li></ul><h3 id=draw-call>Draw call</h3><ul><li><p>draw call受CPU影响</p></li><li><p>UGUI引入了canvas的概念，提供给相同材质的
+界面组件进行合批，减少draw call</p></li><li><p>优化方法</p><ul><li>使用同一组材质球的UI组件，放置在同一个canvas下</li><li>动静分离：canvas可以分组，如果某个界面，存在着会动
+的元素和不会动的元素，则考虑分成两组。但canvas如果
+先SetActive(false)，再SetActive(true)。则需要ForceUpdate
+它强制重绘</li><li>绘制顺序不要穿插，比如A组件用了A材质球，B组件用了B材
+质球，C组件用了A材质球，如果不存在相互遮盖关系的话，
+那么应该在scene hierachy窗口中，将三个组件按上下顺序
+排序为A,C,B</li></ul></li></ul><h2 id=其他优化策略汇总>其他优化策略汇总</h2><h3 id=少用mask组件>少用Mask组件</h3><ul><li>原理：Mask组件会额外消耗多一个Drawcall来创建遮罩做像素剔除。</li><li>Mask组件不利于层级合并。原本同一图集里的ui可以合并层级，
+仅需一个Drawcall渲染，如果加入Mask，就会将一个ui整体分割
+成了Mask下的子ui与其他ui，两者只能各自进行层级合并，至少
+要两个Drawcall。</li></ul><h3 id=字体>字体</h3><ul><li>尽量减少字体特效，outline，渐变等，可以使用本身带有描边的字体文件</li><li>，尽量统一字体风格，减少不必要的额外字体文件，不用richtext</li></ul><h3 id=界面切换>界面切换</h3><ul><li>原理：增加一个新层，并且将Camera的Culling Mask中取消勾选，
+即不渲染该层，UI界面在切换时，将其Canvas所在Layer设置为该
+层，看起来就像被隐藏了</li><li>优点：于切换时基本没有开销，也不会产生多余的 Draw Call</li><li>缺点：隐藏时依然还会有一定的持续开销，而其对应的Mesh
+也会始终存在于内存中。</li></ul><h2 id=各种界面隐藏方案的优劣分析>各种界面隐藏方案的优劣分析</h2><ul><li><strong>SetActive</strong>产生GC,会导致画布丢弃它的VBO数据，从而重建和重新批处理，操作频繁时GC导致CPU占用可能会卡顿。</li><li><strong>enable Canvas</strong>禁用画布,能降低dc，避免SetActive的GC开销，但测试依旧会有SendWillRenderCanvases函数的调用开销。</li><li><strong>移出RootCanvas</strong>，似乎没有多大优化，理论上会降低dc且不会引起重建。</li><li>将单独界面使用Canvas，绑定一个Camera在隐藏时设置Layer进行CullingMask蔽，<strong>同时禁用GraphicsRaycaster</strong>，能避免重建，但随着canvas增多dc会增多，同时界面较时管理比较费力，注意动态UI的事件。</li><li><strong>设置Canvas Group 的alpha为0</strong>：依旧会被渲染，但能避免setactive带来的巨大开销，且容易操作。</li><li><strong>更改Scale的值为0</strong>：点信息被清除，这样不会减少dc开销，同时还会引起重建，不采用。</li><li>设置一个Canvas作为根节点，将其layer设置为相机屏蔽的层级，同时禁用GraphicsRaycaster，当需要隐藏某个界面时将其以该Canvas作为根节点移到其下，这样能避免重建同时减少dc，但会有一些SetParent带来的消耗。目前采用该方案。</li><li>如果只是隐藏某个Graphic类的，可以考虑获取canvasRenderer.cull 设置为true (需要注意的是，在使用
+RectMask2D时，该属性会被修改，一般可在非使用RectMask2D的时候代码处理)</li></ul></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-03-06T15:52:57+08:00>March 06, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_single_channel_texture/>杂谈Unity3D的single channel texture</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>经实测，在Unity3D 2020.2.6f1版本中，在导入纹理的钩子代码中，如果设置<code>TextureImporter.textureType = TextureImporterType.SingleChannel</code>，以及<code>TextureImporterPlatformSettings.format = TextureImporterFormat.R8</code>是一张2048的贴图，导入后其格式</p><p><img src=r8.jpg alt=TextureImporterFormat.R8></p><p>根据<a href=https://docs.unity3d.com/2019.3/Documentation/Manual/class-TextureImporterOverride.html>Unity的纹理格式文档</a>描述：</p><p>当TextureImporter.textureType为TextureImporterType.SingleChannel时，除了R8之外，可选的格式有：</p><p><img src=single_channel_tex_format.gif alt=SingleChannel下可选的格式></p><p>据<a href=https://answer.uwa4d.com/question/613afe308f8c8342419efe40>UWA</a>的人说，R Compressed 4 bit应该是但在本版本的Unity中，其对应的TextureImporterFormat.COM枚举值应该是EAC_R。</p><p>根据<a href=https://docs.unity3d.com/2019.3/Documentation/Manual/class-TextureImporterOverride.html>Unity的纹理格式文档</a>描述：</p><p><strong>R Compressed EAC 4 bit</strong>是一个<strong>High-quality compressed R (single-channel)</strong> 纹理。一个256x256的纹理，在内存中其大小为<strong>32KB</strong>。在Android平台下，<strong>OpenGLES2.0版本是不支持该格式的</strong>，如果指定了该格式，则会自动解压为 <strong>【ETC2 fallback】</strong> 标签项所指定的纹理格式。</p><p>考虑到现在Android手机早就已经是支持OpenGLES3了，所以大胆使用此格式，作为单通道贴图的导入格式。</p><h1 id=参考网页>参考网页</h1><ul><li><a href=https://forum.unity.com/threads/best-texture-format-for-a-single-channel-mask-type-texture.205651/>best-texture-format-for-a-single-channel</a></li><li><a href=https://forum.unity.com/threads/crunched-single-channel-texture.778370/>Crunched single channel texture</a></li><li><a href=https://www.techarthub.com/an-introduction-to-texture-compression-in-unity/>an-introduction-to-texture-compression-in-unity</a></li><li><a href=https://blog.csdn.net/iningwei/article/details/87880658>Unity Editor下判断图片是否带alpha通道</a></li><li><a href=https://while.work/unity->Unity 中纹理压缩的方式 – 搁浅の砖厂</a></li><li><a href=https://docs.unity3d.com/Manual/class-TextureImporterOverride.html>Recommended, default, and supported texture formats, by platform</a></li><li><a href=https://csharp.hotexamples.com/zh/examples/UnityEditor/TextureImporterSettings/-/php-textureimportersettings-class-examples.html>C# (CSharp) UnityEditor TextureImporterSettings示例</a></li></ul><p><a href=https://huailiang.github.io/blog/2022/astc/>https://huailiang.github.io/blog/2022/astc/</a></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-02-23T15:04:03+08:00>February 23, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/animation/animancer_transition/>Animancer的Transition参数手册（翻译）</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a></strong></p><p><a href=https://kybernetik.com.au/animancer/docs/manual/transitions/>原文地址</a></p><h2 id=transitions>Transitions</h2><p>与其硬编码<strong>淡入淡出</strong>的持续时间(hard-coding the fade durations)，开始和结束时间，动画剪辑的播放速度和动画事件，不如使用<strong>transition机制</strong>。此机制可以在编辑模式下的可视化地编辑它们。由非程序员在Inspector面板中定义这些细节，无需编辑和重新编译任何脚本。</p><p>Animancer中包含的每个<a href=https://kybernetik.com.au/animancer/docs/manual/playing/states>State类</a>都有其自己的<a href=https://kybernetik.com.au/animancer/docs/manual/transitions/types>Transition Type</a>，其中包含与之相关的各种详细信息，以便在将其传递给<code>AnimancerComponent.Play(ITransition)</code>时，这些详细信息可用来创建该State类型。例如，当播放一个<code>AnimationClip</code>对象（即一个动画片段剪辑）时，一个<code>ClipState.Transition</code>将创建一个<code>ClipState</code>实例对象。如下代码所示：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>Animancer</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>TransitionExample</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>    [SerializeField]</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> AnimancerComponent _Animancer<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>    [SerializeField]</span> 
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> ClipState<span style=color:#1f2328>.</span>Transition _Animation<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>void</span> OnEnable<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        _Animancer<span style=color:#1f2328>.</span>Play<span style=color:#1f2328>(</span>_Animation<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>对应的inspector显示如下图：</p><p><img src=/image/u3d/u3d_animation/animancer/transition-example.gif alt="enter description here"></p><p>这个<a href=https://kybernetik.com.au/animancer/docs/examples/basics/sequence-coroutine>示例</a>详细演示如何使用transitions。</p><h2 id=fields>Fields</h2><table><thead><tr><th style=text-align:center>字段名字</th><th style=text-align:center>代码值</th><th style=text-align:center>inspector截图</th></tr></thead><tbody><tr><td style=text-align:center><strong>Animation</strong></td><td style=text-align:center><code>Clip</code></td><td style=text-align:center><img src=/image/u3d/u3d_animation/animancer/animation.png alt></td></tr><tr><td style=text-align:center><strong>Fade Duration</strong></td><td style=text-align:center><code>FadeDuration</code></td><td style=text-align:center><img src=/image/u3d/u3d_animation/animancer/fade-duration.png alt></td></tr><tr><td style=text-align:center><strong>Speed</strong></td><td style=text-align:center><code>Speed</code></td><td style=text-align:center><img src=/image/u3d/u3d_animation/animancer/speed.png alt></td></tr><tr><td style=text-align:center><strong>Start Time</strong></td><td style=text-align:center><code>NormalizedStartTime</code></td><td style=text-align:center><img src=/image/u3d/u3d_animation/animancer/start-time.png alt></td></tr><tr><td style=text-align:center><strong>End Time</strong></td><td style=text-align:center><code>Events.NormalizedEndTime</code></td><td style=text-align:center><img src=/image/u3d/u3d_animation/animancer/end-time.png alt></td></tr><tr><td style=text-align:center><strong>Events</strong></td><td style=text-align:center><code>Events</code></td><td style=text-align:center><img src=/image/u3d/u3d_animation/animancer/events.png alt></td></tr></tbody></table><p>各个属性的说明如下表</p><table><thead><tr><th style=text-align:center>字段名字</th><th style=text-align:left>说明</th></tr></thead><tbody><tr><td style=text-align:center><strong>Animation</strong></td><td style=text-align:left>要播放的那个animation clip</td></tr><tr><td style=text-align:center><strong>Fade Duration</strong></td><td style=text-align:left>从上一个动画淡入淡出到新动画所需的时间。此值不能为负，并且将其设置为0 sill会使动画立即播放。不管使用哪个字段输入值， 此时间字段始终被序列化为秒</td></tr><tr><td style=text-align:center><strong>Speed</strong></td><td style=text-align:left>动画以其正常速度的倍数播放的速度。负值会使它向后播放（因此可能希望将<strong>Start Time</strong>设置为1x，以便从末尾开始向后播放</td></tr><tr><td style=text-align:center><strong>Start Time</strong></td><td style=text-align:left>如果启用，播放时动画时刻将立即跳到该值。否则，它将显示默认值：0x（正速度）或1x（负速度）。如果动画的AnimancerNode.Weight == 0在启动过渡时处于非活动状态（），则其时间将从该默认值开始，但是，如果动画处于活动状态，它将从当前时间开始继续播放。不管您使用哪个字段输入值， 此时间字段始终被序列化为标准化时间。</td></tr><tr><td style=text-align:center><strong>End Time</strong></td><td style=text-align:left>如果启用，则此值确定何时将发生“<strong>结束事件</strong>”（<a href=https://kybernetik.com.au/animancer/docs/manual/events/end>End Event</a>）。除了触发该事件之外，它不会影响动画的播放。不管使用哪个字段输入值， 此时间字段始终被序列化为标准化时间。</td></tr><tr><td style=text-align:center><strong>Events</strong></td><td style=text-align:left>此属性将以时间轴的方式去控制transition的一些细节，详细见下列</td></tr></tbody></table><h3 id=events属性的细节>Events属性的细节</h3><ul><li>标签显示重要时间（以秒为单位，四舍五入）。</li><li>蓝色突出显示的区域代表淡入和淡出。注意，过渡仅定义其淡入的方式，因此显示的淡出只是一个默认值。实际淡出将取决于下一个过渡的淡入方式。</li><li>底部下方的灰色条表示在“结束时间”不是1x的情况下，该动画的实际长度。</li><li>右侧的按钮会添加一个<strong>Animancer事件</strong>（<a href=https://kybernetik.com.au/animancer/docs/manual/events/animancer>Animancer Event</a>），该事件也会显示在该区域中。</li></ul><h3 id=time-fields>Time Fields</h3><p>上面的几个字段将单个值显示为两个单独的字段：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-02-12T20:20:49+08:00>February 12, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/animation/animancer_state/>Animancer的States（翻译）</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a></strong></p><p><a href=https://kybernetik.com.au/animancer/docs/manual/playing/states>原文地址</a></p><h2 id=state>State</h2><p>当播放一段动画剪辑（animation clip）时，Animancer会创建一个<code>ClipState</code>来管理它并跟踪其进度。<code>ClipState</code>是最常见的一种<code>AnimancerState</code>，除此之外，有其他类型的<code>AnimancerState</code>，例如<code>Controller States</code>和 <code>Mixer States</code>。这些用来在一个state中管理多个动画剪辑。</p><p>执行<code>AnimancerComponent.Play</code>函数播放一个animation clip，就返回一个<code>AnimancerState</code>对象，如下代码所示：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>void</span> PlayAnimation<span style=color:#1f2328>(</span>AnimancerComponent animancer<span style=color:#1f2328>,</span> AnimationClip clip<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Play the animation and control its state:</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> state <span style=color:#1f2328>=</span> animancer<span style=color:#1f2328>.</span>Play<span style=color:#1f2328>(</span>clip<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    state<span style=color:#1f2328>.</span>Time <span style=color:#1f2328>=</span> <span style=color:#1f2328>...</span>
+</span></span><span style=display:flex><span>    state<span style=color:#1f2328>.</span>NormalizedTime <span style=color:#1f2328>=</span> <span style=color:#1f2328>...</span>
+</span></span><span style=display:flex><span>    state<span style=color:#1f2328>.</span>Speed <span style=color:#1f2328>=</span> <span style=color:#1f2328>...</span>
+</span></span><span style=display:flex><span>    state<span style=color:#1f2328>.</span>OnEnd <span style=color:#1f2328>=</span> <span style=color:#1f2328>...</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>也可以自己访问和创建状态，而无需立即播放它们：</p><table><thead><tr><th style=text-align:center>code</th><th style=text-align:center>description</th></tr></thead><tbody><tr><td style=text-align:center><code>var state = animancer.States.GetOrCreate(clip);</code></td><td style=text-align:center>访问状态而不播放状态（该Play方法在内部使用此状态）。</td></tr><tr><td style=text-align:center><code>var state = animancer.States[clip];</code></td><td style=text-align:center>获取状态（如果存在）（否则为null）。</td></tr><tr><td style=text-align:center><code>var state = animancer.States.Create(key, clip);</code></td><td style=text-align:center>即使该动画已经存在，也要创建一个新状态。注意必须为每个状态提供不同的key。</td></tr><tr><td style=text-align:center><code>var state = new ClipState(animancer, clip);</code></td><td style=text-align:center>创建一个新状态而不给它一个Key。可以使用其<code>AnimancerState.Key</code>属性分配一个。</td></tr></tbody></table><h3 id=keys>Keys</h3><p>当用<code>AnimancerComponent.Play</code>方法创建一个state时，这个state存储在一个内部的<code>Dictionary</code>容器中，通过指定某个key，用以在以后用这个key来检索使用该state。</p><ul><li>默认地，该state所播放的那段动画剪辑所对应的AnimationClip实例对象，将作为该state的key值</li><li><code>NameAnimancerComponent</code>将重载其GetKey方法，<code>NameAnimancerComponent</code>类不再使用它播放的AnimationClip对象，而是使用这个动画剪辑的名字字符串去作为key。但在启动时，可以在inspector面板中，在Animation中预先注册好这个</li></ul><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>void</span> PlayAnimation<span style=color:#1f2328>(</span>AnimancerComponent animancer<span style=color:#1f2328>,</span> AnimationClip clip<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Trying to play an animation before registering it does nothing.</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 通过名字的方式试图去播一个animation clip，如果尚未注册的</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 话，通过名字是无法找到对应的animation clip去播放的</span>
+</span></span><span style=display:flex><span>    animancer<span style=color:#1f2328>.</span>Play<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Attack&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// But if you create a state with a key first, then you only need that key to play it later on.</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 如果预先创建一个state，该state通过字符串Attack作为key，指向一个clip，再调用播放接口就能正确播放了</span>
+</span></span><span style=display:flex><span>    animancer<span style=color:#1f2328>.</span>States<span style=color:#1f2328>.</span>Create<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Attack&#34;</span><span style=color:#1f2328>,</span> clip<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    animancer<span style=color:#1f2328>.</span>Play<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Attack&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Or you can create the state and set its key manually:</span>
+</span></span><span style=display:flex><span>	<span style=color:#57606a>// 或者直接创建一个ClipState对象，然后显式地设置</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> state <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> ClipState<span style=color:#1f2328>(</span>clip<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    state<span style=color:#1f2328>.</span>Key <span style=color:#1f2328>=</span> <span style=color:#0a3069>&#34;Attack&#34;</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><ul><li>如果不需要，则不需要设置<code>AnimancerState.Key</code>。可以简单地创建一个<code>ClipState</code>（或其他所需的一种<code>AnimancerState</code>）。并在要使用它时保留对其的引用。</li><li>如果要让多个state播放同一个animation clip（例如：需要在多个Layer上播放它），则需要使用不同的key注册所有状态（或根本不注册）。FadeMode.FromStart使用此选项可以使剪辑淡出，同时使另一个副本同时淡入。</li></ul><h3 id=enum-keys>Enum Keys</h3><p>枚举值可以用作key，但枚举是值类型，所以用枚举做key的时候，要对它进行装箱操作。相对而言，会带来一些性能消耗</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-02-11T20:30:49+08:00>February 11, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/animation/u3d_animation_state_detail/>Unity3D的Animator中的animation transition参数细节</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><img src=/image/u3d/u3d_animation/animation_transition_of_animator.jpg alt=动画剪辑之间的transition></p><table><thead><tr><th style=text-align:left>选项</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>Has Exit Time</td><td style=text-align:left>如果设置为true，则仅在指定的动画剪辑已经播放了给定百分比之后，才启用<strong>动画剪辑过渡</strong>（transition）。 如果禁用，则将在满足其过渡条件后，立即进行切换。 如果要创建由若干个动画剪辑组成的序列，请将其设置为true。</td></tr><tr><td style=text-align:left>Exit Time</td><td style=text-align:left>这是满足“<strong>Has Exit Time</strong>”选项勾选后，指定的播放动画长度的百分比（0-1范围）。 例如，如果将其设置为0.5，则在播放了50％的动画剪辑后，当满足转换条件后，动画的状态将转换。</td></tr><tr><td style=text-align:left>Fixed Duration</td><td style=text-align:left>这个属性将和下一个属性“ <strong>Transition Duration (s)</strong>”结合使用。如果本选项启用，的财产与下一个过渡期间结合在一起。 如果启用，则<strong>Transition Duration (s)</strong> 项以<strong>秒</strong>为单位;如果关闭，则以动画播放时间的百分比表示。</td></tr><tr><td style=text-align:left>Transition Duration (s)</td><td style=text-align:left>动画状态过渡所需的时间。 这是从一个动画剪辑过渡到另一个所用的时间。 在过渡期间动画剪辑会被混合在一起。 过渡时间越长，会让动画剪辑转换得更平滑些，否则就转换得更锐利。一个好的默认值是大约0.25。</td></tr><tr><td style=text-align:left>Transition Offset</td><td style=text-align:left>选项会把待处理的目标动画开始时刻做偏移。该值以动画剪辑的播放百分比表示。 比如将其设置为0.3。意思是说，当从动画剪辑A过渡到动画剪辑B时，那么A过渡到B之后，会从B的30%处开始播放，而不会从B的开始刻度处开始播放。</td></tr><tr><td style=text-align:left>Interruption Source</td><td style=text-align:left>此设置告诉Unity某个动画剪辑过渡。是否可以被其他过渡打断。 例如动画系统下有一个默认的Idle动画，Idle动画有Jump动画分支和Walk动画分支，而Walk动画分支下又有一个Jump1动画分支，当我们同时满足两个Jump动画的切换条件时，Interruption Source就可以判断优先从哪个动画源切换到Jump或Jump1。Interruption Source中四个选项如下表中的几个选项的一个</td></tr></tbody></table><h2 id=interruption-source的各个选项表>Interruption Source的各个选项表</h2><table><thead><tr><th style=text-align:left>选项</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>None</td><td style=text-align:left>关闭Interruption Source选项</td></tr><tr><td style=text-align:left>Current State:</td><td style=text-align:left>从当前源打断</td></tr><tr><td style=text-align:left>Next State</td><td style=text-align:left>从下一个源打断</td></tr><tr><td style=text-align:left>Current State then Next State</td><td style=text-align:left>优先从当前源打断，如果当前源不能切换到下一个状态则从下一个源打断。</td></tr><tr><td style=text-align:left>Next State then Current State</td><td style=text-align:left>和上一个选项相反</td></tr><tr><td style=text-align:left>Ordered Interruption</td><td style=text-align:left>If set to false, this lets the transition be interrupted by other transitions independently of their order. If set to true,the order of the transitions matters.</td></tr></tbody></table><p>从上面的表可以看出，Interrupiton Source的选项的细节说明，Unity3D提供的官方文档是<strong>极度反人类</strong>的。要彻底弄懂它，必须读这个文章：<a href=https://blogs.unity3d.com/cn/2016/07/13/wait-ive-changed-my-mind-state-machine-transition-interruptions/>Wait, I’ve changed my mind! State Machine Transition interruptions</a></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-01-02T20:20:49+08:00>January 02, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_color_space/>Unity3D的Color Space细节解析</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><img src=/image/u3d/u3d_color_space_explain.svg alt></p><h2 id=参考网页>参考网页</h2><p><a href=https://zhuanlan.zhihu.com/p/36507196>https://zhuanlan.zhihu.com/p/36507196</a></p><p><a href=https://zhuanlan.zhihu.com/p/93216787>https://zhuanlan.zhihu.com/p/93216787</a></p><p><a href=https://blog.csdn.net/candycat1992/article/details/46228771>https://blog.csdn.net/candycat1992/article/details/46228771</a></p><p><a href=https://developer.nvidia.com/gpugems/GPUGems3>https://developer.nvidia.com/gpugems/GPUGems3</a></p><p><a href=http://www.klayge.org/2011/02/26/gamma%E7%9A%84%E4%BC%A0%E8%AF%B4/>http://www.klayge.org/2011/02/26/gamma%E7%9A%84%E4%BC%A0%E8%AF%B4/</a></p><p><a href=https://zhuanlan.zhihu.com/p/36507196>https://zhuanlan.zhihu.com/p/36507196</a></p><p><a href=https://www.kinematicsoup.com/news/2016/6/15/gamma-and-linear-space-what-they-are-how-they-differ>https://www.kinematicsoup.com/news/2016/6/15/gamma-and-linear-space-what-they-are-how-they-differ</a></p><p><a href=https://zhuanlan.zhihu.com/p/66558476>https://zhuanlan.zhihu.com/p/66558476</a></p><p><a href=https://www.cambridgeincolour.com/tutorials/gamma-correction.htm>https://www.cambridgeincolour.com/tutorials/gamma-correction.htm</a></p><p><a href=https://zhuanlan.zhihu.com/p/37679604>https://zhuanlan.zhihu.com/p/37679604</a></p><p><a href=https://zhuanlan.zhihu.com/p/271011254>https://zhuanlan.zhihu.com/p/271011254</a></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-01-01T20:20:49+08:00>January 01, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/dotnet/understand_csharp_async_wait_3/>Understanding C# async / await 第3章</a></h1><div class=entry__content><p><a href=https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-1-compilation>Understanding C# async / await 第1章原文地址</a></p><p><a href=https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-2-awaitable-awaiter-pattern>Understanding C# async / await 第2章原文地址</a></p><p><a href=https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-3-runtime-context>Understanding C# async / await 第3章原文地址</a></p><hr><p>以下是基于你提供的内容的总结和解读，保留示例代码和关键细节：</p><hr><h1 id=理解-c-的-async--await-3运行时上下文><strong>理解 C# 的 async / await (3)：运行时上下文</strong></h1><h2 id=1-概述><strong>1. 概述</strong></h2><p>在前两篇文章中，我们探讨了 <code>async</code> 和 <code>await</code> 的编译过程和 Awaitable-Awaiter 模式。本文将深入探讨 <code>await</code> 在运行时的上下文处理机制，特别是如何通过 <code>ExecutionContext</code> 和 <code>SynchronizationContext</code> 解决跨线程问题。</p><h2 id=2-跨线程问题><strong>2. 跨线程问题</strong></h2><p>在 WPF 应用程序中，以下代码可以正常工作：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>this</span><span style=color:#1f2328>.</span>Button<span style=color:#1f2328>.</span>Click <span style=color:#1f2328>+=</span> <span style=color:#cf222e>async</span> <span style=color:#1f2328>(</span>sender<span style=color:#1f2328>,</span> e<span style=color:#1f2328>)</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>string</span> html <span style=color:#1f2328>=</span> <span style=color:#cf222e>await</span> <span style=color:#cf222e>new</span> WebClient<span style=color:#1f2328>().</span>DownloadStringTaskAsync<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;https://weblogs.asp.net/dixin&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>this</span><span style=color:#1f2328>.</span>TextBox<span style=color:#1f2328>.</span>Text <span style=color:#1f2328>=</span> html<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><p>但如果将其改写为 <code>Task.ContinueWith()</code> 的回调形式：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>this</span><span style=color:#1f2328>.</span>Button<span style=color:#1f2328>.</span>Click <span style=color:#1f2328>+=</span> <span style=color:#1f2328>(</span>sender<span style=color:#1f2328>,</span> e<span style=color:#1f2328>)</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>new</span> WebClient<span style=color:#1f2328>().</span>DownloadStringTaskAsync<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;https://weblogs.asp.net/dixin&#34;</span><span style=color:#1f2328>).</span>ContinueWith<span style=color:#1f2328>(</span><span style=color:#cf222e>await</span> <span style=color:#1f2328>=&gt;</span> 
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>string</span> html <span style=color:#1f2328>=</span> <span style=color:#cf222e>await</span><span style=color:#1f2328>.</span>Result<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>this</span><span style=color:#1f2328>.</span>TextBox<span style=color:#1f2328>.</span>Text <span style=color:#1f2328>=</span> html<span style=color:#1f2328>;</span> <span style=color:#57606a>// 可能会抛出 InvalidOperationException</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span></code></pre></div><p>这段代码可能会抛出 <code>InvalidOperationException</code>，因为回调代码可能在一个非 UI 线程中执行，无法直接访问 UI 控件。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-11-21T19:08:30+08:00>November 21, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/.net/ rel=category>.NET</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/.net/ rel=tag>.NET</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/dotnet/understand_csharp_async_wait_2/>Understanding C# async / await 第2章</a></h1><div class=entry__content><p><a href=https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-1-compilation>Understanding C# async / await 第1章原文地址</a></p><p><a href=https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-2-awaitable-awaiter-pattern>Understanding C# async / await 第2章原文地址</a></p><p><a href=https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-3-runtime-context>Understanding C# async / await 第3章原文地址</a></p><hr><h2 id=理解-c-的-async--await-2awaitable-awaiter-模式><strong>理解 C# 的 async / await (2)：Awaitable-Awaiter 模式</strong></h2><h3 id=1-什么是-awaitable><strong>1. 什么是 Awaitable？</strong></h3><p>在 C# 中，任何具有 <code>GetAwaiter()</code> 方法的对象都是 <strong>awaitable</strong> 的。<code>Task</code> 是最常见的 awaitable 类型，但其他类型也可以实现这一模式。例如：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span>Task<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;</span> task <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> Task<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;(()</span> <span style=color:#1f2328>=&gt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>int</span> result <span style=color:#1f2328>=</span> <span style=color:#cf222e>await</span> task<span style=color:#1f2328>.</span>ConfigureAwait<span style=color:#1f2328>(</span><span style=color:#cf222e>false</span><span style=color:#1f2328>);</span> <span style=color:#57606a>// 返回 ConfiguredTaskAwaitable&lt;TResult&gt;</span>
+</span></span></code></pre></div><p><code>ConfiguredTaskAwaitable&lt;TResult></code> 是一个 awaitable 类型，但它并不是 <code>Task</code>。</p><h3 id=2-awaitable-awaiter-模式><strong>2. Awaitable-Awaiter 模式</strong></h3><p>通过观察不同的 awaitable / awaiter 类型，可以总结出以下规则：</p><ul><li><strong>Awaitable</strong> 对象必须有一个 <code>GetAwaiter()</code> 方法（实例方法或扩展方法）。</li><li><strong>Awaiter</strong> 对象必须满足以下条件：<ul><li>实现 <code>INotifyCompletion</code> 或 <code>ICriticalNotifyCompletion</code> 接口。</li><li>有一个 <code>IsCompleted</code> 属性，返回布尔值。</li><li>有一个 <code>GetResult()</code> 方法，返回 <code>void</code> 或一个结果。</li></ul></li></ul><p>这种模式与 <strong>可迭代-迭代器模式</strong>（<code>IEnumerable</code> / <code>IEnumerator</code>）非常相似。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-11-21T18:08:30+08:00>November 21, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/.net/ rel=category>.NET</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/.net/ rel=tag>.NET</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/dotnet/understand_csharp_async_wait_1/>Understanding C# async / await 第1章</a></h1><div class=entry__content><p><a href=https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-1-compilation>Understanding C# async / await 第1章原文地址</a></p><p><a href=https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-2-awaitable-awaiter-pattern>Understanding C# async / await 第2章原文地址</a></p><p><a href=https://weblogs.asp.net/dixin/understanding-c-sharp-async-await-3-runtime-context>Understanding C# async / await 第3章原文地址</a></p><hr><p>以下是基于你提供的内容的总结和解读，保留示例代码和关键细节：</p><hr><h2 id=理解-c-的-async--await-1编译过程><strong>理解 C# 的 async / await (1)：编译过程</strong></h2><h3 id=1-概述><strong>1. 概述</strong></h3><p>C# 的 <code>async</code> 和 <code>await</code> 关键字为异步编程提供了极大的便利。本文将深入探讨这些语法糖背后的实际代码实现。</p><h3 id=2-准备工作><strong>2. 准备工作</strong></h3><p>首先，定义一些辅助方法：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>internal</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>HelperMethods</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> IO<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>using</span> <span style=color:#1f2328>(</span>WebClient client <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> WebClient<span style=color:#1f2328>())</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            Enumerable<span style=color:#1f2328>.</span>Repeat<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;http://weblogs.asp.net/dixin&#34;</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>10</span><span style=color:#1f2328>).</span>Select<span style=color:#1f2328>(</span>client<span style=color:#1f2328>.</span>DownloadString<span style=color:#1f2328>).</span>ToArray<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>internal</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>int</span> Method<span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> arg0<span style=color:#1f2328>,</span> <span style=color:#cf222e>int</span> arg1<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>int</span> result <span style=color:#1f2328>=</span> arg0 <span style=color:#1f2328>+</span> arg1<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        IO<span style=color:#1f2328>();</span> <span style=color:#57606a>// 模拟长时间运行的 IO 操作</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> result<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>internal</span> <span style=color:#cf222e>static</span> Task<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;</span> MethodTask<span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> arg0<span style=color:#1f2328>,</span> <span style=color:#cf222e>int</span> arg1<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Task<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;</span> task <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> Task<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>int</span><span style=color:#1f2328>&gt;(()</span> <span style=color:#1f2328>=&gt;</span> Method<span style=color:#1f2328>(</span>arg0<span style=color:#1f2328>,</span> arg1<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>        task<span style=color:#1f2328>.</span>Start<span style=color:#1f2328>();</span> <span style=color:#57606a>// 返回已启动的任务</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>internal</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> Before<span style=color:#1f2328>()</span> <span style=color:#1f2328>{</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>internal</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> Continuation1<span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> arg<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>internal</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> Continuation2<span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> arg<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p><code>Method()</code> 是一个模拟长时间 IO 操作的方法，<code>MethodTask()</code> 将其包装为 <code>Task</code> 并返回。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-11-21T17:08:30+08:00>November 21, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/.net/ rel=category>.NET</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/.net/ rel=tag>.NET</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/lua/lua_opt/>lua优化经验总结</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>这是我在做一些手游项目时的lua优化经验总结。</p><h2 id=注意清空table操作的效率问题>注意清空table操作的效率问题</h2><p>在Lua中，通常要清空一个table，很常见的方法就是直接赋值一个新的空table给指向table的变量：例如：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:#cf222e>local</span> t <span style=color:#0550ae>=</span> <span style=color:#1f2328>{</span><span style=color:#f6f8fa;background-color:#82071e>“</span>I am a table<span style=color:#f6f8fa;background-color:#82071e>”</span><span style=color:#1f2328>}</span> 
+</span></span><span style=display:flex><span>t <span style=color:#0550ae>=</span> <span style=color:#1f2328>{}</span> <span style=color:#f6f8fa;background-color:#82071e>–</span><span style=color:#0550ae>-</span> <span style=color:#f6f8fa;background-color:#82071e>现在</span>t指向的table就是一个空的新建的table了<span style=color:#f6f8fa;background-color:#82071e>。</span>
+</span></span><span style=display:flex><span><span style=color:#f6f8fa;background-color:#82071e>这样子虽然逻辑上没什么问题，但</span>t原来指向的那个table实质上就是一个<span style=color:#f6f8fa;background-color:#82071e>“野</span>table<span style=color:#f6f8fa;background-color:#82071e>”了，它的何时被清理掉依赖于</span>lua的gc操作<span style=color:#f6f8fa;background-color:#82071e>。如果</span>t本身就是存储着一些原生数字类型的数组的话<span style=color:#f6f8fa;background-color:#82071e>，这种</span><span style=color:#0550ae>=</span><span style=color:#1f2328>{}</span><span style=color:#f6f8fa;background-color:#82071e>的清空操作是比较低效的。如果在每帧每秒都被调用的函数中，清空一个既有的</span>table<span style=color:#f6f8fa;background-color:#82071e>，可以采用以下的代码：</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>-- [[这样子才是全部清空一个table中的所有项，如果将pairs函数改用ipairs函数则只会清空数组项，而不清空hash项]]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>for</span> i<span style=color:#1f2328>,</span> _ <span style=color:#cf222e>in</span> pairs<span style=color:#1f2328>(</span>t<span style=color:#1f2328>)</span> <span style=color:#cf222e>do</span> <span style=color:#57606a>-- 不需要kv对中的value值，所以用哑元_代替</span>
+</span></span><span style=display:flex><span>    t<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#cf222e>nil</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>end</span>
+</span></span></code></pre></div><h2 id=利用逻辑判断的短路判定特性优化代码>利用逻辑判断的短路判定特性优化代码</h2><p>对于逻辑或（or）操作，只要有一个判断条件为true，则结果为true。逻辑与操作，只要有一个判断条件为false，结果即为false，根据这个特性，在多条件判断时，将获取条件耗费性能最大的函数，挪到最后，尽可能地减少计算。例如：
+逻辑与（and）操作，只要有一个判断条件为false，结果即为false。所以对于全逻辑与的操作，在计算判断条件时，应该每计算一次就判断一次，只要有一个为false，就立即得到判定逻辑与计算最终结果为false：</p><h2 id=字符串常见问题>字符串常见问题</h2><p>和Java，C#，Python等语言类似，一个字符串（对象）对应着一个常量字符串，一旦该字符串声明完毕，其指向的字符串内容即不可更改，所以如果有以下的代码：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:#cf222e>local</span> s1 <span style=color:#0550ae>=</span> <span style=color:#f6f8fa;background-color:#82071e>“</span>I<span style=color:#f6f8fa;background-color:#82071e>”</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>local</span> s2 <span style=color:#0550ae>=</span> <span style=color:#f6f8fa;background-color:#82071e>“</span> am<span style=color:#f6f8fa;background-color:#82071e>”</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>local</span> s3 <span style=color:#0550ae>=</span> <span style=color:#f6f8fa;background-color:#82071e>“</span> Lua<span style=color:#f6f8fa;background-color:#82071e>”</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>local</span> s <span style=color:#0550ae>=</span> s1<span style=color:#0550ae>..</span>s2<span style=color:#0550ae>..</span>s3
+</span></span></code></pre></div><p>在第一个连字符操作完成后，会生成一个匿名的常量字符串，尔后该匿名字符串再和s3进行拼接，再生成一个新的字符串赋值给变量s。也就是说，Lua中的所有字符串，都不会发生“in place”操作，一切会对本字符串的内容发生了修改的操作，必然会导致一个新的字符串的产生。如果是存在着较多的字符串连接操作的话，可以使用table来模拟C#的StringBuilder,如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:#57606a>-- table.concat函数所处理的表中，表项值只接受字符串和数字</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>function</span> <span style=color:#6639ba>concat_string</span><span style=color:#1f2328>(</span>s1<span style=color:#1f2328>,</span>s2<span style=color:#1f2328>,</span>s3<span style=color:#1f2328>,</span>s4<span style=color:#1f2328>,</span>s5<span style=color:#1f2328>,</span>s6<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>-- 如果预先知道了要拼接多少个字符串，在定义table时可以预先</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>-- 开好多少个空位而不是直接创建空表，这样子有利于性能提升</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>local</span> t <span style=color:#0550ae>=</span> <span style=color:#1f2328>{</span><span style=color:#cf222e>nil</span><span style=color:#1f2328>,</span><span style=color:#cf222e>nil</span><span style=color:#1f2328>,</span><span style=color:#cf222e>nil</span><span style=color:#1f2328>,</span><span style=color:#cf222e>nil</span><span style=color:#1f2328>,</span><span style=color:#cf222e>nil</span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    t.name <span style=color:#0550ae>=</span> <span style=color:#f6f8fa;background-color:#82071e>“</span>I am table t<span style=color:#f6f8fa;background-color:#82071e>”</span>  <span style=color:#57606a>-- table.concat函数无视table中的hash项</span>
+</span></span><span style=display:flex><span>    t<span style=color:#1f2328>[</span><span style=color:#0550ae>1</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> s1 <span style=color:#1f2328>;</span> t<span style=color:#1f2328>[</span><span style=color:#0550ae>2</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> s2 <span style=color:#1f2328>;</span> t<span style=color:#1f2328>[</span><span style=color:#0550ae>3</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> s3
+</span></span><span style=display:flex><span>    t<span style=color:#1f2328>[</span><span style=color:#0550ae>4</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> s4 <span style=color:#1f2328>;</span> t<span style=color:#1f2328>[</span><span style=color:#0550ae>5</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> s5 <span style=color:#1f2328>;</span> t<span style=color:#1f2328>[</span><span style=color:#0550ae>6</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> s6
+</span></span><span style=display:flex><span>    t<span style=color:#1f2328>[</span><span style=color:#0550ae>8</span><span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>789</span> <span style=color:#57606a>-- 因为t[7]没定义形成空洞，所以字符串拼接只到t[6]为止，无视t[8]</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> table.concat<span style=color:#1f2328>(</span>t<span style=color:#1f2328>)</span> <span style=color:#57606a>-- 返回一个字符串</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>-- 输出为I am a Lua Programmer！</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>-- 如果直接用..操作符的话，要产生5个匿名的临时字符串，性能低下！</span>
+</span></span><span style=display:flex><span>print<span style=color:#1f2328>(</span>concat_string<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;I&#34;</span><span style=color:#1f2328>,</span><span style=color:#0a3069>&#34; am&#34;</span><span style=color:#1f2328>,</span><span style=color:#0a3069>&#34; a&#34;</span><span style=color:#1f2328>,</span><span style=color:#0a3069>&#34; Lua&#34;</span><span style=color:#1f2328>,</span><span style=color:#0a3069>&#34; Programmer&#34;</span><span style=color:#1f2328>,</span><span style=color:#0a3069>&#34;!&#34;</span><span style=color:#1f2328>))</span>
+</span></span></code></pre></div><h2 id=lua函数闭包的问题>Lua函数（闭包）的问题</h2><p>执行一个函数语句时，会创建一个闭包。通常，对GC的影响不大，但是如果循环中包含函数语句，则可能会产生大量垃圾。例如：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-10-20T18:08:30+08:00>October 20, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/lua/ rel=category>Lua</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/lua/ rel=tag>Lua</a></span></div></div></article></div></div></main><div class="pagination block"><a class="pagination__item pagination__item--desktop" href=/post/>1</a>
+<a class="pagination__item pagination__item--desktop" href=/post/page/2/>2</a>
+<a class="pagination__item pagination__item--desktop" href=/post/page/3/>3</a>
+<span class="pagination__item pagination__item--gap">&mldr;</span>
+<a class="pagination__item pagination__item--desktop" href=/post/page/5/>5</a>
+<span class="pagination__item pagination__item--active" data-total=14>6</span>
+<a class="pagination__item pagination__item--desktop" href=/post/page/7/>7</a>
+<span class="pagination__item pagination__item--gap">&mldr;</span>
+<a class="pagination__item pagination__item--desktop" href=/post/page/14/>14</a></div></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

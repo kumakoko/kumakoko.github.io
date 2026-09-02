@@ -1,391 +1,343 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Unity3D | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="Unity3D" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/tags/unity3d/" />
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Unity3D | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/tags/unity3d/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Unity3D"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="Unity3D"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2026-03-28T21:21:49+08:00"><meta itemprop=dateModified content="2026-03-28T21:21:49+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/tags/unity3d/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-term"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/tags/>Tags</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Unity3D</li></ol></nav><div class="page block"><h1 class=page__title>Unity3D</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/yooassets/yooassets_hostplaymode_detail/>YooAsset HostPlayMode（联机热更模式）完整热更新流程</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com>www.xionggf.com</a></strong></p><h1 id=yooasset-hostplaymode联机热更模式完整热更新流程>YooAsset HostPlayMode（联机热更模式）完整热更新流程</h1><p>HostPlayMode是手游最常用模式，<strong>三套FileSystem协同工作</strong></p><ol><li><strong>BuildinFileSystem</strong>：安装包内<code>StreamingAssets/yoo</code>首包内置资源（只读兜底）</li><li><strong>CacheFileSystem</strong>：手机沙盒可读写目录，存放已经下载的AB包、清单</li><li><strong>RemoteFileSystem</strong>：访问CDN远程服务器下载补丁资源</li></ol><p>前置：打包阶段输出补丁包，包含：<code>version文件</code>、<code>PackageManifest(清单)</code>、全部<code>.bundle</code>，全部上传CDN。</p><h2 id=整体流程图客户端启动后>整体流程图（客户端启动后）</h2><pre tabindex=0><code>游戏启动 → YooAssets全局初始化 → Package初始化
+→ ①请求远端PackageVersion版本号
+→ ②更新本地Manifest资源清单
+→ ③创建下载器，对比MD5/Crc，生成待下载列表
+→ ④多线程断点下载AB包到沙盒缓存
+→ ⑤切换激活新清单，完成更新
+→ （可选）清理沙盒废弃缓存文件
+→ 业务层LoadAssetAsync加载资源，进入游戏
+</code></pre><h2 id=分步详解运行时每一步干什么>分步详解（运行时每一步干什么）</h2><h3 id=步骤1初始化yooasset与package>步骤1：初始化YooAsset与Package</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>//全局初始化</span>
+</span></span><span style=display:flex><span>YooAssets<span style=color:#1f2328>.</span>Initialize<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>var</span> package <span style=color:#1f2328>=</span> YooAssets<span style=color:#1f2328>.</span>CreatePackage<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DefaultPackage&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//HostPlayMode参数：内置文件系统、缓存文件系统、远程CDN文件系统</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>var</span> hostParam <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> HostPlayModeParameters<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>hostParam<span style=color:#1f2328>.</span>BuildinFileSystemParameters <span style=color:#1f2328>=</span> FileSystemParameters<span style=color:#1f2328>.</span>CreateDefaultBuildinFileSystemParameters<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>hostParam<span style=color:#1f2328>.</span>CacheFileSystemParameters <span style=color:#1f2328>=</span> FileSystemParameters<span style=color:#1f2328>.</span>CreateDefaultCacheFileSystemParameters<span style=color:#1f2328>(</span>remoteService<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>hostParam<span style=color:#1f2328>.</span>RemoteFileSystemParameters <span style=color:#1f2328>=</span> FileSystemParameters<span style=color:#1f2328>.</span>CreateDefaultRemoteFileSystemParameters<span style=color:#1f2328>(</span>remoteService<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>await</span> package<span style=color:#1f2328>.</span>InitializeAsync<span style=color:#1f2328>(</span>hostParam<span style=color:#1f2328>);</span>
+</span></span></code></pre></div><ul><li>初始化逻辑：优先读取<strong>沙盒缓存里的Manifest</strong>；沙盒没有就读取安装包StreamingAssets内置Manifest，拷贝到沙盒作为基础版本。此时还没有联网检查新版本，只是把本地旧版本加载就绪。</li></ul><h3 id=步骤2requestpackageversionasync-请求远端版本号>步骤2：RequestPackageVersionAsync 请求远端版本号</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>var</span> verOp <span style=color:#1f2328>=</span> package<span style=color:#1f2328>.</span>RequestPackageVersionAsync<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>await</span> verOp<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>string</span> remoteNewVersion <span style=color:#1f2328>=</span> verOp<span style=color:#1f2328>.</span>PackageVersion<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><ul><li>向CDN请求<strong>version版本文件</strong>（很小的文本文件，记录当前线上Package的版本字符串）。</li><li>拿到线上最新版本号；网络失败在这里弹窗提示重试。</li></ul><blockquote><p>⚠️version文件是整个热更的入口，每次打包补丁包都会生成新version。</p></blockquote><h3 id=步骤3updatepackagemanifestasync-更新资源清单>步骤3：UpdatePackageManifestAsync 更新资源清单</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>var</span> manifestOp <span style=color:#1f2328>=</span> package<span style=color:#1f2328>.</span>UpdatePackageManifestAsync<span style=color:#1f2328>(</span>remoteNewVersion<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>await</span> manifestOp<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><ol><li>拿远端版本号，去CDN下载对应的<strong>PackageManifest清单文件</strong>（几KB）。</li><li>Manifest清单记录该Package下<strong>全部AB包、每个资源归属哪个AB、每个AB的MD5、大小、依赖关系</strong>。</li><li>YooAsset对比：沙盒缓存已有哪些bundle、内置首包有哪些bundle。<ul><li>相同MD5：直接复用（不管来自沙盒缓存，还是来自APK内置StreamingAssets）</li><li>MD5不一致 / 本地不存在：标记为<strong>需要下载</strong></li></ul></li></ol><blockquote><p>✨增量更新的核心就在Manifest对比，<strong>不会全量下载，只下载变更/新增bundle</strong>。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2026-03-28T21:21:49+08:00>March 28, 2026</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/yooassets/ rel=tag>YooAssets</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/yooassets/yooassets_build_res_ui/>YooAsset资源构建界面详解</a></h1><div class=entry__content><p>**请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com>www.xionggf.com</a></p><h1 id=yooasset-assetbundlebuilder-构建界面选项详解30x官方文档>YooAsset AssetBundleBuilder 构建界面选项详解（3.0.x官方文档）</h1><blockquote><p>打开路径：<code>Window → YooAsset → AssetBundle Builder</code></p></blockquote><br><h2 id=1-build-package资源包裹>1. Build Package（资源包裹）</h2><ul><li><strong>作用</strong>：下拉选择要构建的<strong>资源包裹(Package)</strong>，一个工程可以配置多个Package，相互完全独立。</li><li><strong>场景</strong>：项目多分包、多资源包隔离，只构建选中的包裹，不会影响其它包裹。
+注意：打包前需要在<code>AssetBundleCollector</code>窗口配置好对应Package的收集规则。</li></ul><br><h2 id=2-build-pipeline构建管线>2. Build Pipeline（构建管线）</h2><p>决定打包执行逻辑，不同管线用途完全不同，管线种类如下表所示</p><table><thead><tr><th>管线</th><th>详细说明</th><th>使用场景</th></tr></thead><tbody><tr><td>EditorSimulateBuildPipeline</td><td>编辑器模拟构建，<strong>只生成资源清单，不生成真实AB包</strong>。模拟真实打包环境，跳过耗时的AB生成。</td><td>开发调试，EditorSimulateMode模式，快速验证收集逻辑，不用真正打包。</td></tr><tr><td>LegacyBuildPipeline</td><td>Unity传统内置打包管线，旧版本遗留。</td><td>Unity2020及更早版本项目。</td></tr><tr><td>ScriptableBuildPipeline(SBP)</td><td>Unity可编程构建管线，可自定义打包流程，打包速度、稳定性优于旧管线。</td><td><strong>Unity2021.3+强烈推荐生产环境使用</strong></td></tr><tr><td>RawFileBuildPipeline</td><td>原生文件管线，不经过UnityAB系统，直接复制原始文件。</td><td>处理Unity不识别的文件：FMOD bank、自定义二进制文件等。</td></tr><tr><td>ArchiveFileBuildPipeline</td><td>归档管线，把多个原始文件合并成单个归档文件。</td><td>大量小原生文件，减少文件数量，方便管理加密。</td></tr></tbody></table><br><h2 id=3-build-output构建输出目录>3. Build Output（构建输出目录）</h2><ul><li><strong>作用</strong>：设置打包产物根目录。</li><li><strong>重要特性</strong>：工具会自动根据Unity编辑器当前选中的平台，在该目录下创建平台子目录（Android/iOS/StandaloneWindows等），不同平台产物互不干扰。</li><li>产物目录结构示例：<code>BuildOutput/Android/DefaultPackage/v1.0</code>，里面存放AB包、清单、构建报告。</li></ul><br><h2 id=4-build-version构建版本>4. Build Version（构建版本）</h2><ul><li><strong>作用</strong>：本次资源包的版本号，补丁包文件夹名称就等于该版本。<strong>必须大于0，每次热更打包必须修改</strong>。</li><li><strong>运行时意义</strong>：客户端比对该版本号判断是否需要更新资源。</li></ul><blockquote><p>提示：版本号可以是数字字符串，例如<code>1001</code>、<code>20260822</code>。</p></blockquote><br><h2 id=5-clear-build-cache清理构建缓存>5. Clear Build Cache（清理构建缓存）</h2><ul><li><strong>勾选</strong>：删除全部构建缓存，<strong>全量重新构建所有资源包</strong>，打包慢；修改打包规则、资源分组后建议勾选。</li><li><strong>不勾选</strong>：开启<strong>增量打包</strong>，对比上一次缓存，只重新打包发生变更的资源，打包速度大幅提升。</li></ul><blockquote><p>⚠️注意：修改收集规则、分组规则、管线参数时，增量缓存可能产生错误产物，需要勾选清理缓存。</p></blockquote><br><h2 id=6-use-asset-depend-db资源依赖数据库>6. Use Asset Depend DB（资源依赖数据库）</h2><ul><li><strong>开启</strong>：资源收集阶段读取缓存的依赖关系数据库，不用每次重新完整解析所有资源依赖，<strong>大幅提升收集阶段速度</strong>。</li><li><strong>关闭</strong>：每次打包完整扫描所有资源依赖，适合资源大量改动的调试阶段。</li></ul><blockquote><p>生产打包建议勾选，配合增量打包使用。</p></blockquote><br><h2 id=7-bundle-encryptor资源包加密器>7. Bundle Encryptor（资源包加密器）</h2><ul><li><strong>作用</strong>：选择实现<code>IBundleEncryptor</code>接口的加密类，对输出的AssetBundle/Raw/Archive文件做加密处理。</li><li>默认内置：<code>YooAssetEditorEncryptionNone</code>=不加密。</li><li>自定义：自己写加密类，放到Editor目录，下拉框自动识别。</li></ul><blockquote><p>运行时必须配置对应的解密器，否则无法加载资源。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2026-03-28T20:22:49+08:00>March 28, 2026</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/yooassets/ rel=tag>YooAssets</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/yooassets/yooassets_collector_detail/>YooAsset Collector（资源收集器）完整详解</a></h1><div class=entry__content><p>**请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com>www.xionggf.com</a></p><h1 id=yooasset-collector资源收集器完整详解>YooAsset Collector（资源收集器）完整详解</h1><blockquote><p>打开窗口：<code>Window → YooAsset → AssetBundle Collector</code>
+<strong>Collector（收集器）是YooAsset编辑器里最小配置单元</strong>，只存在编辑器阶段，运行时不存在。
+它的职责：<strong>指定扫描哪个目录、筛选哪些资源、资源如何寻址、如何打成AssetBundle</strong>。
+一个Group下可以有<strong>多个Collector</strong>；每个Collector代表一套独立扫描+过滤+打包规则。
+层级回顾：<code>Package → Group → Collector</code>
+Package、Group、Collector都是编辑器配置；打包后全部转化为Manifest清单与物理AB文件。</p></blockquote><h2 id=collector全部属性列表>Collector全部属性列表</h2><table><thead><tr><th>属性</th><th>说明</th></tr></thead><tbody><tr><td><strong>CollectPath</strong></td><td>收集路径，可以填文件夹路径，也可以填单个资源完整路径（<code>Assets/xxx/xxx.prefab</code>），<strong>必须以Assets开头</strong></td></tr><tr><td><strong>CollectorType</strong></td><td>收集器类型（3种，核心），决定资源是否写入Manifest清单，运行时能否直接LoadAsset加载</td></tr><tr><td><strong>AddressRuleName</strong></td><td>寻址规则：生成运行时代码加载资源的key（逻辑地址），EnableAddressable开启后生效</td></tr><tr><td><strong>PackRuleName</strong></td><td>打包规则：决定收集到的资源如何合并、拆分生成AssetBundle物理文件</td></tr><tr><td><strong>FilterRuleName</strong></td><td>过滤规则：在CollectPath范围内再筛选文件类型，过滤掉不需要的资源</td></tr><tr><td><strong>UserData</strong></td><td>自定义字符串，用于<strong>自定义PackRule/AddressRule/FilterRule</strong>，业务扩展用，内置规则不会读取此字段</td></tr><tr><td><strong>AssetTags</strong></td><td>资源标签，分号分隔；用于打包时筛选拷贝到StreamingAssets首包、清单标签过滤等功能</td></tr></tbody></table><hr><h2 id=1-collectortype-收集器类型最重要>1. CollectorType 收集器类型（最重要）</h2><h3 id=-mainassetcollector90业务使用>① MainAssetCollector【90%业务使用】</h3><ul><li><p>✅资源写入Manifest资源清单</p></li><li><p>✅运行时代码可以直接<code>LoadAssetAsync&lt;T>("逻辑地址")</code>加载</p></li><li><p>✅依赖分析正常生效，被引用的贴图材质会做共享包拆分</p></li><li><p><strong>适用</strong>：预制体、UI、场景、音频、Sprite图集，所有需要业务代码主动加载的资源。</p><h3 id=-staticassetcollector>② StaticAssetCollector</h3></li><li><p>❌<strong>不会写入Manifest，代码不能直接加载</strong></p></li><li><p>✅参与打包；<strong>无视共享依赖规则</strong>，不会被框架剥离为共享Bundle。</p><blockquote><p>无论多少主资源引用它，都会严格按照本Collector的PackRule打包，不会被拆分出去。</p></blockquote></li><li><p><strong>适用场景</strong>：强制把一组贴图/材质固定打在同一个AB，不希望框架自动拆共享包。</p><h3 id=-dependassetcollector>③ DependAssetCollector</h3></li><li><p>❌<strong>不会写入Manifest，代码不能直接加载</strong></p></li><li><p>✅参与打包；<strong>没有任何主资源引用这些资源时，打包会自动剔除该资源，减小包体</strong>。</p></li><li><p><strong>适用场景</strong>：特效贴图、粒子纹理等<strong>只被别的资源间接依赖，业务不会直接加载</strong>的资源。可以做细粒度分包，修改一张纹理只更新小包。</p><blockquote><p>简单对比表</p><table><thead><tr><th>类型</th><th>写入清单</th><th>可直接加载</th><th>共享包机制</th><th>特点</th></tr></thead><tbody><tr><td>MainAssetCollector</td><td>✅</td><td>✅</td><td>正常生效</td><td>业务主资源，绝大多数场景</td></tr><tr><td>StaticAssetCollector</td><td>❌</td><td>❌</td><td>关闭</td><td>强制打包，不做共享剥离</td></tr><tr><td>DependAssetCollector</td><td>❌</td><td>❌</td><td>正常生效</td><td>无引用自动剔除，用于依赖资源</td></tr></tbody></table></blockquote></li></ul><hr><h2 id=2-addressrulename-寻址规则逻辑加载地址>2. AddressRuleName 寻址规则（逻辑加载地址）</h2><blockquote><p>需要Package设置勾选<code>EnableAddressable</code>才生效；寻址地址不能重复，大小写敏感。
+内置规则：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2026-03-28T20:20:49+08:00>March 28, 2026</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/yooassets/ rel=tag>YooAssets</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/yooassets/yooassets_package_and_group/>YooAsset Package（逻辑资源包）与Group(分组)详解</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com>www.xionggf.com</a></strong></p><h1 id=yooasset-package逻辑资源包与物理ab文件关系>YooAsset Package（逻辑资源包）与物理AB文件关系</h1><p><strong>Package是纯逻辑概念，它和AssetBundle文件没有固定一一对应关系</strong>。一个 <code>Package</code>（逻辑包）可以对应<strong>N个物理AssetBundle文件</strong>，数量完全由打包规则<code>PackRule</code> + 共享依赖拆分规则共同决定。</p><p>层级梳理：</p><pre tabindex=0><code>Package(逻辑包，运行时代码拿到的对象)
+├─ Group（分组）
+│  ├─ Collector收集器（配置路径、PackRule分包规则）
+│  │    → 根据PackRule生成若干个AssetBundle物理文件
+└─【自动生成】共享依赖Bundle、Shader专用Bundle（不在Collector里配置）
+</code></pre><br><br><h2 id=1-packrule-直接决定collector产出多少ab文件>1. PackRule 直接决定Collector产出多少AB文件</h2><br><table><thead><tr><th>PackRule</th><th>行为</th><th>产出AB数量</th></tr></thead><tbody><tr><td><code>PackSeparately</code></td><td><strong>每个资源文件单独1个AB</strong></td><td>收集多少主资源，就生成多少AB</td></tr><tr><td><code>PackDirectory</code></td><td>每个子文件夹1个AB</td><td>收集路径下子文件夹数量</td></tr><tr><td><code>PackTopDirectory</code></td><td>收集路径下<strong>第一层文件夹</strong>各自一个AB</td><td>一级子目录数量</td></tr><tr><td><code>PackCollector</code></td><td>当前Collector全部资源合并为<strong>1个AB</strong></td><td>固定1个</td></tr><tr><td><code>PackGroup</code></td><td>当前Group下<strong>所有Collector全部合并成1个AB</strong></td><td>固定1个</td></tr></tbody></table><br><p>注意：以上只是<strong>主资源生成的AB数量</strong>，<strong>还会额外产生共享依赖Bundle</strong>，这部分是YooAsset自动生成，你在Collector界面看不到配置。</p><br><br><h2 id=2-额外自动生成的ab包很关键容易被忽略>2. 额外自动生成的AB包（很关键，容易被忽略）</h2><p>开启 <code>EnableSharePackRule</code>（默认开启，零冗余模式）时：</p><ul><li>如果一个贴图/材质被≥2个不同AB包引用，这个依赖资源会被剥离出来，生成<strong>独立的共享AssetBundle</strong>，避免多份拷贝冗余。</li><li>开启自动收集Shader：所有shader会统一打入一个专门的Shader‑Bundle文件。</li></ul><p>👉 所以：<strong>哪怕你把Group设置为PackGroup（全部主资源打为1个AB），最终Package下面也可能不止1个AB，还附带若干共享依赖Bundle、Shader Bundle</strong>。</p><h3 id=举个直观例子>举个直观例子</h3><ul><li>1个Package，1个Group，PackGroup规则：所有主资源合并成1个主AB。</li><li>但是里面10张贴图被多处预制体共用。</li><li>打包结果：<ul><li>1个主资源AB（所有prefab场景）</li><li>N个自动生成的共享依赖AB（被多个地方引用的贴图材质）</li><li>1个Shader Bundle</li></ul></li></ul><blockquote><p>最终这个逻辑Package，实际对应物理磁盘上：<code>1+N+1</code>个<code>.bundle</code>文件。</p></blockquote><br><h2 id=3-运行时视角>3. 运行时视角</h2><p>代码中你操作的是：</p><br><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>var</span> package <span style=color:#1f2328>=</span> YooAsset<span style=color:#1f2328>.</span>GetPackage<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;DefaultPackage&#34;</span><span style=color:#1f2328>);</span> <span style=color:#57606a>//逻辑包对象</span>
+</span></span></code></pre></div><br><p><code>package</code>内部持有一份<strong>Manifest清单文件</strong>。清单记录了这个逻辑包管辖的<strong>全部AssetBundle列表</strong>、每个资源属于哪个AB、AB之间依赖关系、MD5、大小等信息。Manifest是逻辑包和物理AB文件的桥梁；多个物理AB全部归属同一个Package管理，统一更新、统一缓存。</p><br><h2 id=4-容易混淆概念总结>4. 容易混淆概念总结</h2><ol><li><strong>Package</strong>：逻辑业务单元，可以独立更新，一个Package对应<strong>一份manifest清单</strong>，不限制底层AB数量。</li><li><strong>Group</strong>：编辑器配置分组，仅编辑器用，运行时不存在Group对象。</li><li><strong>Collector</strong>：定义哪些资源被收集，以及<strong>分包策略PackRule</strong>。</li><li><strong>AssetBundle</strong>：磁盘真实物理文件，一个Package下面可以几十/几百个AB文件。</li></ol><blockquote><p>❌错误理解：一个Package等于一个AssetBundle文件
+✅正确理解：一个Package = <strong>一份Manifest + 一批属于此Package的物理AB文件集合</strong>。AB数量取决于你的PackRule，以及共享依赖拆分。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2026-03-28T20:20:49+08:00>March 28, 2026</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/yooassets/ rel=tag>YooAssets</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/camera/urp_camera_in_u3d2002/>Unity2022.3版本下URP下Camera组件的一些细节</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=问题1>问题1</h1><blockquote><p>在Unity的URP管线中，Camera组件的指定clear模式的<strong>depth only</strong>选项，好像不存在了？还是说改到哪里去了？</p></blockquote><p>让我查一下官方资料确认 URP 中 Camera 清除模式的准确位置。</p><p>官方文档已确认关键信息。让我再核实一下脚本层面 URP 对 <code>clearFlags</code> 的处理，确保代码说法准确。</p><p>官方文档确认了核心结论。这是一个新旧选项的映射关系，我读一下可视化规范，用一个对照图把结论整理出来。</p><p>核对完毕，官方文档（URP Camera 组件参考 + 清除与渲染顺序文档）已经讲清楚了。结论先说：<strong>URP 里确实没有 &ldquo;Depth Only&rdquo; 这个选项了，但不是被删，而是被重构了</strong>——内置管线的 Clear Flags（Skybox/Solid Color/Depth Only/Don&rsquo;t Clear）四选一，在 URP 里拆成了"颜色缓冲"和"深度缓冲"两套逻辑，由相机的 <strong>Render Type（Base/Overlay）</strong> 决定。</p><p>我把映射关系画成一张对照图：</p><pre tabindex=0><code>&lt;html style=&#34;margin:0;padding:0;&#34;&gt;
+&lt;div style=&#34;background-color:transparent;box-sizing:border-box;font-family:&#39;Roboto&#39;,&#39;PingFang SC&#39;,&#39;Segoe UI&#39;,Arial,sans-serif;--accent:var(--m-02);color:#1A1B1C;&#34;&gt;
+  &lt;div style=&#34;width:100%;box-sizing:border-box;padding:4px 2px;&#34;&gt;
 
+    &lt;!-- 标题 --&gt;
+    &lt;div style=&#34;font-size:15px;font-weight:600;margin:0 0 4px 0;&#34;&gt;内置管线 Clear Flags → URP 的等价配置&lt;/div&gt;
+    &lt;div style=&#34;font-size:12px;color:#6B7280;margin:0 0 12px 0;&#34;&gt;依据：Unity URP 官方文档（Camera 组件参考 / Clearing &amp; Rendering Order）。Base 相机深度缓冲每帧固定清除，无需配置。&lt;/div&gt;
 
-		<meta itemprop="name" content="Unity3D">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/tags/unity3d/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-term">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/tags/">Tags</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity3D</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">Unity3D</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/yooasset_note/">Yoasset学习笔记和踩坑记录</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-安装YooAssets的编辑器和运行时源代码可以直接从Github下面下载，但如果要用到tuyoo公司提供的若干个示例，则还需要配置一下package manager，从Unity的package manager中下载
-打开管理界面 【Edit/Project Settings/Package Manager】 // 输入以下内容（中国版） Name: package.openupm.cn URL: https://package.openupm.cn Scope(s): com.tuyoogame.yooasset // 输入以下内容（国际版） Name: package.openupm.com URL: https://package.openupm.com Scope(s): com.tuyoogame.yooasset 什么是unity的scoped registry参见本站网页。
-如果碰到有如下的控制台输出：
-[Package Manager Window] Error searching for packages. Unable to perform online search: Cannot connect to &#39;package.openupm.cn&#39; (error code: ENOTFOUND). Verify your environment firewall policies allow connection to this host name. If your system is behind a proxy, verify your proxy environment variables (HTTP_PROXY and HTTPS_PROXY) are properly set.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2025-11-12T18:21:49&#43;08:00">November 12, 2025</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_guid/">在unity中生成一个guid值</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-Unity中生成GUID的方法 Unity本身提供了便捷的API来生成GUID，同时也兼容C#标准库的GUID生成方式，以下是两种最常用且可靠的方法：
-方法1：使用Unity内置的GUID类（推荐） Unity引擎有专门的 UnityEditor.GUID 类（编辑器环境）和 System.Guid 类（运行时/编辑器通用），其中运行时通用的方式兼容性最好：
-using UnityEngine; public class GuidGenerator : MonoBehaviour { void Start() { // 生成新的GUID System.Guid newGuid = System.Guid.NewGuid(); // 转换为字符串（常用格式，包含连字符） string guidString = newGuid.ToString(); Debug.Log(&#34;生成的GUID（带连字符）：&#34; + guidString); // 转换为无连字符的字符串（适合存储/传输） string guidNoHyphen = newGuid.ToString(&#34;N&#34;); Debug.Log(&#34;生成的GUID（无连字符）：&#34; + guidNoHyphen); // 转换为Unity编辑器专用的GUID类型（仅编辑器环境可用） #if UNITY_EDITOR UnityEditor.GUID unityGuid = UnityEditor.GUID.Generate(); Debug.Log(&#34;Unity编辑器GUID：&#34; + unityGuid.ToString()); #endif } } 方法2：编辑器扩展（批量生成/快捷生成） 如果需要在编辑器面板快速生成GUID，可以写一个简单的编辑器工具：
-using UnityEditor; using UnityEngine; public class GuidCreatorWindow : EditorWindow { [MenuItem(&#34;Tools/生成GUID&#34;)] static void OpenWindow() { GuidCreatorWindow window = GetWindow&lt;GuidCreatorWindow&gt;(&#34;GUID生成器&#34;); window.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2025-11-12T18:21:49&#43;08:00">November 12, 2025</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_scoped_registry_detail/">详解Unity3D packmanager的scoped registry</a></h1>
-	<div class="entry__content">核心概念：一句话概括 Scoped Registry（作用域注册表） 是一个自定义的包服务器地址，你可以告诉 Unity Package Manager：“当我要找某个特定前缀的包时，不要再去 Unity 的官方源找了，请去我指定的这个私人地址找。”
-为什么需要 Scoped Registry？（解决的问题） 在 Scoped Registry 出现之前，如果你想使用非 Unity 官方提供的包（比如公司内部的工具包、第三方供应商的插件、或自己团队开发的共享模块），通常有几种麻烦的方式：
-直接导入 .unitypackage 文件：难以更新、版本控制混乱、无法清晰地管理依赖。 使用 Git URL：在 Package Manager 里直接链接到 Git 仓库。这虽然可以，但不够规范，并且对私有仓库的权限管理比较麻烦。 手动复制文件：最原始的方法，维护起来是噩梦。 这些方法都不够优雅，也不利于团队协作和持续集成。
-Scoped Registry 的诞生就是为了像管理官方包一样，来管理这些“第三方”或“私人”的包。 它让 Package Manager 从一个只能连接 Unity 官方商店的工具，变成了一个可以连接多个包源的、更通用的依赖管理工具。
-它是如何工作的？ Scoped Registry 基于 npm 的包注册表协议。你配置两个核心信息：
-注册表地址：包的服务器地址。例如： 公司内部搭建的 npm registry（如 Verdaccio、Azure Artifacts 等）。 第三方服务提供的地址（如 OpenUPM 的注册表）。 作用域：一个或多个包名的前缀。它用来“过滤”或“限定”这个注册表负责哪些包。 工作流程示例：
-假设你的公司叫 “AwesomeStudio”，你们将所有内部工具包的名字都命名为 com.awesomestudio.xxx。
-配置 Scoped Registry：
-名称： AwesomeStudio Internal URL： https://packages.awesomestudio.com 作用域： com.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2025-11-11T18:21:49&#43;08:00">November 11, 2025</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/hlsl_sv_dispatch_thread_id_detail/">一篇文章说透计算着色器的SV_DispatchThreadID</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-SV_DispatchThreadID 是HLSL（High-Level Shading Language）中的一个语义（Semantic），用于在Compute Shader中获取当前线程的全局线程ID。它是Compute Shader中非常重要的一个概念，用于确定每个线程处理的数据或任务。
-SV_DispatchThreadID 的含义 全局线程ID：
-SV_DispatchThreadID 是一个 uint3 类型的变量，表示当前线程在全局线程空间中的ID。 它的三个分量（x、y、z）分别表示线程在X、Y、Z三个维度上的全局索引。 线程的全局位置：
-SV_DispatchThreadID 的值范围由程序语言层（例如C#） 的Dispatch 调用，和HLSL语言中的 numthreads 语句定义。 例如，如果调度了 Dispatch(10, 20, 30)，并且 numthreads 是 [8, 8, 1]，那么： SV_DispatchThreadID.x 的范围是 [0, 10*8-1]（即 [0, 79]）。 SV_DispatchThreadID.y 的范围是 [0, 20*8-1]（即 [0, 159]）。 SV_DispatchThreadID.z 的范围是 [0, 30*1-1]（即 [0, 29]）。 用途：
-SV_DispatchThreadID 通常用于确定当前线程处理的数据索引。 例如，在处理2D纹理时，SV_DispatchThreadID.xy 可以直接用作纹理坐标。 在处理1D数组时，SV_DispatchThreadID.x 可以直接用作数组索引。 SV_DispatchThreadID 的计算方式 SV_DispatchThreadID 的值是由以下两个因素决定的：
-线程组的大小（由 numthreads 定义）：
-例如，[numthreads(8, 8, 1)] 表示每个线程组有 8x8x1 = 64 个线程。即是说，numthread语句，是声明“线程”的。 线程组的数量（由 Dispatch 调用定义）：</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-12-30T20:20:49&#43;08:00">December 30, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/texture_streaming/">使用mipmap streaming来优化GPU的纹理内存</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-本文所涉及到的API和Unity3D编辑器都是基于6000.0.25f1c1版本
-1 mipmap streaming 简介 使用 mipmap 流来限制 GPU 内存中纹理的大小。
-1.1 mipmap streaming的工作原理 对于每个被摄像机观察到的纹理，Unity会自动计算并加载其特定级别的mipmap，而不是加载所有级别。这意味着 Unity 只会将每个纹理的指定mipmap level的内容从磁盘传输到 CPU 和 GPU。 Unity 会以尽可能高的分辨率加载 mipmap level，但如果较高分辨率的 mipmap level不符合您设置的内存限制，则使用较低的 mipmap level。mipmap可预配置 Unity 在 GPU 上缓存指定mipmap level的纹理内容，以避免重复加载。 1.2 mipmap streaming的限制 Unity不支持对地形纹理使用mipmap streaming，因为 Unity 始终需要最高分辨率的 mipmap level。 Unity不支持对纹理数组、cubemap，3D纹理使用mipmap streaming。 如果使用Graphics.DrawMeshNow等 API来渲染纹理，Unity 将无法获得计算 mipmap level所需的信息。使用Texture2D.requestedMipmapLevel API 手动设置纹理的 mipmap level，或者禁用mipmap streaming。 如果纹理有tiling和offset属性，但又没指定使用_ST属性，Unity可能无法正确计算这种纹理的mipmap level。 2 启用 mipmap streaming 要启用 mipmap streaming，按照以下步骤操作：
-点击【Edit|Project Settings】菜单项，弹出【Project Settings】面板，选中【Quality】项 在【Texture】部分中，启用【Mipmap Streaming】 在默认情况下，这时候为场景中的所有摄像机都打开了mipmap streaming。在编辑器中，mipmap streaming在edit mode或者play mode下都处于开启状态。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-12-19T20:20:49&#43;08:00">December 19, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/reconstruct_world_position/">一段根据片元深度值重建对应的深度坐标值的代码及其解释</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-// 从深度信息重建世界空间坐标 // 参数： // screenPos - 屏幕空间坐标（通常来自顶点着色器的SV_Position） // viewDir - 视图空间方向向量 // sceneDepth - 包含原始深度和线性深度值的结构体 float3 ReconstructWorldPosition(float4 screenPos, float3 viewDir, SceneDepth sceneDepth) { // 平台深度缓冲处理 ---------------------------------------- #if UNITY_REVERSED_Z // 处理Reversed-Z平台（如DirectX） real rawDepth = sceneDepth.raw; // 直接使用原始深度值 #else // OpenGL等常规深度缓冲平台 // 将深度值从[0,1]映射到[Near,1]，适配OpenGL的NDC范围 real rawDepth = lerp(UNITY_NEAR_CLIP_VALUE, 1, sceneDepth.raw); #endif // 正交投影处理 -------------------------------------------- #if defined(ORTHOGRAPHIC_SUPPORT) // 将屏幕坐标转换为NDC空间（-1到1范围） float4 viewPos = float4( (screenPos.xy / screenPos.w) * 2.0 - 1.0, // 透视除法后映射到NDC rawDepth, // 深度值 1.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-11-29T23:21:49&#43;08:00">November 29, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/surface_depth/">一段计算场景深度与当前透明几何像素的线性深度差的代码及其解释</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-// 计算场景深度与当前透明几何像素的线性深度差 // 参数： // depth - 包含场景深度信息的结构体（包含原始深度和线性眼空间深度） // positionCS - 当前像素在裁剪空间中的位置坐标（SV_Position） float SurfaceDepth(SceneDepth depth, float4 positionCS) { // ===================== 场景深度计算 ===================== // 根据投影模式选择计算方式： // unity_OrthoParams.w: 0=透视投影 | 1=正交投影 const float sceneDepth = (unity_OrthoParams.w == 0) ? depth.eye // 透视模式：直接使用预计算的线性眼空间深度 : LinearDepthToEyeDepth(depth.raw); // 正交模式：将原始深度转换到眼空间 // ================= 当前像素深度计算 ==================== const float clipSpaceDepth = (unity_OrthoParams.w == 0) ? LinearEyeDepth(positionCS.z, _ZBufferParams) // 透视模式：裁剪空间z转线性眼深度 : LinearDepthToEyeDepth(positionCS.z / positionCS.w); // 正交模式：NDC z转眼空间深度 // ================ 深度差异计算结果 ===================== return sceneDepth - clipSpaceDepth; // 返回场景深度与当前像素深度的差值 } 首先，函数内部有两个const float变量，sceneDepth和clipSpaceDepth，然后返回它们的差值。我需要理解这两个变量是如何计算的，特别是条件判断部分unity_OrthoParams.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-11-28T23:21:49&#43;08:00">November 28, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/dynamiclightmap_on/">Unity3D的内置宏 DYNAMICLIGHTMAP_ON</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-在Unity中，DYNAMICLIGHTMAP_ON 是一个与 动态光照贴图（Dynamic Lightmaps） 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 控制着色器是否处理动态光照贴图数据，主要用于实现动态物体的间接光照混合效果。
-核心含义 动态光照贴图标识
-当该宏被激活时（#if defined(DYNAMICLIGHTMAP_ON)），表示当前渲染的物体 启用了动态光照贴图，需要在着色器中采样动态光照贴图数据。 若未激活，则物体仅使用静态光照贴图或实时光照。 技术目的
-允许动态物体（如可移动的物件）与烘焙的静态场景光照进行间接光交互。 结合 Enlighten 或 Progressive Lightmapper 系统，实现动态物体的间接光实时更新。 触发条件 该宏在以下情况下自动激活：
-物体设置
-物体的 Mesh Renderer 组件中勾选 Lightmap Static 为 Contribute GI，同时设置 Lightmap Parameters 为支持动态更新。 光照系统配置
-项目中启用了 Realtime Global Illumination（实时全局光照）。 使用 Baked Indirect 或 Shadowmask 混合光照模式。 Shader编译指令
-在Shader中通过 #pragma multi_compile 或 #pragma shader_feature 声明动态光照贴图支持： #pragma multi_compile __ DYNAMICLIGHTMAP_ON 技术实现机制 1. 数据传递 动态光照贴图信息通过以下方式传递到着色器：
-顶点数据：动态光照贴图坐标通过 TEXCOORD2 传递。 Uniform变量：动态光照贴图纹理（unity_DynamicLightmap）和采样器（samplerunity_DynamicLightmap）。 2. 着色器代码示例 struct v2f { float2 uv : TEXCOORD0; #if defined(LIGHTMAP_ON) float2 lightmapUV : TEXCOORD1; // 静态光照贴图UV #endif #if defined(DYNAMICLIGHTMAP_ON) float2 dynamicLightmapUV : TEXCOORD2; // 动态光照贴图UV #endif }; half3 GetLightmapColor(v2f i) { half3 staticGI = 0; half3 dynamicGI = 0; #if defined(LIGHTMAP_ON) staticGI = SampleLightmap(unity_Lightmap, samplerunity_Lightmap, i.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-11-19T23:21:49&#43;08:00">November 19, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/requires_vertex_shadow_coord_interpolator/">Unity3D的内置宏 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-在Unity URP中，REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR 是一个与阴影计算相关的内置宏（Shader Variant Keyword），它的作用是：
-核心含义 控制顶点着色器是否需要生成并传递阴影坐标插值器
-当该宏被激活时，Unity会在顶点着色器阶段计算主光源的阴影坐标，并通过顶点着色器输出结构体（Varyings）传递到片元着色器。这使得片元着色器可以直接使用插值后的阴影坐标进行阴影采样，避免在片元阶段重复计算。
-触发条件 该宏会自动激活，当以下条件满足时：
-项目中启用了 主光源阴影（Main Light Shadows） 使用了 逐顶点阴影坐标插值 的优化模式（而非逐片元计算） 在Shader中通过 #pragma multi_compile 启用了阴影相关功能（例如 _MAIN_LIGHT_SHADOWS） 典型应用场景 在URP的Shader中，你会在顶点着色器输出结构体 Varyings 中看到类似代码：
-struct Varyings { float4 positionCS : SV_POSITION; float3 positionWS : TEXCOORD0; // 当 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR 激活时，自动添加阴影坐标字段 #if defined(REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR) float4 shadowCoord : TEXCOORD1; #endif }; 技术原理 阴影坐标生成
-顶点着色器通过 GetShadowCoord(vertexInput) 计算阴影坐标，并存储在 shadowCoord 中。
-插值优化
-阴影坐标在顶点阶段计算后，通过插值器传递到片元着色器，减少片元阶段的计算量。
-自动编译控制
-Unity会根据项目设置和Shader特性，在编译时自动决定是否启用该宏，生成不同的Shader变体。
-对比其他阴影模式 宏名称 计算阶段 性能消耗 精度 REQUIRES_VERTEX_SHADOW_COORD_INTERPOLATOR 顶点着色器 较低 中等 REQUIRES_FRAGMENT_SHADOW_COORD_INTERPOLATOR 片元着色器 较高 较高 调试与手动控制 强制启用/禁用（不推荐）</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-11-19T23:21:49&#43;08:00">November 19, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/_light_layers/">Unity3D的内置宏 _LIGHT_LAYERS</a></h1>
-	<div class="entry__content">Unity3D的内置宏 ADDITIONAL_LIGHTS_VERTEX
-请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-在Unity URP/HDRP中，_LIGHT_LAYERS 是一个与 光源层级过滤（Light Layer Masking） 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 实现基于层级的光源与物体交互控制，允许开发者通过层掩码（Layer Masks）精确控制哪些光源可以影响特定物体。
-核心含义 1. 功能定位 光源筛选机制：激活该宏后，物体会根据自身的 Light Layer Mask 和光源的 Light Layer Mask 进行匹配，只有匹配层的光源才会对该物体产生光照影响。 渲染优化：通过层级过滤减少无效光源计算，提升复杂场景性能。 2. 技术目标 精细化光源控制：例如让装饰性灯光只影响场景道具，不影响角色 多世界渲染支持：用于分屏游戏或VR中不同视角的独立光照逻辑 触发条件 该宏的激活需要同时满足以下条件：
-项目设置启用
-URP/HDRP Asset 中开启光源层支持： URP: Lighting &gt; Light Layers &gt; Enable Light Layers HDRP: Lighting &gt; Light Layers Shader声明
-在着色器中通过#pragma指令声明支持：
-#pragma multi_compile _ _LIGHT_LAYERS 光源与物体配置
-光源的 Light Layer Mask 设置为非&quot;Everything&quot;值 物体的 Renderer组件 &gt; Rendering Layer Mask 设置为与光源匹配的层级 技术实现机制 1.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2024-11-19T22:21:49&#43;08:00">November 19, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
-<div class="pagination block">
-				<span class="pagination__item pagination__item--active" data-total="7">1</span>
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/2/">2</a>
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/3/">3</a>
-			<span class="pagination__item pagination__item--gap">&hellip;</span>
-				<a class="pagination__item pagination__item--desktop" href="/tags/unity3d/page/7/">7</a>
-</div>
+    &lt;!-- 表头 --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;margin:0 0 6px 0;font-size:12px;color:#6B7280;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#F0F4FB;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:6px 10px;box-sizing:border-box;font-weight:600;color:#1A1B1C;&#34;&gt;旧：内置管线 Camera 的 Clear Flags&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#F0F4FB;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:6px 10px;box-sizing:border-box;font-weight:600;color:#1A1B1C;&#34;&gt;新：URP 中在哪里配置&lt;/div&gt;
+    &lt;/div&gt;
 
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+    &lt;!-- 行1 Skybox --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Skybox&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;清除为天空盒&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#9BBBF4;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Base 相机 · Environment → Background Type = Skybox&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;清除颜色缓冲为天空盒（仅 Base 相机显示此项）&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 行2 Solid Color --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Solid Color&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;清除为纯色&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#9BBBF4;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Base 相机 · Environment → Background Type = Solid Color&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;再选 Background 颜色（RGBA 设 0,0,0,0 可做透明背景）&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 行3 Depth Only --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#EEF7F3;border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Depth Only&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;只清深度、保留颜色（如武器叠加到场景上）&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#52C41A;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#EEF7F3;border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Overlay 相机（相机堆叠）· Rendering → Clear Depth 勾选&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;把相机加进 Base 的 Stack，Render Type 设 Overlay；勾上后只清深度、保留已有颜色——功能等价&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 行4 Don&#39;t Clear --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Don&#39;t Clear&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;什么缓冲区都不清&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#9BBBF4;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Base 相机 · Environment → Background Type = Uninitialized&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;不初始化颜色缓冲（近似替代；深度仍会清）。较新版本才有此选项&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 底部说明 --&gt;
+    &lt;div style=&#34;background:linear-gradient(135deg, rgba(163,213,232,0.18), rgba(163,213,232,0.30));border-radius:10px;padding:10px 12px;margin:10px 0 0 0;box-sizing:border-box;&#34;&gt;
+      &lt;div style=&#34;font-size:12.5px;line-height:1.6;&#34;&gt;
+        &lt;span style=&#34;font-weight:600;&#34;&gt;两个关键点：&lt;/span&gt;&lt;br/&gt;
+        1️⃣ 只有 &lt;span style=&#34;font-weight:600;&#34;&gt;Overlay 相机&lt;/span&gt; 才有“清深度、不清颜色”的行为（Clear Depth 勾选），这就是 Depth Only 的现代替代；&lt;br/&gt;
+        2️⃣ &lt;span style=&#34;font-weight:600;&#34;&gt;Base 相机&lt;/span&gt; 的深度缓冲每帧固定清除，你只能通过 Background Type 控制颜色缓冲。&lt;br/&gt;
+        ⚠️ 脚本里的 &lt;span style=&#34;font-family:monospace;background:rgba(0,0,0,0.06);padding:0 4px;border-radius:4px;&#34;&gt;camera.clearFlags = CameraClearFlags.Depth&lt;/span&gt; 是内置管线时代的旧 API，URP 中建议不要依赖。
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/html&gt;
+</code></pre><p><strong>补充说明（版本相关）</strong>：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2026-01-15T19:21:39+08:00>January 15, 2026</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/yooassets/yooasset_note/>Yoasset学习笔记和踩坑记录</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>安装YooAssets的编辑器和运行时源代码可以直接从Github下面下载，但如果要用到tuyoo公司提供的若干个示例，则还需要配置一下package manager，从Unity的package manager中下载</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#f6f8fa;background-color:#82071e>打开管理界面</span> <span style=color:#f6f8fa;background-color:#82071e>【</span>Edit<span style=color:#0550ae>/</span>Project Settings<span style=color:#0550ae>/</span>Package Manager<span style=color:#f6f8fa;background-color:#82071e>】</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 输入以下内容（中国版）
+</span></span></span><span style=display:flex><span><span style=color:#900;font-weight:700>Name</span><span style=color:#1f2328>:</span> package<span style=color:#1f2328>.</span>openupm<span style=color:#1f2328>.</span>cn
+</span></span><span style=display:flex><span><span style=color:#900;font-weight:700>URL</span><span style=color:#1f2328>:</span> <span style=color:#900;font-weight:700>https</span><span style=color:#1f2328>:</span><span style=color:#57606a>//package.openupm.cn
+</span></span></span><span style=display:flex><span>Scope<span style=color:#1f2328>(</span>s<span style=color:#1f2328>)</span><span style=color:#0550ae>:</span> com<span style=color:#1f2328>.</span>tuyoogame<span style=color:#1f2328>.</span>yooasset
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 输入以下内容（国际版）
+</span></span></span><span style=display:flex><span><span style=color:#900;font-weight:700>Name</span><span style=color:#1f2328>:</span> package<span style=color:#1f2328>.</span>openupm<span style=color:#1f2328>.</span>com
+</span></span><span style=display:flex><span><span style=color:#900;font-weight:700>URL</span><span style=color:#1f2328>:</span> <span style=color:#900;font-weight:700>https</span><span style=color:#1f2328>:</span><span style=color:#57606a>//package.openupm.com
+</span></span></span><span style=display:flex><span>Scope<span style=color:#1f2328>(</span>s<span style=color:#1f2328>)</span><span style=color:#0550ae>:</span> com<span style=color:#1f2328>.</span>tuyoogame<span style=color:#1f2328>.</span>yooasset
+</span></span></code></pre></div><blockquote><p>什么是unity的scoped registry参见本站<a href=http://www.xionggf.com/post/unity3d/u3d_scoped_registry_detail/>网页</a>。</p></blockquote><p>如果碰到有如下的控制台输出：</p><pre tabindex=0><code>[Package Manager Window] Error searching for packages.
+Unable to perform online search:
+  Cannot connect to &#39;package.openupm.cn&#39; (error code: ENOTFOUND). 
+  Verify your environment firewall policies allow connection to this host name. 
+  If your system is behind a proxy, 
+  verify your proxy environment variables (HTTP_PROXY and HTTPS_PROXY) are properly set.
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions ()
+</code></pre><p>那就证明在国内搞开源是很没有前途的，把URL地址 <strong>package.openupm.cn</strong> 换成 <strong>package.openupm.com</strong> 看看。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2025-11-12T18:21:49+08:00>November 12, 2025</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_guid/>在unity中生成一个guid值</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h3 id=unity中生成guid的方法>Unity中生成GUID的方法</h3><p>Unity本身提供了便捷的API来生成GUID，同时也兼容C#标准库的GUID生成方式，以下是两种最常用且可靠的方法：</p><h4 id=方法1使用unity内置的guid类推荐>方法1：使用Unity内置的GUID类（推荐）</h4><p>Unity引擎有专门的 <code>UnityEditor.GUID</code> 类（编辑器环境）和 <code>System.Guid</code> 类（运行时/编辑器通用），其中运行时通用的方式兼容性最好：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>GuidGenerator</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Start<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 生成新的GUID</span>
+</span></span><span style=display:flex><span>        System<span style=color:#1f2328>.</span>Guid newGuid <span style=color:#1f2328>=</span> System<span style=color:#1f2328>.</span>Guid<span style=color:#1f2328>.</span>NewGuid<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 转换为字符串（常用格式，包含连字符）</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>string</span> guidString <span style=color:#1f2328>=</span> newGuid<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;生成的GUID（带连字符）：&#34;</span> <span style=color:#1f2328>+</span> guidString<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 转换为无连字符的字符串（适合存储/传输）</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>string</span> guidNoHyphen <span style=color:#1f2328>=</span> newGuid<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;N&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;生成的GUID（无连字符）：&#34;</span> <span style=color:#1f2328>+</span> guidNoHyphen<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 转换为Unity编辑器专用的GUID类型（仅编辑器环境可用）</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>#if</span> UNITY_EDITOR
+</span></span><span style=display:flex><span>        UnityEditor<span style=color:#1f2328>.</span>GUID unityGuid <span style=color:#1f2328>=</span> UnityEditor<span style=color:#1f2328>.</span>GUID<span style=color:#1f2328>.</span>Generate<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Unity编辑器GUID：&#34;</span> <span style=color:#1f2328>+</span> unityGuid<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>());</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>#endif</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h4 id=方法2编辑器扩展批量生成快捷生成>方法2：编辑器扩展（批量生成/快捷生成）</h4><p>如果需要在编辑器面板快速生成GUID，可以写一个简单的编辑器工具：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEditor</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>GuidCreatorWindow</span> <span style=color:#1f2328>:</span> EditorWindow
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>    [MenuItem(&#34;Tools/生成GUID&#34;)]</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> OpenWindow<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        GuidCreatorWindow window <span style=color:#1f2328>=</span> GetWindow<span style=color:#1f2328>&lt;</span>GuidCreatorWindow<span style=color:#1f2328>&gt;(</span><span style=color:#0a3069>&#34;GUID生成器&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        window<span style=color:#1f2328>.</span>Show<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> OnGUI<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        GUILayout<span style=color:#1f2328>.</span>Label<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;点击按钮生成新的GUID&#34;</span><span style=color:#1f2328>,</span> EditorStyles<span style=color:#1f2328>.</span>boldLabel<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>GUILayout<span style=color:#1f2328>.</span>Button<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;生成并复制到剪贴板&#34;</span><span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>string</span> newGuid <span style=color:#1f2328>=</span> System<span style=color:#1f2328>.</span>Guid<span style=color:#1f2328>.</span>NewGuid<span style=color:#1f2328>().</span>ToString<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>            EditorGUIUtility<span style=color:#1f2328>.</span>systemCopyBuffer <span style=color:#1f2328>=</span> newGuid<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;已生成并复制GUID：&#34;</span> <span style=color:#1f2328>+</span> newGuid<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            EditorUtility<span style=color:#1f2328>.</span>DisplayDialog<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;成功&#34;</span><span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;GUID已复制到剪贴板：\n&#34;</span> <span style=color:#1f2328>+</span> newGuid<span style=color:#1f2328>,</span> <span style=color:#0a3069>&#34;确定&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=关键说明>关键说明</h3><ol><li><strong>运行时 vs 编辑器</strong>：<ul><li><code>System.Guid.NewGuid()</code>：可在<strong>运行时和编辑器</strong>中使用，跨平台兼容（PC/手机/主机等）。</li><li><code>UnityEditor.GUID.Generate()</code>：仅在<strong>编辑器环境</strong>可用（打包后会报错），主要用于Unity编辑器内的资源标识。</li></ul></li><li><strong>GUID格式</strong>：<ul><li><code>ToString()</code>：默认格式（如 <code>550e8400-e29b-41d4-a716-446655440000</code>）。</li><li><code>ToString("N")</code>：无连字符格式（如 <code>550e8400e29b41d4a716446655440000</code>），适合存储到数据库或配置文件。</li></ul></li><li><strong>使用场景</strong>：<ul><li>给游戏内的物品/角色/存档数据生成唯一标识。</li><li>编辑器中标记自定义资源，避免重复。</li><li>网络通信中标识唯一的请求/响应。</li></ul></li></ol><h3 id=总结>总结</h3><ol><li><strong>通用场景</strong>：优先使用 <code>System.Guid.NewGuid()</code>，支持运行时和编辑器，跨平台无限制。</li><li><strong>编辑器专属</strong>：仅在编辑器代码中使用 <code>UnityEditor.GUID.Generate()</code>，用于Unity内置资源管理。</li><li><strong>格式选择</strong>：带连字符格式可读性好，无连字符格式更适合存储和传输。</li></ol><p>生成的GUID理论上全球唯一，无需担心重复问题，是Unity中实现唯一标识的最佳方案。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2025-11-12T18:21:49+08:00>November 12, 2025</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_scoped_registry_detail/>详解Unity3D packmanager的scoped registry</a></h1><div class=entry__content><h3 id=核心概念一句话概括>核心概念：一句话概括</h3><p><strong>Scoped Registry（作用域注册表）</strong> 是一个自定义的包服务器地址，你可以告诉 Unity Package Manager：“<strong>当我要找某个特定前缀的包时，不要再去 Unity 的官方源找了，请去我指定的这个私人地址找。</strong>”</p><hr><h3 id=为什么需要-scoped-registry解决的问题>为什么需要 Scoped Registry？（解决的问题）</h3><p>在 Scoped Registry 出现之前，如果你想使用非 Unity 官方提供的包（比如公司内部的工具包、第三方供应商的插件、或自己团队开发的共享模块），通常有几种麻烦的方式：</p><ol><li><strong>直接导入 <code>.unitypackage</code> 文件</strong>：难以更新、版本控制混乱、无法清晰地管理依赖。</li><li><strong>使用 Git URL</strong>：在 Package Manager 里直接链接到 Git 仓库。这虽然可以，但不够规范，并且对私有仓库的权限管理比较麻烦。</li><li><strong>手动复制文件</strong>：最原始的方法，维护起来是噩梦。</li></ol><p>这些方法都不够优雅，也不利于团队协作和持续集成。</p><p><strong>Scoped Registry 的诞生就是为了像管理官方包一样，来管理这些“第三方”或“私人”的包。</strong> 它让 Package Manager 从一个只能连接 Unity 官方商店的工具，变成了一个可以连接多个包源的、更通用的依赖管理工具。</p><hr><h3 id=它是如何工作的>它是如何工作的？</h3><p>Scoped Registry 基于 <strong>npm</strong> 的包注册表协议。你配置两个核心信息：</p><ol><li><strong>注册表地址</strong>：包的服务器地址。例如：<ul><li>公司内部搭建的 npm registry（如 Verdaccio、Azure Artifacts 等）。</li><li>第三方服务提供的地址（如 OpenUPM 的注册表）。</li></ul></li><li><strong>作用域</strong>：一个或多个包名的前缀。它用来“过滤”或“限定”这个注册表负责哪些包。</li></ol><p><strong>工作流程示例：</strong></p><p>假设你的公司叫 “AwesomeStudio”，你们将所有内部工具包的名字都命名为 <code>com.awesomestudio.xxx</code>。</p><ol><li><p><strong>配置 Scoped Registry</strong>：</p><ul><li><strong>名称</strong>： <code>AwesomeStudio Internal</code></li><li><strong>URL</strong>： <code>https://packages.awesomestudio.com</code></li><li><strong>作用域</strong>： <code>com.awesomestudio</code></li></ul></li><li><p><strong>当你在 Package Manager 中搜索或安装包时</strong>：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2025-11-11T18:21:49+08:00>November 11, 2025</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/unitask/unitask_completion_source/>用UniTask包装异步回调函数以及UniTaskCompletionSource精讲</a></h1><div class=entry__content><h1 id=unitask-包装回调式异步函数>UniTask 包装回调式异步函数</h1><p>很多老API、第三方SDK都是<strong>回调(callback)模式</strong>：调用一个方法，传进去OnSuccess、OnFail回调，函数直接返回void，不能await。
+UniTask提供 <code>UniTaskCompletionSource</code> 来把回调接口封装成可 <code>await</code> 的 <code>UniTask</code>，这是标准做法。</p><blockquote><p>命名空间：<code>using Cysharp.Threading.Tasks;</code></p></blockquote><h2 id=核心类unitaskcompletionsource>核心类：UniTaskCompletionSource<t></h2><ul><li><code>UniTaskCompletionSource&lt;T></code>：用来手动控制UniTask的完成/失败/取消</li><li><code>.Task</code> 属性：得到可供外部await的 <code>UniTask&lt;T></code></li><li>完成：<code>TrySetResult(T result)</code> → 任务成功结束，返回结果</li><li>失败：<code>TrySetException(Exception ex)</code> → 任务抛出异常</li><li>取消：<code>TrySetCanceled()</code> → 任务变成取消状态</li></ul><blockquote><p>⚠️注意：全部是<code>TrySetXXX</code>，代表只能设置一次，多次调用会忽略。</p></blockquote><hr><h2 id=示例1无返回值回调成功失败回调>示例1：无返回值回调（成功/失败回调）</h2><p>假设原有回调风格函数：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// 原始回调风格API，不是async，靠回调通知结果</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> OldAsyncMethod<span style=color:#1f2328>(</span>Action onSuccess<span style=color:#1f2328>,</span> Action<span style=color:#1f2328>&lt;</span><span style=color:#cf222e>string</span><span style=color:#1f2328>&gt;</span> onError<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 模拟异步，比如网络请求、SDK加载</span>
+</span></span><span style=display:flex><span>    UnityEngine<span style=color:#1f2328>.</span>Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;开始执行旧版回调接口&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    UnityEngine<span style=color:#1f2328>.</span>Time<span style=color:#1f2328>.</span>time<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 模拟延迟后回调，真实场景是SDK内部触发</span>
+</span></span><span style=display:flex><span>    UniTask<span style=color:#1f2328>.</span>Delay<span style=color:#1f2328>(</span><span style=color:#0550ae>2000</span><span style=color:#1f2328>).</span>Forget<span style=color:#1f2328>(()</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>bool</span> ok <span style=color:#1f2328>=</span> <span style=color:#cf222e>true</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>ok<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            onSuccess<span style=color:#1f2328>?.</span>Invoke<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>            onError<span style=color:#1f2328>?.</span>Invoke<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;出错啦&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=包装成-unitask>包装成 UniTask</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// 把回调API封装成可await的UniTask</span>
+</span></span><span style=display:flex><span>UniTask WrapOldAsyncMethod<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 创建完成源</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>var</span> tcs <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> UniTaskCompletionSource<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 调用旧回调接口</span>
+</span></span><span style=display:flex><span>    OldAsyncMethod<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>        onSuccess<span style=color:#1f2328>:</span> <span style=color:#1f2328>()</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 成功，标记任务完成</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetResult<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>},</span>
+</span></span><span style=display:flex><span>        onError<span style=color:#1f2328>:</span> <span style=color:#1f2328>(</span>errMsg<span style=color:#1f2328>)</span> <span style=color:#1f2328>=&gt;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 失败，抛出异常给await方捕获</span>
+</span></span><span style=display:flex><span>            tcs<span style=color:#1f2328>.</span>TrySetException<span style=color:#1f2328>(</span><span style=color:#cf222e>new</span> System<span style=color:#1f2328>.</span>Exception<span style=color:#1f2328>(</span>errMsg<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 返回可供await的任务</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> tcs<span style=color:#1f2328>.</span>Task<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=使用包装后的方法>使用包装后的方法</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>async</span> UniTask Test<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>try</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>await</span> WrapOldAsyncMethod<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;执行成功&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>catch</span> <span style=color:#1f2328>(</span>System<span style=color:#1f2328>.</span>Exception e<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>LogError<span style=color:#1f2328>(</span><span style=color:#0a3069>$&#34;执行失败：{e.Message}&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><hr><h2 id=示例2带返回结果的回调-unitask>示例2：带返回结果的回调 UniTask<t></h2><p>原始回调，成功会返回数据：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2025-04-23T20:20:49+08:00>April 23, 2025</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/unitask/ rel=tag>UniTask</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/unitask/unitask_forget/>UniTask的Forget函数精讲</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=unitask-forget-作用与示例>UniTask Forget() 作用与示例</h1><blockquote><p>UniTask 是基于 ValueTask 为 Unity 实现的异步库，<code>Forget()</code> 是 UniTask 扩展方法。</p></blockquote><h2 id=forget-是干嘛的>Forget() 是干嘛的</h2><ol><li><code>UniTask</code> 本身是可等待异步对象，如果你不 <code>await</code>，也不接收返回变量，编译器会报警告：<strong>未观察到的 UniTask</strong>，提示你这个异步任务被丢弃了。</li><li><strong><code>Forget()</code> 的作用：消除编译器警告，告诉代码：这个异步任务我不等待、不处理返回值、也不捕获异常，就让它后台跑。</strong></li><li>⚠️重点风险：</li></ol><ul><li>调用 <code>Forget()</code> 之后，<strong>任务内部抛出的异常不会被捕获，会直接在Unity控制台报错</strong>。</li><li>它<strong>不会阻塞主线程</strong>，不会等待任务完成，调用之后立刻往下执行，任务继续后台运行。</li><li>只适合：你不需要等待结果、不在乎失败与否的异步操作。</li></ul><blockquote><p>对比：</p><ul><li><code>await xxxUniTask()</code>：等待执行完成，可以捕获异常；</li><li><code>xxxUniTask.Forget()</code>：不等待，直接放行，吃掉“未await警告”，异常仍然会爆出。</li></ul></blockquote><h2 id=安装说明>安装说明</h2><p>要使用 Forget，需要引入命名空间：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>Cysharp.Threading.Tasks</span><span style=color:#1f2328>;</span>
+</span></span></code></pre></div><h2 id=示例1基础-forget-使用>示例1：基础 Forget 使用</h2><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>UnityEngine</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>Cysharp.Threading.Tasks</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>UniTaskForgetDemo</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Start<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 如果直接调用 DoSomeWork(); 不await，编译器会警告</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// DoSomeWork(); </span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Forget：消除警告，任务后台跑，Start立刻执行完毕，不会等3秒</span>
+</span></span><span style=display:flex><span>        DoSomeWork<span style=color:#1f2328>().</span>Forget<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Start函数执行完毕，不会等待异步任务！&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 模拟耗时异步任务</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>async</span> UniTask DoSomeWork<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;任务开始&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>await</span> UniTask<span style=color:#1f2328>.</span>Delay<span style=color:#1f2328>(</span><span style=color:#0550ae>3000</span><span style=color:#1f2328>);</span> <span style=color:#57606a>// 等待3秒</span>
+</span></span><span style=display:flex><span>        Debug<span style=color:#1f2328>.</span>Log<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;3秒后任务执行完成&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>输出顺序：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2025-03-23T20:20:49+08:00>March 23, 2025</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/hlsl_sv_dispatch_thread_id_detail/>一篇文章说透计算着色器的SV_DispatchThreadID</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><code>SV_DispatchThreadID</code> 是HLSL（High-Level Shading Language）中的一个语义（Semantic），用于在Compute Shader中获取当前线程的全局线程ID。它是Compute Shader中非常重要的一个概念，用于确定每个线程处理的数据或任务。</p><hr><h2 id=sv_dispatchthreadid-的含义><code>SV_DispatchThreadID</code> 的含义</h2><ol><li><p><strong>全局线程ID</strong>：</p><ul><li><code>SV_DispatchThreadID</code> 是一个 <code>uint3</code> 类型的变量，表示<strong>当前线程在全局线程空间中的ID</strong>。</li><li>它的三个分量（<code>x</code>、<code>y</code>、<code>z</code>）分别表示线程在X、Y、Z三个维度上的全局索引。</li></ul></li><li><p><strong>线程的全局位置</strong>：</p><ul><li><code>SV_DispatchThreadID</code> 的值范围由<strong>程序语言层（例如C#）</strong> 的<code>Dispatch</code> 调用，和<strong>HLSL语言</strong>中的 <code>numthreads</code> 语句定义。</li><li>例如，如果调度了 <code>Dispatch(10, 20, 30)</code>，并且 <code>numthreads</code> 是 <code>[8, 8, 1]</code>，那么：<ul><li><code>SV_DispatchThreadID.x</code> 的范围是 <code>[0, 10*8-1]</code>（即 <code>[0, 79]</code>）。</li><li><code>SV_DispatchThreadID.y</code> 的范围是 <code>[0, 20*8-1]</code>（即 <code>[0, 159]</code>）。</li><li><code>SV_DispatchThreadID.z</code> 的范围是 <code>[0, 30*1-1]</code>（即 <code>[0, 29]</code>）。</li></ul></li></ul></li><li><p><strong>用途</strong>：</p><ul><li><code>SV_DispatchThreadID</code> 通常用于确定当前线程处理的数据索引。</li><li>例如，在处理2D纹理时，<code>SV_DispatchThreadID.xy</code> 可以直接用作纹理坐标。</li><li>在处理1D数组时，<code>SV_DispatchThreadID.x</code> 可以直接用作数组索引。</li></ul></li></ol><hr><h2 id=sv_dispatchthreadid-的计算方式><code>SV_DispatchThreadID</code> 的计算方式</h2><p><code>SV_DispatchThreadID</code> 的值是由以下两个因素决定的：</p><ol><li><p><strong>线程组的大小</strong>（由 <code>numthreads</code> 定义）：</p><ul><li>例如，<code>[numthreads(8, 8, 1)]</code> 表示每个线程组有 8x8x1 = 64 个线程。<strong>即是说，numthread语句，是声明“线程”的。</strong></li></ul></li><li><p><strong>线程组的数量</strong>（由 <code>Dispatch</code> 调用定义）：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-12-30T20:20:49+08:00>December 30, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/texture_streaming/>使用mipmap streaming来优化GPU的纹理内存</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><strong>本文所涉及到的API和Unity3D编辑器都是基于6000.0.25f1c1版本</strong></p><h2 id=1-mipmap-streaming-简介>1 mipmap streaming 简介</h2><p>使用 mipmap 流来限制 GPU 内存中纹理的大小。</p><h3 id=11-mipmap-streaming的工作原理>1.1 mipmap streaming的工作原理</h3><ol><li>对于每个被摄像机观察到的纹理，Unity会自动计算并加载其特定级别的mipmap，而不是加载所有级别。这意味着 Unity 只会将每个纹理的指定mipmap level的内容从磁盘传输到 CPU 和 GPU。</li><li>Unity 会以尽可能高的分辨率加载 mipmap level，但如果较高分辨率的 mipmap level不符合您设置的内存限制，则使用较低的 mipmap level。mipmap可预配置</li><li>Unity 在 GPU 上缓存指定mipmap level的纹理内容，以避免重复加载。</li></ol><h3 id=12-mipmap-streaming的限制>1.2 mipmap streaming的限制</h3><ol><li>Unity不支持对地形纹理使用mipmap streaming，因为 Unity 始终需要最高分辨率的 mipmap level。</li><li>Unity不支持对<strong>纹理数组</strong>、<strong>cubemap</strong>，<strong>3D纹理</strong>使用mipmap streaming。</li><li>如果使用<code>Graphics.DrawMeshNow</code>等 API来渲染纹理，Unity 将无法获得计算 mipmap level所需的信息。使用<code>Texture2D.requestedMipmapLevel</code> API 手动设置纹理的 mipmap level，或者禁用mipmap streaming。</li><li>如果纹理有tiling和offset属性，但又没指定使用_ST属性，Unity可能无法正确计算这种纹理的mipmap level。</li></ol><br><hr><br><h2 id=2-启用-mipmap-streaming>2 启用 mipmap streaming</h2><p>要启用 mipmap streaming，按照以下步骤操作：</p><ol><li>点击【<strong>Edit|Project Settings</strong>】菜单项，弹出【<strong>Project Settings</strong>】面板，选中【<strong>Quality</strong>】项</li><li>在【<strong>Texture</strong>】部分中，启用【<strong>Mipmap Streaming</strong>】</li></ol><p>在默认情况下，这时候为场景中的所有摄像机都打开了mipmap streaming。在编辑器中，mipmap streaming在edit mode或者play mode下都处于开启状态。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-12-19T20:20:49+08:00>December 19, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div></div></main><div class="pagination block"><span class="pagination__item pagination__item--active" data-total=7>1</span>
+<a class="pagination__item pagination__item--desktop" href=/tags/unity3d/page/2/>2</a>
+<a class="pagination__item pagination__item--desktop" href=/tags/unity3d/page/3/>3</a>
+<span class="pagination__item pagination__item--gap">&mldr;</span>
+<a class="pagination__item pagination__item--desktop" href=/tags/unity3d/page/7/>7</a></div></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

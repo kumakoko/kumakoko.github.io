@@ -1,414 +1,204 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解">
-		<meta property="og:title" content="NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解" />
-<meta property="og:description" content="NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/dotnet/begin_receive_and_end_receive/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2013-10-20T18:08:30+08:00" />
-<meta property="article:modified_time" content="2013-10-20T18:08:30+08:00" />
-
-
-		<meta itemprop="name" content="NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解">
-<meta itemprop="description" content="NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解"><meta itemprop="datePublished" content="2013-10-20T18:08:30+08:00" />
-<meta itemprop="dateModified" content="2013-10-20T18:08:30+08:00" />
-<meta itemprop="wordCount" content="473">
-<meta itemprop="keywords" content=".NET," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2013-10-20T18:08:30&#43;08:00">October 20, 2013</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/.net/" rel="category">.NET</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/.net/" rel="tag">.NET</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#使用beginreceive和endreceive的示例代码">使用BeginReceive和EndReceive的示例代码</a></li>
-    <li><a href="#执行endreceive函数时可能抛出的异常">执行EndReceive函数时可能抛出的异常</a></li>
-    <li><a href="#参考网页">参考网页</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">分类</th>
-<th style="text-align:left">信息</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">类所属的空间:</td>
-<td style="text-align:left">System.Net.Sockets</td>
-</tr>
-<tr>
-<td style="text-align:left">类所属于的程序集:</td>
-<td style="text-align:left">System.dll, netstandard.dll, System.Net.Sockets.dll, System.Net.dll</td>
-</tr>
-</tbody>
-</table>
-<h2 id="使用beginreceive和endreceive的示例代码">使用BeginReceive和EndReceive的示例代码</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System;  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Net;  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Net.Sockets;  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Threading;  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> System.Text;  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// State object for receiving data from remote device.  </span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StateObject</span> {  
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Socket workSocket = <span style="color:#66d9ef">null</span>;              <span style="color:#75715e">// Socket连接的对象 </span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> BufferSize = <span style="color:#ae81ff">256</span>;            <span style="color:#75715e">// 客户端接受socket数据的缓冲区字节数大小 </span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">byte</span>[] buffer = <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">byte</span>[BufferSize];  <span style="color:#75715e">// 客户端接受socket数据的缓冲区</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> StringBuilder sb = <span style="color:#66d9ef">new</span> StringBuilder();<span style="color:#75715e">// 客户端接受数据字符串的容器</span>
-</span></span><span style="display:flex;"><span>}  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">AsynchronousClient</span> {  
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> port = <span style="color:#ae81ff">11000</span>;   <span style="color:#75715e">// 端口号</span>
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// ManualResetEvent类详见 http://www.cnblogs.com/li-peng/p/3291306.html</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 当初始化为true时，为终止状态</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 当初始化为false时，为非终止状态</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 终止状态时调用成员方法WaitOne()允许线程访问下边的语句</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 非终止状态时调用成员方法WaitOne()阻塞线程，不允许线程访问下边的语句</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> ManualResetEvent connectDone = <span style="color:#66d9ef">new</span> ManualResetEvent(<span style="color:#66d9ef">false</span>);  
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> ManualResetEvent sendDone = <span style="color:#66d9ef">new</span> ManualResetEvent(<span style="color:#66d9ef">false</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> ManualResetEvent receiveDone = <span style="color:#66d9ef">new</span> ManualResetEvent(<span style="color:#66d9ef">false</span>);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> String response = String.Empty; <span style="color:#75715e">// 从服务端处收到的字符串 </span>
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> StartClient() {  
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 利用DNS解析域名，获得目标服务器的IP</span>
-</span></span><span style="display:flex;"><span>            IPHostEntry ipHostInfo = Dns.GetHostEntry(<span style="color:#e6db74">&#34;host.contoso.com&#34;</span>);  
-</span></span><span style="display:flex;"><span>            IPAddress ipAddress = ipHostInfo.AddressList[<span style="color:#ae81ff">0</span>];  
-</span></span><span style="display:flex;"><span>            IPEndPoint remoteEP = <span style="color:#66d9ef">new</span> IPEndPoint(ipAddress, port);  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 创建连接用的socket，使用TCP，流式数据  </span>
-</span></span><span style="display:flex;"><span>            Socket client = <span style="color:#66d9ef">new</span> Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 开始连接服务器，注意这里的第三个参数，当传递client进去的时候，传给回调函数ConnectCallback</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 中IAsyncResult类参数ar的AsyncState，就是这个client</span>
-</span></span><span style="display:flex;"><span>            client.BeginConnect( remoteEP, <span style="color:#66d9ef">new</span> AsyncCallback(ConnectCallback), client);
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 因为一开始connectDone处于非终止状态，所以这里执行了WaitOne方法之后，会阻塞住当前的线程</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 直到在ConnectCallback函数中connectDone执行了Set()方法为止</span>
-</span></span><span style="display:flex;"><span>            connectDone.WaitOne();  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 向服务端发送消息，然后阻塞本线程，直到发送成功</span>
-</span></span><span style="display:flex;"><span>            Send(client,<span style="color:#e6db74">&#34;This is a test&lt;EOF&gt;&#34;</span>);  
-</span></span><span style="display:flex;"><span>            sendDone.WaitOne();  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 收取服务端对本客户端发送的消息的应答，然后阻塞本线程，直到收取完成</span>
-</span></span><span style="display:flex;"><span>            Receive(client);
-</span></span><span style="display:flex;"><span>            receiveDone.WaitOne();
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 打印出从服务端接受到的信息</span>
-</span></span><span style="display:flex;"><span>            Console.WriteLine(<span style="color:#e6db74">&#34;Response received : {0}&#34;</span>, response);  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 关闭socket连接</span>
-</span></span><span style="display:flex;"><span>            client.Shutdown(SocketShutdown.Both);  
-</span></span><span style="display:flex;"><span>            client.Close();  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {  
-</span></span><span style="display:flex;"><span>            Console.WriteLine(e.ToString());  
-</span></span><span style="display:flex;"><span>        }  
-</span></span><span style="display:flex;"><span>    }  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> ConnectCallback(IAsyncResult ar) {  
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 在BeginConnect中传递过来的第三个参数就是Socket对象</span>
-</span></span><span style="display:flex;"><span>            Socket client = (Socket) ar.AsyncState;  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 完成后，一个BeginConnect就要对应一个EndConnect</span>
-</span></span><span style="display:flex;"><span>            client.EndConnect(ar);  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 打印输出</span>
-</span></span><span style="display:flex;"><span>            Console.WriteLine(<span style="color:#e6db74">&#34;Socket connected to {0}&#34;</span>,client.RemoteEndPoint.ToString());  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 通知完成，让StartClient函数所处线程解除阻塞，往下执行。</span>
-</span></span><span style="display:flex;"><span>            connectDone.Set();  
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {  
-</span></span><span style="display:flex;"><span>            Console.WriteLine(e.ToString());  
-</span></span><span style="display:flex;"><span>        }  
-</span></span><span style="display:flex;"><span>    }  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Receive(Socket client) {  
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 创建一个state object，这个object将要传递给ReceiveCallback方法</span>
-</span></span><span style="display:flex;"><span>            StateObject state = <span style="color:#66d9ef">new</span> StateObject();  
-</span></span><span style="display:flex;"><span>            state.workSocket = client;  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 开始从服务端处接受数据</span>
-</span></span><span style="display:flex;"><span>            client.BeginReceive( state.buffer, <span style="color:#ae81ff">0</span>, StateObject.BufferSize, <span style="color:#ae81ff">0</span>,  
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">new</span> AsyncCallback(ReceiveCallback), state);  
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {  
-</span></span><span style="display:flex;"><span>            Console.WriteLine(e.ToString());  
-</span></span><span style="display:flex;"><span>        }  
-</span></span><span style="display:flex;"><span>    }  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> ReceiveCallback( IAsyncResult ar ) {  
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 拿到state object</span>
-</span></span><span style="display:flex;"><span>            StateObject state = (StateObject) ar.AsyncState;  
-</span></span><span style="display:flex;"><span>            Socket client = state.workSocket;  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 看看从服务端收到多少字节的数据</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> bytesRead = client.EndReceive(ar);  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (bytesRead &gt; <span style="color:#ae81ff">0</span>) {  
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 收到多少，就把它格式化一下，编码成字符串</span>
-</span></span><span style="display:flex;"><span>                state.sb.Append(Encoding.ASCII.GetString(state.buffer,<span style="color:#ae81ff">0</span>,bytesRead));  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 因为不是一次收完所有服务端要发送过来的数据，所以再继续首收发</span>
-</span></span><span style="display:flex;"><span>                client.BeginReceive(state.buffer,<span style="color:#ae81ff">0</span>,StateObject.BufferSize,<span style="color:#ae81ff">0</span>,  
-</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">new</span> AsyncCallback(ReceiveCallback), state);  
-</span></span><span style="display:flex;"><span>            } <span style="color:#66d9ef">else</span> {  
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 收到的字节数为0了，表示收取完毕了</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> (state.sb.Length &gt; <span style="color:#ae81ff">1</span>) {  
-</span></span><span style="display:flex;"><span>                    response = state.sb.ToString();  
-</span></span><span style="display:flex;"><span>                }  
-</span></span><span style="display:flex;"><span>                <span style="color:#75715e">// 通知线程解除阻塞</span>
-</span></span><span style="display:flex;"><span>                receiveDone.Set();  
-</span></span><span style="display:flex;"><span>            }  
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {  
-</span></span><span style="display:flex;"><span>            Console.WriteLine(e.ToString());  
-</span></span><span style="display:flex;"><span>        }  
-</span></span><span style="display:flex;"><span>    }  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> Send(Socket client, String data) {  
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 编码并发送数据到服务端</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">byte</span>[] byteData = Encoding.ASCII.GetBytes(data); 
-</span></span><span style="display:flex;"><span>        client.BeginSend(byteData, <span style="color:#ae81ff">0</span>, byteData.Length, <span style="color:#ae81ff">0</span>,  
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">new</span> AsyncCallback(SendCallback), client);  
-</span></span><span style="display:flex;"><span>    }  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> SendCallback(IAsyncResult ar) {  
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 发送完成</span>
-</span></span><span style="display:flex;"><span>            Socket client = (Socket) ar.AsyncState;  
-</span></span><span style="display:flex;"><span> 
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 拿到实际发送的字节数，并打印出来</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">int</span> bytesSent = client.EndSend(ar);  
-</span></span><span style="display:flex;"><span>            Console.WriteLine(<span style="color:#e6db74">&#34;Sent {0} bytes to server.&#34;</span>, bytesSent);  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 通知线程解除阻塞</span>
-</span></span><span style="display:flex;"><span>            sendDone.Set();  
-</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (Exception e) {  
-</span></span><span style="display:flex;"><span>            Console.WriteLine(e.ToString());  
-</span></span><span style="display:flex;"><span>        }  
-</span></span><span style="display:flex;"><span>    }  
-</span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> Main(String[] args) {  
-</span></span><span style="display:flex;"><span>        StartClient();  
-</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;  
-</span></span><span style="display:flex;"><span>    }  
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>在调用 <strong>BeginReceive</strong> 方法之前，需要创建一个 <strong>AsyncCallback</strong> 类型的delegate回调方法。并且作为参数传递给 <strong>BeginReceive</strong> 方法。 <strong>BeginReceive</strong> 方法返回之后，系统会开一个独立的线程去执行这个回调方法。这个回调函数方法将使用一个 <strong>IAsyncResult</strong> 类型的值作为输入参数。这个输入参数也是 <strong>BeginReceive</strong> 方法所返回的。</p>
-<p>在这个回调函数里面，可以通过 <strong>IAsyncResult</strong> 参数的 <strong>AsyncState</strong> 方法获取到由BeginReceive方法传递过来的状态对象(state object)。可以从这个state object中对传递过来的socket包进行收取（obtain）。收取完毕之后，可以调用 <strong>EndReceive</strong> 方法分析这些socket数据字节。</p>
-<p><strong>EndReceive</strong> 方法会处阻塞住当前线程，直接数据收取完成为止，如果使用的是非连接协议的话， <strong>EndReceive</strong> 会收取 <strong>第一个入队列的数据报（first enqueued datagram）</strong> 。如果使用的是 <strong>面向连接的协议（connection-oriented protocol）</strong> 的话， <strong>EndReceive</strong> 方法将会尽可能地读取你所在 <strong>BeginReceive</strong> 方法中指定的缓冲区空间的大小那么多的字节数据。如果已经收到了所有的数据，并且服务器关闭了socket连接的话， <strong>EndReceive</strong> 方法将会理解完成并且返回0</p>
-<h2 id="执行endreceive函数时可能抛出的异常">执行EndReceive函数时可能抛出的异常</h2>
-<table>
-<thead>
-<tr>
-<th>异常名</th>
-<th>异常描述和发生条件</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ArgumentNullException</td>
-<td>当传递给EndReceive的IAsyncResult类型的参数为null时发生此异常。</td>
-</tr>
-<tr>
-<td>ArgumentException</td>
-<td>当调用BeginReceive(Byte[], Int32, Int32, SocketFlags, AsyncCallback, Object) 函数时没有正确返回一个IAsyncResult类型的返回值。</td>
-</tr>
-<tr>
-<td>InvalidOperationException</td>
-<td>EndReceive(IAsyncResult)在上一个异步读操作中被调用了</td>
-</tr>
-<tr>
-<td>SocketException</td>
-<td>An error occurred when attempting to access the socket.</td>
-</tr>
-<tr>
-<td>ObjectDisposedException</td>
-<td>socket连接已经被关闭时发生此异常。</td>
-</tr>
-</tbody>
-</table>
-<h2 id="参考网页">参考网页</h2>
-<p><a href="https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-client-socket-example">https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-client-socket-example</a></p>
-<p><a href="https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-server-socket-example">https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-server-socket-example</a></p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/.net/">.NET</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解"><meta property="og:url" content="http://www.xionggf.com/post/dotnet/begin_receive_and_end_receive/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解"><meta property="og:description" content="NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2013-10-20T18:08:30+08:00"><meta property="article:modified_time" content="2013-10-20T18:08:30+08:00"><meta property="article:tag" content=".NET"><meta itemprop=name content="NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解"><meta itemprop=description content="NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解"><meta itemprop=datePublished content="2013-10-20T18:08:30+08:00"><meta itemprop=dateModified content="2013-10-20T18:08:30+08:00"><meta itemprop=wordCount content="473"><meta itemprop=keywords content="Socket,.Net"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2013-10-20T18:08:30+08:00>October 20, 2013</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/.net/ rel=category>.NET</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/.net/ rel=tag>.NET</a></span></div></div><h1 class=entry__title>NET Framework中的Socket类的BeginReceive和EndReceive成员方法详解</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#使用beginreceive和endreceive的示例代码>使用BeginReceive和EndReceive的示例代码</a></li><li><a href=#执行endreceive函数时可能抛出的异常>执行EndReceive函数时可能抛出的异常</a></li><li><a href=#参考网页>参考网页</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><table><thead><tr><th style=text-align:left>分类</th><th style=text-align:left>信息</th></tr></thead><tbody><tr><td style=text-align:left>类所属的空间:</td><td style=text-align:left>System.Net.Sockets</td></tr><tr><td style=text-align:left>类所属于的程序集:</td><td style=text-align:left>System.dll, netstandard.dll, System.Net.Sockets.dll, System.Net.dll</td></tr></tbody></table><h2 id=使用beginreceive和endreceive的示例代码>使用BeginReceive和EndReceive的示例代码</h2><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>System</span><span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>System.Net</span><span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>System.Net.Sockets</span><span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>System.Threading</span><span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#24292e>System.Text</span><span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span><span style=color:#57606a>// State object for receiving data from remote device.  </span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>StateObject</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> Socket workSocket <span style=color:#1f2328>=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>;</span>              <span style=color:#57606a>// Socket连接的对象 </span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>int</span> BufferSize <span style=color:#1f2328>=</span> <span style=color:#0550ae>256</span><span style=color:#1f2328>;</span>            <span style=color:#57606a>// 客户端接受socket数据的缓冲区字节数大小 </span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>byte</span><span style=color:#1f2328>[]</span> buffer <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>byte</span><span style=color:#1f2328>[</span>BufferSize<span style=color:#1f2328>];</span>  <span style=color:#57606a>// 客户端接受socket数据的缓冲区</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> StringBuilder sb <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> StringBuilder<span style=color:#1f2328>();</span><span style=color:#57606a>// 客户端接受数据字符串的容器</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>AsynchronousClient</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>const</span> <span style=color:#cf222e>int</span> port <span style=color:#1f2328>=</span> <span style=color:#0550ae>11000</span><span style=color:#1f2328>;</span>   <span style=color:#57606a>// 端口号</span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ManualResetEvent类详见 http://www.cnblogs.com/li-peng/p/3291306.html</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 当初始化为true时，为终止状态</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 当初始化为false时，为非终止状态</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 终止状态时调用成员方法WaitOne()允许线程访问下边的语句</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 非终止状态时调用成员方法WaitOne()阻塞线程，不允许线程访问下边的语句</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> ManualResetEvent connectDone <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> ManualResetEvent<span style=color:#1f2328>(</span><span style=color:#cf222e>false</span><span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> ManualResetEvent sendDone <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> ManualResetEvent<span style=color:#1f2328>(</span><span style=color:#cf222e>false</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> ManualResetEvent receiveDone <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> ManualResetEvent<span style=color:#1f2328>(</span><span style=color:#cf222e>false</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> String response <span style=color:#1f2328>=</span> String<span style=color:#1f2328>.</span>Empty<span style=color:#1f2328>;</span> <span style=color:#57606a>// 从服务端处收到的字符串 </span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> StartClient<span style=color:#1f2328>()</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>try</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 利用DNS解析域名，获得目标服务器的IP</span>
+</span></span><span style=display:flex><span>            IPHostEntry ipHostInfo <span style=color:#1f2328>=</span> Dns<span style=color:#1f2328>.</span>GetHostEntry<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;host.contoso.com&#34;</span><span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>            IPAddress ipAddress <span style=color:#1f2328>=</span> ipHostInfo<span style=color:#1f2328>.</span>AddressList<span style=color:#1f2328>[</span><span style=color:#0550ae>0</span><span style=color:#1f2328>];</span>  
+</span></span><span style=display:flex><span>            IPEndPoint remoteEP <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> IPEndPoint<span style=color:#1f2328>(</span>ipAddress<span style=color:#1f2328>,</span> port<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 创建连接用的socket，使用TCP，流式数据  </span>
+</span></span><span style=display:flex><span>            Socket client <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> Socket<span style=color:#1f2328>(</span>ipAddress<span style=color:#1f2328>.</span>AddressFamily<span style=color:#1f2328>,</span> SocketType<span style=color:#1f2328>.</span>Stream<span style=color:#1f2328>,</span> ProtocolType<span style=color:#1f2328>.</span>Tcp<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 开始连接服务器，注意这里的第三个参数，当传递client进去的时候，传给回调函数ConnectCallback</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 中IAsyncResult类参数ar的AsyncState，就是这个client</span>
+</span></span><span style=display:flex><span>            client<span style=color:#1f2328>.</span>BeginConnect<span style=color:#1f2328>(</span> remoteEP<span style=color:#1f2328>,</span> <span style=color:#cf222e>new</span> AsyncCallback<span style=color:#1f2328>(</span>ConnectCallback<span style=color:#1f2328>),</span> client<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 因为一开始connectDone处于非终止状态，所以这里执行了WaitOne方法之后，会阻塞住当前的线程</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 直到在ConnectCallback函数中connectDone执行了Set()方法为止</span>
+</span></span><span style=display:flex><span>            connectDone<span style=color:#1f2328>.</span>WaitOne<span style=color:#1f2328>();</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 向服务端发送消息，然后阻塞本线程，直到发送成功</span>
+</span></span><span style=display:flex><span>            Send<span style=color:#1f2328>(</span>client<span style=color:#1f2328>,</span><span style=color:#0a3069>&#34;This is a test&lt;EOF&gt;&#34;</span><span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>            sendDone<span style=color:#1f2328>.</span>WaitOne<span style=color:#1f2328>();</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 收取服务端对本客户端发送的消息的应答，然后阻塞本线程，直到收取完成</span>
+</span></span><span style=display:flex><span>            Receive<span style=color:#1f2328>(</span>client<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            receiveDone<span style=color:#1f2328>.</span>WaitOne<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 打印出从服务端接受到的信息</span>
+</span></span><span style=display:flex><span>            Console<span style=color:#1f2328>.</span>WriteLine<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Response received : {0}&#34;</span><span style=color:#1f2328>,</span> response<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 关闭socket连接</span>
+</span></span><span style=display:flex><span>            client<span style=color:#1f2328>.</span>Shutdown<span style=color:#1f2328>(</span>SocketShutdown<span style=color:#1f2328>.</span>Both<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>            client<span style=color:#1f2328>.</span>Close<span style=color:#1f2328>();</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span> <span style=color:#cf222e>catch</span> <span style=color:#1f2328>(</span>Exception e<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>            Console<span style=color:#1f2328>.</span>WriteLine<span style=color:#1f2328>(</span>e<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>());</span>  
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> ConnectCallback<span style=color:#1f2328>(</span>IAsyncResult ar<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>try</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 在BeginConnect中传递过来的第三个参数就是Socket对象</span>
+</span></span><span style=display:flex><span>            Socket client <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>Socket<span style=color:#1f2328>)</span> ar<span style=color:#1f2328>.</span>AsyncState<span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 完成后，一个BeginConnect就要对应一个EndConnect</span>
+</span></span><span style=display:flex><span>            client<span style=color:#1f2328>.</span>EndConnect<span style=color:#1f2328>(</span>ar<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 打印输出</span>
+</span></span><span style=display:flex><span>            Console<span style=color:#1f2328>.</span>WriteLine<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Socket connected to {0}&#34;</span><span style=color:#1f2328>,</span>client<span style=color:#1f2328>.</span>RemoteEndPoint<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>());</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 通知完成，让StartClient函数所处线程解除阻塞，往下执行。</span>
+</span></span><span style=display:flex><span>            connectDone<span style=color:#1f2328>.</span>Set<span style=color:#1f2328>();</span>  
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span> <span style=color:#cf222e>catch</span> <span style=color:#1f2328>(</span>Exception e<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>            Console<span style=color:#1f2328>.</span>WriteLine<span style=color:#1f2328>(</span>e<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>());</span>  
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> Receive<span style=color:#1f2328>(</span>Socket client<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>try</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 创建一个state object，这个object将要传递给ReceiveCallback方法</span>
+</span></span><span style=display:flex><span>            StateObject state <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> StateObject<span style=color:#1f2328>();</span>  
+</span></span><span style=display:flex><span>            state<span style=color:#1f2328>.</span>workSocket <span style=color:#1f2328>=</span> client<span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 开始从服务端处接受数据</span>
+</span></span><span style=display:flex><span>            client<span style=color:#1f2328>.</span>BeginReceive<span style=color:#1f2328>(</span> state<span style=color:#1f2328>.</span>buffer<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> StateObject<span style=color:#1f2328>.</span>BufferSize<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span>  
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>new</span> AsyncCallback<span style=color:#1f2328>(</span>ReceiveCallback<span style=color:#1f2328>),</span> state<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span> <span style=color:#cf222e>catch</span> <span style=color:#1f2328>(</span>Exception e<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>            Console<span style=color:#1f2328>.</span>WriteLine<span style=color:#1f2328>(</span>e<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>());</span>  
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> ReceiveCallback<span style=color:#1f2328>(</span> IAsyncResult ar <span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>try</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 拿到state object</span>
+</span></span><span style=display:flex><span>            StateObject state <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>StateObject<span style=color:#1f2328>)</span> ar<span style=color:#1f2328>.</span>AsyncState<span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span>            Socket client <span style=color:#1f2328>=</span> state<span style=color:#1f2328>.</span>workSocket<span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 看看从服务端收到多少字节的数据</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>int</span> bytesRead <span style=color:#1f2328>=</span> client<span style=color:#1f2328>.</span>EndReceive<span style=color:#1f2328>(</span>ar<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>bytesRead <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// 收到多少，就把它格式化一下，编码成字符串</span>
+</span></span><span style=display:flex><span>                state<span style=color:#1f2328>.</span>sb<span style=color:#1f2328>.</span>Append<span style=color:#1f2328>(</span>Encoding<span style=color:#1f2328>.</span>ASCII<span style=color:#1f2328>.</span>GetString<span style=color:#1f2328>(</span>state<span style=color:#1f2328>.</span>buffer<span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span>bytesRead<span style=color:#1f2328>));</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// 因为不是一次收完所有服务端要发送过来的数据，所以再继续首收发</span>
+</span></span><span style=display:flex><span>                client<span style=color:#1f2328>.</span>BeginReceive<span style=color:#1f2328>(</span>state<span style=color:#1f2328>.</span>buffer<span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span>StateObject<span style=color:#1f2328>.</span>BufferSize<span style=color:#1f2328>,</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span>  
+</span></span><span style=display:flex><span>                    <span style=color:#cf222e>new</span> AsyncCallback<span style=color:#1f2328>(</span>ReceiveCallback<span style=color:#1f2328>),</span> state<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// 收到的字节数为0了，表示收取完毕了</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>state<span style=color:#1f2328>.</span>sb<span style=color:#1f2328>.</span>Length <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>                    response <span style=color:#1f2328>=</span> state<span style=color:#1f2328>.</span>sb<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>();</span>  
+</span></span><span style=display:flex><span>                <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// 通知线程解除阻塞</span>
+</span></span><span style=display:flex><span>                receiveDone<span style=color:#1f2328>.</span>Set<span style=color:#1f2328>();</span>  
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span> <span style=color:#cf222e>catch</span> <span style=color:#1f2328>(</span>Exception e<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>            Console<span style=color:#1f2328>.</span>WriteLine<span style=color:#1f2328>(</span>e<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>());</span>  
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> Send<span style=color:#1f2328>(</span>Socket client<span style=color:#1f2328>,</span> String data<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 编码并发送数据到服务端</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>byte</span><span style=color:#1f2328>[]</span> byteData <span style=color:#1f2328>=</span> Encoding<span style=color:#1f2328>.</span>ASCII<span style=color:#1f2328>.</span>GetBytes<span style=color:#1f2328>(</span>data<span style=color:#1f2328>);</span> 
+</span></span><span style=display:flex><span>        client<span style=color:#1f2328>.</span>BeginSend<span style=color:#1f2328>(</span>byteData<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> byteData<span style=color:#1f2328>.</span>Length<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span>  
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>new</span> AsyncCallback<span style=color:#1f2328>(</span>SendCallback<span style=color:#1f2328>),</span> client<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>private</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>void</span> SendCallback<span style=color:#1f2328>(</span>IAsyncResult ar<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>try</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 发送完成</span>
+</span></span><span style=display:flex><span>            Socket client <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>Socket<span style=color:#1f2328>)</span> ar<span style=color:#1f2328>.</span>AsyncState<span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 拿到实际发送的字节数，并打印出来</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>int</span> bytesSent <span style=color:#1f2328>=</span> client<span style=color:#1f2328>.</span>EndSend<span style=color:#1f2328>(</span>ar<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>            Console<span style=color:#1f2328>.</span>WriteLine<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Sent {0} bytes to server.&#34;</span><span style=color:#1f2328>,</span> bytesSent<span style=color:#1f2328>);</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// 通知线程解除阻塞</span>
+</span></span><span style=display:flex><span>            sendDone<span style=color:#1f2328>.</span>Set<span style=color:#1f2328>();</span>  
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span> <span style=color:#cf222e>catch</span> <span style=color:#1f2328>(</span>Exception e<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>            Console<span style=color:#1f2328>.</span>WriteLine<span style=color:#1f2328>(</span>e<span style=color:#1f2328>.</span>ToString<span style=color:#1f2328>());</span>  
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>static</span> <span style=color:#cf222e>int</span> Main<span style=color:#1f2328>(</span>String<span style=color:#1f2328>[]</span> args<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>  
+</span></span><span style=display:flex><span>        StartClient<span style=color:#1f2328>();</span>  
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>  
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>  
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>在调用 <strong>BeginReceive</strong> 方法之前，需要创建一个 <strong>AsyncCallback</strong> 类型的delegate回调方法。并且作为参数传递给 <strong>BeginReceive</strong> 方法。 <strong>BeginReceive</strong> 方法返回之后，系统会开一个独立的线程去执行这个回调方法。这个回调函数方法将使用一个 <strong>IAsyncResult</strong> 类型的值作为输入参数。这个输入参数也是 <strong>BeginReceive</strong> 方法所返回的。</p><p>在这个回调函数里面，可以通过 <strong>IAsyncResult</strong> 参数的 <strong>AsyncState</strong> 方法获取到由BeginReceive方法传递过来的状态对象(state object)。可以从这个state object中对传递过来的socket包进行收取（obtain）。收取完毕之后，可以调用 <strong>EndReceive</strong> 方法分析这些socket数据字节。</p><p><strong>EndReceive</strong> 方法会处阻塞住当前线程，直接数据收取完成为止，如果使用的是非连接协议的话， <strong>EndReceive</strong> 会收取 <strong>第一个入队列的数据报（first enqueued datagram）</strong> 。如果使用的是 <strong>面向连接的协议（connection-oriented protocol）</strong> 的话， <strong>EndReceive</strong> 方法将会尽可能地读取你所在 <strong>BeginReceive</strong> 方法中指定的缓冲区空间的大小那么多的字节数据。如果已经收到了所有的数据，并且服务器关闭了socket连接的话， <strong>EndReceive</strong> 方法将会理解完成并且返回0</p><h2 id=执行endreceive函数时可能抛出的异常>执行EndReceive函数时可能抛出的异常</h2><table><thead><tr><th>异常名</th><th>异常描述和发生条件</th></tr></thead><tbody><tr><td>ArgumentNullException</td><td>当传递给EndReceive的IAsyncResult类型的参数为null时发生此异常。</td></tr><tr><td>ArgumentException</td><td>当调用BeginReceive(Byte[], Int32, Int32, SocketFlags, AsyncCallback, Object) 函数时没有正确返回一个IAsyncResult类型的返回值。</td></tr><tr><td>InvalidOperationException</td><td>EndReceive(IAsyncResult)在上一个异步读操作中被调用了</td></tr><tr><td>SocketException</td><td>An error occurred when attempting to access the socket.</td></tr><tr><td>ObjectDisposedException</td><td>socket连接已经被关闭时发生此异常。</td></tr></tbody></table><h2 id=参考网页>参考网页</h2><p><a href=https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-client-socket-example>https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-client-socket-example</a></p><p><a href=https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-server-socket-example>https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-server-socket-example</a></p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/.net/>.NET</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

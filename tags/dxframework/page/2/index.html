@@ -1,306 +1,499 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>DxFramework | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="DxFramework" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/tags/dxframework/" />
-
-
-		<meta itemprop="name" content="DxFramework">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/tags/dxframework/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-term">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/tags/">Tags</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">DxFramework</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">DxFramework</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_4_1/">深度探索DxFramework 4-1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第4章 初始锋芒 剖析DemoA 4.1 Demo实现的功能点和整体架构 4.1.1 实现的功能点 4.1.2 Demo的整体架构 4.2 Demo实例类的定义和初始化 class C_DemoA : public C_GameState { public: C_DemoA(); virtual ~C_DemoA(); virtual void Input(); virtual void Update(); virtual void Render2D(); private: C_Sprite* p_Background; //背景图片 C_Sprite* p_Box; //用来演示的小方盒 // 各种dxfrramework支持的图片格式 C_Sprite* p_Bmp8; //8位bmp格式 C_Sprite* p_Bmp24; //24位bmp格式 C_Sprite* p_Png8; //8位png格式 C_Sprite* p_Png24; //24位png格式 C_Sprite* p_Png32; //32位png格式 DVECTOR2 translation; // box的屏幕坐标 int alpha; // box的透明度 static const int VELOCITY; // box的移动速度，为常量 static const int ANIMATION_SPEED; // box的动画变化速度，为常量 }; C_DemoA::C_DemoA() { alpha = 255; p_Background = new C_Sprite(_T(&#34;demoa_background.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-15T18:08:30&#43;08:00">October 15, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_3_2/">深度探索DxFramework 3-2</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第3章 步入二维游戏的世界 2 3.5 DxFramework对精灵的封装实现 3.5.1 什么是精灵 3.5.2 精灵的实现——C_Sprite类 3.6 游戏中的Game Object 3.6.1 game object的定义 3.6.2 二维的game object GameObject2D类 </div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-14T18:08:30&#43;08:00">October 14, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_3_1/">深度探索DxFramework 3-1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第3章 步入二维游戏的世界 1 3.1 二维动画的原理 在介绍计算机动画的原理之前，先谈谈大家都非常熟悉的电影的播放原理。播放电影的时候需要一大盘的电影胶片。胶片上面就是一帧一帧连续的静止图像。当播放的时候，把胶片按播放顺序，依次通过播放机的镜头，这样胶片上的图像将会逐帧投影到银幕上。因为人眼存在着视觉暂留的生理现象。当眼睛正在观察的物体突然消失的时候，被观察的物体还能在人眼中存留约1/24秒左右。因此，只要一系列本来就是连续的静止的图像，当以合适的速度逐个通过人眼的时候。便会产生连续的“会动”的视觉效果。
-根据人的视觉存留时间可以知道，当电影胶片以每秒24帧的速度播放时，人们看到的就是和现实生活中速度相同的画面。当电影胶片以每秒大于24帧的速度播放时，画面中的各种动作将会变快，这就是俗称的“快镜头”。而如果电影胶片以每秒低于24帧的速度播放时，画面中的各种动作将会变慢，这就是俗称的“慢镜头”。
-计算机动画的原理和播放电影的原理是类似的。举一个简单的二维动画例子：假如要做一个人物走动的二维动画，首先要研究人走路时身体各部位，如躯干、四肢移动摆动的位置。然后按相应时间相应的位置，把这些连续动作绘制成一副副的图。在计算机中就可以存储在一些图片文件中。这些“一副副的图”其实就是类似于电影胶片。把图从磁盘文件中载入到内存，然后按顺序将其逐帧在屏幕中绘制出来，就类似于播放电影的过程。当一组动作播放完成后，再从头从动作的第一帧播放，周而复始，就形成了连贯的动画。
-三维动画和二维动画播放原理是一致的，也是一帧一帧地在屏幕中绘制。与二维动画类似，三维动画也可以分实时和非实时。我们玩的三维计算机游戏的游戏画面其实就可以认为是一种实时三维动画，这些画面都是在每一帧显示前由计算机实时地计算生成。非实时三维动画则用相关软件预先逐帧计算好并且存储在文件中，播放的时候从文件中逐帧读取数据显示即可。在本章中先讨论二维动画。
-3.2 基础数学工具 接着介绍是vector2.h文件中的模板类和函数。VECTOR2定义了一个二维矢量的模板类。
-#pragma once #include &#34;globals.h&#34; #include &#34;error.h&#34; //最小误差，意思是两浮点数之差为小于0.0001的时候， //就认为这两浮点数是相等的。 const XFLOAT VECTOR2_ZERO_TOLERANCE = 0.0001; /* MSVC6 cannot use the overloaded operators due to a compiler bug/feature */ #if _MSC_VER &lt; 1300 #ifndef NO_TEMPLATE_SELECTION #define NO_TEMPLATE_SELECTION #endif #endif template&lt; class T &gt; class VECTOR2 { public: VECTOR2() {} VECTOR2(const T&amp; x, const T&amp; y) : x(x), y(y) {} //复制Direct3D的D3DXVECTOR2类型数据的内容 VECTOR2(const D3DXVECTOR2&amp; v) : x((T)v.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-13T18:08:30&#43;08:00">October 13, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_2_2/">深度探索DxFramework 2-2</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第2章 DxFramework的架构剖析 2 2.3 DxFramework的内存泄漏检测机制 内存泄漏（memory leak）是使用C/C++等程序设计语言进行编程时常常见到的一个问题。内存泄漏给程序运行时带来的影响有很多。一般最后的结果要么是程序死掉；要么是提示系统内存不足。还有一种可能就是程序不会死掉，但是程序的响应速度会明显变慢。
-2.3.1 内存泄漏的原因 产生内存泄漏的原因一般是如下几点：
-动态分配了内存空间，在不需要时忘记释放。 动态分配了内存空间，在不需要时忘记释放。 对某些API函数的不正确使用，导致内存泄漏。 在编程时忘记释放不需要的内存空间是编程时很常见。动态分配的内存在使用完毕后，如若不需要了就一定要释放。如果不释放,那就会造成内存的泄漏。如果造成内存泄漏的代码经常被调用的话，那么内存泄漏的数目就会越来越多的。从而影响整个系统的运行。 如下面的代码段：
-void SomeOperation() { int* pBuffer = new int[32]; for( int i=0; i&lt;32 ; ++i) { pBuffer[i] = i*2+1; } } 很明显，上述的局部变量pTemp指向了一段从堆（heap）空间中分配的内存空间，而在函数退出时没有作任何的释放操作。一旦调用此函数就将导致了内存泄漏。当这个函数被频繁调用的时候，堆空间的内存空间将会被消耗殆尽。
-因为代码编写的问题,会导致某些动态分配的内存根本就无从回收,比如下面的代码段：
-void SomeOperation() { int* pBuffer1 = new int[32]; int* pBuffer2 = new int[32]; pBuffer1 = pBuffer2; if( pBuffer1 ) { delete [] pBuffer1; } } 这样,pBuffer1最初指向的那段内存空间的首地址就丢掉了，无法恢复了。这时候最初分配的那一段内存空间就无法释放掉。
-Windows提供了一些特殊的API,如FormatMessage。如果给它参数传递的函数有FORMAT_MESSAGE_ALLOCATE_BUFFER,它会在函数内部动态分配一块内存缓冲区，返回给用户。但是这个内存缓冲区需要用户显式调用LocalFree来释放。如果用户忘了的话。也会产生内存泄漏。如下面的代码段：
-#include &lt;windows.h&gt; #include &lt;iostream&gt; using namespace std; void FormatAndPrintOneMessage(DWORD dwError) { HLOCAL hLocal = NULL; // 用来存储返回的描述错误信息的字符串的内存缓冲区 BOOL fOK = FormatMessage( // 指定标志，动态分配一块缓冲区 FORMAT_MESSAGE_FROM_SYSTEM |FORMAT_MESSAGE_ALLOCATE_BUFFER , NULL , dwError , MAKELANGID(LANG_ENGLISH,SUBLANG_ENGLISH_US), // 返回动态分配的内存缓冲区 reinterpret_cast&lt;LPTSTR&gt;(&amp;hLocal), 0 , NULL ); if( hLocal &amp;&amp; fOK ) { cout&lt;&lt;&#34;Error Message: &#34;&lt;&lt;(reinterpret_cast&lt;LPCTSTR&gt; (LocalLock(hLocal)))&lt;&lt;endl; // 如果忘记了这一句，将会导致通过FormatMessage函数动态分配的 // 内存无法释放，从而导致内存泄漏 LocalFree(hLocal); } else { cout&lt;&lt;&#34;Error number not found&#34;&lt;&lt;endl; } } void main() { FormatAndPrintOneMessage(5); } 检查已经发布的程序是否存在内存泄漏实在是费时费力，所以我们要把内存泄漏扼杀在萌芽状态。在编码过程中就要时刻进行检查。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-12T18:08:30&#43;08:00">October 12, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_2_1/">深度探索DxFramework 2-1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第2章 DxFramework的架构剖析 1 2.1 DxFramework的全局头文件 在开始着手分析DxFramework之前，我们有必要先弄懂DxFramework所定义的一些在其引擎代码内部中频繁使用的一些数据类型，宏，和全局函数。
-众所周知，由于C++语言的灵活性和自由性；在不同的操作系统平台下，不同的编译器对同一关键字所指定的数据类型所占字节大小是不一致的——C++标准委员会对此也并没有做统一的要求。以int类型为例，C++标准委员会只是要求此类型的大小至少不小于16位。例如在Microsoft Win32平台下，Visual C++6编译器所实现的int是32位整形数据。而在DOS系统下，Borland C++ 3.1实现的int则只有16位。因此，为了代码的平台移植，或者是便于版本的数据类型升级和扩充，一般的大型软件系统都有其自定义的数据类型。以Microsoft定义的win32数据类型为例，就有诸如无符号双字类型，32位的DWORD；无符号单字类型，十六位的WORD；无符号的整形数据，UINT等等。DxFramework也不例外，它也有着它自身的预定义数据类型，它们定义在globals.h文件中，现在我们来逐个分析。代码如下：
-//globals.h #define WIN32_LEAN_AND_MEAN #define DIRECTINPUT_VERSION 0x0800	//指定使用的DInput版本 /* 忽略编号为4786的编译器警告 当变量标识符名字过长（超过255个字符）的时候，调试器无法调试变量标 识符号超过255个字符长度的代码。无法在调试器中查看、计算、更新或监视被截断的符号。调试器在调试过程中 将会把变量标识符“截短”至255个字符。有时在嵌套声明的变量名中，会出现一串长的警告，在使用STL 的时候， 这种警告会经常出现，使用此指令可以关掉此警告 */ #pragma warning(disable: 4786) //用来进行内存侦测的起到开关作用的宏 #ifdef _DEBUG #define _CRTDBG_MAP_ALLOC	//定义此宏，使得CRT内存泄漏侦测函数可用，此宏在crtdbg.h中定义 #define _INC_MALLOC #define enw DEBUG_NEW #endif //定义使用UNICODE的宏 #define UNICODE //如果宏UNCODE定义了，则把宏_UNICODE也定义 #ifdef UNICODE #define _UNICODE #endif #define USE_DOUBLE_FLOAT_PRECISION /* 如果定义了USE_DOUBLE_FLOAT_PRECISION宏 XVECTOR2定义为用双精度浮点数类型实例化模板类 类型的DVECTOR2替代为，XFLOAT定义为如果没有定义的话，就把XVECTOR2定义为单精度浮点数 实例化的模板类类型FVECTOR2，XFLOAT定义为floatFVECTOR2，DVECTOR2类型在vector2.h中定义， 稍后详述 */ #ifdef USE_DOUBLE_FLOAT_PRECISION #define XVECTOR2 DVECTOR2 #define XFLOAT double #else #define XVECTOR2 FVECTOR2 #define XFLOAT float #endif //预包含engine所要使用的系统头文件 #include &lt;tchar.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-11T18:08:30&#43;08:00">October 11, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_1/">深度探索DxFramework 1</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-第1章 DxFramework工程简介 1.1 工程的来源和作者 DxFramework是由Corey于年月发起的。Corey 开发了项目中最初的2D游戏引擎。并且负责了游戏所需的艺术资源的相关工作。他创建了DxFramework的第一个版本。Corey现在在Maxis公司工作，不再是DxFramework的主要的开发者了。而随后加入的Jonathan现在已经是项目管理员。他在Laird教授的领导下参与了程序设计的很多方面的工作。还有一位重要的贡献者是David Yeung，作为DxFramework的重要组成部分的3D Framework和相关示例demo的最原始的版本正是由David Yeung所编写的。还有就是Nuttapong，Nuttapong在David Yeung之后对3D Framework部分做了大量的扩充，增加了许多的功能以及一些demo和sample。
-另外还对DxFramework作出贡献的人员还有：
-Adam Tercala创建了world map demo的最初版本 Jeremy Lee创建了sound demo(DEMO C)的最初版本，并且撰写了C_Sound类 Evan Leung创建了最初的用户接口类（User Interface Object class C_UIObject）以及一系列继承自此类的其他类。
-1.2 工程的配置 本书剖析的版本是0.93版本，这个版本是2004月8月16日发布的。也是在本书截稿为止的最新版本。在DxFramework的主页中所发布的是三个Zip格式的压缩包。它们分别是：
-DxFramework-binary-0.9.3.zip DxFramework-engine-0.9.3.zip DxFramework-0.9.3.zip
-DxFramework-binary-0.9.3.zip只是包含了DxFramework的所发布的可执行数据文件版本。没有相关的源代码。而DxFramework-engine-0.9.3.zip也只是包含了DxFramework的引擎框架代码，而没有示例的代码以及运行所需要的相关文件和数据。而DxFramework-0.9.3则两者兼备。如果是利用DxFramework来编写我们自己的游戏，那么当然选择基于DxFramework-engine-0.9.3，但是本书是通过剖析引擎和示例代码来学习游戏设计技术的，因此本书的剖析对象是DxFramework-0.9.3.zip的内容。
-下载解压缩之根目录有如下的一些文件和目录，目录如下：
-目录 内容 Data 存放示例demo&quot;pic pac&quot;所需的地图数据文件 Docs 存放DxFramework相关的文档 Images 存放DxFramework所需的一些艺术资源，比如一些示例程序所需要的图片等等 Resources 存放DxFramework所用到的图标文件，里面是big.ico和small.ico文件 Sounds 存放DxFramework使用到的一些声音文件，有wav，mp3，mid格式 Source 存放了DxFramework的引擎和示例的原代码，这里面的内容便是本书的重点部分 Frustum 点击鼠标将能绘制该视截体的轮廓，这样可以移开camera到别的位置去看看这个视截体像什么。悬浮在空中的球，当鼠标点击的时候，它会依据它在视截体内与否来决定是否改变其纹理。 Models Models Demo装载了MD2格式的模型和X格式的模型。MD2的动画可以循环播放 Seek and Hide 追踪和躲藏，演示一个简单的AI游戏 Simple Demo 本demo演示了如何使用DxFramework来开发一个3D游戏。这个demo的代码有很多的注释和演示。 Ray Tracking 这个demo演示了如何使用鼠标来点击选中不同的DxFramework图元。鼠标点击点将会变成一个会延伸扩展的球的球心。 LandScape and Billboard 本demo展示一个通过高度图生成的风景地貌。另外还展现了公告板技术。 Split 演示如何把一个基本图元切割成更小的基本图元 MD3 Demo 演示了使用ID Software定义了md3文件格式的模型 BSP 演示了使用二叉空间分割树（binary space partitation tree）对场景数据进行组织 文件如下：</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-11T10:08:30&#43;08:00">October 11, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/inside_dxframework/inside_dxf_0/">深度探索DxFramework 0</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-#前言
-这系列文章的面世，既可说是偶然，也可谓是必然。
-在本世纪初的几年，中国的网络游戏业如同蛰伏着等待破茧而出的蝶蛹一样。看似平静，其实内部正蕴藏着巨大的商机和市场。那时我还在南京的校园里，在计算机前编织着游戏梦。作为一名理工科的学生，当时的我对日后如雨后春笋般的网络游戏所含的巨大利润没有太多的敏锐嗅觉。当时只是为了心目中的一种理想，一种爱好去编程，去学习设计自己的游戏。
-无法忘记那段激情燃烧的岁月。在上大学之前没有接触过计算机的我，为了弥补先天的不足。在那一段时间里如同海绵吸水般从图书馆，从网络中吸取游戏设计相关的知识。也正是在那一段时间里，知道了享誉全球的John Carmack；知道了FreeMind、云风、softboy等一批国内的先行者；知道了他们在求知过程中所经历的酸甜苦辣。那时候网络才刚刚普及，费用奇高。我在学习过程中也时常感叹资料的匮乏和不系统性。四年的学习生涯很快过去，离开校园的我，顺理成章地进入了这个行业。
-有谁能理解在一个身处起步阶段的游戏产业的业界人，从学校进入社会时所经过的各种各样的挫折，困惑和磨练呢？为了提升自我，程序员们往往需要不断地学习，学习，再学习。互联网的普及给程序员提升自我的水平带来了更大的便利和更广泛的知识来源。在一次偶然的机会，其实也是一种必然，互联网上的DxFramework项目引起了我的注意。通过阅读这个项目的源代码，我学到了很多游戏开发的知识，也写了很多阅读笔记和心得文档。然而因为工作的繁忙和需要，我也要花很多业余时间去从其他的开源项目中去学习，种种的原因使得我对DxFramework的学习也是时断时续，但也总算是一直都坚持了下来。
-人生中总是有这样那样的挫折。工作的变动，使得我有机会去专心整理梳顺DxFramework的知识内容。也是一个可称为必然的偶然的机会，我萌生了对DxFramework项目写一本书的想法。相对充足的时间允许我去实现我的想法。作为一个对自己知识和经验的总结；也作为一种知识的传承吸纳；便诞生了这一系列文章。
-这本书不是一本DirectX开发入门教程，也不是一本C++程序设计语言教程；更不是一本数学入门教程。本书的定位是：通过剖析一个完整的，开放源代码的游戏应用程序框架（game application framework），以及使用这框架开发的一些实例。从而掌握游戏程序设计基础知识和设计思维。
-在阅读本书之前，或在阅读本书的同时，读者应首先对C++程序设计语言；Microsoft DirectX开发包；以及和3D图形程序设计相关的数学知识有一个大致的了解。“大致的”的了解意味着读者能基本理解Direct3D的工作方式，以及相关的基础知识。比如读者应该能对诸如“顶点”，“纹理”等基础概念有一个大概的认识。当然，DirectX/Direct3D是一个很大的体系，读者不可能也不必要事无巨细地穷经皓首面面俱到。要强调的是，尽管本书不是一本C++语言教程和DirectX教程，但是在剖析代码时所涉及到的C++语言，Direct3D，乃至3D数学的知识点，本书都将力求讲细讲透。
-对于有一定C++程序设计语言和Direct3D基础知识，对游戏开发有浓厚兴趣，跃跃欲试想登堂入室的读者。本书将会是你很好的选择。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2007-10-10T18:08:30&#43;08:00">October 10, 2007</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/directx/" rel="category">DirectX</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/dxframework/" rel="tag">DxFramework</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
-<div class="pagination block">
-				<a class="pagination__item pagination__item--desktop" href="/tags/dxframework/">1</a>
-				<span class="pagination__item pagination__item--active" data-total="2">2</span>
-</div>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>DxFramework | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/tags/dxframework/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="DxFramework"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="DxFramework"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2007-10-26T18:08:30+08:00"><meta itemprop=dateModified content="2007-10-26T18:08:30+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/tags/dxframework/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-term"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/tags/>Tags</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>DxFramework</li></ol></nav><div class="page block"><h1 class=page__title>DxFramework</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/inside_dxframework/inside_dxf_3_1/>深度探索DxFramework 3-1</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=第3章-步入二维游戏的世界-1>第3章 步入二维游戏的世界 1</h1><h2 id=31-二维动画的原理>3.1 二维动画的原理</h2><p>在介绍计算机动画的原理之前，先谈谈大家都非常熟悉的电影的播放原理。播放电影的时候需要一大盘的电影胶片。胶片上面就是一帧一帧连续的静止图像。当播放的时候，把胶片按播放顺序，依次通过播放机的镜头，这样胶片上的图像将会逐帧投影到银幕上。因为人眼存在着视觉暂留的生理现象。当眼睛正在观察的物体突然消失的时候，被观察的物体还能在人眼中存留约1/24秒左右。因此，只要一系列本来就是连续的静止的图像，当以合适的速度逐个通过人眼的时候。便会产生连续的“会动”的视觉效果。</p><p>根据人的视觉存留时间可以知道，当电影胶片以每秒24帧的速度播放时，人们看到的就是和现实生活中速度相同的画面。当电影胶片以每秒大于24帧的速度播放时，画面中的各种动作将会变快，这就是俗称的“快镜头”。而如果电影胶片以每秒低于24帧的速度播放时，画面中的各种动作将会变慢，这就是俗称的“慢镜头”。</p><p>计算机动画的原理和播放电影的原理是类似的。举一个简单的二维动画例子：假如要做一个人物走动的二维动画，首先要研究人走路时身体各部位，如躯干、四肢移动摆动的位置。然后按相应时间相应的位置，把这些连续动作绘制成一副副的图。在计算机中就可以存储在一些图片文件中。这些“一副副的图”其实就是类似于电影胶片。把图从磁盘文件中载入到内存，然后按顺序将其逐帧在屏幕中绘制出来，就类似于播放电影的过程。当一组动作播放完成后，再从头从动作的第一帧播放，周而复始，就形成了连贯的动画。</p><p>三维动画和二维动画播放原理是一致的，也是一帧一帧地在屏幕中绘制。与二维动画类似，三维动画也可以分实时和非实时。我们玩的三维计算机游戏的游戏画面其实就可以认为是一种实时三维动画，这些画面都是在每一帧显示前由计算机实时地计算生成。非实时三维动画则用相关软件预先逐帧计算好并且存储在文件中，播放的时候从文件中逐帧读取数据显示即可。在本章中先讨论二维动画。</p><h2 id=32-基础数学工具>3.2 基础数学工具</h2><p>接着介绍是vector2.h文件中的模板类和函数。VECTOR2定义了一个二维矢量的模板类。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#pragma once
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&#34;globals.h&#34;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&#34;error.h&#34;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#57606a>//最小误差，意思是两浮点数之差为小于0.0001的时候，
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//就认为这两浮点数是相等的。
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>const</span> XFLOAT VECTOR2_ZERO_TOLERANCE <span style=color:#0550ae>=</span> <span style=color:#0550ae>0.0001</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#57606a>/* MSVC6 cannot use the overloaded
+</span></span></span><span style=display:flex><span><span style=color:#57606a>operators due to a compiler bug/feature */</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#if _MSC_VER &lt; 1300
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#ifndef NO_TEMPLATE_SELECTION
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define NO_TEMPLATE_SELECTION
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#cf222e>template</span><span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>T</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>class</span> <span style=color:#1f2328>VECTOR2</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span><span style=color:#0550ae>:</span>
+</span></span><span style=display:flex><span>   VECTOR2<span style=color:#1f2328>()</span> <span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span>   VECTOR2<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> T<span style=color:#0550ae>&amp;</span> x<span style=color:#1f2328>,</span> <span style=color:#cf222e>const</span> T<span style=color:#0550ae>&amp;</span> y<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> x<span style=color:#1f2328>(</span>x<span style=color:#1f2328>),</span> y<span style=color:#1f2328>(</span>y<span style=color:#1f2328>)</span> <span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//复制Direct3D的D3DXVECTOR2类型数据的内容
+</span></span></span><span style=display:flex><span>   VECTOR2<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> D3DXVECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> x<span style=color:#1f2328>((</span>T<span style=color:#1f2328>)</span>v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>),</span> y<span style=color:#1f2328>((</span>T<span style=color:#1f2328>)</span>v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>)</span> <span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span>     
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//把VECTOR2类型的数据转化成D3DXVECTOR2类型
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> D3DXVECTOR2 <span style=color:#6639ba>ToD3DXVECTOR2</span><span style=color:#1f2328>()</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> D3DXVECTOR2<span style=color:#1f2328>((</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)</span>x<span style=color:#1f2328>,(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)</span>y<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//重载负号操作符，VECTOR2的取相反数操作。
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 <span style=color:#cf222e>operator</span><span style=color:#0550ae>-</span> <span style=color:#1f2328>()</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#0550ae>-</span>x<span style=color:#1f2328>,</span> <span style=color:#0550ae>-</span>y<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//重载加号操作符，VECTOR2的加法操作。
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 <span style=color:#cf222e>operator</span><span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>+</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>+</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//重载加号操作符，VECTOR2的加法操作
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 <span style=color:#cf222e>operator</span><span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>-</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>-</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//重载乘号操作符，VECTOR2的垂直乘法操作。即，
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>//两矢量的各个对应分量独自相乘，得出的值作为一个新矢量的分量。
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 <span style=color:#cf222e>operator</span><span style=color:#0550ae>*</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>*</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>*</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//重载除号操作符，VECTOR2的垂直除法操作。即，两矢量的各个
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>//对应分量独自相除，得出的值作为一个新矢量的分量。
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 <span style=color:#cf222e>operator</span><span style=color:#0550ae>/</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>/</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>/</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#57606a>#ifndef NO_TEMPLATE_SELECTION
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 <span style=color:#cf222e>operator</span><span style=color:#0550ae>+</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>+</span> a<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>+</span> a<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 <span style=color:#cf222e>operator</span><span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>-</span> a<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>-</span> a<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 <span style=color:#cf222e>operator</span><span style=color:#0550ae>*</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>*</span> a<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>*</span> a<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 <span style=color:#cf222e>operator</span><span style=color:#0550ae>/</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>/</span> a<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>/</span> a<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>//重载自加操作
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>void</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>+=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>+=</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>+=</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//重载自减操作
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>void</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>-=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>-=</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>-=</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//重载垂直自乘操作
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>void</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>*=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>*=</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>*=</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//重载垂直自除操作
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>void</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>/=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>/=</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>/=</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//如果两矢量的各个相对应的分量都相等，则都相等
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>bool</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>==</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#1f2328>((</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>==</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>)</span> <span style=color:#0550ae>&amp;&amp;</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>==</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>bool</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>!=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#1f2328>((</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>!=</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>)</span> <span style=color:#0550ae>||</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>!=</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#57606a>#ifndef NO_TEMPLATE_SELECTION
+</span></span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>void</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>+=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>+=</span> a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>+=</span> a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>void</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>-=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>-=</span> a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>-=</span> a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>void</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>*=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>*=</span> a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>*=</span> a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>void</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>/=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>/=</span> a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>/=</span> a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>bool</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>==</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#1f2328>((</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>==</span> a<span style=color:#1f2328>)</span> <span style=color:#0550ae>&amp;&amp;</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>==</span> a<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>bool</span> <span style=color:#cf222e>operator</span><span style=color:#0550ae>!=</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#1f2328>((</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>!=</span> a<span style=color:#1f2328>)</span> <span style=color:#0550ae>||</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>!=</span> a<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//矢量自加一个标量，即矢量的各个分量加上一个相同的标量
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 ScalarAddition<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>+</span> a<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>+</span> a<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//矢量自减一个标量，即矢量的各个分量减去一个相同的标量
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 ScalarSubtraction<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>-</span> a<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>-</span> a<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//矢量自乘一个标量，即矢量的各个分量乘上一个相同的标量
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 ScalarMultiplication<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>*</span> a<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>*</span> a<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//矢量自除一个标量，即矢量的各个分量除上一个相同的标量
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> VECTOR2 ScalarDivision<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#6639ba>VECTOR2</span><span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>/</span> a<span style=color:#1f2328>,</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>/</span> a<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//判断两矢量是否相等
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>bool</span> IsEqualTo<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#1f2328>((</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>==</span> a<span style=color:#1f2328>)</span> <span style=color:#0550ae>&amp;&amp;</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>==</span> a<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//判断两矢量是否不等
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>template</span> <span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>U</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>bool</span> IsNotEqualTo<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> U<span style=color:#0550ae>&amp;</span> a<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#1f2328>((</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>!=</span> a<span style=color:#1f2328>)</span> <span style=color:#0550ae>||</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>!=</span> a<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//判断两矢量的距离，令两矢量为V1(x1，y1)，
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>//V2(x2,y2)其计算公式为
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> XFLOAT <span style=color:#6639ba>DistanceTo</span><span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> sqrt<span style=color:#1f2328>(</span>pow<span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>-</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span><span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span>
+</span></span><span style=display:flex><span>                   pow<span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>-</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span><span style=color:#0550ae>2</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//求两矢量的夹角。
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> XFLOAT <span style=color:#6639ba>AngleTo</span><span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>if</span> <span style=color:#1f2328>((</span>v<span style=color:#1f2328>.</span>x <span style=color:#0550ae>-</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x<span style=color:#1f2328>)</span> <span style=color:#0550ae>==</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>           <span style=color:#cf222e>throw</span> Error<span style=color:#1f2328>(</span> _T<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;AngleTo going to</span>
+</span></span><span style=display:flex><span>                       divide by zero<span style=color:#0550ae>!</span><span style=color:#0a3069>&#34;),</span>
+</span></span><span style=display:flex><span>                       __FILE__<span style=color:#1f2328>,</span> __LINE__ <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>       XFLOAT angle <span style=color:#0550ae>=</span> atan<span style=color:#1f2328>((</span>v<span style=color:#1f2328>.</span>y <span style=color:#0550ae>-</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y<span style=color:#1f2328>)</span><span style=color:#0550ae>/</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>x <span style=color:#0550ae>-</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>if</span> <span style=color:#1f2328>((</span>v<span style=color:#1f2328>.</span>x <span style=color:#0550ae>-</span> <span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x<span style=color:#1f2328>)</span> <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>       <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>           angle <span style=color:#0550ae>+=</span> D3DX_PI<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> angle<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//求本矢量的模
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> XFLOAT <span style=color:#6639ba>Magnitude</span><span style=color:#1f2328>()</span> <span style=color:#cf222e>const</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> sqrt<span style=color:#1f2328>(</span>pow<span style=color:#1f2328>(</span>x<span style=color:#1f2328>,</span><span style=color:#0550ae>2</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> pow<span style=color:#1f2328>(</span>y<span style=color:#1f2328>,</span><span style=color:#0550ae>2</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//单位化（规格化）本矢量
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> <span style=color:#cf222e>void</span> <span style=color:#6639ba>Normalize</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       XFLOAT m <span style=color:#0550ae>=</span> Magnitude<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>      
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>m <span style=color:#0550ae>&lt;=</span> VECTOR2_ZERO_TOLERANCE<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>       <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>           m <span style=color:#0550ae>=</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>       x <span style=color:#0550ae>/=</span> m<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       y <span style=color:#0550ae>/=</span> m<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>abs<span style=color:#1f2328>(</span>x<span style=color:#1f2328>)</span> <span style=color:#0550ae>&lt;</span> VECTOR2_ZERO_TOLERANCE<span style=color:#1f2328>)</span> x <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>abs<span style=color:#1f2328>(</span>y<span style=color:#1f2328>)</span> <span style=color:#0550ae>&lt;</span> VECTOR2_ZERO_TOLERANCE<span style=color:#1f2328>)</span> y <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//求两矢量的点积
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>//令两矢量为V1(x1,y1) V2(x2,y2)
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>//则两矢量的点积应为x1*x2+y1*y2;而此处的计算方式变成：
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>//sqrt( X1*X2*X1*X2+y1*y2*y1*y2 )，
+</span></span></span><span style=display:flex><span>   <span style=color:#57606a>//显然此处的矢量点积计算是错误的。
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> XFLOAT <span style=color:#6639ba>DotProduct</span><span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#1f2328>((</span><span style=color:#0550ae>*</span><span style=color:#cf222e>this</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>*</span> v<span style=color:#1f2328>).</span>Magnitude<span style=color:#1f2328>();</span> <span style=color:#57606a>//错误的计算方式
+</span></span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>  
+</span></span><span style=display:flex><span>   <span style=color:#57606a>//求两矢量的叉积
+</span></span></span><span style=display:flex><span>   <span style=color:#cf222e>inline</span> XFLOAT <span style=color:#6639ba>CrossProduct</span><span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&amp;</span> v<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>       <span style=color:#cf222e>return</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>x <span style=color:#0550ae>*</span> v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>this</span><span style=color:#0550ae>-&gt;</span>y <span style=color:#0550ae>*</span> v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span>   T x<span style=color:#1f2328>;</span>    <span style=color:#57606a>//矢量的x分量
+</span></span></span><span style=display:flex><span>   T y<span style=color:#1f2328>;</span>    <span style=color:#57606a>//矢量的y分量
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#cf222e>typedef</span> VECTOR2<span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>int</span> <span style=color:#0550ae>&gt;</span> IVECTOR2<span style=color:#1f2328>;</span>   <span style=color:#57606a>//整数类型的二维矢量
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>typedef</span> VECTOR2<span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>float</span> <span style=color:#0550ae>&gt;</span> FVECTOR2<span style=color:#1f2328>;</span> <span style=color:#57606a>//单精度类型的二维矢量
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>typedef</span> VECTOR2<span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>double</span> <span style=color:#0550ae>&gt;</span> DVECTOR2<span style=color:#1f2328>;</span>    <span style=color:#57606a>//双精度类型的二维矢量
+</span></span></span><span style=display:flex><span> 
+</span></span><span style=display:flex><span><span style=color:#57606a>//把某矢量的每一个分量化格式成字符串
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>template</span><span style=color:#0550ae>&lt;</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>T</span> <span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>tstring toTString<span style=color:#1f2328>(</span><span style=color:#cf222e>const</span> VECTOR2<span style=color:#0550ae>&lt;</span> T <span style=color:#0550ae>&gt;&amp;</span> v<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>return</span> <span style=color:#6639ba>tstring</span><span style=color:#1f2328>(</span> _T<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;(&#34;</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> toTString<span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> _T<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;,&#34;</span><span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span>
+</span></span><span style=display:flex><span>                   toTString<span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> _T<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;)&#34;</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h2 id=33-基本的颜色理论>3.3 基本的颜色理论</h2><h3 id=331-颜色的基本要素>3.3.1 颜色的基本要素</h3><h3 id=332-颜色模型>3.3.2 颜色模型</h3><h2 id=34-dxframework的纹理类>3.4 DxFramework的纹理类</h2><h3 id=341-纹理的基本概念>3.4.1 纹理的基本概念</h3><p>在计算机图形学发展的早期，计算机生成的3D图像往往像是一块能反射强光的塑料。和自然界的各种物体相比，早期的3D图像缺乏各种纹路——如磨损、裂痕、指纹和污渍等，而这些纹路会增加三维物体的真实感。正因为如此，计算机图形学发展至今，纹理（texture）已经在得到普遍的应用，成为增强计算机生成的三维图像的真实感的重要工具。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2007-10-13T18:08:30+08:00>October 13, 2007</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/directx/ rel=category>DirectX</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/dxframework/ rel=tag>DxFramework</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/inside_dxframework/inside_dxf_2_2/>深度探索DxFramework 2-2</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=第2章-dxframework的架构剖析-2>第2章 DxFramework的架构剖析 2</h1><h2 id=23-dxframework的内存泄漏检测机制>2.3 DxFramework的内存泄漏检测机制</h2><p>内存泄漏（memory leak）是使用C/C++等程序设计语言进行编程时常常见到的一个问题。内存泄漏给程序运行时带来的影响有很多。一般最后的结果要么是程序死掉；要么是提示系统内存不足。还有一种可能就是程序不会死掉，但是程序的响应速度会明显变慢。</p><h3 id=231-内存泄漏的原因>2.3.1 内存泄漏的原因</h3><p>产生内存泄漏的原因一般是如下几点：</p><ol><li>动态分配了内存空间，在不需要时忘记释放。</li><li>动态分配了内存空间，在不需要时忘记释放。</li><li>对某些API函数的不正确使用，导致内存泄漏。</li></ol><p>在编程时忘记释放不需要的内存空间是编程时很常见。动态分配的内存在使用完毕后，如若不需要了就一定要释放。如果不释放,那就会造成内存的泄漏。如果造成内存泄漏的代码经常被调用的话，那么内存泄漏的数目就会越来越多的。从而影响整个系统的运行。 如下面的代码段：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>SomeOperation</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span><span style=color:#0550ae>*</span> pBuffer <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>int</span><span style=color:#1f2328>[</span><span style=color:#0550ae>32</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span><span style=color:#1f2328>(</span> <span style=color:#cf222e>int</span> i<span style=color:#0550ae>=</span><span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i<span style=color:#0550ae>&lt;</span><span style=color:#0550ae>32</span> <span style=color:#1f2328>;</span> <span style=color:#0550ae>++</span>i<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        pBuffer<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#0550ae>=</span> i<span style=color:#0550ae>*</span><span style=color:#0550ae>2</span><span style=color:#0550ae>+</span><span style=color:#0550ae>1</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>很明显，上述的局部变量pTemp指向了一段从堆（heap）空间中分配的内存空间，而在函数退出时没有作任何的释放操作。一旦调用此函数就将导致了内存泄漏。当这个函数被频繁调用的时候，堆空间的内存空间将会被消耗殆尽。</p><p>因为代码编写的问题,会导致某些动态分配的内存根本就无从回收,比如下面的代码段：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>SomeOperation</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span><span style=color:#0550ae>*</span> pBuffer1 <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>int</span><span style=color:#1f2328>[</span><span style=color:#0550ae>32</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span><span style=color:#0550ae>*</span> pBuffer2 <span style=color:#0550ae>=</span> <span style=color:#cf222e>new</span> <span style=color:#cf222e>int</span><span style=color:#1f2328>[</span><span style=color:#0550ae>32</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>    pBuffer1 <span style=color:#0550ae>=</span> pBuffer2<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> pBuffer1 <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>delete</span> <span style=color:#1f2328>[]</span> pBuffer1<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>这样,pBuffer1最初指向的那段内存空间的首地址就丢掉了，无法恢复了。这时候最初分配的那一段内存空间就无法释放掉。</p><p>Windows提供了一些特殊的API,如FormatMessage。如果给它参数传递的函数有FORMAT_MESSAGE_ALLOCATE_BUFFER,它会在函数内部动态分配一块内存缓冲区，返回给用户。但是这个内存缓冲区需要用户显式调用LocalFree来释放。如果用户忘了的话。也会产生内存泄漏。如下面的代码段：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;windows.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;iostream&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#cf222e>namespace</span> std<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>FormatAndPrintOneMessage</span><span style=color:#1f2328>(</span>DWORD dwError<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    HLOCAL hLocal <span style=color:#0550ae>=</span> <span style=color:#6639ba>NULL</span><span style=color:#1f2328>;</span> <span style=color:#57606a>// 用来存储返回的描述错误信息的字符串的内存缓冲区
+</span></span></span><span style=display:flex><span>    BOOL fOK <span style=color:#0550ae>=</span> FormatMessage<span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 指定标志，动态分配一块缓冲区
+</span></span></span><span style=display:flex><span>    FORMAT_MESSAGE_FROM_SYSTEM <span style=color:#0550ae>|</span>FORMAT_MESSAGE_ALLOCATE_BUFFER <span style=color:#1f2328>,</span> 
+</span></span><span style=display:flex><span>    <span style=color:#6639ba>NULL</span> <span style=color:#1f2328>,</span> dwError <span style=color:#1f2328>,</span> MAKELANGID<span style=color:#1f2328>(</span>LANG_ENGLISH<span style=color:#1f2328>,</span>SUBLANG_ENGLISH_US<span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 返回动态分配的内存缓冲区
+</span></span></span><span style=display:flex><span>    <span style=color:#cf222e>reinterpret_cast</span><span style=color:#0550ae>&lt;</span>LPTSTR<span style=color:#0550ae>&gt;</span><span style=color:#1f2328>(</span><span style=color:#0550ae>&amp;</span>hLocal<span style=color:#1f2328>),</span>  <span style=color:#0550ae>0</span> <span style=color:#1f2328>,</span> <span style=color:#6639ba>NULL</span> <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span><span style=color:#1f2328>(</span> hLocal <span style=color:#0550ae>&amp;&amp;</span> fOK <span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        cout<span style=color:#0550ae>&lt;&lt;</span><span style=color:#0a3069>&#34;Error Message: &#34;</span><span style=color:#0550ae>&lt;&lt;</span><span style=color:#1f2328>(</span><span style=color:#cf222e>reinterpret_cast</span><span style=color:#0550ae>&lt;</span>LPCTSTR<span style=color:#0550ae>&gt;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>(</span>LocalLock<span style=color:#1f2328>(</span>hLocal<span style=color:#1f2328>)))</span><span style=color:#0550ae>&lt;&lt;</span>endl<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#57606a>// 如果忘记了这一句，将会导致通过FormatMessage函数动态分配的
+</span></span></span><span style=display:flex><span>      <span style=color:#57606a>// 内存无法释放，从而导致内存泄漏
+</span></span></span><span style=display:flex><span>      LocalFree<span style=color:#1f2328>(</span>hLocal<span style=color:#1f2328>);</span> 
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>   <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>      cout<span style=color:#0550ae>&lt;&lt;</span><span style=color:#0a3069>&#34;Error number not found&#34;</span><span style=color:#0550ae>&lt;&lt;</span>endl<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>   <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> <span style=color:#6639ba>main</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    FormatAndPrintOneMessage<span style=color:#1f2328>(</span><span style=color:#0550ae>5</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>检查已经发布的程序是否存在内存泄漏实在是费时费力，所以我们要把内存泄漏扼杀在萌芽状态。在编码过程中就要时刻进行检查。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2007-10-12T18:08:30+08:00>October 12, 2007</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/directx/ rel=category>DirectX</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/dxframework/ rel=tag>DxFramework</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/inside_dxframework/inside_dxf_2_1/>深度探索DxFramework 2-1</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=第2章-dxframework的架构剖析-1>第2章 DxFramework的架构剖析 1</h1><h2 id=21-dxframework的全局头文件>2.1 DxFramework的全局头文件</h2><p>在开始着手分析DxFramework之前，我们有必要先弄懂DxFramework所定义的一些在其引擎代码内部中频繁使用的一些数据类型，宏，和全局函数。</p><p>众所周知，由于C++语言的灵活性和自由性；在不同的操作系统平台下，不同的编译器对同一关键字所指定的数据类型所占字节大小是不一致的——C++标准委员会对此也并没有做统一的要求。以int类型为例，C++标准委员会只是要求此类型的大小至少不小于16位。例如在Microsoft Win32平台下，Visual C++6编译器所实现的int是32位整形数据。而在DOS系统下，Borland C++ 3.1实现的int则只有16位。因此，为了代码的平台移植，或者是便于版本的数据类型升级和扩充，一般的大型软件系统都有其自定义的数据类型。以Microsoft定义的win32数据类型为例，就有诸如无符号双字类型，32位的DWORD；无符号单字类型，十六位的WORD；无符号的整形数据，UINT等等。DxFramework也不例外，它也有着它自身的预定义数据类型，它们定义在globals.h文件中，现在我们来逐个分析。代码如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#57606a>//globals.h
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define WIN32_LEAN_AND_MEAN
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define DIRECTINPUT_VERSION 0x0800	</span><span style=color:#57606a>//指定使用的DInput版本
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/*
+</span></span></span><span style=display:flex><span><span style=color:#57606a>忽略编号为4786的编译器警告 当变量标识符名字过长（超过255个字符）的时候，调试器无法调试变量标
+</span></span></span><span style=display:flex><span><span style=color:#57606a>识符号超过255个字符长度的代码。无法在调试器中查看、计算、更新或监视被截断的符号。调试器在调试过程中
+</span></span></span><span style=display:flex><span><span style=color:#57606a>将会把变量标识符“截短”至255个字符。有时在嵌套声明的变量名中，会出现一串长的警告，在使用STL 的时候，
+</span></span></span><span style=display:flex><span><span style=color:#57606a>这种警告会经常出现，使用此指令可以关掉此警告
+</span></span></span><span style=display:flex><span><span style=color:#57606a>*/</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#pragma warning(disable: 4786)
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//用来进行内存侦测的起到开关作用的宏
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#ifdef _DEBUG
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define _CRTDBG_MAP_ALLOC	</span><span style=color:#57606a>//定义此宏，使得CRT内存泄漏侦测函数可用，此宏在crtdbg.h中定义
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#define _INC_MALLOC
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define enw DEBUG_NEW
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//定义使用UNICODE的宏
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#define UNICODE
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//如果宏UNCODE定义了，则把宏_UNICODE也定义
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#ifdef UNICODE
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define _UNICODE
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#define USE_DOUBLE_FLOAT_PRECISION
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/*
+</span></span></span><span style=display:flex><span><span style=color:#57606a>如果定义了USE_DOUBLE_FLOAT_PRECISION宏 XVECTOR2定义为用双精度浮点数类型实例化模板类
+</span></span></span><span style=display:flex><span><span style=color:#57606a>类型的DVECTOR2替代为，XFLOAT定义为如果没有定义的话，就把XVECTOR2定义为单精度浮点数
+</span></span></span><span style=display:flex><span><span style=color:#57606a>实例化的模板类类型FVECTOR2，XFLOAT定义为floatFVECTOR2，DVECTOR2类型在vector2.h中定义，
+</span></span></span><span style=display:flex><span><span style=color:#57606a>稍后详述
+</span></span></span><span style=display:flex><span><span style=color:#57606a>*/</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#ifdef USE_DOUBLE_FLOAT_PRECISION
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define XVECTOR2 DVECTOR2
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define XFLOAT double
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#else
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define XVECTOR2 FVECTOR2
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#define XFLOAT float
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#endif
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//预包含engine所要使用的系统头文件
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;tchar.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;stdlib.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;crtdbg.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;windows.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;exception&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;d3d8.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;d3dx8.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;Dinput.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;dshow.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;dsound.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;ctime&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;dplay8.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;dxerr8.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;stdio.h&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;iostream&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;fstream&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;string&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;map&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;list&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;algorithm&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;vector&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;stack&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>#include</span> <span style=color:#57606a>&lt;queue&gt;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>using</span> <span style=color:#cf222e>namespace</span> std<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//使用STL的basic_string模板类来定义
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//DxFramework的字符串类tstring
+</span></span></span><span style=display:flex><span><span style=color:#57606a>//TCHAR是单字节还是双字节，取决于代码编译时，宏UNICODE启动与否
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>typedef</span> std<span style=color:#0550ae>::</span>basic_string<span style=color:#0550ae>&lt;</span>TCHAR<span style=color:#0550ae>&gt;</span> tstring<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//定义了版本号的字符串常量
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>const</span> tstring ENGINE_ENGINE_VERSION_TSTRING <span style=color:#0550ae>=</span> _T<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;0.9.3&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#define ENGINE_ENGINE_VERSION 0x0093
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>//引擎所需的各种图片，音频，视频资源所存放的目录
+</span></span></span><span style=display:flex><span><span style=color:#cf222e>const</span> tstring    IMAGE_DIR <span style=color:#0550ae>=</span> _T<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;./images/&#34;</span><span style=color:#1f2328>);</span> 
+</span></span><span style=display:flex><span><span style=color:#cf222e>const</span> tstring    SOUND_DIR <span style=color:#0550ae>=</span> _T<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;./sounds/&#34;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>const</span> tstring    VIDEO_DIR <span style=color:#0550ae>=</span> _T<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;./video/&#34;</span><span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>从物理学知识可以知道，任何一样颜色的可见光都是由不同强度的红光，绿光，蓝光混合而成。在计算机图形学中，人们通常使用一个四元组来描述一个光的颜色的组成。这四元组是透明度Alpha，红色分量Red，绿色分量Green，蓝色分量Blue组成。一般地，各个分量都可以分成256级。在Direct3D中，通常使用区间[0.0，1.0]内的值表示分量的强度。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2007-10-11T18:08:30+08:00>October 11, 2007</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/directx/ rel=category>DirectX</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/dxframework/ rel=tag>DxFramework</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/inside_dxframework/inside_dxf_1/>深度探索DxFramework 1</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=第1章-dxframework工程简介>第1章 DxFramework工程简介</h1><h2 id=11-工程的来源和作者>1.1 工程的来源和作者</h2><p>DxFramework是由Corey于年月发起的。Corey 开发了项目中最初的2D游戏引擎。并且负责了游戏所需的艺术资源的相关工作。他创建了DxFramework的第一个版本。Corey现在在Maxis公司工作，不再是DxFramework的主要的开发者了。而随后加入的Jonathan现在已经是项目管理员。他在Laird教授的领导下参与了程序设计的很多方面的工作。还有一位重要的贡献者是David Yeung，作为DxFramework的重要组成部分的3D Framework和相关示例demo的最原始的版本正是由David Yeung所编写的。还有就是Nuttapong，Nuttapong在David Yeung之后对3D Framework部分做了大量的扩充，增加了许多的功能以及一些demo和sample。</p><p>另外还对DxFramework作出贡献的人员还有：</p><p>Adam Tercala创建了world map demo的最初版本
+Jeremy Lee创建了sound demo(DEMO C)的最初版本，并且撰写了C_Sound类
+Evan Leung创建了最初的用户接口类（User Interface Object class C_UIObject）以及一系列继承自此类的其他类。</p><h2 id=12-工程的配置>1.2 工程的配置</h2><p>本书剖析的版本是0.93版本，这个版本是2004月8月16日发布的。也是在本书截稿为止的最新版本。在DxFramework的主页中所发布的是三个Zip格式的压缩包。它们分别是：</p><p>DxFramework-binary-0.9.3.zip
+DxFramework-engine-0.9.3.zip
+DxFramework-0.9.3.zip</p><p>DxFramework-binary-0.9.3.zip只是包含了DxFramework的所发布的可执行数据文件版本。没有相关的源代码。而DxFramework-engine-0.9.3.zip也只是包含了DxFramework的引擎框架代码，而没有示例的代码以及运行所需要的相关文件和数据。而DxFramework-0.9.3则两者兼备。如果是利用DxFramework来编写我们自己的游戏，那么当然选择基于DxFramework-engine-0.9.3，但是本书是通过剖析引擎和示例代码来学习游戏设计技术的，因此本书的剖析对象是DxFramework-0.9.3.zip的内容。</p><p>下载解压缩之根目录有如下的一些文件和目录，目录如下：</p><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td>目录</td><td>内容</td><td></td></tr><tr><td>Data</td><td>存放示例demo"pic pac"所需的地图数据文件</td><td></td></tr><tr><td>Docs</td><td>存放DxFramework相关的文档</td><td></td></tr><tr><td>Images</td><td>存放DxFramework所需的一些艺术资源，比如一些示例程序所需要的图片等等</td><td></td></tr><tr><td>Resources</td><td>存放DxFramework所用到的图标文件，里面是big.ico和small.ico文件</td><td></td></tr><tr><td>Sounds</td><td>存放DxFramework使用到的一些声音文件，有wav，mp3，mid格式</td><td></td></tr><tr><td>Source</td><td>存放了DxFramework的引擎和示例的原代码，这里面的内容便是本书的重点部分</td><td></td></tr><tr><td>Frustum</td><td>点击鼠标将能绘制该视截体的轮廓，这样可以移开camera到别的位置去看看这个视截体像什么。悬浮在空中的球，当鼠标点击的时候，它会依据它在视截体内与否来决定是否改变其纹理。</td><td></td></tr><tr><td>Models</td><td>Models Demo装载了MD2格式的模型和X格式的模型。MD2的动画可以循环播放</td><td></td></tr><tr><td>Seek and Hide</td><td>追踪和躲藏，演示一个简单的AI游戏</td><td></td></tr><tr><td>Simple Demo</td><td>本demo演示了如何使用DxFramework来开发一个3D游戏。这个demo的代码有很多的注释和演示。</td><td></td></tr><tr><td>Ray Tracking</td><td>这个demo演示了如何使用鼠标来点击选中不同的DxFramework图元。鼠标点击点将会变成一个会延伸扩展的球的球心。</td><td></td></tr><tr><td>LandScape and Billboard</td><td>本demo展示一个通过高度图生成的风景地貌。另外还展现了公告板技术。</td><td></td></tr><tr><td>Split</td><td>演示如何把一个基本图元切割成更小的基本图元</td><td></td></tr><tr><td>MD3 Demo</td><td>演示了使用ID Software定义了md3文件格式的模型</td><td></td></tr><tr><td>BSP</td><td>演示了使用二叉空间分割树（binary space partitation tree）对场景数据进行组织</td><td></td></tr></tbody></table><p>文件如下：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2007-10-11T10:08:30+08:00>October 11, 2007</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/directx/ rel=category>DirectX</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/dxframework/ rel=tag>DxFramework</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/inside_dxframework/inside_dxf_0/>深度探索DxFramework 0</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>#前言</p><p>这系列文章的面世，既可说是偶然，也可谓是必然。</p><p>在本世纪初的几年，中国的网络游戏业如同蛰伏着等待破茧而出的蝶蛹一样。看似平静，其实内部正蕴藏着巨大的商机和市场。那时我还在南京的校园里，在计算机前编织着游戏梦。作为一名理工科的学生，当时的我对日后如雨后春笋般的网络游戏所含的巨大利润没有太多的敏锐嗅觉。当时只是为了心目中的一种理想，一种爱好去编程，去学习设计自己的游戏。</p><p>无法忘记那段激情燃烧的岁月。在上大学之前没有接触过计算机的我，为了弥补先天的不足。在那一段时间里如同海绵吸水般从图书馆，从网络中吸取游戏设计相关的知识。也正是在那一段时间里，知道了享誉全球的John Carmack；知道了FreeMind、云风、softboy等一批国内的先行者；知道了他们在求知过程中所经历的酸甜苦辣。那时候网络才刚刚普及，费用奇高。我在学习过程中也时常感叹资料的匮乏和不系统性。四年的学习生涯很快过去，离开校园的我，顺理成章地进入了这个行业。</p><p>有谁能理解在一个身处起步阶段的游戏产业的业界人，从学校进入社会时所经过的各种各样的挫折，困惑和磨练呢？为了提升自我，程序员们往往需要不断地学习，学习，再学习。互联网的普及给程序员提升自我的水平带来了更大的便利和更广泛的知识来源。在一次偶然的机会，其实也是一种必然，互联网上的DxFramework项目引起了我的注意。通过阅读这个项目的源代码，我学到了很多游戏开发的知识，也写了很多阅读笔记和心得文档。然而因为工作的繁忙和需要，我也要花很多业余时间去从其他的开源项目中去学习，种种的原因使得我对DxFramework的学习也是时断时续，但也总算是一直都坚持了下来。</p><p>人生中总是有这样那样的挫折。工作的变动，使得我有机会去专心整理梳顺DxFramework的知识内容。也是一个可称为必然的偶然的机会，我萌生了对DxFramework项目写一本书的想法。相对充足的时间允许我去实现我的想法。作为一个对自己知识和经验的总结；也作为一种知识的传承吸纳；便诞生了这一系列文章。</p><p>这本书不是一本DirectX开发入门教程，也不是一本C++程序设计语言教程；更不是一本数学入门教程。本书的定位是：通过剖析一个完整的，开放源代码的游戏应用程序框架（game application framework），以及使用这框架开发的一些实例。从而掌握游戏程序设计基础知识和设计思维。</p><p>在阅读本书之前，或在阅读本书的同时，读者应首先对C++程序设计语言；Microsoft DirectX开发包；以及和3D图形程序设计相关的数学知识有一个大致的了解。“大致的”的了解意味着读者能基本理解Direct3D的工作方式，以及相关的基础知识。比如读者应该能对诸如“顶点”，“纹理”等基础概念有一个大概的认识。当然，DirectX/Direct3D是一个很大的体系，读者不可能也不必要事无巨细地穷经皓首面面俱到。要强调的是，尽管本书不是一本C++语言教程和DirectX教程，但是在剖析代码时所涉及到的C++语言，Direct3D，乃至3D数学的知识点，本书都将力求讲细讲透。</p><p>对于有一定C++程序设计语言和Direct3D基础知识，对游戏开发有浓厚兴趣，跃跃欲试想登堂入室的读者。本书将会是你很好的选择。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2007-10-10T18:08:30+08:00>October 10, 2007</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/directx/ rel=category>DirectX</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/dxframework/ rel=tag>DxFramework</a></span></div></div></article></div></div></main><div class="pagination block"><a class="pagination__item pagination__item--desktop" href=/tags/dxframework/>1</a>
+<span class="pagination__item pagination__item--active" data-total=2>2</span></div></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

@@ -1,569 +1,104 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Unity3D的内置宏 _LIGHT_LAYERS | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Unity3D的内置宏  _LIGHT_LAYERS">
-		<meta property="og:title" content="Unity3D的内置宏 _LIGHT_LAYERS" />
-<meta property="og:description" content="Unity3D的内置宏  _LIGHT_LAYERS" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/_light_layers/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2024-11-19T22:21:49+08:00" />
-<meta property="article:modified_time" content="2024-11-19T22:21:49+08:00" />
-
-
-		<meta itemprop="name" content="Unity3D的内置宏 _LIGHT_LAYERS">
-<meta itemprop="description" content="Unity3D的内置宏  _LIGHT_LAYERS"><meta itemprop="datePublished" content="2024-11-19T22:21:49+08:00" />
-<meta itemprop="dateModified" content="2024-11-19T22:21:49+08:00" />
-<meta itemprop="wordCount" content="393">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Unity3D的内置宏 _LIGHT_LAYERS</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2024-11-19T22:21:49&#43;08:00">November 19, 2024</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">Unity3D的内置宏 _LIGHT_LAYERS</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#核心含义"><strong>核心含义</strong></a>
-      <ul>
-        <li><a href="#1-功能定位">1. 功能定位</a></li>
-        <li><a href="#2-技术目标">2. 技术目标</a></li>
-      </ul>
-    </li>
-    <li><a href="#触发条件"><strong>触发条件</strong></a></li>
-    <li><a href="#技术实现机制"><strong>技术实现机制</strong></a>
-      <ul>
-        <li><a href="#1-数据传递流程">1. 数据传递流程</a></li>
-        <li><a href="#2-核心函数">2. 核心函数</a></li>
-      </ul>
-    </li>
-    <li><a href="#应用场景"><strong>应用场景</strong></a>
-      <ul>
-        <li><a href="#1-选择性光照影响">1. 选择性光照影响</a></li>
-        <li><a href="#2-多玩家分屏">2. 多玩家分屏</a></li>
-        <li><a href="#3-特效隔离">3. 特效隔离</a></li>
-      </ul>
-    </li>
-    <li><a href="#配置步骤"><strong>配置步骤</strong></a></li>
-    <li><a href="#性能影响与优化"><strong>性能影响与优化</strong></a></li>
-    <li><a href="#常见问题与解决方案"><strong>常见问题与解决方案</strong></a>
-      <ul>
-        <li><a href="#问题1层过滤不生效"><strong>问题1：层过滤不生效</strong></a></li>
-        <li><a href="#问题2层掩码显示异常"><strong>问题2：层掩码显示异常</strong></a></li>
-        <li><a href="#问题3跨平台兼容性问题"><strong>问题3：跨平台兼容性问题</strong></a></li>
-      </ul>
-    </li>
-    <li><a href="#进阶用法示例"><strong>进阶用法示例</strong></a>
-      <ul>
-        <li><a href="#1-动态层切换">1. 动态层切换</a></li>
-        <li><a href="#2-多层混合运算">2. 多层混合运算</a></li>
-        <li><a href="#3-调试可视化">3. 调试可视化</a></li>
-      </ul>
-    </li>
-    <li><a href="#与其他系统的协作"><strong>与其他系统的协作</strong></a></li>
-    <li><a href="#最佳实践"><strong>最佳实践</strong></a></li>
-    <li><a href="#总结"><strong>总结</strong></a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p>Unity3D的内置宏 ADDITIONAL_LIGHTS_VERTEX</p>
-<p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<p>在Unity URP/HDRP中，<strong><code>_LIGHT_LAYERS</code></strong> 是一个与 <strong>光源层级过滤（Light Layer Masking）</strong> 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 <strong>实现基于层级的光源与物体交互控制</strong>，允许开发者通过层掩码（Layer Masks）精确控制哪些光源可以影响特定物体。</p>
-<hr>
-<h2 id="核心含义"><strong>核心含义</strong></h2>
-<h3 id="1-功能定位">1. 功能定位</h3>
-<ul>
-<li><strong>光源筛选机制</strong>：激活该宏后，物体会根据自身的 <strong>Light Layer Mask</strong> 和光源的 <strong>Light Layer Mask</strong> 进行匹配，只有匹配层的光源才会对该物体产生光照影响。</li>
-<li><strong>渲染优化</strong>：通过层级过滤减少无效光源计算，提升复杂场景性能。</li>
-</ul>
-<h3 id="2-技术目标">2. 技术目标</h3>
-<ul>
-<li><strong>精细化光源控制</strong>：例如让装饰性灯光只影响场景道具，不影响角色</li>
-<li><strong>多世界渲染支持</strong>：用于分屏游戏或VR中不同视角的独立光照逻辑</li>
-</ul>
-<hr>
-<h2 id="触发条件"><strong>触发条件</strong></h2>
-<p>该宏的激活需要同时满足以下条件：</p>
-<ol>
-<li>
-<p><strong>项目设置启用</strong></p>
-<ul>
-<li><strong>URP/HDRP Asset</strong> 中开启光源层支持：
-<ul>
-<li>URP: Lighting &gt; Light Layers &gt; Enable Light Layers</li>
-<li>HDRP: Lighting &gt; Light Layers</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p><strong>Shader声明</strong><br>
-在着色器中通过<code>#pragma</code>指令声明支持：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#75715e">#pragma multi_compile _ _LIGHT_LAYERS</span>
-</span></span></code></pre></div></li>
-<li>
-<p><strong>光源与物体配置</strong></p>
-<ul>
-<li>光源的 <strong>Light Layer Mask</strong> 设置为非&quot;Everything&quot;值</li>
-<li>物体的 <strong>Renderer组件 &gt; Rendering Layer Mask</strong> 设置为与光源匹配的层级</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="技术实现机制"><strong>技术实现机制</strong></h2>
-<h3 id="1-数据传递流程">1. 数据传递流程</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#75715e">// 在片元着色器中筛选有效光源</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#if defined(_LIGHT_LAYERS)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 获取物体的渲染层掩码（8位/32位，取决于设置）</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint</span> renderingLayers <span style="color:#f92672">=</span> GetMeshRenderingLayer(); <span style="color:#75715e">// 例如0b00000101</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 光源层掩码与物体层掩码进行按位与操作</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((light.layerMask <span style="color:#f92672">&amp;</span> renderingLayers) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 该光源影响当前物体</span>
-</span></span><span style="display:flex;"><span>        ApplyLighting(light);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif</span>
-</span></span></code></pre></div><h3 id="2-核心函数">2. 核心函数</h3>
-<ul>
-<li><code>GetMeshRenderingLayer()</code>：获取当前片元所属物体的层掩码</li>
-<li><code>GetLightLayerMask(lightIndex)</code>：获取指定光源的层掩码</li>
-</ul>
-<hr>
-<h2 id="应用场景"><strong>应用场景</strong></h2>
-<h3 id="1-选择性光照影响">1. 选择性光照影响</h3>
-<table>
-<thead>
-<tr>
-<th>物体类型</th>
-<th>层掩码</th>
-<th>光源类型</th>
-<th>层掩码</th>
-<th>交互结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>角色模型</td>
-<td>0b00000001</td>
-<td>角色聚光灯</td>
-<td>0b00000001</td>
-<td>影响</td>
-</tr>
-<tr>
-<td>环境装饰物</td>
-<td>0b00000010</td>
-<td>角色聚光灯</td>
-<td>0b00000001</td>
-<td>不影响</td>
-</tr>
-<tr>
-<td>全场景物体</td>
-<td>0b11111111</td>
-<td>全局方向光</td>
-<td>0b00000100</td>
-<td>不影响（掩码不匹配）</td>
-</tr>
-</tbody>
-</table>
-<h3 id="2-多玩家分屏">2. 多玩家分屏</h3>
-<ul>
-<li><strong>玩家1视角</strong>：光源层=0b0001，角色层=0b0001</li>
-<li><strong>玩家2视角</strong>：光源层=0b0010，角色层=0b0010</li>
-<li>实现各玩家只能看到自己角色的光照效果</li>
-</ul>
-<h3 id="3-特效隔离">3. 特效隔离</h3>
-<ul>
-<li>爆炸特效光源层=0b0100</li>
-<li>重要NPC渲染层=0b0100</li>
-<li>确保爆炸光效仅影响特定NPC</li>
-</ul>
-<hr>
-<h2 id="配置步骤"><strong>配置步骤</strong></h2>
-<ol>
-<li>
-<p><strong>启用光源层系统</strong></p>
-<ul>
-<li>URP: <em>Project Settings &gt; URP Global Settings &gt; Lighting &gt; Light Layers &gt; Enable</em></li>
-<li>HDRP: <em>HDRP Asset &gt; Lighting &gt; Light Layers</em></li>
-</ul>
-</li>
-<li>
-<p><strong>设置光源层级</strong></p>
-<ul>
-<li>选择光源，在Inspector中设置 <strong>Light Layer Mask</strong></li>
-</ul>
-</li>
-<li>
-<p><strong>设置物体层级</strong></p>
-<ul>
-<li>选择物体，在Mesh Renderer中设置 <strong>Rendering Layer Mask</strong></li>
-</ul>
-</li>
-<li>
-<p><strong>Shader适配</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#75715e">// 添加层筛选逻辑</span>
-</span></span><span style="display:flex;"><span>Light mainLight <span style="color:#f92672">=</span> GetMainLight(input.positionWS);
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#if defined(_LIGHT_LAYERS)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (IsMatchingLayer(mainLight.layerMask, input.renderingLayer)) {
-</span></span><span style="display:flex;"><span>        color <span style="color:#f92672">+=</span> CalculateLightContribution(mainLight);
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#else</span>
-</span></span><span style="display:flex;"><span>    color <span style="color:#f92672">+=</span> CalculateLightContribution(mainLight); <span style="color:#75715e">// 无条件应用</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif</span>
-</span></span></code></pre></div></li>
-</ol>
-<hr>
-<h2 id="性能影响与优化"><strong>性能影响与优化</strong></h2>
-<table>
-<thead>
-<tr>
-<th>模式</th>
-<th>CPU开销</th>
-<th>GPU开销</th>
-<th>内存占用</th>
-<th>适用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>启用光源层</td>
-<td>低</td>
-<td>降低</td>
-<td>轻微增加</td>
-<td>多光源复杂场景</td>
-</tr>
-<tr>
-<td>禁用光源层</td>
-<td>最低</td>
-<td>高</td>
-<td>最低</td>
-<td>简单场景/全光源影响需求</td>
-</tr>
-</tbody>
-</table>
-<p><strong>优化建议</strong>：</p>
-<ul>
-<li>将高频变化光源设为全层级（0b11111111），避免频繁层检测</li>
-<li>使用8位层掩码（默认）而非32位以节省带宽</li>
-<li>通过脚本动态更新层掩码，而非每帧检测</li>
-</ul>
-<hr>
-<h2 id="常见问题与解决方案"><strong>常见问题与解决方案</strong></h2>
-<h3 id="问题1层过滤不生效"><strong>问题1：层过滤不生效</strong></h3>
-<ul>
-<li><strong>诊断步骤</strong>：
-<ol>
-<li>确认项目设置中光源层系统已启用</li>
-<li>检查光源和物体的层掩码是否有重叠位</li>
-<li>验证Shader中是否正确定义了<code>_LIGHT_LAYERS</code>宏</li>
-</ol>
-</li>
-</ul>
-<h3 id="问题2层掩码显示异常"><strong>问题2：层掩码显示异常</strong></h3>
-<ul>
-<li><strong>现象</strong>：层选择UI显示错乱</li>
-<li><strong>解决方案</strong>：
-<ul>
-<li>清除项目Library文件夹</li>
-<li>检查层名称定义是否冲突（<em>Edit &gt; Project Settings &gt; Tags and Layers</em>）</li>
-</ul>
-</li>
-</ul>
-<h3 id="问题3跨平台兼容性问题"><strong>问题3：跨平台兼容性问题</strong></h3>
-<ul>
-<li><strong>表现</strong>：移动端层过滤失效</li>
-<li><strong>修正方案</strong>：
-<ul>
-<li>确保Shader中正确使用<code>UNITY_LIGHT_LAYERS</code>宏（移动端可能需要特殊处理）</li>
-<li>检查图形API是否支持位运算（如OpenGL ES 2.0需降级实现）</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="进阶用法示例"><strong>进阶用法示例</strong></h2>
-<h3 id="1-动态层切换">1. 动态层切换</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// C#脚本控制物体层</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Update() {
-</span></span><span style="display:flex;"><span>    Renderer renderer = GetComponent&lt;Renderer&gt;();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (isStealthMode) {
-</span></span><span style="display:flex;"><span>        renderer.renderingLayerMask = <span style="color:#ae81ff">0</span>b00000001; <span style="color:#75715e">// 只受潜行光源影响</span>
-</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
-</span></span><span style="display:flex;"><span>        renderer.renderingLayerMask = <span style="color:#ae81ff">0</span>b11111111; <span style="color:#75715e">// 受所有光源影响</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="2-多层混合运算">2. 多层混合运算</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#75715e">// 允许同时匹配多个层级（如层1 OR 层3）</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#if defined(_LIGHT_LAYERS)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint</span> requiredLayers <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>b00000101; <span style="color:#75715e">// 层0和层2</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((light.layerMask <span style="color:#f92672">&amp;</span> requiredLayers) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
-</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 应用光源</span>
-</span></span><span style="display:flex;"><span>    }
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif</span>
-</span></span></code></pre></div><h3 id="3-调试可视化">3. 调试可视化</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#75715e">// 通过颜色显示当前层</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">half4</span> frag(v2f i) <span style="color:#f92672">:</span> <span style="color:#a6e22e">SV_Target</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">uint</span> layers <span style="color:#f92672">=</span> GetMeshRenderingLayer();
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">half4</span>(
-</span></span><span style="display:flex;"><span>        (layers <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0</span>b00000001) <span style="color:#f92672">?</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>, <span style="color:#75715e">// 红色=层0</span>
-</span></span><span style="display:flex;"><span>        (layers <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0</span>b00000010) <span style="color:#f92672">?</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>, <span style="color:#75715e">// 绿色=层1</span>
-</span></span><span style="display:flex;"><span>        (layers <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0</span>b00000100) <span style="color:#f92672">?</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>, <span style="color:#75715e">// 蓝色=层2</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>    );
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
-<h2 id="与其他系统的协作"><strong>与其他系统的协作</strong></h2>
-<table>
-<thead>
-<tr>
-<th>系统</th>
-<th>协作方式</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Light Probes</strong></td>
-<td>光照探针数据不受层过滤影响，需额外处理</td>
-</tr>
-<tr>
-<td><strong>Shadowmask</strong></td>
-<td>阴影层级需单独通过<code>_SHADOW_LAYERS</code>控制</td>
-</tr>
-<tr>
-<td><strong>Shader Graph</strong></td>
-<td>通过<code>Rendering Layer</code>节点访问层掩码</td>
-</tr>
-<tr>
-<td><strong>DOTS</strong></td>
-<td>需通过ECS组件同步<code>RenderingLayerMask</code></td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="最佳实践"><strong>最佳实践</strong></h2>
-<ol>
-<li>
-<p><strong>层级规划原则</strong></p>
-<ul>
-<li>按功能划分：角色层(1)、环境层(2)、特效层(3)等</li>
-<li>预留扩展位（至少保留2-3个未使用层）</li>
-</ul>
-</li>
-<li>
-<p><strong>性能关键路径</strong></p>
-<ul>
-<li>将高频光源（如玩家手电筒）设为独立层</li>
-<li>静态环境光源使用全层或专用层</li>
-</ul>
-</li>
-<li>
-<p><strong>团队协作规范</strong></p>
-<ul>
-<li>建立层使用文档，明确各bit对应功能</li>
-<li>使用<code>[RenderingLayerMask]</code>属性自定义Inspector显示</li>
-</ul>
-</li>
-</ol>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span><span style="color:#75715e">// 自定义层标签显示</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RenderingLayerMaskAttribute</span> : PropertyAttribute {}
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">
-</span></span></span><span style="display:flex;"><span><span style="color:#a6e22e">[CustomPropertyDrawer(typeof(RenderingLayerMaskAttribute))]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RenderingLayerMaskDrawer</span> : PropertyDrawer {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 实现类似LayerMask的BitField UI</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
-<h2 id="总结"><strong>总结</strong></h2>
-<p><code>_LIGHT_LAYERS</code> 是Unity现代渲染管线中实现 <strong>精准光源控制</strong> 的核心机制，通过位掩码技术为复杂场景提供高效的光照筛选能力。开发者可通过：</p>
-<ol>
-<li>合理规划光源与物体的层分配</li>
-<li>编写条件敏感的光照着色器</li>
-<li>结合动态脚本控制</li>
-</ol>
-<p>实现从性能优化到高级视觉效果的多重目标，特别适用于MMO、开放世界等需要精细光照管理的项目类型。</p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/_additional_lights_vertex/">Unity3D的内置宏 _ADDITIONAL_LIGHTS_VERTEX</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/stylized_water_2_doc/">StylizedWater2插件帮助文档精读</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/amplify_imposter_manual/">Amplify Imposter 插件使用指南</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/amplify_imposter_custom_baking/">Amplify Imposter Custom Baking</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_fov_and_screentoworldpoint/">Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Unity3D的内置宏 _LIGHT_LAYERS | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="Unity3D的内置宏  _LIGHT_LAYERS"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/_light_layers/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Unity3D的内置宏 _LIGHT_LAYERS"><meta property="og:description" content="Unity3D的内置宏  _LIGHT_LAYERS"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2024-11-19T22:21:49+08:00"><meta property="article:modified_time" content="2024-11-19T22:21:49+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="Unity3D的内置宏 _LIGHT_LAYERS"><meta itemprop=description content="Unity3D的内置宏  _LIGHT_LAYERS"><meta itemprop=datePublished content="2024-11-19T22:21:49+08:00"><meta itemprop=dateModified content="2024-11-19T22:21:49+08:00"><meta itemprop=wordCount content="393"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Unity3D的内置宏 _LIGHT_LAYERS</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2024-11-19T22:21:49+08:00>November 19, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>Unity3D的内置宏 _LIGHT_LAYERS</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#核心含义><strong>核心含义</strong></a><ul><li><a href=#1-功能定位>1. 功能定位</a></li><li><a href=#2-技术目标>2. 技术目标</a></li></ul></li><li><a href=#触发条件><strong>触发条件</strong></a></li><li><a href=#技术实现机制><strong>技术实现机制</strong></a><ul><li><a href=#1-数据传递流程>1. 数据传递流程</a></li><li><a href=#2-核心函数>2. 核心函数</a></li></ul></li><li><a href=#应用场景><strong>应用场景</strong></a><ul><li><a href=#1-选择性光照影响>1. 选择性光照影响</a></li><li><a href=#2-多玩家分屏>2. 多玩家分屏</a></li><li><a href=#3-特效隔离>3. 特效隔离</a></li></ul></li><li><a href=#配置步骤><strong>配置步骤</strong></a></li><li><a href=#性能影响与优化><strong>性能影响与优化</strong></a></li><li><a href=#常见问题与解决方案><strong>常见问题与解决方案</strong></a><ul><li><a href=#问题1层过滤不生效><strong>问题1：层过滤不生效</strong></a></li><li><a href=#问题2层掩码显示异常><strong>问题2：层掩码显示异常</strong></a></li><li><a href=#问题3跨平台兼容性问题><strong>问题3：跨平台兼容性问题</strong></a></li></ul></li><li><a href=#进阶用法示例><strong>进阶用法示例</strong></a><ul><li><a href=#1-动态层切换>1. 动态层切换</a></li><li><a href=#2-多层混合运算>2. 多层混合运算</a></li><li><a href=#3-调试可视化>3. 调试可视化</a></li></ul></li><li><a href=#与其他系统的协作><strong>与其他系统的协作</strong></a></li><li><a href=#最佳实践><strong>最佳实践</strong></a></li><li><a href=#总结><strong>总结</strong></a></li></ul></nav></details><div class=entry__content><p>Unity3D的内置宏 ADDITIONAL_LIGHTS_VERTEX</p><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>在Unity URP/HDRP中，<strong><code>_LIGHT_LAYERS</code></strong> 是一个与 <strong>光源层级过滤（Light Layer Masking）</strong> 相关的内置变体关键字（Shader Variant Keyword）。它的核心作用是 <strong>实现基于层级的光源与物体交互控制</strong>，允许开发者通过层掩码（Layer Masks）精确控制哪些光源可以影响特定物体。</p><hr><h2 id=核心含义><strong>核心含义</strong></h2><h3 id=1-功能定位>1. 功能定位</h3><ul><li><strong>光源筛选机制</strong>：激活该宏后，物体会根据自身的 <strong>Light Layer Mask</strong> 和光源的 <strong>Light Layer Mask</strong> 进行匹配，只有匹配层的光源才会对该物体产生光照影响。</li><li><strong>渲染优化</strong>：通过层级过滤减少无效光源计算，提升复杂场景性能。</li></ul><h3 id=2-技术目标>2. 技术目标</h3><ul><li><strong>精细化光源控制</strong>：例如让装饰性灯光只影响场景道具，不影响角色</li><li><strong>多世界渲染支持</strong>：用于分屏游戏或VR中不同视角的独立光照逻辑</li></ul><hr><h2 id=触发条件><strong>触发条件</strong></h2><p>该宏的激活需要同时满足以下条件：</p><ol><li><p><strong>项目设置启用</strong></p><ul><li><strong>URP/HDRP Asset</strong> 中开启光源层支持：<ul><li>URP: Lighting > Light Layers > Enable Light Layers</li><li>HDRP: Lighting > Light Layers</li></ul></li></ul></li><li><p><strong>Shader声明</strong><br>在着色器中通过<code>#pragma</code>指令声明支持：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>#pragma multi_compile _ _LIGHT_LAYERS</span>
+</span></span></code></pre></div></li><li><p><strong>光源与物体配置</strong></p><ul><li>光源的 <strong>Light Layer Mask</strong> 设置为非"Everything"值</li><li>物体的 <strong>Renderer组件 > Rendering Layer Mask</strong> 设置为与光源匹配的层级</li></ul></li></ol><hr><h2 id=技术实现机制><strong>技术实现机制</strong></h2><h3 id=1-数据传递流程>1. 数据传递流程</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>// 在片元着色器中筛选有效光源</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#if defined(_LIGHT_LAYERS)</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 获取物体的渲染层掩码（8位/32位，取决于设置）</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>uint</span> renderingLayers <span style=color:#0550ae>=</span> GetMeshRenderingLayer<span style=color:#1f2328>();</span> <span style=color:#57606a>// 例如0b00000101</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 光源层掩码与物体层掩码进行按位与操作</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>((</span>light<span style=color:#1f2328>.</span>layerMask <span style=color:#0550ae>&amp;</span> renderingLayers<span style=color:#1f2328>)</span> <span style=color:#0550ae>!=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 该光源影响当前物体</span>
+</span></span><span style=display:flex><span>        ApplyLighting<span style=color:#1f2328>(</span>light<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif</span>
+</span></span></code></pre></div><h3 id=2-核心函数>2. 核心函数</h3><ul><li><code>GetMeshRenderingLayer()</code>：获取当前片元所属物体的层掩码</li><li><code>GetLightLayerMask(lightIndex)</code>：获取指定光源的层掩码</li></ul><hr><h2 id=应用场景><strong>应用场景</strong></h2><h3 id=1-选择性光照影响>1. 选择性光照影响</h3><table><thead><tr><th>物体类型</th><th>层掩码</th><th>光源类型</th><th>层掩码</th><th>交互结果</th></tr></thead><tbody><tr><td>角色模型</td><td>0b00000001</td><td>角色聚光灯</td><td>0b00000001</td><td>影响</td></tr><tr><td>环境装饰物</td><td>0b00000010</td><td>角色聚光灯</td><td>0b00000001</td><td>不影响</td></tr><tr><td>全场景物体</td><td>0b11111111</td><td>全局方向光</td><td>0b00000100</td><td>不影响（掩码不匹配）</td></tr></tbody></table><h3 id=2-多玩家分屏>2. 多玩家分屏</h3><ul><li><strong>玩家1视角</strong>：光源层=0b0001，角色层=0b0001</li><li><strong>玩家2视角</strong>：光源层=0b0010，角色层=0b0010</li><li>实现各玩家只能看到自己角色的光照效果</li></ul><h3 id=3-特效隔离>3. 特效隔离</h3><ul><li>爆炸特效光源层=0b0100</li><li>重要NPC渲染层=0b0100</li><li>确保爆炸光效仅影响特定NPC</li></ul><hr><h2 id=配置步骤><strong>配置步骤</strong></h2><ol><li><p><strong>启用光源层系统</strong></p><ul><li>URP: <em>Project Settings > URP Global Settings > Lighting > Light Layers > Enable</em></li><li>HDRP: <em>HDRP Asset > Lighting > Light Layers</em></li></ul></li><li><p><strong>设置光源层级</strong></p><ul><li>选择光源，在Inspector中设置 <strong>Light Layer Mask</strong></li></ul></li><li><p><strong>设置物体层级</strong></p><ul><li>选择物体，在Mesh Renderer中设置 <strong>Rendering Layer Mask</strong></li></ul></li><li><p><strong>Shader适配</strong></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>// 添加层筛选逻辑</span>
+</span></span><span style=display:flex><span>Light mainLight <span style=color:#0550ae>=</span> GetMainLight<span style=color:#1f2328>(</span>input<span style=color:#1f2328>.</span>positionWS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#if defined(_LIGHT_LAYERS)</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>IsMatchingLayer<span style=color:#1f2328>(</span>mainLight<span style=color:#1f2328>.</span>layerMask<span style=color:#1f2328>,</span> input<span style=color:#1f2328>.</span>renderingLayer<span style=color:#1f2328>))</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        color <span style=color:#0550ae>+=</span> CalculateLightContribution<span style=color:#1f2328>(</span>mainLight<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#else</span>
+</span></span><span style=display:flex><span>    color <span style=color:#0550ae>+=</span> CalculateLightContribution<span style=color:#1f2328>(</span>mainLight<span style=color:#1f2328>);</span> <span style=color:#57606a>// 无条件应用</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif</span>
+</span></span></code></pre></div></li></ol><hr><h2 id=性能影响与优化><strong>性能影响与优化</strong></h2><table><thead><tr><th>模式</th><th>CPU开销</th><th>GPU开销</th><th>内存占用</th><th>适用场景</th></tr></thead><tbody><tr><td>启用光源层</td><td>低</td><td>降低</td><td>轻微增加</td><td>多光源复杂场景</td></tr><tr><td>禁用光源层</td><td>最低</td><td>高</td><td>最低</td><td>简单场景/全光源影响需求</td></tr></tbody></table><p><strong>优化建议</strong>：</p><ul><li>将高频变化光源设为全层级（0b11111111），避免频繁层检测</li><li>使用8位层掩码（默认）而非32位以节省带宽</li><li>通过脚本动态更新层掩码，而非每帧检测</li></ul><hr><h2 id=常见问题与解决方案><strong>常见问题与解决方案</strong></h2><h3 id=问题1层过滤不生效><strong>问题1：层过滤不生效</strong></h3><ul><li><strong>诊断步骤</strong>：<ol><li>确认项目设置中光源层系统已启用</li><li>检查光源和物体的层掩码是否有重叠位</li><li>验证Shader中是否正确定义了<code>_LIGHT_LAYERS</code>宏</li></ol></li></ul><h3 id=问题2层掩码显示异常><strong>问题2：层掩码显示异常</strong></h3><ul><li><strong>现象</strong>：层选择UI显示错乱</li><li><strong>解决方案</strong>：<ul><li>清除项目Library文件夹</li><li>检查层名称定义是否冲突（<em>Edit > Project Settings > Tags and Layers</em>）</li></ul></li></ul><h3 id=问题3跨平台兼容性问题><strong>问题3：跨平台兼容性问题</strong></h3><ul><li><strong>表现</strong>：移动端层过滤失效</li><li><strong>修正方案</strong>：<ul><li>确保Shader中正确使用<code>UNITY_LIGHT_LAYERS</code>宏（移动端可能需要特殊处理）</li><li>检查图形API是否支持位运算（如OpenGL ES 2.0需降级实现）</li></ul></li></ul><hr><h2 id=进阶用法示例><strong>进阶用法示例</strong></h2><h3 id=1-动态层切换>1. 动态层切换</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// C#脚本控制物体层</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>void</span> Update<span style=color:#1f2328>()</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Renderer renderer <span style=color:#1f2328>=</span> GetComponent<span style=color:#1f2328>&lt;</span>Renderer<span style=color:#1f2328>&gt;();</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>isStealthMode<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        renderer<span style=color:#1f2328>.</span>renderingLayerMask <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span>b00000001<span style=color:#1f2328>;</span> <span style=color:#57606a>// 只受潜行光源影响</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span> <span style=color:#cf222e>else</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        renderer<span style=color:#1f2328>.</span>renderingLayerMask <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span>b11111111<span style=color:#1f2328>;</span> <span style=color:#57606a>// 受所有光源影响</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=2-多层混合运算>2. 多层混合运算</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>// 允许同时匹配多个层级（如层1 OR 层3）</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#if defined(_LIGHT_LAYERS)</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>uint</span> requiredLayers <span style=color:#0550ae>=</span> <span style=color:#0550ae>0</span>b00000101<span style=color:#1f2328>;</span> <span style=color:#57606a>// 层0和层2</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>((</span>light<span style=color:#1f2328>.</span>layerMask <span style=color:#0550ae>&amp;</span> requiredLayers<span style=color:#1f2328>)</span> <span style=color:#0550ae>!=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 应用光源</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>#endif</span>
+</span></span></code></pre></div><h3 id=3-调试可视化>3. 调试可视化</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#57606a>// 通过颜色显示当前层</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>half4</span> frag<span style=color:#1f2328>(</span>v2f i<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> <span style=color:#0550ae>SV_Target</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>uint</span> layers <span style=color:#0550ae>=</span> GetMeshRenderingLayer<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> <span style=color:#cf222e>half4</span><span style=color:#1f2328>(</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>(</span>layers <span style=color:#0550ae>&amp;</span> <span style=color:#0550ae>0</span>b00000001<span style=color:#1f2328>)</span> <span style=color:#0550ae>?</span> <span style=color:#0550ae>1</span> <span style=color:#0550ae>:</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#57606a>// 红色=层0</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>(</span>layers <span style=color:#0550ae>&amp;</span> <span style=color:#0550ae>0</span>b00000010<span style=color:#1f2328>)</span> <span style=color:#0550ae>?</span> <span style=color:#0550ae>1</span> <span style=color:#0550ae>:</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#57606a>// 绿色=层1</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>(</span>layers <span style=color:#0550ae>&amp;</span> <span style=color:#0550ae>0</span>b00000100<span style=color:#1f2328>)</span> <span style=color:#0550ae>?</span> <span style=color:#0550ae>1</span> <span style=color:#0550ae>:</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#57606a>// 蓝色=层2</span>
+</span></span><span style=display:flex><span>        <span style=color:#0550ae>1</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><hr><h2 id=与其他系统的协作><strong>与其他系统的协作</strong></h2><table><thead><tr><th>系统</th><th>协作方式</th></tr></thead><tbody><tr><td><strong>Light Probes</strong></td><td>光照探针数据不受层过滤影响，需额外处理</td></tr><tr><td><strong>Shadowmask</strong></td><td>阴影层级需单独通过<code>_SHADOW_LAYERS</code>控制</td></tr><tr><td><strong>Shader Graph</strong></td><td>通过<code>Rendering Layer</code>节点访问层掩码</td></tr><tr><td><strong>DOTS</strong></td><td>需通过ECS组件同步<code>RenderingLayerMask</code></td></tr></tbody></table><hr><h2 id=最佳实践><strong>最佳实践</strong></h2><ol><li><p><strong>层级规划原则</strong></p><ul><li>按功能划分：角色层(1)、环境层(2)、特效层(3)等</li><li>预留扩展位（至少保留2-3个未使用层）</li></ul></li><li><p><strong>性能关键路径</strong></p><ul><li>将高频光源（如玩家手电筒）设为独立层</li><li>静态环境光源使用全层或专用层</li></ul></li><li><p><strong>团队协作规范</strong></p><ul><li>建立层使用文档，明确各bit对应功能</li><li>使用<code>[RenderingLayerMask]</code>属性自定义Inspector显示</li></ul></li></ol><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#57606a>// 自定义层标签显示</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>RenderingLayerMaskAttribute</span> <span style=color:#1f2328>:</span> PropertyAttribute <span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>
+</span></span></span><span style=display:flex><span><span style=color:#1f2328>[CustomPropertyDrawer(typeof(RenderingLayerMaskAttribute))]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>RenderingLayerMaskDrawer</span> <span style=color:#1f2328>:</span> PropertyDrawer <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 实现类似LayerMask的BitField UI</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><hr><h2 id=总结><strong>总结</strong></h2><p><code>_LIGHT_LAYERS</code> 是Unity现代渲染管线中实现 <strong>精准光源控制</strong> 的核心机制，通过位掩码技术为复杂场景提供高效的光照筛选能力。开发者可通过：</p><ol><li>合理规划光源与物体的层分配</li><li>编写条件敏感的光照着色器</li><li>结合动态脚本控制</li></ol><p>实现从性能优化到高级视觉效果的多重目标，特别适用于MMO、开放世界等需要精细光照管理的项目类型。</p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/_additional_lights_vertex/>Unity3D的内置宏 _ADDITIONAL_LIGHTS_VERTEX</a></li><li class=related__item><a class=related__link href=/post/unity3d/stylized_water_2_doc/>StylizedWater2插件帮助文档精读</a></li><li class=related__item><a class=related__link href=/post/unity3d/amplify_imposter_manual/>Amplify Imposter 插件使用指南</a></li><li class=related__item><a class=related__link href=/post/unity3d/amplify_imposter_custom_baking/>Amplify Imposter Custom Baking</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_fov_and_screentoworldpoint/>Unity3D中摄像机的FOV和Camera.ScreenToWorldPoint方法的关系</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

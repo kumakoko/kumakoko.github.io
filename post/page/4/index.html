@@ -1,385 +1,360 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Posts | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="Posts" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/post/" />
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Posts | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/post/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Posts"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="Posts"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2026-03-28T21:21:49+08:00"><meta itemprop=dateModified content="2026-03-28T21:21:49+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/post/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-section"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Posts</li></ol></nav><div class="page block"><h1 class=page__title>Posts</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/rendering_meshes_in_unity_without_meshrenderers/>不使用MeshRenderer去绘制Mesh【翻译】</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><a href=https://www.edraflame.com/blog/unity-graphics-drawmesh-drawmeshinstanced/>原文地址</a></p><h2 id=在-unity-中不使用-meshrenderer-渲染网格><strong>在 Unity 中不使用 MeshRenderer 渲染网格</strong></h2><h3 id=1-概述><strong>1. 概述</strong></h3><ul><li><strong>目的</strong>：使用 <code>DrawMesh</code> 系列方法在 Unity 中渲染大量网格，而无需创建和管理 GameObject。</li><li><strong>特点</strong>：<ul><li>网格会受到光照影响，可以投射和接收阴影。</li><li>可以针对所有相机或特定相机渲染。</li><li>支持 GPU 实例化和 Compute Shader。</li></ul></li></ul><h3 id=2-常用方法><strong>2. 常用方法</strong></h3><ul><li><strong><code>DrawMesh</code></strong>：最简单的渲染方法，使用指定材质渲染网格。</li><li><strong><code>DrawMeshInstanced</code></strong>：通过 GPU 实例化渲染大量相同网格，支持小规模变化（如颜色）。</li><li><strong><code>DrawMeshInstancedIndirect</code></strong>：通过 ComputeBuffer 传递实例数量和位置等数据，适用于大规模实例化。</li><li><strong><code>DrawMeshInstancedProcedural</code></strong>：与 <code>DrawMeshInstancedIndirect</code> 类似，但实例数量可以直接从 C# 传递。</li><li><strong><code>DrawProcedural</code></strong>：在 GPU 上执行绘制调用，无需顶点或索引缓冲区，适用于 Compute Shader。</li><li><strong><code>DrawProceduralIndirect</code></strong>：与 <code>DrawProcedural</code> 类似，但实例数量等数据从 ComputeBuffer 传递。</li></ul><h3 id=3-代码示例><strong>3. 代码示例</strong></h3><ul><li><strong><code>DrawMesh</code></strong>：<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>ExampleDrawMesh</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> Mesh mesh<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> Material material<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Update<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Graphics<span style=color:#1f2328>.</span>DrawMesh<span style=color:#1f2328>(</span>mesh<span style=color:#1f2328>,</span> Vector3<span style=color:#1f2328>.</span>zero<span style=color:#1f2328>,</span> Quaternion<span style=color:#1f2328>.</span>identity<span style=color:#1f2328>,</span> material<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></li><li><strong><code>DrawMeshNow</code></strong>：<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>ExampleDrawMeshNow</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> Mesh mesh<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> Material material<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> <span style=color:#cf222e>void</span> OnPostRender<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        material<span style=color:#1f2328>.</span>SetPass<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        Graphics<span style=color:#1f2328>.</span>DrawMeshNow<span style=color:#1f2328>(</span>mesh<span style=color:#1f2328>,</span> Vector3<span style=color:#1f2328>.</span>zero<span style=color:#1f2328>,</span> Quaternion<span style=color:#1f2328>.</span>identity<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></li><li><strong><code>DrawMeshInstanced</code></strong>：<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>ExampleDrawMeshInstanced</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> Mesh mesh<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> Material material<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    Matrix4x4<span style=color:#1f2328>[]</span> matrices<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> OnEnable<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        matrices <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> Matrix4x4<span style=color:#1f2328>[</span><span style=color:#0550ae>10</span><span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>10</span><span style=color:#1f2328>;</span> i<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            Vector3 position <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> Vector3<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> i<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            Quaternion rotation <span style=color:#1f2328>=</span> Quaternion<span style=color:#1f2328>.</span>identity<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            Vector3 scale <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> Vector3<span style=color:#1f2328>(</span><span style=color:#0550ae>0.3f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.3f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.3f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            matrices<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#1f2328>=</span> Matrix4x4<span style=color:#1f2328>.</span>TRS<span style=color:#1f2328>(</span>position<span style=color:#1f2328>,</span> rotation<span style=color:#1f2328>,</span> scale<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Update<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Graphics<span style=color:#1f2328>.</span>DrawMeshInstanced<span style=color:#1f2328>(</span>mesh<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> material<span style=color:#1f2328>,</span> matrices<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></li><li><strong><code>DrawMeshInstancedIndirect</code></strong>：<div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>class</span> <span style=color:#1f2328>ExampleDrawMeshInstancedIndirect</span> <span style=color:#1f2328>:</span> MonoBehaviour
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> Mesh mesh<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>public</span> Material material<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    ComputeBuffer argsBuffer<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    ComputeBuffer matricesBuffer<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    Bounds bounds<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Start<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        argsBuffer <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> ComputeBuffer<span style=color:#1f2328>(</span><span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>5</span> <span style=color:#1f2328>*</span> <span style=color:#cf222e>sizeof</span><span style=color:#1f2328>(</span><span style=color:#cf222e>uint</span><span style=color:#1f2328>),</span> ComputeBufferType<span style=color:#1f2328>.</span>IndirectArguments<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        argsBuffer<span style=color:#1f2328>.</span>SetData<span style=color:#1f2328>(</span><span style=color:#cf222e>new</span> <span style=color:#cf222e>uint</span><span style=color:#1f2328>[]</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>(</span><span style=color:#cf222e>uint</span><span style=color:#1f2328>)</span>mesh<span style=color:#1f2328>.</span>GetIndexCount<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>(</span><span style=color:#cf222e>uint</span><span style=color:#1f2328>)</span>instanceCount<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>(</span><span style=color:#cf222e>uint</span><span style=color:#1f2328>)</span>mesh<span style=color:#1f2328>.</span>GetIndexStart<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>(</span><span style=color:#cf222e>uint</span><span style=color:#1f2328>)</span>mesh<span style=color:#1f2328>.</span>GetBaseVertex<span style=color:#1f2328>(</span><span style=color:#0550ae>0</span><span style=color:#1f2328>),</span>
+</span></span><span style=display:flex><span>            <span style=color:#0550ae>0</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>});</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        bounds <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> Bounds<span style=color:#1f2328>(</span>Vector3<span style=color:#1f2328>.</span>zero<span style=color:#1f2328>,</span> <span style=color:#cf222e>new</span> Vector3<span style=color:#1f2328>(</span><span style=color:#0550ae>10.0f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>10.0f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>10.0f</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        Matrix4x4<span style=color:#1f2328>[]</span> matrices <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> Matrix4x4<span style=color:#1f2328>[</span>instanceCount<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#1f2328>&lt;</span> instanceCount<span style=color:#1f2328>;</span> i<span style=color:#1f2328>++)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            Vector3 offset <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> Vector3<span style=color:#1f2328>(</span>i <span style=color:#1f2328>*</span> <span style=color:#0550ae>0.3f</span><span style=color:#1f2328>,</span> Mathf<span style=color:#1f2328>.</span>Sin<span style=color:#1f2328>(</span>i <span style=color:#1f2328>/</span> <span style=color:#0550ae>3f</span><span style=color:#1f2328>),</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            matrices<span style=color:#1f2328>[</span>i<span style=color:#1f2328>]</span> <span style=color:#1f2328>=</span> Matrix4x4<span style=color:#1f2328>.</span>TRS<span style=color:#1f2328>(</span>transform<span style=color:#1f2328>.</span>position <span style=color:#1f2328>+</span> offset<span style=color:#1f2328>,</span> Quaternion<span style=color:#1f2328>.</span>identity<span style=color:#1f2328>,</span> <span style=color:#cf222e>new</span> Vector3<span style=color:#1f2328>(</span><span style=color:#0550ae>0.3f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.3f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>0.3f</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        matricesBuffer <span style=color:#1f2328>=</span> <span style=color:#cf222e>new</span> ComputeBuffer<span style=color:#1f2328>(</span>instanceCount<span style=color:#1f2328>,</span> <span style=color:#cf222e>sizeof</span><span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> <span style=color:#0550ae>4</span> <span style=color:#1f2328>*</span> <span style=color:#0550ae>4</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        matricesBuffer<span style=color:#1f2328>.</span>SetData<span style=color:#1f2328>(</span>matrices<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        material<span style=color:#1f2328>.</span>SetBuffer<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;matricesBuffer&#34;</span><span style=color:#1f2328>,</span> matricesBuffer<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> Update<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Graphics<span style=color:#1f2328>.</span>DrawMeshInstancedIndirect<span style=color:#1f2328>(</span>mesh<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> material<span style=color:#1f2328>,</span> bounds<span style=color:#1f2328>,</span> argsBuffer<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>void</span> OnDisable<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        matricesBuffer<span style=color:#1f2328>?.</span>Release<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        matricesBuffer <span style=color:#1f2328>=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        argsBuffer<span style=color:#1f2328>?.</span>Release<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>        argsBuffer <span style=color:#1f2328>=</span> <span style=color:#cf222e>null</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div></li></ul><h3 id=4-使用场景><strong>4. 使用场景</strong></h3><ul><li><strong>动态更新位置</strong>：在每帧更新网格位置，如波浪运动。</li><li><strong>复杂模拟</strong>：使用 Compute Shader 进行网格位置的复杂计算（如群体模拟）。</li><li><strong>大规模实例化</strong>：通过 <code>DrawMeshInstancedIndirect</code> 实现高效的大规模实例化渲染。</li></ul><h3 id=5-文件下载><strong>5. 文件下载</strong></h3><ul><li><strong>包含内容</strong>：<ul><li><code>DrawMesh</code>、<code>DrawMeshInstanced</code>、<code>DrawMeshInstancedIndirect</code> 的脚本。</li><li>两个着色器（基础着色器和 PBR 表面着色器）。</li><li>使用 Compute Shader 移动网格的示例。</li><li>示例场景展示脚本使用方法。</li></ul></li></ul><h3 id=总结><strong>总结</strong></h3><ul><li><strong>核心方法</strong>：<code>DrawMesh</code> 系列方法提供了灵活的网格渲染方式，支持 GPU 实例化和 Compute Shader。</li><li><strong>性能优化</strong>：通过 <code>DrawMeshInstancedIndirect</code> 和 Compute Shader，可以将计算任务卸载到 GPU，提升性能。</li><li><strong>适用场景</strong>：适用于大规模实例化、动态位置更新和复杂模拟的渲染需求。</li></ul></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2024-02-17T19:08:53+08:00>February 17, 2024</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_unity_engine_graphics_format_detail/>Unity3D中枚举类型UnityEngine.Experimental.Rendering.GraphicsFormat详解</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a></strong>
+在Unity中，<code>UnityEngine.Experimental.Rendering.GraphicsFormat</code> 枚举类型定义了多种图形格式，用于描述纹理、渲染目标等的像素格式。每种格式都有不同的通道数、每个像素的字节数以及适用场景。以下是 <code>GraphicsFormat</code> 中每个值的具体含义、通道数、每个像素的字节数等详细信息：</p><hr><h2 id=1-常用图形格式><strong>1. 常用图形格式</strong></h2><table><thead><tr><th>枚举值</th><th>含义</th><th>通道数</th><th>每个像素字节数</th><th>描述</th></tr></thead><tbody><tr><td><strong>None</strong></td><td>无格式</td><td>-</td><td>-</td><td>未定义格式。</td></tr><tr><td><strong>R8_UNorm</strong></td><td>单通道 8 位无符号归一化</td><td>1</td><td>1</td><td>适用于单通道数据，如灰度图。</td></tr><tr><td><strong>R8_SNorm</strong></td><td>单通道 8 位有符号归一化</td><td>1</td><td>1</td><td>适用于单通道有符号数据。</td></tr><tr><td><strong>R8_UInt</strong></td><td>单通道 8 位无符号整数</td><td>1</td><td>1</td><td>适用于单通道无符号整数数据。</td></tr><tr><td><strong>R8_SInt</strong></td><td>单通道 8 位有符号整数</td><td>1</td><td>1</td><td>适用于单通道有符号整数数据。</td></tr><tr><td><strong>R16_UNorm</strong></td><td>单通道 16 位无符号归一化</td><td>1</td><td>2</td><td>适用于单通道高精度数据。</td></tr><tr><td><strong>R16_SNorm</strong></td><td>单通道 16 位有符号归一化</td><td>1</td><td>2</td><td>适用于单通道高精度有符号数据。</td></tr><tr><td><strong>R16_UInt</strong></td><td>单通道 16 位无符号整数</td><td>1</td><td>2</td><td>适用于单通道高精度无符号整数数据。</td></tr><tr><td><strong>R16_SInt</strong></td><td>单通道 16 位有符号整数</td><td>1</td><td>2</td><td>适用于单通道高精度有符号整数数据。</td></tr><tr><td><strong>R16_SFloat</strong></td><td>单通道 16 位有符号浮点数</td><td>1</td><td>2</td><td>适用于单通道高精度浮点数数据。</td></tr><tr><td><strong>R32_UInt</strong></td><td>单通道 32 位无符号整数</td><td>1</td><td>4</td><td>适用于单通道超高精度无符号整数数据。</td></tr><tr><td><strong>R32_SInt</strong></td><td>单通道 32 位有符号整数</td><td>1</td><td>4</td><td>适用于单通道超高精度有符号整数数据。</td></tr><tr><td><strong>R32_SFloat</strong></td><td>单通道 32 位有符号浮点数</td><td>1</td><td>4</td><td>适用于单通道超高精度浮点数数据。</td></tr><tr><td><strong>R8G8_UNorm</strong></td><td>双通道 8 位无符号归一化</td><td>2</td><td>2</td><td>适用于双通道数据，如法线贴图的 XY 通道。</td></tr><tr><td><strong>R8G8_SNorm</strong></td><td>双通道 8 位有符号归一化</td><td>2</td><td>2</td><td>适用于双通道有符号数据。</td></tr><tr><td><strong>R8G8_UInt</strong></td><td>双通道 8 位无符号整数</td><td>2</td><td>2</td><td>适用于双通道无符号整数数据。</td></tr><tr><td><strong>R8G8_SInt</strong></td><td>双通道 8 位有符号整数</td><td>2</td><td>2</td><td>适用于双通道有符号整数数据。</td></tr><tr><td><strong>R16G16_UNorm</strong></td><td>双通道 16 位无符号归一化</td><td>2</td><td>4</td><td>适用于双通道高精度数据。</td></tr><tr><td><strong>R16G16_SNorm</strong></td><td>双通道 16 位有符号归一化</td><td>2</td><td>4</td><td>适用于双通道高精度有符号数据。</td></tr><tr><td><strong>R16G16_UInt</strong></td><td>双通道 16 位无符号整数</td><td>2</td><td>4</td><td>适用于双通道高精度无符号整数数据。</td></tr><tr><td><strong>R16G16_SInt</strong></td><td>双通道 16 位有符号整数</td><td>2</td><td>4</td><td>适用于双通道高精度有符号整数数据。</td></tr><tr><td><strong>R16G16_SFloat</strong></td><td>双通道 16 位有符号浮点数</td><td>2</td><td>4</td><td>适用于双通道高精度浮点数数据。</td></tr><tr><td><strong>R32G32_UInt</strong></td><td>双通道 32 位无符号整数</td><td>2</td><td>8</td><td>适用于双通道超高精度无符号整数数据。</td></tr><tr><td><strong>R32G32_SInt</strong></td><td>双通道 32 位有符号整数</td><td>2</td><td>8</td><td>适用于双通道超高精度有符号整数数据。</td></tr><tr><td><strong>R32G32_SFloat</strong></td><td>双通道 32 位有符号浮点数</td><td>2</td><td>8</td><td>适用于双通道超高精度浮点数数据。</td></tr><tr><td><strong>R8G8B8A8_UNorm</strong></td><td>四通道 8 位无符号归一化</td><td>4</td><td>4</td><td>适用于 RGBA 颜色数据。</td></tr><tr><td><strong>R8G8B8A8_SNorm</strong></td><td>四通道 8 位有符号归一化</td><td>4</td><td>4</td><td>适用于 RGBA 有符号数据。</td></tr><tr><td><strong>R8G8B8A8_UInt</strong></td><td>四通道 8 位无符号整数</td><td>4</td><td>4</td><td>适用于 RGBA 无符号整数数据。</td></tr><tr><td><strong>R8G8B8A8_SInt</strong></td><td>四通道 8 位有符号整数</td><td>4</td><td>4</td><td>适用于 RGBA 有符号整数数据。</td></tr><tr><td><strong>R16G16B16A16_UNorm</strong></td><td>四通道 16 位无符号归一化</td><td>4</td><td>8</td><td>适用于 RGBA 高精度数据。</td></tr><tr><td><strong>R16G16B16A16_SNorm</strong></td><td>四通道 16 位有符号归一化</td><td>4</td><td>8</td><td>适用于 RGBA 高精度有符号数据。</td></tr><tr><td><strong>R16G16B16A16_UInt</strong></td><td>四通道 16 位无符号整数</td><td>4</td><td>8</td><td>适用于 RGBA 高精度无符号整数数据。</td></tr><tr><td><strong>R16G16B16A16_SInt</strong></td><td>四通道 16 位有符号整数</td><td>4</td><td>8</td><td>适用于 RGBA 高精度有符号整数数据。</td></tr><tr><td><strong>R16G16B16A16_SFloat</strong></td><td>四通道 16 位有符号浮点数</td><td>4</td><td>8</td><td>适用于 RGBA 高精度浮点数数据。</td></tr><tr><td><strong>R32G32B32A32_UInt</strong></td><td>四通道 32 位无符号整数</td><td>4</td><td>16</td><td>适用于 RGBA 超高精度无符号整数数据。</td></tr><tr><td><strong>R32G32B32A32_SInt</strong></td><td>四通道 32 位有符号整数</td><td>4</td><td>16</td><td>适用于 RGBA 超高精度有符号整数数据。</td></tr><tr><td><strong>R32G32B32A32_SFloat</strong></td><td>四通道 32 位有符号浮点数</td><td>4</td><td>16</td><td>适用于 RGBA 超高精度浮点数数据。</td></tr><tr><td><strong>B8G8R8A8_UNorm</strong></td><td>四通道 BGRA 8 位无符号归一化</td><td>4</td><td>4</td><td>适用于 BGRA 颜色数据。</td></tr><tr><td><strong>B8G8R8A8_SNorm</strong></td><td>四通道 BGRA 8 位有符号归一化</td><td>4</td><td>4</td><td>适用于 BGRA 有符号数据。</td></tr><tr><td><strong>B8G8R8A8_UInt</strong></td><td>四通道 BGRA 8 位无符号整数</td><td>4</td><td>4</td><td>适用于 BGRA 无符号整数数据。</td></tr><tr><td><strong>B8G8R8A8_SInt</strong></td><td>四通道 BGRA 8 位有符号整数</td><td>4</td><td>4</td><td>适用于 BGRA 有符号整数数据。</td></tr><tr><td><strong>B8G8R8X8_UNorm</strong></td><td>四通道 BGRA 8 位无符号归一化（无 Alpha）</td><td>4</td><td>4</td><td>适用于 BGRA 颜色数据（无 Alpha 通道）。</td></tr><tr><td><strong>B8G8R8X8_SNorm</strong></td><td>四通道 BGRA 8 位有符号归一化（无 Alpha）</td><td>4</td><td>4</td><td>适用于 BGRA 有符号数据（无 Alpha 通道）。</td></tr><tr><td><strong>B8G8R8X8_UInt</strong></td><td>四通道 BGRA 8 位无符号整数（无 Alpha）</td><td>4</td><td>4</td><td>适用于 BGRA 无符号整数数据（无 Alpha 通道）。</td></tr><tr><td><strong>B8G8R8X8_SInt</strong></td><td>四通道 BGRA 8 位有符号整数（无 Alpha）</td><td>4</td><td>4</td><td>适用于 BGRA 有符号整数数据（无 Alpha 通道）。</td></tr><tr><td><strong>R10G10B10A2_UNorm</strong></td><td>四通道 RGBA，RGB 各 10 位，A 2 位</td><td>4</td><td>4</td><td>适用于高精度 RGB 和低精度 Alpha 数据。</td></tr><tr><td><strong>R10G10B10A2_UInt</strong></td><td>四通道 RGBA，RGB 各 10 位，A 2 位</td><td>4</td><td>4</td><td>适用于高精度 RGB 和低精度 Alpha 无符号整数数据。</td></tr><tr><td><strong>R11G11B10_UFloat</strong></td><td>三通道 RGB，R 和 G 各 11 位，B 10 位</td><td>3</td><td>4</td><td>适用于 HDR 数据，节省内存。</td></tr><tr><td><strong>D16_UNorm</strong></td><td>16 位深度</td><td>1</td><td>2</td><td>适用于深度缓冲区。</td></tr><tr><td><strong>D24_UNorm_S8_UInt</strong></td><td>24 位深度 + 8 位模板</td><td>2</td><td>4</td><td>适用于深度和模板缓冲区。</td></tr><tr><td><strong>D32_SFloat</strong></td><td>32 位深度</td><td>1</td><td>4</td><td>适用于高精度深度缓冲区。</td></tr><tr><td><strong>D32_SFloat_S8_UInt</strong></td><td>32 位深度 + 8 位模板</td><td>2</td><td>5</td><td>适用于高精度深度和模板缓冲区。</td></tr></tbody></table><hr><h2 id=2-总结><strong>2. 总结</strong></h2><ul><li><strong><code>GraphicsFormat</code></strong> 提供了多种图形格式，适用于不同的场景和平台。</li><li><strong>通道数</strong> 和 <strong>每个像素的字节数</strong> 是选择图形格式时的重要参数。</li><li><strong>浮点格式</strong>（如 R16_SFloat、R32G32B32A32_SFloat）适用于高精度数据存储，如 HDR 贴图或物理模拟数据。</li><li><strong>深度/模板格式</strong>（如 D24_UNorm_S8_UInt、D32_SFloat_S8_UInt）适用于深度和模板缓冲区。</li></ul><p>根据具体需求（如平台、内存占用、图像质量等），选择合适的图形格式。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2023-12-09T18:38:27+08:00>December 09, 2023</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_unity_engine_texture_format_detail/>Unity3D中枚举类型UnityEngine.TextureFormat详解</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a></strong></p><p>在Unity中，<code>UnityEngine.TextureFormat</code> 枚举类型定义了多种纹理格式，每种格式都有不同的通道数、每个像素的字节数以及适用场景。以下是 <code>UnityEngine.TextureFormat</code> 中每个值的具体含义、通道数、每个像素的字节数等详细信息：</p><hr><h2 id=1-常用纹理格式><strong>1. 常用纹理格式</strong></h2><table><thead><tr><th>枚举值</th><th>含义</th><th>通道数</th><th>每个像素字节数</th><th>描述</th></tr></thead><tbody><tr><td><strong>Alpha8</strong></td><td>单通道 Alpha</td><td>1</td><td>1</td><td>仅存储 Alpha 通道，适用于遮罩或透明度贴图。</td></tr><tr><td><strong>ARGB4444</strong></td><td>4 通道 ARGB，每通道 4 位</td><td>4</td><td>2</td><td>每个通道 4 位，适用于低精度颜色贴图。</td></tr><tr><td><strong>RGB24</strong></td><td>3 通道 RGB，每通道 8 位</td><td>3</td><td>3</td><td>存储 RGB 颜色，无 Alpha 通道，适用于普通颜色贴图。</td></tr><tr><td><strong>RGBA32</strong></td><td>4 通道 RGBA，每通道 8 位</td><td>4</td><td>4</td><td>存储 RGBA 颜色，适用于带透明度的颜色贴图。</td></tr><tr><td><strong>RGB565</strong></td><td>3 通道 RGB，R 和 B 各 5 位，G 6 位</td><td>3</td><td>2</td><td>压缩格式，适用于低精度颜色贴图。</td></tr><tr><td><strong>R16</strong></td><td>单通道 16 位</td><td>1</td><td>2</td><td>存储单通道 16 位数据，适用于高度图或深度图。</td></tr><tr><td><strong>DXT1</strong></td><td>DXT1 压缩格式</td><td>3</td><td>0.5</td><td>压缩格式，适用于不透明或 1 位 Alpha 贴图。</td></tr><tr><td><strong>DXT5</strong></td><td>DXT5 压缩格式</td><td>4</td><td>1</td><td>压缩格式，适用于带透明度的贴图。</td></tr><tr><td><strong>RGBA4444</strong></td><td>4 通道 RGBA，每通道 4 位</td><td>4</td><td>2</td><td>每个通道 4 位，适用于低精度带透明度的颜色贴图。</td></tr><tr><td><strong>BGRA32</strong></td><td>4 通道 BGRA，每通道 8 位</td><td>4</td><td>4</td><td>存储 BGRA 颜色，适用于带透明度的颜色贴图。</td></tr><tr><td><strong>RHalf</strong></td><td>单通道 16 位浮点数</td><td>1</td><td>2</td><td>存储单通道 16 位浮点数，适用于高精度数据。</td></tr><tr><td><strong>RGHalf</strong></td><td>2 通道 16 位浮点数</td><td>2</td><td>4</td><td>存储双通道 16 位浮点数，适用于高精度数据。</td></tr><tr><td><strong>RGBAHalf</strong></td><td>4 通道 16 位浮点数</td><td>4</td><td>8</td><td>存储四通道 16 位浮点数，适用于 HDR 贴图。</td></tr><tr><td><strong>RFloat</strong></td><td>单通道 32 位浮点数</td><td>1</td><td>4</td><td>存储单通道 32 位浮点数，适用于高精度数据。</td></tr><tr><td><strong>RGFloat</strong></td><td>2 通道 32 位浮点数</td><td>2</td><td>8</td><td>存储双通道 32 位浮点数，适用于高精度数据。</td></tr><tr><td><strong>RGBAFloat</strong></td><td>4 通道 32 位浮点数</td><td>4</td><td>16</td><td>存储四通道 32 位浮点数，适用于超高精度数据。</td></tr><tr><td><strong>YUY2</strong></td><td>YUY2 压缩格式</td><td>3</td><td>2</td><td>适用于视频纹理。</td></tr><tr><td><strong>RGB9e5Float</strong></td><td>3 通道 RGB，共享指数浮点数</td><td>3</td><td>4</td><td>适用于 HDR 贴图，节省内存。</td></tr><tr><td><strong>BC4</strong></td><td>BC4 压缩格式（单通道）</td><td>1</td><td>0.5</td><td>适用于单通道数据压缩。</td></tr><tr><td><strong>BC5</strong></td><td>BC5 压缩格式（双通道）</td><td>2</td><td>1</td><td>适用于法线贴图等双通道数据压缩。</td></tr><tr><td><strong>BC6H</strong></td><td>BC6H 压缩格式（HDR）</td><td>3</td><td>1</td><td>适用于 HDR 贴图压缩。</td></tr><tr><td><strong>BC7</strong></td><td>BC7 压缩格式（高质量 RGBA）</td><td>4</td><td>1</td><td>适用于高质量 RGBA 贴图压缩。</td></tr><tr><td><strong>DXT1Crunched</strong></td><td>DXT1 压缩格式（进一步压缩）</td><td>3</td><td>0.5</td><td>适用于不透明贴图，进一步压缩以减少文件大小。</td></tr><tr><td><strong>DXT5Crunched</strong></td><td>DXT5 压缩格式（进一步压缩）</td><td>4</td><td>1</td><td>适用于带透明度的贴图，进一步压缩以减少文件大小。</td></tr><tr><td><strong>PVRTC_RGB2</strong></td><td>PVRTC 2 位 RGB 压缩格式</td><td>3</td><td>0.25</td><td>适用于移动设备上的 RGB 贴图压缩。</td></tr><tr><td><strong>PVRTC_RGBA2</strong></td><td>PVRTC 2 位 RGBA 压缩格式</td><td>4</td><td>0.25</td><td>适用于移动设备上的 RGBA 贴图压缩。</td></tr><tr><td><strong>PVRTC_RGB4</strong></td><td>PVRTC 4 位 RGB 压缩格式</td><td>3</td><td>0.5</td><td>适用于移动设备上的 RGB 贴图压缩。</td></tr><tr><td><strong>PVRTC_RGBA4</strong></td><td>PVRTC 4 位 RGBA 压缩格式</td><td>4</td><td>0.5</td><td>适用于移动设备上的 RGBA 贴图压缩。</td></tr><tr><td><strong>ETC_RGB4</strong></td><td>ETC1 4 位 RGB 压缩格式</td><td>3</td><td>0.5</td><td>适用于 Android 设备上的 RGB 贴图压缩。</td></tr><tr><td><strong>ETC2_RGB</strong></td><td>ETC2 8 位 RGB 压缩格式</td><td>3</td><td>0.5</td><td>适用于 Android 设备上的 RGB 贴图压缩。</td></tr><tr><td><strong>ETC2_RGBA1</strong></td><td>ETC2 8 位 RGBA 压缩格式（1 位 Alpha）</td><td>4</td><td>0.5</td><td>适用于 Android 设备上的 RGBA 贴图压缩（1 位 Alpha）。</td></tr><tr><td><strong>ETC2_RGBA8</strong></td><td>ETC2 8 位 RGBA 压缩格式</td><td>4</td><td>1</td><td>适用于 Android 设备上的 RGBA 贴图压缩。</td></tr><tr><td><strong>ASTC_4x4</strong></td><td>ASTC 4x4 压缩格式</td><td>4</td><td>1</td><td>适用于高质量 RGBA 贴图压缩。</td></tr><tr><td><strong>ASTC_5x5</strong></td><td>ASTC 5x5 压缩格式</td><td>4</td><td>0.8</td><td>适用于高质量 RGBA 贴图压缩。</td></tr><tr><td><strong>ASTC_6x6</strong></td><td>ASTC 6x6 压缩格式</td><td>4</td><td>0.67</td><td>适用于高质量 RGBA 贴图压缩。</td></tr><tr><td><strong>ASTC_8x8</strong></td><td>ASTC 8x8 压缩格式</td><td>4</td><td>0.5</td><td>适用于高质量 RGBA 贴图压缩。</td></tr><tr><td><strong>ASTC_10x10</strong></td><td>ASTC 10x10 压缩格式</td><td>4</td><td>0.4</td><td>适用于高质量 RGBA 贴图压缩。</td></tr><tr><td><strong>ASTC_12x12</strong></td><td>ASTC 12x12 压缩格式</td><td>4</td><td>0.33</td><td>适用于高质量 RGBA 贴图压缩。</td></tr><tr><td><strong>ETC_RGB4Crunched</strong></td><td>ETC1 4 位 RGB 压缩格式（进一步压缩）</td><td>3</td><td>0.5</td><td>适用于 Android 设备上的 RGB 贴图压缩，进一步压缩以减少文件大小。</td></tr><tr><td><strong>ETC2_RGBA8Crunched</strong></td><td>ETC2 8 位 RGBA 压缩格式（进一步压缩）</td><td>4</td><td>1</td><td>适用于 Android 设备上的 RGBA 贴图压缩，进一步压缩以减少文件大小。</td></tr></tbody></table><hr><h2 id=2-总结><strong>2. 总结</strong></h2><ul><li><strong><code>UnityEngine.TextureFormat</code></strong> 提供了多种纹理格式，适用于不同的场景和平台。</li><li><strong>通道数</strong> 和 <strong>每个像素的字节数</strong> 是选择纹理格式时的重要参数。</li><li><strong>压缩格式</strong>（如 DXT、PVRTC、ETC、ASTC）可以显著减少内存占用，但可能会损失一定的图像质量。</li><li><strong>浮点格式</strong>（如 RHalf、RGBAFloat）适用于高精度数据存储，如 HDR 贴图或物理模拟数据。</li></ul><p>根据具体需求（如平台、内存占用、图像质量等），选择合适的纹理格式。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2023-12-08T18:38:27+08:00>December 08, 2023</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/accessing_texture_data_efficiently/>高效地访问纹理数据</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p><a href=https://blog.unity.com/engine-platform/accessing-texture-data-efficiently>原文地址</a></p><h1 id=working-with-pixel-data-in-unity>Working with pixel data in Unity</h1><p>Pixel data describes the color of individual pixels in a texture. Unity provides methods that enable you to read from or write to pixel data with C# scripts.</p><blockquote><p>像素数据描述纹理中各个像素的颜色。Unity 提供了使用 C# 脚本读取或写入像素数据的方法。</p></blockquote><p>You might use these methods to duplicate or update a texture (for example, adding a detail to a player’s profile picture), or use the texture’s data in a particular way, like reading a texture that represents a world map to determine where to place an object.</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2023-11-22T20:20:49+08:00>November 22, 2023</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/2d_pixel_perfect_package/>Unity的2D Pixel Perfect包的工作原理</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>Unity的 <strong>2D Pixel Perfect</strong> 包（现为 <strong>Pixel Perfect Camera</strong> 组件）是专为像素风格游戏设计的工具，其核心目标是确保2D精灵（Sprites）在屏幕上以<strong>整数像素</strong>呈现，避免模糊或锯齿，保持复古像素艺术的清晰锐利。以下是它的<strong>工作原理</strong>和关键实现方式：</p><hr><h2 id=1-核心原理像素对齐pixel-snapping><strong>1. 核心原理：像素对齐（Pixel Snapping）</strong></h2><ul><li><strong>问题根源</strong>：<br>当游戏相机或精灵的坐标包含<strong>小数部分</strong>（如位置为 <code>(10.3, 5.7)</code>），Unity的渲染器会进行<strong>子像素插值</strong>，导致精灵边缘模糊（抗锯齿效果）。</li><li><strong>解决方案</strong>：<br>Pixel Perfect Camera 会动态调整相机位置和渲染分辨率，确保所有2D精灵的顶点坐标对齐到<strong>屏幕像素网格</strong>（即整数坐标），消除小数偏移。</li></ul><hr><h2 id=2-关键工作流程><strong>2. 关键工作流程</strong></h2><h3 id=1-设置目标分辨率><strong>(1) 设置目标分辨率</strong></h3><ul><li><p><strong>Assets Pixels Per Unit (PPU)</strong>：<br>在精灵导入设置中定义 <code>Pixels Per Unit</code>（如 <code>16</code> 表示1 Unity单位 = 16像素）。<br><strong>示例</strong>：若角色精灵为 <code>32x32</code> 像素，PPU=16，则精灵在Unity中的大小为 <code>2x2</code> 单位。</p></li><li><p><strong>Reference Resolution</strong>：<br>在 <code>Pixel Perfect Camera</code> 组件中设置目标分辨率（如 <code>256x144</code>），表示游戏设计的基准像素分辨率。</p></li></ul><h3 id=2-动态调整相机><strong>(2) 动态调整相机</strong></h3><ul><li><p><strong>整数倍缩放（Scale to Fit）</strong>：<br>相机会根据当前屏幕分辨率，选择<strong>整数倍缩放</strong>（1x, 2x, 3x&mldr;）以适配窗口，避免非整数拉伸。<br><strong>例如</strong>：</p><ul><li>目标分辨率 <code>256x144</code>，屏幕为 <code>768x432</code> → 缩放3倍（<code>256*3=768</code>）。</li><li>若屏幕为 <code>900x500</code>，可能缩放3倍并留黑边（Letterboxing）。</li></ul></li><li><p><strong>像素对齐（Pixel Snapping）</strong>：<br>每帧调整相机位置，使其<strong>渲染的像素网格</strong>与屏幕物理像素对齐。<br><strong>数学逻辑</strong>：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2023-11-12T18:21:49+08:00>November 12, 2023</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/u3d_http_details/>Http详解及如何在Unity上使用</a></h1><div class=entry__content><p>** 请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a>。**</p><h1 id=1-http协议简介>1 HTTP协议简介</h1><p>超文本传输协议（英文：HyperText Transfer Protocol，缩写：HTTP）是一种用于分布式、协作式和超媒体信息系统的应用层协议。</p><p><img src=https://img-blog.csdnimg.cn/img_convert/e9bfa2f280045f1997ea620d7c8ce997.png alt="enter description here"></p><p>HTTP是一个基于TCP/IP通信协议。来传递数据（HTML 文件, 图片文件, 查询结果等）。它指定了客户端可能发送给服务器什么样的消息，以及得到什么样的响应。请求和响应消息的<strong>头以ASCII形式给出</strong>；而<strong>消息内容则具有一个类似MIME</strong>的格式。</p><p>HTTP协议永远都是客户端发起请求，服务器回送响应。见下图：</p><p><img src=https://img-blog.csdnimg.cn/20210129135846292.png alt="enter description here"></p><hr><h1 id=2-http工作流程>2 HTTP工作流程</h1><p>一次HTTP操作称为一个<strong>事务</strong>，其工作过程可分为四步：</p><ol><li>客户机与服务器建立TCP连接。只要单击某个超级链接/输入网址/提交表单等。</li><li>建立连接后，客户机发送http请求给服务器.</li><li>服务器接到请求后，响应信息。</li><li>客户端接收服务器所返回的信息，然后客户机与服务器断开TCP连接。</li></ol><hr><h1 id=3-http发展及各版本>3 HTTP发展及各版本</h1><table><thead><tr><th>版本</th><th>产生时间</th><th>内容</th><th>发展现状</th></tr></thead><tbody><tr><td>HTTP/1.1</td><td>1997年</td><td>持久连接(长连接)、节约带宽、HOST域、管道机制、分块传输编码</td><td>2015年前使用最广泛</td></tr><tr><td>HTTP/2</td><td>2015年</td><td>多路复用、服务器推送、头信息压缩、二进制协议等</td><td>逐渐覆盖市场</td></tr></tbody></table><h2 id=31-http11-版本>3.1 HTTP1.1 版本</h2><p>HTTP 1.1 新增了<strong>delete options</strong> 等几种请求数据的方式，客户端和服务端三次握手后，建立tcp链接，一个tcp链接可以传送多个请求和响应，这样就减少了握手和建立tcp和关闭tcp链接的消耗，传输更快
+HTTP 1.1 支持<strong>持久链接</strong> 请求头有一个<code>connection</code> 参数，参数值是<code>close/keep-alive</code> 意思是本次请求处理完后，服务器是关闭该tcp链接还是继续使用该链接</p><h2 id=32-http-20-版本>3.2 HTTP 2.0 版本</h2><p>HTTP2.0使用了<strong>多路复用</strong>的技术，做到同一个链接并发处理多个请求，而且并发请求的数量比HTTP1.1大了好几个数量级。</p><p><img src="https://img-blog.csdnimg.cn/2021012914183772.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3phbmd4aWFvbHU=,size_16,color_FFFFFF,t_70" alt="enter description here"></p><h1 id=4-http主要特点>4 HTTP主要特点</h1><ul><li><strong>简单快速</strong>：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。</li><li><strong>灵活</strong>：HTTP允许传输任意类型的数据对象。正在传输的类型由<strong>Content-Type</strong>加以标记。</li><li><strong>无连接</strong>：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。<img src=https://img-blog.csdnimg.cn/20210129142033346.png alt="enter description here"><img src="https://img-blog.csdnimg.cn/20210129141958497.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3phbmd4aWFvbHU=,size_16,color_FFFFFF,t_70" alt="enter description here"></li><li><strong>无状态</strong>：无状态是指协议对于事务处理没有记忆能力。也就是说，打开一个服务器上的网页和上一次打开这个服务器上的网页之间没有任何联系。HTTP是一个无状态的面向连接的协议，无状态不代表HTTP不能保持TCP连接，更不能代表HTTP使用的是UDP协议（无连接）。<img src=https://img-blog.csdnimg.cn/2021012914212757.png alt="enter description here"></li><li>支持B/S及C/S模式</li></ul><hr><h1 id=5-http协议安全机制>5 HTTP协议安全机制</h1><p><strong>HTTPS (Secure Hypertext Transfer Protocol)</strong>：<strong>安全超文本传输协议</strong>。HTTPS是在HTTP上建立SSL加密层，并对传输数据进行加密，是HTTP协议的安全版。HTTPS提供的安全通信，应用了<strong>对称加密</strong>，<strong>非对称加密</strong>，<strong>数据签名</strong>等技术。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2023-01-08T18:38:27+08:00>January 08, 2023</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/misc/http_detail_table/>Http的报头、消息返回码等细节一览表</a></h1><div class=entry__content><p>** 请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a>。**</p><h1 id=1-http头部>1 HTTP头部</h1><h2 id=11-requests-header>1.1 Requests Header</h2><table><thead><tr><th>Header</th><th>解释</th><th>示例</th></tr></thead><tbody><tr><td>Accept</td><td>指定客户端能够接收的内容类型</td><td>Accept: text/plain, text/html</td></tr><tr><td>Accept-Charset</td><td>浏览器可以接受的字符编码集。</td><td>Accept-Charset: iso-8859-5</td></tr><tr><td>Accept-Encoding</td><td>指定浏览器可以支持的web服务器返回内容压缩编码类型。</td><td>Accept-Encoding: compress, gzip</td></tr><tr><td>Accept-Language</td><td>浏览器可接受的语言</td><td>Accept-Language: en,zh</td></tr><tr><td>Accept-Ranges</td><td>可以请求网页实体的一个或者多个子范围字段</td><td>Accept-Ranges: bytes</td></tr><tr><td>Authorization</td><td>HTTP授权的授权证书</td><td>Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</td></tr><tr><td>Cache-Control</td><td>指定请求和响应遵循的缓存机制</td><td>Cache-Control: no-cache</td></tr><tr><td>Connection</td><td>表示是否需要持久连接。（HTTP 1.1默认进行持久连接）</td><td>Connection: close</td></tr><tr><td>Cookie</td><td>HTTP请求发送时，会把保存在该请求域名下的所有cookie值一起发送给web服务器。</td><td>Cookie: $Version=1; Skin=new;</td></tr><tr><td>Content-Length</td><td>请求的内容长度</td><td>Content-Length: 348</td></tr><tr><td>Content-Type</td><td>请求的与实体对应的MIME信息</td><td>Content-Type: application/x-www-form-urlencoded</td></tr><tr><td>Date</td><td>请求发送的日期和时间</td><td>Date: Tue, 15 Nov 2010 08:12:31 GMT</td></tr><tr><td>Expect</td><td>请求的特定的服务器行为</td><td>Expect: 100-continue</td></tr><tr><td>From</td><td>发出请求的用户的Email</td><td>From: <a href=mailto:user@email.com>user@email.com</a></td></tr><tr><td>Host</td><td>指定请求的服务器的域名和端口号</td><td>Host: <a href=https://www.zcmhi.com>www.zcmhi.com</a></td></tr><tr><td>If-Match</td><td>只有请求内容与实体相匹配才有效</td><td>If-Match: “737060cd8c284d8af7ad3082f209582d”</td></tr><tr><td>If-Modified-Since</td><td>如果请求的部分在指定时间之后被修改则请求成功，未被修改则返回304代码</td><td>If-Modified-Since: Sat, 29 Oct 2010 19:43:31 GMT</td></tr><tr><td>If-None-Match</td><td>如果内容未改变返回304代码，参数为服务器先前发送的Etag，与服务器回应的Etag比较判断是否改变</td><td>If-None-Match: “737060cd8c284d8af7ad3082f209582d”</td></tr><tr><td>If-Range</td><td>如果实体未改变，服务器发送客户端丢失的部分，否则发送整个实体。参数也为Etag</td><td>If-Range: “737060cd8c284d8af7ad3082f209582d”</td></tr><tr><td>If-Unmodified-Since</td><td>只在实体在指定时间之后未被修改才请求成功</td><td>If-Unmodified-Since: Sat, 29 Oct 2010 19:43:31 GMT</td></tr><tr><td>Max-Forwards</td><td>限制信息通过代理和网关传送的时间</td><td>Max-Forwards: 10</td></tr><tr><td>Pragma</td><td>用来包含实现特定的指令</td><td>Pragma: no-cache</td></tr><tr><td>Proxy-Authorization</td><td>连接到代理的授权证书</td><td>Proxy-Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</td></tr><tr><td>Range</td><td>只请求实体的一部分，指定范围</td><td>Range: bytes=500-999</td></tr><tr><td>Referer</td><td>先前网页的地址，当前请求网页紧随其后,即来路</td><td>Referer: <a href=http://www.zcmhi.com/archives/71.html>http://www.zcmhi.com/archives/71.html</a></td></tr><tr><td>TE</td><td>客户端愿意接受的传输编码，并通知服务器接受接受尾加头信息</td><td>TE: trailers,deflate;q=0.5</td></tr><tr><td>Upgrade</td><td>向服务器指定某种传输协议以便服务器进行转换（如果支持）</td><td>Upgrade: HTTP/2.0, SHTTP/1.3, IRC/6.9, RTA/x11</td></tr><tr><td>User-Agent</td><td>User-Agent的内容包含发出请求的用户信息</td><td>User-Agent: Mozilla/5.0 (Linux; X11)</td></tr><tr><td>Via</td><td>通知中间网关或代理服务器地址，通信协议</td><td>Via: 1.0 fred, 1.1 nowhere.com (Apache/1.1)</td></tr><tr><td>Warning</td><td>关于消息实体的警告信息</td><td>Warn: 199 Miscellaneous warning</td></tr></tbody></table><h2 id=12--responses-header>1.2 Responses Header</h2><table><thead><tr><th>Header</th><th>解释</th><th>示例</th></tr></thead><tbody><tr><td>Accept-Ranges</td><td>表明服务器是否支持指定范围请求及哪种类型的分段请求</td><td>Accept-Ranges: bytes</td></tr><tr><td>Age</td><td>从原始服务器到代理缓存形成的估算时间（以秒计，非负）</td><td>Age: 12</td></tr><tr><td>Allow</td><td>对某网络资源的有效的请求行为，不允许则返回405</td><td>Allow: GET, HEAD</td></tr><tr><td>Cache-Control</td><td>告诉所有的缓存机制是否可以缓存及哪种类型</td><td>Cache-Control: no-cache</td></tr><tr><td>Content-Encoding</td><td>web服务器支持的返回内容压缩编码类型。</td><td>Content-Encoding: gzip</td></tr><tr><td>Content-Language</td><td>响应体的语言</td><td>Content-Language: en,zh</td></tr><tr><td>Content-Length</td><td>响应体的长度</td><td>Content-Length: 348</td></tr><tr><td>Content-Location</td><td>请求资源可替代的备用的另一地址</td><td>Content-Location: /index.htm</td></tr><tr><td>Content-MD5</td><td>返回资源的MD5校验值</td><td>Content-MD5: Q2hlY2sgSW50ZWdyaXR5IQ==</td></tr><tr><td>Content-Range</td><td>在整个返回体中本部分的字节位置</td><td>Content-Range: bytes 21010-47021/47022</td></tr><tr><td>Content-Type</td><td>返回内容的MIME类型</td><td>Content-Type: text/html; charset=utf-8</td></tr><tr><td>Date</td><td>原始服务器消息发出的时间</td><td>Date: Tue, 15 Nov 2010 08:12:31 GMT</td></tr><tr><td>ETag</td><td>请求变量的实体标签的当前值</td><td>ETag: “737060cd8c284d8af7ad3082f209582d”</td></tr><tr><td>Expires</td><td>响应过期的日期和时间</td><td>Expires: Thu, 01 Dec 2010 16:00:00 GMT</td></tr><tr><td>Last-Modified</td><td>请求资源的最后修改时间</td><td>Last-Modified: Tue, 15 Nov 2010 12:45:26 GMT</td></tr><tr><td>Location</td><td>用来重定向接收方到非请求URL的位置来完成请求或标识新的资源</td><td>Location: <a href=http://www.zcmhi.com/archives/94.html>http://www.zcmhi.com/archives/94.html</a></td></tr><tr><td>Pragma</td><td>包括实现特定的指令，它可应用到响应链上的任何接收方</td><td>Pragma: no-cache</td></tr><tr><td>Proxy-Authenticate</td><td>它指出认证方案和可应用到代理的该URL上的参数</td><td>Proxy-Authenticate: Basic</td></tr><tr><td>refresh</td><td>应用于重定向或一个新的资源被创造，在5秒之后重定向（由网景提出，被大部分浏览器支持）</td><td>Refresh: 5; url=http://www.atool.org/httptest.php</td></tr><tr><td>Retry-After</td><td>如果实体暂时不可取，通知客户端在指定时间之后再次尝试</td><td>Retry-After: 120</td></tr><tr><td>Server</td><td>web服务器软件名称</td><td>Server: Apache/1.3.27 (Unix) (Red-Hat/Linux)</td></tr><tr><td>Set-Cookie</td><td>设置Http Cookie</td><td>Set-Cookie: UserID=JohnDoe; Max-Age=3600; Version=1</td></tr><tr><td>Trailer</td><td>指出头域在分块传输编码的尾部存在</td><td>Trailer: Max-Forwards</td></tr><tr><td>Transfer-Encoding</td><td>文件传输编码</td><td>Transfer-Encoding:chunked</td></tr><tr><td>Vary</td><td>告诉下游代理是使用缓存响应还是从原始服务器请求</td><td>Vary: *</td></tr><tr><td>Via</td><td>告知代理客户端响应是通过哪里发送的</td><td>Via: 1.0 fred, 1.1 nowhere.com (Apache/1.1)</td></tr><tr><td>Warning</td><td>警告实体可能存在的问题</td><td>Warning: 199 Miscellaneous warning</td></tr><tr><td>WWW-Authenticate</td><td>表明客户端请求实体应该使用的授权方案</td><td>WWW-Authenticate: Basic</td></tr><tr><td>X-Powered-By</td><td>由语言解析器或者应用程序框架输出的，这个值的意义用于告知网站是用何种语言或框架编写的</td><td>X-Powered-By: ASP.NET</td></tr></tbody></table><hr><h1 id=2-http状态码>2 HTTP状态码</h1><p>当浏览者访问一个网页时，浏览者的浏览器会向网页所在服务器发出请求。当浏览器接收并显示网页前，此网页所在的服务器会返回一个包含HTTP状态码的信息头（server header）用以响应浏览器的请求。HTTP状态码的英文为HTTP Status Code。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2023-01-07T18:38:27+08:00>January 07, 2023</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/misc/ rel=category>MISC</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/misc/ rel=tag>MISC</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/cg/octahedron_mapping/>八面体（Octahedron）及其坐标映射</a></h1><div class=entry__content><h2 id=八面体octahedron及其坐标映射><strong>八面体（Octahedron）及其坐标映射</strong></h2><p>八面体是一种 <strong>正八面体几何结构</strong>，它可以用于 <strong>映射方向向量（3D）到2D</strong>，以便进行 <strong>高效的纹理存储和查询</strong>。在 <strong>Impostor 渲染</strong> 中，<strong>八面体映射</strong>（Octahedral Mapping）是一种将 <strong>球面方向向量</strong> 投影到 <strong>二维平面</strong> 的方法，广泛用于 <strong>环境贴图、光照计算、Impostor 纹理存储</strong> 等。</p><hr><h2 id=1-为什么使用八面体坐标><strong>1. 为什么使用八面体坐标？</strong></h2><p>通常，我们用一个 <strong>单位向量</strong>（( x, y, z )）表示方向。但如果要将方向存储在 <strong>2D 纹理</strong>（如 Impostor 贴图）中，我们需要找到一种 <strong>从 3D 到 2D 的映射方法</strong>。</p><p><strong>常见的映射方法：</strong></p><ul><li><strong>球面坐标（Spherical Coordinates）</strong>：容易产生<strong>极点扭曲</strong>（pole distortion）。</li><li><strong>立方体映射（Cubemap）</strong>：存储效率不高，容易出现<strong>采样接缝</strong>（seams）。</li><li><strong>八面体映射（Octahedral Mapping）</strong>：<ul><li>相比 <strong>球面坐标</strong>，它没有极点扭曲问题。</li><li>相比 <strong>立方体映射</strong>，它存储利用率高达 <strong>100%</strong>，没有浪费区域。</li><li>计算简单，适用于 <strong>GPU 计算</strong>。</li></ul></li></ul><p>因此，八面体映射是一种高效的 <strong>3D → 2D 映射</strong> 方法。</p><hr><h2 id=2-八面体坐标转换><strong>2. 八面体坐标转换</strong></h2><p>八面体映射的核心思想是 <strong>将单位球的上、下两个半球折叠到一个正方形上</strong>。</p><h3 id=1-3d-方向向量到八面体坐标vectortooctahedron><strong>(1) 3D 方向向量到八面体坐标（VectortoOctahedron）</strong></h3><p>假设有一个 <strong>单位方向向量</strong>：
+[
+V = (x, y, z)
+]
+<strong>步骤：</strong></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2022-12-25T20:36:51+08:00>December 25, 2022</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/cg/ rel=category>CG</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/cg/ rel=tag>CG</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/interior_mapping_document/>伪内部空间映射的相关文档</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h4 id=csdn上的参考网页>CSDN上的参考网页</h4><p><a href=https://blog.csdn.net/weixin_42825810/article/details/123229929>Unity Shader Interior mapping 内部映射</a></p><p>CSDN上的<a href=https://blog.csdn.net/weixin_43803133/article/details/117296825>案例学习——Interior Mapping 室内映射（假室内效果）</a></p><p>CSDN上的<a href="https://blog.csdn.net/C4ieh/article/details/125382057?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-125382057-blog-117296825.pc_relevant_3mothn_strategy_recovery&amp;spm=1001.2101.3001.4242.2&amp;utm_relevant_index=4">UE5黑客帝国3d print假室内的一些使用记录</a></p><p><a href="https://blog.csdn.net/weixin_33788424/article/details/112494892?spm=1001.2101.3001.6650.7&amp;utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-7-112494892-blog-123229929.pc_relevant_landingrelevant&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EESLANDING%7Edefault-7-112494892-blog-123229929.pc_relevant_landingrelevant&amp;utm_relevant_index=12">unity 跟随目标_使用Cubemap在Unity中制作虚拟室内效果</a></p><h4 id=知乎上的参考网页>知乎上的参考网页</h4><p><a href=https://zhuanlan.zhihu.com/p/376762518>案例学习——Interior Mapping 室内映射（假室内效果）</a></p><p><a href=https://zhuanlan.zhihu.com/p/159439811>一种假室内(Fake Interior)效果的实现</a>，这种是带上了室内深度效果的，即每个室内的深度纵深是不一样的。</p><h4 id=其他>其他</h4><p>Joost van Dongen的论文《<a href=/files/papers/interior-mapping-a-new-techique-for-rendering-realistic-buildings.pdf>Interior Mapping A new techique for rendering realistic buildings</a>》</p><p>下面的这份代码是《<a href=https://zhuanlan.zhihu.com/p/159439811>一种假室内(Fake Interior)效果的实现</a>》中提到的代码实现</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cpp data-lang=cpp><span style=display:flex><span>Shader <span style=color:#0a3069>&#34;Custom/FakeRoom&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Properties
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>[</span>NoScaleOffset<span style=color:#1f2328>]</span>_WindowTex <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Window Texture&#34;</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>2</span>D<span style=color:#1f2328>)</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;black&#34;</span> <span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span>        _RoomTex <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Room Texture&#34;</span><span style=color:#1f2328>,</span> CUBE<span style=color:#1f2328>)</span> <span style=color:#0550ae>=</span> <span style=color:#0a3069>&#34;&#34;</span><span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span>        _RoomDepth <span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Room Depth&#34;</span><span style=color:#1f2328>,</span> Range<span style=color:#1f2328>(</span><span style=color:#0550ae>0.01</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>))</span> <span style=color:#0550ae>=</span> <span style=color:#0550ae>1.0</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    SubShader
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Tags <span style=color:#1f2328>{</span> <span style=color:#0a3069>&#34;RenderType&#34;</span><span style=color:#0550ae>=</span><span style=color:#0a3069>&#34;Opaque&#34;</span> <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        Cull Back
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        Pass
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            CGPROGRAM
+</span></span><span style=display:flex><span>            <span style=color:#57606a>#pragma vertex vert
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>#pragma fragment frag
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>#include</span> <span style=color:#57606a>&#34;UnityCG.cginc&#34;</span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>#define FLT_EPS  5.960464478e-8  </span><span style=color:#57606a>// 2^-24, machine epsilon: 1 + EPS = 1 (half of the ULP for 1.0f)
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>#define Max3(a, b, c) max(max(a, b), c)
+</span></span></span><span style=display:flex><span>            <span style=color:#57606a>#define Min3(a, b, c) min(min(a, b), c)
+</span></span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>struct</span> <span style=color:#1f2328>appdata</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                float4 <span style=color:#900;font-weight:700>positionOS</span> <span style=color:#1f2328>:</span> POSITION<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float2 <span style=color:#900;font-weight:700>uv</span> <span style=color:#1f2328>:</span> TEXCOORD0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float3 <span style=color:#900;font-weight:700>normal</span> <span style=color:#1f2328>:</span> NORMAL<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>struct</span> <span style=color:#1f2328>v2f</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                float2 <span style=color:#900;font-weight:700>uv</span> <span style=color:#1f2328>:</span> TEXCOORD0<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float4 <span style=color:#900;font-weight:700>positionCS</span> <span style=color:#1f2328>:</span> SV_POSITION<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float3 <span style=color:#900;font-weight:700>positionOS</span> <span style=color:#1f2328>:</span> TEXCOORD1<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float3 <span style=color:#900;font-weight:700>viewDirOS</span> <span style=color:#1f2328>:</span> TEXCOORD2<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                float3 <span style=color:#900;font-weight:700>normalOS</span> <span style=color:#1f2328>:</span> TEXCOORD3<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>};</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            sampler2D _WindowTex<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            samplerCUBE _RoomTex<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            float4 _RoomTex_ST<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            fixed _RoomDepth<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>bool</span> <span style=color:#6639ba>IntersectRayAABB</span><span style=color:#1f2328>(</span>float3 rayOrigin<span style=color:#1f2328>,</span> float3 rayDirection<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                  float3 boxMin<span style=color:#1f2328>,</span>    float3 boxMax<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                                  <span style=color:#cf222e>float</span>  tMin<span style=color:#1f2328>,</span>       <span style=color:#cf222e>float</span> tMax<span style=color:#1f2328>,</span>
+</span></span><span style=display:flex><span>                              out <span style=color:#cf222e>float</span>  tEntr<span style=color:#1f2328>,</span>  out <span style=color:#cf222e>float</span> tExit<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Could be precomputed. Clamp to avoid INF. clamp() is a single ALU on GCN.
+</span></span></span><span style=display:flex><span>                <span style=color:#57606a>// rcp(FLT_EPS) = 16,777,216, which is large enough for our purposes,
+</span></span></span><span style=display:flex><span>                <span style=color:#57606a>// yet doesn&#39;t cause a lot of numerical issues associated with FLT_MAX.
+</span></span></span><span style=display:flex><span>                float3 rayDirInv <span style=color:#0550ae>=</span> clamp<span style=color:#1f2328>(</span>rcp<span style=color:#1f2328>(</span>rayDirection<span style=color:#1f2328>),</span> <span style=color:#0550ae>-</span>rcp<span style=color:#1f2328>(</span>FLT_EPS<span style=color:#1f2328>),</span> rcp<span style=color:#1f2328>(</span>FLT_EPS<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Perform ray-slab intersection (component-wise).
+</span></span></span><span style=display:flex><span>                float3 t0 <span style=color:#0550ae>=</span> boxMin <span style=color:#0550ae>*</span> rayDirInv <span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span>rayOrigin <span style=color:#0550ae>*</span> rayDirInv<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                float3 t1 <span style=color:#0550ae>=</span> boxMax <span style=color:#0550ae>*</span> rayDirInv <span style=color:#0550ae>-</span> <span style=color:#1f2328>(</span>rayOrigin <span style=color:#0550ae>*</span> rayDirInv<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Find the closest/farthest distance (component-wise).
+</span></span></span><span style=display:flex><span>                float3 tSlabEntr <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>t0<span style=color:#1f2328>,</span> t1<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                float3 tSlabExit <span style=color:#0550ae>=</span> max<span style=color:#1f2328>(</span>t0<span style=color:#1f2328>,</span> t1<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Find the farthest entry and the nearest exit.
+</span></span></span><span style=display:flex><span>                tEntr <span style=color:#0550ae>=</span> Max3<span style=color:#1f2328>(</span>tSlabEntr<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> tSlabEntr<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> tSlabEntr<span style=color:#1f2328>.</span>z<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                tExit <span style=color:#0550ae>=</span> Min3<span style=color:#1f2328>(</span>tSlabExit<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> tSlabExit<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> tSlabExit<span style=color:#1f2328>.</span>z<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                <span style=color:#57606a>// Clamp to the range.
+</span></span></span><span style=display:flex><span>                tEntr <span style=color:#0550ae>=</span> max<span style=color:#1f2328>(</span>tEntr<span style=color:#1f2328>,</span> tMin<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                tExit <span style=color:#0550ae>=</span> min<span style=color:#1f2328>(</span>tExit<span style=color:#1f2328>,</span> tMax<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> tEntr <span style=color:#0550ae>&lt;</span> tExit<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>            v2f <span style=color:#6639ba>vert</span> <span style=color:#1f2328>(</span>appdata v<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                v2f o<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                o<span style=color:#1f2328>.</span>positionCS <span style=color:#0550ae>=</span> UnityObjectToClipPos<span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>positionOS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                o<span style=color:#1f2328>.</span>uv <span style=color:#0550ae>=</span> v<span style=color:#1f2328>.</span>uv<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                o<span style=color:#1f2328>.</span>positionOS <span style=color:#0550ae>=</span> v<span style=color:#1f2328>.</span>positionOS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                o<span style=color:#1f2328>.</span>viewDirOS <span style=color:#0550ae>=</span> ObjSpaceViewDir<span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>positionOS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                o<span style=color:#1f2328>.</span>normalOS <span style=color:#0550ae>=</span> v<span style=color:#1f2328>.</span>normal<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> o<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            fixed4 <span style=color:#6639ba>frag</span> <span style=color:#1f2328>(</span>v2f i<span style=color:#1f2328>)</span> <span style=color:#0550ae>:</span> SV_Target
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            
+</span></span><span style=display:flex><span>                fixed4 windowColor <span style=color:#0550ae>=</span> tex2D<span style=color:#1f2328>(</span>_WindowTex<span style=color:#1f2328>,</span> i<span style=color:#1f2328>.</span>uv<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                float3 viewDirOS <span style=color:#0550ae>=</span> normalize<span style=color:#1f2328>(</span>i<span style=color:#1f2328>.</span>viewDirOS<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                float3 normalOS <span style=color:#0550ae>=</span> i<span style=color:#1f2328>.</span>normalOS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>float</span> radius <span style=color:#0550ae>=</span> <span style=color:#0550ae>0.5</span><span style=color:#1f2328>,</span> posEntr<span style=color:#1f2328>,</span> posExit<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>float</span> bias <span style=color:#0550ae>=</span> <span style=color:#0550ae>2</span> <span style=color:#0550ae>*</span> radius <span style=color:#0550ae>*</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1</span> <span style=color:#0550ae>-</span> _RoomDepth<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>                float3 boxMin <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>float3<span style=color:#1f2328>)(</span><span style=color:#0550ae>-</span>radius<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> lerp<span style=color:#1f2328>((</span>float3<span style=color:#1f2328>)</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> bias <span style=color:#0550ae>*</span> normalOS<span style=color:#1f2328>,</span> Max3<span style=color:#1f2328>(</span>normalOS<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> normalOS<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> normalOS<span style=color:#1f2328>.</span>z<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>                float3 boxMax <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span>float3<span style=color:#1f2328>)(</span>radius<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> lerp<span style=color:#1f2328>(</span>bias <span style=color:#0550ae>*</span> normalOS<span style=color:#1f2328>,</span> <span style=color:#1f2328>(</span>float3<span style=color:#1f2328>)</span><span style=color:#0550ae>0</span><span style=color:#1f2328>,</span> Max3<span style=color:#1f2328>(</span>normalOS<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> normalOS<span style=color:#1f2328>.</span>y<span style=color:#1f2328>,</span> normalOS<span style=color:#1f2328>.</span>z<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>                
+</span></span><span style=display:flex><span>                IntersectRayAABB<span style=color:#1f2328>(</span>i<span style=color:#1f2328>.</span>positionOS<span style=color:#1f2328>,</span> <span style=color:#0550ae>-</span>viewDirOS<span style=color:#1f2328>,</span> boxMin<span style=color:#1f2328>,</span> boxMax<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>2</span><span style=color:#1f2328>,</span> posEntr<span style=color:#1f2328>,</span> posExit<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>                float3 sampleDir <span style=color:#0550ae>=</span> i<span style=color:#1f2328>.</span>positionOS <span style=color:#0550ae>-</span> posExit <span style=color:#0550ae>*</span> viewDirOS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                sampleDir <span style=color:#0550ae>-=</span> bias <span style=color:#0550ae>*</span> normalOS<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                fixed4 col <span style=color:#0550ae>=</span> texCUBElod<span style=color:#1f2328>(</span>_RoomTex<span style=color:#1f2328>,</span> float4<span style=color:#1f2328>(</span>sampleDir<span style=color:#1f2328>,</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>                col<span style=color:#1f2328>.</span>rgb <span style=color:#0550ae>+=</span> windowColor<span style=color:#1f2328>.</span>rgb <span style=color:#0550ae>*</span> windowColor<span style=color:#1f2328>.</span>a<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>return</span> col<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            ENDCG
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>下面这段代码则是《<a href=https://blog.csdn.net/weixin_43803133/article/details/117296825>案例学习——Interior Mapping 室内映射（假室内效果）</a>》中的“预投影2D贴图方法的实现”</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2022-12-08T18:38:27+08:00>December 08, 2022</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/volumetric_clouds_write_up/>Volumetric Clouds Write-up(翻译)</a></h1><div class=entry__content><p><a href=https://www.patreon.com/posts/volumetric-write-21646034>原文地址</a></p><p>The basis of this effect is drawing a vertical stack of quads, each one showing a slice of the cloud. The cloud texture itself is just a world-mapped, top-down animated noise that is piped into opacity.</p><blockquote><p>这种效果的基础是绘制<strong>一组垂直堆叠的四边形</strong>（简称为：四边形堆栈，vertical stack of quads），每个四边形都显示一片云。 云纹理本身只是一个<strong>世界映射的</strong>(world-mapped)、<strong>自上而下的</strong>(top-down)的动画噪声，它通过渲染，管道传输到不透明度中。</p></blockquote><p><img src=/image/u3d/volumetric_cloud_write_up/1.gif alt></p><p>To animate the noise, I use the same trick that I use in countless other shaders to create a natural looking motion that appears free of obvious repetition, which is to blend the noise with either a copy of itself with a different UV scale, or a different noise texture, and pan these two noise textures against each other in opposite directions, and then blend them together through multiplication or some other desired blend mode.</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2022-11-11T20:20:49+08:00>November 11, 2022</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/unity_texture_compression_detail/>Unity纹理压缩格式详解</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=www.xionggf.com>www.xionggf.com</a></strong></p><h2 id=crunch-compression紧凑压缩>Crunch compression(紧凑压缩)</h2><p>Crunch compression是一种<strong>建筑在DXT或ETC压缩之上</strong>的压缩格式，提供额外的可变比特率压缩。<strong>当Unity加载紧凑压缩的纹理时，它会在CPU上将纹理解压缩为DXT或 ETC，然后将DXT或ETC压缩的纹理数据上传到GPU</strong>。</p><p>紧凑压缩有助于<strong>纹理使用尽可能少的磁盘空间</strong>，但对运行时内存使用没有影响。紧凑压缩 纹理可能需要很长时间来压缩，但运行时的解压缩速度相当快。您可以调整紧凑压缩的有损程度，以在文件大小和质量之间取得平衡。</p><h2 id=unity的各种纹理压缩格式信息>Unity的各种纹理压缩格式信息</h2><p><img src=/image/u3d/unity_texture_compression.png alt=Unity的各种纹理压缩格式信息></p><h2 id=参考网页>参考网页</h2><ul><li><a href=https://zhuanlan.zhihu.com/p/340754532>聊聊 Unity 的 Alpha Is Transparency 有什么用</a></li><li><a href=https://answers.unity.com/questions/819633/what-does-the-alpha-is-transparency-setting-actual.html>What does the &ldquo;alpha is transparency&rdquo; setting actually do?</a></li><li><a href=https://blog.csdn.net/wodownload2/article/details/105117777>光照贴图的中的编码格式</a></li></ul></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2022-06-08T18:38:27+08:00>June 08, 2022</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/from_outline_to_urp_multipass/>从半透明模型的描边到URP Multipass Rendering</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>卡通渲染技术中，描边的实现的有多种做法，有<strong>基于后处理实现</strong>，也有<strong>基于非后处理，通过多次绘制模型的方法</strong>实现。</p><p>通过多次绘制模型的实现，方法无非就是：</p><ol><li>绘制模型本体，同时<strong>写入深度值</strong>。</li><li>让模型顶点<strong>沿着法线外扩</strong>一定的偏移量，即让模型膨胀一些</li><li>全用描边的颜色绘制膨胀过的模型，且，在绘制时，使用<strong>cull front</strong>，即<strong>只绘制模型的背向摄像机面</strong>。在第1步中因为绘制模型本体时已经写入深度值。在本步骤中只要不改变深度测试函数的方式，那么除了膨胀部分之外，是无法写入像素的，能写入的部分，便形成了边缘。</li></ol><p>上述的方式，一般应用于不透明的材质上。如果是半透明的材质的话就有问题，因为在第1步绘制半透明材质时，一般是不写入深度值的。那么第3步在绘制膨胀模型时，模型背部的地方就会被绘制上去。</p><p>解决这个问题有很多，可以利用stencil test的方式。也可以在第一步绘制，不绘制任何颜色，只写入深度，然后再绘制模型，最后再绘制描边。后一种方法，如果用Unity内置管线，大约就是这个样子：</p><pre tabindex=0><code>Shader &#34;Unlit/半透明&#34;
+{
+    Properties
+    {
+        _Diffuse(&#34;Diffuse&#34;,Color) = (1,1,1,1)  //  漫反射
+        _MainTex(&#34;MainTex&#34;,2D) = &#34;white&#34;{}  //  2D纹理贴图
+        _AlphaScale(&#34;Alpha Scale&#34;,Range(0,1)) = 1  //  控制Alpha参数
+    }
+    
+    SubShader
+    {
+        Tags { &#34;Queue&#34; = &#34;Transparent&#34; &#34;IgnoreProjector&#34; = &#34;True&#34; &#34;RenderType&#34; = &#34;Transparent&#34; }   //渲染顺序设置Transparent
+        
+        LOD 100
+        // 用两个pass通道来处理，防止出现渲染错误，第一个pass通道
+        // 每个pass通道都会渲染一次
+        Pass  
+        {
+            ZWrite On   //  注意这里：写入深度 为了确认渲染顺序
+            ColorMask 0  //  掩码遮罩代表这个pass通道不写入任何颜色值
+        }
 
+        Pass  //  第二个pass通道
+        {
+            Tags{&#34;LightMode&#34; = &#34;ForwardBase&#34;}
 
-		<meta itemprop="name" content="Posts">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/post/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-section">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Posts</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">Posts</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_unity_engine_texture_format_detail/">Unity3D中枚举类型UnityEngine.TextureFormat详解</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-在Unity中，UnityEngine.TextureFormat 枚举类型定义了多种纹理格式，每种格式都有不同的通道数、每个像素的字节数以及适用场景。以下是 UnityEngine.TextureFormat 中每个值的具体含义、通道数、每个像素的字节数等详细信息：
-1. 常用纹理格式 枚举值 含义 通道数 每个像素字节数 描述 Alpha8 单通道 Alpha 1 1 仅存储 Alpha 通道，适用于遮罩或透明度贴图。 ARGB4444 4 通道 ARGB，每通道 4 位 4 2 每个通道 4 位，适用于低精度颜色贴图。 RGB24 3 通道 RGB，每通道 8 位 3 3 存储 RGB 颜色，无 Alpha 通道，适用于普通颜色贴图。 RGBA32 4 通道 RGBA，每通道 8 位 4 4 存储 RGBA 颜色，适用于带透明度的颜色贴图。 RGB565 3 通道 RGB，R 和 B 各 5 位，G 6 位 3 2 压缩格式，适用于低精度颜色贴图。 R16 单通道 16 位 1 2 存储单通道 16 位数据，适用于高度图或深度图。 DXT1 DXT1 压缩格式 3 0.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2023-12-08T18:38:27&#43;08:00">December 08, 2023</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/accessing_texture_data_efficiently/">高效地访问纹理数据</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-原文地址
-Working with pixel data in Unity Pixel data describes the color of individual pixels in a texture. Unity provides methods that enable you to read from or write to pixel data with C# scripts.
-像素数据描述纹理中各个像素的颜色。Unity 提供了使用 C# 脚本读取或写入像素数据的方法。
-You might use these methods to duplicate or update a texture (for example, adding a detail to a player’s profile picture), or use the texture’s data in a particular way, like reading a texture that represents a world map to determine where to place an object.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2023-11-22T20:20:49&#43;08:00">November 22, 2023</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/2d_pixel_perfect_package/">Unity的2D Pixel Perfect包的工作原理</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-Unity的 2D Pixel Perfect 包（现为 Pixel Perfect Camera 组件）是专为像素风格游戏设计的工具，其核心目标是确保2D精灵（Sprites）在屏幕上以整数像素呈现，避免模糊或锯齿，保持复古像素艺术的清晰锐利。以下是它的工作原理和关键实现方式：
-1. 核心原理：像素对齐（Pixel Snapping） 问题根源：
-当游戏相机或精灵的坐标包含小数部分（如位置为 (10.3, 5.7)），Unity的渲染器会进行子像素插值，导致精灵边缘模糊（抗锯齿效果）。 解决方案：
-Pixel Perfect Camera 会动态调整相机位置和渲染分辨率，确保所有2D精灵的顶点坐标对齐到屏幕像素网格（即整数坐标），消除小数偏移。 2. 关键工作流程 (1) 设置目标分辨率 Assets Pixels Per Unit (PPU)：
-在精灵导入设置中定义 Pixels Per Unit（如 16 表示1 Unity单位 = 16像素）。
-示例：若角色精灵为 32x32 像素，PPU=16，则精灵在Unity中的大小为 2x2 单位。
-Reference Resolution：
-在 Pixel Perfect Camera 组件中设置目标分辨率（如 256x144），表示游戏设计的基准像素分辨率。
-(2) 动态调整相机 整数倍缩放（Scale to Fit）：
-相机会根据当前屏幕分辨率，选择整数倍缩放（1x, 2x, 3x&hellip;）以适配窗口，避免非整数拉伸。
-例如：
-目标分辨率 256x144，屏幕为 768x432 → 缩放3倍（256*3=768）。 若屏幕为 900x500，可能缩放3倍并留黑边（Letterboxing）。 像素对齐（Pixel Snapping）：</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2023-11-12T18:21:49&#43;08:00">November 12, 2023</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/u3d_http_details/">Http详解及如何在Unity上使用</a></h1>
-	<div class="entry__content">** 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com。**
-1 HTTP协议简介 超文本传输协议（英文：HyperText Transfer Protocol，缩写：HTTP）是一种用于分布式、协作式和超媒体信息系统的应用层协议。
-HTTP是一个基于TCP/IP通信协议。来传递数据（HTML 文件, 图片文件, 查询结果等）。它指定了客户端可能发送给服务器什么样的消息，以及得到什么样的响应。请求和响应消息的头以ASCII形式给出；而消息内容则具有一个类似MIME的格式。
-HTTP协议永远都是客户端发起请求，服务器回送响应。见下图：
-2 HTTP工作流程 一次HTTP操作称为一个事务，其工作过程可分为四步：
-客户机与服务器建立TCP连接。只要单击某个超级链接/输入网址/提交表单等。 建立连接后，客户机发送http请求给服务器. 服务器接到请求后，响应信息。 客户端接收服务器所返回的信息，然后客户机与服务器断开TCP连接。 3 HTTP发展及各版本 版本 产生时间 内容 发展现状 HTTP/1.1 1997年 持久连接(长连接)、节约带宽、HOST域、管道机制、分块传输编码 2015年前使用最广泛 HTTP/2 2015年 多路复用、服务器推送、头信息压缩、二进制协议等 逐渐覆盖市场 3.1 HTTP1.1 版本 HTTP 1.1 新增了delete options 等几种请求数据的方式，客户端和服务端三次握手后，建立tcp链接，一个tcp链接可以传送多个请求和响应，这样就减少了握手和建立tcp和关闭tcp链接的消耗，传输更快 HTTP 1.1 支持持久链接 请求头有一个connection 参数，参数值是close/keep-alive 意思是本次请求处理完后，服务器是关闭该tcp链接还是继续使用该链接
-3.2 HTTP 2.0 版本 HTTP2.0使用了多路复用的技术，做到同一个链接并发处理多个请求，而且并发请求的数量比HTTP1.1大了好几个数量级。
-4 HTTP主要特点 简单快速：客户向服务器请求服务时，只需传送请求方法和路径。请求方法常用的有GET、HEAD、POST。每种方法规定了客户与服务器联系的类型不同。由于HTTP协议简单，使得HTTP服务器的程序规模小，因而通信速度很快。 灵活：HTTP允许传输任意类型的数据对象。正在传输的类型由Content-Type加以标记。 无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。 无状态：无状态是指协议对于事务处理没有记忆能力。也就是说，打开一个服务器上的网页和上一次打开这个服务器上的网页之间没有任何联系。HTTP是一个无状态的面向连接的协议，无状态不代表HTTP不能保持TCP连接，更不能代表HTTP使用的是UDP协议（无连接）。 支持B/S及C/S模式 5 HTTP协议安全机制 HTTPS (Secure Hypertext Transfer Protocol)：安全超文本传输协议。HTTPS是在HTTP上建立SSL加密层，并对传输数据进行加密，是HTTP协议的安全版。HTTPS提供的安全通信，应用了对称加密，非对称加密，数据签名等技术。
-HTTP缺点：不够安全——明文传输，不做加密，易被中间人攻击（中间人截获甚至篡改信息） HTTPS主要作用： （1）对数据进行加密，并建立一个信息安全通道，来保证传输过程中的数据安全; （2）对网站服务器进行真实身份认证。 6 HTTP请求方法 根据HTTP标准，HTTP请求可以使用多种请求方法。到目前为止，有以下的方法</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2023-01-08T18:38:27&#43;08:00">January 08, 2023</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/misc/http_detail_table/">Http的报头、消息返回码等细节一览表</a></h1>
-	<div class="entry__content">** 请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com。**
-1 HTTP头部 1.1 Requests Header Header 解释 示例 Accept 指定客户端能够接收的内容类型 Accept: text/plain, text/html Accept-Charset 浏览器可以接受的字符编码集。 Accept-Charset: iso-8859-5 Accept-Encoding 指定浏览器可以支持的web服务器返回内容压缩编码类型。 Accept-Encoding: compress, gzip Accept-Language 浏览器可接受的语言 Accept-Language: en,zh Accept-Ranges 可以请求网页实体的一个或者多个子范围字段 Accept-Ranges: bytes Authorization HTTP授权的授权证书 Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ== Cache-Control 指定请求和响应遵循的缓存机制 Cache-Control: no-cache Connection 表示是否需要持久连接。（HTTP 1.1默认进行持久连接） Connection: close Cookie HTTP请求发送时，会把保存在该请求域名下的所有cookie值一起发送给web服务器。 Cookie: $Version=1; Skin=new; Content-Length 请求的内容长度 Content-Length: 348 Content-Type 请求的与实体对应的MIME信息 Content-Type: application/x-www-form-urlencoded Date 请求发送的日期和时间 Date: Tue, 15 Nov 2010 08:12:31 GMT Expect 请求的特定的服务器行为 Expect: 100-continue From 发出请求的用户的Email From: user@email.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2023-01-07T18:38:27&#43;08:00">January 07, 2023</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/misc/" rel="category">MISC</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/misc/" rel="tag">MISC</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/cg/octahedron_mapping/">八面体（Octahedron）及其坐标映射</a></h1>
-	<div class="entry__content">八面体（Octahedron）及其坐标映射 八面体是一种 正八面体几何结构，它可以用于 映射方向向量（3D）到2D，以便进行 高效的纹理存储和查询。在 Impostor 渲染 中，八面体映射（Octahedral Mapping）是一种将 球面方向向量 投影到 二维平面 的方法，广泛用于 环境贴图、光照计算、Impostor 纹理存储 等。
-1. 为什么使用八面体坐标？ 通常，我们用一个 单位向量（( x, y, z )）表示方向。但如果要将方向存储在 2D 纹理（如 Impostor 贴图）中，我们需要找到一种 从 3D 到 2D 的映射方法。
-常见的映射方法：
-球面坐标（Spherical Coordinates）：容易产生极点扭曲（pole distortion）。 立方体映射（Cubemap）：存储效率不高，容易出现采样接缝（seams）。 八面体映射（Octahedral Mapping）： 相比 球面坐标，它没有极点扭曲问题。 相比 立方体映射，它存储利用率高达 100%，没有浪费区域。 计算简单，适用于 GPU 计算。 因此，八面体映射是一种高效的 3D → 2D 映射 方法。
-2. 八面体坐标转换 八面体映射的核心思想是 将单位球的上、下两个半球折叠到一个正方形上。
-(1) 3D 方向向量到八面体坐标（VectortoOctahedron） 假设有一个 单位方向向量： [ V = (x, y, z) ] 步骤：</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2022-12-25T20:36:51&#43;08:00">December 25, 2022</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/interior_mapping_document/">伪内部空间映射的相关文档</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-CSDN上的参考网页 Unity Shader Interior mapping 内部映射
-CSDN上的案例学习——Interior Mapping 室内映射（假室内效果）
-CSDN上的UE5黑客帝国3d print假室内的一些使用记录
-unity 跟随目标_使用Cubemap在Unity中制作虚拟室内效果
-知乎上的参考网页 案例学习——Interior Mapping 室内映射（假室内效果）
-一种假室内(Fake Interior)效果的实现，这种是带上了室内深度效果的，即每个室内的深度纵深是不一样的。
-其他 Joost van Dongen的论文《Interior Mapping A new techique for rendering realistic buildings》
-下面的这份代码是《一种假室内(Fake Interior)效果的实现》中提到的代码实现
-Shader &#34;Custom/FakeRoom&#34; { Properties { [NoScaleOffset]_WindowTex (&#34;Window Texture&#34;, 2D) = &#34;black&#34; {} _RoomTex (&#34;Room Texture&#34;, CUBE) = &#34;&#34;{} _RoomDepth (&#34;Room Depth&#34;, Range(0.01, 1)) = 1.0 } SubShader { Tags { &#34;RenderType&#34;=&#34;Opaque&#34; } Cull Back Pass { CGPROGRAM #pragma vertex vert #pragma fragment frag #include &#34;UnityCG.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2022-12-08T18:38:27&#43;08:00">December 08, 2022</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/volumetric_clouds_write_up/">Volumetric Clouds Write-up(翻译)</a></h1>
-	<div class="entry__content">原文地址
-The basis of this effect is drawing a vertical stack of quads, each one showing a slice of the cloud. The cloud texture itself is just a world-mapped, top-down animated noise that is piped into opacity.
-这种效果的基础是绘制一组垂直堆叠的四边形（简称为：四边形堆栈，vertical stack of quads），每个四边形都显示一片云。 云纹理本身只是一个世界映射的(world-mapped)、自上而下的(top-down)的动画噪声，它通过渲染，管道传输到不透明度中。
-To animate the noise, I use the same trick that I use in countless other shaders to create a natural looking motion that appears free of obvious repetition, which is to blend the noise with either a copy of itself with a different UV scale, or a different noise texture, and pan these two noise textures against each other in opposite directions, and then blend them together through multiplication or some other desired blend mode.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2022-11-11T20:20:49&#43;08:00">November 11, 2022</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/unity_texture_compression_detail/">Unity纹理压缩格式详解</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-Crunch compression(紧凑压缩) Crunch compression是一种建筑在DXT或ETC压缩之上的压缩格式，提供额外的可变比特率压缩。当Unity加载紧凑压缩的纹理时，它会在CPU上将纹理解压缩为DXT或 ETC，然后将DXT或ETC压缩的纹理数据上传到GPU。
-紧凑压缩有助于纹理使用尽可能少的磁盘空间，但对运行时内存使用没有影响。紧凑压缩 纹理可能需要很长时间来压缩，但运行时的解压缩速度相当快。您可以调整紧凑压缩的有损程度，以在文件大小和质量之间取得平衡。
-Unity的各种纹理压缩格式信息 参考网页 聊聊 Unity 的 Alpha Is Transparency 有什么用 What does the &ldquo;alpha is transparency&rdquo; setting actually do? 光照贴图的中的编码格式 </div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2022-06-08T18:38:27&#43;08:00">June 08, 2022</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/from_outline_to_urp_multipass/">从半透明模型的描边到URP Multipass Rendering</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-卡通渲染技术中，描边的实现的有多种做法，有基于后处理实现，也有基于非后处理，通过多次绘制模型的方法实现。
-通过多次绘制模型的实现，方法无非就是：
-绘制模型本体，同时写入深度值。 让模型顶点沿着法线外扩一定的偏移量，即让模型膨胀一些 全用描边的颜色绘制膨胀过的模型，且，在绘制时，使用cull front，即只绘制模型的背向摄像机面。在第1步中因为绘制模型本体时已经写入深度值。在本步骤中只要不改变深度测试函数的方式，那么除了膨胀部分之外，是无法写入像素的，能写入的部分，便形成了边缘。 上述的方式，一般应用于不透明的材质上。如果是半透明的材质的话就有问题，因为在第1步绘制半透明材质时，一般是不写入深度值的。那么第3步在绘制膨胀模型时，模型背部的地方就会被绘制上去。
-解决这个问题有很多，可以利用stencil test的方式。也可以在第一步绘制，不绘制任何颜色，只写入深度，然后再绘制模型，最后再绘制描边。后一种方法，如果用Unity内置管线，大约就是这个样子：
-Shader &#34;Unlit/半透明&#34; { Properties { _Diffuse(&#34;Diffuse&#34;,Color) = (1,1,1,1) // 漫反射 _MainTex(&#34;MainTex&#34;,2D) = &#34;white&#34;{} // 2D纹理贴图 _AlphaScale(&#34;Alpha Scale&#34;,Range(0,1)) = 1 // 控制Alpha参数 } SubShader { Tags { &#34;Queue&#34; = &#34;Transparent&#34; &#34;IgnoreProjector&#34; = &#34;True&#34; &#34;RenderType&#34; = &#34;Transparent&#34; } //渲染顺序设置Transparent LOD 100 // 用两个pass通道来处理，防止出现渲染错误，第一个pass通道 // 每个pass通道都会渲染一次 Pass { ZWrite On // 注意这里：写入深度 为了确认渲染顺序 ColorMask 0 // 掩码遮罩代表这个pass通道不写入任何颜色值 } Pass // 第二个pass通道 { Tags{&#34;LightMode&#34; = &#34;ForwardBase&#34;} ZWrite Off // 注意这里：关闭ZWrite（深度写入） Blend SrcAlpha OneMinusSrcAlpha // 源颜色因子 正常透明混合 CGPROGRAM #pragma vertex vert #pragma fragment frag #include &#34;UnityCG.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2022-04-29T11:37:25&#43;08:00">April 29, 2022</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/shader/" rel="tag">shader</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
-<div class="pagination block">
-				<a class="pagination__item pagination__item--desktop" href="/post/">1</a>
-				<a class="pagination__item pagination__item--desktop" href="/post/page/2/">2</a>
-				<a class="pagination__item pagination__item--desktop" href="/post/page/3/">3</a>
-				<span class="pagination__item pagination__item--active" data-total="15">4</span>
-				<a class="pagination__item pagination__item--desktop" href="/post/page/5/">5</a>
-			<span class="pagination__item pagination__item--gap">&hellip;</span>
-				<a class="pagination__item pagination__item--desktop" href="/post/page/15/">15</a>
-</div>
+            ZWrite Off  // 注意这里：关闭ZWrite（深度写入）
+            Blend SrcAlpha OneMinusSrcAlpha  //  源颜色因子  正常透明混合
 
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include &#34;UnityCG.cginc&#34;
+            #include &#34;Lighting.cginc&#34;
+
+            struct v2f 
+            {
+                float4 vertex :SV_POSITION;  //  输出顶点信息
+                fixed3 worldNormal : TEXCOORD0;
+                float3 worldPos:TEXCOORD1;
+                float2 uv:TEXCOORD2;
+            };
+
+            fixed4 _Diffuse;
+            float _AlphaScale;
+            sampler2D _MainTex;
+            float4 _MainTex_ST; 
+            
+            v2f vert(appdata_base v)  //  顶点着色器
+            {
+                v2f o;
+                o.vertex = UnityObjectToClipPos(v.vertex);
+                fixed3 worldNormal = UnityObjectToWorldNormal(v.normal); 
+                o.worldNormal = worldNormal;
+                o.worldPos = mul(unity_ObjectToWorld, v.vertex); 
+                o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
+                return o;
+            }
+
+            fixed4 frag(v2f i) : SV_Target
+            {
+                fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
+                fixed4 texColor = tex2D(_MainTex, i.uv);  
+                fixed3 worldLightDir = UnityWorldSpaceLightDir(i.worldPos);
+
+                fixed3 diffuse = 
+                texColor.rgb * _LightColor0.rgb * _Diffuse.rgb * 
+                max(0, dot(worldLightDir,i.worldNormal) * 0.5 + 0.5); 
+                fixed3 color = ambient + diffuse;
+                return fixed4(color, texColor.a * _AlphaScale); 
+            }
+            ENDCG
+        }
+    }
+    FallBack &#34;Transparent/VertexLit&#34;    
+}
+</code></pre><p>内置管线的方式很直观。但URP到目前为止（版本10.3.2），无法支持太多的PASS，</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2022-04-29T11:37:25+08:00>April 29, 2022</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/shader/ rel=tag>shader</a></span></div></div></article></div></div></main><div class="pagination block"><a class="pagination__item pagination__item--desktop" href=/post/>1</a>
+<a class="pagination__item pagination__item--desktop" href=/post/page/2/>2</a>
+<a class="pagination__item pagination__item--desktop" href=/post/page/3/>3</a>
+<span class="pagination__item pagination__item--active" data-total=14>4</span>
+<a class="pagination__item pagination__item--desktop" href=/post/page/5/>5</a>
+<span class="pagination__item pagination__item--gap">&mldr;</span>
+<a class="pagination__item pagination__item--desktop" href=/post/page/14/>14</a></div></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

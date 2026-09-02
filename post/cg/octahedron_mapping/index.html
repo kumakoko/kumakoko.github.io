@@ -1,411 +1,89 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>八面体（Octahedron）及其坐标映射 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="八面体（Octahedron）及其坐标映射">
-		<meta property="og:title" content="八面体（Octahedron）及其坐标映射" />
-<meta property="og:description" content="八面体（Octahedron）及其坐标映射" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/cg/octahedron_mapping/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2022-12-25T20:36:51+08:00" />
-<meta property="article:modified_time" content="2022-12-25T20:36:51+08:00" />
-
-
-		<meta itemprop="name" content="八面体（Octahedron）及其坐标映射">
-<meta itemprop="description" content="八面体（Octahedron）及其坐标映射"><meta itemprop="datePublished" content="2022-12-25T20:36:51+08:00" />
-<meta itemprop="dateModified" content="2022-12-25T20:36:51+08:00" />
-<meta itemprop="wordCount" content="396">
-<meta itemprop="keywords" content="CG," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">八面体（Octahedron）及其坐标映射</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2022-12-25T20:36:51&#43;08:00">December 25, 2022</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/cg/" rel="category">CG</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/cg/" rel="tag">CG</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">八面体（Octahedron）及其坐标映射</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#八面体octahedron及其坐标映射"><strong>八面体（Octahedron）及其坐标映射</strong></a></li>
-    <li><a href="#1-为什么使用八面体坐标"><strong>1. 为什么使用八面体坐标？</strong></a></li>
-    <li><a href="#2-八面体坐标转换"><strong>2. 八面体坐标转换</strong></a>
-      <ul>
-        <li><a href="#1-3d-方向向量到八面体坐标vectortooctahedron"><strong>(1) 3D 方向向量到八面体坐标（VectortoOctahedron）</strong></a></li>
-        <li><a href="#2-八面体坐标到-3d-方向向量octahedrontovector"><strong>(2) 八面体坐标到 3D 方向向量（OctahedronToVector）</strong></a></li>
-      </ul>
-    </li>
-    <li><a href="#3-半球八面体映射hemi-octahedral-mapping"><strong>3. 半球八面体映射（Hemi-Octahedral Mapping）</strong></a>
-      <ul>
-        <li><a href="#1-半球八面体的转换"><strong>(1) 半球八面体的转换</strong></a></li>
-        <li><a href="#2-优势"><strong>(2) 优势</strong></a></li>
-        <li><a href="#3-半球八面体的逆变换"><strong>(3) 半球八面体的逆变换</strong></a></li>
-      </ul>
-    </li>
-    <li><a href="#4-八面体-vs-半球八面体"><strong>4. 八面体 vs. 半球八面体</strong></a></li>
-    <li><a href="#5-代码示例"><strong>5. 代码示例</strong></a>
-      <ul>
-        <li><a href="#1-vectortooctahedron八面体映射"><strong>(1) VectortoOctahedron（八面体映射）</strong></a></li>
-        <li><a href="#2-octahedrontovector八面体反变换"><strong>(2) OctahedronToVector（八面体反变换）</strong></a></li>
-        <li><a href="#3-vectortohemioctahedron半球八面体映射"><strong>(3) VectortoHemiOctahedron（半球八面体映射）</strong></a></li>
-      </ul>
-    </li>
-    <li><a href="#6-总结"><strong>6. 总结</strong></a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><h2 id="八面体octahedron及其坐标映射"><strong>八面体（Octahedron）及其坐标映射</strong></h2>
-<p>八面体是一种 <strong>正八面体几何结构</strong>，它可以用于 <strong>映射方向向量（3D）到2D</strong>，以便进行 <strong>高效的纹理存储和查询</strong>。在 <strong>Impostor 渲染</strong> 中，<strong>八面体映射</strong>（Octahedral Mapping）是一种将 <strong>球面方向向量</strong> 投影到 <strong>二维平面</strong> 的方法，广泛用于 <strong>环境贴图、光照计算、Impostor 纹理存储</strong> 等。</p>
-<hr>
-<h2 id="1-为什么使用八面体坐标"><strong>1. 为什么使用八面体坐标？</strong></h2>
-<p>通常，我们用一个 <strong>单位向量</strong>（( x, y, z )）表示方向。但如果要将方向存储在 <strong>2D 纹理</strong>（如 Impostor 贴图）中，我们需要找到一种 <strong>从 3D 到 2D 的映射方法</strong>。</p>
-<p><strong>常见的映射方法：</strong></p>
-<ul>
-<li><strong>球面坐标（Spherical Coordinates）</strong>：容易产生<strong>极点扭曲</strong>（pole distortion）。</li>
-<li><strong>立方体映射（Cubemap）</strong>：存储效率不高，容易出现<strong>采样接缝</strong>（seams）。</li>
-<li><strong>八面体映射（Octahedral Mapping）</strong>：
-<ul>
-<li>相比 <strong>球面坐标</strong>，它没有极点扭曲问题。</li>
-<li>相比 <strong>立方体映射</strong>，它存储利用率高达 <strong>100%</strong>，没有浪费区域。</li>
-<li>计算简单，适用于 <strong>GPU 计算</strong>。</li>
-</ul>
-</li>
-</ul>
-<p>因此，八面体映射是一种高效的 <strong>3D → 2D 映射</strong> 方法。</p>
-<hr>
-<h2 id="2-八面体坐标转换"><strong>2. 八面体坐标转换</strong></h2>
-<p>八面体映射的核心思想是 <strong>将单位球的上、下两个半球折叠到一个正方形上</strong>。</p>
-<h3 id="1-3d-方向向量到八面体坐标vectortooctahedron"><strong>(1) 3D 方向向量到八面体坐标（VectortoOctahedron）</strong></h3>
-<p>假设有一个 <strong>单位方向向量</strong>：
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>八面体（Octahedron）及其坐标映射 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="八面体（Octahedron）及其坐标映射"><meta property="og:url" content="http://www.xionggf.com/post/cg/octahedron_mapping/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="八面体（Octahedron）及其坐标映射"><meta property="og:description" content="八面体（Octahedron）及其坐标映射"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2022-12-25T20:36:51+08:00"><meta property="article:modified_time" content="2022-12-25T20:36:51+08:00"><meta property="article:tag" content="CG"><meta itemprop=name content="八面体（Octahedron）及其坐标映射"><meta itemprop=description content="八面体（Octahedron）及其坐标映射"><meta itemprop=datePublished content="2022-12-25T20:36:51+08:00"><meta itemprop=dateModified content="2022-12-25T20:36:51+08:00"><meta itemprop=wordCount content="396"><meta itemprop=keywords content="CG"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>八面体（Octahedron）及其坐标映射</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2022-12-25T20:36:51+08:00>December 25, 2022</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/cg/ rel=category>CG</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/cg/ rel=tag>CG</a></span></div></div><h1 class=entry__title>八面体（Octahedron）及其坐标映射</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#八面体octahedron及其坐标映射><strong>八面体（Octahedron）及其坐标映射</strong></a></li><li><a href=#1-为什么使用八面体坐标><strong>1. 为什么使用八面体坐标？</strong></a></li><li><a href=#2-八面体坐标转换><strong>2. 八面体坐标转换</strong></a><ul><li><a href=#1-3d-方向向量到八面体坐标vectortooctahedron><strong>(1) 3D 方向向量到八面体坐标（VectortoOctahedron）</strong></a></li><li><a href=#2-八面体坐标到-3d-方向向量octahedrontovector><strong>(2) 八面体坐标到 3D 方向向量（OctahedronToVector）</strong></a></li></ul></li><li><a href=#3-半球八面体映射hemi-octahedral-mapping><strong>3. 半球八面体映射（Hemi-Octahedral Mapping）</strong></a><ul><li><a href=#1-半球八面体的转换><strong>(1) 半球八面体的转换</strong></a></li><li><a href=#2-优势><strong>(2) 优势</strong></a></li><li><a href=#3-半球八面体的逆变换><strong>(3) 半球八面体的逆变换</strong></a></li></ul></li><li><a href=#4-八面体-vs-半球八面体><strong>4. 八面体 vs. 半球八面体</strong></a></li><li><a href=#5-代码示例><strong>5. 代码示例</strong></a><ul><li><a href=#1-vectortooctahedron八面体映射><strong>(1) VectortoOctahedron（八面体映射）</strong></a></li><li><a href=#2-octahedrontovector八面体反变换><strong>(2) OctahedronToVector（八面体反变换）</strong></a></li><li><a href=#3-vectortohemioctahedron半球八面体映射><strong>(3) VectortoHemiOctahedron（半球八面体映射）</strong></a></li></ul></li><li><a href=#6-总结><strong>6. 总结</strong></a></li></ul></nav></details><div class=entry__content><h2 id=八面体octahedron及其坐标映射><strong>八面体（Octahedron）及其坐标映射</strong></h2><p>八面体是一种 <strong>正八面体几何结构</strong>，它可以用于 <strong>映射方向向量（3D）到2D</strong>，以便进行 <strong>高效的纹理存储和查询</strong>。在 <strong>Impostor 渲染</strong> 中，<strong>八面体映射</strong>（Octahedral Mapping）是一种将 <strong>球面方向向量</strong> 投影到 <strong>二维平面</strong> 的方法，广泛用于 <strong>环境贴图、光照计算、Impostor 纹理存储</strong> 等。</p><hr><h2 id=1-为什么使用八面体坐标><strong>1. 为什么使用八面体坐标？</strong></h2><p>通常，我们用一个 <strong>单位向量</strong>（( x, y, z )）表示方向。但如果要将方向存储在 <strong>2D 纹理</strong>（如 Impostor 贴图）中，我们需要找到一种 <strong>从 3D 到 2D 的映射方法</strong>。</p><p><strong>常见的映射方法：</strong></p><ul><li><strong>球面坐标（Spherical Coordinates）</strong>：容易产生<strong>极点扭曲</strong>（pole distortion）。</li><li><strong>立方体映射（Cubemap）</strong>：存储效率不高，容易出现<strong>采样接缝</strong>（seams）。</li><li><strong>八面体映射（Octahedral Mapping）</strong>：<ul><li>相比 <strong>球面坐标</strong>，它没有极点扭曲问题。</li><li>相比 <strong>立方体映射</strong>，它存储利用率高达 <strong>100%</strong>，没有浪费区域。</li><li>计算简单，适用于 <strong>GPU 计算</strong>。</li></ul></li></ul><p>因此，八面体映射是一种高效的 <strong>3D → 2D 映射</strong> 方法。</p><hr><h2 id=2-八面体坐标转换><strong>2. 八面体坐标转换</strong></h2><p>八面体映射的核心思想是 <strong>将单位球的上、下两个半球折叠到一个正方形上</strong>。</p><h3 id=1-3d-方向向量到八面体坐标vectortooctahedron><strong>(1) 3D 方向向量到八面体坐标（VectortoOctahedron）</strong></h3><p>假设有一个 <strong>单位方向向量</strong>：
 [
 V = (x, y, z)
 ]
-<strong>步骤：</strong></p>
-<ol>
-<li>
-<p><strong>投影到 XY 平面</strong>
+<strong>步骤：</strong></p><ol><li><p><strong>投影到 XY 平面</strong>
 [
 P = \frac{(x, z)}{|x| + |y| + |z|}
-]</p>
-<ul>
-<li>这里分母是向量 <strong>绝对值求和</strong>，用于<strong>归一化</strong>，确保八面体映射不会超出范围。</li>
-<li>结果 ( P ) 是 <strong>[-1,1] 范围</strong> 内的二维坐标。</li>
-</ul>
-</li>
-<li>
-<p><strong>折叠负 Y 轴部分</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (y <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
-</span></span><span style="display:flex;"><span>    P <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> abs(P.yx)) <span style="color:#f92672">*</span> sign(P.xy);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><ul>
-<li>如果 <strong>y &lt; 0</strong>（即方向朝向球的下半部分），我们将它折叠回 <strong>上半球</strong>，确保所有数据都在 <strong>一个正方形区域内</strong>。</li>
-<li>这样，我们得到了最终的 <strong>八面体 UV 坐标</strong>。</li>
-</ul>
-</li>
-</ol>
-<blockquote>
-<p><strong>最终的八面体坐标范围是：</strong><br>
-( (x&rsquo;, z&rsquo;) ) ∈ [-1,1]²，表示一个 <strong>正方形</strong> 内的 2D 坐标。</p>
-</blockquote>
-<hr>
-<h3 id="2-八面体坐标到-3d-方向向量octahedrontovector"><strong>(2) 八面体坐标到 3D 方向向量（OctahedronToVector）</strong></h3>
-<p>要将八面体坐标还原回 <strong>3D 方向向量</strong>：</p>
-<ol>
-<li>
-<p>先计算：
+]</p><ul><li>这里分母是向量 <strong>绝对值求和</strong>，用于<strong>归一化</strong>，确保八面体映射不会超出范围。</li><li>结果 ( P ) 是 <strong>[-1,1] 范围</strong> 内的二维坐标。</li></ul></li><li><p><strong>折叠负 Y 轴部分</strong></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>y <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    P <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1</span> <span style=color:#0550ae>-</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>P<span style=color:#1f2328>.</span>yx<span style=color:#1f2328>))</span> <span style=color:#0550ae>*</span> <span style=color:#6639ba>sign</span><span style=color:#1f2328>(</span>P<span style=color:#1f2328>.</span>xy<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><ul><li>如果 <strong>y &lt; 0</strong>（即方向朝向球的下半部分），我们将它折叠回 <strong>上半球</strong>，确保所有数据都在 <strong>一个正方形区域内</strong>。</li><li>这样，我们得到了最终的 <strong>八面体 UV 坐标</strong>。</li></ul></li></ol><blockquote><p><strong>最终的八面体坐标范围是：</strong><br>( (x&rsquo;, z&rsquo;) ) ∈ [-1,1]²，表示一个 <strong>正方形</strong> 内的 2D 坐标。</p></blockquote><hr><h3 id=2-八面体坐标到-3d-方向向量octahedrontovector><strong>(2) 八面体坐标到 3D 方向向量（OctahedronToVector）</strong></h3><p>要将八面体坐标还原回 <strong>3D 方向向量</strong>：</p><ol><li><p>先计算：
 [
 y = 1 - |x&rsquo;| - |z&rsquo;|
 ]
-这样，我们得到了向量的 <strong>Y 分量</strong>（因为 X 和 Z 分量已经在 UV 坐标中）。</p>
-</li>
-<li>
-<p>如果 <strong>y &lt; 0</strong>，意味着这个点原本在<strong>折叠的区域</strong>，需要展开：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (y <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) {
-</span></span><span style="display:flex;"><span>    x<span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> abs(z<span style="color:#960050;background-color:#1e0010">&#39;</span>)) <span style="color:#f92672">*</span> sign(x<span style="color:#960050;background-color:#1e0010">&#39;</span>);
-</span></span><span style="display:flex;"><span>    z<span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> abs(x<span style="color:#960050;background-color:#1e0010">&#39;</span>)) <span style="color:#f92672">*</span> sign(z<span style="color:#960050;background-color:#1e0010">&#39;</span>);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这样，我们可以还原出原始的 <strong>3D 方向向量</strong>。</p>
-</li>
-</ol>
-<hr>
-<h2 id="3-半球八面体映射hemi-octahedral-mapping"><strong>3. 半球八面体映射（Hemi-Octahedral Mapping）</strong></h2>
-<p>通常情况下，<strong>八面体映射可以表示整个单位球（full sphere）</strong>，即它可以存储所有方向 ( (x, y, z) )，其中 ( y ) 可以是 <strong>正的（上半球）或负的（下半球）</strong>。</p>
-<p>然而，在某些情况下，我们只关心<strong>上半球方向</strong>（例如环境光遮蔽、Impostor 只存储朝上的视角等）。此时，我们可以使用 <strong>半球八面体映射（Hemi-Octahedral Mapping）</strong>。</p>
-<h3 id="1-半球八面体的转换"><strong>(1) 半球八面体的转换</strong></h3>
-<p>如果我们知道方向总是位于 <strong>上半球</strong>（即 ( y &gt; 0 )），可以对 <strong>八面体坐标</strong> 进行如下优化：</p>
-<ol>
-<li>
-<p>计算：
+这样，我们得到了向量的 <strong>Y 分量</strong>（因为 X 和 Z 分量已经在 UV 坐标中）。</p></li><li><p>如果 <strong>y &lt; 0</strong>，意味着这个点原本在<strong>折叠的区域</strong>，需要展开：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>y <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    x<span style=color:#f6f8fa;background-color:#82071e>&#39;</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1</span> <span style=color:#0550ae>-</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>z<span style=color:#f6f8fa;background-color:#82071e>&#39;</span><span style=color:#1f2328>))</span> <span style=color:#0550ae>*</span> <span style=color:#6639ba>sign</span><span style=color:#1f2328>(</span>x<span style=color:#f6f8fa;background-color:#82071e>&#39;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    z<span style=color:#f6f8fa;background-color:#82071e>&#39;</span> <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1</span> <span style=color:#0550ae>-</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>x<span style=color:#f6f8fa;background-color:#82071e>&#39;</span><span style=color:#1f2328>))</span> <span style=color:#0550ae>*</span> <span style=color:#6639ba>sign</span><span style=color:#1f2328>(</span>z<span style=color:#f6f8fa;background-color:#82071e>&#39;</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>这样，我们可以还原出原始的 <strong>3D 方向向量</strong>。</p></li></ol><hr><h2 id=3-半球八面体映射hemi-octahedral-mapping><strong>3. 半球八面体映射（Hemi-Octahedral Mapping）</strong></h2><p>通常情况下，<strong>八面体映射可以表示整个单位球（full sphere）</strong>，即它可以存储所有方向 ( (x, y, z) )，其中 ( y ) 可以是 <strong>正的（上半球）或负的（下半球）</strong>。</p><p>然而，在某些情况下，我们只关心<strong>上半球方向</strong>（例如环境光遮蔽、Impostor 只存储朝上的视角等）。此时，我们可以使用 <strong>半球八面体映射（Hemi-Octahedral Mapping）</strong>。</p><h3 id=1-半球八面体的转换><strong>(1) 半球八面体的转换</strong></h3><p>如果我们知道方向总是位于 <strong>上半球</strong>（即 ( y > 0 )），可以对 <strong>八面体坐标</strong> 进行如下优化：</p><ol><li><p>计算：
 [
 P = \frac{(x, z)}{|x| + y + |z|}
-]</p>
-<ul>
-<li>这里的分母变成 <strong>( |x| + y + |z| )</strong>，保证数据只映射到<strong>上半球</strong>。</li>
-</ul>
-</li>
-<li>
-<p><strong>无需折叠 y &lt; 0 的情况</strong>，因为所有数据都位于上半球。</p>
-</li>
-</ol>
-<h3 id="2-优势"><strong>(2) 优势</strong></h3>
-<ul>
-<li><strong>更高的精度</strong>：因为它的分布不会受到负半球的影响。</li>
-<li><strong>更紧凑的存储</strong>：可以将 <strong>完整的 2D 八面体映射空间</strong> 用于表示 <strong>上半球方向</strong>。</li>
-</ul>
-<h3 id="3-半球八面体的逆变换"><strong>(3) 半球八面体的逆变换</strong></h3>
-<p>如果我们存储了半球八面体坐标，我们可以直接恢复 3D 方向：</p>
-<ol>
-<li>计算：
+]</p><ul><li>这里的分母变成 <strong>( |x| + y + |z| )</strong>，保证数据只映射到<strong>上半球</strong>。</li></ul></li><li><p><strong>无需折叠 y &lt; 0 的情况</strong>，因为所有数据都位于上半球。</p></li></ol><h3 id=2-优势><strong>(2) 优势</strong></h3><ul><li><strong>更高的精度</strong>：因为它的分布不会受到负半球的影响。</li><li><strong>更紧凑的存储</strong>：可以将 <strong>完整的 2D 八面体映射空间</strong> 用于表示 <strong>上半球方向</strong>。</li></ul><h3 id=3-半球八面体的逆变换><strong>(3) 半球八面体的逆变换</strong></h3><p>如果我们存储了半球八面体坐标，我们可以直接恢复 3D 方向：</p><ol><li>计算：
 [
 y = 1 - |x&rsquo;| - |z&rsquo;|
 ]
-这里不需要处理 ( y &lt; 0 ) 的情况，因为所有数据本来就来自上半球。</li>
-</ol>
-<hr>
-<h2 id="4-八面体-vs-半球八面体"><strong>4. 八面体 vs. 半球八面体</strong></h2>
-<table>
-<thead>
-<tr>
-<th>特性</th>
-<th>八面体映射（Octahedral Mapping）</th>
-<th>半球八面体映射（Hemi-Octahedral Mapping）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>存储范围</strong></td>
-<td>上下半球（全方向）</td>
-<td>仅上半球（( y &gt; 0 )）</td>
-</tr>
-<tr>
-<td><strong>映射公式</strong></td>
-<td>( (x, z) / (</td>
-<td>x</td>
-</tr>
-<tr>
-<td><strong>存储区域</strong></td>
-<td>正方形（[-1,1]²）</td>
-<td>正方形（[-1,1]²），但数据密度更高</td>
-</tr>
-<tr>
-<td><strong>是否需要折叠</strong></td>
-<td>需要折叠 ( y &lt; 0 ) 的区域</td>
-<td>不需要折叠</td>
-</tr>
-<tr>
-<td><strong>适用场景</strong></td>
-<td>全方向 Impostor、Cubemap 纹理存储</td>
-<td>仅用于半球方向（如光照、环境遮挡）</td>
-</tr>
-</tbody>
-</table>
-<hr>
-<h2 id="5-代码示例"><strong>5. 代码示例</strong></h2>
-<h3 id="1-vectortooctahedron八面体映射"><strong>(1) VectortoOctahedron（八面体映射）</strong></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#66d9ef">float2</span> VectortoOctahedron(<span style="color:#66d9ef">float3</span> v) {
-</span></span><span style="display:flex;"><span>    v <span style="color:#f92672">/=</span> abs(v.x) <span style="color:#f92672">+</span> abs(v.y) <span style="color:#f92672">+</span> abs(v.z);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (v.y <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) v.xy <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> abs(v.yx)) <span style="color:#f92672">*</span> sign(v.xy);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> v.xz;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="2-octahedrontovector八面体反变换"><strong>(2) OctahedronToVector（八面体反变换）</strong></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#66d9ef">float3</span> OctahedronToVector(<span style="color:#66d9ef">float2</span> uv) {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">float3</span> v <span style="color:#f92672">=</span> <span style="color:#66d9ef">float3</span>(uv.x, <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> abs(uv.x) <span style="color:#f92672">-</span> abs(uv.y), uv.y);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (v.y <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span>) v.xz <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> abs(v.zx)) <span style="color:#f92672">*</span> sign(v.xz);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> normalize(v);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h3 id="3-vectortohemioctahedron半球八面体映射"><strong>(3) VectortoHemiOctahedron（半球八面体映射）</strong></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-hlsl" data-lang="hlsl"><span style="display:flex;"><span><span style="color:#66d9ef">float2</span> VectortoHemiOctahedron(<span style="color:#66d9ef">float3</span> v) {
-</span></span><span style="display:flex;"><span>    v <span style="color:#f92672">/=</span> abs(v.x) <span style="color:#f92672">+</span> v.y <span style="color:#f92672">+</span> abs(v.z);
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> v.xz;
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
-<h2 id="6-总结"><strong>6. 总结</strong></h2>
-<ul>
-<li><strong>八面体映射</strong> 是一种高效的 <strong>3D → 2D 方向存储方法</strong>，适用于 <strong>全方向数据</strong>（如全景环境贴图、Impostor）。</li>
-<li><strong>半球八面体映射</strong> 仅存储 <strong>上半球数据</strong>，适用于<strong>光照计算、半球环境贴图等</strong>，精度更高，存储更紧凑。</li>
-</ul>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/cg/">CG</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/hlsl_float_to_int/">在HLSL中对浮点数和整数之间进行转换</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/how_to_set_camera_for_isometric/">3转2时如何设置摄像机角度以实现isometric渲染效果</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/inside_hdr/">理解高动态范围光</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/tiny3d_implement_introduce/">软渲染示例程序Tiny3D的实现简介</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/cg/ray_tracing/ray_tracing_from_the_ground_up/code_4_1_explanation/">《光线跟踪算法技术》代码4.1解释</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+这里不需要处理 ( y &lt; 0 ) 的情况，因为所有数据本来就来自上半球。</li></ol><hr><h2 id=4-八面体-vs-半球八面体><strong>4. 八面体 vs. 半球八面体</strong></h2><table><thead><tr><th>特性</th><th>八面体映射（Octahedral Mapping）</th><th>半球八面体映射（Hemi-Octahedral Mapping）</th></tr></thead><tbody><tr><td><strong>存储范围</strong></td><td>上下半球（全方向）</td><td>仅上半球（( y > 0 )）</td></tr><tr><td><strong>映射公式</strong></td><td>( (x, z) / (</td><td>x</td></tr><tr><td><strong>存储区域</strong></td><td>正方形（[-1,1]²）</td><td>正方形（[-1,1]²），但数据密度更高</td></tr><tr><td><strong>是否需要折叠</strong></td><td>需要折叠 ( y &lt; 0 ) 的区域</td><td>不需要折叠</td></tr><tr><td><strong>适用场景</strong></td><td>全方向 Impostor、Cubemap 纹理存储</td><td>仅用于半球方向（如光照、环境遮挡）</td></tr></tbody></table><hr><h2 id=5-代码示例><strong>5. 代码示例</strong></h2><h3 id=1-vectortooctahedron八面体映射><strong>(1) VectortoOctahedron（八面体映射）</strong></h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>float2</span> VectortoOctahedron<span style=color:#1f2328>(</span><span style=color:#cf222e>float3</span> v<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    v <span style=color:#0550ae>/=</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>y<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>z<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>y <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> v<span style=color:#1f2328>.</span>xy <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1</span> <span style=color:#0550ae>-</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>yx<span style=color:#1f2328>))</span> <span style=color:#0550ae>*</span> <span style=color:#6639ba>sign</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>xy<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> v<span style=color:#1f2328>.</span>xz<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=2-octahedrontovector八面体反变换><strong>(2) OctahedronToVector（八面体反变换）</strong></h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>float3</span> OctahedronToVector<span style=color:#1f2328>(</span><span style=color:#cf222e>float2</span> uv<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float3</span> v <span style=color:#0550ae>=</span> <span style=color:#cf222e>float3</span><span style=color:#1f2328>(</span>uv<span style=color:#1f2328>.</span>x<span style=color:#1f2328>,</span> <span style=color:#0550ae>1</span> <span style=color:#0550ae>-</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>uv<span style=color:#1f2328>.</span>x<span style=color:#1f2328>)</span> <span style=color:#0550ae>-</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>uv<span style=color:#1f2328>.</span>y<span style=color:#1f2328>),</span> uv<span style=color:#1f2328>.</span>y<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>y <span style=color:#0550ae>&lt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span> v<span style=color:#1f2328>.</span>xz <span style=color:#0550ae>=</span> <span style=color:#1f2328>(</span><span style=color:#0550ae>1</span> <span style=color:#0550ae>-</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>zx<span style=color:#1f2328>))</span> <span style=color:#0550ae>*</span> <span style=color:#6639ba>sign</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>xz<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> <span style=color:#6639ba>normalize</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h3 id=3-vectortohemioctahedron半球八面体映射><strong>(3) VectortoHemiOctahedron（半球八面体映射）</strong></h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-hlsl data-lang=hlsl><span style=display:flex><span><span style=color:#cf222e>float2</span> VectortoHemiOctahedron<span style=color:#1f2328>(</span><span style=color:#cf222e>float3</span> v<span style=color:#1f2328>)</span> <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    v <span style=color:#0550ae>/=</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>x<span style=color:#1f2328>)</span> <span style=color:#0550ae>+</span> v<span style=color:#1f2328>.</span>y <span style=color:#0550ae>+</span> <span style=color:#6639ba>abs</span><span style=color:#1f2328>(</span>v<span style=color:#1f2328>.</span>z<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> v<span style=color:#1f2328>.</span>xz<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><hr><h2 id=6-总结><strong>6. 总结</strong></h2><ul><li><strong>八面体映射</strong> 是一种高效的 <strong>3D → 2D 方向存储方法</strong>，适用于 <strong>全方向数据</strong>（如全景环境贴图、Impostor）。</li><li><strong>半球八面体映射</strong> 仅存储 <strong>上半球数据</strong>，适用于<strong>光照计算、半球环境贴图等</strong>，精度更高，存储更紧凑。</li></ul></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/cg/>CG</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/cg/hlsl_float_to_int/>在HLSL中对浮点数和整数之间进行转换</a></li><li class=related__item><a class=related__link href=/post/cg/how_to_set_camera_for_isometric/>3转2时如何设置摄像机角度以实现isometric渲染效果</a></li><li class=related__item><a class=related__link href=/post/cg/inside_hdr/>理解高动态范围光</a></li><li class=related__item><a class=related__link href=/post/cg/tiny3d_implement_introduce/>软渲染示例程序Tiny3D的实现简介</a></li><li class=related__item><a class=related__link href=/post/cg/ray_tracing/ray_tracing_from_the_ground_up/code_4_1_explanation/>《光线跟踪算法技术》代码4.1解释</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

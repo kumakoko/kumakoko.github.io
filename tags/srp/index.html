@@ -1,257 +1,155 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>SRP | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
-		<meta property="og:title" content="SRP" />
-<meta property="og:description" content="Responsive card-based &amp; code-light Hugo theme" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.xionggf.com/tags/srp/" />
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>SRP | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content><meta property="og:url" content="http://www.xionggf.com/tags/srp/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="SRP"><meta property="og:description" content="Responsive card-based & code-light Hugo theme"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="website"><meta itemprop=name content="SRP"><meta itemprop=description content="Responsive card-based & code-light Hugo theme"><meta itemprop=datePublished content="2026-01-15T19:21:39+08:00"><meta itemprop=dateModified content="2026-01-15T19:21:39+08:00"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=alternate type=application/rss+xml href=/tags/srp/index.xml title=XGF><link rel=manifest href=/manifest.json></head><body class="body kind-term"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/tags/>Tags</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>SRP</li></ol></nav><div class="page block"><h1 class=page__title>SRP</h1></div><div class=cards><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/camera/urp_camera_in_u3d2002/>Unity2022.3版本下URP下Camera组件的一些细节</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=问题1>问题1</h1><blockquote><p>在Unity的URP管线中，Camera组件的指定clear模式的<strong>depth only</strong>选项，好像不存在了？还是说改到哪里去了？</p></blockquote><p>让我查一下官方资料确认 URP 中 Camera 清除模式的准确位置。</p><p>官方文档已确认关键信息。让我再核实一下脚本层面 URP 对 <code>clearFlags</code> 的处理，确保代码说法准确。</p><p>官方文档确认了核心结论。这是一个新旧选项的映射关系，我读一下可视化规范，用一个对照图把结论整理出来。</p><p>核对完毕，官方文档（URP Camera 组件参考 + 清除与渲染顺序文档）已经讲清楚了。结论先说：<strong>URP 里确实没有 &ldquo;Depth Only&rdquo; 这个选项了，但不是被删，而是被重构了</strong>——内置管线的 Clear Flags（Skybox/Solid Color/Depth Only/Don&rsquo;t Clear）四选一，在 URP 里拆成了"颜色缓冲"和"深度缓冲"两套逻辑，由相机的 <strong>Render Type（Base/Overlay）</strong> 决定。</p><p>我把映射关系画成一张对照图：</p><pre tabindex=0><code>&lt;html style=&#34;margin:0;padding:0;&#34;&gt;
+&lt;div style=&#34;background-color:transparent;box-sizing:border-box;font-family:&#39;Roboto&#39;,&#39;PingFang SC&#39;,&#39;Segoe UI&#39;,Arial,sans-serif;--accent:var(--m-02);color:#1A1B1C;&#34;&gt;
+  &lt;div style=&#34;width:100%;box-sizing:border-box;padding:4px 2px;&#34;&gt;
 
+    &lt;!-- 标题 --&gt;
+    &lt;div style=&#34;font-size:15px;font-weight:600;margin:0 0 4px 0;&#34;&gt;内置管线 Clear Flags → URP 的等价配置&lt;/div&gt;
+    &lt;div style=&#34;font-size:12px;color:#6B7280;margin:0 0 12px 0;&#34;&gt;依据：Unity URP 官方文档（Camera 组件参考 / Clearing &amp; Rendering Order）。Base 相机深度缓冲每帧固定清除，无需配置。&lt;/div&gt;
 
-		<meta itemprop="name" content="SRP">
-<meta itemprop="description" content="Responsive card-based &amp; code-light Hugo theme">
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="alternate" type="application/rss+xml" href="/tags/srp/index.xml" title="XGF">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-term">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/tags/">Tags</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">SRP</li>
-	</ol>
-</nav>
-		<div class="page block">
-			<h1 class="page__title">SRP</h1>
-			
-		</div>
-		<div class="cards">
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/diff_between_urp_and_builtin/">URP和内建管线的一些编程上的差异</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-SubShader代码中的Tags 新增加了RenderPipeline关键字 SubShader的Tags段中需添加 &quot;RenderPipeline&quot; = &quot;UniversalPipeline&quot;语句段
-光照模式（LightMode）关键字的对应替换 Built-in URP 作用 ForwardBase UniversalForward ForwardAdd 开启关键字_ADDITIONAL_LIGHTS解决 ShadowCaster ShadowCaster MotionVectors 尚未支持 Always 不再支持 PrepassBase 不再支持 PrepassFinal 不再支持 Vertex 不再支持 VertexLMRGBM 不再支持 VertexLM 不再支持 URP新增 DepthOnly URP新增 Meta 用于烘焙光照贴图 URP新增 Universal2D 用于2D的前向渲染 URP新增 UniversalGBuffer Deferred Rendering（延迟渲染）中使用，目前URP不支持延迟渲染，暂时用以兼容HDRP URP新增 UniversalForwardOnly 用于在Deferred Rendering（延迟渲染）中，表示这个Pass使用Forward Rendering（前向渲染） 变体相关的指令 内建管线中，提供了multi_compile_fwdbase来编译所有ForwardBasePass所需要的变体，multi_compile_fwdadd来编译ForwardAddPass所需要的所有变体，类似如下代码：
-#pragma multi_compile_fwdbase 而在URP中，需要自己判断需要编辑哪些变体，用户又更大的灵活性，类似如下（参考Lit.Shader）：
-#pragma multi_compile _ _MAIN_LIGHT_SHADOWS #pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS #pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS #pragma multi_compile _ _SHADOWS_SOFT #pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE 参考网页 从 Builtin 管线升级到 URP</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-08-02T23:29:44&#43;08:00">August 02, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/srp_batcher/">Scriptable Render Pipeline (SRP) Batcher</a></h1>
-	<div class="entry__content">非SRP Batcher的Unity渲染管线怎么做 不多说，先看图：
-图中有个Unity Engine propeties，其实就是指一些不需要我们显式地写在shaderlab代码的Propeties块中的uniform shader变量。比如物体的变换矩阵等等。
-上图中的Unity Engine properties，以及各个材质球数据，存放在System Memory中。每当准备渲染物体时。CPU要将这些数据从System Memory中搜集起来，设置到shader的常量缓冲区中去（即CBUFFER，即从CPU传给GPU的数据，这些数据包含了shaderlab代码的Propeties块中的定义的变量）。在内部的渲染循环中，当渲染某个物体，发现需要用到一个新的材质数据时，CPU就将shader properties搜集起来。放到不同的常量缓冲区中去。这些常量缓冲区的个数，就取决着色器代码中声明了多少个。
-SRP Batcher 的工作原理： 在 Unity 中，您可以在一帧中的任何时间修改任何材质的属性。然而这种做法有一些缺点。例如，当在一次DrawCall调用种使用新材质时，有很多工作要做。因此，场景中的材质越多，Unity设置 GPU用到的数据所需要的 CPU时间就越多。传统的处理方式是减少DrawCalls的数量来优化CPU端的渲染成本，因为Unity在发出DrawCall之前要设置很多东西。真正的 CPU耗时是耗在这些设置操作，而不是来自 GPU的绘制本身。这些设置操作也只是Unity 需要推送到 GPU 命令缓冲区的一些字节数据而已。
-当场景中有大量的材质球，但是shader的变体比较少时，SRP Batcher就能进行优化。它的方法简而言之是：对Unity Engine properties，尽可能将其留存在GPU memory中。如果材质的内容没有发生变化的话，那么就不需要把这些数据上传到GPU memory上，从而省去了传统方式中的这部分CPU的工作。SRP Batcher专门定制了一些代码（dedicated code），可以快速地将Unity Engine properties更新到一个大的GPU 缓冲区（large GPU buffer） 中。如下图所示：
-在上图中，CPU仅仅需要处理built-in engine properties，也就是诸如物体的变换矩阵等等。这是因为物体可能会移动，所以它的世界变换矩阵等等会经常发生变化。而其他的材质数据就被持久化地存储在CBUFFER中，这是因为大部分可渲染物体，它进行渲染时，传给shader的一些uniform变量一般都是保持，不随着时间的变化而变化的。这也就是说，SRP Batcher通过两种手段加速渲染：
-每个可渲染物体的材质数据持久化存在显存中。 专门定制的代码管理一个大的逐物体GPU Buffer，即图中的Per Object large buffer块。 SRP Batcher compatibility 在任何给定的场景中，有些可渲染物体与 SRP Batcher 兼容，有些则不兼容。即使使用不兼容的对象，Unity 也能正确渲染场景。这是因为兼容对象使用SRP Batcher代码路径，而其他对象使用标准的SRP 代码路径。能使用SRP Batcher 代码路径渲染的可渲染对象必须是以下的类型：
-渲染对象必须是一个mesh或skinned mesh。它不能是粒子。 着色器必须与 SRP Batcher 兼容。HDRP 和 URP 中的所有光照和非光照着色器都符合此要求（这些着色器的粒子版本除外）。 可渲染对象不得使用 MaterialPropertyBlocks。 要使着色器与 SRP Batcher兼容，必须遵循以下几点：</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-06-01T16:05:07&#43;08:00">June 01, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/urp_shader_pass_tag/">URP Shader Pass Tag</a></h1>
-	<div class="entry__content">原文地址
-以下是将上述回答表格化的结果：
-URP 中 ShaderLab Pass 标签参考 1. LightMode 标签 标签值 描述 适用场景 UniversalForward 渲染对象几何体并计算所有光照贡献。 Forward 渲染路径 UniversalGBuffer 渲染对象几何体但不计算光照贡献。 Deferred 渲染路径 UniversalForwardOnly 渲染对象几何体并计算所有光照贡献，可在 Forward 和 Deferred 渲染路径中使用。 Deferred 渲染路径中需要 Forward 渲染的对象（如 Clear Coat 法线） DepthNormalsOnly 用于深度和法线预渲染，生成环境光遮蔽（AO）。 Deferred 渲染路径，结合 UniversalForwardOnly 使用 Universal2D 渲染对象并计算 2D 光照贡献。 2D 渲染器 ShadowCaster 渲染对象从光源视角的深度到阴影贴图或深度纹理。 阴影生成 DepthOnly 渲染从相机视角的深度信息到深度纹理。 深度渲染 Meta 仅在 Unity 编辑器烘焙光照贴图时执行，构建时会被剥离。 光照贴图烘焙 SRPDefaultUnlit 用于绘制额外 Pass（如对象轮廓），适用于 Forward 和 Deferred 渲染路径。 绘制额外 Pass（如轮廓） MotionVectors 用于支持运动矢量（Motion Vectors）的 Pass。 运动矢量渲染 2.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2021-06-01T16:02:07&#43;08:00">June 01, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>, 
-		<a class="meta-tags__link" href="/tags/urp/" rel="tag">URP</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/universal_additional_camera_data_component/">The Universal Additional Camera Data component</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-URP版本：8.2.0
-源参考网页
-通用附加相机数据组件（Universal Addtional Camera Data Component） 是通用渲染管线（URP）用于内部数据存储的组件。通用附加相机数据组件使URP可以扩展和覆盖Unity标准相机组件的功能和外观。
-在URP中，具有Camera组件的GameObject还必须具有通用附加摄影机数据组件。如果您的项目使用URP，则在创建Camera GameObject时，Unity会自动添加通用附加相机数据组件。您不能从带有Camera组件的game object中删除通用附加相机数据组件。
-如果您使用脚本来控制和自定义URP，则可以通过以下脚本访问摄像机的通用附加摄像机数据组件：
-var cameraData = camera.GetUniversalAdditionalCameraData(); 有关更多信息，请参见UniversalAdditionalCameraData API文档。如果需要通过脚本频繁访问通用附加摄像机数据组件，则应缓存对其的引用，以避免不必要的CPU工作。</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2020-01-15T19:21:39&#43;08:00">January 15, 2020</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-				<div class="card card--2col">
-					<article class="entry card__box block">
-	<h1 class="entry__title title-excerpt"><a class="entry__title-link" href="/post/unity3d/urp_doc/urp/">Universal Render Pipeline</a></h1>
-	<div class="entry__content">请尊重原作者的工作，转载时请务必注明转载自：www.xionggf.com
-1 URP的常见问题回答 URP和HDRP(High Definition Render Pipeline)不能混用。 可以从内建render pipeline转到URP。可以用升级器(upgrade)升级内建shader到URP shader。如果自定义的shader的话，需要手动去upgrade。 不能在运行期换pipeline asset。 URP和HDRP之间不能换用。 通过Package Manager获取URP的package 在URP Asset的【Player Setting】界面上可以找到Dynamic Batching的checkbox 选中材质球时，在Inspector面板中，找到Render Face选项，选择Both选项，即可开启Double Sided Global Illumination。 URP适用于各种平台，包括PC和mobile 在Built-in RP和URP功能对照表中，标识为Not Supported的功能，表示没有且不会在后续版本中实现。 如果在build URP工程时很慢，检查以下shader stripping是否设置对，要strip掉可以strip掉的shader。 缺省地，URP是在linear space中工作，可以在Player Setting中将其设置为在gamma space中工作。 通过创建ScriptableRendererFeature脚本，使用scriptable render pass可以扩展URP的功能。 2 URP Asset URP版本：8.2.0 源网页
-要使用URP asset，需要创建一个URP asset，并在【Graphic settings】界面将其赋值使用。URP asset控制图形渲染的功能，设置图形渲染的质量等级。URP asset本身是一个scriptable object。它继承自RenderPipelineAsset类。在一个工程中可以使用多个URP asset，并且可以在它们之间切换使用，比如有个URP asset是启用了阴影，另一个URP asset关闭了阴影。
-URP有以下几大类的控制选项，如下：
-General Quality Lighting Shadows Post-processing Advanced 下面的图显示了这几个控制选项的UI：
-2.1 General 这是一些用于控制管道渲染框架的核心部分常规设置
-属性名 描述 对应的编辑器变量名称 Depth Texture 当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个深度纹理_CameraDepthTexture。缺省地URP将把这个深度纹理交给你场景中的所有的摄像机去使用之。 m_RequireDepthTextureProp Opaque Texture 当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个不透明的深度纹理_CameraOpaqueTexture。缺省地，URP将这个深度纹理交给你场景中的所有的摄像机使用。这个深度纹理起的作用，就很类似于built-in render pipeline中的GrabPass。在URP渲染任意的透明状网格(transparent mesh)时，该纹理将会提供一个当前场景的一个快照(snapshot) m_RequireOpaqueTextureProp Opaque Downsampling 设置Opaque Texture属性的降采样方式，有None(不采样)、2倍线性过滤(2x Bilinear)，、4倍线性过滤(4x Bilinear)，、4倍盒状过滤(4x Bilinear)，其中4倍盒状过滤产生一种轻柔羽化的效果 m_OpaqueDownsamplingProp Terrain Holes 禁用此项的话，在build包的时候，URP将会移出所有的Terrain hole shader变体，将会减少build包的时间 &ndash; 2.</div>
-	<div class="entry__meta meta mt tar">
-	<time class="entry__meta-published meta-published" datetime="2020-01-15T19:21:39&#43;08:00">January 15, 2020</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>, 
-		<a class="meta-tags__link" href="/tags/srp/" rel="tag">SRP</a>
-	</span>
-</div>
-	</div>
-</article>
-				</div>
-			
-		</div>
-	</main>
-	
+    &lt;!-- 表头 --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;margin:0 0 6px 0;font-size:12px;color:#6B7280;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#F0F4FB;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:6px 10px;box-sizing:border-box;font-weight:600;color:#1A1B1C;&#34;&gt;旧：内置管线 Camera 的 Clear Flags&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#F0F4FB;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:6px 10px;box-sizing:border-box;font-weight:600;color:#1A1B1C;&#34;&gt;新：URP 中在哪里配置&lt;/div&gt;
+    &lt;/div&gt;
 
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="/js/custom.js"></script>
-</body>
-</html>
+    &lt;!-- 行1 Skybox --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Skybox&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;清除为天空盒&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#9BBBF4;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Base 相机 · Environment → Background Type = Skybox&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;清除颜色缓冲为天空盒（仅 Base 相机显示此项）&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 行2 Solid Color --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Solid Color&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;清除为纯色&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#9BBBF4;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Base 相机 · Environment → Background Type = Solid Color&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;再选 Background 颜色（RGBA 设 0,0,0,0 可做透明背景）&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 行3 Depth Only --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#EEF7F3;border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Depth Only&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;只清深度、保留颜色（如武器叠加到场景上）&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#52C41A;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#EEF7F3;border:1px solid rgba(82,196,26,0.35);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Overlay 相机（相机堆叠）· Rendering → Clear Depth 勾选&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;把相机加进 Base 的 Stack，Render Type 设 Overlay；勾上后只清深度、保留已有颜色——功能等价&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 行4 Don&#39;t Clear --&gt;
+    &lt;div style=&#34;display:flex;gap:8px;align-items:stretch;margin:0 0 6px 0;flex-wrap:wrap;&#34;&gt;
+      &lt;div style=&#34;flex:1 1 160px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Don&#39;t Clear&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;什么缓冲区都不清&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div style=&#34;flex:0 0 22px;display:flex;align-items:center;justify-content:center;color:#9BBBF4;font-size:16px;font-weight:600;&#34;&gt;→&lt;/div&gt;
+      &lt;div style=&#34;flex:1 1 200px;min-width:0;background:#FFFFFF;border:0.5px solid rgba(0,0,0,0.08);border-radius:8px;padding:8px 10px;box-sizing:border-box;&#34;&gt;
+        &lt;div style=&#34;font-size:13px;font-weight:600;&#34;&gt;Base 相机 · Environment → Background Type = Uninitialized&lt;/div&gt;
+        &lt;div style=&#34;font-size:12px;color:#6B7280;&#34;&gt;不初始化颜色缓冲（近似替代；深度仍会清）。较新版本才有此选项&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;!-- 底部说明 --&gt;
+    &lt;div style=&#34;background:linear-gradient(135deg, rgba(163,213,232,0.18), rgba(163,213,232,0.30));border-radius:10px;padding:10px 12px;margin:10px 0 0 0;box-sizing:border-box;&#34;&gt;
+      &lt;div style=&#34;font-size:12.5px;line-height:1.6;&#34;&gt;
+        &lt;span style=&#34;font-weight:600;&#34;&gt;两个关键点：&lt;/span&gt;&lt;br/&gt;
+        1️⃣ 只有 &lt;span style=&#34;font-weight:600;&#34;&gt;Overlay 相机&lt;/span&gt; 才有“清深度、不清颜色”的行为（Clear Depth 勾选），这就是 Depth Only 的现代替代；&lt;br/&gt;
+        2️⃣ &lt;span style=&#34;font-weight:600;&#34;&gt;Base 相机&lt;/span&gt; 的深度缓冲每帧固定清除，你只能通过 Background Type 控制颜色缓冲。&lt;br/&gt;
+        ⚠️ 脚本里的 &lt;span style=&#34;font-family:monospace;background:rgba(0,0,0,0.06);padding:0 4px;border-radius:4px;&#34;&gt;camera.clearFlags = CameraClearFlags.Depth&lt;/span&gt; 是内置管线时代的旧 API，URP 中建议不要依赖。
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/html&gt;
+</code></pre><p><strong>补充说明（版本相关）</strong>：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2026-01-15T19:21:39+08:00>January 15, 2026</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/urp_doc/diff_between_urp_and_builtin/>URP和内建管线的一些编程上的差异</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=subshader代码中的tags>SubShader代码中的Tags</h2><h3 id=新增加了renderpipeline关键字>新增加了RenderPipeline关键字</h3><p>SubShader的Tags段中需添加 <code>"RenderPipeline" = "UniversalPipeline"</code>语句段</p><h3 id=光照模式lightmode关键字的对应替换>光照模式（LightMode）关键字的对应替换</h3><table><thead><tr><th style=text-align:center>Built-in</th><th style=text-align:center>URP</th><th style=text-align:left>作用</th></tr></thead><tbody><tr><td style=text-align:center><code>ForwardBase</code></td><td style=text-align:center><code>UniversalForward</code></td><td></td></tr><tr><td style=text-align:center><code>ForwardAdd</code></td><td style=text-align:center>开启关键字<code>_ADDITIONAL_LIGHTS</code>解决</td><td></td></tr><tr><td style=text-align:center><code>ShadowCaster</code></td><td style=text-align:center><code>ShadowCaster</code></td><td></td></tr><tr><td style=text-align:center><code>MotionVectors</code></td><td style=text-align:center>尚未支持</td><td></td></tr><tr><td style=text-align:center><code>Always</code></td><td style=text-align:center>不再支持</td><td></td></tr><tr><td style=text-align:center><code>PrepassBase</code></td><td style=text-align:center>不再支持</td><td></td></tr><tr><td style=text-align:center><code>PrepassFinal</code></td><td style=text-align:center>不再支持</td><td></td></tr><tr><td style=text-align:center><code>Vertex</code></td><td style=text-align:center>不再支持</td><td></td></tr><tr><td style=text-align:center><code>VertexLMRGBM</code></td><td style=text-align:center>不再支持</td><td></td></tr><tr><td style=text-align:center><code>VertexLM</code></td><td style=text-align:center>不再支持</td><td></td></tr><tr><td style=text-align:center>URP新增</td><td style=text-align:center><code>DepthOnly</code></td><td></td></tr><tr><td style=text-align:center>URP新增</td><td style=text-align:center><code>Meta</code></td><td style=text-align:left>用于烘焙光照贴图</td></tr><tr><td style=text-align:center>URP新增</td><td style=text-align:center><code>Universal2D</code></td><td style=text-align:left>用于2D的前向渲染</td></tr><tr><td style=text-align:center>URP新增</td><td style=text-align:center><code>UniversalGBuffer</code></td><td style=text-align:left>Deferred Rendering（延迟渲染）中使用，目前URP不支持延迟渲染，暂时用以兼容HDRP</td></tr><tr><td style=text-align:center>URP新增</td><td style=text-align:center><code>UniversalForwardOnly</code></td><td style=text-align:left>用于在Deferred Rendering（延迟渲染）中，表示这个Pass使用Forward Rendering（前向渲染）</td></tr></tbody></table><h3 id=变体相关的指令>变体相关的指令</h3><p>内建管线中，提供了<code>multi_compile_fwdbase</code>来编译所有<strong>ForwardBasePass</strong>所需要的变体，<code>multi_compile_fwdadd</code>来编译<strong>ForwardAddPass</strong>所需要的所有变体，类似如下代码：</p><pre tabindex=0><code>#pragma multi_compile_fwdbase
+</code></pre><p>而在URP中，需要自己判断需要编辑哪些变体，用户又更大的灵活性，类似如下（参考Lit.Shader）：</p><pre tabindex=0><code>#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
+#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
+#pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+#pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
+#pragma multi_compile _ _SHADOWS_SOFT
+#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
+</code></pre><h2 id=参考网页>参考网页</h2><p><a href=https://zhuanlan.zhihu.com/p/360566324>从 Builtin 管线升级到 URP</a></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-08-02T23:29:44+08:00>August 02, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/urp_doc/srp_batcher/>Scriptable Render Pipeline (SRP) Batcher</a></h1><div class=entry__content><h2 id=非srp-batcher的unity渲染管线怎么做>非SRP Batcher的Unity渲染管线怎么做</h2><p>不多说，先看图：</p><p><img src=/image/u3d/u3d_srp/urp_doc/SRP-Batcher-OFF.png alt="SRP Batcher OFF"></p><p>图中有个<code>Unity Engine propeties</code>，其实就是指一些不需要我们显式地写在shaderlab代码的Propeties块中的uniform shader变量。比如物体的变换矩阵等等。</p><p>上图中的<code>Unity Engine properties</code>，以及各个材质球数据，存放在System Memory中。每当准备渲染物体时。CPU要将这些数据从System Memory中搜集起来，设置到shader的常量缓冲区中去（即CBUFFER，即从CPU传给GPU的数据，这些数据包含了shaderlab代码的Propeties块中的定义的变量）。在内部的渲染循环中，当渲染某个物体，发现需要用到一个新的材质数据时，CPU就将shader properties搜集起来。放到不同的常量缓冲区中去。这些常量缓冲区的个数，就取决着色器代码中声明了多少个。</p><h2 id=srp-batcher-的工作原理>SRP Batcher 的工作原理：</h2><p>在 Unity 中，您可以在一帧中的任何时间修改任何材质的属性。然而这种做法有一些缺点。例如，当在一次DrawCall调用种使用新材质时，有很多工作要做。因此，场景中的材质越多，Unity设置 GPU用到的数据所需要的 CPU时间就越多。传统的处理方式<strong>是减少DrawCalls的数量来优化CPU端的渲染成本</strong>，因为Unity在发出DrawCall之前要设置很多东西。真正的 CPU耗时是耗在这些设置操作，而不是来自 GPU的绘制本身。这些设置操作也只是Unity 需要推送到 GPU 命令缓冲区的一些字节数据而已。</p><p>当场景中有大量的材质球，但是shader的变体比较少时，SRP Batcher就能进行优化。它的方法简而言之是：对Unity Engine properties，尽可能将其留存在GPU memory中。如果材质的内容没有发生变化的话，那么就不需要把这些数据上传到GPU memory上，从而省去了传统方式中的这部分CPU的工作。SRP Batcher专门定制了一些代码（<strong>dedicated code</strong>），可以快速地将<code>Unity Engine properties</code>更新到一个<strong>大的GPU 缓冲区（large GPU buffer）</strong> 中。如下图所示：</p><p><img src=/image/u3d/u3d_srp/urp_doc/SRP_Batcher_loop.png alt="SRP Bathcer loop"></p><p>在上图中，CPU仅仅需要处理<strong>built-in engine properties</strong>，也就是诸如<strong>物体的变换矩阵</strong>等等。这是因为物体可能会移动，所以它的世界变换矩阵等等会经常发生变化。而其他的材质数据就被持久化地存储在CBUFFER中，这是因为大部分可渲染物体，它进行渲染时，传给shader的一些uniform变量一般都是保持，不随着时间的变化而变化的。这也就是说，SRP Batcher通过两种手段加速渲染：</p><ul><li>每个可渲染物体的材质数据持久化存在显存中。</li><li>专门定制的代码管理一个大的逐物体GPU Buffer，即图中的<strong>Per Object large buffer</strong>块。</li></ul><h2 id=srp-batcher-compatibility>SRP Batcher compatibility</h2><p>在任何给定的场景中，有些可渲染物体与 SRP Batcher 兼容，有些则不兼容。即使使用不兼容的对象，Unity 也能正确渲染场景。这是因为兼容对象使用SRP Batcher代码路径，而其他对象使用标准的SRP 代码路径。能使用SRP Batcher 代码路径渲染的可渲染对象必须是以下的类型：</p><ol><li>渲染对象必须是一个<strong>mesh</strong>或<strong>skinned mesh</strong>。它不能是粒子。</li><li>着色器必须与 SRP Batcher 兼容。HDRP 和 URP 中的所有光照和非光照着色器都符合此要求（这些着色器的粒子版本除外）。</li><li>可渲染对象不得使用 MaterialPropertyBlocks。</li></ol><p>要使着色器与 SRP Batcher兼容，必须遵循以下几点：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-06-01T16:05:07+08:00>June 01, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/urp_doc/urp_shader_pass_tag/>URP Shader Pass Tag</a></h1><div class=entry__content><p><a href=https://docs.unity3d.com/6000.0/Documentation/Manual/urp/urp-shaders/urp-shaderlab-pass-tags.html>原文地址</a></p><p>以下是将上述回答表格化的结果：</p><hr><h3 id=urp-中-shaderlab-pass-标签参考><strong>URP 中 ShaderLab Pass 标签参考</strong></h3><h4 id=1-lightmode-标签><strong>1. LightMode 标签</strong></h4><table><thead><tr><th><strong>标签值</strong></th><th><strong>描述</strong></th><th><strong>适用场景</strong></th></tr></thead><tbody><tr><td><strong>UniversalForward</strong></td><td>渲染对象几何体并计算所有光照贡献。</td><td><strong>Forward 渲染路径</strong></td></tr><tr><td><strong>UniversalGBuffer</strong></td><td>渲染对象几何体但不计算光照贡献。</td><td><strong>Deferred 渲染路径</strong></td></tr><tr><td><strong>UniversalForwardOnly</strong></td><td>渲染对象几何体并计算所有光照贡献，可在 Forward 和 Deferred 渲染路径中使用。</td><td>Deferred 渲染路径中需要 Forward 渲染的对象（如 Clear Coat 法线）</td></tr><tr><td><strong>DepthNormalsOnly</strong></td><td>用于深度和法线预渲染，生成环境光遮蔽（AO）。</td><td><strong>Deferred 渲染路径</strong>，结合 <code>UniversalForwardOnly</code> 使用</td></tr><tr><td><strong>Universal2D</strong></td><td>渲染对象并计算 2D 光照贡献。</td><td><strong>2D 渲染器</strong></td></tr><tr><td><strong>ShadowCaster</strong></td><td>渲染对象从光源视角的深度到阴影贴图或深度纹理。</td><td>阴影生成</td></tr><tr><td><strong>DepthOnly</strong></td><td>渲染从相机视角的深度信息到深度纹理。</td><td>深度渲染</td></tr><tr><td><strong>Meta</strong></td><td>仅在 Unity 编辑器烘焙光照贴图时执行，构建时会被剥离。</td><td>光照贴图烘焙</td></tr><tr><td><strong>SRPDefaultUnlit</strong></td><td>用于绘制额外 Pass（如对象轮廓），适用于 Forward 和 Deferred 渲染路径。</td><td>绘制额外 Pass（如轮廓）</td></tr><tr><td><strong>MotionVectors</strong></td><td>用于支持运动矢量（Motion Vectors）的 Pass。</td><td>运动矢量渲染</td></tr></tbody></table><hr><h4 id=2-universalmaterialtype-标签><strong>2. UniversalMaterialType 标签</strong></h4><table><thead><tr><th><strong>标签值</strong></th><th><strong>描述</strong></th><th><strong>适用场景</strong></th></tr></thead><tbody><tr><td><strong>Lit</strong></td><td>表示着色器类型为 <strong>Lit</strong>（PBR 高光模型），在 G-buffer Pass 中使用模板标记使用 Lit 着色器的像素。</td><td><strong>Deferred 渲染路径</strong></td></tr><tr><td><strong>SimpleLit</strong></td><td>表示着色器类型为 <strong>SimpleLit</strong>（Blinn-Phong 高光模型），在 G-buffer Pass 中使用模板标记使用 SimpleLit 着色器的像素。</td><td><strong>Deferred 渲染路径</strong></td></tr></tbody></table><p>URP 不支持以下的内建管线所支持的 LightMode 标签：<code>Always</code>, <code>ForwardAdd</code>, <code>PrepassBase</code>, <code>PrepassFinal</code>, <code>Vertex</code>, <code>VertexLMRGBM</code>, <code>VertexLM</code>。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-06-01T16:02:07+08:00>June 01, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a>,
+<a class=meta-tags__link href=/tags/urp/ rel=tag>URP</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/urp_doc/urp/>Universal Render Pipeline</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h1 id=1-urp的常见问题回答>1 URP的常见问题回答</h1><ol><li>URP和HDRP(High Definition Render Pipeline)不能混用。</li><li>可以从内建render pipeline转到URP。可以用升级器(upgrade)升级内建shader到URP shader。如果自定义的shader的话，需要手动去upgrade。</li><li>不能在运行期换pipeline asset。</li><li>URP和HDRP之间不能换用。</li><li>通过Package Manager获取URP的package</li><li>在URP Asset的【Player Setting】界面上可以找到<strong>Dynamic Batching</strong>的checkbox</li><li>选中材质球时，在<strong>Inspector</strong>面板中，找到<strong>Render Face</strong>选项，选择<strong>Both</strong>选项，即可开启<strong>Double Sided Global Illumination</strong>。</li><li>URP适用于各种平台，包括PC和mobile</li><li>在<a href=https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@7.1/manual/universalrp-builtin-feature-comparison.html>Built-in RP和URP功能对照表</a>中，标识为<code>Not Supported</code>的功能，表示没有且不会在后续版本中实现。</li><li>如果在build URP工程时很慢，检查以下shader stripping是否设置对，要strip掉可以strip掉的shader。</li><li>缺省地，URP是在linear space中工作，可以在Player Setting中将其设置为在gamma space中工作。</li><li>通过创建ScriptableRendererFeature脚本，使用scriptable render pass可以扩展URP的功能。</li></ol><h1 id=2-urp-asset>2 URP Asset</h1><p>URP版本：8.2.0
+<a href=https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@8.2/manual/universalrp-asset.html>源网页</a></p><p>要使用URP asset，需要创建一个URP asset，并在【Graphic settings】界面将其赋值使用。URP asset控制图形渲染的功能，设置图形渲染的质量等级。URP asset本身是一个<strong>scriptable object</strong>。它继承自<code>RenderPipelineAsset</code>类。在一个工程中可以使用多个URP asset，并且可以在它们之间切换使用，比如有个URP asset是启用了阴影，另一个URP asset关闭了阴影。</p><p>URP有以下几大类的控制选项，如下：</p><ul><li>General</li><li>Quality</li><li>Lighting</li><li>Shadows</li><li>Post-processing</li><li>Advanced</li></ul><p>下面的图显示了这几个控制选项的UI：</p><p><img src=/image/u3d/u3d_srp/urp_doc/urp_asset_ui.jpg alt></p><h2 id=21-general>2.1 General</h2><p>这是一些用于控制管道渲染框架的核心部分常规设置</p><table><thead><tr><th style=text-align:center>属性名</th><th style=text-align:left>描述</th><th style=text-align:center>对应的编辑器变量名称</th></tr></thead><tbody><tr><td style=text-align:center>Depth Texture</td><td style=text-align:left>当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个深度纹理<code>_CameraDepthTexture</code>。缺省地URP将把这个深度纹理交给你场景中的所有的摄像机去使用之。</td><td style=text-align:center>m_RequireDepthTextureProp</td></tr><tr><td style=text-align:center>Opaque Texture</td><td style=text-align:left>当在一个摄像机对象的inspector界面上启用此项时，URP将会在shader中创建一个<strong>不透明的深度纹理</strong><code>_CameraOpaqueTexture</code>。缺省地，URP将这个深度纹理交给你场景中的所有的摄像机使用。这个深度纹理起的作用，就很类似于built-in render pipeline中的GrabPass。在URP渲染任意的透明状网格(transparent mesh)时，该纹理将会提供一个当前场景的一个<strong>快照</strong>(snapshot)</td><td style=text-align:center>m_RequireOpaqueTextureProp</td></tr><tr><td style=text-align:center>Opaque Downsampling</td><td style=text-align:left>设置<strong>Opaque Texture</strong>属性的降采样方式，有<strong>None(不采样)</strong>、<strong>2倍线性过滤(2x Bilinear)</strong>，、<strong>4倍线性过滤(4x Bilinear)</strong>，、<strong>4倍盒状过滤(4x Bilinear)</strong>，其中4倍盒状过滤产生一种轻柔羽化的效果</td><td style=text-align:center>m_OpaqueDownsamplingProp</td></tr><tr><td style=text-align:center>Terrain Holes</td><td style=text-align:left>禁用此项的话，在build包的时候，URP将会移出所有的Terrain hole shader变体，将会减少build包的时间</td><td style=text-align:center>&ndash;</td></tr></tbody></table><h2 id=22-quality>2.2 Quality</h2><p>Qulity项相关管的属性控制URP的渲染质量级别。通过控制这些属性，可以在低端硬件上提高性能，在高端硬件上提高图形质量。如果要为不同的硬件设置不同的设置，则可以在多个Universal Render Pipeline资源中配置这些设置，然后根据需要在这些设置中切换。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-01-15T19:21:39+08:00>January 15, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/camera/universal_additional_camera_data_component/>UniversalAdditionalCameraData组件</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>URP版本：8.2.0</p><p><a href=https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@8.2/manual/universal-additional-camera-data.html>源参考网页</a></p><p><strong>通用附加相机数据组件（Universal Addtional Camera Data Component）</strong> 是通用渲染管线（URP）用于<strong>内部数据存储</strong>的组件。<strong>通用附加相机数据组件</strong>使URP可以扩展和覆盖Unity标准相机组件的功能和外观。</p><p>在URP中，具有Camera组件的GameObject还必须具有<strong>通用附加摄影机数据</strong>组件。如果您的项目使用URP，则在创建Camera GameObject时，Unity会自动添加<strong>通用附加相机数据组件</strong>。您不能从带有Camera组件的game object中删除<strong>通用附加相机数据</strong>组件。</p><p>如果您使用脚本来控制和自定义URP，则可以通过以下脚本访问摄像机的<strong>通用附加摄像机数据</strong>组件：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>var</span> cameraData <span style=color:#1f2328>=</span> camera<span style=color:#1f2328>.</span>GetUniversalAdditionalCameraData<span style=color:#1f2328>();</span>
+</span></span></code></pre></div><p>有关更多信息，请参见<a href=https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@8.2/api/UnityEngine.Rendering.Universal.UniversalAdditionalCameraData.html>UniversalAdditionalCameraData</a> API文档。如果需要通过脚本频繁访问通用<strong>附加摄像机数据组件</strong>，则应缓存对其的引用，以避免不必要的CPU工作。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-01-15T19:21:39+08:00>January 15, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a></span></div></div></article></div></div></main></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src=/js/custom.js></script></body></html>

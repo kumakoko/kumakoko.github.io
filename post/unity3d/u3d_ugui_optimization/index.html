@@ -1,327 +1,67 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>UGUI优化 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="UGUI优化">
-		<meta property="og:title" content="UGUI优化" />
-<meta property="og:description" content="UGUI优化" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/unity3d/u3d_ugui_optimization/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2021-03-06T15:52:57+08:00" />
-<meta property="article:modified_time" content="2021-03-06T15:52:57+08:00" />
-
-
-		<meta itemprop="name" content="UGUI优化">
-<meta itemprop="description" content="UGUI优化"><meta itemprop="datePublished" content="2021-03-06T15:52:57+08:00" />
-<meta itemprop="dateModified" content="2021-03-06T15:52:57+08:00" />
-<meta itemprop="wordCount" content="77">
-<meta itemprop="keywords" content="Unity3D," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">UGUI优化</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2021-03-06T15:52:57&#43;08:00">March 06, 2021</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/unity3d/" rel="category">Unity3D</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/unity3d/" rel="tag">Unity3D</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">UGUI优化</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li><a href="#影响性能的要素">影响性能的要素</a>
-      <ul>
-        <li><a href="#像素填充率fillrate">像素填充率（FillRate）</a></li>
-        <li><a href="#draw-call">Draw call</a></li>
-      </ul>
-    </li>
-    <li><a href="#其他优化策略汇总">其他优化策略汇总</a>
-      <ul>
-        <li><a href="#少用mask组件">少用Mask组件</a></li>
-        <li><a href="#字体">字体</a></li>
-        <li><a href="#界面切换">界面切换</a></li>
-      </ul>
-    </li>
-    <li><a href="#各种界面隐藏方案的优劣分析">各种界面隐藏方案的优劣分析</a></li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<h2 id="影响性能的要素">影响性能的要素</h2>
-<h3 id="像素填充率fillrate">像素填充率（FillRate）</h3>
-<ul>
-<li>
-<p>概念：指每秒每秒显卡能填充的像素数</p>
-</li>
-<li>
-<p>填充率和over draw息息相关，over draw由GPU影响</p>
-</li>
-<li>
-<p>影响像素填充率的原因</p>
-<ul>
-<li>
-<p>半透明物体过多</p>
-<ul>
-<li>绘制半透明物体需要：</li>
-<li>1 开启ALPHA_BLEND</li>
-<li>2 关闭Z TEST和Z WRITE</li>
-</ul>
-</li>
-<li>
-<p>同一像素的over draw过高，
-即重复绘制次数过多</p>
-</li>
-</ul>
-</li>
-<li>
-<p>优化方法</p>
-<ul>
-<li>对于Alpha值为0，但是又要响应输入的不可见物体，采用
-无绘制但能响应RayCast的组件来处理</li>
-<li>减少填充区域的覆盖，比如一个矩形区域，它的周围空白不
-可见区域比较多，那可以考虑把矩形转化为若干个三角形</li>
-</ul>
-</li>
-</ul>
-<h3 id="draw-call">Draw call</h3>
-<ul>
-<li>
-<p>draw call受CPU影响</p>
-</li>
-<li>
-<p>UGUI引入了canvas的概念，提供给相同材质的
-界面组件进行合批，减少draw call</p>
-</li>
-<li>
-<p>优化方法</p>
-<ul>
-<li>使用同一组材质球的UI组件，放置在同一个canvas下</li>
-<li>动静分离：canvas可以分组，如果某个界面，存在着会动
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>UGUI优化 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="UGUI优化"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/u3d_ugui_optimization/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="UGUI优化"><meta property="og:description" content="UGUI优化"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-03-06T15:52:57+08:00"><meta property="article:modified_time" content="2021-03-06T15:52:57+08:00"><meta property="article:tag" content="Unity3D"><meta itemprop=name content="UGUI优化"><meta itemprop=description content="UGUI优化"><meta itemprop=datePublished content="2021-03-06T15:52:57+08:00"><meta itemprop=dateModified content="2021-03-06T15:52:57+08:00"><meta itemprop=wordCount content="77"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>UGUI优化</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2021-03-06T15:52:57+08:00>March 06, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a></span></div></div><h1 class=entry__title>UGUI优化</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#影响性能的要素>影响性能的要素</a><ul><li><a href=#像素填充率fillrate>像素填充率（FillRate）</a></li><li><a href=#draw-call>Draw call</a></li></ul></li><li><a href=#其他优化策略汇总>其他优化策略汇总</a><ul><li><a href=#少用mask组件>少用Mask组件</a></li><li><a href=#字体>字体</a></li><li><a href=#界面切换>界面切换</a></li></ul></li><li><a href=#各种界面隐藏方案的优劣分析>各种界面隐藏方案的优劣分析</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><h2 id=影响性能的要素>影响性能的要素</h2><h3 id=像素填充率fillrate>像素填充率（FillRate）</h3><ul><li><p>概念：指每秒每秒显卡能填充的像素数</p></li><li><p>填充率和over draw息息相关，over draw由GPU影响</p></li><li><p>影响像素填充率的原因</p><ul><li><p>半透明物体过多</p><ul><li>绘制半透明物体需要：</li><li>1 开启ALPHA_BLEND</li><li>2 关闭Z TEST和Z WRITE</li></ul></li><li><p>同一像素的over draw过高，
+即重复绘制次数过多</p></li></ul></li><li><p>优化方法</p><ul><li>对于Alpha值为0，但是又要响应输入的不可见物体，采用
+无绘制但能响应RayCast的组件来处理</li><li>减少填充区域的覆盖，比如一个矩形区域，它的周围空白不
+可见区域比较多，那可以考虑把矩形转化为若干个三角形</li></ul></li></ul><h3 id=draw-call>Draw call</h3><ul><li><p>draw call受CPU影响</p></li><li><p>UGUI引入了canvas的概念，提供给相同材质的
+界面组件进行合批，减少draw call</p></li><li><p>优化方法</p><ul><li>使用同一组材质球的UI组件，放置在同一个canvas下</li><li>动静分离：canvas可以分组，如果某个界面，存在着会动
 的元素和不会动的元素，则考虑分成两组。但canvas如果
 先SetActive(false)，再SetActive(true)。则需要ForceUpdate
-它强制重绘</li>
-<li>绘制顺序不要穿插，比如A组件用了A材质球，B组件用了B材
+它强制重绘</li><li>绘制顺序不要穿插，比如A组件用了A材质球，B组件用了B材
 质球，C组件用了A材质球，如果不存在相互遮盖关系的话，
 那么应该在scene hierachy窗口中，将三个组件按上下顺序
-排序为A,C,B</li>
-</ul>
-</li>
-</ul>
-<h2 id="其他优化策略汇总">其他优化策略汇总</h2>
-<h3 id="少用mask组件">少用Mask组件</h3>
-<ul>
-<li>原理：Mask组件会额外消耗多一个Drawcall来创建遮罩做像素剔除。</li>
-<li>Mask组件不利于层级合并。原本同一图集里的ui可以合并层级，
+排序为A,C,B</li></ul></li></ul><h2 id=其他优化策略汇总>其他优化策略汇总</h2><h3 id=少用mask组件>少用Mask组件</h3><ul><li>原理：Mask组件会额外消耗多一个Drawcall来创建遮罩做像素剔除。</li><li>Mask组件不利于层级合并。原本同一图集里的ui可以合并层级，
 仅需一个Drawcall渲染，如果加入Mask，就会将一个ui整体分割
 成了Mask下的子ui与其他ui，两者只能各自进行层级合并，至少
-要两个Drawcall。</li>
-</ul>
-<h3 id="字体">字体</h3>
-<ul>
-<li>尽量减少字体特效，outline，渐变等，可以使用本身带有描边的字体文件</li>
-<li>，尽量统一字体风格，减少不必要的额外字体文件，不用richtext</li>
-</ul>
-<h3 id="界面切换">界面切换</h3>
-<ul>
-<li>原理：增加一个新层，并且将Camera的Culling Mask中取消勾选，
+要两个Drawcall。</li></ul><h3 id=字体>字体</h3><ul><li>尽量减少字体特效，outline，渐变等，可以使用本身带有描边的字体文件</li><li>，尽量统一字体风格，减少不必要的额外字体文件，不用richtext</li></ul><h3 id=界面切换>界面切换</h3><ul><li>原理：增加一个新层，并且将Camera的Culling Mask中取消勾选，
 即不渲染该层，UI界面在切换时，将其Canvas所在Layer设置为该
-层，看起来就像被隐藏了</li>
-<li>优点：于切换时基本没有开销，也不会产生多余的 Draw Call</li>
-<li>缺点：隐藏时依然还会有一定的持续开销，而其对应的Mesh
-也会始终存在于内存中。</li>
-</ul>
-<h2 id="各种界面隐藏方案的优劣分析">各种界面隐藏方案的优劣分析</h2>
-<ul>
-<li><strong>SetActive</strong>产生GC,会导致画布丢弃它的VBO数据，从而重建和重新批处理，操作频繁时GC导致CPU占用可能会卡顿。</li>
-<li><strong>enable Canvas</strong>禁用画布,能降低dc，避免SetActive的GC开销，但测试依旧会有SendWillRenderCanvases函数的调用开销。</li>
-<li><strong>移出RootCanvas</strong>，似乎没有多大优化，理论上会降低dc且不会引起重建。</li>
-<li>将单独界面使用Canvas，绑定一个Camera在隐藏时设置Layer进行CullingMask蔽，<strong>同时禁用GraphicsRaycaster</strong>，能避免重建，但随着canvas增多dc会增多，同时界面较时管理比较费力，注意动态UI的事件。</li>
-<li><strong>设置Canvas Group 的alpha为0</strong>：依旧会被渲染，但能避免setactive带来的巨大开销，且容易操作。</li>
-<li><strong>更改Scale的值为0</strong>：点信息被清除，这样不会减少dc开销，同时还会引起重建，不采用。</li>
-<li>设置一个Canvas作为根节点，将其layer设置为相机屏蔽的层级，同时禁用GraphicsRaycaster，当需要隐藏某个界面时将其以该Canvas作为根节点移到其下，这样能避免重建同时减少dc，但会有一些SetParent带来的消耗。目前采用该方案。</li>
-<li>如果只是隐藏某个Graphic类的，可以考虑获取canvasRenderer.cull 设置为true (需要注意的是，在使用
-RectMask2D时，该属性会被修改，一般可在非使用RectMask2D的时候代码处理)</li>
-</ul>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/unity3d/">Unity3D</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_single_channel_texture/">杂谈Unity3D的single channel texture</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/animation/animancer_transition/">Animancer的Transition参数手册（翻译）</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/animation/animancer_state/">Animancer的States（翻译）</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/animation/u3d_animation_state_detail/">Unity3D的Animator中的animation transition参数细节</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/unity3d/u3d_color_space/">Unity3D的Color Space细节解析</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+层，看起来就像被隐藏了</li><li>优点：于切换时基本没有开销，也不会产生多余的 Draw Call</li><li>缺点：隐藏时依然还会有一定的持续开销，而其对应的Mesh
+也会始终存在于内存中。</li></ul><h2 id=各种界面隐藏方案的优劣分析>各种界面隐藏方案的优劣分析</h2><ul><li><strong>SetActive</strong>产生GC,会导致画布丢弃它的VBO数据，从而重建和重新批处理，操作频繁时GC导致CPU占用可能会卡顿。</li><li><strong>enable Canvas</strong>禁用画布,能降低dc，避免SetActive的GC开销，但测试依旧会有SendWillRenderCanvases函数的调用开销。</li><li><strong>移出RootCanvas</strong>，似乎没有多大优化，理论上会降低dc且不会引起重建。</li><li>将单独界面使用Canvas，绑定一个Camera在隐藏时设置Layer进行CullingMask蔽，<strong>同时禁用GraphicsRaycaster</strong>，能避免重建，但随着canvas增多dc会增多，同时界面较时管理比较费力，注意动态UI的事件。</li><li><strong>设置Canvas Group 的alpha为0</strong>：依旧会被渲染，但能避免setactive带来的巨大开销，且容易操作。</li><li><strong>更改Scale的值为0</strong>：点信息被清除，这样不会减少dc开销，同时还会引起重建，不采用。</li><li>设置一个Canvas作为根节点，将其layer设置为相机屏蔽的层级，同时禁用GraphicsRaycaster，当需要隐藏某个界面时将其以该Canvas作为根节点移到其下，这样能避免重建同时减少dc，但会有一些SetParent带来的消耗。目前采用该方案。</li><li>如果只是隐藏某个Graphic类的，可以考虑获取canvasRenderer.cull 设置为true (需要注意的是，在使用
+RectMask2D时，该属性会被修改，一般可在非使用RectMask2D的时候代码处理)</li></ul></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/u3d_single_channel_texture/>杂谈Unity3D的single channel texture</a></li><li class=related__item><a class=related__link href=/post/unity3d/animation/animancer_transition/>Animancer的Transition参数手册（翻译）</a></li><li class=related__item><a class=related__link href=/post/unity3d/animation/animancer_state/>Animancer的States（翻译）</a></li><li class=related__item><a class=related__link href=/post/unity3d/animation/u3d_animation_state_detail/>Unity3D的Animator中的animation transition参数细节</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_color_space/>Unity3D的Color Space细节解析</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>

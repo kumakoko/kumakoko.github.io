@@ -1,326 +1,154 @@
-<!DOCTYPE html>
-<html class="no-js" lang="zh-cn">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="theme-color" content="#1b1b1b">
-	<title>Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3 | XGF</title>
-	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="#《Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3">
-		<meta property="og:title" content="Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3" />
-<meta property="og:description" content="#《Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://www.xionggf.com/post/lua/cocos2d_lua_core/lua_advanced_3/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2017-10-22T18:08:30+08:00" />
-<meta property="article:modified_time" content="2017-10-22T18:08:30+08:00" />
-
-
-		<meta itemprop="name" content="Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3">
-<meta itemprop="description" content="#《Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3"><meta itemprop="datePublished" content="2017-10-22T18:08:30+08:00" />
-<meta itemprop="dateModified" content="2017-10-22T18:08:30+08:00" />
-<meta itemprop="wordCount" content="211">
-<meta itemprop="keywords" content="Lua," />
-	<link rel="stylesheet" href="/css/bundle.css">
-	<link rel="stylesheet" href="/css/custom.css">
-	<link rel="stylesheet" href="/css/themes/dark-red.css">
-	<link rel="icon" href="/icons/16.png" sizes="16x16" type="image/png">
-	<link rel="icon" href="/icons/32.png" sizes="32x32" type="image/png">
-	<link rel="manifest" href="/manifest.json">
-</head>
-<body class="body kind-page">
-	<header class="header">
-	<a class="logo" href="/">XGF</a>
-	
-<nav class="main-nav main-nav--right" role="navigation">
-	<button id="toggle" class="main-nav__btn" aria-label="Menu toggle" aria-expanded="false" tabindex="0">
-		<div class="main-nav__btn-box" tabindex="-1">
-			<svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18">
-				<path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/>
-				<path class="icon-menu__x" d="M11.55 9L18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55 0 9 6.45 15.45 0 18 2.55 11.55 9z"/>
-			</svg>
-		</div>
-	</button>
-	<ul id="menu" class="main-nav__list">
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/kgl/">
-					
-					<span class="main-nav__text">KumaGL</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/about/">
-					
-					<span class="main-nav__text">关于本网站</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_demo/">
-					
-					<span class="main-nav__text">我的小作品</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/my_books/">
-					
-					<span class="main-nav__text">我的著作译作</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/resume/">
-					
-					<span class="main-nav__text">简历</span>
-					
-				</a>
-			</li>
-			<li class="main-nav__item">
-				<a class="main-nav__link" href="/post/mainsection/gems/">
-					
-					<span class="main-nav__text">网络上的奇珍异宝</span>
-					
-				</a>
-			</li>
-	</ul>
-</nav>
-</header>
-	<div class="primary">
-	
-	<main class="main">
-		
-<nav class="breadcrumb block" aria-label="breadcrumb">
-	<ol class="breadcrumb__list">
-		
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/">Xiong&#39;S Graphic Framework</a>
-		</li>
-		<li class="breadcrumb__item">
-			<a class="breadcrumbs__link" href="/post/">Posts</a>
-		</li>
-		<li class="breadcrumbs__item breadcrumb__item--active" aria-current="page">Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3</li>
-	</ol>
-</nav>
-		<div class="single block">
-			<article class="entry">
-	<div class="entry__meta meta mb">
-	<time class="entry__meta-published meta-published" datetime="2017-10-22T18:08:30&#43;08:00">October 22, 2017</time>
-<div class="entry__meta-categories meta-categories">
-	<span class="meta-categories__list">Categories:
-		<a class="meta-categories__link" href="/categories/lua/" rel="category">Lua</a>
-	</span>
-</div>
-<div class="entry__meta-tags meta-tags">
-	<span class="meta-tags__list">Tags:
-		<a class="meta-tags__link" href="/tags/lua/" rel="tag">Lua</a>
-	</span>
-</div>
-	</div>
-				<h1 class="entry__title">Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3</h1>
-<details class="entry__toc toc" open>
-	<summary class="toc__title">Table of Contents</summary>
-	<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#1-用元表实现一个people类">1 用元表实现一个People类</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-</details>
-				<div class="entry__content"><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href="http://www.xionggf.com/">www.xionggf.com</a></strong></p>
-<p>##用表模拟面向对象编程中的类和对象</p>
-<h3 id="1-用元表实现一个people类">1 用元表实现一个People类</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span>People <span style="color:#f92672">=</span> {age <span style="color:#f92672">=</span> <span style="color:#ae81ff">18</span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">--[[
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">等同于这样的声明方式：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">function People.new(self) self就是People表本身
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">--]]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">People</span>:<span style="color:#a6e22e">new</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">local</span> p <span style="color:#f92672">=</span> {}             <span style="color:#75715e">-- 生成一个表p</span>
-</span></span><span style="display:flex;"><span>    setmetatable(p, self)    <span style="color:#75715e">-- 表p的元表设置为表People</span>
-</span></span><span style="display:flex;"><span>    self.__index <span style="color:#f92672">=</span> self      <span style="color:#75715e">--[[ 表People的__index值就是__People本身。前文说到，__index对应的值可以是
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                                  一个table也可以是一个table。现在以一个table作为__index的值 --]]</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> p
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">People</span>:<span style="color:#a6e22e">growUp</span>()
-</span></span><span style="display:flex;"><span>    self.age <span style="color:#f92672">=</span> self.age <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>    print(self.age)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 测试</span>
-</span></span><span style="display:flex;"><span>p1 <span style="color:#f92672">=</span> People:new()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">--[[
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">p1：growUp()的调用等价于：p1.growUp(p1)。这个语句的执行可以分解为以下的一些步骤：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">1 首先要拿到函数p1.growUp。从People:new函数中可以知道：p1就是People:new函数中的p，一开始就是一个空表，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">但这个空表p的元表就是表People，且空表p的元表People表的__index方法就是它自己，这也就是说。虽然p表是一个空表，
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">但是当执行到p1.growUp时，会查找执行到People.growUp的函数去执行之。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">2 得到了People.growUp函数之后执行值，这里p1:growUp()的调用方式是等价于People.growUp(p1)。在growUp函数内部
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">当执行到self.age = self.age+1语句时，一开始的p1表中没有age项目，但执行语句后，首先会从People表中复制一份age项到
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">p1表，然后再对p1自身的age项加1.所以输出19。p2也是遵循这个“复制一份age项到p2表”的操作，故而最后也是输出19
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">--]]</span>
-</span></span><span style="display:flex;"><span>p1:growUp() <span style="color:#75715e">-- 输出19</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p2 <span style="color:#f92672">=</span> People:new()
-</span></span><span style="display:flex;"><span>p2:growUp() <span style="color:#75715e">-- 输出19</span>
-</span></span></code></pre></div><p>###2 在People类的基础上定义Man类</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span>People <span style="color:#f92672">=</span> {age <span style="color:#f92672">=</span> <span style="color:#ae81ff">18</span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">People</span>:<span style="color:#a6e22e">new</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">local</span> p <span style="color:#f92672">=</span> {}
-</span></span><span style="display:flex;"><span>    setmetatable(p, self)
-</span></span><span style="display:flex;"><span>    self.__index <span style="color:#f92672">=</span> self
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> p
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">People</span>:<span style="color:#a6e22e">growUp</span>()
-</span></span><span style="display:flex;"><span>    self.age <span style="color:#f92672">=</span> self.age <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;People&#39;s growUp:&#34;</span> <span style="color:#f92672">..</span> self.age)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">--[[
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">表Man等同于类People的一个实例对象。Man:growUp调用了People.growUp(self)函数。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">执行Man:growUp函数，输出的语句为：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">People&#39;s growUp:19
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">--]]</span>
-</span></span><span style="display:flex;"><span>Man <span style="color:#f92672">=</span> People:new()
-</span></span><span style="display:flex;"><span>Man:growUp()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">--[[
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">表Man可以视为类People的一个实例对象，但也可以视为一个类Man。下面的语句定义了growUp
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">函数，其实也就是等同于重载了People类的growUp函数了
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">--]]</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Man</span>:<span style="color:#a6e22e">growUp</span>()
-</span></span><span style="display:flex;"><span>    self.age <span style="color:#f92672">=</span> self.age <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Man&#39;s growUp:&#34;</span> <span style="color:#f92672">..</span> self.age)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">-- 测试</span>
-</span></span><span style="display:flex;"><span>man1 <span style="color:#f92672">=</span> Man:new() <span style="color:#75715e">--[[ 执行的是People.new函数，但这时候，表man1的元表为表Man，注意这时候
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                  的表Man中已经有age属性了，而且age值为19--]]</span>
-</span></span><span style="display:flex;"><span>man1:growUp() <span style="color:#75715e">--[[ 表man1执行的是Man.growUp(self)函数，所以执行这函数输出为：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">                 Man&#39;s growUp:20 --]]</span>
-</span></span></code></pre></div><p>###3 同一个表先后对应于两个不同的对象实例</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span>People <span style="color:#f92672">=</span> {age <span style="color:#f92672">=</span> <span style="color:#ae81ff">18</span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">People</span>:<span style="color:#a6e22e">new</span>()
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">local</span> p <span style="color:#f92672">=</span> {}
-</span></span><span style="display:flex;"><span>    setmetatable(p, self)
-</span></span><span style="display:flex;"><span>    self.__index <span style="color:#f92672">=</span> self
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> p
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">People</span>:<span style="color:#a6e22e">growUp</span>()
-</span></span><span style="display:flex;"><span>    self.age <span style="color:#f92672">=</span> self.age <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;People&#39;s growUp:&#34;</span> <span style="color:#f92672">..</span> self.age)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>Man <span style="color:#f92672">=</span> People:new()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">Man</span>:<span style="color:#a6e22e">growUp</span>()
-</span></span><span style="display:flex;"><span>    self.age <span style="color:#f92672">=</span> self.age <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
-</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Man&#39;s growUp:&#34;</span> <span style="color:#f92672">..</span> self.age)
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">--[[
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">People:new()方法和Man:new()方法都是两个不同的实例对象，且Man表自身没有执行过Man:growUp方法。
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">因此。先后两次的person:growUp方法的执行，分别显示了以下的两个语句：
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">People&#39;s growUp:19
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Man&#39;s growUp:19
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">--]]</span>
-</span></span><span style="display:flex;"><span>person <span style="color:#f92672">=</span> People:new()
-</span></span><span style="display:flex;"><span>person:growUp()
-</span></span><span style="display:flex;"><span>person <span style="color:#f92672">=</span> Man:new()
-</span></span><span style="display:flex;"><span>person:growUp()
-</span></span></code></pre></div><p><a href="http://www.xionggf.com">返回首页</a></p>
-</div>
-				
-				<footer class="entry__footer">
-					
-<div class="entry__tags">
-			<a class="entry__tag btn" href="/tags/lua/">Lua</a>
-</div>
-					
-				</footer>
-				
-			</article>
-		</div>
-	</main>
-	
-<div class="authorbox block">
-	<div class="author">
-		<figure class="author__avatar">
-			<img class="author__img" alt="kumakoko avatar" src="/img/avatar.png" height="90" width="90">
-		</figure>
-		<div class="author__body">
-			<div class="author__name">
-				kumakoko
-			</div>
-			<div class="author__bio">pure coder</div>
-		</div>
-	</div>
-</div>
-	
-
-
-
-<div class="related block">
-	<h3 class="related__title">Related</h3>
-	<ul class="related__list">
-		
-		<li class="related__item"><a class="related__link" href="/post/lua/cocos2d_lua_core/lua_advanced_2/">Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 2</a></li>
-		
-		<li class="related__item"><a class="related__link" href="/post/lua/cocos2d_lua_core/lua_advanced_1/">Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 1</a></li>
-		
-	</ul>
-</div>
-
-	
-<section class="comments block">
-	<div id="disqus_thread"></div>
-<script>
-    window.disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "KK" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-</section>
-
-	</div>
-	<footer class="footer">
-<div class="footer__social social">
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="mailto:sun_of_lover@sina.com">
-			<svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h300c7 0 13 3 17 7L256 281zm54-23l121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
-		</a>
-		<a class="social__link" target="_blank" rel="noopener noreferrer" href="https://github.com/kumakoko">
-			<svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg>
-		</a>
-</div>
-	<div class="footer__copyright">© 2026 XGF. <span class="footer__copyright-credits"><a href="https://beian.miit.gov.cn/" rel="nofollow noopener" target="_blank">粤ICP备15048756号-1</a> Powered by <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/vimux/binario" rel="nofollow noopener" target="_blank">Binario</a> theme.</span></div>
-</footer>
-<script src="/js/menu.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script>
-
-<script src="/js/custom.js"></script>
-</body>
-</html>
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="#《Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3"><meta property="og:url" content="http://www.xionggf.com/post/lua/cocos2d_lua_core/lua_advanced_3/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3"><meta property="og:description" content="#《Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2017-10-22T18:08:30+08:00"><meta property="article:modified_time" content="2017-10-22T18:08:30+08:00"><meta property="article:tag" content="Lua"><meta itemprop=name content="Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3"><meta itemprop=description content="#《Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3"><meta itemprop=datePublished content="2017-10-22T18:08:30+08:00"><meta itemprop=dateModified content="2017-10-22T18:08:30+08:00"><meta itemprop=wordCount content="211"><meta itemprop=keywords content="Lua"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2017-10-22T18:08:30+08:00>October 22, 2017</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/lua/ rel=category>Lua</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/lua/ rel=tag>Lua</a></span></div></div><h1 class=entry__title>Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 3</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><ul><li><a href=#1-用元表实现一个people类>1 用元表实现一个People类</a></li></ul></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=http://www.xionggf.com/>www.xionggf.com</a></strong></p><p>##用表模拟面向对象编程中的类和对象</p><h3 id=1-用元表实现一个people类>1 用元表实现一个People类</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-lua data-lang=lua><span style=display:flex><span>People <span style=color:#0550ae>=</span> <span style=color:#1f2328>{</span>age <span style=color:#0550ae>=</span> <span style=color:#0550ae>18</span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>--[[
+</span></span></span><span style=display:flex><span><span style=color:#57606a>等同于这样的声明方式：
+</span></span></span><span style=display:flex><span><span style=color:#57606a>function People.new(self) self就是People表本身
+</span></span></span><span style=display:flex><span><span style=color:#57606a>--]]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>function</span> <span style=color:#1f2328>People</span><span style=color:#1f2328>:</span><span style=color:#6639ba>new</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>local</span> p <span style=color:#0550ae>=</span> <span style=color:#1f2328>{}</span>             <span style=color:#57606a>-- 生成一个表p</span>
+</span></span><span style=display:flex><span>    setmetatable<span style=color:#1f2328>(</span>p<span style=color:#1f2328>,</span> self<span style=color:#1f2328>)</span>    <span style=color:#57606a>-- 表p的元表设置为表People</span>
+</span></span><span style=display:flex><span>    self.__index <span style=color:#0550ae>=</span> self      <span style=color:#57606a>--[[ 表People的__index值就是__People本身。前文说到，__index对应的值可以是
+</span></span></span><span style=display:flex><span><span style=color:#57606a>                                  一个table也可以是一个table。现在以一个table作为__index的值 --]]</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> p
+</span></span><span style=display:flex><span><span style=color:#cf222e>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>function</span> <span style=color:#1f2328>People</span><span style=color:#1f2328>:</span><span style=color:#6639ba>growUp</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    self.age <span style=color:#0550ae>=</span> self.age <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span>
+</span></span><span style=display:flex><span>    print<span style=color:#1f2328>(</span>self.age<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>-- 测试</span>
+</span></span><span style=display:flex><span>p1 <span style=color:#0550ae>=</span> People<span style=color:#1f2328>:</span>new<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>--[[
+</span></span></span><span style=display:flex><span><span style=color:#57606a>p1：growUp()的调用等价于：p1.growUp(p1)。这个语句的执行可以分解为以下的一些步骤：
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>1 首先要拿到函数p1.growUp。从People:new函数中可以知道：p1就是People:new函数中的p，一开始就是一个空表，
+</span></span></span><span style=display:flex><span><span style=color:#57606a>但这个空表p的元表就是表People，且空表p的元表People表的__index方法就是它自己，这也就是说。虽然p表是一个空表，
+</span></span></span><span style=display:flex><span><span style=color:#57606a>但是当执行到p1.growUp时，会查找执行到People.growUp的函数去执行之。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>2 得到了People.growUp函数之后执行值，这里p1:growUp()的调用方式是等价于People.growUp(p1)。在growUp函数内部
+</span></span></span><span style=display:flex><span><span style=color:#57606a>当执行到self.age = self.age+1语句时，一开始的p1表中没有age项目，但执行语句后，首先会从People表中复制一份age项到
+</span></span></span><span style=display:flex><span><span style=color:#57606a>p1表，然后再对p1自身的age项加1.所以输出19。p2也是遵循这个“复制一份age项到p2表”的操作，故而最后也是输出19
+</span></span></span><span style=display:flex><span><span style=color:#57606a>--]]</span>
+</span></span><span style=display:flex><span>p1<span style=color:#1f2328>:</span>growUp<span style=color:#1f2328>()</span> <span style=color:#57606a>-- 输出19</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>p2 <span style=color:#0550ae>=</span> People<span style=color:#1f2328>:</span>new<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>p2<span style=color:#1f2328>:</span>growUp<span style=color:#1f2328>()</span> <span style=color:#57606a>-- 输出19</span>
+</span></span></code></pre></div><p>###2 在People类的基础上定义Man类</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-lua data-lang=lua><span style=display:flex><span>People <span style=color:#0550ae>=</span> <span style=color:#1f2328>{</span>age <span style=color:#0550ae>=</span> <span style=color:#0550ae>18</span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>function</span> <span style=color:#1f2328>People</span><span style=color:#1f2328>:</span><span style=color:#6639ba>new</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>local</span> p <span style=color:#0550ae>=</span> <span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span>    setmetatable<span style=color:#1f2328>(</span>p<span style=color:#1f2328>,</span> self<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    self.__index <span style=color:#0550ae>=</span> self
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> p
+</span></span><span style=display:flex><span><span style=color:#cf222e>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>function</span> <span style=color:#1f2328>People</span><span style=color:#1f2328>:</span><span style=color:#6639ba>growUp</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    self.age <span style=color:#0550ae>=</span> self.age <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span>
+</span></span><span style=display:flex><span>    print<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;People&#39;s growUp:&#34;</span> <span style=color:#0550ae>..</span> self.age<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>--[[
+</span></span></span><span style=display:flex><span><span style=color:#57606a>表Man等同于类People的一个实例对象。Man:growUp调用了People.growUp(self)函数。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>执行Man:growUp函数，输出的语句为：
+</span></span></span><span style=display:flex><span><span style=color:#57606a>People&#39;s growUp:19
+</span></span></span><span style=display:flex><span><span style=color:#57606a>--]]</span>
+</span></span><span style=display:flex><span>Man <span style=color:#0550ae>=</span> People<span style=color:#1f2328>:</span>new<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>Man<span style=color:#1f2328>:</span>growUp<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>--[[
+</span></span></span><span style=display:flex><span><span style=color:#57606a>表Man可以视为类People的一个实例对象，但也可以视为一个类Man。下面的语句定义了growUp
+</span></span></span><span style=display:flex><span><span style=color:#57606a>函数，其实也就是等同于重载了People类的growUp函数了
+</span></span></span><span style=display:flex><span><span style=color:#57606a>--]]</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>function</span> <span style=color:#1f2328>Man</span><span style=color:#1f2328>:</span><span style=color:#6639ba>growUp</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    self.age <span style=color:#0550ae>=</span> self.age <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span>
+</span></span><span style=display:flex><span>    print<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Man&#39;s growUp:&#34;</span> <span style=color:#0550ae>..</span> self.age<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>-- 测试</span>
+</span></span><span style=display:flex><span>man1 <span style=color:#0550ae>=</span> Man<span style=color:#1f2328>:</span>new<span style=color:#1f2328>()</span> <span style=color:#57606a>--[[ 执行的是People.new函数，但这时候，表man1的元表为表Man，注意这时候
+</span></span></span><span style=display:flex><span><span style=color:#57606a>                  的表Man中已经有age属性了，而且age值为19--]]</span>
+</span></span><span style=display:flex><span>man1<span style=color:#1f2328>:</span>growUp<span style=color:#1f2328>()</span> <span style=color:#57606a>--[[ 表man1执行的是Man.growUp(self)函数，所以执行这函数输出为：
+</span></span></span><span style=display:flex><span><span style=color:#57606a>                 Man&#39;s growUp:20 --]]</span>
+</span></span></code></pre></div><p>###3 同一个表先后对应于两个不同的对象实例</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-lua data-lang=lua><span style=display:flex><span>People <span style=color:#0550ae>=</span> <span style=color:#1f2328>{</span>age <span style=color:#0550ae>=</span> <span style=color:#0550ae>18</span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>function</span> <span style=color:#1f2328>People</span><span style=color:#1f2328>:</span><span style=color:#6639ba>new</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>local</span> p <span style=color:#0550ae>=</span> <span style=color:#1f2328>{}</span>
+</span></span><span style=display:flex><span>    setmetatable<span style=color:#1f2328>(</span>p<span style=color:#1f2328>,</span> self<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    self.__index <span style=color:#0550ae>=</span> self
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> p
+</span></span><span style=display:flex><span><span style=color:#cf222e>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>function</span> <span style=color:#1f2328>People</span><span style=color:#1f2328>:</span><span style=color:#6639ba>growUp</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    self.age <span style=color:#0550ae>=</span> self.age <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span>
+</span></span><span style=display:flex><span>    print<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;People&#39;s growUp:&#34;</span> <span style=color:#0550ae>..</span> self.age<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Man <span style=color:#0550ae>=</span> People<span style=color:#1f2328>:</span>new<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>function</span> <span style=color:#1f2328>Man</span><span style=color:#1f2328>:</span><span style=color:#6639ba>growUp</span><span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>    self.age <span style=color:#0550ae>=</span> self.age <span style=color:#0550ae>+</span> <span style=color:#0550ae>1</span>
+</span></span><span style=display:flex><span>    print<span style=color:#1f2328>(</span><span style=color:#0a3069>&#34;Man&#39;s growUp:&#34;</span> <span style=color:#0550ae>..</span> self.age<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>end</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>--[[
+</span></span></span><span style=display:flex><span><span style=color:#57606a>People:new()方法和Man:new()方法都是两个不同的实例对象，且Man表自身没有执行过Man:growUp方法。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>因此。先后两次的person:growUp方法的执行，分别显示了以下的两个语句：
+</span></span></span><span style=display:flex><span><span style=color:#57606a>People&#39;s growUp:19
+</span></span></span><span style=display:flex><span><span style=color:#57606a>Man&#39;s growUp:19
+</span></span></span><span style=display:flex><span><span style=color:#57606a>--]]</span>
+</span></span><span style=display:flex><span>person <span style=color:#0550ae>=</span> People<span style=color:#1f2328>:</span>new<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>person<span style=color:#1f2328>:</span>growUp<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>person <span style=color:#0550ae>=</span> Man<span style=color:#1f2328>:</span>new<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span>person<span style=color:#1f2328>:</span>growUp<span style=color:#1f2328>()</span>
+</span></span></code></pre></div><p><a href=http://www.xionggf.com>返回首页</a></p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/lua/>Lua</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/lua/cocos2d_lua_core/lua_advanced_2/>Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 2</a></li><li class=related__item><a class=related__link href=/post/lua/cocos2d_lua_core/lua_advanced_1/>Cocos2d-x之lua核心编程（第二版）》示例代码注释详解 1</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>76</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (76)">unity3d<span class=sidebar__tag-count>76</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>
