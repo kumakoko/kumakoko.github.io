@@ -1,0 +1,134 @@
+/* Light palette customized for the XGF site. */
+body {
+  color: #000;
+  background-color: #fff;
+}
+
+a,
+.entry__title,
+.entry__title-link,
+.page__title {
+  color: #006994;
+}
+
+a:hover {
+  color: #005475;
+}
+
+blockquote {
+  border-color: #006994;
+}
+
+mark {
+  color: #fff;
+  background-color: #006994;
+}
+
+.header,
+.block,
+.pagination,
+.main-nav__btn,
+.main-nav__list.main-nav__list--active {
+  color: #000;
+  background-color: #fff;
+  border-color: #c8ddd2;
+}
+
+.card:first-child {
+  border-color: #c8ddd2;
+}
+
+.card__box {
+  color: #000;
+  background-color: #e8f5e9;
+  border-color: #c8ddd2;
+}
+
+.entry__content,
+.page__content,
+.breadcrumb {
+  color: #000;
+}
+
+.entry__meta,
+.footer,
+.pagination__item--gap {
+  color: #4f5b57;
+}
+
+.main-nav__item {
+  border-color: #c8ddd2;
+}
+
+.main-nav__item:hover,
+.btn,
+.empty__tip,
+.social__link {
+  background-color: #e8f5e9;
+}
+
+.main-nav__item--active,
+.main-nav__link:hover {
+  border-color: #006994;
+}
+
+.btn:hover {
+  color: #fff;
+  background-color: #006994;
+}
+
+.logo:hover,
+.toc {
+  color: #006994;
+}
+
+.main-nav__btn {
+  fill: #006994;
+}
+
+.toc,
+code,
+figcaption,
+.entry__featured,
+.featured__figcaption {
+  color: #000;
+  background-color: #f2f7f4;
+}
+
+.toc[open] {
+  color: #000;
+}
+
+pre {
+  color: #f8f8f2;
+  background-color: #272822;
+}
+
+pre code {
+  color: inherit;
+  background-color: inherit;
+}
+
+table {
+  border-color: #4f5b57;
+}
+
+td,
+th {
+  border-color: #4f5b57;
+}
+
+.footer {
+  border-color: #c8ddd2;
+}
+
+.social__link {
+  border-color: #c8ddd2;
+  fill: #006994;
+  stroke: #006994;
+}
+
+.share__icon {
+  fill: #006994;
+  stroke: #006994;
+}

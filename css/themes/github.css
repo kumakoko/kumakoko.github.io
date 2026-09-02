@@ -1,0 +1,158 @@
+/* GitHub-style light palette for the XGF site. */
+body {
+  color: #1f2328;
+  background-color: #ffffff;
+}
+
+a,
+.entry__title,
+.entry__title-link,
+.page__title {
+  color: #0969da;
+}
+
+a:hover {
+  color: #0550ae;
+}
+
+blockquote {
+  border-color: #d0d7de;
+}
+
+mark {
+  color: #ffffff;
+  background-color: #0969da;
+}
+
+.header,
+.block,
+.pagination,
+.main-nav__btn,
+.main-nav__list.main-nav__list--active {
+  color: #1f2328;
+  background-color: #ffffff;
+  border-color: #d0d7de;
+}
+
+.card:first-child {
+  border-color: #d0d7de;
+}
+
+.card__box {
+  color: #1f2328;
+  background-color: #f6f8fa;
+  border-color: #d0d7de;
+}
+
+.entry__content,
+.page__content,
+.breadcrumb {
+  color: #1f2328;
+}
+
+.entry__meta,
+.footer,
+.pagination__item--gap {
+  color: #656d76;
+}
+
+.main-nav__item {
+  border-color: #d0d7de;
+}
+
+.main-nav__item:hover,
+.btn,
+.empty__tip,
+.social__link {
+  background-color: #f6f8fa;
+}
+
+.main-nav__item--active,
+.main-nav__link:hover {
+  border-color: #0969da;
+}
+
+.btn:hover {
+  color: #ffffff;
+  background-color: #0969da;
+}
+
+.logo:hover,
+.toc {
+  color: #0969da;
+}
+
+.main-nav__btn {
+  fill: #0969da;
+}
+
+.toc,
+code,
+figcaption,
+.entry__featured,
+.featured__figcaption {
+  color: #1f2328;
+  background-color: #f6f8fa;
+}
+
+.toc[open] {
+  color: #1f2328;
+}
+
+pre {
+  color: #1f2328;
+  background-color: #f6f8fa;
+}
+
+pre code {
+  color: inherit;
+  background-color: inherit;
+}
+
+table {
+  border-color: #d0d7de;
+}
+
+td,
+th {
+  border-color: #d0d7de;
+}
+
+.footer {
+  border-color: #d0d7de;
+}
+
+.social__link {
+  border-color: #d0d7de;
+  fill: #0969da;
+  stroke: #0969da;
+}
+
+.share__icon {
+  fill: #0969da;
+  stroke: #0969da;
+}
+
+/* Fixed-height equal cards (400px) */
+.card__box {
+  height: 400px;
+  overflow: hidden;
+}
+
+.entry__featured {
+  max-height: 160px;
+  overflow: hidden;
+}
+
+.entry__featured img {
+  max-height: 160px;
+  object-fit: cover;
+}
+
+.entry__content {
+  overflow: hidden;
+}
+
+.entry__meta {
+  margin-top: auto;
+}
