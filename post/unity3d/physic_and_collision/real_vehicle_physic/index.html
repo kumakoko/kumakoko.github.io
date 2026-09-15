@@ -1,0 +1,1171 @@
+<!doctype html><html class=no-js lang=zh-cn><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=theme-color content="#0969da"><title>真实车辆物理【转载】 | XGF</title><script>(function(e,t){e[t]=e[t].replace("no-js","js")})(document.documentElement,"className")</script><meta name=description content="真实车辆物理"><meta property="og:url" content="http://www.xionggf.com/post/unity3d/physic_and_collision/real_vehicle_physic/"><meta property="og:site_name" content="XGF"><meta property="og:title" content="真实车辆物理【转载】"><meta property="og:description" content="真实车辆物理"><meta property="og:locale" content="zh_cn"><meta property="og:type" content="article"><meta property="article:section" content="post"><meta property="article:published_time" content="2015-03-23T20:20:49+08:00"><meta property="article:modified_time" content="2015-03-23T20:20:49+08:00"><meta property="article:tag" content="Unity3D"><meta property="article:tag" content="Collider"><meta property="article:tag" content="Physic"><meta itemprop=name content="真实车辆物理【转载】"><meta itemprop=description content="真实车辆物理"><meta itemprop=datePublished content="2015-03-23T20:20:49+08:00"><meta itemprop=dateModified content="2015-03-23T20:20:49+08:00"><meta itemprop=wordCount content="3878"><meta itemprop=keywords content="Unity3D"><link rel=stylesheet href=/css/bundle.css><link rel=stylesheet href=/css/custom.css><link rel=stylesheet href=/css/themes/github.css><link rel=icon href=/icons/16.png sizes=16x16 type=image/png><link rel=icon href=/icons/32.png sizes=32x32 type=image/png><link rel=manifest href=/manifest.json></head><body class="body kind-page"><header class=header><a class=logo href=/>XGF</a><nav class="main-nav main-nav--right" role=navigation><button id=toggle class=main-nav__btn aria-label="Menu toggle" aria-expanded=false tabindex=0><div class=main-nav__btn-box tabindex=-1><svg class="main-nav__icon icon-menu" width="18" height="18" viewBox="0 0 18 18"><path class="icon-menu__burger" d="M18 0v3.6H0V0h18zM0 10.8h18V7.2H0v3.6zM0 18h18v-3.6H0V18z"/><path class="icon-menu__x" d="M11.55 9 18 15.45 15.45 18 9 11.55 2.55 18 0 15.45 6.45 9 0 2.55 2.55.0 9 6.45 15.45.0 18 2.55 11.55 9z"/></svg></div></button><ul id=menu class=main-nav__list><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/kgl/><span class=main-nav__text>KumaGL</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/about/><span class=main-nav__text>关于本网站</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_demo/><span class=main-nav__text>我的小作品</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/my_books/><span class=main-nav__text>我的著作译作</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/resume/><span class=main-nav__text>简历</span></a></li><li class=main-nav__item><a class=main-nav__link href=/post/mainsection/gems/><span class=main-nav__text>网络上的奇珍异宝</span></a></li></ul></nav></header><div class=layout><div class=primary><main class=main><nav class="breadcrumb block" aria-label=breadcrumb><ol class=breadcrumb__list><li class=breadcrumb__item><a class=breadcrumbs__link href=/>Xiong'S Graphic Framework</a></li><li class=breadcrumb__item><a class=breadcrumbs__link href=/post/>Posts</a></li><li class="breadcrumbs__item breadcrumb__item--active" aria-current=page>真实车辆物理【转载】</li></ol></nav><div class="single block"><article class=entry><div class="entry__meta meta mb"><time class="entry__meta-published meta-published" datetime=2015-03-23T20:20:49+08:00>March 23, 2015</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/collider/ rel=tag>Collider</a>,
+<a class=meta-tags__link href=/tags/physic/ rel=tag>Physic</a></span></div></div><h1 class=entry__title>真实车辆物理【转载】</h1><details class="entry__toc toc" open><summary class=toc__title>Table of Contents</summary><nav id=TableOfContents><ul><li><a href=#阻尼>阻尼</a></li></ul><ul><li><a href=#悬挂伸缩长度的计算>悬挂伸缩长度的计算</a></li><li><a href=#悬挂力的计算>悬挂力的计算</a></li><li><a href=#悬挂长度>悬挂长度</a></li><li><a href=#计算悬挂力>计算悬挂力：</a></li><li><a href=#计算悬挂阻尼>计算悬挂阻尼：</a></li><li><a href=#悬挂受力>悬挂受力</a></li><li><a href=#摩擦力>摩擦力</a></li><li><a href=#外倾角camber>外倾角（Camber）</a></li></ul><ul><li><a href=#pacejka公式>Pacejka公式</a></li></ul></nav></details><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=https://kumakoko.github.io/>kumakoko.github.io</a></strong></p><h1 id=悬挂>悬挂</h1><p>悬挂的本质就是弹簧的伸缩。</p><h1 id=弹簧>弹簧</h1><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/001.jpg alt></p><p>弹簧在不受力的状态下，会有一个恒定的长度（Rest Distance）：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/002.jpg alt></p><p>当弹簧被压缩/拉伸，会产生趋向于让弹簧回归恒定长度的力：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/003.jpg alt>
+<img src=/image/u3d/physic_and_collision/real_vehicle_physics/004.jpg alt></p><p>弹簧力的大小，与偏移距离成正比：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/005.jpg alt>
+<img src=/image/u3d/physic_and_collision/real_vehicle_physics/006.jpg alt></p><p>弹簧越软，偏移相同距离所需的力就越小；弹簧越硬，力就越大。所以<strong>弹簧的强度（Strength）</strong>，在车辆物理中用来控制车辆悬挂的软硬：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/007.jpg alt>
+<img src=/image/u3d/physic_and_collision/real_vehicle_physics/008.jpg alt></p><p>如果没有外力干预，弹簧会趋向于拉伸、压缩的往复运动：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/009.gif alt></p><p>车辆悬挂可不希望路过减速带后，车辆上下来回弹个没完，所以需要一个让弹簧区域稳定的东西——阻尼。</p><h2 id=阻尼>阻尼</h2><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/010.jpg alt=（阻尼：简单理解为“装满液体的活塞”）></p><p>阻尼的作用是，当弹簧做拉伸/压缩运动时，让弹簧趋向于静止。所以，阻尼产生的力，与速度有关：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/011.jpg alt></p><p>当弹簧受到向右的推力时，产生的向右的速度；同时阻尼感受到向右的速度，从而产生向左的反向力。阻尼系数（Damping）越大，反向力就越大，弹簧就越快趋于静止：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/012.jpg alt></p><p>弹簧会在阻尼的作用下，短时间内趋于稳定：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/013.gif alt></p><p>有了弹簧和阻尼，悬挂就有了理论基础，通过配置：</p><ul><li>弹簧恒定长度（Rest Distance）</li><li>弹簧硬度（Stength）</li><li>阻尼系数（Damping）
+就可以实现真实的车辆悬挂的感觉。</li></ul><h1 id=悬挂实现的几种方式>悬挂实现的几种方式</h1><p>就目前学习到的悬挂实现，有3种方式：</p><ul><li>Unity内置：Wheel Collider</li><li>自定义：射线检测</li><li>自定义：带体积的轮胎触地检测</li></ul><h1 id=unity内置wheel-collider>Unity内置：Wheel Collider</h1><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/014.jpg alt></p><ul><li>Spring：对应弹簧强度（Strength）</li><li>Damper：对应阻尼系数（Damping）</li><li>Target Position：对应弹簧不受力时的恒定长度（Rest Length）
+额外还有Suspension Distance，用于限定弹簧偏移（Offset）的最大距离。</li></ul><p>但Wheel Collider被普遍认为稳定性不佳，且它的实现本质跟下面的射线检测，实现逻辑是一致的。</p><h1 id=自定义实现射线检测>自定义实现：射线检测</h1><p>射线检测，是自定义悬挂系统实现较为常见的一种方式。其原理是：</p><ul><li>在悬挂与车体连接处，发射一条射线（Physics.Raycast）</li><li>射线与地面接触，得到悬挂连接处的离地高度</li><li>减去悬挂恒定长度，得到悬挂压缩/拉伸的偏移</li></ul><p>根据偏移，计算出弹簧产生的力，将弹簧的力作用于车体的刚体（Rigidbody），以支撑车体的重量（4个轮子，4份悬挂的力，作用于4个悬挂连接处）</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/015.gif alt></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>/// &lt;summary&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 处理自定义悬挂物理逻辑，替代WheelCollider悬挂部分；</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 使用射线检测模拟弹簧悬挂，计算弹簧力、阻尼力，施加到车体刚体上</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 每一个车轮实例调用该函数，四个轮子分别独立计算悬挂力</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 原理说明：</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 1. 从悬挂车体连接点向下发射射线检测地面</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 2. 根据射线命中距离，算出悬挂压缩量</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 3. 根据压缩量计算弹簧弹力，再叠加阻尼力抵消上下振动速度</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 4. 将最终悬挂力作用在车体刚体对应接触点，撑起车身重量</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// 5. 同时更新车轮视觉模型位置（tfSteer为车轮Transform）</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/// &lt;/summary&gt;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>void</span> HandleSuspension<span style=color:#1f2328>()</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 射线总长度 = 悬挂静息长度 + 悬挂可伸缩行程 + 车轮半径</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 射线最长向下探测这么远，超过代表轮子悬空离开地面</span>
+</span></span><span style=display:flex><span>    rayLength <span style=color:#1f2328>=</span> config<span style=color:#1f2328>.</span>restLength <span style=color:#1f2328>+</span> config<span style=color:#1f2328>.</span>travalLength <span style=color:#1f2328>+</span> config<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 射线发射原点：悬挂与车身连接点的世界坐标（车身上硬点位置）</span>
+</span></span><span style=display:flex><span>    origin <span style=color:#1f2328>=</span> transform<span style=color:#1f2328>.</span>position<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 射线向下方向：当前物体自身的负Y轴（跟随车身倾斜，不是世界向下）</span>
+</span></span><span style=display:flex><span>    down <span style=color:#1f2328>=</span> <span style=color:#1f2328>-</span>transform<span style=color:#1f2328>.</span>up<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 发射射线：从origin沿down方向，最大探测距离rayLength</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// isGrounded：是否射线碰到地面；hit：射线碰撞信息结构体</span>
+</span></span><span style=display:flex><span>    isGrounded <span style=color:#1f2328>=</span> Physics<span style=color:#1f2328>.</span>Raycast<span style=color:#1f2328>(</span>origin<span style=color:#1f2328>,</span> down<span style=color:#1f2328>,</span> <span style=color:#cf222e>out</span> hit<span style=color:#1f2328>,</span> rayLength<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ----------------------轮子接触地面的分支----------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>isGrounded<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 射线撞击地面的世界坐标点</span>
+</span></span><span style=display:flex><span>        contactPoint <span style=color:#1f2328>=</span> hit<span style=color:#1f2328>.</span>point<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 地面碰撞面法线（斜面会得到倾斜法线，用于力的投影修正）</span>
+</span></span><span style=display:flex><span>        contactNormal <span style=color:#1f2328>=</span> hit<span style=color:#1f2328>.</span>normal<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 射线原点到碰撞点的距离</span>
+</span></span><span style=display:flex><span>        contactDistance <span style=color:#1f2328>=</span> hit<span style=color:#1f2328>.</span>distance<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 悬挂向上方向，和射线向下方向相反</span>
+</span></span><span style=display:flex><span>        Vector3 up <span style=color:#1f2328>=</span> <span style=color:#1f2328>-</span>down<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 计算悬挂压缩量：</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// (静息悬挂长度 + 车轮半径) 是轮子完全不受力时应该有的离地距离</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 减去实际射线距离，得到被地面顶上去多少 = 压缩值</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Clamp限制：最小0(完全拉伸无压缩)，最大travalLength(悬挂压到底)</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> compression <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>Clamp<span style=color:#1f2328>((</span>config<span style=color:#1f2328>.</span>restLength <span style=color:#1f2328>+</span> config<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>)</span> <span style=color:#1f2328>-</span> contactDistance<span style=color:#1f2328>,</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>,</span> config<span style=color:#1f2328>.</span>travalLength<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 获取【刚体上该地面接触点】的世界空间速度（包含车身移动、旋转带来的点速度）</span>
+</span></span><span style=display:flex><span>        Vector3 pointVel <span style=color:#1f2328>=</span> rbCar<span style=color:#1f2328>.</span>GetPointVelocity<span style=color:#1f2328>(</span>contactPoint<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 提取该点沿悬挂向上方向的速度分量：正数代表轮子向上运动，负数向下运动</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> speedUp <span style=color:#1f2328>=</span> Vector3<span style=color:#1f2328>.</span>Dot<span style=color:#1f2328>(</span>pointVel<span style=color:#1f2328>,</span> up<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 悬挂力计算公式：弹簧力 - 阻尼力</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// compression * springStrength：弹簧弹力，压缩越大弹力越大</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// speedUp * damper：阻尼，抵消悬挂上下弹跳速度，抑制抖动</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> force <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>compression <span style=color:#1f2328>*</span> config<span style=color:#1f2328>.</span>springStrength<span style=color:#1f2328>)</span> <span style=color:#1f2328>-</span> <span style=color:#1f2328>(</span>speedUp <span style=color:#1f2328>*</span> config<span style=color:#1f2328>.</span>damper<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 组装力向量：力沿着悬挂向上方向推车身</span>
+</span></span><span style=display:flex><span>        Vector3 forceVec <span style=color:#1f2328>=</span> up <span style=color:#1f2328>*</span> force<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 在地面接触点位置，给车身刚体施加悬挂支撑力。ForceMode.Force：持续力，受Time.deltaTime影响</span>
+</span></span><span style=display:flex><span>        rbCar<span style=color:#1f2328>.</span>AddForceAtPosition<span style=color:#1f2328>(</span>forceVec<span style=color:#1f2328>,</span> contactPoint<span style=color:#1f2328>,</span> ForceMode<span style=color:#1f2328>.</span>Force<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 将悬挂力投影到地面法线方向；斜坡地面时修正垂直地面的法向力大小</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Dot(up, contactNormal)：悬挂向上与地面法线夹角投影；Abs保证力符号正确</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> normalProj <span style=color:#1f2328>=</span> force <span style=color:#1f2328>*</span> Mathf<span style=color:#1f2328>.</span>Abs<span style=color:#1f2328>(</span>Vector3<span style=color:#1f2328>.</span>Dot<span style=color:#1f2328>(</span>up<span style=color:#1f2328>,</span> contactNormal<span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 平滑插值当前法向力，避免物理帧力剧烈跳动，0.3为插值系数控制平滑程度</span>
+</span></span><span style=display:flex><span>        curNormalForce <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>Lerp<span style=color:#1f2328>(</span>lastNormalForce<span style=color:#1f2328>,</span> normalProj<span style=color:#1f2328>,</span> <span style=color:#0550ae>0.3f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 保存本帧法向力，下一帧作为Lerp的旧值</span>
+</span></span><span style=display:flex><span>        lastNormalForce <span style=color:#1f2328>=</span> curNormalForce<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 更新车轮视觉模型位置：射线碰撞点往上抬一个车轮半径，就是轮子模型的中心位置</span>
+</span></span><span style=display:flex><span>        tfSteer<span style=color:#1f2328>.</span>position <span style=color:#1f2328>=</span> origin <span style=color:#1f2328>+</span> down <span style=color:#1f2328>*</span> <span style=color:#1f2328>(</span>contactDistance <span style=color:#1f2328>-</span> config<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ----------------------轮子悬空，射线没有碰到地面----------------------</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 没有地面碰撞点，虚拟一个理论接触点：沿向下射线走到最大理论位置</span>
+</span></span><span style=display:flex><span>        contactPoint <span style=color:#1f2328>=</span> origin <span style=color:#1f2328>+</span> down <span style=color:#1f2328>*</span> <span style=color:#1f2328>(</span>config<span style=color:#1f2328>.</span>restLength <span style=color:#1f2328>+</span> config<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 悬空时地面法线临时赋值为向下</span>
+</span></span><span style=display:flex><span>        contactNormal <span style=color:#1f2328>=</span> down<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 射线直接走到最大探测距离</span>
+</span></span><span style=display:flex><span>        contactDistance <span style=color:#1f2328>=</span> rayLength<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 轮子离地，法向支撑力归零</span>
+</span></span><span style=display:flex><span>        curNormalForce <span style=color:#1f2328>=</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 根据地面倾斜虚拟车轮伸缩；dot用来模拟悬空时车轮随姿态轻微伸缩效果</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> dot <span style=color:#1f2328>=</span> Vector3<span style=color:#1f2328>.</span>Dot<span style=color:#1f2328>(</span>contactNormal<span style=color:#1f2328>,</span> Vector3<span style=color:#1f2328>.</span>down<span style=color:#1f2328>)</span> <span style=color:#1f2328>/</span> <span style=color:#0550ae>2f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 计算悬空状态下车轮视觉模型的伸缩长度</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> length <span style=color:#1f2328>=</span> config<span style=color:#1f2328>.</span>restLength <span style=color:#1f2328>+</span> dot <span style=color:#1f2328>*</span> config<span style=color:#1f2328>.</span>travalLength<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// 设置悬空时车轮模型位置，轮子向外伸出，模拟悬挂完全舒展状态</span>
+</span></span><span style=display:flex><span>        tfSteer<span style=color:#1f2328>.</span>position <span style=color:#1f2328>=</span> origin <span style=color:#1f2328>+</span> down <span style=color:#1f2328>*</span> length<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>/* 上面的代码里为什么处处带上车轮半径config.radius？要解答这个问题，首先要先记住核心事实：
+</span></span></span><span style=display:flex><span><span style=color:#57606a>1 射线发射点 = 车身上悬挂硬点（弹簧顶端），不是车轮中心。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>2 射线打到的是**地面地面表面**，而不是车轮中心位置。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>3 radius就是车轮从中心到地面的距离。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>看这几个出现radius的地方
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>rayLength = config.restLength + config.travalLength + config.radius;// 射线总长度
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>float compression = Mathf.Clamp((config.restLength + config.radius) - 
+</span></span></span><span style=display:flex><span><span style=color:#57606a>                            contactDistance, 0f, config.travalLength); // 计算压缩量
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>tfSteer.position = origin + down * (contactDistance - config.radius); // 地面接触，更新车轮模型位置
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>rayLength 射线长度为什么 + radius
+</span></span></span><span style=display:flex><span><span style=color:#57606a>1 restLength：弹簧本体静息长度：即是悬挂硬点到车轮中心的距离。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>2 车轮中心到地面，还有一段距离，就是车轮半径 radius
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>如果车辆静止，悬挂完全不受压缩，即有：
+</span></span></span><span style=display:flex><span><span style=color:#57606a>“悬挂硬点” 到 “地面的总距离” = restLength(硬点到轮心) + radius(轮心到地面)
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>悬挂还可以向下拉伸travalLength，所以射线最大探测距离必须把半径算进去，不然射线还没碰到地面就截断了。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>rayLength = 弹簧行程 + 弹簧静息长度 + 车轮半径
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>如果不加 radius，射线探测距离变短，车轮明明贴着地面，射线却检测不到地面，判定轮子悬空。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>---
+</span></span></span><span style=display:flex><span><span style=color:#57606a>压缩量计算 (config.restLength + config.radius) - contactDistance
+</span></span></span><span style=display:flex><span><span style=color:#57606a>contactDistance：射线原点（悬挂硬点）到地面的距离。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>restLength + radius：理想静止状态下，硬点到地面的期望距离**（悬挂不受压缩，轮子刚好贴地）。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>公式含义： 实际硬点到地面距离contactDistance比理想值越小 → 地面把轮子往上顶得越多 → 悬挂压缩越大。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>举例： 理想静止：restLength+radius = 1.0m 射线测出来 `contactDistance = 0.7m compression = 1.0 - 0.7 = 0.3m → 悬挂被压缩了0.3米。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>如果去掉radius：基准变成硬点到轮心，拿它和【硬点到地面】做减法，压缩量直接算错，弹簧力完全错乱。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>---
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>更新车轮视觉位置 contactDistance - config.radius
+</span></span></span><span style=display:flex><span><span style=color:#57606a>contactDistance：悬挂硬点往下到地面的距离。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>地面再往回（向上）回退一个车轮半径，得到车轮中心的位置，赋值给车轮模型 transform tfSteer。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>悬挂硬点 origin
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    ↓ down 方向
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    ↓ contactDistance 到达地面
+</span></span></span><span style=display:flex><span><span style=color:#57606a>    ↑ 回退 radius → 车轮中心点 tfSteer.position
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>如果不减去 radius：车轮模型会直接埋进地面，轮子模型一半陷地里。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>---
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>把概念拆开画逻辑关系（伪示意图）
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>origin(悬挂硬点/射线起点)
+</span></span></span><span style=display:flex><span><span style=color:#57606a>     |
+</span></span></span><span style=display:flex><span><span style=color:#57606a>     | restLength (弹簧静息长度：硬点 → 车轮中心)
+</span></span></span><span style=display:flex><span><span style=color:#57606a>     ▼
+</span></span></span><span style=display:flex><span><span style=color:#57606a>tfSteer(车轮中心)
+</span></span></span><span style=display:flex><span><span style=color:#57606a>     |
+</span></span></span><span style=display:flex><span><span style=color:#57606a>     | radius (轮心 → 地面)
+</span></span></span><span style=display:flex><span><span style=color:#57606a>     ▼
+</span></span></span><span style=display:flex><span><span style=color:#57606a>───────────── 地面
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>射线从origin一路打到地面，得到 contactDistance = restLength + radius（静止无压缩）。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>restLength`：只描述**弹簧，硬点 ↔ 轮心**
+</span></span></span><span style=display:flex><span><span style=color:#57606a>- `radius`：描述**车轮几何体，轮心 ↔ 地面**
+</span></span></span><span style=display:flex><span><span style=color:#57606a>两者职责完全不一样，所以计算地面距离的时候必须叠加。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>## 容易踩坑的误区
+</span></span></span><span style=display:flex><span><span style=color:#57606a>1. 有人会把射线起点直接放在车轮中心，那代码就**不需要 radius**参与射线距离、压缩计算。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>但现实车辆悬挂弹簧顶端是固定在车架上，不在车轮中心；本代码模拟真实结构，射线起点是车架悬挂硬点，所以必须带上半径。
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>2. 悬空分支为什么公式里没有 radius？
+</span></span></span><span style=display:flex><span><span style=color:#57606a>contactPoint = origin + down * (config.restLength + config.radius);
+</span></span></span><span style=display:flex><span><span style=color:#57606a>
+</span></span></span><span style=display:flex><span><span style=color:#57606a>悬空这里**其实加了 radius，构造虚拟接触点。后面计算视觉长度length是给车轮中心用，已经包含在 restLength，不再重复叠加 radius。*/</span>
+</span></span></code></pre></div><h1 id=自定义实现带体积的轮胎触地检测>自定义实现：带体积的轮胎触地检测</h1><p>这种实现方式来自于NWH工作室开发的Vehicle Physics 2插件。第一次看到演示视频的时候，感觉挺惊艳的。</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/016.gif alt></p><p>因为那时候接触了Wheel Collider和射线检测，一直很遗憾没办法按照车轮实际的形状做地面检测碰撞：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/017.jpg alt></p><p>出于对这种实现方式的好奇，这段时间阅读了它的源码。</p><h1 id=nwh-vehicle-physics-2中的悬挂实现>NWH: Vehicle Physics 2中的悬挂实现</h1><p>VP2的悬挂实现原理是：</p><ul><li>检测轮胎触地点</li><li>通过触地点，反推悬挂伸缩的长度</li><li>通过悬挂伸缩长度，反推作用于车体的力</li></ul><p>总体思路与射线检测相同，但VP2做了一些稳定性、精细化和性能方面的补充。</p><h1 id=vp2轮胎触地检测>VP2：轮胎触地检测</h1><p>触地检测分为2种精细度的检测方式：</p><ul><li>单球体碰撞检测</li><li>多球体碰撞检测</li></ul><p>一般会使用单球体检测，当单球体没有检测到碰撞，或是明确指定多球体碰撞时，再使用多球体进行碰撞检测。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>override</span> <span style=color:#cf222e>bool</span> WheelCast<span style=color:#1f2328>(</span><span style=color:#cf222e>in</span> Vector3 origin<span style=color:#1f2328>,</span> <span style=color:#cf222e>in</span> Vector3 direction<span style=color:#1f2328>,</span> <span style=color:#cf222e>in</span> <span style=color:#cf222e>float</span> distance<span style=color:#1f2328>,</span> <span style=color:#cf222e>in</span> <span style=color:#cf222e>float</span> radius<span style=color:#1f2328>,</span> <span style=color:#cf222e>in</span> <span style=color:#cf222e>float</span> width<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> WheelHit wheelHit<span style=color:#1f2328>,</span> LayerMask layerMask<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>bool</span> isValid <span style=color:#1f2328>=</span> WheelCastSingleSphere<span style=color:#1f2328>(</span>origin<span style=color:#1f2328>,</span> direction<span style=color:#1f2328>,</span> distance<span style=color:#1f2328>,</span> radius<span style=color:#1f2328>,</span> width<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> _castResult<span style=color:#1f2328>,</span> layerMask<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>forceMulticast <span style=color:#1f2328>||</span> <span style=color:#1f2328>!</span>isValid<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        isValid <span style=color:#1f2328>=</span> WheelCastMultiSphere<span style=color:#1f2328>(</span>origin<span style=color:#1f2328>,</span> direction<span style=color:#1f2328>,</span> distance<span style=color:#1f2328>,</span> radius<span style=color:#1f2328>,</span> width<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> _castResult<span style=color:#1f2328>,</span> layerMask<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>isValid<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        wheelHit<span style=color:#1f2328>.</span>point <span style=color:#1f2328>=</span> _castResult<span style=color:#1f2328>.</span>point<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        wheelHit<span style=color:#1f2328>.</span>normal <span style=color:#1f2328>=</span> _castResult<span style=color:#1f2328>.</span>normal<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        wheelHit<span style=color:#1f2328>.</span>collider <span style=color:#1f2328>=</span> _castResult<span style=color:#1f2328>.</span>collider<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> isValid<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>对于绝大多数平坦路面，使用WheelCastSingleSphere就能完成检测，节省性能；在起伏较大的路面，且轮胎比较宽的车辆使用场景下（比如：越野障碍场地），使用WheelCastMultiSphere更昂贵的性能消耗算法，能达到更加真实的轮胎碰撞检测效果。</p><h1 id=单次球体碰撞检测>单次球体碰撞检测</h1><p>由悬挂与车体接触的位置，生成一个球体碰撞，这个球体由悬挂点向下移动一定的距离，过程中与其他碰撞体发生碰撞，并记录碰撞信息。</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/018.jpg alt>
+<img src=/image/u3d/physic_and_collision/real_vehicle_physics/019.jpg alt></p><p>源码如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>private</span> <span style=color:#cf222e>bool</span> WheelCastSingleSphere<span style=color:#1f2328>(</span>Vector3 origin<span style=color:#1f2328>,</span> Vector3 direction<span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span> distance<span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span> radius<span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span> width<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> RaycastHit hit<span style=color:#1f2328>,</span> LayerMask layerMask<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Decide whether to use Raycast or SphereCast based on wheel width</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>bool</span> useRaycast <span style=color:#1f2328>=</span> width <span style=color:#1f2328>&lt;=</span> <span style=color:#0550ae>0.01f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> hitCount <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>useRaycast<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Use RaycastNonAlloc for narrow wheels</span>
+</span></span><span style=display:flex><span>        hitCount <span style=color:#1f2328>=</span> Physics<span style=color:#1f2328>.</span>RaycastNonAlloc<span style=color:#1f2328>(</span>origin<span style=color:#1f2328>,</span> direction<span style=color:#1f2328>,</span> _raycastHits<span style=color:#1f2328>,</span> distance<span style=color:#1f2328>,</span> layerMask<span style=color:#1f2328>,</span> QueryTriggerInteraction<span style=color:#1f2328>.</span>Ignore<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Use SphereCastNonAlloc for wider wheels</span>
+</span></span><span style=display:flex><span>        hitCount <span style=color:#1f2328>=</span> Physics<span style=color:#1f2328>.</span>SphereCastNonAlloc<span style=color:#1f2328>(</span>origin<span style=color:#1f2328>,</span> radius<span style=color:#1f2328>,</span> direction<span style=color:#1f2328>,</span> _spherecastHits<span style=color:#1f2328>,</span> distance<span style=color:#1f2328>,</span> layerMask<span style=color:#1f2328>,</span> QueryTriggerInteraction<span style=color:#1f2328>.</span>Ignore<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>hitCount <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> minDistance <span style=color:#1f2328>=</span> <span style=color:#cf222e>float</span><span style=color:#1f2328>.</span>MaxValue<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        RaycastHit closestHit <span style=color:#1f2328>=</span> <span style=color:#cf222e>default</span><span style=color:#1f2328>(</span>RaycastHit<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        RaycastHit<span style=color:#1f2328>[]</span> hits <span style=color:#1f2328>=</span> useRaycast <span style=color:#1f2328>?</span> _raycastHits <span style=color:#1f2328>:</span> _spherecastHits<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#1f2328>&lt;</span> hitCount<span style=color:#1f2328>;</span> i<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>var</span> h <span style=color:#1f2328>=</span> hits<span style=color:#1f2328>[</span>i<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Ignore own colliders</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_wheelController<span style=color:#1f2328>.</span>vehicleColliders<span style=color:#1f2328>.</span>Contains<span style=color:#1f2328>(</span>h<span style=color:#1f2328>.</span>collider<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>continue</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Check if the hit point is inside the wheel&#39;s volume</span>
+</span></span><span style=display:flex><span>            Vector3 offset <span style=color:#1f2328>=</span> h<span style=color:#1f2328>.</span>point <span style=color:#1f2328>-</span> origin<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            Vector3 localOffset <span style=color:#1f2328>=</span> _transform<span style=color:#1f2328>.</span>InverseTransformVector<span style=color:#1f2328>(</span>offset<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>float</span> halfWidth <span style=color:#1f2328>=</span> width <span style=color:#1f2328>*</span> <span style=color:#0550ae>0.5f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>localOffset<span style=color:#1f2328>.</span>x <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>halfWidth <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>x <span style=color:#1f2328>&gt;</span> halfWidth <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>z <span style=color:#1f2328>&gt;</span> radius <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>z <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>radius<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>continue</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Check if this hit is closer</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>h<span style=color:#1f2328>.</span>distance <span style=color:#1f2328>&lt;</span> minDistance<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                minDistance <span style=color:#1f2328>=</span> h<span style=color:#1f2328>.</span>distance<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                closestHit <span style=color:#1f2328>=</span> h<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>minDistance <span style=color:#1f2328>!=</span> <span style=color:#cf222e>float</span><span style=color:#1f2328>.</span>MaxValue<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            hit <span style=color:#1f2328>=</span> closestHit<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>return</span> <span style=color:#cf222e>true</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> <span style=color:#cf222e>false</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><ul><li>如果轮胎宽度（厚度）小于1厘米，改用射线检测</li><li>碰撞对象的3层过滤筛查：</li><li>排除自己的车轮碰撞体</li></ul><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_wheelController<span style=color:#1f2328>.</span>vehicleColliders<span style=color:#1f2328>.</span>Contains<span style=color:#1f2328>(</span>h<span style=color:#1f2328>.</span>collider<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>continue</span><span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>排除在轮胎外侧的碰撞体</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>Vector3 offset <span style=color:#1f2328>=</span> h<span style=color:#1f2328>.</span>point <span style=color:#1f2328>-</span> origin<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>Vector3 localOffset <span style=color:#1f2328>=</span> _transform<span style=color:#1f2328>.</span>InverseTransformVector<span style=color:#1f2328>(</span>offset<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> halfWidth <span style=color:#1f2328>=</span> width <span style=color:#1f2328>*</span> <span style=color:#0550ae>0.5f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>localOffset<span style=color:#1f2328>.</span>x <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>halfWidth <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>x <span style=color:#1f2328>&gt;</span> halfWidth <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>z <span style=color:#1f2328>&gt;</span> radius <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>z <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>radius<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>continue</span><span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>取距离最近的碰撞体作为碰撞点</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>h<span style=color:#1f2328>.</span>distance <span style=color:#1f2328>&lt;</span> minDistance<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    minDistance <span style=color:#1f2328>=</span> h<span style=color:#1f2328>.</span>distance<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    closestHit <span style=color:#1f2328>=</span> h<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>如此，经过层层筛选，可过滤出轮胎与地面的碰撞点。</p><h1 id=多球体碰撞检测>多球体碰撞检测</h1><p>生成以轮胎宽度为直径的多个球型射线。</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/020.jpg alt></p><p>先让球型射线在轮胎中心的高度线上依次排列，球之间的间距刚好是球的半径：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/021.jpg alt></p><p>将这几个球型射线的位置移动到轮胎的下半部分，使其均匀地分布在轮胎下半部分的 180度范围：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/022.jpg alt=图片球的数量有误，应该是9个球型射线></p><p>然后这几个球型射线由悬挂处的位置向下移动指定距离，过程中检测到的碰撞体作为轮胎与地面接触的候选碰撞体。</p><p>源码如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>private</span> <span style=color:#cf222e>bool</span> WheelCastMultiSphere<span style=color:#1f2328>(</span>Vector3 origin<span style=color:#1f2328>,</span> Vector3 direction<span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span> distance<span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span> radius<span style=color:#1f2328>,</span> <span style=color:#cf222e>float</span> width<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> RaycastHit hit<span style=color:#1f2328>,</span> LayerMask layerMask<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> castRadius <span style=color:#1f2328>=</span> width <span style=color:#1f2328>*</span> <span style=color:#0550ae>0.5f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Decide whether to use Raycast or SphereCast based on wheel width</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>bool</span> useRaycast <span style=color:#1f2328>=</span> castRadius <span style=color:#1f2328>&lt;=</span> <span style=color:#0550ae>0.01f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> zSteps <span style=color:#1f2328>=</span> useRaycast <span style=color:#1f2328>?</span> <span style=color:#0550ae>1</span> <span style=color:#1f2328>:</span> Mathf<span style=color:#1f2328>.</span>RoundToInt<span style=color:#1f2328>((</span>radius <span style=color:#1f2328>/</span> castRadius<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> <span style=color:#0550ae>2f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    zSteps <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>Max<span style=color:#1f2328>(</span>zSteps<span style=color:#1f2328>,</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>);</span> <span style=color:#57606a>// Ensure at least 3 steps for coverage</span>
+</span></span><span style=display:flex><span>    zSteps <span style=color:#1f2328>=</span> zSteps <span style=color:#1f2328>%</span> <span style=color:#0550ae>2</span> <span style=color:#1f2328>==</span> <span style=color:#0550ae>0</span> <span style=color:#1f2328>?</span> zSteps <span style=color:#1f2328>+</span> <span style=color:#0550ae>1</span> <span style=color:#1f2328>:</span> zSteps<span style=color:#1f2328>;</span> <span style=color:#57606a>// Ensure an odd number</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> stepAngle <span style=color:#1f2328>=</span> <span style=color:#0550ae>180f</span> <span style=color:#1f2328>/</span> <span style=color:#1f2328>(</span>zSteps <span style=color:#1f2328>-</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Vector3 up <span style=color:#1f2328>=</span> _transform<span style=color:#1f2328>.</span>up<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    Vector3 forwardOffset <span style=color:#1f2328>=</span> _transform<span style=color:#1f2328>.</span>forward <span style=color:#1f2328>*</span> radius<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Quaternion steerQuaternion <span style=color:#1f2328>=</span> Quaternion<span style=color:#1f2328>.</span>AngleAxis<span style=color:#1f2328>(</span>_wheelController<span style=color:#1f2328>.</span>SteerAngle<span style=color:#1f2328>,</span> up<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    Quaternion xStepQuaternion <span style=color:#1f2328>=</span> Quaternion<span style=color:#1f2328>.</span>AngleAxis<span style=color:#1f2328>(</span>stepAngle<span style=color:#1f2328>,</span> _transform<span style=color:#1f2328>.</span>right<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    Quaternion xRotationQuaternion <span style=color:#1f2328>=</span> Quaternion<span style=color:#1f2328>.</span>identity<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    _allHits<span style=color:#1f2328>.</span>Clear<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> z <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> z <span style=color:#1f2328>&lt;</span> zSteps<span style=color:#1f2328>;</span> z<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Vector3 castOrigin <span style=color:#1f2328>=</span> origin <span style=color:#1f2328>+</span> steerQuaternion <span style=color:#1f2328>*</span> xRotationQuaternion <span style=color:#1f2328>*</span> forwardOffset<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>int</span> hitCount <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        RaycastHit<span style=color:#1f2328>[]</span> hits <span style=color:#1f2328>=</span> useRaycast <span style=color:#1f2328>?</span> _raycastHits <span style=color:#1f2328>:</span> _spherecastHits<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>useRaycast<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Use RaycastNonAlloc for narrow wheels</span>
+</span></span><span style=display:flex><span>            hitCount <span style=color:#1f2328>=</span> Physics<span style=color:#1f2328>.</span>RaycastNonAlloc<span style=color:#1f2328>(</span>castOrigin<span style=color:#1f2328>,</span> direction<span style=color:#1f2328>,</span> hits<span style=color:#1f2328>,</span> distance<span style=color:#1f2328>,</span> layerMask<span style=color:#1f2328>,</span> QueryTriggerInteraction<span style=color:#1f2328>.</span>Ignore<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Use SphereCastNonAlloc for wider wheels</span>
+</span></span><span style=display:flex><span>            hitCount <span style=color:#1f2328>=</span> Physics<span style=color:#1f2328>.</span>SphereCastNonAlloc<span style=color:#1f2328>(</span>castOrigin<span style=color:#1f2328>,</span> castRadius<span style=color:#1f2328>,</span> direction<span style=color:#1f2328>,</span> hits<span style=color:#1f2328>,</span> distance<span style=color:#1f2328>,</span> layerMask<span style=color:#1f2328>,</span> QueryTriggerInteraction<span style=color:#1f2328>.</span>Ignore<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#1f2328>&lt;</span> hitCount<span style=color:#1f2328>;</span> i<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>var</span> h <span style=color:#1f2328>=</span> hits<span style=color:#1f2328>[</span>i<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>            _allHits<span style=color:#1f2328>.</span>Add<span style=color:#1f2328>(</span>h<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        xRotationQuaternion <span style=color:#1f2328>*=</span> xStepQuaternion<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_allHits<span style=color:#1f2328>.</span>Count <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> minDistance <span style=color:#1f2328>=</span> <span style=color:#cf222e>float</span><span style=color:#1f2328>.</span>MaxValue<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        RaycastHit closestHit <span style=color:#1f2328>=</span> <span style=color:#cf222e>default</span><span style=color:#1f2328>(</span>RaycastHit<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#1f2328>&lt;</span> _allHits<span style=color:#1f2328>.</span>Count<span style=color:#1f2328>;</span> i<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>var</span> currentHit <span style=color:#1f2328>=</span> _allHits<span style=color:#1f2328>[</span>i<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Ignore own colliders</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_wheelController<span style=color:#1f2328>.</span>vehicleColliders<span style=color:#1f2328>.</span>Contains<span style=color:#1f2328>(</span>currentHit<span style=color:#1f2328>.</span>collider<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>continue</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Check if the hit point is inside the wheel&#39;s volume</span>
+</span></span><span style=display:flex><span>            Vector3 offset <span style=color:#1f2328>=</span> currentHit<span style=color:#1f2328>.</span>point <span style=color:#1f2328>-</span> origin<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            Vector3 localOffset <span style=color:#1f2328>=</span> _transform<span style=color:#1f2328>.</span>InverseTransformVector<span style=color:#1f2328>(</span>offset<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>float</span> halfWidth <span style=color:#1f2328>=</span> width <span style=color:#1f2328>*</span> <span style=color:#0550ae>0.5f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>localOffset<span style=color:#1f2328>.</span>x <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>halfWidth <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>x <span style=color:#1f2328>&gt;</span> halfWidth <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>z <span style=color:#1f2328>&gt;</span> radius <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>z <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>radius<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                <span style=color:#cf222e>continue</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            <span style=color:#57606a>// Check if this hit is closer</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>currentHit<span style=color:#1f2328>.</span>distance <span style=color:#1f2328>&lt;</span> minDistance<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>                minDistance <span style=color:#1f2328>=</span> currentHit<span style=color:#1f2328>.</span>distance<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>                closestHit <span style=color:#1f2328>=</span> currentHit<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>minDistance <span style=color:#1f2328>!=</span> <span style=color:#cf222e>float</span><span style=color:#1f2328>.</span>MaxValue<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            hit <span style=color:#1f2328>=</span> closestHit<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>return</span> <span style=color:#cf222e>true</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> <span style=color:#cf222e>false</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>以轮胎宽度的一般作为球型射线的球的半径。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> castRadius <span style=color:#1f2328>=</span> width <span style=color:#1f2328>*</span> <span style=color:#0550ae>0.5f</span><span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>计算球型射线的数量，确保数量一定是基数，这样存在最中间的球型射线是在轮胎竖直向下的下沿。如果轮胎宽度小于1厘米，则发射三根线状射线，分别在轮胎前向、下向、后向的方向。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>bool</span> useRaycast <span style=color:#1f2328>=</span> castRadius <span style=color:#1f2328>&lt;=</span> <span style=color:#0550ae>0.01f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>int</span> zSteps <span style=color:#1f2328>=</span> useRaycast <span style=color:#1f2328>?</span> <span style=color:#0550ae>1</span> <span style=color:#1f2328>:</span> Mathf<span style=color:#1f2328>.</span>RoundToInt<span style=color:#1f2328>((</span>radius <span style=color:#1f2328>/</span> castRadius<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> <span style=color:#0550ae>2f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>zSteps <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>Max<span style=color:#1f2328>(</span>zSteps<span style=color:#1f2328>,</span> <span style=color:#0550ae>3</span><span style=color:#1f2328>);</span> <span style=color:#57606a>// Ensure at least 3 steps for coverage</span>
+</span></span><span style=display:flex><span>zSteps <span style=color:#1f2328>=</span> zSteps <span style=color:#1f2328>%</span> <span style=color:#0550ae>2</span> <span style=color:#1f2328>==</span> <span style=color:#0550ae>0</span> <span style=color:#1f2328>?</span> zSteps <span style=color:#1f2328>+</span> <span style=color:#0550ae>1</span> <span style=color:#1f2328>:</span> zSteps<span style=color:#1f2328>;</span> <span style=color:#57606a>// Ensure an odd number</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> stepAngle <span style=color:#1f2328>=</span> <span style=color:#0550ae>180f</span> <span style=color:#1f2328>/</span> <span style=color:#1f2328>(</span>zSteps <span style=color:#1f2328>-</span> <span style=color:#0550ae>1</span><span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>基于偏移+旋转，把射线的发射点的位置设置在轮胎的下半边缘，然后进行射线检测</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>Vector3 up <span style=color:#1f2328>=</span> _transform<span style=color:#1f2328>.</span>up<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>Vector3 forwardOffset <span style=color:#1f2328>=</span> _transform<span style=color:#1f2328>.</span>forward <span style=color:#1f2328>*</span> radius<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Quaternion steerQuaternion <span style=color:#1f2328>=</span> Quaternion<span style=color:#1f2328>.</span>AngleAxis<span style=color:#1f2328>(</span>_wheelController<span style=color:#1f2328>.</span>SteerAngle<span style=color:#1f2328>,</span> up<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>Quaternion xStepQuaternion <span style=color:#1f2328>=</span> Quaternion<span style=color:#1f2328>.</span>AngleAxis<span style=color:#1f2328>(</span>stepAngle<span style=color:#1f2328>,</span> _transform<span style=color:#1f2328>.</span>right<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>Quaternion xRotationQuaternion <span style=color:#1f2328>=</span> Quaternion<span style=color:#1f2328>.</span>identity<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>_allHits<span style=color:#1f2328>.</span>Clear<span style=color:#1f2328>();</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> z <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> z <span style=color:#1f2328>&lt;</span> zSteps<span style=color:#1f2328>;</span> z<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    Vector3 castOrigin <span style=color:#1f2328>=</span> origin <span style=color:#1f2328>+</span> steerQuaternion <span style=color:#1f2328>*</span> xRotationQuaternion <span style=color:#1f2328>*</span> forwardOffset<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>int</span> hitCount <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    RaycastHit<span style=color:#1f2328>[]</span> hits <span style=color:#1f2328>=</span> useRaycast <span style=color:#1f2328>?</span> _raycastHits <span style=color:#1f2328>:</span> _spherecastHits<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>useRaycast<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Use RaycastNonAlloc for narrow wheels</span>
+</span></span><span style=display:flex><span>        hitCount <span style=color:#1f2328>=</span> Physics<span style=color:#1f2328>.</span>RaycastNonAlloc<span style=color:#1f2328>(</span>castOrigin<span style=color:#1f2328>,</span> direction<span style=color:#1f2328>,</span> hits<span style=color:#1f2328>,</span> distance<span style=color:#1f2328>,</span> layerMask<span style=color:#1f2328>,</span> QueryTriggerInteraction<span style=color:#1f2328>.</span>Ignore<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Use SphereCastNonAlloc for wider wheels</span>
+</span></span><span style=display:flex><span>        hitCount <span style=color:#1f2328>=</span> Physics<span style=color:#1f2328>.</span>SphereCastNonAlloc<span style=color:#1f2328>(</span>castOrigin<span style=color:#1f2328>,</span> castRadius<span style=color:#1f2328>,</span> direction<span style=color:#1f2328>,</span> hits<span style=color:#1f2328>,</span> distance<span style=color:#1f2328>,</span> layerMask<span style=color:#1f2328>,</span> QueryTriggerInteraction<span style=color:#1f2328>.</span>Ignore<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#1f2328>&lt;</span> hitCount<span style=color:#1f2328>;</span> i<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>var</span> h <span style=color:#1f2328>=</span> hits<span style=color:#1f2328>[</span>i<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>        _allHits<span style=color:#1f2328>.</span>Add<span style=color:#1f2328>(</span>h<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    xRotationQuaternion <span style=color:#1f2328>*=</span> xStepQuaternion<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>检测到的所有碰撞信息，按照与单次球体碰撞检测中相同的处理方式：三层过滤，得到距离最近的碰撞信息作为轮胎的碰撞。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_allHits<span style=color:#1f2328>.</span>Count <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> minDistance <span style=color:#1f2328>=</span> <span style=color:#cf222e>float</span><span style=color:#1f2328>.</span>MaxValue<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    RaycastHit closestHit <span style=color:#1f2328>=</span> <span style=color:#cf222e>default</span><span style=color:#1f2328>(</span>RaycastHit<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> i <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> i <span style=color:#1f2328>&lt;</span> _allHits<span style=color:#1f2328>.</span>Count<span style=color:#1f2328>;</span> i<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>var</span> currentHit <span style=color:#1f2328>=</span> _allHits<span style=color:#1f2328>[</span>i<span style=color:#1f2328>];</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Ignore own colliders</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_wheelController<span style=color:#1f2328>.</span>vehicleColliders<span style=color:#1f2328>.</span>Contains<span style=color:#1f2328>(</span>currentHit<span style=color:#1f2328>.</span>collider<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>continue</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Check if the hit point is inside the wheel&#39;s volume</span>
+</span></span><span style=display:flex><span>        Vector3 offset <span style=color:#1f2328>=</span> currentHit<span style=color:#1f2328>.</span>point <span style=color:#1f2328>-</span> origin<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        Vector3 localOffset <span style=color:#1f2328>=</span> _transform<span style=color:#1f2328>.</span>InverseTransformVector<span style=color:#1f2328>(</span>offset<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> halfWidth <span style=color:#1f2328>=</span> width <span style=color:#1f2328>*</span> <span style=color:#0550ae>0.5f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>localOffset<span style=color:#1f2328>.</span>x <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>halfWidth <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>x <span style=color:#1f2328>&gt;</span> halfWidth <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>z <span style=color:#1f2328>&gt;</span> radius <span style=color:#1f2328>||</span> localOffset<span style=color:#1f2328>.</span>z <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>radius<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>            <span style=color:#cf222e>continue</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#57606a>// Check if this hit is closer</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>currentHit<span style=color:#1f2328>.</span>distance <span style=color:#1f2328>&lt;</span> minDistance<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            minDistance <span style=color:#1f2328>=</span> currentHit<span style=color:#1f2328>.</span>distance<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>            closestHit <span style=color:#1f2328>=</span> currentHit<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>minDistance <span style=color:#1f2328>!=</span> <span style=color:#cf222e>float</span><span style=color:#1f2328>.</span>MaxValue<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        hit <span style=color:#1f2328>=</span> closestHit<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> <span style=color:#cf222e>true</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>通过上述两种不同颗粒度的检测，得到轮胎的触地状况。</p><h1 id=vp2悬挂伸缩和力的计算>VP2：悬挂伸缩和力的计算</h1><p>经过上面部分轮胎触地检测：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>_groupDetection<span style=color:#1f2328>.</span>WheelCast<span style=color:#1f2328>(</span>_castOrigin<span style=color:#1f2328>,</span> _castDirection<span style=color:#1f2328>,</span> castLength<span style=color:#1f2328>,</span> wheel<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>,</span> wheel<span style=color:#1f2328>.</span>width<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> wheelHit<span style=color:#1f2328>,</span> layerMask<span style=color:#1f2328>)</span>
+</span></span></code></pre></div><p>得到碰撞点的位置后，由碰撞点位置，来计算悬挂的伸缩和力的大小。</p><h2 id=悬挂伸缩长度的计算>悬挂伸缩长度的计算</h2><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_groundDetection<span style=color:#1f2328>.</span>WheelCast<span style=color:#1f2328>(</span>_castOrigin<span style=color:#1f2328>,</span> _castDirection<span style=color:#1f2328>,</span> castLength<span style=color:#1f2328>,</span> wheel<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>,</span> wheel<span style=color:#1f2328>.</span>width<span style=color:#1f2328>,</span> <span style=color:#cf222e>ref</span> wheelHit<span style=color:#1f2328>,</span> layerMask<span style=color:#1f2328>))</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    _isGrounded <span style=color:#1f2328>=</span> <span style=color:#cf222e>true</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// ...</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>spring<span style=color:#1f2328>.</span>prevLength <span style=color:#1f2328>=</span> spring<span style=color:#1f2328>.</span>length<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> targetLength<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_isGrounded<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// 后面有逻辑分析</span>
+</span></span><span style=display:flex><span>    _hitLocalPoint <span style=color:#1f2328>=</span> _suspensionInvWorldMatrix<span style=color:#1f2328>.</span>MultiplyPoint3x4<span style=color:#1f2328>(</span>wheelHit<span style=color:#1f2328>.</span>point<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> hitAngle <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>Asin<span style=color:#1f2328>(</span>Mathf<span style=color:#1f2328>.</span>Clamp<span style=color:#1f2328>(</span>_hitLocalPoint<span style=color:#1f2328>.</span>z <span style=color:#1f2328>/</span> wheel<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>,</span> <span style=color:#1f2328>-</span><span style=color:#0550ae>1f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1f</span><span style=color:#1f2328>));</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> localGroundedYPosition <span style=color:#1f2328>=</span> _hitLocalPoint<span style=color:#1f2328>.</span>y <span style=color:#1f2328>+</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>*</span> Mathf<span style=color:#1f2328>.</span>Cos<span style=color:#1f2328>(</span>hitAngle<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    targetLength <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>Clamp<span style=color:#1f2328>(-</span>localGroundedYPosition<span style=color:#1f2328>,</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>,</span> spring<span style=color:#1f2328>.</span>maxLength<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    targetLength <span style=color:#1f2328>=</span> spring<span style=color:#1f2328>.</span>maxLength<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>上一段_isGrounded为true的代码逻辑是：</p><p>由碰撞点的位置，反推轮胎中心的位置，以此来计算悬挂的压缩长度。
+具体分析如下：</p><p>将碰撞位置的由世界空间，转为悬挂的本地空间</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>_hitLocalPoint <span style=color:#1f2328>=</span> _suspensionInvWorldMatrix<span style=color:#1f2328>.</span>MultiplyPoint3x4<span style=color:#1f2328>(</span>wheelHit<span style=color:#1f2328>.</span>point<span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>根据轮胎的半径和碰撞点的悬挂本地坐标的z值，计算得到轮胎中心相对碰撞点的偏移夹角hitAngle</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> hitAngle <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>Asin<span style=color:#1f2328>(</span>Mathf<span style=color:#1f2328>.</span>Clamp<span style=color:#1f2328>(</span>_hitLocalPoint<span style=color:#1f2328>.</span>z <span style=color:#1f2328>/</span> wheel<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>,</span> <span style=color:#1f2328>-</span><span style=color:#0550ae>1f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1f</span><span style=color:#1f2328>));</span>
+</span></span></code></pre></div><p>根据碰撞点的y值和夹角hitAngle计算得到碰撞点相对轮胎中心的偏移（图中蓝色文字部分），再得到轮胎中心在悬挂本地坐标的y值</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> localGroundedYPosition <span style=color:#1f2328>=</span> _hitLocalPoint<span style=color:#1f2328>.</span>y <span style=color:#1f2328>+</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>*</span> Mathf<span style=color:#1f2328>.</span>Cos<span style=color:#1f2328>(</span>hitAngle<span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>这个y值的绝对值，再经过悬挂最大长度的限制后，就是悬挂的目标长度</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>targetLength <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>Clamp<span style=color:#1f2328>(-</span>localGroundedYPosition<span style=color:#1f2328>,</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>,</span> spring<span style=color:#1f2328>.</span>maxLength<span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/023.jpg alt></p><h2 id=悬挂力的计算>悬挂力的计算</h2><p>在计算力之前，先修正一下前面的说法：在NWH：VP2插件力，悬挂的长度是可以压缩到0的，也就是上图中，如果悬挂压缩到极致，轮胎中心是可以与悬挂点位置重合的。</p><p>如此，spring.maxLength，所谓悬挂的最大长度，就变成了悬挂的最大压缩长度。后面力的计算是基于这一前提。相关源码，后面逐条分析：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>targetLength <span style=color:#1f2328>&gt;</span> spring<span style=color:#1f2328>.</span>length<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Extension: Apply extension speed limit</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> extensionSpeed <span style=color:#1f2328>=</span> suspensionExtensionSpeedCoeff <span style=color:#1f2328>*</span> _dt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    spring<span style=color:#1f2328>.</span>length <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>MoveTowards<span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>length<span style=color:#1f2328>,</span> targetLength<span style=color:#1f2328>,</span> extensionSpeed<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#57606a>// Compression: Instantaneous adjustment</span>
+</span></span><span style=display:flex><span>    spring<span style=color:#1f2328>.</span>length <span style=color:#1f2328>=</span> targetLength<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>spring<span style=color:#1f2328>.</span>compressionVelocity <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>prevLength <span style=color:#1f2328>-</span> spring<span style=color:#1f2328>.</span>length<span style=color:#1f2328>)</span> <span style=color:#1f2328>/</span> _dt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>spring<span style=color:#1f2328>.</span>compression <span style=color:#1f2328>=</span> spring<span style=color:#1f2328>.</span>maxLength <span style=color:#1f2328>==</span> <span style=color:#0550ae>0</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>1f</span> <span style=color:#1f2328>:</span> <span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>maxLength <span style=color:#1f2328>-</span> spring<span style=color:#1f2328>.</span>length<span style=color:#1f2328>)</span> <span style=color:#1f2328>/</span> spring<span style=color:#1f2328>.</span>maxLength<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>spring<span style=color:#1f2328>.</span>force <span style=color:#1f2328>=</span> _isGrounded <span style=color:#1f2328>?</span> spring<span style=color:#1f2328>.</span>maxForce <span style=color:#1f2328>*</span> spring<span style=color:#1f2328>.</span>forceCurve<span style=color:#1f2328>.</span>Evaluate<span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>compression<span style=color:#1f2328>)</span> <span style=color:#1f2328>:</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>damper<span style=color:#1f2328>.</span>force <span style=color:#1f2328>=</span> _isGrounded <span style=color:#1f2328>?</span> damper<span style=color:#1f2328>.</span>CalculateDamperForce<span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>compressionVelocity<span style=color:#1f2328>)</span> <span style=color:#1f2328>:</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_isGrounded<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>maxLength <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>&amp;&amp;</span> spring<span style=color:#1f2328>.</span>maxForce <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        load <span style=color:#1f2328>=</span> spring<span style=color:#1f2328>.</span>force <span style=color:#1f2328>+</span> damper<span style=color:#1f2328>.</span>force<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        load <span style=color:#1f2328>=</span> load <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>:</span> load<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        _suspensionForce <span style=color:#1f2328>=</span> load <span style=color:#1f2328>*</span> wheelHit<span style=color:#1f2328>.</span>normal<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        targetRigidbody<span style=color:#1f2328>.</span>AddForceAtPosition<span style=color:#1f2328>(</span>_suspensionForce<span style=color:#1f2328>,</span> _suspensionWorldPosition<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        load <span style=color:#1f2328>=</span> loadRating<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h2 id=悬挂长度>悬挂长度</h2><p>如果相比前一帧是压缩的，它会受到压缩速度的限制；如果是拉伸的，则没有速度上限，直接变成目标长度</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>targetLength <span style=color:#1f2328>&gt;</span> spring<span style=color:#1f2328>.</span>length<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> extensionSpeed <span style=color:#1f2328>=</span> suspensionExtensionSpeedCoeff <span style=color:#1f2328>*</span> _dt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    spring<span style=color:#1f2328>.</span>length <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>MoveTowards<span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>length<span style=color:#1f2328>,</span> targetLength<span style=color:#1f2328>,</span> extensionSpeed<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>    spring<span style=color:#1f2328>.</span>length <span style=color:#1f2328>=</span> targetLength<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><h2 id=计算悬挂力>计算悬挂力：</h2><p>根据压缩长度/最大压缩长度，得到归一化的压缩量，用受力曲线来控制压缩过程中的受力程度变化，乘以最大的压缩受力，得到当前压缩程度下的受力。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>spring<span style=color:#1f2328>.</span>compression <span style=color:#1f2328>=</span> spring<span style=color:#1f2328>.</span>maxLength <span style=color:#1f2328>==</span> <span style=color:#0550ae>0</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>1f</span> <span style=color:#1f2328>:</span> <span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>maxLength <span style=color:#1f2328>-</span> spring<span style=color:#1f2328>.</span>length<span style=color:#1f2328>)</span> <span style=color:#1f2328>/</span> spring<span style=color:#1f2328>.</span>maxLength<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>spring<span style=color:#1f2328>.</span>force <span style=color:#1f2328>=</span> _isGrounded <span style=color:#1f2328>?</span> spring<span style=color:#1f2328>.</span>maxForce <span style=color:#1f2328>*</span> spring<span style=color:#1f2328>.</span>forceCurve<span style=color:#1f2328>.</span>Evaluate<span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>compression<span style=color:#1f2328>)</span> <span style=color:#1f2328>:</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>;</span>
+</span></span></code></pre></div><h2 id=计算悬挂阻尼>计算悬挂阻尼：</h2><p>根据前后两帧悬挂长度的变化，计算悬挂压缩速度，根据压缩速度由阻尼系统计算阻尼的力（阻尼力的计算后面讲）。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>spring<span style=color:#1f2328>.</span>compressionVelocity <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>prevLength <span style=color:#1f2328>-</span> spring<span style=color:#1f2328>.</span>length<span style=color:#1f2328>)</span> <span style=color:#1f2328>/</span> _dt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>damper<span style=color:#1f2328>.</span>force <span style=color:#1f2328>=</span> _isGrounded <span style=color:#1f2328>?</span> damper<span style=color:#1f2328>.</span>CalculateDamperForce<span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>compressionVelocity<span style=color:#1f2328>)</span> <span style=color:#1f2328>:</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>阻尼的计算根据速度的正负，分2套参数计算。速度为正，表示弹簧正在压缩；速度为负，表示弹簧正在回弹。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>public</span> <span style=color:#cf222e>float</span> CalculateDamperForce<span style=color:#1f2328>(</span><span style=color:#cf222e>in</span> <span style=color:#cf222e>float</span> velocity<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>velocity <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> CalculateBumpForce<span style=color:#1f2328>(</span>velocity<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>return</span> CalculateReboundForce<span style=color:#1f2328>(</span>velocity<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>阻尼力大小的计算，是经典的双段线性阻尼模型。根据速度绝对值，分为低速、高速两个区域。</p><ul><li>低速区：主要处理车身姿态（过弯侧倾、刹车点头），通常比较硬，为了操作稳。</li><li>高速区：主要处理路面颠簸（压过石头、复杂地形），通畅比较软，为了舒适，防止冲击力直接传给车架。</li></ul><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>// 压缩</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>private</span> <span style=color:#cf222e>float</span> CalculateBumpForce<span style=color:#1f2328>(</span><span style=color:#cf222e>in</span> <span style=color:#cf222e>float</span> velocity<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>velocity <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>)</span> <span style=color:#cf222e>return</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> x <span style=color:#1f2328>=</span> velocity<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>x <span style=color:#1f2328>&lt;</span> bumpDivisionVelocity<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        y <span style=color:#1f2328>=</span> x <span style=color:#1f2328>*</span> slowBump<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        y <span style=color:#1f2328>=</span> bumpDivisionVelocity <span style=color:#1f2328>*</span> slowBump <span style=color:#1f2328>+</span> <span style=color:#1f2328>(</span>x <span style=color:#1f2328>-</span> bumpDivisionVelocity<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> fastBump<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> y <span style=color:#1f2328>*</span> bumpRate<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 回弹</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>private</span> <span style=color:#cf222e>float</span> CalculateReboundForce<span style=color:#1f2328>(</span><span style=color:#cf222e>in</span> <span style=color:#cf222e>float</span> velocity<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>velocity <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>)</span> <span style=color:#cf222e>return</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>;</span> <span style=color:#57606a>// We are in bump, return.</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> x <span style=color:#1f2328>=</span> <span style=color:#1f2328>-</span>velocity<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> y<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>x <span style=color:#1f2328>&lt;</span> reboundDivisionVelocity<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        y <span style=color:#1f2328>=</span> x <span style=color:#1f2328>*</span> slowRebound<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>        y <span style=color:#1f2328>=</span> reboundDivisionVelocity <span style=color:#1f2328>*</span> slowRebound <span style=color:#1f2328>+</span> <span style=color:#1f2328>(</span>x <span style=color:#1f2328>-</span> reboundDivisionVelocity<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> fastRebound<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>return</span> <span style=color:#1f2328>-</span>y <span style=color:#1f2328>*</span> reboundRate<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><h2 id=悬挂受力>悬挂受力</h2><p>综合弹簧力和阻尼的力以后，在碰撞点法线方向上，对车体施加力。</p><pre tabindex=0><code>if (_isGrounded)
+{
+    if (spring.maxLength &gt; 0f &amp;&amp; spring.maxForce &gt; 0f)
+    {
+        load = spring.force + damper.force;
+        load = load &lt; 0f ? 0f : load;
+        _suspensionForce = load * wheelHit.normal;
+        targetRigidbody.AddForceAtPosition(_suspensionForce, _suspensionWorldPosition);
+    }
+    else
+    {
+        load = loadRating;
+    }
+}
+</code></pre><h2 id=摩擦力>摩擦力</h2><p>在将摩擦力之前，先提一个比较有趣的知识——外倾角。</p><h2 id=外倾角camber>外倾角（Camber）</h2><p>顾名思义，外倾角，就是轮胎向外侧倾斜的角度。根据倾斜的角度为正、负还是零，分为：</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/024.jpg alt></p><ul><li>负外倾</li></ul><p>轮胎顶部向内倾斜，呈“八”字型，常见于赛车、改装车。
+因为车辆高速过弯时，车体会一定程度向外侧倾斜，此时轮胎相比静止状态，有更大的接触面积，可以提供更大的抓地力</p><ul><li><p>0度
+两侧轮胎完全垂直于地面，常规车辆比较常见。</p></li><li><p>正外倾</p></li></ul><p>轮胎顶部向外倾斜，呈“V”字型，常见于重载卡车空载时的状态。
+当卡车空载状态下，车桥处于自然弯曲状态，轮胎呈“V”字型向外倾斜；
+当卡车重载状态下，车桥被压平，车轮成平行垂直于地面的状态，接触面变大，方便更好地承重。</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/025.jpg alt></p><p>综上，外倾角的大小会影响车轮与地面的基础面积，从而影响轮胎与地面接触的摩擦力。</p><h1 id=pacejka魔术公式magic-formula>Pacejka魔术公式（Magic Formula）</h1><p>Pacejka 魔术公式（Magic Formula）是车辆动力学中描述轮胎力的圣经。虽然名为“公式”，但它其实是一个半经验模型。它不像牛顿第二定律那样，从物理基本原理推导而来，而是Hans B. Pacejka教授通过大量的轮胎实验数据，发现有一套数据公式能完美拟合几乎所有轮胎的力学特性曲线，因为拟合得太准了，却又没有完全基于物理微观结构，所以被称为“Magic Formula”。</p><p>Pacejka魔术公式中有一个很重要的概念——滑移（Slip）。</p><h1 id=滑移slip>滑移（Slip）</h1><p>要理解滑移，先从轮胎开始讲起。
+轮胎不是刚体，它是会发生形变的。当车辆的速度发生变化，轮胎就会发生形变。</p><p>举个例子：</p><p>一辆车以10米/秒的速度向前行进，当它加速到15米/秒时，轮毂的转速会立刻增加，</p><p>靠近轮毂的轮胎部分转速贴近轮毂的转速，</p><p>而靠近地面的轮胎部分转速则依然保持在原来的速度，</p><p>如此，轮胎就会发生形变。</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/026.jpg alt></p><p>靠近地面的轮胎部分的速度与车辆实际的行驶速度保持一致，我们称之为“车速”；</p><p>靠近轮毂的轮胎部分的速度，我们计算为“轮胎转速 × 半径”。</p><p>所以滑移的计算公式为：</p><p>滑移率（slip）= (轮胎转速 x 半径 - 车速) / 车速</p><p>这个公式的本质，是在计算：“轮子转过的距离”与“车子实际走过的距离”之间的偏差比例。要注意，滑移（Slip）与打滑（Skid）的区分：</p><ul><li>打滑：胎面和地面发生相对位移。</li><li>滑移：台面与地面保持相对静止。</li></ul><p>滑移的“移”，“移”的是轮胎的形变，形变产生了力，推动车辆前进。</p><h2 id=pacejka公式>Pacejka公式</h2><p>Pacekja的核心目标是描述滑移率（Slip）与摩擦力（Force）之间的关系。</p><p>Pacejka教授发现：</p><p>【轮胎类别】不论是F1赛车的热熔胎、家用轿车的四季胎，还是卡车的越野胎；
+【路面条件】不论是干燥的柏油路、湿滑的水泥路，还是可能会打滑的雪地；
+【受力方向】不论是纵向力（加速/刹车引起的滑移）还是横向力（转向引起的侧偏）；</p><p>它们随滑移率变化的摩擦力曲线走势完全一致，这个曲线的特征分为3个阶段：</p><p>阶段一：线性区——“抓地稳”
+Slip区间：0%~3%
+曲线直线上升
+手感：方向盘很紧，车身相应极其灵敏。你给多少输入，轮胎就给多少力。
+阶段二：峰值区——“极限边缘”
+Slip区间：5%~15%
+曲线到达最高点
+手感：赛车手梦寐以求的区域。此时摩擦力最大，刹车最狠，过弯最快。但车开始有点“游离感”，因为部分轮胎橡胶开始出现滑动。
+阶段三：滑动区——“失控/偏移”
+Slip区间：>20%
+曲线过了峰值，开始下滑，然后变成一条平线。
+手感：车辆彻底滑出去。此时无论怎么深踩油门或猛打方向，力都不会增加，甚至会减少（动摩擦&lt;静摩擦上限）。这解释了：为什么刹车抱死后，反而不会马上停下来。</p><p><img src=/image/u3d/physic_and_collision/real_vehicle_physics/027.jpg alt></p><p>Pacejka教授用4个字母（B，C，D，E），3个三角函数组合出了一套数学公式，拟合了曲线的特征：</p><p>其中，变量：</p><p>-x：输入变量。对于纵向力，x是滑移率；对于横向力，x为侧偏角。
+-y：输出变量。纵向摩擦力或横向摩擦力。</p><p>4个字母，是调整轮胎手感的关键：</p><p>-D（Peak Value - 峰值因子）
+决定了曲线又多高。
+含义：轮胎的最大抓地力。
+调整：根据轮胎抓地力强弱，调整D值。
+比如：普通家用车轮胎调为1.0，赛车热熔胎抓地力更强，调为1.5。</p><p>-C（Shape Factor - 形变因子）
+决定了峰值附近的曲线有多“宽”。
+含义：数学修正系数，通常纵向力取1.65，横向力取1.3，一般不轻易调整。</p><p>B（Stiffness Factor - 刚度因子）
+决定了曲线在原点附近的斜率。
+含义：轮胎的硬度。
+调整：B越大，轮胎响应越灵敏，稍微打一点方向盘，力就立刻上来，比如：F1赛车的轮胎；
+B越小，轮胎响应越迟钝，软绵绵的，但容错率高，比如：卡车、越野车的轮胎。</p><p>-E（Curvature Factor - 曲率因子）
+决定了峰值以后下降的趋势。
+含义：失控后的宽容度。
+调整：E较大，一旦突破极限，抓地力瞬间消失。车辆很难救回，一滑就飞。
+E较小，突破极限后，抓地力稍微降低。非常适合漂移，手感顺滑。</p><p>Pacejka公式解释了两个案例：</p><p>案例一：小米汽车多事故
+以较低价格，让平民开上了跑车。新手一脚油门踩到底，滑移率一下子上来，车子直接打滑。</p><p>案例二：《极限竞速：地平线》为什么用键盘玩不好？
+使用键盘玩《地平线》，驾驶法拉利F40，一按W，车辆直接原地打滑。因为键盘按下等同于油门踩死，滑移率瞬间拉满，摩擦力瞬间不足。所以玩赛车类主机游戏，推荐用线性手柄。</p><h1 id=nwhvp2的摩擦力源码分析>NWH：VP2的摩擦力源码分析</h1><p>NWH的摩擦力源码部分在UpdateFriction函数，主要分为如下几个部分：</p><ul><li>准备工作与负载计算</li><li>速度钳制</li><li>纵向摩擦力（核心）</li><li>横向摩擦力</li><li>防溜车/蠕行逻辑</li><li>摩擦圆逻辑</li></ul><p>准备工作与负载计算
+根据摩擦力公式：F = μ × N，μ是摩擦力系数，N是轮胎对地面的压力，在NWH中也就是轮胎受到的负载力。</p><p>不同于前面提到的Pacejka公式：计算得到的是摩擦力。NWH插件中使用的Pacekja曲线得到的值，更类似于摩擦系数μ，所以准备工作需要计算轮胎对地面的压力。</p><p>在前面悬挂的处理逻辑中，轮胎对地面的压力load实则已经计算过了：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_isGrounded<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>spring<span style=color:#1f2328>.</span>maxLength <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>&amp;&amp;</span> spring<span style=color:#1f2328>.</span>maxForce <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        load <span style=color:#1f2328>=</span> spring<span style=color:#1f2328>.</span>force <span style=color:#1f2328>+</span> damper<span style=color:#1f2328>.</span>force<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        load <span style=color:#1f2328>=</span> load <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>:</span> load<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        _suspensionForce <span style=color:#1f2328>=</span> load <span style=color:#1f2328>*</span> wheelHit<span style=color:#1f2328>.</span>normal<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        targetRigidbody<span style=color:#1f2328>.</span>AddForceAtPosition<span style=color:#1f2328>(</span>_suspensionForce<span style=color:#1f2328>,</span> _suspensionWorldPosition<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        load <span style=color:#1f2328>=</span> loadRating<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>在摩擦力计算部分，NWH插件通过loadFactor参数，对车轮的纵向、横向的摩擦力做了更精细化的控制，有点类似于对μ进行差异化的控制。同时限制了下压力的最大值，为了模拟轮胎在重压下的性能衰减（如果不限制，可能会出现载重无限大、抓地力无限大的Bug）。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> lngLoad <span style=color:#1f2328>=</span> load <span style=color:#1f2328>*</span> forwardFriction<span style=color:#1f2328>.</span>loadFactor<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 这里可能是Bug，看起来应该用sideFriction.loadFactor</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> latLoad <span style=color:#1f2328>=</span> load <span style=color:#1f2328>*</span> forwardFriction<span style=color:#1f2328>.</span>loadFactor<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> lngLoadClamped <span style=color:#1f2328>=</span> lngLoad <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>:</span> lngLoad <span style=color:#1f2328>&gt;</span> loadRating <span style=color:#1f2328>?</span> loadRating <span style=color:#1f2328>:</span> lngLoad<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> latLoadClamped <span style=color:#1f2328>=</span> latLoad <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>:</span> latLoad <span style=color:#1f2328>&gt;</span> loadRating <span style=color:#1f2328>?</span> loadRating <span style=color:#1f2328>:</span> latLoad<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>速度钳制
+因为滑移率（Slip）的计算公式是：</p><p>滑移率 = (轮胎转速x半径-车速)/车速</p><p>如果车速为0，会导致滑移率无限大。所以在实际的逻辑计算中，需要限制车速的最小值。NWH中将车速的最小值限定在1.5~10之间：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> forwardSpeedClamp <span style=color:#1f2328>=</span> <span style=color:#0550ae>1.5f</span> <span style=color:#1f2328>*</span> <span style=color:#1f2328>(</span>_dt <span style=color:#1f2328>/</span> <span style=color:#0550ae>0.005f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>forwardSpeedClamp <span style=color:#1f2328>=</span> forwardSpeedClamp <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>1.5f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>1.5f</span> <span style=color:#1f2328>:</span> forwardSpeedClamp <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>10f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>10f</span> <span style=color:#1f2328>:</span> forwardSpeedClamp<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> clampedAbsForwardSpeed <span style=color:#1f2328>=</span> absForwardSpeed <span style=color:#1f2328>&lt;</span> forwardSpeedClamp <span style=color:#1f2328>?</span> forwardSpeedClamp <span style=color:#1f2328>:</span> absForwardSpeed<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> invClampedAbsForwardSpeed <span style=color:#1f2328>=</span> <span style=color:#0550ae>1.0f</span> <span style=color:#1f2328>/</span> clampedAbsForwardSpeed<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>这里有一段很有意思的代码：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> forwardSpeedClamp <span style=color:#1f2328>=</span> <span style=color:#0550ae>1.5f</span> <span style=color:#1f2328>*</span> <span style=color:#1f2328>(</span>_dt <span style=color:#1f2328>/</span> <span style=color:#0550ae>0.005f</span><span style=color:#1f2328>);</span>
+</span></span></code></pre></div><p>这段代码有2个疑点：</p><p>为什么最小车速的计算跟帧率挂钩
+为什么当前帧的时长_dt要除以0.005</p><ol><li>为什么最小车速的计算跟帧率挂钩
+我们反过来想：如果最小车速恒定为1.5，不同帧率下会发生什么？</li></ol><p>设定一个场景：</p><p>一辆车就快停下了，当前车速为1m/s，接下来踩刹车让车速为0m/s。</p><p>情况A：高帧率（200Hz，_dt = 0.005s）
+时间很短。
+物理引擎算出来：“需要500N的摩擦力来刹车。”
+作用时间0.005秒。
+结果：车速从1m/s变为0.9m/s。很平滑，没问题。</p><p>情况B：低帧率（10Hz，_dt = 0.1s）
+假设最小车速恒定为1.5m/s，算出来的Slip和摩擦力很大（比如：还是500N）。</p><p>但是！这次力作用的时间变成了0.1秒（变成了上面的20倍）。
+力 × 时间 = 冲量，导致冲量相当大。
+结果：巨大的刹车力作用了太久，车速不仅减为0m/s，还被反推，变成了-2m/s。
+下一帧：物理引擎发现车辆在倒车，施加一个反方向的摩擦力，又用力过猛，车速变成3m/s。
+最终表现：车子疯狂前后移动鬼畜。</p><p>情况C：低频率（10Hz，_dt = 0.1s）——最小车速与_dt挂钩
+_dt相较于情况A扩大了20倍，于是把最小车速也扩大了20倍。
+分母变大 &#187;> 滑移率变小 &#187;> 摩擦力也变小了（Pacejka曲线阶段一为线性区）
+虽然摩擦力也变小了，但是它作用的时间为0.1秒，是情况A的20倍。
+结果：小力 × 长时间 ≈ 大力 × 短时间
+车辆减速为0的表现与情况A接近，不存在震荡的问题。</p><ol start=2><li>为什么当前帧的时长_dt要除以0.005
+0.005秒 = 200Hz，这是高精度物理模拟的标准频率，NWH的数值标准是基于200Hz的频率来设定的。</li></ol><p>纵向摩擦力
+在分析纵向摩擦力的源码前，先了解一下2个物理知识：</p><p>牛顿第二定律——旋转版
+转动惯量公式</p><p>牛顿第二定律——旋转版
+我们知道牛顿第二定律：</p><p>力
+质
+量
+加
+速
+度</p><p>把它换成旋转版，就变成了：</p><p>它们的对照关系是：</p><p>牛顿第二定律 牛顿第二定律-旋转版
+F：力 τ：扭矩，Torque，让东西转动的力气
+m：质量 I，转动惯量，Inertia，轮子有多重、多难转动
+α：加速度 α：角加速度，Angular Acceleration，转速增加得有多快</p><p>放到车辆物理中，用于将扭矩转为“车轮转速这一帧改变了多少”，可以用：</p><p>转动惯量公式
+上面牛顿第二定律-旋转版的公式里面有提到I，转动惯量，它的计算来源于转动惯量公式。</p><p>跟车轮的转动惯量相关的，有2种转动惯量公式：</p><p>圆环
+实心圆</p><p>圆环
+公式：</p><p>结构：所有质量都集中在最外圈（比如：呼啦圈、自行车轮胎）。
+物理意义：因为100%的质量都在最远的地方（r处），力臂最大，所以惯性最大，最难加速。</p><ol start=2><li>实心圆</li></ol><p>公式：</p><p>结构：质量均匀分布在整个圆盘上（比如：硬币、实心铁饼）。
+物理意义：虽然外圈有质量，但圆心附近也有质量。圆心附近的质量最容易转动。平均下来，它的惯性只有圆环的一半。</p><p>NWH采用的是圆环公式，有如下几个考量：</p><p>汽车轮胎的质量分布更接近“圆环”
+轮胎：橡胶、钢丝帘布层、胎面，这些很重的东西都在最外圈
+轮毂：轮毂的“桶身”也在外圈。中间的“辐条”通常做的比较细、比较轻。
+为了数值稳定性（主要原因）
+惯性越大，物理状态越不容易改变，越不容易出现轮子转速一下子飙升等不稳定的情况
+简化参数设计，避免通过“系数”控制惯量
+如果公式是：I = k · m · r2，这个k就需要交给策划等职能去配置，会增加认知负担。
+相对来说，把k预设为1是一个相对安全且保守的策略，即使因为配置者填了一个较小的质量，车子开起来也不会显得轻飘飘。</p><p>源码分析
+纵向摩擦力受滑移率（Slip）影响，滑移率由轮胎转速计算而来，而轮胎转速受到以下几个因素影响：</p><p>引擎传递到轮胎的动力扭矩
+刹车给予轮胎的刹车扭矩
+轮胎在地面上滚动，速度越来越慢的滚动阻力扭矩</p><p>所以纵向摩擦力的核心代码，是这样的（后面逐行分析）：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>// 初始化代码</span>
+</span></span><span style=display:flex><span>wheel<span style=color:#1f2328>.</span>inertia <span style=color:#1f2328>=</span> wheel<span style=color:#1f2328>.</span>mass <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// 纵向摩擦力的计算</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> peakForwardFrictionForce <span style=color:#1f2328>=</span> activeFrictionPreset<span style=color:#1f2328>.</span>BCDE<span style=color:#1f2328>.</span>z <span style=color:#1f2328>*</span> lngLoadClamped<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> combinedBrakeTorque <span style=color:#1f2328>=</span> brakeTorque <span style=color:#1f2328>+</span> rollingResistanceTorque<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>+=</span> motorTorque <span style=color:#1f2328>/</span> wheel<span style=color:#1f2328>.</span>inertia <span style=color:#1f2328>*</span> _dt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_isGrounded<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>=</span> <span style=color:#1f2328>-(</span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>-</span> forwardFriction<span style=color:#1f2328>.</span>speed<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                            <span style=color:#1f2328>*</span> invClampedAbsForwardSpeed <span style=color:#1f2328>*</span> forwardFriction<span style=color:#1f2328>.</span>stiffness<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> slipSign <span style=color:#1f2328>=</span> forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>1.0f</span> <span style=color:#1f2328>:</span> <span style=color:#1f2328>-</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> absSlip <span style=color:#1f2328>=</span> forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>?</span> <span style=color:#1f2328>-</span>forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>:</span> forwardFriction<span style=color:#1f2328>.</span>slip<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> unclampedFrictionForce <span style=color:#1f2328>=</span> <span style=color:#1f2328>-</span>slipSign <span style=color:#1f2328>*</span> activeFrictionPreset<span style=color:#1f2328>.</span>Curve<span style=color:#1f2328>.</span>Evaluate<span style=color:#1f2328>(</span>absSlip<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> lngLoadClamped<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> frictionForce <span style=color:#1f2328>=</span> unclampedFrictionForce <span style=color:#1f2328>&gt;</span> peakForwardFrictionForce <span style=color:#1f2328>?</span>
+</span></span><span style=display:flex><span>        peakForwardFrictionForce <span style=color:#1f2328>:</span> unclampedFrictionForce <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>peakForwardFrictionForce <span style=color:#1f2328>?</span> <span style=color:#1f2328>-</span>peakForwardFrictionForce <span style=color:#1f2328>:</span> unclampedFrictionForce<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>-=</span> frictionForce <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>/</span> wheel<span style=color:#1f2328>.</span>inertia <span style=color:#1f2328>*</span> _dt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>combinedBrakeTorque <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> prevAngVel <span style=color:#1f2328>=</span> wheel<span style=color:#1f2328>.</span>angularVelocity<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> angVelSign <span style=color:#1f2328>=</span> wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>1.0f</span> <span style=color:#1f2328>:</span> <span style=color:#1f2328>-</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>-=</span> angVelSign <span style=color:#1f2328>*</span> combinedBrakeTorque <span style=color:#1f2328>/</span> wheel<span style=color:#1f2328>.</span>inertia <span style=color:#1f2328>*</span> _dt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>&amp;&amp;</span> prevAngVel <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>||</span>
+</span></span><span style=display:flex><span>        wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>&amp;&amp;</span> prevAngVel <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>=</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>代码分析如下：</p><p>惯量的计算
+初始化时，根据圆环惯量公式，由轮胎质量、轮胎半径，计算得到轮胎的惯量。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>wheel<span style=color:#1f2328>.</span>inertia <span style=color:#1f2328>=</span> wheel<span style=color:#1f2328>.</span>mass <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>变量准备工作
+根据Pacejka公式的D值（峰值μ）和实际的纵向负载，得到轮胎纵向摩擦力上限。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> peakForwardFrictionForce <span style=color:#1f2328>=</span> activeFrictionPreset<span style=color:#1f2328>.</span>BCDE<span style=color:#1f2328>.</span>z <span style=color:#1f2328>*</span> lngLoadClamped<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>阻力总和扭矩 = 刹车扭矩 + 轮胎滚动阻力扭矩（可以理解为：轮胎滚动的损耗）。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> combinedBrakeTorque <span style=color:#1f2328>=</span> brakeTorque <span style=color:#1f2328>+</span> rollingResistanceTorque<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>动力增加轮胎转速
+根据牛顿第二定律-旋转版公式，得到轮胎转速增量公式：
+。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>+=</span> motorTorque <span style=color:#1f2328>/</span> wheel<span style=color:#1f2328>.</span>inertia <span style=color:#1f2328>*</span> _dt<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>轮胎转速，转为前进的摩擦力
+由轮胎转速、当前车速，得到滑移率。</p><p>需要注意的是：这里的滑移率额外乘以了轮胎总摩擦的刚度系数stiffness，这个系数是用来额外调整Pacejka曲线的“陡峭程度”。</p><p>轮胎胎壁越硬，稍微一点点滑移，力瞬间就满了，反应极快，比如：F1赛车轮胎。</p><p>轮胎胎壁越软，橡胶越容易扭曲，需要让轮子转得比车快得多（大滑移），力气才会慢悠悠地上来，比如：越野车轮胎。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>=</span> <span style=color:#1f2328>-(</span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>-</span> forwardFriction<span style=color:#1f2328>.</span>speed<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>                        <span style=color:#1f2328>*</span> invClampedAbsForwardSpeed <span style=color:#1f2328>*</span> forwardFriction<span style=color:#1f2328>.</span>stiffness<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> slipSign <span style=color:#1f2328>=</span> forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>1.0f</span> <span style=color:#1f2328>:</span> <span style=color:#1f2328>-</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> absSlip <span style=color:#1f2328>=</span> forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>?</span> <span style=color:#1f2328>-</span>forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>:</span> forwardFriction<span style=color:#1f2328>.</span>slip<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>滑移率根据预先配置的Pacejka曲线，采样得到摩擦系数（常规是摩擦力，在NWH中类似摩擦系数的值）。</p><p>根据静摩擦公式： ，由轮胎负载lngLoadClamped，得到摩擦力。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> unclampedFrictionForce <span style=color:#1f2328>=</span> <span style=color:#1f2328>-</span>slipSign <span style=color:#1f2328>*</span> activeFrictionPreset<span style=color:#1f2328>.</span>Curve<span style=color:#1f2328>.</span>Evaluate<span style=color:#1f2328>(</span>absSlip<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> lngLoadClamped<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> frictionForce <span style=color:#1f2328>=</span> unclampedFrictionForce <span style=color:#1f2328>&gt;</span> peakForwardFrictionForce <span style=color:#1f2328>?</span>
+</span></span><span style=display:flex><span>    peakForwardFrictionForce <span style=color:#1f2328>:</span> unclampedFrictionForce <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>peakForwardFrictionForce <span style=color:#1f2328>?</span> <span style=color:#1f2328>-</span>peakForwardFrictionForce <span style=color:#1f2328>:</span> unclampedFrictionForce<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>摩擦力反作用于轮胎转速
+根据扭矩公式：
+和轮胎转速增量公式：</p><p>，调整轮胎的转速：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>-=</span> frictionForce <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>/</span> wheel<span style=color:#1f2328>.</span>inertia <span style=color:#1f2328>*</span> _dt<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>阻力扭矩作用于轮胎的转速
+根据轮胎转速增量公式：
+，调整轮胎的转速：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> prevAngVel <span style=color:#1f2328>=</span> wheel<span style=color:#1f2328>.</span>angularVelocity<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> angVelSign <span style=color:#1f2328>=</span> wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>1.0f</span> <span style=color:#1f2328>:</span> <span style=color:#1f2328>-</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>-=</span> angVelSign <span style=color:#1f2328>*</span> combinedBrakeTorque <span style=color:#1f2328>/</span> wheel<span style=color:#1f2328>.</span>inertia <span style=color:#1f2328>*</span> _dt<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>阻力只会减小轮胎转速，不会增加反向转速：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>&amp;&amp;</span> prevAngVel <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>||</span>
+</span></span><span style=display:flex><span>        wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>&amp;&amp;</span> prevAngVel <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>=</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>以上是纵向摩擦力处理的核心逻辑流程，但上面的逻辑隐含了一个比较大的问题。</p><p>我们假设一个“大马力后驱车弹射起步”的场景，看看根据上面的逻辑会发生什么？</p><p>车况：500匹马力，1档，油门踩死。
+物理现状：
+轮子转动惯量 (
+)：很小（轮子很轻，很容易转起来）。
+引擎扭矩 (
+)：巨大。
+地面摩擦力极限 (
+）：也很大。
+目标：轮子应该迅速从 0 加速到某个平衡点（比如空转 100 rad/s），然后稳定住。
+帧率：50Hz（每帧0.02秒）</p><p>第一帧：
+轮速：0
+引擎：输出1000Nm扭矩
+摩擦：因为轮速为0，滑移率是0，所以摩擦力，所以摩擦力为0
+净扭矩：1000 - 0 = 1000Nm
+第一帧-执行：
+wheel.angularVelocity += 1000 / I * 0.02
+因为轮子惯量I很小，这1000Nm持续作用0.02秒，足以让轮子转速瞬间飙升。
+结果：轮速从0直接跳到500rad/s（超级快）。
+转速过头了：
+实际上，轮速到了100rad/s时，摩擦力就应该介入，把轮子拉住的。因为帧率低，轮速秒涨的，轮速增长的中间过程缺少了摩擦力的作用。
+第二帧：
+轮速：500rad/s
+引擎：还是输出1000Nm的扭矩
+摩擦：Pacejka曲线检测到，“卧槽！滑移率这么大？摩擦力拉满！”，于是提供了-5000Nm的反向扭矩。
+净扭矩：1000 - 5000 = -4000Nm
+第二帧-执行：
+这-4000Nm持续作用了0.02秒
+结果：轮速从500rad/s变为-300rad/s。</p><p>循环往复，车辆弹射起步阶段，轮速在+500和-300之间剧烈跳变，车身就会出现鬼畜抖动，甚至被弹飞。</p><p>上面问题出现的核心原因在于：</p><p>帧率低，车轮转速在一帧内秒变，变化的中间过程缺少摩擦力的作用，导致变化剧烈。</p><p>对于这一问题，NWH提供了子步进的策略，把一帧拆分成20份，把扭矩也拆分成20份，分20次计算，这样每次计算车轮的转速都会受到摩擦力的作用，就不会出现车轮速度的剧变了。</p><p>源码如下：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>// *******************************</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// ******** LONGITUDINAL ********* </span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// *******************************</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> peakForwardFrictionForce <span style=color:#1f2328>=</span> activeFrictionPreset<span style=color:#1f2328>.</span>BCDE<span style=color:#1f2328>.</span>z <span style=color:#1f2328>*</span> lngLoadClamped<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> combinedBrakeTorque <span style=color:#1f2328>=</span> brakeTorque <span style=color:#1f2328>+</span> rollingResistanceTorque<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> invSubsteps <span style=color:#1f2328>=</span> <span style=color:#0550ae>1.0f</span> <span style=color:#1f2328>/</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>float</span><span style=color:#1f2328>)</span>frictionSubsteps<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> sdt <span style=color:#1f2328>=</span> _dt <span style=color:#1f2328>*</span> invSubsteps<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> invSdt <span style=color:#1f2328>=</span> <span style=color:#0550ae>1.0f</span> <span style=color:#1f2328>/</span> sdt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> lngFrictionForceSum <span style=color:#1f2328>=</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> invInertia <span style=color:#1f2328>=</span> <span style=color:#0550ae>1.0f</span> <span style=color:#1f2328>/</span> wheel<span style=color:#1f2328>.</span>inertia<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> invInertiaTimesSdt <span style=color:#1f2328>=</span> invInertia <span style=color:#1f2328>*</span> sdt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>for</span> <span style=color:#1f2328>(</span><span style=color:#cf222e>int</span> substep <span style=color:#1f2328>=</span> <span style=color:#0550ae>0</span><span style=color:#1f2328>;</span> substep <span style=color:#1f2328>&lt;</span> frictionSubsteps<span style=color:#1f2328>;</span> substep<span style=color:#1f2328>++)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>+=</span> motorTorque <span style=color:#1f2328>*</span> invInertiaTimesSdt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_isGrounded<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>=</span> <span style=color:#1f2328>-(</span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>-</span> forwardFriction<span style=color:#1f2328>.</span>speed<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> invClampedAbsForwardSpeed <span style=color:#1f2328>*</span> forwardFriction<span style=color:#1f2328>.</span>stiffness<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> slipSign <span style=color:#1f2328>=</span> forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>1.0f</span> <span style=color:#1f2328>:</span> <span style=color:#1f2328>-</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> absSlip <span style=color:#1f2328>=</span> forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>?</span> <span style=color:#1f2328>-</span>forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>:</span> forwardFriction<span style=color:#1f2328>.</span>slip<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> unclampedFrictionForce <span style=color:#1f2328>=</span> <span style=color:#1f2328>-</span>slipSign <span style=color:#1f2328>*</span> activeFrictionPreset<span style=color:#1f2328>.</span>Curve<span style=color:#1f2328>.</span>Evaluate<span style=color:#1f2328>(</span>absSlip<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> lngLoadClamped<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> frictionForce <span style=color:#1f2328>=</span> unclampedFrictionForce <span style=color:#1f2328>&gt;</span> peakForwardFrictionForce <span style=color:#1f2328>?</span>
+</span></span><span style=display:flex><span>            peakForwardFrictionForce <span style=color:#1f2328>:</span> unclampedFrictionForce <span style=color:#1f2328>&lt;</span> <span style=color:#1f2328>-</span>peakForwardFrictionForce <span style=color:#1f2328>?</span> <span style=color:#1f2328>-</span>peakForwardFrictionForce <span style=color:#1f2328>:</span> unclampedFrictionForce<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>-=</span> frictionForce <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>*</span> invInertiaTimesSdt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        lngFrictionForceSum <span style=color:#1f2328>+=</span> frictionForce <span style=color:#1f2328>*</span> invSubsteps<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>combinedBrakeTorque <span style=color:#1f2328>&gt;</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> prevAngVel <span style=color:#1f2328>=</span> wheel<span style=color:#1f2328>.</span>angularVelocity<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>float</span> angVelSign <span style=color:#1f2328>=</span> wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>1.0f</span> <span style=color:#1f2328>:</span> <span style=color:#1f2328>-</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>-=</span> angVelSign <span style=color:#1f2328>*</span> combinedBrakeTorque <span style=color:#1f2328>*</span> invInertiaTimesSdt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>&amp;&amp;</span> prevAngVel <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>||</span>
+</span></span><span style=display:flex><span>            wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.0f</span> <span style=color:#1f2328>&amp;&amp;</span> prevAngVel <span style=color:#1f2328>&gt;=</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>=</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>forwardFriction<span style=color:#1f2328>.</span>force <span style=color:#1f2328>=</span> lngFrictionForceSum<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>=</span> _isGrounded <span style=color:#1f2328>?</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>-(</span>wheel<span style=color:#1f2328>.</span>angularVelocity <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius <span style=color:#1f2328>-</span> forwardFriction<span style=color:#1f2328>.</span>speed<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> invClampedAbsForwardSpeed <span style=color:#1f2328>*</span> forwardFriction<span style=color:#1f2328>.</span>stiffness <span style=color:#1f2328>:</span> <span style=color:#0550ae>0.0f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>forwardFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>=</span> Mathf<span style=color:#1f2328>.</span>Clamp<span style=color:#1f2328>(</span>forwardFriction<span style=color:#1f2328>.</span>slip<span style=color:#1f2328>,</span> <span style=color:#1f2328>-</span><span style=color:#0550ae>1.0f</span><span style=color:#1f2328>,</span> <span style=color:#0550ae>1.0f</span><span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>counterTorque <span style=color:#1f2328>=</span> <span style=color:#1f2328>-</span>forwardFriction<span style=color:#1f2328>.</span>force <span style=color:#1f2328>*</span> wheel<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>横向摩擦力
+它的代码很短（后面逐条分析）：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>// *******************************</span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// ********** LATERAL ************ </span>
+</span></span><span style=display:flex><span><span style=color:#57606a>// *******************************</span>
+</span></span><span style=display:flex><span>sideFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>=</span> <span style=color:#1f2328>(</span>Mathf<span style=color:#1f2328>.</span>Atan2<span style=color:#1f2328>(</span>sideFriction<span style=color:#1f2328>.</span>speed<span style=color:#1f2328>,</span> clampedAbsForwardSpeed<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> Mathf<span style=color:#1f2328>.</span>Rad2Deg<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> <span style=color:#0550ae>0.01111f</span> <span style=color:#1f2328>*</span> sideFriction<span style=color:#1f2328>.</span>stiffness<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> sideSlipSign <span style=color:#1f2328>=</span> sideFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0</span> <span style=color:#1f2328>?</span> <span style=color:#1f2328>-</span><span style=color:#0550ae>1f</span> <span style=color:#1f2328>:</span> <span style=color:#0550ae>1f</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> absSideSlip <span style=color:#1f2328>=</span> sideFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0</span> <span style=color:#1f2328>?</span> <span style=color:#1f2328>-</span>sideFriction<span style=color:#1f2328>.</span>slip <span style=color:#1f2328>:</span> sideFriction<span style=color:#1f2328>.</span>slip<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>float</span> peakSideFrictionForce <span style=color:#1f2328>=</span> activeFrictionPreset<span style=color:#1f2328>.</span>BCDE<span style=color:#1f2328>.</span>z <span style=color:#1f2328>*</span> latLoadClamped<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>sideFriction<span style=color:#1f2328>.</span>force <span style=color:#1f2328>=</span> <span style=color:#1f2328>-</span>sideSlipSign <span style=color:#1f2328>*</span> activeFrictionPreset<span style=color:#1f2328>.</span>Curve<span style=color:#1f2328>.</span>Evaluate<span style=color:#1f2328>(</span>absSideSlip<span style=color:#1f2328>)</span> <span style=color:#1f2328>*</span> latLoadClamped <span style=color:#1f2328>*</span> camberFrictionCoeff<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>相比纵向摩擦力，横向摩擦力的计算有了些许的变化，主要是2点：</p><p>未使用子步进来精细化计算
+滑移率计算方式的改变
+我们先来分析一下为什么会有上面这两点不同。</p><ol><li>未使用子步进精细化计算
+纵向摩擦力，使用子步进来计算，是因为：</li></ol><p>纵向摩擦力中，动（滚动）的对象是轮胎
+轮胎的质量小，惯性就小
+扭矩对轮胎的作用影响很大，导致了剧烈变化。</p><p>而横向摩擦力中：</p><p>动（滑动）的对象是车辆本体
+车辆质量巨大，惯性就打
+力改变它的剧烈程度就小，所以不会出现剧烈变化，从而导致剧烈抖动的现象</p><p>因此，横向摩擦力的计算，不再使用子步进，这样也可以节省性能。</p><ol start=2><li>滑移率计算方式的改变
+横向滑移率的计算，由纵向速度差/车辆纵向速度速变成了车辆横向速度/车辆纵向速度，它们都在一定程度反映了轮胎在横向、纵向的形变程度。</li></ol><p>正所谓：</p><p>形变产生力，力改变车辆的运动状态。</p><p>其实，滑移率是Pacejka输入变量在纵向摩擦力中的叫法，在横向摩擦力里叫侧偏角。</p><p>回到代码分析：</p><p>由车辆横向速度和纵向速度，经由三角函数Mathf.Atan2转为弧度后，再转化为角度：
+sideFriction.slip = (Mathf.Atan2(sideFriction.speed, clampedAbsForwardSpeed) * Mathf.Rad2Deg)
+* 0.01111f * sideFriction.stiffness;
+这里乘以0.0111f本质是/ 90，得到90度范围内规划化的值。</p><p>再经由刚度stiffness来调节轮胎的软硬。</p><p>由Pacejka曲线采样，得到横向摩擦力：
+sideFriction.force = -sideSlipSign * activeFrictionPreset.Curve.Evaluate(absSideSlip)
+* latLoadClamped * camberFrictionCoeff;
+这里额外乘以一个变量camberFrictionCoeff，就是我们前面提到的外倾角：</p><p>它是由悬挂朝上方向与轮胎触地点的法线方向，经过点乘计算得到。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>float</span> camberFrictionCoeff <span style=color:#1f2328>=</span> Vector3<span style=color:#1f2328>.</span>Dot<span style=color:#1f2328>(</span>_suspensionUp<span style=color:#1f2328>,</span> wheelHit<span style=color:#1f2328>.</span>normal<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>camberFrictionCoeff <span style=color:#1f2328>=</span> camberFrictionCoeff <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>?</span> <span style=color:#0550ae>0f</span> <span style=color:#1f2328>:</span> camberFrictionCoeff<span style=color:#1f2328>;</span>
+</span></span></code></pre></div><p>其实这个点乘的结果，除了包含了外倾角的影响因素，同时也包含了触碰点不在悬挂正下方这种情况的影响：</p><p>防溜车/蠕行逻辑
+在物理中，很难达到的就是绝对稳定的状态，比如：让车辆稳定地静止停留在平面上。</p><p>这是物理引擎界的千古难题：“静摩擦力很难模拟”。</p><p>就好比：使用Unity的Wheel Collider组件实现的车辆物理，会让车辆经常处于“动”和“静”之间的反复横跳，从而导致：</p><p>车辆停在平面上，车轮会莫名其妙的细微抖动
+车停在斜坡上，会慢慢往下滑
+这也是很多做真实驾驶手感的Unity开发者不愿意使用Wheel Collider的原因。</p><p>下面这段代码就是NWH针对低速抖动的问题进行的代码处理，其核心处理逻辑是：</p><p>当车辆处理低速状态下，锚定车轮停留的位置点
+后续每一帧计算车轮当前的位置与锚定位置的偏差
+根据偏差计算，在横向、纵向给予一定的力，用以修正位置偏差</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_isGrounded <span style=color:#1f2328>&amp;&amp;</span> <span style=color:#1f2328>!</span>_wakeOneFrame <span style=color:#1f2328>&amp;&amp;</span> absForwardSpeed <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.12f</span> <span style=color:#1f2328>&amp;&amp;</span> absSideSpeed <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.12f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>float</span> verticalOffset <span style=color:#1f2328>=</span> spring<span style=color:#1f2328>.</span>length <span style=color:#1f2328>+</span> wheel<span style=color:#1f2328>.</span>radius<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    Vector3 currentPosition <span style=color:#1f2328>=</span> _suspensionWorldPosition <span style=color:#1f2328>-</span> _suspensionUp <span style=color:#1f2328>*</span> verticalOffset<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>if</span> <span style=color:#1f2328>(!</span>_lowSpeedReferenceIsSet<span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        _lowSpeedReferenceIsSet <span style=color:#1f2328>=</span> <span style=color:#cf222e>true</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        _lowSpeedReferencePosition <span style=color:#1f2328>=</span> currentPosition<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>    <span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>        Vector3 referenceError <span style=color:#1f2328>=</span> _lowSpeedReferencePosition <span style=color:#1f2328>-</span> currentPosition<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>        Vector3 correctiveForce <span style=color:#1f2328>=</span> load <span style=color:#1f2328>*</span> referenceError <span style=color:#1f2328>/</span> _dt<span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        <span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>Mathf<span style=color:#1f2328>.</span>Abs<span style=color:#1f2328>(</span>wheel<span style=color:#1f2328>.</span>angularVelocity<span style=color:#1f2328>)</span> <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.5f</span><span style=color:#1f2328>)</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>            forwardFriction<span style=color:#1f2328>.</span>force <span style=color:#1f2328>+=</span> Vector3<span style=color:#1f2328>.</span>Dot<span style=color:#1f2328>(</span>correctiveForce<span style=color:#1f2328>,</span> _suspensionForward<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>        <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        sideFriction<span style=color:#1f2328>.</span>force <span style=color:#1f2328>+=</span> Vector3<span style=color:#1f2328>.</span>Dot<span style=color:#1f2328>(</span>correctiveForce<span style=color:#1f2328>,</span> _suspensionRight<span style=color:#1f2328>);</span>
+</span></span><span style=display:flex><span>    <span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span><span style=display:flex><span><span style=color:#cf222e>else</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>{</span>
+</span></span><span style=display:flex><span>    _lowSpeedReferenceIsSet <span style=color:#1f2328>=</span> <span style=color:#cf222e>false</span><span style=color:#1f2328>;</span>
+</span></span><span style=display:flex><span><span style=color:#1f2328>}</span>
+</span></span></code></pre></div><p>判定车辆低速的检测条件
+在车辆触地，且横向、纵向速度都小于0.12m/s的状态下，判定需要处理低速位置修正逻辑。</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#cf222e>if</span> <span style=color:#1f2328>(</span>_isGrounded <span style=color:#1f2328>&amp;&amp;</span> <span style=color:#1f2328>!</span>_wakeOneFrame <span style=color:#1f2328>&amp;&amp;</span> absForwardSpeed <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.12f</span> <span style=color:#1f2328>&amp;&amp;</span> absSideSpeed <span style=color:#1f2328>&lt;</span> <span style=color:#0550ae>0.12f</span><span style=color:#1f2328>)</span>
+</span></span></code></pre></div><p>计算车轮当前坐标
+根据悬挂长度、轮胎半径和悬挂点坐标，计算得到车轮当前位置。</p><p>float verticalOffset = spring.length + wheel.radius;
+Vector3 currentPosition = _suspensionWorldPosition - _suspensionUp * verticalOffset;</p><p>设定锚点位置
+车辆进入低速状态的第一帧，记录当前位置作为锚定位置。</p><p>if (!_lowSpeedReferenceIsSet)
+{
+_lowSpeedReferenceIsSet = true;
+_lowSpeedReferencePosition = currentPosition;
+}</p><p>修正位置偏差
+计算当前帧与锚定位置的偏差：</p><p>Vector3 referenceError = _lowSpeedReferencePosition - currentPosition;
+根据牛顿第二定律：
+，这里轮胎的负载力作为质量的替代品，参与修正力的计算：</p><p>Vector3 correctiveForce = load * referenceError / _dt;
+修正力在横向上的分量，加入前面计算的横向摩擦力中：</p><p>sideFriction.force += Vector3.Dot(correctiveForce, _suspensionRight);
+修正力在纵向上的分量，增加了轮胎转速的判断。主要是为了防止“烧胎起步被锁在原地”的情况。</p><p>烧胎起步时，车辆处于起步打滑阶段，车速还没起来，但是轮胎速度飙升（>0.5），此时纵向上不应该给予修正力。</p><p>if (Mathf.Abs(wheel.angularVelocity) &lt; 0.5f)
+{
+forwardFriction.force += Vector3.Dot(correctiveForce, _suspensionForward);
+}</p><p>通过以上代码的修正，就能让车辆在低速状态下，锁定在初始位置。</p><p>限制与抓地力参数
+通过上述一系列计算，横向摩擦力、纵向摩擦力的值基本比较接近符合观感的数值大小。</p><p>再将双向的摩擦力分别限制在最大摩擦力以下：</p><p>forwardFriction.force = forwardFriction.force > peakForwardFrictionForce ? peakForwardFrictionForce
+: forwardFriction.force &lt; -peakForwardFrictionForce ? -peakForwardFrictionForce : forwardFriction.force;
+sideFriction.force = sideFriction.force > peakSideFrictionForce ? peakSideFrictionForce
+: sideFriction.force &lt; -peakSideFrictionForce ? -peakSideFrictionForce : sideFriction.force;</p><p>最后配上自定的抓地力控制参数，可以为车辆物理的游戏性提供更多的玩法：</p><p>forwardFriction.force *= forwardFriction.grip;
+sideFriction.force *= sideFriction.grip;
+比如：</p><p>模拟雪地打滑的手感，可以把grip调低
+模拟车辆过加速带，速度剧增，但又能让车辆吸在地面不打滑，可以把grip调高</p><p>摩擦圆逻辑
+前面我们分纵向、横向，分开计算了两个方向的摩擦力，最终是需要将两个方向的力进行矢量合并，再施加给车辆的刚体组件。合并后的力如果不加处理，可能会导致超出最大摩擦力的情况，这样有悖物理学表现，于是就有了这一段摩擦圆的逻辑。</p><p>两个方向的摩擦力合并后得到的摩擦力是：</p><p>横向的摩擦力就不能大于：</p><p>但是直接用摩擦力会有问题，举个例子：</p><p>车辆在疯狂烧胎的情况下，会伴随着横向抖动/滑动。此时：</p><p>纵向的滑移率很大，达到滑动区，纵向摩擦力变得很小
+按照摩擦圆理论，横向的摩擦力不应该被削减很多，但实则横向的摩擦力也几乎被削减的很小了</p><p>使用摩擦力直接参与计算，会导致变现跟现实相悖。所以改用纵向的滑移率，这样比较符合直觉认知：</p><p>纵向滑移率变大，导致横向摩擦力的大小被挤压
+横向摩擦力也变小，导致烧胎时车辆横向抖动/滑动</p><p>于是公式变成了：</p><p>横
+向
+摩
+擦
+力
+占
+比
+纵
+向
+摩
+擦
+力
+占
+用
+程
+度</p><p>纵向摩擦力占用程度：滑移率（Slip）</p><p>而在代码计算中开根号是一个极其耗时的操作，写代码时应该避免开根号，就变成了：</p><p>横
+向
+摩
+擦
+力
+占
+比
+纵
+向
+摩
+擦
+力
+占
+用
+程
+度</p><p>但是由下图可知：</p><p>与
+偏差较多
+会导致滑移率（x轴）相对不变时，横向摩擦力（y轴）削减的更多，车辆横向抓地力更弱，游戏手感体验更差。</p><p>与
+比较接近
+尤其是滑移率（x轴）较小时（游戏体验的绝大多数时间，滑移率保持在比较小的范围），横向摩擦力的削减与标准接近，且比标准更高，横向抓地力更稳，打滑的容错率更高。</p><p>所以NWH采用的是
+的计算方式：</p><p>if (frictionCircleStrength > 0)
+{
+sideFriction.force *= 1f - (Mathf.Pow(Mathf.Clamp01(Mathf.Abs(forwardFriction.slip)), frictionCirclePower) * frictionCircleStrength);
+}</p><p>为了扩大使用场景，NWH加入了参数frictionCircleStrength来控制摩擦圆逻辑对横向摩擦力的影响：</p><p>对于追求真实驾驶手感的游戏
+设置：frictionCircleStrength设置为1
+遵循横、纵摩擦力合并后不得大于最大静摩擦的原则。
+对于追求爽感驾驶（Arcade Style）的游戏
+设置：frictionCircleStrength为0
+按住漂移键，车轮虽然在疯转，但依然能精准地按照预期的方向过弯。</p><p>摩擦圆逻辑，一定程度上也能解释生活中的一些场景：在刚下过雨的路面骑电瓶车，一般会避免急刹。</p><p>因为急刹会导致车辆滑移率一下子增加，车辆横向抓地力被狠狠削减，导致车辆侧滑。</p><p>施加力
+最终，通过横向、纵向摩擦力的向量相加，得到最终的摩擦力向量。</p><p>_frictionForce = _suspensionRight * sideFriction.force + _suspensionForward * forwardFriction.force;</p><p>NWH加入参数forceApplicationPointDistance，用于调整摩擦力的作用点高度，这样在确保车身重心的真实性的同时，防止车辆过弯翻车的问题：</p><p>if (_isGrounded)
+{
+// Apply friction force to self
+// Avoid adding calculated friction when using native friction
+Vector3 forcePosition = wheelHit.point + _suspensionUp * forceApplicationPointDistance * spring.maxLength;
+targetRigidbody.AddForceAtPosition(_frictionForce, forcePosition);
+}</p><p>这里要说道说道Wheel Collider组件了，在不调整车辆重心的前提下，使用Wheel Collider经常会出现：车辆转个小弯，车身就向外侧严重倾斜的问题。</p><p>为了防止车身倾斜，通常处理是将车辆的重心压得很低，一般会低到模型下方。但这样会导致车身在空中的姿态很诡异，像不倒翁一样自动回正，完全没有真实车辆的重量感。</p><p>最终效果
+下图是车辆无动力状态下的自由落体的表现：</p><p>动图封面</p><p>能够看到：</p><p>车轮跟台阶没有明显的穿模痕迹
+车辆悬挂表现自然
+车辆从台阶上下来后，在无动力的状态下还会往前移动一段距离
+车轮的滚动，相对地面没有打滑，表现自然，接近真实</p><p>其他
+高性能写法
+NWH有很多看起来比较奇怪的写法，实则是为了性能服务的：</p><p>使用矩阵运算实现世界、局部坐标的转化，而非类似transform.TransformPoint的写法：
+private void UpdateSuspensionTransforms()
+{
+_suspensionLocalMatrix = TargetRigidbody.transform.worldToLocalMatrix * transform.localToWorldMatrix;</p><pre><code>_suspensionLocalUp.x = _suspensionLocalMatrix.m01;
+_suspensionLocalUp.y = _suspensionLocalMatrix.m11;
+_suspensionLocalUp.z = _suspensionLocalMatrix.m21;
+
+_suspensionLocalForward.x = _suspensionLocalMatrix.m02;
+_suspensionLocalForward.y = _suspensionLocalMatrix.m12;
+_suspensionLocalForward.z = _suspensionLocalMatrix.m22;
+
+_suspensionLocalRight.x = _suspensionLocalMatrix.m00;
+_suspensionLocalRight.y = _suspensionLocalMatrix.m10;
+_suspensionLocalRight.z = _suspensionLocalMatrix.m20;
+
+_suspensionLocalPosition.x = _suspensionLocalMatrix.m03;
+_suspensionLocalPosition.y = _suspensionLocalMatrix.m13;
+_suspensionLocalPosition.z = _suspensionLocalMatrix.m23;
+
+// Calculate quaternion from angle axis
+steerRotationQuaternion = Quaternion.AngleAxis(steerAngle, _suspensionLocalUp);
+
+// Create the rotation matrix from the quaternion
+float x2 = steerRotationQuaternion.x * steerRotationQuaternion.x;
+float y2 = steerRotationQuaternion.y * steerRotationQuaternion.y;
+float z2 = steerRotationQuaternion.z * steerRotationQuaternion.z;
+float xy = steerRotationQuaternion.x * steerRotationQuaternion.y;
+float xz = steerRotationQuaternion.x * steerRotationQuaternion.z;
+float yz = steerRotationQuaternion.y * steerRotationQuaternion.z;
+float wx = steerRotationQuaternion.w * steerRotationQuaternion.x;
+float wy = steerRotationQuaternion.w * steerRotationQuaternion.y;
+float wz = steerRotationQuaternion.w * steerRotationQuaternion.z;
+
+steerRotationMatrix.m00 = 1.0f - 2.0f * (y2 + z2);
+steerRotationMatrix.m01 = 2.0f * (xy - wz);
+steerRotationMatrix.m02 = 2.0f * (xz + wy);
+steerRotationMatrix.m03 = 0.0f;
+
+steerRotationMatrix.m10 = 2.0f * (xy + wz);
+steerRotationMatrix.m11 = 1.0f - 2.0f * (x2 + z2);
+steerRotationMatrix.m12 = 2.0f * (yz - wx);
+steerRotationMatrix.m13 = 0.0f;
+
+steerRotationMatrix.m20 = 2.0f * (xz - wy);
+steerRotationMatrix.m21 = 2.0f * (yz + wx);
+steerRotationMatrix.m22 = 1.0f - 2.0f * (x2 + y2);
+steerRotationMatrix.m23 = 0.0f;
+
+steerRotationMatrix.m30 = 0.0f;
+steerRotationMatrix.m31 = 0.0f;
+steerRotationMatrix.m32 = 0.0f;
+steerRotationMatrix.m33 = 1.0f;
+
+float offsetX = -wheel.rimOffset * (_suspensionLocalPosition.x &lt; 0f ? -1f : 1f);
+steerRotationMatrix.m03 = (_suspensionLocalPosition.x + offsetX) * (1 - steerRotationMatrix.m00) + _suspensionLocalPosition.y * (-steerRotationMatrix.m01) + _suspensionLocalPosition.z * (-steerRotationMatrix.m02);
+steerRotationMatrix.m13 = (_suspensionLocalPosition.x + offsetX) * (-steerRotationMatrix.m10) + _suspensionLocalPosition.y * (1 - steerRotationMatrix.m11) + _suspensionLocalPosition.z * (-steerRotationMatrix.m12);
+steerRotationMatrix.m23 = (_suspensionLocalPosition.x + offsetX) * (-steerRotationMatrix.m20) + _suspensionLocalPosition.y * (-steerRotationMatrix.m21) + _suspensionLocalPosition.z * (1 - steerRotationMatrix.m22);
+
+_suspensionWorldMatrix = _parentWorldMatrix * (steerRotationMatrix * _suspensionLocalMatrix);
+_suspensionInvWorldMatrix = Matrix4x4.Inverse(_suspensionWorldMatrix);
+
+_suspensionWorldPosition.x = _suspensionWorldMatrix.m03;
+_suspensionWorldPosition.y = _suspensionWorldMatrix.m13;
+_suspensionWorldPosition.z = _suspensionWorldMatrix.m23;
+
+_suspensionUp.x = _suspensionWorldMatrix.m01;
+_suspensionUp.y = _suspensionWorldMatrix.m11;
+_suspensionUp.z = _suspensionWorldMatrix.m21;
+
+_suspensionForward.x = _suspensionWorldMatrix.m02;
+_suspensionForward.y = _suspensionWorldMatrix.m12;
+_suspensionForward.z = _suspensionWorldMatrix.m22;
+
+_suspensionRight.x = _suspensionWorldMatrix.m00;
+_suspensionRight.y = _suspensionWorldMatrix.m10;
+_suspensionRight.z = _suspensionWorldMatrix.m20;
+
+_suspensionWorldRotation = Quaternion.LookRotation(_suspensionForward, _suspensionUp);
+</code></pre><p>}
+简单数学运算，避免调用函数，一方面少了一层函数调用，另一方面Mathf底层对一些运算有做极限情况的考虑（如：1e-6f），可能导致物理不稳定：
+// lngLoadClamped = Mathf.Clamp(lngLoad, 0f, loadingRating);
+float lngLoadClamped = lngLoad &lt; 0f ? 0f : lngLoad > loadRating ? loadRating : lngLoad;</p><p>// absForwardSpeed = Mathf.Abs(forwardFriction.speed)
+float absForwardSpeed = forwardFriction.speed &lt; 0 ? -forwardFriction.speed : forwardFriction.speed;
+避免高频使用除法：
+float invSubsteps = 1.0f / (float)frictionSubsteps; // 提前计算好倒数
+float sdt = _dt * invSubsteps;
+float invSdt = 1.0f / sdt; // 提前计算好倒数
+float lngFrictionForceSum = 0.0f;
+float invInertia = 1.0f / wheel.inertia; // 提前计算好倒数
+float invInertiaTimesSdt = invInertia * sdt; // 提前计算好倒数</p><p>for (int substep = 0; substep &lt; frictionSubsteps; substep++)
+{
+wheel.angularVelocity += motorTorque * invInertiaTimesSdt;
+// &mldr;
+}
+避免使用开方：
+// 前面提到的摩擦圆逻辑
+sideFriction.force *= 1f - (Mathf.Pow(Mathf.Clamp01(Mathf.Abs(forwardFriction.slip)), frictionCirclePower) * frictionCircleStrength);</p><p>车轮、车身穿模问题
+当车辆从高空落到地上，会出现车轮跟车身穿模的问题：</p><p>NWH中的处理是：</p><p>在悬挂压缩到最厉害的位置，生成车轮大小的圆柱碰撞体，它相对车身位置保持不变，当悬挂的压缩超出了极限，由碰撞体接触地面，防止悬挂进一步压缩。</p><p>动图</p><p>参考
+Making Custom Car Physics in Unity (for Very Very Valet)
+NWH Vehicle Physics 2
+图片、相关知识来源：Google Gemini (Thinking with 3 Pro)
+所属专栏 · 2025-12-02 22:42 更新</p><p>Unity开发</p><p>代码咖啡
+13 篇内容 · 827 赞同
+订阅
+最热内容 ·
+Unity移动设备阴影方案浅尝
+编辑于 2025-12-02 22:43・美国・包含 AI 辅助创作 作者对内容负责
+游戏开发
+游戏物理
+干货！手把手教你新疆办理道路运输许可证，流程、材料、常见问题全解析
+想开物流公司？想从事货运业务？道路运输许可证是绕不开的“入场券”！但很多老板一听到办证就头大：流程复杂、材料繁多、审核严格…别慌！本期，账房姑娘带你一文搞懂办理全流程，助&mldr;
+用户头像
+账房姑娘
+100+热议
+​赞同 15​
+​添加评论
+​28
+​1
+​分享
+​申请转载
+​
+​</p><p>理性发言，友善互动</p><p>还没有评论，发表第一个评论吧
+关于作者
+代码咖啡
+代码咖啡
+​
+冯委、CRomputer罗老师也关注了他
+回答
+4
+文章
+53
+关注者
+772
+​关注他
+​发私信
+大家都在搜
+换一换
+武汉大学教授曾梦琪被举报
+422 万
+热
+江西吉安山体滑坡十余人被埋
+422 万
+新
+汤家凤呼吁取消英语主科地位
+422 万
+新
+Claude 完成费马大定理形式化证明
+422 万
+新
+出发吧！看山
+421 万
+活动
+女子吃甜虾肠道爬出寄生虫
+421 万
+热
+GPT-6 正式发布
+327 万
+热
+乌克兰两部门基辅交火
+279 万
+热
+曝科大讯飞公关副总裁被解除职务
+274 万
+乡音无改鬓毛shuāi远上寒山石径xié
+264 万
+我猜你没看过这个！
+推荐阅读
+汽车减振器技术路线解析（下）电控篇
+汽车减振器技术路线解析（下）电控篇
+风拂峰上枫
+汽车底盘（二）：制动系统匹配计算（下）
+37000N夹紧力，最后能换来多大制动力？上一篇我们提到：对于一辆 500 kg 的微型车，当驾驶员踩下 500 N 踏板力，经过踏板杠杆、助力机构和液压系统放大后，单个车轮上的卡钳夹紧力大约可以…</p><p>二十三画生
+【科普】什么是车辆的极限状态
+【科普】什么是车辆的极限状态
+自行车维修员
+自冲铆接与车身轻量化
+自冲铆接与车身轻量化
+大自然袁文</p><p>选择语言</p></div><footer class=entry__footer><div class=entry__tags><a class="entry__tag btn" href=/tags/unity3d/>Unity3D</a>
+<a class="entry__tag btn" href=/tags/collider/>Collider</a>
+<a class="entry__tag btn" href=/tags/physic/>Physic</a></div></footer></article></div></main><div class="authorbox block"><div class=author><figure class=author__avatar><img class=author__img alt="kumakoko avatar" src=/img/avatar.png height=90 width=90></figure><div class=author__body><div class=author__name>kumakoko</div><div class=author__bio>pure coder</div></div></div></div><div class="related block"><h3 class=related__title>Related</h3><ul class=related__list><li class=related__item><a class=related__link href=/post/unity3d/physic_and_collision/wheel_collider_detail/>Unity引擎的Wheel Collider组件详解</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_2d_collision_trigger/>Unity2D的碰撞检测响应处理细节</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_collision_trigger/>Unity3D的碰撞检测响应处理细节</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_png_iccp_warning/>解决Unity3D在编译时出现libpng iccp警告的问题</a></li><li class=related__item><a class=related__link href=/post/unity3d/u3d_mesh_edge_flicker/>在Unity3D中模型渲染时边缘抖动有杂点的问题解决方案</a></li></ul></div><section class="comments block"><div id=disqus_thread></div><script>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//KK.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></section></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
+<span class=sidebar__count>14</span></a></li><li><a href=/categories/directx/ class=sidebar__link><span>directx</span>
+<span class=sidebar__count>19</span></a></li><li><a href=/categories/godot/ class=sidebar__link><span>godot</span>
+<span class=sidebar__count>2</span></a></li><li><a href=/categories/gpu-driven-terrain/ class=sidebar__link><span>gpu driven terrain</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/ios/ class=sidebar__link><span>ios</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/lua/ class=sidebar__link><span>lua</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/memoir/ class=sidebar__link><span>memoir</span>
+<span class=sidebar__count>6</span></a></li><li><a href=/categories/misc/ class=sidebar__link><span>misc</span>
+<span class=sidebar__count>3</span></a></li><li><a href=/categories/opengl/ class=sidebar__link><span>opengl</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/shader/ class=sidebar__link><span>shader</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/shaderlab/ class=sidebar__link><span>shaderlab</span>
+<span class=sidebar__count>4</span></a></li><li><a href=/categories/unity/ class=sidebar__link><span>unity</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/unity3d/ class=sidebar__link><span>unity3d</span>
+<span class=sidebar__count>84</span></a></li><li><a href=/categories/vr/ class=sidebar__link><span>vr</span>
+<span class=sidebar__count>1</span></a></li><li><a href=/categories/windows/ class=sidebar__link><span>windows</span>
+<span class=sidebar__count>4</span></a></li></ul></details><details class=sidebar__block open><summary class=sidebar__title>Tags</summary><div class=sidebar__tags><a href=/tags/.net/ class=sidebar__tag title=".net (9)">.net<span class=sidebar__tag-count>9</span>
+</a><a href=/tags/ai/ class=sidebar__tag title="ai (2)">ai<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/assetbundle/ class=sidebar__tag title="assetbundle (1)">assetbundle<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/c++/ class=sidebar__tag title="c++ (3)">c++<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/cg/ class=sidebar__tag title="cg (11)">cg<span class=sidebar__tag-count>11</span>
+</a><a href=/tags/collider/ class=sidebar__tag title="collider (2)">collider<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/culling/ class=sidebar__tag title="culling (1)">culling<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/directx/ class=sidebar__tag title="directx (2)">directx<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/dnh/ class=sidebar__tag title="dnh (6)">dnh<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/dxframework/ class=sidebar__tag title="dxframework (17)">dxframework<span class=sidebar__tag-count>17</span>
+</a><a href=/tags/godot/ class=sidebar__tag title="godot (2)">godot<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/gpu-driven-terrain/ class=sidebar__tag title="gpu driven terrain (1)">gpu driven terrain<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hdr/ class=sidebar__tag title="hdr (1)">hdr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
+</a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/physic/ class=sidebar__tag title="physic (2)">physic<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (7)">srp<span class=sidebar__tag-count>7</span>
+</a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity/ class=sidebar__tag title="unity (1)">unity<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (84)">unity3d<span class=sidebar__tag-count>84</span>
+</a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/urp/ class=sidebar__tag title="urp (1)">urp<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/vr/ class=sidebar__tag title="vr (1)">vr<span class=sidebar__tag-count>1</span>
+</a><a href=/tags/windows-programming/ class=sidebar__tag title="windows programming (4)">windows programming<span class=sidebar__tag-count>4</span>
+</a><a href=/tags/worldstreamer/ class=sidebar__tag title="worldstreamer (5)">worldstreamer<span class=sidebar__tag-count>5</span>
+</a><a href=/tags/yooassets/ class=sidebar__tag title="yooassets (4)">yooassets<span class=sidebar__tag-count>4</span></a></div></details></aside></div><footer class=footer><div class="footer__social social"><a class=social__link target=_blank rel="noopener noreferrer" href=mailto:sun_of_lover@sina.com><svg class="social__icon" aria-label="Email" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M299 268l124 106c-4 4-10 7-17 7H106c-7 0-13-3-17-7l124-106 43 38 43-38zm-43 13L89 138c4-4 10-7 17-7h3e2c7 0 13 3 17 7L256 281zm54-23 121-105v208L310 258zM81 153l121 105L81 361V153z"/></svg>
+</a><a class=social__link target=_blank rel="noopener noreferrer" href=https://github.com/kumakoko><svg class="social__icon" aria-label="Github" role="img" width="32" height="32" viewBox="0 0 512 512"><path d="M335 499c14 0 12 17 12 17H165s-2-17 12-17c13 0 16-6 16-12l-1-50c-71 16-86-28-86-28-12-30-28-37-28-37-24-16 1-16 1-16 26 2 40 26 40 26 22 39 59 28 74 22 2-17 9-28 16-35-57-6-116-28-116-126 0-28 10-51 26-69-3-6-11-32 3-67 0 0 21-7 70 26 42-12 86-12 128 0 49-33 70-26 70-26 14 35 6 61 3 67 16 18 26 41 26 69 0 98-60 120-117 126 10 8 18 24 18 48l-1 70c0 6 3 12 16 12z"/></svg></a></div><div class=footer__copyright>© 2026 XGF. <span class=footer__copyright-credits>Powered by <a href=https://gohugo.io/ rel="nofollow noopener" target=_blank>Hugo</a> and <a href=https://github.com/vimux/binario rel="nofollow noopener" target=_blank>Binario</a> theme.</span></div></footer><script src=/js/menu.js></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async></script><script src=/js/custom.js></script></body></html>
