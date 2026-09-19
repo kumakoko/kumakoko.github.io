@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="1582" viewBox="0 0 1320 1582" font-family="'Segoe UI','Microsoft YaHei',system-ui,sans-serif">
+<defs>
+<linearGradient id="rootGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f766e"/><stop offset="1" stop-color="#134e4a"/></linearGradient>
+</defs>
+<rect x="0" y="0" width="1320" height="1582" fill="#f4f8f6"/>
+<rect x="24" y="24" width="430" height="88" rx="14" fill="url(#rootGrad)"/>
+<text x="46" y="58" font-size="24" font-weight="800" fill="#ffffff">World Streamer v2.1</text>
+<text x="46" y="86" font-size="13.5" fill="#d7f0eb">Unity 场景异步流式加载系统 · 核心知识脑图</text>
+<text x="46" y="104" font-size="12.5" fill="#b5ddd5">基于官方手册全文整理</text>
+<line x1="464" y1="149.0" x2="470" y2="149.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="126" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="149.0" r="11" fill="#0f766e"/>
+<text x="490" y="153.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+<text x="510" y="154.0" font-size="15" font-weight="700" fill="#1e293b">产品定位</text>
+<rect x="660" y="126" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="126" width="4" height="40" rx="2" fill="#0f766e"/>
+<text x="674" y="150.5" font-size="13" fill="#1e293b">场景异步流式加载系统</text>
+<rect x="877" y="126" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="126" width="4" height="40" rx="2" fill="#0f766e"/>
+<text x="891" y="142.0" font-size="13" fill="#1e293b">世界切成虚拟网格元素(Scene</text>
+<text x="891" y="159.0" font-size="13" fill="#1e293b">)存盘</text>
+<rect x="1094" y="126" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="126" width="4" height="40" rx="2" fill="#0f766e"/>
+<text x="1108" y="150.5" font-size="13" fill="#1e293b">靠近/满足条件才异步加载</text>
+<rect x="660" y="176" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="176" width="4" height="40" rx="2" fill="#0f766e"/>
+<text x="674" y="192.0" font-size="13" fill="#1e293b">任意轴与空间：2D/3D/太空/</text>
+<text x="674" y="209.0" font-size="13" fill="#1e293b">开放世界</text>
+<rect x="877" y="176" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="176" width="4" height="40" rx="2" fill="#0f766e"/>
+<text x="891" y="192.0" font-size="13" fill="#1e293b">省</text>
+<text x="891" y="209.0" font-size="13" fill="#1e293b">CPU/RAM/VRAM/GPU、免加…</text>
+<rect x="1094" y="176" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="176" width="4" height="40" rx="2" fill="#0f766e"/>
+<text x="1108" y="200.5" font-size="13" fill="#1e293b">真正威力在 Build</text>
+<line x1="464" y1="265.0" x2="470" y2="265.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="242" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="265.0" r="11" fill="#15803d"/>
+<text x="490" y="269.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+<text x="510" y="270.0" font-size="15" font-weight="700" fill="#1e293b">项目前置</text>
+<rect x="660" y="242" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="242" width="4" height="40" rx="2" fill="#15803d"/>
+<text x="674" y="258.0" font-size="13" fill="#1e293b">三个 Tag</text>
+<text x="674" y="275.0" font-size="13" fill="#1e293b">必备：SceneStreamer …</text>
+<rect x="877" y="242" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="242" width="4" height="40" rx="2" fill="#15803d"/>
+<text x="891" y="266.5" font-size="13" fill="#1e293b">Incremental GC 常开</text>
+<rect x="1094" y="242" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="242" width="4" height="40" rx="2" fill="#15803d"/>
+<text x="1108" y="258.0" font-size="13" fill="#1e293b">Prebake Collision</text>
+<text x="1108" y="275.0" font-size="13" fill="#1e293b">Meshes（最终构建）</text>
+<rect x="660" y="292" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="292" width="4" height="40" rx="2" fill="#15803d"/>
+<text x="674" y="316.5" font-size="13" fill="#1e293b">Work 场景：切分世界用</text>
+<rect x="877" y="292" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="292" width="4" height="40" rx="2" fill="#15803d"/>
+<text x="891" y="308.0" font-size="13" fill="#1e293b">Gameplay</text>
+<text x="891" y="325.0" font-size="13" fill="#1e293b">场景：玩家/相机/UI …</text>
+<line x1="464" y1="381.0" x2="470" y2="381.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="358" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="381.0" r="11" fill="#0e7490"/>
+<text x="490" y="385.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+<text x="510" y="386.0" font-size="15" font-weight="700" fill="#1e293b">核心组件</text>
+<rect x="660" y="358" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="358" width="4" height="40" rx="2" fill="#0e7490"/>
+<text x="674" y="374.0" font-size="13" fill="#1e293b">Scene</text>
+<text x="674" y="391.0" font-size="13" fill="#1e293b">Manager：切分/分层/生成…</text>
+<rect x="877" y="358" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="358" width="4" height="40" rx="2" fill="#0e7490"/>
+<text x="891" y="374.0" font-size="13" fill="#1e293b">Scene</text>
+<text x="891" y="391.0" font-size="13" fill="#1e293b">Collection：记录层与网…</text>
+<rect x="1094" y="358" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="358" width="4" height="40" rx="2" fill="#0e7490"/>
+<text x="1108" y="382.5" font-size="13" fill="#1e293b">Streamer：按层加载的加载器</text>
+<rect x="660" y="408" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="408" width="4" height="40" rx="2" fill="#0e7490"/>
+<text x="674" y="424.0" font-size="13" fill="#1e293b">Collider</text>
+<text x="674" y="441.0" font-size="13" fill="#1e293b">Streamer：撞触发器才加载</text>
+<rect x="877" y="408" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="408" width="4" height="40" rx="2" fill="#0e7490"/>
+<text x="891" y="424.0" font-size="13" fill="#1e293b">Local Area</text>
+<text x="891" y="441.0" font-size="13" fill="#1e293b">Updater：局部编辑/合并</text>
+<rect x="1094" y="408" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="408" width="4" height="40" rx="2" fill="#0e7490"/>
+<text x="1108" y="432.5" font-size="13" fill="#1e293b">World Mover：浮点坐标重置</text>
+<rect x="660" y="458" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="458" width="4" height="40" rx="2" fill="#0e7490"/>
+<text x="674" y="474.0" font-size="13" fill="#1e293b">Streamer</text>
+<text x="674" y="491.0" font-size="13" fill="#1e293b">GUI：加载屏/传送/重生</text>
+<line x1="464" y1="547.0" x2="470" y2="547.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="524" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="547.0" r="11" fill="#1d4ed8"/>
+<text x="490" y="551.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">4</text>
+<text x="510" y="552.0" font-size="15" font-weight="700" fill="#1e293b">分层与虚拟网格</text>
+<rect x="660" y="524" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="524" width="4" height="40" rx="2" fill="#1d4ed8"/>
+<text x="674" y="540.0" font-size="13" fill="#1e293b">按尺寸分层：大/中/小/灯光粒</text>
+<text x="674" y="557.0" font-size="13" fill="#1e293b">子</text>
+<rect x="877" y="524" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="524" width="4" height="40" rx="2" fill="#1d4ed8"/>
+<text x="891" y="540.0" font-size="13" fill="#1e293b">拆分轴：地形只 XZ、太空</text>
+<text x="891" y="557.0" font-size="13" fill="#1e293b">XYZ</text>
+<rect x="1094" y="524" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="524" width="4" height="40" rx="2" fill="#1d4ed8"/>
+<text x="1108" y="548.5" font-size="13" fill="#1e293b">网格尺寸不宜过大/过小</text>
+<rect x="660" y="574" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="574" width="4" height="40" rx="2" fill="#1d4ed8"/>
+<text x="674" y="590.0" font-size="13" fill="#1e293b">Terrain：网格尺寸 =</text>
+<text x="674" y="607.0" font-size="13" fill="#1e293b">地形块尺寸</text>
+<rect x="877" y="574" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="574" width="4" height="40" rx="2" fill="#1d4ed8"/>
+<text x="891" y="590.0" font-size="13" fill="#1e293b">归类：前缀命名 或 Object</text>
+<text x="891" y="607.0" font-size="13" fill="#1e293b">Parent</text>
+<rect x="1094" y="574" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="574" width="4" height="40" rx="2" fill="#1d4ed8"/>
+<text x="1108" y="598.5" font-size="13" fill="#1e293b">空前缀层必须放最后</text>
+<line x1="464" y1="663.0" x2="470" y2="663.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="640" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="663.0" r="11" fill="#0369a1"/>
+<text x="490" y="667.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">5</text>
+<text x="510" y="668.0" font-size="15" font-weight="700" fill="#1e293b">Streamer 参数</text>
+<rect x="660" y="640" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="640" width="4" height="40" rx="2" fill="#0369a1"/>
+<text x="674" y="656.0" font-size="13" fill="#1e293b">Loading Range：0=1格</text>
+<text x="674" y="673.0" font-size="13" fill="#1e293b">1=9格 2=25格</text>
+<rect x="877" y="640" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="640" width="4" height="40" rx="2" fill="#0369a1"/>
+<text x="891" y="656.0" font-size="13" fill="#1e293b">Deloading</text>
+<text x="891" y="673.0" font-size="13" fill="#1e293b">Range：先距离后时间</text>
+<rect x="1094" y="640" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="640" width="4" height="40" rx="2" fill="#0369a1"/>
+<text x="1108" y="656.0" font-size="13" fill="#1e293b">Destroy Tile</text>
+<text x="1108" y="673.0" font-size="13" fill="#1e293b">Delay：延迟销毁防抖</text>
+<rect x="660" y="690" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="690" width="4" height="40" rx="2" fill="#0369a1"/>
+<text x="674" y="706.0" font-size="13" fill="#1e293b">Position</text>
+<text x="674" y="723.0" font-size="13" fill="#1e293b">Check：位置刷新频率</text>
+<rect x="877" y="690" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="690" width="4" height="40" rx="2" fill="#0369a1"/>
+<text x="891" y="714.5" font-size="13" fill="#1e293b">并行数/等待帧：控制加载节奏</text>
+<rect x="1094" y="690" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="690" width="4" height="40" rx="2" fill="#0369a1"/>
+<text x="1108" y="706.0" font-size="13" fill="#1e293b">循环世界：加载范围 &lt;</text>
+<text x="1108" y="723.0" font-size="13" fill="#1e293b">半世界-1</text>
+<line x1="464" y1="779.0" x2="470" y2="779.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="756" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="779.0" r="11" fill="#b45309"/>
+<text x="490" y="783.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">6</text>
+<text x="510" y="784.0" font-size="15" font-weight="700" fill="#1e293b">环形流式 Ring</text>
+<rect x="660" y="756" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="756" width="4" height="40" rx="2" fill="#b45309"/>
+<text x="674" y="772.0" font-size="13" fill="#1e293b">Use Loading Range Min</text>
+<text x="674" y="789.0" font-size="13" fill="#1e293b">开启</text>
+<rect x="877" y="756" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="756" width="4" height="40" rx="2" fill="#b45309"/>
+<text x="891" y="780.5" font-size="13" fill="#1e293b">内圈挖空：近处不加载本层</text>
+<rect x="1094" y="756" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="756" width="4" height="40" rx="2" fill="#b45309"/>
+<text x="1108" y="772.0" font-size="13" fill="#1e293b">Sync with other</text>
+<text x="1108" y="789.0" font-size="13" fill="#1e293b">layer：无缝替换</text>
+<rect x="660" y="806" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="806" width="4" height="40" rx="2" fill="#b45309"/>
+<text x="674" y="822.0" font-size="13" fill="#1e293b">典型：近景高清层 +</text>
+<text x="674" y="839.0" font-size="13" fill="#1e293b">远景低模层</text>
+<rect x="877" y="806" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="806" width="4" height="40" rx="2" fill="#b45309"/>
+<text x="891" y="822.0" font-size="13" fill="#1e293b">解决 Terrain 无 LOD</text>
+<text x="891" y="839.0" font-size="13" fill="#1e293b">的问题</text>
+<line x1="464" y1="895.0" x2="470" y2="895.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="872" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="895.0" r="11" fill="#c2410c"/>
+<text x="490" y="899.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">7</text>
+<text x="510" y="900.0" font-size="15" font-weight="700" fill="#1e293b">浮点修复</text>
+<rect x="660" y="872" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="872" width="4" height="40" rx="2" fill="#c2410c"/>
+<text x="674" y="888.0" font-size="13" fill="#1e293b">坐标过大 →</text>
+<text x="674" y="905.0" font-size="13" fill="#1e293b">物理失准/阴影闪烁</text>
+<rect x="877" y="872" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="872" width="4" height="40" rx="2" fill="#c2410c"/>
+<text x="891" y="888.0" font-size="13" fill="#1e293b">World Mover</text>
+<text x="891" y="905.0" font-size="13" fill="#1e293b">按瓦片数重置坐标</text>
+<rect x="1094" y="872" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="872" width="4" height="40" rx="2" fill="#c2410c"/>
+<text x="1108" y="888.0" font-size="13" fill="#1e293b">XYZ Tile Range / 主</text>
+<text x="1108" y="905.0" font-size="13" fill="#1e293b">Streamer</text>
+<rect x="660" y="922" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="922" width="4" height="40" rx="2" fill="#c2410c"/>
+<text x="674" y="938.0" font-size="13" fill="#1e293b">Current Move 校正多人</text>
+<text x="674" y="955.0" font-size="13" fill="#1e293b">RPC</text>
+<rect x="877" y="922" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="922" width="4" height="40" rx="2" fill="#c2410c"/>
+<text x="891" y="938.0" font-size="13" fill="#1e293b">不支持静态合批（Terrain</text>
+<text x="891" y="955.0" font-size="13" fill="#1e293b">除外）</text>
+<line x1="464" y1="1011.0" x2="470" y2="1011.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="988" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="1011.0" r="11" fill="#be123c"/>
+<text x="490" y="1015.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">8</text>
+<text x="510" y="1016.0" font-size="15" font-weight="700" fill="#1e293b">循环世界</text>
+<rect x="660" y="988" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="988" width="4" height="40" rx="2" fill="#be123c"/>
+<text x="674" y="1012.5" font-size="13" fill="#1e293b">Looping 复选框开启</text>
+<rect x="877" y="988" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="988" width="4" height="40" rx="2" fill="#be123c"/>
+<text x="891" y="1012.5" font-size="13" fill="#1e293b">每层独立循环，可 sync 同步</text>
+<rect x="1094" y="988" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="988" width="4" height="40" rx="2" fill="#be123c"/>
+<text x="1108" y="1012.5" font-size="13" fill="#1e293b">Override X/Y/Z 强制循环</text>
+<rect x="660" y="1038" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="1038" width="4" height="40" rx="2" fill="#be123c"/>
+<text x="674" y="1062.5" font-size="13" fill="#1e293b">接缝：复制 + 融合边缘</text>
+<rect x="877" y="1038" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="1038" width="4" height="40" rx="2" fill="#be123c"/>
+<text x="891" y="1062.5" font-size="13" fill="#1e293b">必须配合浮点修复</text>
+<line x1="464" y1="1127.0" x2="470" y2="1127.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="1104" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="1127.0" r="11" fill="#3f6212"/>
+<text x="490" y="1131.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">9</text>
+<text x="510" y="1132.0" font-size="15" font-weight="700" fill="#1e293b">地形流式</text>
+<rect x="660" y="1104" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="1104" width="4" height="40" rx="2" fill="#3f6212"/>
+<text x="674" y="1120.0" font-size="13" fill="#1e293b">分块三档：110% / 10-50% /</text>
+<text x="674" y="1137.0" font-size="13" fill="#1e293b">任意</text>
+<rect x="877" y="1104" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="1104" width="4" height="40" rx="2" fill="#3f6212"/>
+<text x="891" y="1120.0" font-size="13" fill="#1e293b">低模生成：LOD=3、Basemap</text>
+<text x="891" y="1137.0" font-size="13" fill="#1e293b">512</text>
+<rect x="1094" y="1104" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="1104" width="4" height="40" rx="2" fill="#3f6212"/>
+<text x="1108" y="1120.0" font-size="13" fill="#1e293b">NM 树（cross</text>
+<text x="1108" y="1137.0" font-size="13" fill="#1e293b">LOD）烘焙进低模</text>
+<rect x="660" y="1154" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="1154" width="4" height="40" rx="2" fill="#3f6212"/>
+<text x="674" y="1178.5" font-size="13" fill="#1e293b">位置 = 块尺寸整数倍防错位</text>
+<rect x="877" y="1154" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="1154" width="4" height="40" rx="2" fill="#3f6212"/>
+<text x="891" y="1170.0" font-size="13" fill="#1e293b">前缀：LOD0 /</text>
+<text x="891" y="1187.0" font-size="13" fill="#1e293b">LOD1_Terrain</text>
+<rect x="1094" y="1154" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="1154" width="4" height="40" rx="2" fill="#3f6212"/>
+<text x="1108" y="1170.0" font-size="13" fill="#1e293b">实时生成：2×加载范围+1</text>
+<text x="1108" y="1187.0" font-size="13" fill="#1e293b">空瓦片</text>
+<line x1="464" y1="1243.0" x2="470" y2="1243.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="1220" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="1243.0" r="11" fill="#334155"/>
+<text x="490" y="1247.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">10</text>
+<text x="510" y="1248.0" font-size="15" font-weight="700" fill="#1e293b">模型流式</text>
+<rect x="660" y="1220" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="1220" width="4" height="40" rx="2" fill="#334155"/>
+<text x="674" y="1236.0" font-size="13" fill="#1e293b">分层：Big/Medium/Small/F</text>
+<text x="674" y="1253.0" font-size="13" fill="#1e293b">X</text>
+<rect x="877" y="1220" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="1220" width="4" height="40" rx="2" fill="#334155"/>
+<text x="891" y="1236.0" font-size="13" fill="#1e293b">前缀重命名 或 Object</text>
+<text x="891" y="1253.0" font-size="13" fill="#1e293b">Parent</text>
+<rect x="1094" y="1220" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="1220" width="4" height="40" rx="2" fill="#334155"/>
+<text x="1108" y="1236.0" font-size="13" fill="#1e293b">公式：视距 ÷ 网格尺寸 =</text>
+<text x="1108" y="1253.0" font-size="13" fill="#1e293b">加载范围</text>
+<rect x="660" y="1270" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="1270" width="4" height="40" rx="2" fill="#334155"/>
+<text x="674" y="1294.5" font-size="13" fill="#1e293b">示例：1500÷300=5 → LR=5</text>
+<rect x="877" y="1270" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="1270" width="4" height="40" rx="2" fill="#334155"/>
+<text x="891" y="1286.0" font-size="13" fill="#1e293b">参考值：Delay 1s、0.1s</text>
+<text x="891" y="1303.0" font-size="13" fill="#1e293b">检查</text>
+<line x1="464" y1="1359.0" x2="470" y2="1359.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="1336" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="1359.0" r="11" fill="#b91c1c"/>
+<text x="490" y="1363.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">11</text>
+<text x="510" y="1364.0" font-size="15" font-weight="700" fill="#1e293b">碰撞体流式</text>
+<rect x="660" y="1336" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="1336" width="4" height="40" rx="2" fill="#b91c1c"/>
+<text x="674" y="1352.0" font-size="13" fill="#1e293b">Is Trigger +</text>
+<text x="674" y="1369.0" font-size="13" fill="#1e293b">ColliderScene 脚本</text>
+<rect x="877" y="1336" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="1336" width="4" height="40" rx="2" fill="#b91c1c"/>
+<text x="891" y="1352.0" font-size="13" fill="#1e293b">生成 Collider_Stream</text>
+<text x="891" y="1369.0" font-size="13" fill="#1e293b">预制体</text>
+<rect x="1094" y="1336" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="1336" width="4" height="40" rx="2" fill="#b91c1c"/>
+<text x="1108" y="1360.5" font-size="13" fill="#1e293b">可藏入普通层（套娃结构）</text>
+<rect x="660" y="1386" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="1386" width="4" height="40" rx="2" fill="#b91c1c"/>
+<text x="674" y="1410.5" font-size="13" fill="#1e293b">Unload Timer / 仅玩家激活</text>
+<rect x="877" y="1386" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="1386" width="4" height="40" rx="2" fill="#b91c1c"/>
+<text x="891" y="1410.5" font-size="13" fill="#1e293b">必须加入 Build Settings</text>
+<line x1="464" y1="1475.0" x2="470" y2="1475.0" stroke="#c3d6cf" stroke-width="2"/>
+<rect x="470" y="1452" width="180" height="46" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+<circle cx="490" cy="1475.0" r="11" fill="#047857"/>
+<text x="490" y="1479.5" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">12</text>
+<text x="510" y="1480.0" font-size="15" font-weight="700" fill="#1e293b">性能优化</text>
+<rect x="660" y="1452" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="1452" width="4" height="40" rx="2" fill="#047857"/>
+<text x="674" y="1468.0" font-size="13" fill="#1e293b">Ring</text>
+<text x="674" y="1485.0" font-size="13" fill="#1e293b">换低模：省数百MB/数千batch</text>
+<rect x="877" y="1452" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="1452" width="4" height="40" rx="2" fill="#047857"/>
+<text x="891" y="1468.0" font-size="13" fill="#1e293b">Terrain Culling：省</text>
+<text x="891" y="1485.0" font-size="13" fill="#1e293b">10-90% CPU</text>
+<rect x="1094" y="1452" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="1452" width="4" height="40" rx="2" fill="#047857"/>
+<text x="1108" y="1476.5" font-size="13" fill="#1e293b">Vegetation Studio 移植被</text>
+<rect x="660" y="1502" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="660" y="1502" width="4" height="40" rx="2" fill="#047857"/>
+<text x="674" y="1518.0" font-size="13" fill="#1e293b">静态对象勾</text>
+<text x="674" y="1535.0" font-size="13" fill="#1e293b">Static、简单碰撞体</text>
+<rect x="877" y="1502" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="877" y="1502" width="4" height="40" rx="2" fill="#047857"/>
+<text x="891" y="1526.5" font-size="13" fill="#1e293b">GC 尖峰 → 减少场景对象</text>
+<rect x="1094" y="1502" width="205" height="40" rx="8" fill="#ffffff" stroke="#e2e8f0"/>
+<rect x="1094" y="1502" width="4" height="40" rx="2" fill="#047857"/>
+<text x="1108" y="1526.5" font-size="13" fill="#1e293b">树草用 Instancing</text>
+<line x1="464" y1="120" x2="464" y2="1475.0" stroke="#c3d6cf" stroke-width="2"/>
+<line x1="239.0" y1="112" x2="464" y2="112" stroke="#c3d6cf" stroke-width="2"/>
+<line x1="464" y1="112" x2="464" y2="120" stroke="#c3d6cf" stroke-width="2"/>
+</svg>
