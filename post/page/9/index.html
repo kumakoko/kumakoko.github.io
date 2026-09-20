@@ -456,7 +456,7 @@ public class PrefabLightmapData : MonoBehaviour
 ❌ 不能把场景作为Transform子物体；只能是平级场景容器；卸载可以完整释放贴图内存。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-01-15T19:21:39+08:00>January 15, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
 <a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
 <a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
-<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a>,
+<a class=meta-tags__link href=/tags/lightmapping/ rel=tag>Lightmapping</a>,
 <a class=meta-tags__link href=/tags/terrain/ rel=tag>Terrain</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/multicompile_shaderfeature_shadervariant_assetbundle/>Unity的multi_compile和shader_feature编译指示符、shader variant和asset bundle</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=https://kumakoko.github.io/>kumakoko.github.io</a></strong></p><h2 id=multi_compile编译指示符>multi_compile编译指示符</h2><p>multi_compile编译指示符的文档在<a href=https://docs.unity3d.com/Manual/SL-MultipleProgramVariants.html>这里</a>。假如有以下的shader示例语句：</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-cs data-lang=cs><span style=display:flex><span><span style=color:#57606a>#pragma</span> multi_compile  _USE_SEMITRANSPARENT _USE_OPAQUE
 </span></span><span style=display:flex><span><span style=color:#57606a>#pragma</span> multi_compile  _MULTI_RED _MULTI_GREEN _MULTI_BLU
 </span></span><span style=display:flex><span>
@@ -541,15 +541,15 @@ public class PrefabLightmapData : MonoBehaviour
 </a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
 </a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
 </a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
-</a><a href=/tags/lightmapping/ class=sidebar__tag title="lightmapping (2)">lightmapping<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/lightmapping/ class=sidebar__tag title="lightmapping (6)">lightmapping<span class=sidebar__tag-count>6</span>
 </a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
 </a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
 </a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
 </a><a href=/tags/physic/ class=sidebar__tag title="physic (2)">physic<span class=sidebar__tag-count>2</span>
 </a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
 </a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
-</a><a href=/tags/srp/ class=sidebar__tag title="srp (7)">srp<span class=sidebar__tag-count>7</span>
-</a><a href=/tags/terrain/ class=sidebar__tag title="terrain (6)">terrain<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/terrain/ class=sidebar__tag title="terrain (3)">terrain<span class=sidebar__tag-count>3</span>
 </a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
 </a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (101)">unity3d<span class=sidebar__tag-count>101</span>
 </a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>

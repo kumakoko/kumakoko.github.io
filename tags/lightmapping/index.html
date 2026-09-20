@@ -6,6 +6,90 @@
 <a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
 <a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
 <a class=meta-tags__link href=/tags/terrain/ rel=tag>Terrain</a>,
+<a class=meta-tags__link href=/tags/lightmapping/ rel=tag>Lightmapping</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/lightmap/inside_u3d_lighting_and_bake/>彻底弄懂Unity3D的光照模式，光照贴图和光探针（持续更新）</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=https://kumakoko.github.io/>kumakoko.github.io</a></strong></p><h1 id=1-光源的light-mode>1 光源的Light Mode</h1><p>光源的Light Mode分为<code>Realtime</code>，<code>Baked</code>，<code>Mixed</code>四种。</p><h2 id=realtime类型>Realtime类型</h2><ol><li>本类型的光源，会根据<strong>Shadow Distance</strong>项指定的值，以及<strong>当前摄像机的位置值</strong>，去敲定本光源是否给物体投下阴影。在URP中，Shadow Distance值在<strong>Universl Render Pipeline Asset</strong>中指定。</li><li>在旧管线中，如果启用了【Realtime Global Illumination】选项，realtime光源仅贡献实时的直接光照部分。正因为如此，所以由这种光源产生的影子是纯黑的，不会受别的间接光照的影响</li><li>在自定义的管线中，实时光源可以对<strong>实时的间接光照部分</strong>产生贡献。</li></ol><h2 id=baked类型>Baked类型</h2><ol><li>Unity把Baked类型的光源产生的照明和阴影信息，烘焙到lightmap或者light probe中。</li><li>baked类型的光源，只贡献了漫反射部分的光照，不贡献镜面高光部分的光照。</li><li>只有标识为static的GameObject才接受baked类型的光源产生的照明和阴影。</li></ol><h2 id=mixed类型>Mixed类型</h2><ol><li>mixed类型，顾名思义，<strong>即是整合了realtime和baked两种模式的特点</strong>。采用mixed类型的光源，可以在其贡献的直接光照部分，使用realtime的模式实现，间接光照部分，使用baked模式实现。</li><li>在场景中，mixed类型的光源的行为，<strong>依赖于【Lighting】窗口中的【Lighting Mode】属性设置</strong>。不同的设置，会产生不同的视觉保真度，以及产生不同的性能消耗。</li><li>在运行时，可以更改mixed类型的光源的属性。但仅对realtime部分的属性生效。</li></ol><h1 id=2lighting窗口中的lighting-mode属性>2【Lighting】窗口中的【Lighting Mode】属性</h1><table><thead><tr><th></th><th style=text-align:center>直接光照的实现模式</th><th style=text-align:center>间接光照的实现模式</th><th style=text-align:center>阴影的实现模式</th><th style=text-align:center>适用机型</th></tr></thead><tbody><tr><td>Baked Indirect</td><td style=text-align:center>real-time</td><td style=text-align:center>baked</td><td style=text-align:center>real-time</td><td style=text-align:center>中端机型</td></tr><tr><td>Shadowmask</td><td style=text-align:center>real-time</td><td style=text-align:center>baked</td><td style=text-align:center>部分baked，部分real-time</td><td style=text-align:center>中高端机型</td></tr><tr><td>Subtractive</td><td style=text-align:center>baked</td><td style=text-align:center>baked</td><td style=text-align:center>只对一个平行光渲染real-time阴影</td><td style=text-align:center>低端机型</td></tr></tbody></table><h2 id=baked-indirect光照模式的一些细节>Baked Indirect光照模式的一些细节</h2><p>内置管线，URP,HDRP，都支持本模式</p><p>在本模式下，Mixed类型的光源照射到GameObject时，GameObject会收到以下的光影信息如下表：</p><h2 id=shadowmask光照模式的一些细节>Shadowmask光照模式的一些细节</h2><p>与baked indirect模式类似，Shadowmask模式也结合了实时直接光照和烘焙间接光照。<strong>但两者不同之处在于在于渲染阴影的方式</strong>。Shadowmask模式允许Unity在运行时结合baked阴影和real-time阴影，并在远处渲染阴影。它通过使用额外的光照贴图
+纹理称为阴影蒙版，并通过将附加信息存储在光探头。</p><p>Shadowmask模式提<strong>供所有模式下保真度最高的阴影</strong>，但性能成本和内存要求最高。</p><h3 id=不同渲染管线对shadowmask模式的支持程度>不同渲染管线对Shadowmask模式的支持程度</h3><table><thead><tr><th>管线类型</th><th>是否支持</th></tr></thead><tbody><tr><td>内置管线</td><td>支持</td></tr><tr><td>URP</td><td>从10.1版本开始支持</td></tr><tr><td>HDRP</td><td>支持</td></tr></tbody></table><p>Shadowmask模式有两种，一种是<code>Distance Shadowmask</code>，另一种是<code>Shadowmask</code>。在Project Setting界面的<code>Quality</code>选项可以指定，如下图所示：</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2022-03-18T20:20:49+08:00>March 18, 2022</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/lightmapping/ rel=tag>Lightmapping</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/lightmap/unity_lightmap_keng/>Unity动态加载光照贴图的坑</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=kumakoko.github.io>kumakoko.github.io</a></strong></p><p>Unity的光照贴图，如果在运行时动态加载的话，需要对创建出来的game object的lightmap index做一次重新指派，
+然后在设置一下LightmapSetting。基本按照Mr.钱康来的这一系列文章那样子设置。如下链接：</p><p><a href=https://qiankanglai.me/2015/07/27/unity-lightmap/>Unity中光照贴图一二坑及解决办法</a></p><p><a href=https://qiankanglai.me/2016/03/15/unity-lightmap2/index.html>Unity中光照贴图一二坑(续)</a></p><p>如果按照老钱的方法去做了，还是有问题的话，那么就要看下 <strong>【Project Settings -> Graphics -> Shader Stripping】</strong> 菜单下的这个：</p><p>就是打包时没把<strong>LIGHTMAP_ON</strong>相关的shader变体给打进去，因为被strip掉。为了保险，选中Custom，然后所有全部选上，再进行打AB。就能正确加载光照贴图。当然，这样子会导致变体变多变大，所以最好还是仔细分析下，那些勾选上为好。</p><p>国内有一个兄弟也是碰到<a href=https://gameinstitute.qq.com/community/detail/118989>这个问题</a>，在Unity论坛上也<a href=https://forum.unity.com/threads/assetbundle-cant-load-the-lightmap.666304/>有人</a>用这个方案解决了问题</p><p>另外，经过实测，只要正确设置好shader stripping之后，无论从AB中装载进来的game object，是不是<strong>从static变为非static标签</strong>，或者有没有用<strong>StaticBatchingUtility.Combine</strong>去运行时静态合批，都不影响正确加载lightmap</p><h2 id=参考网页>参考网页</h2><p><a href=https://zhuanlan.zhihu.com/p/81198807>光照贴图接缝探讨</a></p><p><a href=https://forum.unity.com/threads/where-did-lightmap-static-go.988791/>where did &ldquo;lightmap static&rdquo; go</a></p><p><a href=https://gameinstitute.qq.com/community/detail/118989>打包Assetbundle以及Shader Stripping导致LightMap全部丢失的解决方法</a></p><p><a href=https://answer.uwa4d.com/question/58da62451ccdfe463a4f87d1>UWA上的《Lightmap丢失》</a></p><p><a href=https://www.cnblogs.com/CloudLiu/p/10338642.html>Shader Variants 打包遇到的问题</a></p><p><a href=https://blog.unity.com/engine-platform/stripping-scriptable-shader-variants>Stripping scriptable shader variants</a></p><p><a href=https://gist.github.com/yasirkula/d8fa2fb5f22aefcc7a232f6feeb91db7>Stripping commonly unused shader variants in Unity&rsquo;s built-in render pipeline</a></p><p><a href=https://docs.unity3d.com/2020.2/Documentation/Manual/class-GraphicsSettings.html>Unity帮助文档中和Shader Stripping相关的页面</a></p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2021-12-08T18:38:27+08:00>December 08, 2021</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/lightmapping/ rel=tag>Lightmapping</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/lightmap/subscene_bake_lightmap_to_entire_map/>分.unity文件制作并烘焙场景后整合成一个大场景的方案</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=https://kumakoko.github.io/>kumakoko.github.io</a></strong></p><h1 id=问题>问题</h1><blockquote><p>A,B,C,D四个场景，在四个.unity文件中，分别独立烘焙出光照贴图，得到四份光照贴图数据，然后把A,B,C,D四个场景mesh保存成四个prefab，把这四个prefab分别拖放一个实例放在main.unity文件中，那这四分光照贴图数据可以重新指派并绑定吗</p></blockquote><h1 id=核心结论>核心结论</h1><p>A/B/C/D各自独立烘焙，把Mesh导出成Prefab，直接拖进<code>main.unity</code>：<strong>原生不行，光照贴图绑定会全部丢失</strong>，但是<strong>可以通过脚本实现手动重新指派绑定四份独立光照贴图数据</strong>。</p><h2 id=底层原理为什么直接拖prefab会变黑>底层原理（为什么直接拖Prefab会变黑）</h2><ol><li><code>Renderer.lightmapIndex</code>、<code>Renderer.lightmapScaleOffset</code> <strong>不是Prefab序列化数据</strong>，只保存在原始<code>.unity</code>场景实例里，导出Prefab的时候这些字段直接丢失，全部重置为<code>‑1</code>，物体不采样光照贴图。</li><li>Unity全局只有一套**<code>LightmapSettings.lightmaps</code>数组**（main场景全局唯一），它保存当前生效的全部光照贴图资源。A/B/C/D四个场景各自烘焙产生的四套光照贴图，默认不会自动合并进main场景这个数组。</li><li>⚠️ <strong>硬性约束：Prefab实例的世界坐标，必须和原始A/B/C/D烘焙场景里该物体的世界坐标完全一模一样。一旦位移/旋转改变，<code>lightmapScaleOffset</code>采样UV错乱，阴影光斑全部错位花掉</strong>。></li></ol><blockquote><p>光照贴图UV是基于烘焙时物体世界位置算出来的，不是模型本地坐标。</p></blockquote><h2 id=可行方案经典-prefablightmapdata-方案行业标准>可行方案：经典 PrefabLightmapData 方案（行业标准）</h2><p>思路：<strong>在A/B/C/D原始烘焙场景，把每个场景的【光照贴图纹理 + 每个Renderer的lightmapIndex+scaleOffset】序列化存到一个脚本组件上，再导出Prefab；main场景实例化Prefab之后，脚本运行时把贴图推入全局LightmapSettings数组，并给每个Renderer恢复参数</strong>。</p><blockquote><p>注意：编辑器模式下main场景Hierarchy看不到烘焙效果，<strong>只在运行时生效</strong>，编辑器视图是黑的。</p></blockquote><h3 id=简要脚本结构精简版>简要脚本结构（精简版）</h3><pre tabindex=0><code>using UnityEngine;
+using System.Collections.Generic;
+
+[DisallowMultipleComponent]
+public class PrefabLightmapData : MonoBehaviour
+{
+    [System.Serializable]
+    public struct RendererInfo
+    {
+        public Renderer renderer;
+        public int lightmapIndex;
+        public Vector4 lightmapScaleOffset;
+    }
+
+    public RendererInfo[] rendererInfos;
+    public Texture2D[] lightmapColors;
+
+    void Awake()
+    {
+        //1.把本组光照贴图加入全局LightmapSettings
+        List&lt;LightmapData&gt; globalMaps = new 
+               List&lt;LightmapData&gt;(LightmapSettings.lightmaps);
+        int baseIdx = globalMaps.Count;
+        foreach(var tex in lightmapColors)
+        {
+            globalMaps.Add(new LightmapData(){ lightmapColor = tex });
+        }
+        LightmapSettings.lightmaps = globalMaps.ToArray();
+
+        //2.给本Prefab内每个Renderer恢复光照参数，索引偏移
+        foreach(var info in rendererInfos)
+        {
+            if(info.renderer != null)
+            {
+                info.renderer.lightmapIndex = baseIdx + info.lightmapIndex;
+                info.renderer.lightmapScaleOffset = info.lightmapScaleOffset;
+            }
+        }
+    }
+
+#if UNITY_EDITOR
+    //编辑器工具：在原始A/B/C/D烘焙场景，选中根物体，调用这个采集当前场景烘焙信息存入组件
+    [ContextMenu(&#34;Capture Lightmap From Current Scene&#34;)]
+    void Capture()
+    {
+        var renderers = GetComponentsInChildren&lt;Renderer&gt;();
+        List&lt;RendererInfo&gt; infos = new List&lt;RendererInfo&gt;();
+        List&lt;Texture2D&gt; texList = new List&lt;Texture2D&gt;();
+        foreach(var r in renderers)
+        {
+            if(r.lightmapIndex &lt; 0) continue;
+            infos.Add(new RendererInfo(){
+                renderer = r,
+                lightmapIndex = r.lightmapIndex,
+                lightmapScaleOffset = r.lightmapScaleOffset
+            });
+        }
+        //收集本场景用到的所有光照贴图
+        foreach(var lm in LightmapSettings.lightmaps)
+        {
+            if(lm.lightmapColor != null) texList.Add(lm.lightmapColor);
+        }
+        rendererInfos = infos.ToArray();
+        lightmapColors = texList.ToArray();
+    }
+#endif
+}
+</code></pre><h3 id=使用流程>使用流程</h3><ol><li>打开A.unity，烘焙完整光照；</li><li>A场景根节点挂上<code>PrefabLightmapData</code>组件，右键组件菜单执行<code>Capture Lightmap From Current Scene</code>；采集A这套贴图和所有Renderer参数；</li><li>将A根物体拖成Prefab；B/C/D重复同样操作；</li><li>打开<code>main.unity</code>，把A、B、C、D四个Prefab实例拖入场景；<strong>实例世界坐标必须与原始烘焙场景完全一致，不能挪位置</strong>；</li><li>进入Play模式，脚本<code>Awake()</code>执行：<ul><li>将A/B/C/D各自的光照贴图合并进main场景全局<code>LightmapSettings.lightmaps</code>数组；</li><li>修正每个Renderer的<code>lightmapIndex</code>偏移，恢复<code>lightmapScaleOffset</code>；</li><li>运行时四个模块全部显示各自烘焙好的阴影光照。</li></ul></li></ol><h2 id=必须面对的坑>必须面对的坑</h2><ol><li><strong>编辑器不预览</strong>：只有Play模式才有光照效果，Scene视图编辑状态物体是黑的，这是该方案固有特点。</li><li><strong>不能移动旋转Prefab实例</strong>：一旦transform改变，光照采样直接错乱。如果需要摆放偏移，只能在<strong>父节点做偏移，子物体保持烘焙时世界坐标不变</strong>（用Root Shift技巧）。</li><li><strong>全局LightmapSettings数组膨胀</strong>：A+B+C+D四套贴图全部塞进main全局数组，贴图内存会叠加。不用的模块销毁时，<strong>无法自动把贴图从全局LightmapSettings数组移除</strong>（Unity API限制），会残留贴图内存。</li><li>Light Probes光照探针：探针数据也是绑定原始场景，这套脚本<strong>不会保存探针</strong>；动态物体接受GI会失效。需要额外自己序列化探针数据。</li><li>不支持Directional光照贴图（方向烘焙），上面示例只处理color贴图，需要可自行扩展。</li></ol><h2 id=对比另外两条备选路线>对比另外两条备选路线</h2><h3 id=方案aadditive多场景优先推荐如果业务允许>方案A：Additive多场景（优先推荐，如果业务允许）</h3><p>不导出Prefab；main为主场景，运行时<code>LoadSceneAdditive(A)</code>、<code>LoadSceneAdditive(B)</code>；A/B/C/D保持独立<code>.unity</code>场景文件。
+✅ A/B/C/D完整保留自身<code>.lightingDataAsset</code>光照数据；编辑器可预览光照；光照贴图完全原生工作；
+❌ 不能把场景作为Transform子物体；只能是平级场景容器；卸载可以完整释放贴图内存。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-01-15T19:21:39+08:00>January 15, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
+<a class=meta-tags__link href=/tags/lightmapping/ rel=tag>Lightmapping</a>,
+<a class=meta-tags__link href=/tags/terrain/ rel=tag>Terrain</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/lightmap/u3d_lightmap_color_distortion/>Unity3D烘焙光照图在移动平台上颜色失真的分析和应对方案</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=https://kumakoko.github.io/>kumakoko.github.io</a></strong></p><p>Unity烘焙的LightMap是32bit的HDR图，而移动设备通常不支持 <strong>HDR图(32bit per channel)</strong> ，会按照 <strong>LDR图(8bit per channel)</strong> 的形式进行处理，因此会出现色偏问题。即颜色变淡，在例子中地面为绿色，因此相比于PC平台，切到移动平台如Android或者iOS上之后，黄色变淡，使得地面的绿色更加显眼。对此Unity3D技术支持人员的的建议是：</p><ul><li>可尝试自行修改LightMap的<code>DecodeLightmap</code>函数，该函数可在 <strong>Unity\Editor\Data\CGIncludes\UnityCG.cginc</strong> 文件中找到。需要说明的是，这种方法也不能达到与PC端完全一致的效果。</li><li>为了避免类似问题，请不要使用过于强烈的Light进行烘焙，因为Light的强度(Intensity)越高，色偏问题会越严重。</li></ul></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2015-03-17T20:20:49+08:00>March 17, 2015</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
+<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
+<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
 <a class=meta-tags__link href=/tags/lightmapping/ rel=tag>Lightmapping</a></span></div></div></article></div></div></main></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
 <span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
 <span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
@@ -40,15 +124,15 @@
 </a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
 </a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
 </a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
-</a><a href=/tags/lightmapping/ class=sidebar__tag title="lightmapping (2)">lightmapping<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/lightmapping/ class=sidebar__tag title="lightmapping (6)">lightmapping<span class=sidebar__tag-count>6</span>
 </a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
 </a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
 </a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
 </a><a href=/tags/physic/ class=sidebar__tag title="physic (2)">physic<span class=sidebar__tag-count>2</span>
 </a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
 </a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
-</a><a href=/tags/srp/ class=sidebar__tag title="srp (7)">srp<span class=sidebar__tag-count>7</span>
-</a><a href=/tags/terrain/ class=sidebar__tag title="terrain (6)">terrain<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/terrain/ class=sidebar__tag title="terrain (3)">terrain<span class=sidebar__tag-count>3</span>
 </a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
 </a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (101)">unity3d<span class=sidebar__tag-count>101</span>
 </a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>

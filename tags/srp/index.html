@@ -97,80 +97,7 @@
 </span></span></code></pre></div><p>有关更多信息，请参见<a href=https://docs.unity3d.com/Packages/com.unity.render-pipelines.universal@8.2/api/UnityEngine.Rendering.Universal.UniversalAdditionalCameraData.html>UniversalAdditionalCameraData</a> API文档。如果需要通过脚本频繁访问通用<strong>附加摄像机数据组件</strong>，则应缓存对其的引用，以避免不必要的CPU工作。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-01-15T19:21:39+08:00>January 15, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
 <a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
 <a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
-<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a></span></div></div></article></div><div class="card card--3col"><article class="entry card__box block"><h1 class="entry__title title-excerpt"><a class=entry__title-link href=/post/unity3d/lightmap/subscene_bake_lightmap_to_entire_map/>分.unity文件制作并烘焙场景后整合成一个大场景的方案</a></h1><div class=entry__content><p><strong>请尊重原作者的工作，转载时请务必注明转载自：<a href=https://kumakoko.github.io/>kumakoko.github.io</a></strong></p><h1 id=问题>问题</h1><blockquote><p>A,B,C,D四个场景，在四个.unity文件中，分别独立烘焙出光照贴图，得到四份光照贴图数据，然后把A,B,C,D四个场景mesh保存成四个prefab，把这四个prefab分别拖放一个实例放在main.unity文件中，那这四分光照贴图数据可以重新指派并绑定吗</p></blockquote><h1 id=核心结论>核心结论</h1><p>A/B/C/D各自独立烘焙，把Mesh导出成Prefab，直接拖进<code>main.unity</code>：<strong>原生不行，光照贴图绑定会全部丢失</strong>，但是<strong>可以通过脚本实现手动重新指派绑定四份独立光照贴图数据</strong>。</p><h2 id=底层原理为什么直接拖prefab会变黑>底层原理（为什么直接拖Prefab会变黑）</h2><ol><li><code>Renderer.lightmapIndex</code>、<code>Renderer.lightmapScaleOffset</code> <strong>不是Prefab序列化数据</strong>，只保存在原始<code>.unity</code>场景实例里，导出Prefab的时候这些字段直接丢失，全部重置为<code>‑1</code>，物体不采样光照贴图。</li><li>Unity全局只有一套**<code>LightmapSettings.lightmaps</code>数组**（main场景全局唯一），它保存当前生效的全部光照贴图资源。A/B/C/D四个场景各自烘焙产生的四套光照贴图，默认不会自动合并进main场景这个数组。</li><li>⚠️ <strong>硬性约束：Prefab实例的世界坐标，必须和原始A/B/C/D烘焙场景里该物体的世界坐标完全一模一样。一旦位移/旋转改变，<code>lightmapScaleOffset</code>采样UV错乱，阴影光斑全部错位花掉</strong>。></li></ol><blockquote><p>光照贴图UV是基于烘焙时物体世界位置算出来的，不是模型本地坐标。</p></blockquote><h2 id=可行方案经典-prefablightmapdata-方案行业标准>可行方案：经典 PrefabLightmapData 方案（行业标准）</h2><p>思路：<strong>在A/B/C/D原始烘焙场景，把每个场景的【光照贴图纹理 + 每个Renderer的lightmapIndex+scaleOffset】序列化存到一个脚本组件上，再导出Prefab；main场景实例化Prefab之后，脚本运行时把贴图推入全局LightmapSettings数组，并给每个Renderer恢复参数</strong>。</p><blockquote><p>注意：编辑器模式下main场景Hierarchy看不到烘焙效果，<strong>只在运行时生效</strong>，编辑器视图是黑的。</p></blockquote><h3 id=简要脚本结构精简版>简要脚本结构（精简版）</h3><pre tabindex=0><code>using UnityEngine;
-using System.Collections.Generic;
-
-[DisallowMultipleComponent]
-public class PrefabLightmapData : MonoBehaviour
-{
-    [System.Serializable]
-    public struct RendererInfo
-    {
-        public Renderer renderer;
-        public int lightmapIndex;
-        public Vector4 lightmapScaleOffset;
-    }
-
-    public RendererInfo[] rendererInfos;
-    public Texture2D[] lightmapColors;
-
-    void Awake()
-    {
-        //1.把本组光照贴图加入全局LightmapSettings
-        List&lt;LightmapData&gt; globalMaps = new 
-               List&lt;LightmapData&gt;(LightmapSettings.lightmaps);
-        int baseIdx = globalMaps.Count;
-        foreach(var tex in lightmapColors)
-        {
-            globalMaps.Add(new LightmapData(){ lightmapColor = tex });
-        }
-        LightmapSettings.lightmaps = globalMaps.ToArray();
-
-        //2.给本Prefab内每个Renderer恢复光照参数，索引偏移
-        foreach(var info in rendererInfos)
-        {
-            if(info.renderer != null)
-            {
-                info.renderer.lightmapIndex = baseIdx + info.lightmapIndex;
-                info.renderer.lightmapScaleOffset = info.lightmapScaleOffset;
-            }
-        }
-    }
-
-#if UNITY_EDITOR
-    //编辑器工具：在原始A/B/C/D烘焙场景，选中根物体，调用这个采集当前场景烘焙信息存入组件
-    [ContextMenu(&#34;Capture Lightmap From Current Scene&#34;)]
-    void Capture()
-    {
-        var renderers = GetComponentsInChildren&lt;Renderer&gt;();
-        List&lt;RendererInfo&gt; infos = new List&lt;RendererInfo&gt;();
-        List&lt;Texture2D&gt; texList = new List&lt;Texture2D&gt;();
-        foreach(var r in renderers)
-        {
-            if(r.lightmapIndex &lt; 0) continue;
-            infos.Add(new RendererInfo(){
-                renderer = r,
-                lightmapIndex = r.lightmapIndex,
-                lightmapScaleOffset = r.lightmapScaleOffset
-            });
-        }
-        //收集本场景用到的所有光照贴图
-        foreach(var lm in LightmapSettings.lightmaps)
-        {
-            if(lm.lightmapColor != null) texList.Add(lm.lightmapColor);
-        }
-        rendererInfos = infos.ToArray();
-        lightmapColors = texList.ToArray();
-    }
-#endif
-}
-</code></pre><h3 id=使用流程>使用流程</h3><ol><li>打开A.unity，烘焙完整光照；</li><li>A场景根节点挂上<code>PrefabLightmapData</code>组件，右键组件菜单执行<code>Capture Lightmap From Current Scene</code>；采集A这套贴图和所有Renderer参数；</li><li>将A根物体拖成Prefab；B/C/D重复同样操作；</li><li>打开<code>main.unity</code>，把A、B、C、D四个Prefab实例拖入场景；<strong>实例世界坐标必须与原始烘焙场景完全一致，不能挪位置</strong>；</li><li>进入Play模式，脚本<code>Awake()</code>执行：<ul><li>将A/B/C/D各自的光照贴图合并进main场景全局<code>LightmapSettings.lightmaps</code>数组；</li><li>修正每个Renderer的<code>lightmapIndex</code>偏移，恢复<code>lightmapScaleOffset</code>；</li><li>运行时四个模块全部显示各自烘焙好的阴影光照。</li></ul></li></ol><h2 id=必须面对的坑>必须面对的坑</h2><ol><li><strong>编辑器不预览</strong>：只有Play模式才有光照效果，Scene视图编辑状态物体是黑的，这是该方案固有特点。</li><li><strong>不能移动旋转Prefab实例</strong>：一旦transform改变，光照采样直接错乱。如果需要摆放偏移，只能在<strong>父节点做偏移，子物体保持烘焙时世界坐标不变</strong>（用Root Shift技巧）。</li><li><strong>全局LightmapSettings数组膨胀</strong>：A+B+C+D四套贴图全部塞进main全局数组，贴图内存会叠加。不用的模块销毁时，<strong>无法自动把贴图从全局LightmapSettings数组移除</strong>（Unity API限制），会残留贴图内存。</li><li>Light Probes光照探针：探针数据也是绑定原始场景，这套脚本<strong>不会保存探针</strong>；动态物体接受GI会失效。需要额外自己序列化探针数据。</li><li>不支持Directional光照贴图（方向烘焙），上面示例只处理color贴图，需要可自行扩展。</li></ol><h2 id=对比另外两条备选路线>对比另外两条备选路线</h2><h3 id=方案aadditive多场景优先推荐如果业务允许>方案A：Additive多场景（优先推荐，如果业务允许）</h3><p>不导出Prefab；main为主场景，运行时<code>LoadSceneAdditive(A)</code>、<code>LoadSceneAdditive(B)</code>；A/B/C/D保持独立<code>.unity</code>场景文件。
-✅ A/B/C/D完整保留自身<code>.lightingDataAsset</code>光照数据；编辑器可预览光照；光照贴图完全原生工作；
-❌ 不能把场景作为Transform子物体；只能是平级场景容器；卸载可以完整释放贴图内存。</p></div><div class="entry__meta meta mt tar"><time class="entry__meta-published meta-published" datetime=2020-01-15T19:21:39+08:00>January 15, 2020</time><div class="entry__meta-categories meta-categories"><span class=meta-categories__list>Categories:
-<a class=meta-categories__link href=/categories/unity3d/ rel=category>Unity3D</a></span></div><div class="entry__meta-tags meta-tags"><span class=meta-tags__list>Tags:
-<a class=meta-tags__link href=/tags/unity3d/ rel=tag>Unity3D</a>,
-<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a>,
-<a class=meta-tags__link href=/tags/terrain/ rel=tag>Terrain</a></span></div></div></article></div></div></main></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
+<a class=meta-tags__link href=/tags/srp/ rel=tag>SRP</a></span></div></div></article></div></div></main></div><aside class=sidebar><details class=sidebar__block open><summary class=sidebar__title>Categories</summary><ul class=sidebar__list><li><a href=/categories/.net/ class=sidebar__link><span>.net</span>
 <span class=sidebar__count>9</span></a></li><li><a href=/categories/ai/ class=sidebar__link><span>ai</span>
 <span class=sidebar__count>2</span></a></li><li><a href=/categories/c++/ class=sidebar__link><span>c++</span>
 <span class=sidebar__count>3</span></a></li><li><a href=/categories/cg/ class=sidebar__link><span>cg</span>
@@ -204,15 +131,15 @@ public class PrefabLightmapData : MonoBehaviour
 </a><a href=/tags/hiz/ class=sidebar__tag title="hiz (1)">hiz<span class=sidebar__tag-count>1</span>
 </a><a href=/tags/hlsl/ class=sidebar__tag title="hlsl (1)">hlsl<span class=sidebar__tag-count>1</span>
 </a><a href=/tags/ios/ class=sidebar__tag title="ios (3)">ios<span class=sidebar__tag-count>3</span>
-</a><a href=/tags/lightmapping/ class=sidebar__tag title="lightmapping (2)">lightmapping<span class=sidebar__tag-count>2</span>
+</a><a href=/tags/lightmapping/ class=sidebar__tag title="lightmapping (6)">lightmapping<span class=sidebar__tag-count>6</span>
 </a><a href=/tags/lua/ class=sidebar__tag title="lua (4)">lua<span class=sidebar__tag-count>4</span>
 </a><a href=/tags/misc/ class=sidebar__tag title="misc (2)">misc<span class=sidebar__tag-count>2</span>
 </a><a href=/tags/opengl/ class=sidebar__tag title="opengl (4)">opengl<span class=sidebar__tag-count>4</span>
 </a><a href=/tags/physic/ class=sidebar__tag title="physic (2)">physic<span class=sidebar__tag-count>2</span>
 </a><a href=/tags/shader/ class=sidebar__tag title="shader (7)">shader<span class=sidebar__tag-count>7</span>
 </a><a href=/tags/shaderlab/ class=sidebar__tag title="shaderlab (5)">shaderlab<span class=sidebar__tag-count>5</span>
-</a><a href=/tags/srp/ class=sidebar__tag title="srp (7)">srp<span class=sidebar__tag-count>7</span>
-</a><a href=/tags/terrain/ class=sidebar__tag title="terrain (6)">terrain<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/srp/ class=sidebar__tag title="srp (6)">srp<span class=sidebar__tag-count>6</span>
+</a><a href=/tags/terrain/ class=sidebar__tag title="terrain (3)">terrain<span class=sidebar__tag-count>3</span>
 </a><a href=/tags/unitask/ class=sidebar__tag title="unitask (1)">unitask<span class=sidebar__tag-count>1</span>
 </a><a href=/tags/unity3d/ class=sidebar__tag title="unity3d (101)">unity3d<span class=sidebar__tag-count>101</span>
 </a><a href=/tags/unityeditor/ class=sidebar__tag title="unityeditor (1)">unityeditor<span class=sidebar__tag-count>1</span>
